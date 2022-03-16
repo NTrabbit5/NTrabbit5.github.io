@@ -16,13 +16,13 @@
       
       <link rel="shortcut icon" href="/favicon.ico" />
        
-<link rel="stylesheet" href="/dist/main.css">
+<link rel="stylesheet" href="/NTrabbit5/dist/main.css">
 
       
-<link rel="stylesheet" href="/css/fonts/remixicon.css">
+<link rel="stylesheet" href="/NTrabbit5/css/fonts/remixicon.css">
 
       
-<link rel="stylesheet" href="/css/custom.css">
+<link rel="stylesheet" href="/NTrabbit5/css/custom.css">
  
       <script src="https://cdn.staticfile.org/pace/1.2.4/pace.min.js"></script>
        
@@ -59,7 +59,7 @@
       <img src="/images/cover1.jpg" alt="image frame" />
     </div>
     <div class="cover-inner text-center text-white">
-      <h1><a href="/">TeX_baitu blog</a></h1>
+      <h1><a href="/NTrabbit5/">TeX_baitu blog</a></h1>
       <div id="subtitle-box">
         
         <span id="subtitle"></span>
@@ -149,6 +149,118 @@
     
     
     <article
+  id="post-20220316-PDF相关细节"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/NTrabbit5/2022/03/16/20220316-PDF%E7%9B%B8%E5%85%B3%E7%BB%86%E8%8A%82/"
+    >20220316-PDF相关细节</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/NTrabbit5/2022/03/16/20220316-PDF%E7%9B%B8%E5%85%B3%E7%BB%86%E8%8A%82/" class="article-date">
+  <time datetime="2022-03-16T04:09:24.000Z" itemprop="datePublished">2022-03-16</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h2 id="0x01"><a href="#0x01" class="headerlink" title="0x01"></a>0x01</h2><h2 id="0x02"><a href="#0x02" class="headerlink" title="0x02"></a>0x02</h2><h2 id="0x03"><a href="#0x03" class="headerlink" title="0x03"></a>0x03</h2><h2 id="0x04"><a href="#0x04" class="headerlink" title="0x04"></a>0x04</h2><hr />
+版权信息 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/NTrabbit5/tags/PDF/" rel="tag">PDF</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-20220316-hexo自定义配置"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/NTrabbit5/2022/03/16/20220316-hexo%E8%87%AA%E5%AE%9A%E4%B9%89%E9%85%8D%E7%BD%AE/"
+    >20220316-hexo自定义配置</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/NTrabbit5/2022/03/16/20220316-hexo%E8%87%AA%E5%AE%9A%E4%B9%89%E9%85%8D%E7%BD%AE/" class="article-date">
+  <time datetime="2022-03-16T03:50:03.000Z" itemprop="datePublished">2022-03-16</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h3 id="创建分类页面"><a href="#创建分类页面" class="headerlink" title="创建分类页面"></a>创建分类页面</h3><p>添加一个 分类 页面，并在菜单中显示页面链接。 * 1.新建一个页面，命名为 categories 。命令如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new page categories</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>2.编辑刚新建的页面 index.md，将页面的类型设置为 categories ，主题将自动为这个页面显示所有分类。</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">title: categories</span><br><span class="line"><span class="built_in">date</span>: 2018-01-14 20:26:39</span><br><span class="line"><span class="built_in">type</span>: <span class="string">&quot;categories&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>* 3.在菜单中添加链接。编辑主题的 _config.yml ，将 menu 中的 categories: &#x2F;categories 注释去掉，如下</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">menu:</span><br><span class="line">  home: / || home</span><br><span class="line">  <span class="comment">#about: /about/ || user</span></span><br><span class="line">  tags: /tags/ || tags</span><br><span class="line">  categories: /categories/ || th</span><br><span class="line">  archives: /archives/ || archive</span><br></pre></td></tr></table></figure>
+
+<p>以后更新文章的时候可以在md文件头部加上categories分类名了</p> 
+      <a class="article-more-link" href="/NTrabbit5/2022/03/16/20220316-hexo%E8%87%AA%E5%AE%9A%E4%B9%89%E9%85%8D%E7%BD%AE/"
+        >阅读更多...</a
+      >
+       
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/NTrabbit5/tags/hexo/" rel="tag">hexo</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-20220316-markdown语法笔记"
   class="article article-type-post"
   itemscope
@@ -160,7 +272,7 @@
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2022/03/16/20220316-markdown%E8%AF%AD%E6%B3%95%E7%AC%94%E8%AE%B0/"
+  <a class="article-title" href="/NTrabbit5/2022/03/16/20220316-markdown%E8%AF%AD%E6%B3%95%E7%AC%94%E8%AE%B0/"
     >markdown语法笔记</a> 
 </h2>
  
@@ -169,7 +281,7 @@
     </header>
      
     <div class="article-meta">
-      <a href="/2022/03/16/20220316-markdown%E8%AF%AD%E6%B3%95%E7%AC%94%E8%AE%B0/" class="article-date">
+      <a href="/NTrabbit5/2022/03/16/20220316-markdown%E8%AF%AD%E6%B3%95%E7%AC%94%E8%AE%B0/" class="article-date">
   <time datetime="2022-03-16T03:30:07.000Z" itemprop="datePublished">2022-03-16</time>
 </a>    
     </div>
@@ -178,224 +290,11 @@
        
   <h1 id="一级标题"><a href="#一级标题" class="headerlink" title="一级标题"></a>一级标题</h1><h2 id="二级标题"><a href="#二级标题" class="headerlink" title="二级标题"></a>二级标题</h2><h3 id="三级标题"><a href="#三级标题" class="headerlink" title="三级标题"></a>三级标题</h3><h4 id="四级标题"><a href="#四级标题" class="headerlink" title="四级标题"></a>四级标题</h4><p>…</p>
 <h6 id="七级标题"><a href="#七级标题" class="headerlink" title="七级标题"></a>七级标题</h6><p>只到h6，而且h1下面会有一条横线，注意，# 后面有空格</p>
-<h1 id="这是一级标题"><a href="#这是一级标题" class="headerlink" title="这是一级标题"></a>这是一级标题</h1><h2 id="这是二级标题"><a href="#这是二级标题" class="headerlink" title="这是二级标题"></a>这是二级标题</h2><p>实际上这些标签最后转化为html标签</p>
-<h3 id="无序列表"><a href="#无序列表" class="headerlink" title="无序列表"></a>无序列表</h3><ul>
-<li><p>1</p>
-</li>
-<li><p>2</p>
-</li>
-<li><p>1</p>
-</li>
-<li><p>2</p>
-</li>
-<li><p>1</p>
-</li>
-<li><p>2</p>
-</li>
-</ul>
-<h3 id="有序列表"><a href="#有序列表" class="headerlink" title="有序列表"></a>有序列表</h3><ol>
-<li>列表1</li>
-<li>列表2</li>
-<li>列表3</li>
-</ol>
-<ul>
-<li><p>不以结婚为目的的谈恋爱都叫耍流氓</p>
-<blockquote>
-<p>这是毛主席说的</p>
-</blockquote>
-</li>
-<li><p>前方高能</p>
-<blockquote>
-<p>注意：这里是为了提醒前面有很刺激的事情发生，请做好准备</p>
-</blockquote>
-</li>
-</ul>
-<blockquote>
-<p>一级引用</p>
-</blockquote>
-<blockquote>
-<blockquote>
-<p>二级引用</p>
-<blockquote>
-<p>三级引用</p>
-<blockquote>
-<p>四级应用</p>
-<blockquote>
-<p>五级引用</p>
-<blockquote>
-<p>六级引用</p>
-<blockquote>
-<p>七级引用</p>
-<blockquote>
-<p>等等</p>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
-<p>华丽的分隔线</p>
-<hr>
-<hr>
-<hr>
-<ol start="5">
-<li>连接</li>
-</ol>
-<p>支持2种连接方式，不管是哪一种，连接文字都是用[方括号]来标记的</p>
-<h3 id="行内式子"><a href="#行内式子" class="headerlink" title="行内式子"></a>行内式子</h3><p><a target="_blank" rel="noopener" href="http://www.baidu.com/">百度</a>一下，你就知道</p>
-<h3 id="下面是带链接的列表"><a href="#下面是带链接的列表" class="headerlink" title="下面是带链接的列表"></a>下面是带链接的列表</h3><ul>
-<li><a href="www.latexstudio.com">LaTeX科技排版工作室</a></li>
-<li><a href="www.baidu.com">百度一下</a></li>
-</ul>
-<h3 id="参数式子"><a href="#参数式子" class="headerlink" title="参数式子"></a>参数式子</h3><p>这里是<code>[name]</code> ，这里是<a target="_blank" rel="noopener" href="http://www.baidu.com/" title="瞎写的">百度</a>。</p>
-<p>这就好理解了，就是把链接当成参数，适合多出使用链接的场景，注意参数的对应关系，参数定义时，这三种写法都可以。</p>
-<h3 id="图片"><a href="#图片" class="headerlink" title="图片"></a>图片</h3><p>图片也有2种方式，行内式和参数式</p>
-<p><img src="C:\Users\lenovo\Pictures\cover.png" alt="我是图片"></p>
-<p>!！<a href="C:\Users\lenovo\Pictures\cover.png">我是图片</a></p>
-<ol start="7">
-<li>代码框</li>
-</ol>
-<p>这个就比较重要了，很多时候都需要展示出一些代码</p>
-<p>如果代码量比较少，只有单行的话，可以用单反引号包起来，</p>
-<h4 id="第二种"><a href="#第二种" class="headerlink" title="第二种"></a>第二种</h4><p>多行用3个`</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">床前明月光</span><br></pre></td></tr></table></figure>
-
-<p>8.表格，这个写的有点麻烦，主义看看</p>
-<table>
-<thead>
-<tr>
-<th>name</th>
-<th>age</th>
-<th>sex</th>
-</tr>
-</thead>
-<tbody><tr>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-</tbody></table>
-<p>对齐肯定是最好的，第一种的分割线后面的冒号表示对齐方式，写在左边表示左对齐，右边表示右对齐，两边都写表示居中，不过现实出来的结果是，表格外面并没有线框包起来，不知道别人的怎么弄的</p>
-<ol start="9">
-<li>强调</li>
-</ol>
-<p><em>字体倾斜</em></p>
-<p><em>字体倾斜</em></p>
-<p><strong>字体加粗</strong></p>
-<p><strong>字体加粗</strong></p>
-<p>一个星号或者是一个下划线包起来，会转换为<em>倾斜，如果是两个，会转换为<strong>加粗</p>
-<h3 id="转义"><a href="#转义" class="headerlink" title="转义"></a>转义</h3><p>\</p>
-<p>&#39;</p>
-<p>~</p>
-<p>*</p>
-<p>_</p>
-<p>+</p>
-<p>.</p>
-<p>!</p>
-<p>@</p>
-<ol start="11">
-<li>删除线</li>
-</ol>
-<p><del>请删掉我吧</del></p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
+<h1 id="这是一级标题"><a href="#这是一级标题" class="headerlink" title="这是一级标题"></a>这是一级标题</h1><h2 id="这是二级标题"><a href="#这是二级标题" class="headerlink" title="这是二级标题"></a>这是二级标题</h2><p>实际上这些标签最后转化为html标签</p> 
+      <a class="article-more-link" href="/NTrabbit5/2022/03/16/20220316-markdown%E8%AF%AD%E6%B3%95%E7%AC%94%E8%AE%B0/"
+        >阅读更多...</a
+      >
        
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20220316_PDF_note"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-     
-    <div class="article-meta">
-      <a href="/2022/03/16/20220316_PDF_note/" class="article-date">
-  <time datetime="2022-03-16T02:40:28.786Z" itemprop="datePublished">2022-03-16</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <!-- https://www.jianshu.com/p/26a726baf70e -->
-<h1 id="PDFnote"><a href="#PDFnote" class="headerlink" title="PDFnote"></a>PDFnote</h1><p>PDF的一些笔记</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-hello-world"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/03/16/hello-world/"
-    >Hello World</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/03/16/hello-world/" class="article-date">
-  <time datetime="2022-03-16T02:19:46.183Z" itemprop="datePublished">2022-03-16</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
- 
       <!-- reward -->
       
     </div>
@@ -478,41 +377,29 @@
 <nav class="navbar">
   
   <div class="logo">
-    <a href="/"><img src="/images/ayer-side.svg" alt="TeX_baitu blog"></a>
+    <a href="/NTrabbit5/"><img src="/images/ayer-side.svg" alt="TeX_baitu blog"></a>
   </div>
   
   <ul class="nav nav-main">
     
     <li class="nav-item">
-      <a class="nav-item-link" href="/">主页</a>
+      <a class="nav-item-link" href="/NTrabbit5/">主页</a>
     </li>
     
     <li class="nav-item">
-      <a class="nav-item-link" href="/archives">归档</a>
+      <a class="nav-item-link" href="/NTrabbit5/archives">归档</a>
     </li>
     
     <li class="nav-item">
-      <a class="nav-item-link" href="/categories">分类</a>
+      <a class="nav-item-link" href="/NTrabbit5/categories">分类</a>
     </li>
     
     <li class="nav-item">
-      <a class="nav-item-link" href="/tags">标签</a>
+      <a class="nav-item-link" href="/NTrabbit5/tags">标签</a>
     </li>
     
     <li class="nav-item">
-      <a class="nav-item-link" href="/tags/%E6%97%85%E8%A1%8C/">旅行</a>
-    </li>
-    
-    <li class="nav-item">
-      <a class="nav-item-link" target="_blank" rel="noopener" href="http://shenyu-vip.lofter.com">摄影</a>
-    </li>
-    
-    <li class="nav-item">
-      <a class="nav-item-link" href="/friends">友链</a>
-    </li>
-    
-    <li class="nav-item">
-      <a class="nav-item-link" href="/2019/about">关于我</a>
+      <a class="nav-item-link" href="/NTrabbit5/2019/about">关于我</a>
     </li>
     
   </ul>
@@ -526,7 +413,7 @@
       </a>
       
       
-      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+      <a class="nav-item-link" target="_blank" href="/NTrabbit5/atom.xml" title="RSS Feed">
         <i class="ri-rss-line"></i>
       </a>
       
@@ -549,22 +436,22 @@
   <div class="reward-box">
     
     <div class="reward-item">
-      <img class="reward-img" src="/images/alipay.jpg">
+      <img class="reward-img" src="/NTrabbit5/images/alipay.jpg">
       <span class="reward-type">支付宝</span>
     </div>
     
     
     <div class="reward-item">
-      <img class="reward-img" src="/images/wechat.jpg">
+      <img class="reward-img" src="/NTrabbit5/images/wechat.jpg">
       <span class="reward-type">微信</span>
     </div>
     
   </div>
 </div>
     
-<script src="/js/jquery-3.6.0.min.js"></script>
+<script src="/NTrabbit5/js/jquery-3.6.0.min.js"></script>
  
-<script src="/js/lazyload.min.js"></script>
+<script src="/NTrabbit5/js/lazyload.min.js"></script>
 
 <!-- Tocbot -->
 
@@ -575,7 +462,7 @@
 />
 <script src="https://cdn.staticfile.org/justifiedGallery/3.8.1/js/jquery.justifiedGallery.min.js"></script>
 
-<script src="/dist/main.js"></script>
+<script src="/NTrabbit5/dist/main.js"></script>
 
 <!-- ImageViewer -->
  <!-- Root element of PhotoSwipe. Must have class pswp. -->
@@ -690,7 +577,7 @@
 
 <!-- busuanzi  -->
  
-<script src="/js/busuanzi-2.3.pure.min.js"></script>
+<script src="/NTrabbit5/js/busuanzi-2.3.pure.min.js"></script>
  
 <!-- ClickLove -->
 
@@ -700,7 +587,7 @@
 
 <!-- CodeCopy -->
  
-<link rel="stylesheet" href="/css/clipboard.css">
+<link rel="stylesheet" href="/NTrabbit5/css/clipboard.css">
  <script src="https://cdn.staticfile.org/clipboard.js/2.0.10/clipboard.min.js"></script>
 <script>
   function wait(callback, seconds) {
