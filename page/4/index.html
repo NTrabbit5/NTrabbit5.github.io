@@ -11,7 +11,7 @@
         name="viewport"
         content="width=device-width, initial-scale=1, maximum-scale=1"
       />
-      <title>归档 |  TeX_baitu blog</title>
+      <title> TeX_baitu blog</title>
   <meta name="generator" content="hexo-theme-ayer">
       
       <link rel="shortcut icon" href="/favicon.ico" />
@@ -51,248 +51,144 @@
     
       
     <main class="content on">
-      <section class="outer">
+      
+
+
+<script src="https://cdn.staticfile.org/typed.js/2.0.12/typed.min.js"></script>
+
+
+<!-- Subtitle -->
+
+  <script>
+    try {
+      var typed = new Typed("#subtitle", {
+        strings: ['面朝大海，春暖花开', '愿你一生努力，一生被爱', '想要的都拥有，得不到的都释怀'],
+        startDelay: 0,
+        typeSpeed: 200,
+        loop: true,
+        backSpeed: 100,
+        showCursor: true
+      });
+    } catch (err) {
+      console.log(err)
+    }
+  </script>
   
+<div id="main">
+  <section class="outer">
+  
+  
+  
+
+<div class="notice" style="margin-top:50px">
+    <i class="ri-heart-fill"></i>
+    <div class="notice-content" id="broad"></div>
+</div>
+<script type="text/javascript">
+    fetch('https://v1.hitokoto.cn')
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById("broad").innerHTML = data.hitokoto;
+        })
+        .catch(console.error)
+</script>
+
+<style>
+    .notice {
+        padding: 20px;
+        border: 1px dashed #e6e6e6;
+        color: #969696;
+        position: relative;
+        display: inline-block;
+        width: 100%;
+        background: #fbfbfb50;
+        border-radius: 10px;
+    }
+
+    .notice i {
+        float: left;
+        color: #999;
+        font-size: 16px;
+        padding-right: 10px;
+        vertical-align: middle;
+        margin-top: -2px;
+    }
+
+    .notice-content {
+        display: initial;
+        vertical-align: middle;
+    }
+</style>
   
   <article class="articles">
     
     
-    <h1 class="page-type-title">归档</h1>
     
     
-  
-  
-  
-  
-  
-  
-  <div class="archives-wrap">
-    <div class="archive-year-wrap">
-      <a href="/archives/2022" class="archive-year">2022</a>
+    <article
+  id="post-20220316-markdown语法笔记"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/03/16/20220316-markdown%E8%AF%AD%E6%B3%95%E7%AC%94%E8%AE%B0/"
+    >markdown语法笔记</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/03/16/20220316-markdown%E8%AF%AD%E6%B3%95%E7%AC%94%E8%AE%B0/" class="article-date">
+  <time datetime="2022-03-16T03:30:07.000Z" itemprop="datePublished">2022-03-16</time>
+</a>    
     </div>
-    <div class="archives">
       
-      <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2022/03/19/20220319-%E3%80%8A%E6%8E%A2%E7%AA%97%E3%80%8B%E6%AD%8C%E8%AF%8D/" class="archive-article-date">
-  <time datetime="2022-03-19T02:22:51.000Z" itemprop="datePublished">03/19</time>
-</a>
+    <div class="article-entry" itemprop="articleBody">
        
-<h2 itemprop="name">
-  <a class="archive-article-title" href="/2022/03/19/20220319-%E3%80%8A%E6%8E%A2%E7%AA%97%E3%80%8B%E6%AD%8C%E8%AF%8D/"
-    >20220319-《探窗》歌词</a> 
-</h2>
- 
-
-    </header>
-    
-    
-  </div>
-</article>
-      
-  
-  
-      <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2022/03/19/20220319-%E3%80%8A%E7%AC%91%E7%BA%B3%E3%80%8B%E6%AD%8C%E8%AF%8D/" class="archive-article-date">
-  <time datetime="2022-03-19T02:18:42.000Z" itemprop="datePublished">03/19</time>
-</a>
+  <h1 id="一级标题"><a href="#一级标题" class="headerlink" title="一级标题"></a>一级标题</h1><h2 id="二级标题"><a href="#二级标题" class="headerlink" title="二级标题"></a>二级标题</h2><h3 id="三级标题"><a href="#三级标题" class="headerlink" title="三级标题"></a>三级标题</h3><h4 id="四级标题"><a href="#四级标题" class="headerlink" title="四级标题"></a>四级标题</h4><p>…</p>
+<h6 id="七级标题"><a href="#七级标题" class="headerlink" title="七级标题"></a>七级标题</h6><p>只到h6，而且h1下面会有一条横线，注意，# 后面有空格</p>
+<h1 id="这是一级标题"><a href="#这是一级标题" class="headerlink" title="这是一级标题"></a>这是一级标题</h1><h2 id="这是二级标题"><a href="#这是二级标题" class="headerlink" title="这是二级标题"></a>这是二级标题</h2><p>实际上这些标签最后转化为html标签</p> 
+      <a class="article-more-link" href="/2022/03/16/20220316-markdown%E8%AF%AD%E6%B3%95%E7%AC%94%E8%AE%B0/"
+        >阅读更多...</a
+      >
        
-<h2 itemprop="name">
-  <a class="archive-article-title" href="/2022/03/19/20220319-%E3%80%8A%E7%AC%91%E7%BA%B3%E3%80%8B%E6%AD%8C%E8%AF%8D/"
-    >《笑纳》歌词</a> 
-</h2>
- 
-
-    </header>
-    
-    
-  </div>
-</article>
-      
-  
-  
-      <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2022/03/19/20220319-%E3%80%8A%E8%B5%A4%E4%BC%B6%E3%80%8B%E6%AD%8C%E8%AF%8D/" class="archive-article-date">
-  <time datetime="2022-03-19T02:16:39.000Z" itemprop="datePublished">03/19</time>
-</a>
-       
-<h2 itemprop="name">
-  <a class="archive-article-title" href="/2022/03/19/20220319-%E3%80%8A%E8%B5%A4%E4%BC%B6%E3%80%8B%E6%AD%8C%E8%AF%8D/"
-    >《赤伶》歌词</a> 
-</h2>
- 
-
-    </header>
-    
-    
-  </div>
-</article>
-      
-  
-  
-      <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2022/03/17/20220317-python%E8%AE%A1%E6%97%B6/" class="archive-article-date">
-  <time datetime="2022-03-17T05:56:12.000Z" itemprop="datePublished">03/17</time>
-</a>
-       
-<h2 itemprop="name">
-  <a class="archive-article-title" href="/2022/03/17/20220317-python%E8%AE%A1%E6%97%B6/"
-    >python计时</a> 
-</h2>
- 
-
-    </header>
-    
-    
-  </div>
-</article>
-      
-  
-  
-      <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2022/03/16/20220316-win10-sublime3%E8%BE%93%E5%85%A5%E6%B3%95%E4%B8%8D%E8%B7%9F%E9%9A%8F%E9%97%AE%E9%A2%98/" class="archive-article-date">
-  <time datetime="2022-03-16T07:41:04.000Z" itemprop="datePublished">03/16</time>
-</a>
-       
-<h2 itemprop="name">
-  <a class="archive-article-title" href="/2022/03/16/20220316-win10-sublime3%E8%BE%93%E5%85%A5%E6%B3%95%E4%B8%8D%E8%B7%9F%E9%9A%8F%E9%97%AE%E9%A2%98/"
-    >win10-sublime3输入法不跟随问题</a> 
-</h2>
- 
-
-    </header>
-    
-    
-  </div>
-</article>
-      
-  
-  
-      <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2022/03/16/20220316-vMix%E7%9B%B4%E6%92%AD%E8%BD%AF%E4%BB%B6%E4%BD%BF%E7%94%A8/" class="archive-article-date">
-  <time datetime="2022-03-16T07:37:10.000Z" itemprop="datePublished">03/16</time>
-</a>
-       
-<h2 itemprop="name">
-  <a class="archive-article-title" href="/2022/03/16/20220316-vMix%E7%9B%B4%E6%92%AD%E8%BD%AF%E4%BB%B6%E4%BD%BF%E7%94%A8/"
-    >vMix直播软件使用</a> 
-</h2>
- 
-
-    </header>
-    
-    
-  </div>
-</article>
-      
-  
-  
-      <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2022/03/16/20220316-sublime-markdown%E6%8F%92%E4%BB%B6/" class="archive-article-date">
-  <time datetime="2022-03-16T06:23:09.000Z" itemprop="datePublished">03/16</time>
-</a>
-       
-<h2 itemprop="name">
-  <a class="archive-article-title" href="/2022/03/16/20220316-sublime-markdown%E6%8F%92%E4%BB%B6/"
-    >sublime-markdown插件</a> 
-</h2>
- 
-
-    </header>
-    
-    
-  </div>
-</article>
-      
-  
-  
-      <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2022/03/16/20220316-PDF%E7%9B%B8%E5%85%B3%E7%BB%86%E8%8A%82/" class="archive-article-date">
-  <time datetime="2022-03-16T04:23:09.000Z" itemprop="datePublished">03/16</time>
-</a>
-       
-<h2 itemprop="name">
-  <a class="archive-article-title" href="/2022/03/16/20220316-PDF%E7%9B%B8%E5%85%B3%E7%BB%86%E8%8A%82/"
-    >PDF相关细节</a> 
-</h2>
- 
-
-    </header>
-    
-    
-  </div>
-</article>
-      
-  
-  
-      <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2022/03/16/20220316-hexo%E8%87%AA%E5%AE%9A%E4%B9%89%E9%85%8D%E7%BD%AE/" class="archive-article-date">
-  <time datetime="2022-03-16T03:50:03.000Z" itemprop="datePublished">03/16</time>
-</a>
-       
-<h2 itemprop="name">
-  <a class="archive-article-title" href="/2022/03/16/20220316-hexo%E8%87%AA%E5%AE%9A%E4%B9%89%E9%85%8D%E7%BD%AE/"
-    >hexo自定义配置</a> 
-</h2>
- 
-
-    </header>
-    
-    
-  </div>
-</article>
-      
-  
-  
-      <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2022/03/16/20220316-Aero%E4%B8%AD%E6%96%87%E8%AF%B4%E6%98%8E/" class="archive-article-date">
-  <time datetime="2022-03-16T03:37:52.000Z" itemprop="datePublished">03/16</time>
-</a>
-       
-<h2 itemprop="name">
-  <a class="archive-article-title" href="/2022/03/16/20220316-Aero%E4%B8%AD%E6%96%87%E8%AF%B4%E6%98%8E/"
-    >Aero中文说明</a> 
-</h2>
- 
-
-    </header>
-    
-    
-  </div>
-</article>
-      
+      <!-- reward -->
       
     </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
   </div>
-  
+
+   
+    
+</article>
+
+    
+  </article>
   
 
   
   <nav class="page-nav">
     
-    <a class="extend prev" rel="prev" href="/archives/page/2/">上一页</a><a class="page-number" href="/archives/">1</a><a class="page-number" href="/archives/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/archives/page/4/">4</a><a class="extend next" rel="next" href="/archives/page/4/">下一页</a>
+    <a class="extend prev" rel="prev" href="/page/3/">上一页</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span>
   </nav>
   
 </section>
+</div>
+
       <footer class="footer">
   <div class="outer">
     <ul>
