@@ -11,7 +11,7 @@
         name="viewport"
         content="width=device-width, initial-scale=1, maximum-scale=1"
       />
-      <title>秋瑾 |  TeX_baitu blog</title>
+      <title>office文档结构解析 |  TeX_baitu blog</title>
   <meta name="generator" content="hexo-theme-ayer">
       
       <link rel="shortcut icon" href="/favicon.ico" />
@@ -53,7 +53,7 @@
     <main class="content on">
       <section class="outer">
   <article
-  id="post-20220426-秋瑾"
+  id="post-20220426-office文档结构解析"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -64,7 +64,7 @@
     <header class="article-header">
        
 <h1 class="article-title sea-center" style="border-left:0" itemprop="name">
-  秋瑾
+  office文档结构解析
 </h1>
  
 
@@ -72,15 +72,15 @@
     </header>
      
     <div class="article-meta">
-      <a href="/2022/04/26/20220426-%E7%A7%8B%E7%91%BE/" class="article-date">
-  <time datetime="2022-04-26T10:38:53.000Z" itemprop="datePublished">2022-04-26</time>
+      <a href="/2022/04/26/20220426-office%E6%96%87%E6%A1%A3%E7%BB%93%E6%9E%84%E8%A7%A3%E6%9E%90/" class="article-date">
+  <time datetime="2022-04-26T14:24:04.000Z" itemprop="datePublished">2022-04-26</time>
 </a>   
 <div class="word_count">
     <span class="post-time">
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> 字数统计:</span>
-            <span class="post-count">241</span>
+            <span class="post-count">2.2k</span>
         </span>
     </span>
 
@@ -89,25 +89,237 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> 阅读时长≈</span>
-            <span class="post-count">1 分钟</span>
+            <span class="post-count">8 分钟</span>
         </span>
     </span>
 </div>
  
     </div>
       
+    <div class="tocbot"></div>
+
 
 
 
   
     <div class="article-entry" itemprop="articleBody">
        
-  <p>陶澹人</p>
-<p>出自清代的《秋暮遣怀》</p>
-<p>人生天地一叶萍，利名役役三秋草。<br>秋草能为春草新，苍颜难换朱颜好。<br>篱前黄菊未开花，寂寞清樽冷怀抱。<br><strong>秋风秋雨愁煞人，寒宵独坐心如捣</strong>。<br>出门拔剑壮槃游，霜华拂处尘氛少。<br>朝凌五岳暮三洲，人世风波岂能保。<br>不如归去卧糟丘，老死蓬蒿事幽讨。</p>
-<p>事已至此，余位卑言轻，愧无力成全，然汝死非我意，幸亮之也</p>
-<p>《勉女权歌》<br>【年代】清<br>【作者】秋瑾</p>
-<p>吾辈爱自由，勉励自由一杯酒。<br>男女平权天赋就，岂甘居牛后？<br>愿奋然自拔，一洗从前羞耻垢。<br>愿安作同俦，恢复江山劳素手。<br>旧习最堪羞，女子竟同牛马偶。<br>曙光新放文明侯，独去占头筹。<br>愿奴隶根除，智识学问历练就。<br>责任上肩头，国民女杰期无负。</p>
+  <p>转自：<a target="_blank" rel="noopener" href="https://www.anquanke.com/post/id/175548">https://www.anquanke.com/post/id/175548</a></p>
+<p><a target="_blank" rel="noopener" href="http://officeopenxml.com/anatomyofOOXML.php">http://officeopenxml.com/anatomyofOOXML.php</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/u012107143/article/details/111877587">https://blog.csdn.net/u012107143/article/details/111877587</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">本文系作者此前研究office文件格式解析及漏洞挖掘和分析时梳理的部分基础知识，文章部分内容可能会借鉴他人成果，由于时间久远所以无法一一考证。本文仅限于初学者作为参考，如有笔误，请见谅。</span><br></pre></td></tr></table></figure>
+
+<h2 id="Office文档格式简要介绍"><a href="#Office文档格式简要介绍" class="headerlink" title="Office文档格式简要介绍"></a>Office文档格式简要介绍</h2><p>OpenXML（OOXML）是微软在Office 2007中提出的一种新的文档格式，Office 2007中的Word、Excel、PowerPoint默认均采用OpenXML格式。OpenXML在2006年12月成为了ECMA规范的一部分，编号为ECMA376；并于2008年4月通过国际标准化组织的表决，并于两个月后公布为ISO／IEC 29500国际标准。</p>
+<p>另一种结构是office 97-03的存储规范：OLE。它是一种对象链接和嵌入的技术，该技术可以包含文本，图形，电子表格甚至其他二进制数据。</p>
+<h3 id="Docx（Open-XML）文档结构"><a href="#Docx（Open-XML）文档结构" class="headerlink" title="Docx（Open XML）文档结构"></a>Docx（Open XML）文档结构</h3><p>Docx这种新的word 格式有三个主要的组成部分：部件、内容类型和关系。</p>
+<p><strong>部件</strong></p>
+<p>部件就是对应于office文档解压后的一个个文件。这些文件都是包中的文档部件。</p>
+<p>Word2007的文档部件大致有以下几种：</p>
+<blockquote>
+<p>注释；</p>
+<p>格式定义；</p>
+<p>列表定义；</p>
+<p>页眉；</p>
+<p>图表；</p>
+<p>关系；</p>
+<p>文档内容；</p>
+<p>图片。</p>
+</blockquote>
+<p>在word中，使用单独的文件（xml）来表示文档中的每个部分以及附加的内容。他们需要依赖于各部件之间的正确关系保证文件的完整和有效性，如果可以准确保持部件之间的关系，那么文件结构可以任意更改。</p>
+<p>以docx文档为例，说明openxml文档内容的结构。随手建立一个docx文档，使用zip解压到文件夹中，他的目录结构如下：</p>
+<p><a target="_blank" rel="noopener" href="https://p1.ssl.qhimg.com/t011e27a7ab3a6a702d.png"><img src="https://p1.ssl.qhimg.com/t011e27a7ab3a6a702d.png" alt="img"></a></p>
+<p>事实上，在word2007及以上的版本当中，一个文档则是由一个文件夹（或者说容器），由内部的部件各自定义属性和数据，并相互依赖而产生的。一个文件可能会包含这些目录和组件：</p>
+<p><strong>[Content_Types].xml</strong></p>
+<p>这个文件描述的是整个文档内容的类型，把各个xml文件组合成一个整体。</p>
+<p><strong>docProps文件夹</strong></p>
+<p>这个文件夹中的xml记录了docx文档的主要属性信息</p>
+<p>Core.xml：描述文件的创建时间，标题，主题和作者等给予open xml约定文档格式的通用文件属性</p>
+<p>App.xml：描述文档的其他属性，文档类型，版本，只读信息，共享，安全属性等特定的文件属性</p>
+<p><strong>rels 文件夹</strong></p>
+<p>这个文件夹存放了所有指定的rels文件</p>
+<p><strong>rels文件</strong></p>
+<p>这些文件描述了文档结构中的起始关系，也可以叫做关系部件</p>
+<p><strong>item1.xml</strong></p>
+<p>包含了一些文档中出现的数据。例如自定义XML数据部件。</p>
+<p><strong>内容类型</strong></p>
+<p>每个文档部件都有一个特定的内容类型。一个部件的内容类型描述了这种文件类型的内容。例如，XML部件包含了Word XML格式定义的标记，而内容类型可以用来分析文档的组成。</p>
+<p>典型的内容类型是以word application开头，然后是厂商的名称。在内容类型中，word vender被简写为vnd。所有内容类型都被指定为以application&#x2F;vnd.ms-word开头。如果内容类型是一个XML文件，那么它的URI将以+xml结尾。其它的非XML内容的类型，例如图片，则没有这种结尾。下面是一些典型的内容类型：</p>
+<p>1.application&#x2F;vnd.openxmlformats-officedocument.wordprocessingml.endnotes+xml</p>
+<p>它是一个描述Word文档中的尾注文档部件的内容类型。其中，+xml表示它是一个XML文件。</p>
+<p>2.application&#x2F;vnd.openxmlformats-package.core-properties+xml</p>
+<p>它是一个描述核心文档属性部件的内容类型。其中，+xml表示它是一个XML文件。</p>
+<p>3.image&#x2F;png</p>
+<p>图片的内容类型。其中没有+xml部分 － 表示内容类型不是XML文件。</p>
+<p><strong>部件关系</strong></p>
+<p>部件关系记录了文档部件之间的逻辑连接，比如根文档部件拥有一个<code>http://schemas.openxmlformats.org/package/2006/relationships/header</code>类型到application&#x2F;vnd.openxmlformats-officedocument.wordprocessingml.header+xml<br>内容类型部件的关系。这表示部件之间的关系是，目标部件是源部件的页眉。而这个页眉部件可能也有自己的关系。在包中，可以通过_rels目录中的.rels文件进行关系定位。</p>
+<p>构建关系的方法是：每一个关系中都有一个源一个目的，源是关系命名的部件。例如，document.xml.rels中所有的关系都将document.xml作为它们的源。每个.rels文件都包含一个<relationships>元素，每个元素都对应一个ID，包括目标部件的内容类型。</p>
+<p><a target="_blank" rel="noopener" href="https://p1.ssl.qhimg.com/t0100c12dfbda0e0f77.png"><img src="https://p1.ssl.qhimg.com/t0100c12dfbda0e0f77.png" alt="img"></a></p>
+<h3 id="Doc文档结构"><a href="#Doc文档结构" class="headerlink" title="Doc文档结构"></a>Doc文档结构</h3><p>Word 97-03的后缀是doc，doc文件本身是一个ole类型文件。OLE (Object Linking and Embedding)文 件 主 要 由 storages 和 streams<br>组成，而ole本身其实是一种面向对象的技术，该技术允许程序之间链接和嵌入对象数据，建立复合文档。</p>
+<p><a target="_blank" rel="noopener" href="https://p3.ssl.qhimg.com/t01d6904e85bf964cda.png"><img src="https://p3.ssl.qhimg.com/t01d6904e85bf964cda.png" alt="img"></a></p>
+<p>WordDocument stream 中保存的最重要的数据结构是 FIB（File InformationBlock），FIB 中除了保存 doc文件的一些基本信息（如格式版本）之外，大部分字段是指向其它结构的指针和标识其结构大小（见图2）。例如 fcClx 字段表示 Clx 结构在 Table stream中的偏移，lcbClx 字段标识 Clx结构的大小。类似的，名称以“fc”开头的字段都表示对应结构在某个stream中的偏移，对应的以“lcb”开头的字段则表示其结构大小。</p>
+<p><a target="_blank" rel="noopener" href="https://p1.ssl.qhimg.com/t01def8024c3d4e7905.png"><img src="https://p1.ssl.qhimg.com/t01def8024c3d4e7905.png" alt="img"></a></p>
+<h3 id="rtf文档结构"><a href="#rtf文档结构" class="headerlink" title="rtf文档结构"></a>rtf文档结构</h3><p>富文本格式（Rtf, rich text format）是微软的文本和图像信息交换制定的格式。Rtf文件可以划分为文件头和文档区两个部分组成。文件头和文档区由文本、控制字和控制符组成，同时利用{…}来表明层级关系。</p>
+<table>
+<thead>
+<tr>
+<th>Rtf文件内容</th>
+<th>控制字</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>文件头</td>
+<td>rtfN</td>
+<td>版本号</td>
+</tr>
+<tr>
+<td></td>
+<td>fonttbl</td>
+<td>字体表</td>
+</tr>
+<tr>
+<td></td>
+<td>filetbl</td>
+<td>文件表</td>
+</tr>
+<tr>
+<td></td>
+<td>listtable</td>
+<td>编目表</td>
+</tr>
+<tr>
+<td>文档区</td>
+<td>info</td>
+<td>信息组</td>
+</tr>
+<tr>
+<td></td>
+<td>pict</td>
+<td>图片</td>
+</tr>
+<tr>
+<td></td>
+<td>object</td>
+<td>对象</td>
+</tr>
+<tr>
+<td></td>
+<td>sv</td>
+<td>绘图对象值</td>
+</tr>
+<tr>
+<td></td>
+<td>sn</td>
+<td>绘图对象名称</td>
+</tr>
+<tr>
+<td></td>
+<td>objupdate</td>
+<td>自动更新机制。</td>
+</tr>
+</tbody></table>
+<p>(<strong>objupdate很重要，攻击样本中经常使用，确保OLE对象自动加载、更新</strong>)</p>
+<h2 id="OLE简单说明"><a href="#OLE简单说明" class="headerlink" title="OLE简单说明"></a>OLE简单说明</h2><p>前面已经说到OLE的基本概念，现在我们先说说不同格式文档的OLE嵌入。OLE就其本质而言，是COM对象的子集，是一种基于组件对象模型（COM）的对象链接和嵌入技术。</p>
+<h3 id="不同嵌套控制字及对应的文件格式"><a href="#不同嵌套控制字及对应的文件格式" class="headerlink" title="不同嵌套控制字及对应的文件格式"></a>不同嵌套控制字及对应的文件格式</h3><p>OLE对象控制字和相应解释如下：</p>
+<table>
+<thead>
+<tr>
+<th>对象类型</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>objemb</td>
+<td>嵌入图片、文档、音频等</td>
+</tr>
+<tr>
+<td>objlink</td>
+<td>嵌入链接文件</td>
+</tr>
+<tr>
+<td>objautlink</td>
+<td>嵌入自动链接对象类型。</td>
+</tr>
+<tr>
+<td>objsub</td>
+<td>Macintosh版管理签署对象类型。</td>
+</tr>
+<tr>
+<td>objpub</td>
+<td>Macintosh版管理发布对象类型。</td>
+</tr>
+<tr>
+<td>objicemb</td>
+<td>MS Word for Macintosh可安装命令（IC）嵌入对象类型。</td>
+</tr>
+<tr>
+<td>objhtml</td>
+<td>超文本标记语言（HTML）控件对象类型。</td>
+</tr>
+<tr>
+<td>objocx</td>
+<td>嵌入ActiveX控件</td>
+</tr>
+</tbody></table>
+<p>OLE对象数据控制字和对应解释如下：</p>
+<table>
+<thead>
+<tr>
+<th>对象数据</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>objdata</td>
+<td>采用特定格式表示的对象数据；OLE对象采用OLESaveToStream结构。常见恶意文件样本关键字。</td>
+</tr>
+<tr>
+<td>objalias</td>
+<td>Macintosh编辑管理器发行对象的别名记录。</td>
+</tr>
+<tr>
+<td>objsect</td>
+<td>Macintosh编辑管理器发行对象的域记录。</td>
+</tr>
+</tbody></table>
+<h3 id="OLE对象数据结构解析"><a href="#OLE对象数据结构解析" class="headerlink" title="OLE对象数据结构解析"></a>OLE对象数据结构解析</h3><p>上面的表中，3个对象数据控制字都可以被对象类型引用。OLE对象数据包括头部（ObjectHeader）和数据流（ObjectStream），它们是通过D0CF11E0A1B11AE1<br>标志符进行区分。其中头部由OLE 版本（4 字节）、格式ID（4 字节）、程序名长度（4字节）、程序名和数据流大小（4字节）组成。用一个CVE-2017-0199溢出文档中嵌入的OLE对象，可以对它做一下解析。对象内容如下：</p>
+<p><a target="_blank" rel="noopener" href="https://p0.ssl.qhimg.com/t014a784fb57ba0f81d.png"><img src="https://p0.ssl.qhimg.com/t014a784fb57ba0f81d.png" alt="img"></a></p>
+<p>{*objdata<br>0105000002000000090000004f4c45324c696e6b000000000000000000000a0000<strong>d0cf11e0a1b11ae1</strong>000000000000000000000000000000003e000300feff0900060000000000000000000000010000000100000000000000001000000200000001000000feffffff0000000000000000fffffffffffffffffffffffffffffffffffffff</p>
+<p>上面数据流中加粗字符前面的是OLE对象的头部，各字段解析内容如下：</p>
+<table>
+<thead>
+<tr>
+<th>数据</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>01050000</td>
+<td>OLE Version</td>
+</tr>
+<tr>
+<td>02000000</td>
+<td>Format ID</td>
+</tr>
+<tr>
+<td>09000000</td>
+<td>ProgName Size（0x09）</td>
+</tr>
+<tr>
+<td>4f4c45324c696e6b00</td>
+<td>ProgName (OLE2Link)</td>
+</tr>
+<tr>
+<td>000a0000</td>
+<td>Data Size</td>
+</tr>
+</tbody></table>
+<p><strong>d0cf11e0a1b11ae1</strong>后面的数据就是ObjectStream的内容了，解析的时候需要将ascii<br>转换成hex才可以识别。</p>
+<p><a target="_blank" rel="noopener" href="https://p5.ssl.qhimg.com/t010c9498feba4bd05d.png"><img src="https://p5.ssl.qhimg.com/t010c9498feba4bd05d.png" alt="img"></a></p>
+<h3 id="部分office文档混淆免杀技术"><a href="#部分office文档混淆免杀技术" class="headerlink" title="部分office文档混淆免杀技术"></a>部分office文档混淆免杀技术</h3><p><strong>RTF文档格式混淆</strong></p>
+<p><strong>文件头混淆</strong></p>
+<p>Rtf文档正常的文件头是**{rtf1**，但解析器只识别前四个字节{rt}，所以可以通过修改文件头达到样本混淆的效果。</p>
+<p>{rt</p>
  
       <!-- reward -->
       
@@ -178,7 +390,7 @@
     <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://example.com/2022/04/26/20220426-%E7%A7%8B%E7%91%BE/" alt="微信分享二维码">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://example.com/2022/04/26/20220426-office%E6%96%87%E6%A1%A3%E7%BB%93%E6%9E%84%E8%A7%A3%E6%9E%90/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -189,19 +401,10 @@
    
   <nav class="article-nav">
     
-      <a href="/2022/04/26/20220426-office%E6%96%87%E6%A1%A3%E7%BB%93%E6%9E%84%E8%A7%A3%E6%9E%90/" class="article-nav-link">
-        <strong class="article-nav-caption">上一篇</strong>
-        <div class="article-nav-title">
-          
-            office文档结构解析
-          
-        </div>
-      </a>
     
-    
-      <a href="/2022/04/25/20220425-%E4%B9%90%E9%AB%98/" class="article-nav-link">
+      <a href="/2022/04/26/20220426-%E7%A7%8B%E7%91%BE/" class="article-nav-link">
         <strong class="article-nav-caption">下一篇</strong>
-        <div class="article-nav-title">乐高</div>
+        <div class="article-nav-title">秋瑾</div>
       </a>
     
   </nav>
