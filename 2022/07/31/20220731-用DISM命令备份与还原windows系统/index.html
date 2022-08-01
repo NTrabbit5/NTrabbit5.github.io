@@ -11,7 +11,7 @@
         name="viewport"
         content="width=device-width, initial-scale=1, maximum-scale=1"
       />
-      <title>20220716-ranger插件 |  TeX_baitu blog</title>
+      <title>20220731-用DISM命令备份与还原windows系统 |  TeX_baitu blog</title>
   <meta name="generator" content="hexo-theme-ayer">
       
       <link rel="shortcut icon" href="/favicon.ico" />
@@ -53,7 +53,7 @@
     <main class="content on">
       <section class="outer">
   <article
-  id="post-20220716-ranger插件"
+  id="post-20220731-用DISM命令备份与还原windows系统"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -64,7 +64,7 @@
     <header class="article-header">
        
 <h1 class="article-title sea-center" style="border-left:0" itemprop="name">
-  20220716-ranger插件
+  20220731-用DISM命令备份与还原windows系统
 </h1>
  
 
@@ -72,15 +72,15 @@
     </header>
      
     <div class="article-meta">
-      <a href="/2022/07/16/20220716-ranger%E6%8F%92%E4%BB%B6/" class="article-date">
-  <time datetime="2022-07-16T07:13:42.000Z" itemprop="datePublished">2022-07-16</time>
+      <a href="/2022/07/31/20220731-%E7%94%A8DISM%E5%91%BD%E4%BB%A4%E5%A4%87%E4%BB%BD%E4%B8%8E%E8%BF%98%E5%8E%9Fwindows%E7%B3%BB%E7%BB%9F/" class="article-date">
+  <time datetime="2022-07-31T09:25:34.000Z" itemprop="datePublished">2022-07-31</time>
 </a>   
 <div class="word_count">
     <span class="post-time">
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> 字数统计:</span>
-            <span class="post-count">2.5k</span>
+            <span class="post-count">3.2k</span>
         </span>
     </span>
 
@@ -89,7 +89,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> 阅读时长≈</span>
-            <span class="post-count">9 分钟</span>
+            <span class="post-count">12 分钟</span>
         </span>
     </span>
 </div>
@@ -102,55 +102,100 @@
   
     <div class="article-entry" itemprop="articleBody">
        
-  <p>http%3A&#x2F;&#x2F;ranger.github.io&#x2F;</p>
-<p>ranger 是一个终端文件管理器，通过ranger 可以实现和windows 中类似的资源管理器的展示功能</p>
-<p>ranger 分为三个部分</p>
-<p>左边为上级目录结构</p>
-<p>中间为当前可以操作的目录</p>
-<p>右边为当前目录下面所有的文件</p>
-<p>最底端的状态栏显示的是当前选中文件的一些文件信息，比如执行权限和上次修改的时间</p>
-<p>安装 sudo apt-get install ranger</p>
-<p>进入之后就可以使用 vim 的相关命令了，比如 hjkl 上下左右的操作 、:q 推出 等。</p>
-<p>常用命令组合</p>
-<p>除了最基本的 vim 操作的常用快捷键不在进行介绍之后，以下为常用的快捷键介绍。</p>
-<p>S 使用终端定位到当前所在目录<br>H 后退<br>cw 重命名</p>
-<p>on&#x2F;ob 根据文件名进行排序，<br>oc 根据改变时间进行排序<br>os 根据文件大小进行排序<br>ot 根据后缀名进行排序<br>oa 根据访问时间进行排序<br>om 根据修改进行排序</p>
-<p>utf-8 支持</p>
-<p>多栏显示<br>所选文件 目录的预览</p>
-<p>常用文件操作票</p>
-<p>类似vim 的控制台和热键</p>
-<p>一次重命名多个文件<br>自动确定文件类型并使用正确的程序运行它们<br>退出 ranger 后更改 shell 目录<br>标签、书签、鼠标支持<br>真彩色图像预览 [如何启用]<br>视频缩略图 [如何启用]<br>依赖项<br>Python（测试版本为 2.7、3.1、3.2、3.3、3.4），支持 ncurses 和（可选）宽 unicode。<br>寻呼机（默认为less ）<br>可选的：</p>
-<p>用于确定文件类型的文件<br>python 模块chardet，以防编码检测问题<br>“sudo”以使用“以 root 身份运行”功能<br>w3m用于以“真彩色”预览图像。<br>可选，用于增强文件预览（使用“scope.sh”）：</p>
-<p>img2txt（来自caca-utils）用于预览ASCII-art中的图像<br>highlight用于代码的语法高亮<br>用于预览档案的工具<br>lynx、w3m或elinks用于预览 html 页面<br>pdftotext 用于 pdf 预览<br>传输显示查看比特种子信息<br>mediainfo或 exiftool 用于查看有关媒体文件的信息</p>
-<p>ranger wiki <a target="_blank" rel="noopener" href="https://github.com/ranger/ranger/wiki">https://github.com/ranger/ranger/wiki</a></p>
-<p>配置文件<br>将默认配置文件复制到该文件~&#x2F;.config&#x2F;range<br>$ ranger –copy-config&#x3D;all<br>1<br>ranger 使用4个主要配置文件：<br>文件名 描述<br>commands.py 包含以Python编写的各种函数的实现，用于修改ranger’s行为<br>rc.conf 用于设置各种选项并将按键绑定到功能<br>rifle.conf  决定使用哪个程序打开哪个文件<br>scope.sh  是一个shell脚本，用于生成各种文件类型的预览<br>宏指令<br>宏指令可以用在 command 命令中达到缩写命令的目的。</p>
-<p>宏指令 功能<br>%f  高亮显示的文件<br>%d  当前文件夹的路径<br>%s  当前文件夹选择的文件<br>%t  当前文件夹所有标记的文件<br>%c  当前复制&#x2F;剪切文件的完整路径<br>%p  选择文件的完整路径<br>宏指令 %f、%d、%p 和 %s 有大写的变体，%F、%D、%P 和 %S，指下一个标记。为了表示一个特定的标记，可以在 % 和 字母 中间加一个数字，比如 %7s 指当前文件夹中第七个所选择的文件。<br>  %c 是唯一一个作用于当前文件夹以外的宏指令，所以你可以通过复制功能达到其他的目的。比如比较在两个在不同文件夹里的文件的不同：复制文件 A（键入 yy），然后切换到文件 B 的目录，并标记文件 B（键入 SPACE），最后键入 @，输入 shell: diff %c %s。对于文件路径的宏命令（%d、%c 和 %p）通常是转义了的，所以可以直接在 shell command 命令中使用。<br>  此外，如果你创建了使用 Key 的按键绑定，那么宏命令 %Key（或者 %Key0、%Key1、……)在 shell command 中就代表按下 Key 键几次。</p>
-<p>文件选择<br>标记&#x2F;取消标记：space<br>反选：v<br>视觉模式开启&#x2F;关闭：V，在视觉模式下，移动光标即可选择条目。也可以按 uV或者 ESC 退出。<br>取消当前目录的全部标记：uv</p>
-<p>黄色的 Mrk 符号位于终端右下角，表示此文件夹里有标记的文件。黄色的 Mrk 并不会因为切换目录而消失。</p>
-<p>文件操作<br>复制：yy<br>剪切：dd<br>粘贴：pp<br>删除：dD</p>
-<p>将不同目录的文件加入操作列表：ya<br>重命名：cw<br>在当前名称基础上重命名：A<br>类似A, 但是光标会跳到起始位置：I<br>向下翻一页：Ctrl+f或PAGEDOWN<br>向上翻一页：Ctrl+b或PAGEUP<br>向上翻半页：Ctrl+u或者K<br>向下翻半页：Ctrl+d或者 J<br>后退到上一个历史记录：H<br>前进到下一个历史记录：L</p>
-<p>目录跳转<br>父目录上移：[<br>父目录下移：]<br>如果当前选中高亮的是是链接目录，直接跳到原目录内：g L<br>如果当前目录是链接目录内，直接跳到原目录：g l<br>跳转目录：g+其他</p>
-<p>查看与编辑文件<br>操作  说明<br>i 或者 F3 调用 Pager 查看文件 与在终端中输入 pager + 文件名 一样。<br>E 或者 F4 调用默认编辑器编辑文件 可在终端中输入 select-editor 选择默认编辑器。<br>书签<br>新建书签：m<br>打开书签：&#96;<br>删除书签：um</p>
-<p>标签<br>多标签即多窗口工作。可以在每个窗口来回切换。</p>
-<p>新建标签：</p>
-<p>g n<br>Ctrl+n<br>切换标签：</p>
-<p>g t或g T<br>Tab 或 Shift+Tab<br>Alt+标签名<br>关闭标签：g c 或 Ctrl+w</p>
-<p>链接<br>粘贴绝对路径的链接：pl<br>粘贴相对路径的链接：pL<br>硬链接：phl</p>
-<p>排序<br>排序：o</p>
-<p>名词  描述<br>atime access time，访问时间<br>basename  基于文件名<br>ctime change time，改变时间，文件的权限组别和文件自身数据被修改的时间<br>extension 扩展名<br>mtime modified time，修改时间<br>任务管理<br>在执行某些操作(比如复制一个大文件)时不能立即完成, 这在 ranger 中就是一个任务. 你可以停止, 启动某个任务, 也可以对某个任务设置优先级.</p>
-<p>打开&#x2F;关闭任务视图：w<br>在打开的任务视图中：<br>终止一个任务：dd<br>降低当前任务的优先级：J<br>提升当前任务的优先级：K<br>预览<br>默认情况下，只能预览文本文件，但是你可以通过设定配置 use_preview_script 和 preview_files 为 true 来增加可以预览的文件类型。默认的预览脚本是 ~&#x2F;.config&#x2F;ranger&#x2F;scope.sh，安装如下工具（每种类型只需要一个）就预览对应的文件类型，scope.sh 会自动调用它们：</p>
-<p>工具  预览文件类型  安装<br>lynx<br>elinks<br>w3m 网页  sudo apt install lynx<br>sudo apt install elinks<br>sudo apt install w3m<br>highlight<br>pygmentize  高亮代码  sudo apt install highlight<br>pip install pygmentize<br>img2txt 图片  sudo apt install caca-utils<br>atool<br>bsdtar<br>unrar<br>7z  压缩包 sudo apt install atool<br>sudo apt install libarchive-tools<br>sudo apt install unrar<br>sudo apt install p7zip<br>pdftotext<br>mutool  PDF sudo apt install poppler-utils<br>sudo apt install mupdf-tools<br>mediainfo<br>exiftool  媒体  sudo apt install mediainfo<br>sudo apt install libimage-exiftool-perl<br>ffmpegthumbnailer 视频缩略图 sudo apt install ffmpegthumbnailer<br>fontimage 字体  sudo apt install fontforge<br>transmission-show 种子  sudo apt install transmission-cli<br>独立于 preview script，有一个通过将图像用字符画的形式直接绘制到终端中的预览功能。要启用此功能，将 preview_images 选项设置为 true 并将 preview_images_method 选项设置为一种图像预览模式（需要安装这些工具）：</p>
-<p>预览模式  是否适用于 ssh 注意  设置 preview_images_method 为<br>w3m 否 与 tmux 不兼容（尽管它可以工作）。  w3m<br>iTerm2  是 iTerm2 编译时必须添加 image preview support 选项。  iterm2<br>urxvt 否 urxvt 编译时必须添加 pixbuf support 选项。此模式本质上是将图像暂时设置为终端背景，这样它将破坏以前设置的任何图像背景。  urxvt<br>urxvt-full  否 与 urxvt 相同，但使用整个终端窗口预览图片。 urxvt-full<br>获取帮助<br>按下?时获取帮助，再使用按键选择帮助类型：</p>
-<p>m: opens the man page for ranger（打开官方man手册）<br>k: opens a list of keybindings（打开按键绑定列表）<br>c: opens a list of available commands and descriptions（打开命令列表）<br>s: opens a list of settings and their current values（打开设置列表）<br>官方man手册网站：<a target="_blank" rel="noopener" href="https://ranger.github.io/ranger.1.html">https://ranger.github.io/ranger.1.html</a></p>
-<p>其他<br>查找：f<br>搜索：&#x2F;<br>修改设置：z<br>显示隐藏文件：zh<br>打开&#x2F;关闭文件预览功能：zp<br>打开目录预览功能：zP<br>过滤器(如过滤pdf文件, zf+pdf,回车)：zf<br>在当前目录打开终端：S<br>目录展平：:flag (level)<br>批量重命名：标记选中后，输入:bulkrename</p>
-<p>参考<br>官方用户指南<br><a target="_blank" rel="noopener" href="http://www.mikewootc.com/wiki/linux/usage/ranger_file_manager.html">http://www.mikewootc.com/wiki/linux/usage/ranger_file_manager.html</a><br>博客链接【推荐】<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/xkfz008/article/details/7339530">https://blog.csdn.net/xkfz008/article/details/7339530</a></p>
-<p>安装插件<br>ranger也有很多预览时用的插件 :</p>
-<p>sudo apt-get install caca-utils # img2txt 图片<br>sudo apt-get install highlight  # 代码高亮<br>sudo apt-get install atool　    # 存档预览<br>sudo apt-get install w3m        # html页面预览<br>sudo apt-get install mediainfo  # 多媒体文件预览<br>1<br>2<br>3<br>4<br>5<br>当然还有其他文件格式的预览</p>
-<p>sudo apt-get install catdoc     # doc预览<br>sudo apt-get install docx2txt   # docx预览<br>sudo apt-get install xlsx2csv   # xlsx预览<br>1<br>2<br>3<br>其他 :<br>zh&#x2F;退回键    显示隐藏文件</p>
-<p>zp        打开&#x2F;关闭文件预览功能<br>zP        打开目录预览功能<br>1<br>2<br>3<br>4<br>当然ranger也是直接支持终端的基本命令的, 比如可以直接使用cd.</p>
-<p>其次也支持其他方便操作的快捷方式. 如 : g可以快速的通过按键进入指定的目录中. 还有d等操作</p>
-<p>最后, ranger还是直接支持鼠标点击.</p>
-<p>参考 :<br>Ranger<br><a target="_blank" rel="noopener" href="http://www.mikewootc.com/wiki/linux/usage/ranger_file_manager.html">http://www.mikewootc.com/wiki/linux/usage/ranger_file_manager.html</a></p>
+  <p>用浅显易懂的语言全面详细的解说用DISM命令进行系统备份与还原</p>
+<p>用 DISM 命令进行系统备份与还原需要在 Windows 8 以上的第二系统（系统引导不能在需要备份的系统分区中）、Windows To Go、Windows PE 或 Windows RE 下才能进行，并以管理员身份运行命令提示符。</p>
+<p>注意：</p>
+<p>有的 PE 精简过分可能不能运行 DISM 命令。由于 DISM 命令不能进行系统热备份，所以在第二系统中进行备份时，如果当前系统的启动引导文件在需要进行备份的分区中，DISM 会显示“另一个程序正在使用此文件，进程无法访问。”</p>
+<p>另外，如果用 Windows 8 Ent 中自带功能制作的 Windows To Go，是不能对本地磁盘进行操作的，只能用其他方法制作的 Windows To Go 来进行操作。</p>
+<p>如果在 Windows 7 系统（包括 PE）中使用 DISM 命令可以把 Windows 8 系统 C:\Windows\System32 中的 Dism 文件夹与 Dism.exe 复制到 Windows 7 系统（包括 PE）的 C:\Windows\System32 下就可以使用 DISM 所有命令了。</p>
+<p>一、初始备份（例如：把 C 分区的系统备份到 D 分区的 Win8BF 文件夹中，备份文件名为 Win8Pro.wim）：</p>
+<p>Dism &#x2F;Capture-Image &#x2F;ImageFile:D:\Win8BF\Win8Pro.wim &#x2F;CaptureDir:C:\ &#x2F;Name:Win8Pro-1 &#x2F;Description:0000-00-00</p>
+<p>命令解释：</p>
+<p>&#x2F;Capture-Image - 指定捕获映像。</p>
+<p>&#x2F;ImageFile: - 指定映像文件路径。                </p>
+<p>&#x2F;CaptureDir: - 指定捕获目录。</p>
+<p>&#x2F;Name: - 指定名称。此项不能省略。</p>
+<p>&#x2F;Description: - 指定描述。描述是为了说明这次备份的具体情况，我们这里用了时间。此项可省略。</p>
+<p>注意：如果是在 Win8 系统中进行操作，备份时注意暂时关闭 Windows Defender，它要对整个备份文件进行扫描，其中 MsMpEng.exe 对 CPU 的占用有时高达 90% 以上，严重拖慢备份速度，有时甚至使备份时间延长十倍以上。</p>
+<p>二、增量备份（例如：把 C 分区的系统增量备份到 D:\Win8BF\Win8Pro.wim 中）：</p>
+<p>Dism &#x2F;Append-Image &#x2F;ImageFile:D:\Win8BF\Win8Pro.wim &#x2F;CaptureDir:C:\ &#x2F;Name:Win8Pro-2 &#x2F;Description:0000-00-00</p>
+<p>命令解释：</p>
+<p>&#x2F;Append-Image - 指定追加映像。</p>
+<p>Dism 允许各卷映像之间同名，但为了以后应用方便，各卷映像之间的名称最好不同。Dism 可以指定卷映像索引号或名称来对卷映像进行操作。索引号可能因删除某卷映像而发生改变，但名称是不会变的，如果各卷映像之间同名，用指定名称来对卷映像进行操作时就会出现问题。</p>
+<p>重要事项：</p>
+<p>确保有足够的磁盘空间可用于运行 &#x2F;Append-Image 选项。如果在附加映像期间磁盘空间不足，则可能会损坏 .wim 文件。</p>
+<p>三、系统还原（例如：把 D:\Win8BF\Win8Pro.wim 中第二次备份还原到 C 分区）：</p>
+<p>Dism &#x2F;Apply-Image &#x2F;ImageFile:D:\Win8BF\Win8Pro.wim &#x2F;Index:2 &#x2F;ApplyDir:C:\</p>
+<p>命令解释：</p>
+<p>&#x2F;Apply-Image - 指定应用映像。</p>
+<p>&#x2F;ApplyDir: - 指定应用目录。</p>
+<p>&#x2F;Index: - 指定索引。此项不能省略。</p>
+<p>因 Dism 安装 WIM 映像不会像 Ghost 那样格式化磁盘，所以如果需要可以自己格式化系统盘。   </p>
+<p>修改映像路径与应用目录可把任意一个系统备份的卷映像还原到任意一个分区。修改卷映像索引号或卷映像名称可以还原备份映像中的任意一个备份。</p>
+<p>也可以用此命令把 Windows 系统（WIM 映像）快速安装到任何分区。例如在 PE 中把 Win8Pro 安装到 C 分区（设 Win8ISO 用虚拟光驱加载的盘符为 E）：</p>
+<p>Dism &#x2F;Apply-Image &#x2F;ImageFile:E:\sources\install.wim &#x2F;Index:1 &#x2F;ApplyDir:C:\</p>
+<p>由于 Windows 系统原始 WIM 映像中没有启动引导文件，需要添加启动引导：</p>
+<p>bcdboot C:\windows &#x2F;s C: &#x2F;l zh-cn</p>
+<p>如果是把 Windows 8 安装到 USB 设备中作 Windows To Go，也应添加启动引导：</p>
+<p>bcdboot X:\windows &#x2F;s X: &#x2F;l zh-cn &#x2F;f ALL （X为 USB 设备的盘符）。</p>
+<p>添加 Net 3.5（包括 2.0 和 3.0）：</p>
+<p>Dism &#x2F;Image:C:\ &#x2F;enable-feature &#x2F;featurename:NetFX3 &#x2F;Source:E:\sources\sxs</p>
+<p>四、获取WIM文件映像信息（例如：查看 D:\Win8BF\Win8Pro.wim 映像信息）：</p>
+<p>Dism &#x2F;Get-WimInfo &#x2F;Wimfile:D:\Win8BF\Win8Pro.wim</p>
+<p>命令解释：</p>
+<p>&#x2F;Get-WimInfo - 显示有关 WIM 文件中的映像的信息。</p>
+<p>&#x2F;Wimfile: - 指定 WIM 文件路径。<br>可以在后面添加索引号或名称来查看某次备份的详细信息。还可以在后面添加 &gt;d:\list.txt 把信息导出为记事本，方便查看。如：</p>
+<p>Dism &#x2F;Get-WimInfo &#x2F;Wimfile:D:\Win8BF\Win8Pro.wim &#x2F;Index:1&gt; d:\list.txt</p>
+<p>或：Dism &#x2F;Get-WimInfo &#x2F;Wimfile:D:\Win8BF\Win8Pro.wim &#x2F;Name:Win8Pro-1&gt; d:\list.txt</p>
+<p>在一个映像中如果有两个卷映像同名，就不能用指定名称来查看这两个卷映像的详细信息。</p>
+<p>五、从具有多个卷映像的WIM 文件中删除指定的卷映像（例如：删除 D:\Win8BF\Win8.wim 中的第二次备份）：<br>Dism &#x2F;Delete-Image &#x2F;ImageFile:D:\Win8BF\Win8Pro.wim &#x2F;Index:2</p>
+<p>命令解释：</p>
+<p>&#x2F;Delete-Image - 指定删除映像。</p>
+<p>此命令仅删除卷映像名称与描述，而不会删除卷映像数据。可用于防止误应用该卷映像。</p>
+<p>六、从具有多个卷映像的WIM 文件中提取单独的卷映像：</p>
+<p>增量备份多了，WIM 文件也变得大起来了，删除指定的卷映像仅删除了名称与描述，而不会删除卷映像数据，所以不会减小 WIM 文件的体积。这就要用 &#x2F;Export-Image 命令从具有多个卷映像的 WIM 文件中提取需要保留的单独卷映像，以减小 WIM 文件的体积。（例如：从 D:\Win8BF\Win8Pro.wim 中提取第二次备份到 D:\Win8BF\ 中，保存为 Win8Pro-2.wim）：</p>
+<p>Dism &#x2F;Export-Image &#x2F;SourceImageFile:D:\Win8BF\Win8Pro.wim &#x2F;SourceIndex:2 &#x2F;DestinationImageFile:D:\Win8BF\Win8Pro-2.wim   </p>
+<p>命令解释：</p>
+<p>&#x2F;Export-Image - 指定导出映像。</p>
+<p>&#x2F;SourceImageFile: - 指定映像文件来源路径。</p>
+<p>&#x2F;SourceIndex: - 指定来源索引。</p>
+<p>&#x2F;DestinationImageFile: - 指定目标映像文件路径。</p>
+<p>如果 Win8Pro.wim 中有五个备份，我们只想保留其中第二与第五个备份，同样可以用 &#x2F;Export-Image 命令把其中 Index:2 与 Index:5 提取出来，保存为 Win8.wim。命令如下：</p>
+<p>Dism &#x2F;Export-Image &#x2F;SourceImageFile:D:\Win8BF\Win8Pro.wim &#x2F;SourceIndex:2 &#x2F;DestinationImageFile:D:\Win8BF\Win8.wim<br>Dism &#x2F;Export-Image &#x2F;SourceImageFile:D:\Win8BF\Win8Pro.wim &#x2F;SourceIndex:5 &#x2F;DestinationImageFile:D:\Win8BF\Win8.wim   </p>
+<p>Win8.wim 中就包涵有两个卷映像，卷映像的索引号会发生改变，但名称不会变。</p>
+<p>&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</p>
+<p>附录1：一些可用选项</p>
+<p>&#x2F;Verify - 指定校验。用于检查错误和文件重复。</p>
+<p>&#x2F;CheckIntegrity - 用于在捕捉、卸载、导出和提交操作中使用 .wim 文件时检测和跟踪 .wim 文件的损坏情况。</p>
+<p>用于在 DISM 检测到 .wim 文件在应用和装载操作中发生损坏时停止操作。</p>
+<p>&#x2F;ScratchDir: - 指定暂存目录的路径。此目录必须存在。该目录必须位于本地。</p>
+<p>&#x2F;Compress: - 用于指定对初始捕捉操作使用的压缩类型。</p>
+<p>maximum 选项能提供最佳压缩效果，但是捕捉映像所用的时间较长。</p>
+<p>fast 选项能提供更快速的映像压缩，但生成的文件比使用 maximum 选项压缩的文件大。这也是在未指定参数时所用的默认压缩类型。</p>
+<p>none 选项不会压缩捕捉的映像。</p>
+<p>recovery 选项导出一键重置映像。生成的文件显著缩小，这又大大减少了在恢复驱动器上保存一键重置映像所需的磁盘空间量。必须使用 .esd 扩展名指定目标文件。</p>
+<p>&#x2F;ConfigFile: - 指定映像捕捉和压缩命令排除列表配置文件的位置。</p>
+<p>默认的排除列表——默认情况下，DISM.exe 工具将排除以下文件：   </p>
+<p>[ExclusionList]<br>$ntfs.log<br>\hiberfil.sys<br>\pagefile.sys<br>\swapfile.sys<br>“\System Volume Information”<br>\RECYCLER<br>\Windows\CSC</p>
+<p>[CompressionExclusionList]<br>*.mp3<br>*.zip<br>*.cab<br>\WINDOWS\inf*.pnf<br>&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;<br>附录2： &#x2F;ScratchDir 命令具体使用方法</p>
+<p>创建或处理 Windows 映像时，你应使用带有 DISM 的 &#x2F;ScratchDir 选项，在不同的驱动器上创建临时目录。临时目录适用于许多 DISM 操作，包括捕获映像、安装语言包、更新或在 Windows 映像中安装或删除 Windows 功能。先将一些文件扩展到此临时目录，然后再将它们应用于 Windows 映像。</p>
+<p>&#x2F;ScratchDir: - 指定暂存目录的路径。</p>
+<p>指定用来解压缩服务文件的临时目录。此目录必须存在。</p>
+<p>指定在服务期间提取临时使用的文件时要使用的临时目录。该目录必须位于本地。<br>安装完成后，不再需要此目录的内容，可以将其删除。</p>
+<p>如果你不使用 &#x2F;ScratchDir 选项设置临时目录路径， Windows PE 将默认创建 32-MB 临时目录。</p>
+<p>如果未指定临时目录，将使用 \Windows%Temp% 目录，以及每次运行 DISM 时随机生成的十六进制值的子目录名称。每次操作后，都会删除暂存目录中的项。</p>
+<p>作为最佳做法，你应使用 &#x2F;ScratchDir 选项，转而在其他有足够空间支持任何映像管理和你所执行的服务操作的分区上指定目录。</p>
+<p>运行 DISM 命令临时目录空间不足的问题多出现在 PE 操作的情况下，下面是备份及还原命令中 &#x2F;ScratchDir 具体使用的完整命令。</p>
+<p>以初始备份为例（例如：把 C 分区的系统备份到 D 分区的 Win8BF 文件夹中，备份文件名为 Win8Pro.wim，指定临时目录为 D:\Temp）：</p>
+<p>Dism &#x2F;Capture-Image &#x2F;ImageFile:D:\Win8BF\Win8Pro.wim &#x2F;ScratchDir:D:\Temp &#x2F;CaptureDir:C:\ &#x2F;Name:Win8Pro-1 &#x2F;Description:0000-00-00</p>
+<p>注意：必须先在 D 盘建立一个 Temp 文件夹,D 盘必须有充足的可用空间。</p>
+<p>以还原为例（例如：把 D:\Win8BF\Win8Pro.wim 中第二次备份还原到 C 分区，指定临时目录为 D:\Temp）：</p>
+<p>Dism &#x2F;Apply-Image &#x2F;ImageFile:D:\Win8BF\Win8Pro.wim &#x2F;Index:2 &#x2F;ScratchDir:D:\Temp &#x2F;ApplyDir:C:\</p>
+<p>wbadmin<br>项目<br>2022&#x2F;04&#x2F;02<br>7 个参与者</p>
+<p>使你能够从命令提示符备份和还原操作系统、卷、文件、文件夹和应用程序。</p>
+<p>若要使用此命令配置定期计划的备份，您必须是 Administrators 组的成员。 若要使用此命令执行所有其他任务，您必须是 Backup Operators 组或 Administrators 组的成员，或者您必须被委派了适当的权限。</p>
+<p>必须从提升的命令提示符运行 wbadmin ，方法是右键单击 “ 命令提示符”，然后选择 “以 管理员身份运行”。</p>
+<p>参数<br>参数  说明<br>wbadmin delete catalog  删除本地计算机上的备份目录。 仅当此计算机上的备份目录已损坏，并且你没有将备份存储在可用于还原目录的其他位置时，才使用此命令。<br>wbadmin delete systemstatebackup  删除一个或多个系统状态备份。<br>wbadmin disable backup  禁用日常备份。<br>wbadmin enable backup 配置并启用定期计划的备份。<br>wbadmin get disks 列出当前处于联机状态的磁盘。<br>wbadmin get items 列出备份中包含的项。<br>wbadmin get status  显示当前正在运行的备份或恢复操作的状态。<br>wbadmin get versions  列出从本地计算机恢复的备份的详细信息，或者，如果指定了其他位置，则从另一台计算机。<br>wbadmin restore catalog 在本地计算机上的备份目录已损坏的情况下，从指定的存储位置恢复备份目录。<br>wbadmin start backup  运行一次性备份。 如果与不带参数一起使用，则将使用每日备份计划的设置。<br>wbadmin start recovery  运行指定的卷、应用程序、文件或文件夹的恢复。<br>wbadmin start sysrecovery 运行完整系统的恢复 (至少包含操作系统状态) 的所有卷。 仅当使用 Windows 恢复环境时，此命令才可用。<br>wbadmin start systemstatebackup 运行系统状态备份。<br>wbadmin start systemstaterecovery 运行系统状态恢复。<br>wbadmin stop job  停止当前正在运行的备份或恢复操作。</p>
  
       <!-- reward -->
       
@@ -221,32 +266,30 @@
     <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://example.com/2022/07/16/20220716-ranger%E6%8F%92%E4%BB%B6/" alt="微信分享二维码">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://example.com/2022/07/31/20220731-%E7%94%A8DISM%E5%91%BD%E4%BB%A4%E5%A4%87%E4%BB%BD%E4%B8%8E%E8%BF%98%E5%8E%9Fwindows%E7%B3%BB%E7%BB%9F/" alt="微信分享二维码">
     </div>
 </div>
 
 <div id="share-mask"></div>  
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/" rel="tag">linux</a></li></ul>
-
     </footer>
   </div>
 
    
   <nav class="article-nav">
     
-      <a href="/2022/07/22/20220722-PowerShell%E7%AE%A1%E9%81%93%E4%BD%BF%E7%94%A8/" class="article-nav-link">
+      <a href="/2022/08/01/20220801-epub%E7%94%B5%E5%AD%90%E4%B9%A6%E5%88%B6%E4%BD%9C/" class="article-nav-link">
         <strong class="article-nav-caption">上一篇</strong>
         <div class="article-nav-title">
           
-            20220722-PowerShell管道使用
+            20220801-epub电子书制作
           
         </div>
       </a>
     
     
-      <a href="/2022/07/13/20220713-%E7%94%B5%E5%AD%90%E4%B9%A6%E7%AE%A1%E7%90%86%E5%B7%A5%E4%BD%9C%E6%B5%81/" class="article-nav-link">
+      <a href="/2022/07/26/20220726-%E6%81%8B%E7%88%B1%E6%97%B6%E7%9A%84%E8%81%8A%E5%A4%A9%E8%AF%9D%E9%A2%98/" class="article-nav-link">
         <strong class="article-nav-caption">下一篇</strong>
-        <div class="article-nav-title">20220713-电子书管理工作流</div>
+        <div class="article-nav-title">20220726-恋爱时的聊天话题</div>
       </a>
     
   </nav>
