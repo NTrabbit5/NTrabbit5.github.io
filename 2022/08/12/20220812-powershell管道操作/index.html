@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-CN">
+  
+
+    <head>
+      <meta charset="utf-8" />
+        
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1"
+      />
+      <title>20220812-powershell管道操作 |  TeX_baitu blog</title>
+  <meta name="generator" content="hexo-theme-ayer">
+      
+      <link rel="shortcut icon" href="/favicon.ico" />
+       
+<link rel="stylesheet" href="/dist/main.css">
+
+      
+<link rel="stylesheet" href="/css/fonts/remixicon.css">
+
+      
+<link rel="stylesheet" href="/css/custom.css">
+ 
+      <script src="https://cdn.staticfile.org/pace/1.2.4/pace.min.js"></script>
+       
+ 
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma@5.0.1/bulma.min.css"
+      />
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+
+      <!-- mermaid -->
+      
+      <style>
+        .swal2-styled.swal2-confirm {
+          font-size: 1.6rem;
+        }
+      </style>
+    </head>
+  </html>
+</html>
+
+
+<body>
+  <div id="app">
+    
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-20220812-powershell管道操作"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  20220812-powershell管道操作
+</h1>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/08/12/20220812-powershell%E7%AE%A1%E9%81%93%E6%93%8D%E4%BD%9C/" class="article-date">
+  <time datetime="2022-08-12T01:22:56.000Z" itemprop="datePublished">2022-08-12</time>
+</a>   
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">1.5k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">6 分钟</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+    <div class="tocbot"></div>
+
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>无论是在Linux中写Bash脚本还是在Window上写PowerShell，管道符”|“是一个非常有用的工具。它提供了将前一个命令的输出作为下一个命令的输入的功能。在数据处理中，我们也可以使用管道符对数据进行各种操作。</p>
+<h2 id="Import-amp-Export导入导出"><a href="#Import-amp-Export导入导出" class="headerlink" title="Import&amp;Export导入导出"></a>Import&amp;Export导入导出</h2><p>先说导入导出是为了能够为接下来的数据处理准备数据。在PowerShell中我们也可以通过各种Get-XXX命令获得各种各样需要的数据，但是并不是所有操作系统和各个版本的PowerShell都支持某个命令的。比如Get-Volume命令，用于获得每个磁盘的信息，但是这个命令不能在Win7下运行，只能在Win8或Win2012Server下运行。</p>
+<p>最常见，最简单的外部数据源就是CSV文件了。我们可以使用Export-Csv命令将PowerShell中的对象转换为CSV格式，持久化到磁盘上。比如我们将当前的所有进程信息导出为CSV文件，命令为：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">Get</span>-<span class="title class_">Process</span> | <span class="title class_">Export</span>-<span class="title class_">Csv</span> <span class="attr">C</span>:\test.<span class="property">csv</span> -<span class="title class_">Encoding</span> <span class="title class_">Unicode</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>（注意，如果是有中文内容建议设置Encoding为Unicode或者UTF8）</p>
+<p>Import-Csv命令是导入外部的CSV文件到内存。比较刚才导出的CSV文件，我们接下来要对这个文件进行处理。我们可以将文件的内容保存到变量$data中。命令为：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$data=<span class="title class_">Import</span>-<span class="title class_">Csv</span> <span class="attr">C</span>:\test.<span class="property">csv</span> -<span class="title class_">Encoding</span> <span class="title class_">Unicode</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>当然，我们也可以先进行类型转换，然后保存。命令为：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$data | <span class="title class_">ConvertTo</span>-<span class="title class_">Csv</span> | <span class="title class_">Out</span>-<span class="title class_">File</span> <span class="attr">C</span>:\test.<span class="property">csv</span> -<span class="title class_">Encoding</span> utf8</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="Sorting排序"><a href="#Sorting排序" class="headerlink" title="Sorting排序"></a>Sorting排序</h2><p>前面我们已经将CSV的内容载入到$data变量中了，那么如果我们要按照某一个字段排序，可以使用Sort-Object命令。</p>
+<p>比如我们要Name这个字段排序，并输出排序后的结果，那么命令为：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$data | <span class="title class_">Sort</span>-<span class="title class_">Object</span> <span class="title class_">Name</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>也可以简写为：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$data | <span class="title class_">Sort</span> <span class="title class_">Name</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>如果是需要多个字段排序，那么可以将字段列在后面，字段之间用逗号隔开。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$data | <span class="title class_">Sort</span> <span class="title class_">Name</span>,<span class="title class_">Handles</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>如果是逆向排序，那么需要在字段后面加参数-Descending</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$data | <span class="title class_">Sort</span> <span class="title class_">Name</span> –<span class="title class_">Descending</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="Selecting选取"><a href="#Selecting选取" class="headerlink" title="Selecting选取"></a>Selecting选取</h2><p>选取相当于SQL中的SELECT命令。对应的PowerShell命令是Select-Object，可以简写为Select。该命令后面跟上要选取的列名即可。如果是要选取所有的列，也可以使用*表示。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$data | select <span class="title class_">Name</span>,<span class="variable constant_">VM</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>选取所有列，那么命令就是：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$data | select *</span><br></pre></td></tr></table></figure>
+
+
+
+<p>如果是只选取前面几条数据，那么可以使用-First参数。比如我们按Handles排序，只查看头10条进程记录的名字和Handles。命令为：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$data | sort <span class="title class_">Handles</span> | select <span class="title class_">Handles</span>,<span class="title class_">Name</span> -<span class="title class_">First</span> <span class="number">10</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>另外还有参数-Last选取的是最后几条记录，-Skip可以选择跳过一定记录。</p>
+<h2 id="Calculate计算列"><a href="#Calculate计算列" class="headerlink" title="Calculate计算列"></a>Calculate计算列</h2><p>在SELECT的时候，我们可以使用函数对其中的列进行运算，使用的语法是：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@&#123; </span><br><span class="line">  n=<span class="string">&#x27;New Column Name&#x27;</span>; </span><br><span class="line">  e=&#123; $_.<span class="property">xxxCalc</span> &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>其中的$_就是表示当前的记录。</p>
+<p>比如VM列记录的是以Byte为单位的数据，我们先新建一列名为”VM(MB)”,其值是换算成MB的结果，那么我们可以写为：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$data | select <span class="title class_">Name</span>,<span class="variable constant_">VM</span>,@&#123;n=<span class="string">&quot;VM(MB)&quot;</span>;e=&#123;$_.<span class="property">VM</span>/1MB&#125;&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="Measuring度量"><a href="#Measuring度量" class="headerlink" title="Measuring度量"></a>Measuring度量</h2><p>说度量可能有点不是很清晰，其实就是对应SQL中的聚合函数。比如 SUM, Max,Min之类的，需要使用Measure-Object命令。比如要查看有多少个程序，最小的Handles和最大的Handles，那么命令是：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$data | <span class="title class_">Measure</span>-<span class="title class_">Object</span> -<span class="title class_">Property</span> <span class="title class_">Handles</span> -<span class="title class_">Minimum</span> -<span class="title class_">Maximum</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>既然说到SQL中的聚合函数，那么自然就会想到另外一个关键字Group By。在PowerShell中也有对应的命令Group-Object。如果我们想要按进程的Name进行分组，查看每个进程名对应的VM总大小。那么我们可以先按Name进行Group：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$data | <span class="title class_">Group</span>-<span class="title class_">Object</span> <span class="title class_">Name</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>这时我们可以看到系统返回的结果有3列：Count,Name,Group。而我们要进行聚合的VM值是在Group中。这时需要用到前面提到的Select命令。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$data | <span class="title class_">Group</span>-<span class="title class_">Object</span> <span class="title class_">Name</span> | select <span class="title class_">Name</span>,<span class="title class_">Count</span>,@&#123;n=<span class="string">&quot;TotalVM&quot;</span>;e=&#123;($_.<span class="property">Group</span> | <span class="title class_">Measure</span>-<span class="title class_">Object</span> -<span class="title class_">Property</span> <span class="variable constant_">VM</span> -<span class="title class_">Sum</span>).<span class="property">Sum</span>&#125;&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="Filter过滤"><a href="#Filter过滤" class="headerlink" title="Filter过滤"></a>Filter过滤</h2><p>过滤相当于SLQ中的Where语句，在PowerShell中使用Where-Object命令。可以简写为Where，甚至可以简写为”?”。在普通程序里面我们遇到的比较运算和逻辑运算在PowerShell中有所不同，是这样的参数：</p>
+<table>
+<thead>
+<tr>
+<th align="left">Comparison</th>
+<th align="left">Case-InSensitive</th>
+<th align="left">Case-sensitive</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">Equality</td>
+<td align="left">-eq</td>
+<td align="left">-ceq</td>
+</tr>
+<tr>
+<td align="left">Inequality</td>
+<td align="left">-ne</td>
+<td align="left">-cne</td>
+</tr>
+<tr>
+<td align="left">Greater than</td>
+<td align="left">-gt</td>
+<td align="left">-cgt</td>
+</tr>
+<tr>
+<td align="left">Less than</td>
+<td align="left">-lt</td>
+<td align="left">-clt</td>
+</tr>
+<tr>
+<td align="left">Greater than or equal to</td>
+<td align="left">-ge</td>
+<td align="left">-cge</td>
+</tr>
+<tr>
+<td align="left">Less than or equal to</td>
+<td align="left">-le</td>
+<td align="left">-cle</td>
+</tr>
+<tr>
+<td align="left">Wildcard equality</td>
+<td align="left">-like</td>
+<td align="left">-clike</td>
+</tr>
+</tbody></table>
+<p>-and 和-or用于逻辑运算。</p>
+<p>仍然以前面load的$data为例，我们要查看以W开头的进程的Handles和Name，那么命令为：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$data | ?&#123; $_.<span class="property">Name</span> -like <span class="string">&#x27;W*&#x27;</span>&#125;| select <span class="title class_">Handles</span>,<span class="title class_">Name</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>如果是多个条件，既要以w开头，还要VM大于100M的进程，那么命令为：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$data | ?&#123; $_.<span class="property">Name</span> -like <span class="string">&#x27;W*&#x27;</span> -and $_.<span class="property">VM</span> -gt 100MB&#125;| select <span class="title class_">Handles</span>,<span class="title class_">Name</span>,<span class="variable constant_">VM</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="Enumeration枚举"><a href="#Enumeration枚举" class="headerlink" title="Enumeration枚举"></a>Enumeration枚举</h2><p>枚举相当于C#中的Foreach函数，或者说是SQL中的游标，对于每一行数据，都进行一个运算或者函数处理。在PowerShell中对应的命令是ForEach-Object，可以简写为ForEach，还可以进一步简写为”%“。</p>
+<p>比如我们要将VM改为MB为单位，可以对每一行数据进行运算：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$data | % &#123;$_.<span class="property">VM</span>=$_.<span class="property">VM</span>/1MB&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>运行该命令后我们再查看$data就会发现VM列已经改变了。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$data | select <span class="title class_">Name</span>,<span class="variable constant_">VM</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>另外对于Foreach命令，还有两个比较有用的参数-Begin –End,用于在做For循环之前调用和循环结束后调用。</p>
+<p>比如我们想把某一列写入一个文件，我们可以在-Begin时创建文件，记录开始的时间，然后Foreach中Append内容到文件，最后把结束时间写入：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$data | % -<span class="title class_">Begin</span> &#123; <span class="title class_">Get</span>-<span class="title class_">Date</span> | <span class="title class_">Out</span>-<span class="title class_">File</span> <span class="attr">C</span>:\test.<span class="property">txt</span> &#125; -<span class="title class_">Process</span> &#123; $_.<span class="property">Name</span> | <span class="title class_">Out</span>-<span class="title class_">File</span> <span class="attr">C</span>:\test.<span class="property">txt</span> -<span class="title class_">Append</span>&#125; -<span class="title class_">End</span> &#123; <span class="title class_">Get</span>-<span class="title class_">Date</span> | <span class="title class_">Out</span>-<span class="title class_">File</span> <span class="attr">C</span>:\test.<span class="property">txt</span> -<span class="title class_">Append</span>&#125;</span><br></pre></td></tr></table></figure>
+
+
+ 
+      <!-- reward -->
+      
+      <div id="reword-out">
+        <div id="reward-btn">
+          打赏
+        </div>
+      </div>
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>版权声明： </strong>
+          
+          本博客所有文章除特别声明外，著作权归作者所有。转载请注明出处！
+          
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://example.com/2022/08/12/20220812-powershell%E7%AE%A1%E9%81%93%E6%93%8D%E4%BD%9C/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>  
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+    
+      <a href="/2022/08/08/20220808-PhotoShop%E6%8F%92%E4%BB%B6%E7%BC%96%E5%86%99/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">20220808-PhotoShop插件编写</div>
+      </a>
+    
+  </nav>
+
+  
+   
+    
+    <script src="https://cdn.staticfile.org/twikoo/1.4.18/twikoo.all.min.js"></script>
+    <div id="twikoo" class="twikoo"></div>
+    <script>
+        twikoo.init({
+            envId: ""
+        })
+    </script>
+ 
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2015-2022
+        <i class="ri-heart-fill heart_icon"></i> TeX_baitu
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+        
+        <span>
+  <span><i class="ri-user-3-fill"></i>访问人数:<span id="busuanzi_value_site_uv"></span></span>
+  <span class="division">|</span>
+  <span><i class="ri-eye-fill"></i>浏览次数:<span id="busuanzi_value_page_pv"></span></span>
+</span>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+        <script type="text/javascript" src='https://s9.cnzz.com/z_stat.php?id=1278069914&amp;web_id=1278069914'></script>
+        
+      </li>
+    </ul>
+  </div>
+</footer>    
+    </main>
+    <div class="float_btns">
+      <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+    </div>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/ayer-side.svg" alt="TeX_baitu blog"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags/%E6%97%85%E8%A1%8C/">旅行</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" target="_blank" rel="noopener" href="http://shenyu-vip.lofter.com">摄影</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/friends">友链</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/2019/about">关于我</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="搜索">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-3.6.0.min.js"></script>
+ 
+<script src="/js/lazyload.min.js"></script>
+
+<!-- Tocbot -->
+ 
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  tocbot.init({
+    tocSelector: ".tocbot",
+    contentSelector: ".article-entry",
+    headingSelector: "h1, h2, h3, h4, h5, h6",
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: "main",
+    positionFixedSelector: ".tocbot",
+    positionFixedClass: "is-position-fixed",
+    fixedSidebarOffset: "auto",
+  });
+</script>
+
+<script src="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.js"></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.css"
+/>
+<script src="https://cdn.staticfile.org/justifiedGallery/3.8.1/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+ <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/default-skin/default-skin.min.css">
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script> 
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+ 
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+ 
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+<!-- CodeCopy -->
+ 
+<link rel="stylesheet" href="/css/clipboard.css">
+ <script src="https://cdn.staticfile.org/clipboard.js/2.0.10/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+ 
+<!-- CanvasBackground -->
+
+<script>
+  if (window.mermaid) {
+    mermaid.initialize({ theme: "forest" });
+  }
+</script>
+
+
+    
+    
+
+  </div>
+</body>
+
+</html>

@@ -126,6 +126,240 @@
     
     
     <article
+  id="post-20220801-epub电子书制作"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/08/01/20220801-epub%E7%94%B5%E5%AD%90%E4%B9%A6%E5%88%B6%E4%BD%9C/"
+    >20220801-epub电子书制作</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/08/01/20220801-epub%E7%94%B5%E5%AD%90%E4%B9%A6%E5%88%B6%E4%BD%9C/" class="article-date">
+  <time datetime="2022-08-01T00:31:38.000Z" itemprop="datePublished">2022-08-01</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>软件 zigil</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-20220731-用DISM命令备份与还原windows系统"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/07/31/20220731-%E7%94%A8DISM%E5%91%BD%E4%BB%A4%E5%A4%87%E4%BB%BD%E4%B8%8E%E8%BF%98%E5%8E%9Fwindows%E7%B3%BB%E7%BB%9F/"
+    >20220731-用DISM命令备份与还原windows系统</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/07/31/20220731-%E7%94%A8DISM%E5%91%BD%E4%BB%A4%E5%A4%87%E4%BB%BD%E4%B8%8E%E8%BF%98%E5%8E%9Fwindows%E7%B3%BB%E7%BB%9F/" class="article-date">
+  <time datetime="2022-07-31T09:25:34.000Z" itemprop="datePublished">2022-07-31</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>用浅显易懂的语言全面详细的解说用DISM命令进行系统备份与还原</p>
+<p>用 DISM 命令进行系统备份与还原需要在 Windows 8 以上的第二系统（系统引导不能在需要备份的系统分区中）、Windows To Go、Windows PE 或 Windows RE 下才能进行，并以管理员身份运行命令提示符。</p>
+<p>注意：</p>
+<p>有的 PE 精简过分可能不能运行 DISM 命令。由于 DISM 命令不能进行系统热备份，所以在第二系统中进行备份时，如果当前系统的启动引导文件在需要进行备份的分区中，DISM 会显示“另一个程序正在使用此文件，进程无法访问。”</p>
+<p>另外，如果用 Windows 8 Ent 中自带功能制作的 Windows To Go，是不能对本地磁盘进行操作的，只能用其他方法制作的 Windows To Go 来进行操作。</p>
+<p>如果在 Windows 7 系统（包括 PE）中使用 DISM 命令可以把 Windows 8 系统 C:\Windows\System32 中的 Dism 文件夹与 Dism.exe 复制到 Windows 7 系统（包括 PE）的 C:\Windows\System32 下就可以使用 DISM 所有命令了。</p>
+<p>一、初始备份（例如：把 C 分区的系统备份到 D 分区的 Win8BF 文件夹中，备份文件名为 Win8Pro.wim）：</p>
+<p>Dism &#x2F;Capture-Image &#x2F;ImageFile:D:\Win8BF\Win8Pro.wim &#x2F;CaptureDir:C:\ &#x2F;Name:Win8Pro-1 &#x2F;Description:0000-00-00</p>
+<p>命令解释：</p>
+<p>&#x2F;Capture-Image - 指定捕获映像。</p>
+<p>&#x2F;ImageFile: - 指定映像文件路径。                </p>
+<p>&#x2F;CaptureDir: - 指定捕获目录。</p>
+<p>&#x2F;Name: - 指定名称。此项不能省略。</p>
+<p>&#x2F;Description: - 指定描述。描述是为了说明这次备份的具体情况，我们这里用了时间。此项可省略。</p>
+<p>注意：如果是在 Win8 系统中进行操作，备份时注意暂时关闭 Windows Defender，它要对整个备份文件进行扫描，其中 MsMpEng.exe 对 CPU 的占用有时高达 90% 以上，严重拖慢备份速度，有时甚至使备份时间延长十倍以上。</p>
+<p>二、增量备份（例如：把 C 分区的系统增量备份到 D:\Win8BF\Win8Pro.wim 中）：</p>
+<p>Dism &#x2F;Append-Image &#x2F;ImageFile:D:\Win8BF\Win8Pro.wim &#x2F;CaptureDir:C:\ &#x2F;Name:Win8Pro-2 &#x2F;Description:0000-00-00</p>
+<p>命令解释：</p>
+<p>&#x2F;Append-Image - 指定追加映像。</p>
+<p>Dism 允许各卷映像之间同名，但为了以后应用方便，各卷映像之间的名称最好不同。Dism 可以指定卷映像索引号或名称来对卷映像进行操作。索引号可能因删除某卷映像而发生改变，但名称是不会变的，如果各卷映像之间同名，用指定名称来对卷映像进行操作时就会出现问题。</p>
+<p>重要事项：</p>
+<p>确保有足够的磁盘空间可用于运行 &#x2F;Append-Image 选项。如果在附加映像期间磁盘空间不足，则可能会损坏 .wim 文件。</p>
+<p>三、系统还原（例如：把 D:\Win8BF\Win8Pro.wim 中第二次备份还原到 C 分区）：</p>
+<p>Dism &#x2F;Apply-Image &#x2F;ImageFile:D:\Win8BF\Win8Pro.wim &#x2F;Index:2 &#x2F;ApplyDir:C:\</p>
+<p>命令解释：</p>
+<p>&#x2F;Apply-Image - 指定应用映像。</p>
+<p>&#x2F;ApplyDir: - 指定应用目录。</p>
+<p>&#x2F;Index: - 指定索引。此项不能省略。</p>
+<p>因 Dism 安装 WIM 映像不会像 Ghost 那样格式化磁盘，所以如果需要可以自己格式化系统盘。   </p>
+<p>修改映像路径与应用目录可把任意一个系统备份的卷映像还原到任意一个分区。修改卷映像索引号或卷映像名称可以还原备份映像中的任意一个备份。</p>
+<p>也可以用此命令把 Windows 系统（WIM 映像）快速安装到任何分区。例如在 PE 中把 Win8Pro 安装到 C 分区（设 Win8ISO 用虚拟光驱加载的盘符为 E）：</p>
+<p>Dism &#x2F;Apply-Image &#x2F;ImageFile:E:\sources\install.wim &#x2F;Index:1 &#x2F;ApplyDir:C:\</p>
+<p>由于 Windows 系统原始 WIM 映像中没有启动引导文件，需要添加启动引导：</p>
+<p>bcdboot C:\windows &#x2F;s C: &#x2F;l zh-cn</p>
+<p>如果是把 Windows 8 安装到 USB 设备中作 Windows To Go，也应添加启动引导：</p>
+<p>bcdboot X:\windows &#x2F;s X: &#x2F;l zh-cn &#x2F;f ALL （X为 USB 设备的盘符）。</p>
+<p>添加 Net 3.5（包括 2.0 和 3.0）：</p>
+<p>Dism &#x2F;Image:C:\ &#x2F;enable-feature &#x2F;featurename:NetFX3 &#x2F;Source:E:\sources\sxs</p>
+<p>四、获取WIM文件映像信息（例如：查看 D:\Win8BF\Win8Pro.wim 映像信息）：</p>
+<p>Dism &#x2F;Get-WimInfo &#x2F;Wimfile:D:\Win8BF\Win8Pro.wim</p>
+<p>命令解释：</p>
+<p>&#x2F;Get-WimInfo - 显示有关 WIM 文件中的映像的信息。</p>
+<p>&#x2F;Wimfile: - 指定 WIM 文件路径。<br>可以在后面添加索引号或名称来查看某次备份的详细信息。还可以在后面添加 &gt;d:\list.txt 把信息导出为记事本，方便查看。如：</p>
+<p>Dism &#x2F;Get-WimInfo &#x2F;Wimfile:D:\Win8BF\Win8Pro.wim &#x2F;Index:1&gt; d:\list.txt</p>
+<p>或：Dism &#x2F;Get-WimInfo &#x2F;Wimfile:D:\Win8BF\Win8Pro.wim &#x2F;Name:Win8Pro-1&gt; d:\list.txt</p>
+<p>在一个映像中如果有两个卷映像同名，就不能用指定名称来查看这两个卷映像的详细信息。</p>
+<p>五、从具有多个卷映像的WIM 文件中删除指定的卷映像（例如：删除 D:\Win8BF\Win8.wim 中的第二次备份）：<br>Dism &#x2F;Delete-Image &#x2F;ImageFile:D:\Win8BF\Win8Pro.wim &#x2F;Index:2</p>
+<p>命令解释：</p>
+<p>&#x2F;Delete-Image - 指定删除映像。</p>
+<p>此命令仅删除卷映像名称与描述，而不会删除卷映像数据。可用于防止误应用该卷映像。</p>
+<p>六、从具有多个卷映像的WIM 文件中提取单独的卷映像：</p>
+<p>增量备份多了，WIM 文件也变得大起来了，删除指定的卷映像仅删除了名称与描述，而不会删除卷映像数据，所以不会减小 WIM 文件的体积。这就要用 &#x2F;Export-Image 命令从具有多个卷映像的 WIM 文件中提取需要保留的单独卷映像，以减小 WIM 文件的体积。（例如：从 D:\Win8BF\Win8Pro.wim 中提取第二次备份到 D:\Win8BF\ 中，保存为 Win8Pro-2.wim）：</p>
+<p>Dism &#x2F;Export-Image &#x2F;SourceImageFile:D:\Win8BF\Win8Pro.wim &#x2F;SourceIndex:2 &#x2F;DestinationImageFile:D:\Win8BF\Win8Pro-2.wim   </p>
+<p>命令解释：</p>
+<p>&#x2F;Export-Image - 指定导出映像。</p>
+<p>&#x2F;SourceImageFile: - 指定映像文件来源路径。</p>
+<p>&#x2F;SourceIndex: - 指定来源索引。</p>
+<p>&#x2F;DestinationImageFile: - 指定目标映像文件路径。</p>
+<p>如果 Win8Pro.wim 中有五个备份，我们只想保留其中第二与第五个备份，同样可以用 &#x2F;Export-Image 命令把其中 Index:2 与 Index:5 提取出来，保存为 Win8.wim。命令如下：</p>
+<p>Dism &#x2F;Export-Image &#x2F;SourceImageFile:D:\Win8BF\Win8Pro.wim &#x2F;SourceIndex:2 &#x2F;DestinationImageFile:D:\Win8BF\Win8.wim<br>Dism &#x2F;Export-Image &#x2F;SourceImageFile:D:\Win8BF\Win8Pro.wim &#x2F;SourceIndex:5 &#x2F;DestinationImageFile:D:\Win8BF\Win8.wim   </p>
+<p>Win8.wim 中就包涵有两个卷映像，卷映像的索引号会发生改变，但名称不会变。</p>
+<p>&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</p>
+<p>附录1：一些可用选项</p>
+<p>&#x2F;Verify - 指定校验。用于检查错误和文件重复。</p>
+<p>&#x2F;CheckIntegrity - 用于在捕捉、卸载、导出和提交操作中使用 .wim 文件时检测和跟踪 .wim 文件的损坏情况。</p>
+<p>用于在 DISM 检测到 .wim 文件在应用和装载操作中发生损坏时停止操作。</p>
+<p>&#x2F;ScratchDir: - 指定暂存目录的路径。此目录必须存在。该目录必须位于本地。</p>
+<p>&#x2F;Compress: - 用于指定对初始捕捉操作使用的压缩类型。</p>
+<p>maximum 选项能提供最佳压缩效果，但是捕捉映像所用的时间较长。</p>
+<p>fast 选项能提供更快速的映像压缩，但生成的文件比使用 maximum 选项压缩的文件大。这也是在未指定参数时所用的默认压缩类型。</p>
+<p>none 选项不会压缩捕捉的映像。</p>
+<p>recovery 选项导出一键重置映像。生成的文件显著缩小，这又大大减少了在恢复驱动器上保存一键重置映像所需的磁盘空间量。必须使用 .esd 扩展名指定目标文件。</p>
+<p>&#x2F;ConfigFile: - 指定映像捕捉和压缩命令排除列表配置文件的位置。</p>
+<p>默认的排除列表——默认情况下，DISM.exe 工具将排除以下文件：   </p>
+<p>[ExclusionList]<br>$ntfs.log<br>\hiberfil.sys<br>\pagefile.sys<br>\swapfile.sys<br>“\System Volume Information”<br>\RECYCLER<br>\Windows\CSC</p>
+<p>[CompressionExclusionList]<br>*.mp3<br>*.zip<br>*.cab<br>\WINDOWS\inf*.pnf<br>&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;<br>附录2： &#x2F;ScratchDir 命令具体使用方法</p>
+<p>创建或处理 Windows 映像时，你应使用带有 DISM 的 &#x2F;ScratchDir 选项，在不同的驱动器上创建临时目录。临时目录适用于许多 DISM 操作，包括捕获映像、安装语言包、更新或在 Windows 映像中安装或删除 Windows 功能。先将一些文件扩展到此临时目录，然后再将它们应用于 Windows 映像。</p>
+<p>&#x2F;ScratchDir: - 指定暂存目录的路径。</p>
+<p>指定用来解压缩服务文件的临时目录。此目录必须存在。</p>
+<p>指定在服务期间提取临时使用的文件时要使用的临时目录。该目录必须位于本地。<br>安装完成后，不再需要此目录的内容，可以将其删除。</p>
+<p>如果你不使用 &#x2F;ScratchDir 选项设置临时目录路径， Windows PE 将默认创建 32-MB 临时目录。</p>
+<p>如果未指定临时目录，将使用 \Windows%Temp% 目录，以及每次运行 DISM 时随机生成的十六进制值的子目录名称。每次操作后，都会删除暂存目录中的项。</p>
+<p>作为最佳做法，你应使用 &#x2F;ScratchDir 选项，转而在其他有足够空间支持任何映像管理和你所执行的服务操作的分区上指定目录。</p>
+<p>运行 DISM 命令临时目录空间不足的问题多出现在 PE 操作的情况下，下面是备份及还原命令中 &#x2F;ScratchDir 具体使用的完整命令。</p>
+<p>以初始备份为例（例如：把 C 分区的系统备份到 D 分区的 Win8BF 文件夹中，备份文件名为 Win8Pro.wim，指定临时目录为 D:\Temp）：</p>
+<p>Dism &#x2F;Capture-Image &#x2F;ImageFile:D:\Win8BF\Win8Pro.wim &#x2F;ScratchDir:D:\Temp &#x2F;CaptureDir:C:\ &#x2F;Name:Win8Pro-1 &#x2F;Description:0000-00-00</p>
+<p>注意：必须先在 D 盘建立一个 Temp 文件夹,D 盘必须有充足的可用空间。</p>
+<p>以还原为例（例如：把 D:\Win8BF\Win8Pro.wim 中第二次备份还原到 C 分区，指定临时目录为 D:\Temp）：</p>
+<p>Dism &#x2F;Apply-Image &#x2F;ImageFile:D:\Win8BF\Win8Pro.wim &#x2F;Index:2 &#x2F;ScratchDir:D:\Temp &#x2F;ApplyDir:C:\</p>
+<p>wbadmin<br>项目<br>2022&#x2F;04&#x2F;02<br>7 个参与者</p>
+<p>使你能够从命令提示符备份和还原操作系统、卷、文件、文件夹和应用程序。</p>
+<p>若要使用此命令配置定期计划的备份，您必须是 Administrators 组的成员。 若要使用此命令执行所有其他任务，您必须是 Backup Operators 组或 Administrators 组的成员，或者您必须被委派了适当的权限。</p>
+<p>必须从提升的命令提示符运行 wbadmin ，方法是右键单击 “ 命令提示符”，然后选择 “以 管理员身份运行”。</p>
+<p>参数<br>参数  说明<br>wbadmin delete catalog  删除本地计算机上的备份目录。 仅当此计算机上的备份目录已损坏，并且你没有将备份存储在可用于还原目录的其他位置时，才使用此命令。<br>wbadmin delete systemstatebackup  删除一个或多个系统状态备份。<br>wbadmin disable backup  禁用日常备份。<br>wbadmin enable backup 配置并启用定期计划的备份。<br>wbadmin get disks 列出当前处于联机状态的磁盘。<br>wbadmin get items 列出备份中包含的项。<br>wbadmin get status  显示当前正在运行的备份或恢复操作的状态。<br>wbadmin get versions  列出从本地计算机恢复的备份的详细信息，或者，如果指定了其他位置，则从另一台计算机。<br>wbadmin restore catalog 在本地计算机上的备份目录已损坏的情况下，从指定的存储位置恢复备份目录。<br>wbadmin start backup  运行一次性备份。 如果与不带参数一起使用，则将使用每日备份计划的设置。<br>wbadmin start recovery  运行指定的卷、应用程序、文件或文件夹的恢复。<br>wbadmin start sysrecovery 运行完整系统的恢复 (至少包含操作系统状态) 的所有卷。 仅当使用 Windows 恢复环境时，此命令才可用。<br>wbadmin start systemstatebackup 运行系统状态备份。<br>wbadmin start systemstaterecovery 运行系统状态恢复。<br>wbadmin stop job  停止当前正在运行的备份或恢复操作。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-20220726-恋爱时的聊天话题"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/07/26/20220726-%E6%81%8B%E7%88%B1%E6%97%B6%E7%9A%84%E8%81%8A%E5%A4%A9%E8%AF%9D%E9%A2%98/"
+    >20220726-恋爱时的聊天话题</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/07/26/20220726-%E6%81%8B%E7%88%B1%E6%97%B6%E7%9A%84%E8%81%8A%E5%A4%A9%E8%AF%9D%E9%A2%98/" class="article-date">
+  <time datetime="2022-07-25T23:26:44.000Z" itemprop="datePublished">2022-07-26</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>聊对近期某个电影的看法<br>聊新开的某家餐厅<br>聊有喜欢喝的饮料<br>聊一点点的奶茶<br>聊对人生的看法<br>聊有没有近期的规划<br>聊想实现的心愿<br>聊最想得到的东西<br>聊小时候的故事<br>聊同桌的她<br>聊那个讨厌的班主任<br>聊那个难忘的考试<br>聊家庭的构成<br>聊父母的和睦<br>聊父母的爱好<br>聊可爱的弟弟<br>聊那些柜子里不穿的衣服<br>聊多久打扫的房间<br>聊地板的颜色<br>聊洗衣服的分类<br>聊今天发生的趣事<br>聊那个给你买棒冰的闺蜜<br>聊最好的朋友<br>聊送出祝福的初恋<br>聊没看出来的化妆<br>聊夏天出来防晒的霜<br>聊带出来的帽子<br>聊装饰的项链<br>聊初次见面时的尴尬<br>聊没有表现好的那个谈话<br>聊没来得及说的漂亮的鞋子<br>聊这个包与你衣服很配<br>聊习惯的猫猫狗狗<br>聊种死的那盆肉肉<br>聊习惯的花<br>聊习惯的香味<br>聊大学怎么过来的<br>聊难忘的实习<br>聊实习的那个师父<br>聊一起实习的那些人<br>聊眼镜的度数<br>聊眼镜的起源<br>聊隐形眼镜<br>聊你们工资<br>聊你们的福利<br>聊公司组织出去旅游<br>聊有意义的福利发放经历<br>聊看的书<br>聊看的电视剧<br>聊当前的比赛<br>聊此刻的电影频道<br>聊最喜欢的节目</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-20220723-ADB命令大全"
   class="article article-type-post"
   itemscope
@@ -903,203 +1137,13 @@
 </article>
 
     
-    <article
-  id="post-20220512-工业软件"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/05/12/20220512-%E5%B7%A5%E4%B8%9A%E8%BD%AF%E4%BB%B6/"
-    >工业软件</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/05/12/20220512-%E5%B7%A5%E4%B8%9A%E8%BD%AF%E4%BB%B6/" class="article-date">
-  <time datetime="2022-05-12T13:49:03.000Z" itemprop="datePublished">2022-05-12</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p><a target="_blank" rel="noopener" href="https://www.bilibili.com/medialist/play/196986312?from=space&amp;business=space&amp;sort_field=play&amp;spm_id_from=333.999.0.0">https://www.bilibili.com/medialist/play/196986312?from=space&amp;business=space&amp;sort_field=play&amp;spm_id_from=333.999.0.0</a></p>
-<p>[TOC]</p>
-<h2 id="0x01"><a href="#0x01" class="headerlink" title="0x01"></a>0x01</h2><h2 id="0x02"><a href="#0x02" class="headerlink" title="0x02"></a>0x02</h2><h2 id="0x03"><a href="#0x03" class="headerlink" title="0x03"></a>0x03</h2><h2 id="0x04"><a href="#0x04" class="headerlink" title="0x04"></a>0x04</h2> 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20220512-chorme插件安装"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/05/12/20220512-chorme%E6%8F%92%E4%BB%B6%E5%AE%89%E8%A3%85/"
-    >chorme插件安装</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/05/12/20220512-chorme%E6%8F%92%E4%BB%B6%E5%AE%89%E8%A3%85/" class="article-date">
-  <time datetime="2022-05-12T13:29:10.000Z" itemprop="datePublished">2022-05-12</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>chrome一直是老Y使用的浏览器，它简洁、扩展插件丰富，用户体验应该是目前最好的浏览器了。</p>
-<p>但由于众所周知的原因，国内上不了google，所以虽然chrome插件丰富，但获取一直是一个比较麻烦的事情。</p>
-<p>目前国内也有许多网站，他们都是通过爬取谷歌官方插件提供给国内用户直接下载。</p>
-<p>今天老Y就总结了下5大网站，可以方便快捷的获取chrome的插件：</p>
-<ol>
-<li>gugeapps</li>
-</ol>
-<p><a target="_blank" rel="noopener" href="http://www.gugeapps.net/">http://www.gugeapps.net</a></p>
-<p>这个网站，老Y在以前的文章中推荐过，种类很全，更新快速，几乎就是谷歌商店的国内版。</p>
-<ol start="2">
-<li>扩展迷</li>
-</ol>
-<p><a target="_blank" rel="noopener" href="http://extfans.com/">http://extfans.com</a></p>
-<p>资源丰富，同时还提供了日榜单、周榜单、月榜单和总榜单等数据排行，帮助大家发现最新有趣的插件。另外，注意截图中红色部分，看我发现了什么？</p>
-<ol start="3">
-<li>Chrome插件网</li>
-</ol>
-<p><a target="_blank" rel="noopener" href="http://chromecj.com/">http://chromecj.com</a></p>
-<p>更新速度非常快，而且还提供了许多非常有用的教程文章，比如：五种百度云盘下载速度慢解决方法……</p>
-<ol start="4">
-<li>插件网</li>
-</ol>
-<p><a target="_blank" rel="noopener" href="http://www.cnplugins.com/">http://www.cnplugins.com</a></p>
-<p>老牌的chrome插件搬运网站，提供了插件分类、插件推荐、插件百科、插件排行等四大板块，里面也有许多非常有意思的总结性文章，比如：chrome比价插件哪个更好用？亲自测试使用总结 Chrome插件。</p>
-<ol start="5">
-<li>我爱chrome插件网</li>
-</ol>
-<p>有是一个非常棒的chrome插件下载网站，提供64位离线版下载服务，直接点击即可下载！</p>
-<p>另外，老Y将自己收集了多年的网站（大概有几千个），如下图所示做成了书签。下载地址：</p>
-<p><a target="_blank" rel="noopener" href="https://ilaoygzs.lanzoux.com/iznOcirahkh">https://ilaoygzs.lanzoux.com/iznOcirahkh</a> 密码:eri3</p>
-<h2 id="插件安装方法"><a href="#插件安装方法" class="headerlink" title="插件安装方法"></a>插件安装方法</h2><p>后缀改为zip 解压</p>
-<p>之后加载即可</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20220509-《有人》"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/05/09/20220509-%E3%80%8A%E6%9C%89%E4%BA%BA%E3%80%8B/"
-    >《有人》</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/05/09/20220509-%E3%80%8A%E6%9C%89%E4%BA%BA%E3%80%8B/" class="article-date">
-  <time datetime="2022-05-09T10:37:18.000Z" itemprop="datePublished">2022-05-09</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>《有人》是由赵钶、武宇龙作词，赵钶作曲并演唱的一首歌曲，发行于2018年8月5日。</p>
-<p>填词：赵钶，武宇龙 </p>
-<p>编曲：赵钶 </p>
-<p>制作人：关天天</p>
-<p>有人浪迹江湖，有人寒窗苦读。</p>
-<p>有人阿谀奉承，有人早已麻木。</p>
-<p>有人嫌贫爱富，有人唯利是图。</p>
-<p>有人精打细算，有人满不在乎。</p>
-<p>他们，竖起了耳朵猜喜怒，咧开了笑脸躲城府。</p>
-<p>不过想在平凡世界里找宝物，才会哭着笑着装糊涂。</p>
-<p>有人家财万贯却还失声痛哭。</p>
-<p>有人身无分文却也活的舒服。</p>
-<p>有人入不敷出半杯酒便再无贪图。</p>
-<p>有人换了张脸企图脱颖而出。</p>
-<p>有人躲躲藏藏不想引人注目。</p>
-<p>有人狰狞面目却还装得衣冠楚楚。</p>
-<p>有人爱的盲目，有人有眼无珠。</p>
-<p>有人付之全部，有人一文不出。</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
   </article>
   
 
   
   <nav class="page-nav">
     
-    <a class="extend prev" rel="prev" href="/">上一页</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/3/">下一页</a>
+    <a class="extend prev" rel="prev" href="/">上一页</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/3/">下一页</a>
   </nav>
   
 </section>
