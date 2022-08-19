@@ -11,7 +11,7 @@
         name="viewport"
         content="width=device-width, initial-scale=1, maximum-scale=1"
       />
-      <title>归档: 2022/8 |  TeX_baitu blog</title>
+      <title>20220818-mutoolpdf简介 |  TeX_baitu blog</title>
   <meta name="generator" content="hexo-theme-ayer">
       
       <link rel="shortcut icon" href="/favicon.ico" />
@@ -52,246 +52,201 @@
       
     <main class="content on">
       <section class="outer">
-  
-  
-  <article class="articles">
+  <article
+  id="post-20220818-mutoolpdf简介"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
     
-    
-    <h1 class="page-type-title">2022/8</h1>
-    
-    
-  
-  
-  
-  
-  
-  
-  <div class="archives-wrap">
-    <div class="archive-year-wrap">
-      <a href="/archives/2022" class="archive-year">2022</a>
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  20220818-mutoolpdf简介
+</h1>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/08/18/20220818-mutoolpdf%E7%AE%80%E4%BB%8B/" class="article-date">
+  <time datetime="2022-08-18T04:18:36.000Z" itemprop="datePublished">2022-08-18</time>
+</a>   
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">826</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">3 分钟</span>
+        </span>
+    </span>
+</div>
+ 
     </div>
-    <div class="archives">
       
-      <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2022/08/18/20220818-mutoolpdf%E7%AE%80%E4%BB%8B/" class="archive-article-date">
-  <time datetime="2022-08-18T04:18:36.000Z" itemprop="datePublished">08/18</time>
-</a>
-       
-<h2 itemprop="name">
-  <a class="archive-article-title" href="/2022/08/18/20220818-mutoolpdf%E7%AE%80%E4%BB%8B/"
-    >20220818-mutoolpdf简介</a> 
-</h2>
- 
 
-    </header>
-    
-    
-  </div>
-</article>
-      
-  
-  
-      <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2022/08/17/20220817-PDF%E6%96%87%E4%BB%B6%E5%A4%84%E7%90%86%E6%8F%90%E7%A4%BA/" class="archive-article-date">
-  <time datetime="2022-08-17T13:57:24.000Z" itemprop="datePublished">08/17</time>
-</a>
-       
-<h2 itemprop="name">
-  <a class="archive-article-title" href="/2022/08/17/20220817-PDF%E6%96%87%E4%BB%B6%E5%A4%84%E7%90%86%E6%8F%90%E7%A4%BA/"
-    >20220817-PDF文件处理提示</a> 
-</h2>
- 
 
-    </header>
-    
-    
-  </div>
-</article>
-      
-  
-  
-      <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2022/08/12/20220812-pdftocairo/" class="archive-article-date">
-  <time datetime="2022-08-12T06:55:37.000Z" itemprop="datePublished">08/12</time>
-</a>
-       
-<h2 itemprop="name">
-  <a class="archive-article-title" href="/2022/08/12/20220812-pdftocairo/"
-    >20220812-pdftocairo</a> 
-</h2>
- 
 
-    </header>
-    
-    
-  </div>
-</article>
-      
   
-  
-      <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2022/08/12/20220812-powershell%E7%AE%A1%E9%81%93%E6%93%8D%E4%BD%9C/" class="archive-article-date">
-  <time datetime="2022-08-12T01:22:56.000Z" itemprop="datePublished">08/12</time>
-</a>
+    <div class="article-entry" itemprop="articleBody">
        
-<h2 itemprop="name">
-  <a class="archive-article-title" href="/2022/08/12/20220812-powershell%E7%AE%A1%E9%81%93%E6%93%8D%E4%BD%9C/"
-    >20220812-powershell管道操作</a> 
-</h2>
+  <p>MuPDF Command Line Tools<br>MuPDF 官网</p>
+<p>MuPDF 的命令行工具都放在了一个命令文件中：mutool.exe</p>
+<p>mutool draw 将页面转为图像等文件<br>draw 命令将文档渲染成图片，转换其他格式的矢量图或提取文本内容。</p>
+<pre><code>mutool draw [options] file [pages]
+</code></pre>
+<p>支持的输入格式：pdf, xps, cbz, and epub<br>支持的输出格式：</p>
+<ul>
+<li>图像：pbm, pgm, ppm, pam, png, tga, pwg, pcl</li>
+<li>矢量：svg, pdf, and debug trace (as xml)</li>
+<li>文本：plain text, html, and structured text (as xml)</li>
+</ul>
+<p>Options:<br>-p password<br>文件是加密的话，用以输入密码。</p>
+<p>-o output<br>指定输出的文件名，文件名可以嵌入指示页码（例如：“页面%d.PNG”），<br>并支持Prtf修改器，例如“%03d”。如果没有指定输出，输出将转到 stdout。从文件名可推断出输出格式。</p>
+<p>-F format<br>指定输出格式，一般在输出到 stdout 时使用。</p>
+<p>-R angle<br>指定顺时针旋转角度。</p>
+<p>-r resolution<br>指定的分辨率。默认为 72 dpi。</p>
+<p>-w width<br>指定页面宽度</p>
+<p>-h height<br>指定页面高度</p>
+<p>-f<br>精确匹配；在匹配指定的宽度&#x2F;高度时忽略纵横比。</p>
+<p>-B bandheight<br>本设置这在渲染过程中使用较少的内存。仅兼容PAM、PGM、PPM、PNM和PNG输出格式。和 md5 checksumming may 不能同时使用。</p>
+<p>-W width<br>EPUB布局中的页面宽度。</p>
+<p>-H height<br>EPUB布局中的页面高度。</p>
+<p>-S size<br>EPUB布局中的字体大小</p>
+<p>-U filename<br>指定用于EPUB布局的用户自定义的CSS样式表</p>
+<p>-c colorspace<br>指定渲染的色彩空间。支持的色彩空间：单色、灰度、Grayα、RGB、RGBALPHA、CMYK、CMYKALPHA。允许的缩写：M，G，GA，RGBA，CMYKA。默认值是基于输出格式选择的。</p>
+<p>-G gamma<br>伽马校正，0.7 或 1.4 常用于亮色或暗色文本的渲染。</p>
+<p>-I<br>反转颜色</p>
+<p>-s [mft5]<br>显示各种信息：</p>
+<ul>
+<li>m 用于字形缓存和总内存使用，</li>
+<li>f 用于页面特性，例如页面是灰度级还是颜色，</li>
+<li>t 用于每页渲染时间以及统计信息，</li>
+<li>5 用于 md5 渲染图像的校验和，这些校验和可用于检查渲染是否已经改变。</li>
+</ul>
+<p>-A bits<br>指定反锯齿位数。默认值为 8。</p>
+<p>-D<br>禁止显示列表的使用。会导致速度减慢，但可减少内存的使用量。</p>
+<p>-i<br>忽略错误。</p>
+<p>-L<br>低内存模式（避免缓存对象在每个页面后清除缓存）。</p>
+<p>-P<br>同时进行解释和渲染。</p>
+<p>pages<br>逗号分隔的页码和范围列表（例如：1,5，10-15）。如果没有指定页面，则将呈现所有页面。</p>
+<p>mutool convert 用于将文档转换成其他格式<br>mutool trace 这是一个调试工具，用于退踪打印图形的调用情况。<br>这些工具专门用于处理 PDF 文件:</p>
+<p>mutool show 显示 PDF 文件中内部对象的工具。<br>mutool extract 提取图像和嵌入字体资源。<br>mutool clean 重写PDF文件。用于修复损坏的文件，或使PDF文件可编辑。<br>mutool merge 将多个输入文件合并为一个新的 PDF 文件<br>mutool create 从文本文件创建一个新的PDF文件。<br>mutool portfolio Manipulate PDF portfolios.<br>最后，有一个工具可以做任何你能想象到的事情:</p>
+<p>mutool run 一种运行JavaScript程序的工具，可以访问MUPDF库函数。</p>
  
-
-    </header>
-    
-    
-  </div>
-</article>
+      <!-- reward -->
       
-  
-  
-      <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2022/08/08/20220808-PhotoShop%E6%8F%92%E4%BB%B6%E7%BC%96%E5%86%99/" class="archive-article-date">
-  <time datetime="2022-08-08T07:28:20.000Z" itemprop="datePublished">08/08</time>
-</a>
-       
-<h2 itemprop="name">
-  <a class="archive-article-title" href="/2022/08/08/20220808-PhotoShop%E6%8F%92%E4%BB%B6%E7%BC%96%E5%86%99/"
-    >20220808-PhotoShop插件编写</a> 
-</h2>
- 
-
-    </header>
-    
-    
-  </div>
-</article>
-      
-  
-  
-      <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2022/08/08/20220808-Manim%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B/" class="archive-article-date">
-  <time datetime="2022-08-08T07:21:07.000Z" itemprop="datePublished">08/08</time>
-</a>
-       
-<h2 itemprop="name">
-  <a class="archive-article-title" href="/2022/08/08/20220808-Manim%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B/"
-    >20220808-Manim入门教程</a> 
-</h2>
- 
-
-    </header>
-    
-    
-  </div>
-</article>
-      
-  
-  
-      <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2022/08/06/20220806-%E5%A5%BD%E7%94%A8%E7%9A%84%E6%9C%AC%E5%9C%B0%E8%A7%86%E9%A2%91%E6%92%AD%E6%94%BE%E5%99%A8%E6%8E%A8%E8%8D%90/" class="archive-article-date">
-  <time datetime="2022-08-06T09:14:13.000Z" itemprop="datePublished">08/06</time>
-</a>
-       
-<h2 itemprop="name">
-  <a class="archive-article-title" href="/2022/08/06/20220806-%E5%A5%BD%E7%94%A8%E7%9A%84%E6%9C%AC%E5%9C%B0%E8%A7%86%E9%A2%91%E6%92%AD%E6%94%BE%E5%99%A8%E6%8E%A8%E8%8D%90/"
-    >20220806-好用的本地视频播放器推荐</a> 
-</h2>
- 
-
-    </header>
-    
-    
-  </div>
-</article>
-      
-  
-  
-      <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2022/08/06/20220806-windows-cmd%E4%B8%AD%E7%9A%84%E5%87%BD%E6%95%B0%E4%BD%BF%E7%94%A8/" class="archive-article-date">
-  <time datetime="2022-08-06T06:56:36.000Z" itemprop="datePublished">08/06</time>
-</a>
-       
-<h2 itemprop="name">
-  <a class="archive-article-title" href="/2022/08/06/20220806-windows-cmd%E4%B8%AD%E7%9A%84%E5%87%BD%E6%95%B0%E4%BD%BF%E7%94%A8/"
-    >20220806-windows_cmd中的函数使用</a> 
-</h2>
- 
-
-    </header>
-    
-    
-  </div>
-</article>
-      
-  
-  
-      <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2022/08/05/20220805-powershell%E5%88%A4%E6%96%AD%E8%B7%AF%E5%BE%84%E6%98%AF%E5%90%A6%E5%AD%98%E5%9C%A8/" class="archive-article-date">
-  <time datetime="2022-08-05T03:55:25.000Z" itemprop="datePublished">08/05</time>
-</a>
-       
-<h2 itemprop="name">
-  <a class="archive-article-title" href="/2022/08/05/20220805-powershell%E5%88%A4%E6%96%AD%E8%B7%AF%E5%BE%84%E6%98%AF%E5%90%A6%E5%AD%98%E5%9C%A8/"
-    >20220805-powershell判断路径是否存在</a> 
-</h2>
- 
-
-    </header>
-    
-    
-  </div>
-</article>
-      
-  
-  
-      <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2022/08/02/20220802-windows%E4%B8%8Btree%E7%9A%84%E7%94%A8%E6%B3%95/" class="archive-article-date">
-  <time datetime="2022-08-02T04:57:17.000Z" itemprop="datePublished">08/02</time>
-</a>
-       
-<h2 itemprop="name">
-  <a class="archive-article-title" href="/2022/08/02/20220802-windows%E4%B8%8Btree%E7%9A%84%E7%94%A8%E6%B3%95/"
-    >20220802-windows下tree的用法</a> 
-</h2>
- 
-
-    </header>
-    
-    
-  </div>
-</article>
-      
+      <div id="reword-out">
+        <div id="reward-btn">
+          打赏
+        </div>
+      </div>
       
     </div>
-  </div>
-  
-  
-
-  
-  <nav class="page-nav">
     
-    <span class="page-number current">1</span><a class="page-number" href="/archives/2022/08/page/2/">2</a><a class="extend next" rel="next" href="/archives/2022/08/page/2/">下一页</a>
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>版权声明： </strong>
+          
+          本博客所有文章除特别声明外，著作权归作者所有。转载请注明出处！
+          
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://example.com/2022/08/18/20220818-mutoolpdf%E7%AE%80%E4%BB%8B/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>  
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+    
+      <a href="/2022/08/17/20220817-PDF%E6%96%87%E4%BB%B6%E5%A4%84%E7%90%86%E6%8F%90%E7%A4%BA/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">20220817-PDF文件处理提示</div>
+      </a>
+    
   </nav>
+
   
+   
+    
+    <script src="https://cdn.staticfile.org/twikoo/1.4.18/twikoo.all.min.js"></script>
+    <div id="twikoo" class="twikoo"></div>
+    <script>
+        twikoo.init({
+            envId: ""
+        })
+    </script>
+ 
+</article>
+
 </section>
       <footer class="footer">
   <div class="outer">
@@ -430,6 +385,22 @@
 <script src="/js/lazyload.min.js"></script>
 
 <!-- Tocbot -->
+ 
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  tocbot.init({
+    tocSelector: ".tocbot",
+    contentSelector: ".article-entry",
+    headingSelector: "h1, h2, h3, h4, h5, h6",
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: "main",
+    positionFixedSelector: ".tocbot",
+    positionFixedClass: "is-position-fixed",
+    fixedSidebarOffset: "auto",
+  });
+</script>
 
 <script src="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.js"></script>
 <link
