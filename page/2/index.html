@@ -126,6 +126,105 @@
     
     
     <article
+  id="post-20220802-windows下tree的用法"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/08/02/20220802-windows%E4%B8%8Btree%E7%9A%84%E7%94%A8%E6%B3%95/"
+    >20220802-windows下tree的用法</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/08/02/20220802-windows%E4%B8%8Btree%E7%9A%84%E7%94%A8%E6%B3%95/" class="article-date">
+  <time datetime="2022-08-02T04:57:17.000Z" itemprop="datePublished">2022-08-02</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="Window平台下tree-命令使用"><a href="#Window平台下tree-命令使用" class="headerlink" title="Window平台下tree 命令使用"></a><a target="_blank" rel="noopener" href="https://www.cnblogs.com/ricolee/p/cmd-tree.html">Window平台下tree 命令使用</a></h1><p>WIndow 平台要想打印目录树，可以用cmd工具或者power shell 的<code>tree</code>命令实现</p>
+<p>tree 命令格式和参数：</p>
+<p>TREE [drive:][path] [&#x2F;F] [&#x2F;A]</p>
+<ul>
+<li>&#x2F;F 显示每个文件夹中文件的名称。（带扩展名）</li>
+<li>&#x2F;A 使用 ASCII 字符，而不使用扩展字符。(如果要显示中文，例如 tree &#x2F;f &#x2F;A &gt;tree.txt)</li>
+</ul>
+<p>比如：</p>
+<figure class="highlight dos"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Copy</span> <span class="built_in">tree</span> /f &gt;<span class="built_in">tree</span>.txt</span><br></pre></td></tr></table></figure>
+
+<p>导出当前目录的文件夹&#x2F;文件的目录树到tree.txt文件中。</p>
+<blockquote>
+<p><strong>Tip：</strong></p>
+<ol>
+<li>要是目录很深文件很多生成的树大了去!，比如我在D盘根目录使用49MB的tree.txt；</li>
+<li>没找到其它参数可以只打印一级或者二级目录类似的参数；</li>
+</ol>
+</blockquote>
+<p>又或者用git bash 工具 使用<code>tree</code>命令，比如：</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">Copy$ tree -L <span class="number">1</span></span><br><span class="line">.</span><br><span class="line">|<span class="comment">-- LICENSE        </span></span><br><span class="line">|<span class="comment">-- README.es.md   </span></span><br><span class="line">|<span class="comment">-- README.ja.md   </span></span><br><span class="line">|<span class="comment">-- README.md      </span></span><br><span class="line">|<span class="comment">-- README.zh-CN.md</span></span><br><span class="line">|<span class="comment">-- babel.config.js</span></span><br><span class="line">|<span class="comment">-- build</span></span><br><span class="line">|<span class="comment">-- dist</span></span><br><span class="line">|<span class="comment">-- jest.config.js</span></span><br><span class="line">|<span class="comment">-- list.txt</span></span><br><span class="line">|<span class="comment">-- mock</span></span><br><span class="line">|<span class="comment">-- node_modules</span></span><br><span class="line">|<span class="comment">-- package-lock.json</span></span><br><span class="line">|<span class="comment">-- package.json</span></span><br><span class="line">|<span class="comment">-- plop-templates</span></span><br><span class="line">|<span class="comment">-- plopfile.js</span></span><br><span class="line">|<span class="comment">-- postcss.config.js</span></span><br><span class="line">|<span class="comment">-- public</span></span><br><span class="line">|<span class="comment">-- src</span></span><br><span class="line">|<span class="comment">-- tests</span></span><br><span class="line">|<span class="comment">-- vue-elment-admin.md</span></span><br><span class="line">`<span class="comment">-- vue.config.js</span></span><br></pre></td></tr></table></figure>
+
+<p>比cmd和power shell 好用，前提是需要安装Tree for Windows工具：</p>
+<ol>
+<li>打开进入 <a target="_blank" rel="noopener" href="http://gnuwin32.sourceforge.net/packages/tree.htm">Tree for Windows</a> 页面，选择下载 Binaries zip 文件。</li>
+<li>解压压缩包，找到压缩包内的 bin 目录，将 bin 目录下的 tree.exe 复制</li>
+<li>找到 <code>C:\\Program Files\Git\usr\bin</code> 目录，将 tree.exe 粘贴到该目录下，安装即完成</li>
+</ol>
+<p>tree命令行参数：</p>
+<ul>
+<li>-a 显示所有文件和目录。</li>
+<li>-A 使用ASNI绘图字符显示树状图而非以ASCII字符组合。</li>
+<li>-C 在文件和目录清单加上色彩，便于区分各种类型。</li>
+<li>-d 显示目录名称而非内容。</li>
+<li>-D 列出文件或目录的更改时间。</li>
+<li>-f 在每个文件或目录之前，显示完整的相对路径名称。</li>
+<li>-F 在执行文件，目录，Socket，符号连接，管道名称名称，各自加上”*”,”&#x2F;“,”&#x3D;”,”@”,”|“号。</li>
+<li>-g 列出文件或目录的所属群组名称，没有对应的名称时，则显示群组识别码。</li>
+<li>-i 不以阶梯状列出文件或目录名称。</li>
+<li>-I 不显示符合范本样式的文件或目录名称。</li>
+<li>-l 如遇到性质为符号连接的目录，直接列出该连接所指向的原始目录。</li>
+<li>-n 不在文件和目录清单加上色彩。</li>
+<li>-N 直接列出文件和目录名称，包括控制字符。</li>
+<li>-p 列出权限标示。</li>
+<li>-P 只显示符合范本样式的文件或目录名称。</li>
+<li>-q 用”?”号取代控制字符，列出文件和目录名称。</li>
+<li>-s 列出文件或目录大小。</li>
+<li>-t 用文件和目录的更改时间排序。</li>
+<li>-u 列出文件或目录的拥有者名称，没有对应的名称时，则显示用户识别码。</li>
+<li>-x 将范围局限在现行的文件系统中，若指定目录下的某些子目录，其存放于另一个文件系统上，则将该子目录予以排除在寻找范围外。</li>
+</ul>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考#"></a>参考<a target="_blank" rel="noopener" href="https://www.cnblogs.com/ricolee/p/cmd-tree.html#3188521218">#</a></h2><ul>
+<li><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/32ba82d84680">Window 平台下添加 tree 命令</a></li>
+</ul>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-20220801-《人类简史》目录"
   class="article article-type-post"
   itemscope
@@ -1155,56 +1254,6 @@
        
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/" rel="tag">linux</a></li></ul>
 
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20220713-电子书管理工作流"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/07/13/20220713-%E7%94%B5%E5%AD%90%E4%B9%A6%E7%AE%A1%E7%90%86%E5%B7%A5%E4%BD%9C%E6%B5%81/"
-    >20220713-电子书管理工作流</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/07/13/20220713-%E7%94%B5%E5%AD%90%E4%B9%A6%E7%AE%A1%E7%90%86%E5%B7%A5%E4%BD%9C%E6%B5%81/" class="article-date">
-  <time datetime="2022-07-12T23:58:42.000Z" itemprop="datePublished">2022-07-13</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>基于zotero+zotfile+syncthing+ReadEra，实现电脑+手机两端同步的电子书管理流程</p>
-<p>视频大纲：<a target="_blank" rel="noopener" href="https://logseq.fishyer.com/#/page/%E7%94%B5%E5%AD%90%E4%B9%A6%E7%AE%A1%E7%90%86%E5%B7%A5%E4%BD%9C%E6%B5%81">https://logseq.fishyer.com/#/page/%E7%94%B5%E5%AD%90%E4%B9%A6%E7%AE%A1%E7%90%86%E5%B7%A5%E4%BD%9C%E6%B5%81</a></p>
-<p>更多工具推荐，欢迎查看 <a target="_blank" rel="noopener" href="https://logseq.fishyer.com/">https://logseq.fishyer.com</a></p>
-<p>public:true<br>1-用Zlibrary下载书，或者是其他网络渠道，比如百度网盘、阿里网盘、淘宝<br>2-导入到Zotero里面<br>安装Zotfile插件，配置附件路径为Dropbox网盘下的路径<br>3-配置Syncthing，同步书籍文件夹到Android手机上<br>电脑-Windows<br>C:\Users\Administrator\Dropbox\MyObsidian\MyAttachment\MyZotoreFile<br>手机-Android<br>&#x2F;storage&#x2F;emulated&#x2F;0&#x2F;MyObsidian<br>主要就是同步MyObsidian文件夹，下面的子文件夹自然就同步了<br>其实Mac电脑也支持，不过ios手机的话就稍稍麻烦一点<br>4-阅读方式<br>PDF就在电脑上用Zotero本身看<br>很方便截图标注<br>epub等其他格式，就直接在Android手机上ReadEra看<br>其实也可以用Calibre将其他类型转换为PDF，但是我现在的主力阅读器是手机，所以就不转PDF了<br>作用<br>Zotero-书架，添加标签和添加分类等<br>ReadEra-阅读器，方便随时随地看书</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
     </footer>
   </div>
 
