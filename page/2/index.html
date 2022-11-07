@@ -126,6 +126,252 @@
     
     
     <article
+  id="post-20220812-pdftocairo"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/08/12/20220812-pdftocairo/"
+    >20220812-pdftocairo</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/08/12/20220812-pdftocairo/" class="article-date">
+  <time datetime="2022-08-12T06:55:37.000Z" itemprop="datePublished">2022-08-12</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>[TOC]</p>
+<h2 id="0x01"><a href="#0x01" class="headerlink" title="0x01"></a>0x01</h2><h2 id="0x02"><a href="#0x02" class="headerlink" title="0x02"></a>0x02</h2><h2 id="0x03"><a href="#0x03" class="headerlink" title="0x03"></a>0x03</h2><h2 id="0x04"><a href="#0x04" class="headerlink" title="0x04"></a>0x04</h2> 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-20220812-powershell管道操作"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/08/12/20220812-powershell%E7%AE%A1%E9%81%93%E6%93%8D%E4%BD%9C/"
+    >20220812-powershell管道操作</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/08/12/20220812-powershell%E7%AE%A1%E9%81%93%E6%93%8D%E4%BD%9C/" class="article-date">
+  <time datetime="2022-08-12T01:22:56.000Z" itemprop="datePublished">2022-08-12</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>无论是在Linux中写Bash脚本还是在Window上写PowerShell，管道符”|“是一个非常有用的工具。它提供了将前一个命令的输出作为下一个命令的输入的功能。在数据处理中，我们也可以使用管道符对数据进行各种操作。</p>
+<h2 id="Import-amp-Export导入导出"><a href="#Import-amp-Export导入导出" class="headerlink" title="Import&amp;Export导入导出"></a>Import&amp;Export导入导出</h2><p>先说导入导出是为了能够为接下来的数据处理准备数据。在PowerShell中我们也可以通过各种Get-XXX命令获得各种各样需要的数据，但是并不是所有操作系统和各个版本的PowerShell都支持某个命令的。比如Get-Volume命令，用于获得每个磁盘的信息，但是这个命令不能在Win7下运行，只能在Win8或Win2012Server下运行。</p>
+<p>最常见，最简单的外部数据源就是CSV文件了。我们可以使用Export-Csv命令将PowerShell中的对象转换为CSV格式，持久化到磁盘上。比如我们将当前的所有进程信息导出为CSV文件，命令为：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">Get</span>-<span class="title class_">Process</span> | <span class="title class_">Export</span>-<span class="title class_">Csv</span> <span class="attr">C</span>:\test.<span class="property">csv</span> -<span class="title class_">Encoding</span> <span class="title class_">Unicode</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>（注意，如果是有中文内容建议设置Encoding为Unicode或者UTF8）</p>
+<p>Import-Csv命令是导入外部的CSV文件到内存。比较刚才导出的CSV文件，我们接下来要对这个文件进行处理。我们可以将文件的内容保存到变量$data中。命令为：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$data=<span class="title class_">Import</span>-<span class="title class_">Csv</span> <span class="attr">C</span>:\test.<span class="property">csv</span> -<span class="title class_">Encoding</span> <span class="title class_">Unicode</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>当然，我们也可以先进行类型转换，然后保存。命令为：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$data | <span class="title class_">ConvertTo</span>-<span class="title class_">Csv</span> | <span class="title class_">Out</span>-<span class="title class_">File</span> <span class="attr">C</span>:\test.<span class="property">csv</span> -<span class="title class_">Encoding</span> utf8</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="Sorting排序"><a href="#Sorting排序" class="headerlink" title="Sorting排序"></a>Sorting排序</h2><p>前面我们已经将CSV的内容载入到$data变量中了，那么如果我们要按照某一个字段排序，可以使用Sort-Object命令。</p>
+<p>比如我们要Name这个字段排序，并输出排序后的结果，那么命令为：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$data | <span class="title class_">Sort</span>-<span class="title class_">Object</span> <span class="title class_">Name</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>也可以简写为：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$data | <span class="title class_">Sort</span> <span class="title class_">Name</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>如果是需要多个字段排序，那么可以将字段列在后面，字段之间用逗号隔开。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$data | <span class="title class_">Sort</span> <span class="title class_">Name</span>,<span class="title class_">Handles</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>如果是逆向排序，那么需要在字段后面加参数-Descending</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$data | <span class="title class_">Sort</span> <span class="title class_">Name</span> –<span class="title class_">Descending</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="Selecting选取"><a href="#Selecting选取" class="headerlink" title="Selecting选取"></a>Selecting选取</h2><p>选取相当于SQL中的SELECT命令。对应的PowerShell命令是Select-Object，可以简写为Select。该命令后面跟上要选取的列名即可。如果是要选取所有的列，也可以使用*表示。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$data | select <span class="title class_">Name</span>,<span class="variable constant_">VM</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>选取所有列，那么命令就是：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$data | select *</span><br></pre></td></tr></table></figure>
+
+
+
+<p>如果是只选取前面几条数据，那么可以使用-First参数。比如我们按Handles排序，只查看头10条进程记录的名字和Handles。命令为：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$data | sort <span class="title class_">Handles</span> | select <span class="title class_">Handles</span>,<span class="title class_">Name</span> -<span class="title class_">First</span> <span class="number">10</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>另外还有参数-Last选取的是最后几条记录，-Skip可以选择跳过一定记录。</p>
+<h2 id="Calculate计算列"><a href="#Calculate计算列" class="headerlink" title="Calculate计算列"></a>Calculate计算列</h2><p>在SELECT的时候，我们可以使用函数对其中的列进行运算，使用的语法是：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@&#123; </span><br><span class="line">  n=<span class="string">&#x27;New Column Name&#x27;</span>; </span><br><span class="line">  e=&#123; $_.<span class="property">xxxCalc</span> &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>其中的$_就是表示当前的记录。</p>
+<p>比如VM列记录的是以Byte为单位的数据，我们先新建一列名为”VM(MB)”,其值是换算成MB的结果，那么我们可以写为：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$data | select <span class="title class_">Name</span>,<span class="variable constant_">VM</span>,@&#123;n=<span class="string">&quot;VM(MB)&quot;</span>;e=&#123;$_.<span class="property">VM</span>/1MB&#125;&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="Measuring度量"><a href="#Measuring度量" class="headerlink" title="Measuring度量"></a>Measuring度量</h2><p>说度量可能有点不是很清晰，其实就是对应SQL中的聚合函数。比如 SUM, Max,Min之类的，需要使用Measure-Object命令。比如要查看有多少个程序，最小的Handles和最大的Handles，那么命令是：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$data | <span class="title class_">Measure</span>-<span class="title class_">Object</span> -<span class="title class_">Property</span> <span class="title class_">Handles</span> -<span class="title class_">Minimum</span> -<span class="title class_">Maximum</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>既然说到SQL中的聚合函数，那么自然就会想到另外一个关键字Group By。在PowerShell中也有对应的命令Group-Object。如果我们想要按进程的Name进行分组，查看每个进程名对应的VM总大小。那么我们可以先按Name进行Group：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$data | <span class="title class_">Group</span>-<span class="title class_">Object</span> <span class="title class_">Name</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>这时我们可以看到系统返回的结果有3列：Count,Name,Group。而我们要进行聚合的VM值是在Group中。这时需要用到前面提到的Select命令。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$data | <span class="title class_">Group</span>-<span class="title class_">Object</span> <span class="title class_">Name</span> | select <span class="title class_">Name</span>,<span class="title class_">Count</span>,@&#123;n=<span class="string">&quot;TotalVM&quot;</span>;e=&#123;($_.<span class="property">Group</span> | <span class="title class_">Measure</span>-<span class="title class_">Object</span> -<span class="title class_">Property</span> <span class="variable constant_">VM</span> -<span class="title class_">Sum</span>).<span class="property">Sum</span>&#125;&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="Filter过滤"><a href="#Filter过滤" class="headerlink" title="Filter过滤"></a>Filter过滤</h2><p>过滤相当于SLQ中的Where语句，在PowerShell中使用Where-Object命令。可以简写为Where，甚至可以简写为”?”。在普通程序里面我们遇到的比较运算和逻辑运算在PowerShell中有所不同，是这样的参数：</p>
+<table>
+<thead>
+<tr>
+<th align="left">Comparison</th>
+<th align="left">Case-InSensitive</th>
+<th align="left">Case-sensitive</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">Equality</td>
+<td align="left">-eq</td>
+<td align="left">-ceq</td>
+</tr>
+<tr>
+<td align="left">Inequality</td>
+<td align="left">-ne</td>
+<td align="left">-cne</td>
+</tr>
+<tr>
+<td align="left">Greater than</td>
+<td align="left">-gt</td>
+<td align="left">-cgt</td>
+</tr>
+<tr>
+<td align="left">Less than</td>
+<td align="left">-lt</td>
+<td align="left">-clt</td>
+</tr>
+<tr>
+<td align="left">Greater than or equal to</td>
+<td align="left">-ge</td>
+<td align="left">-cge</td>
+</tr>
+<tr>
+<td align="left">Less than or equal to</td>
+<td align="left">-le</td>
+<td align="left">-cle</td>
+</tr>
+<tr>
+<td align="left">Wildcard equality</td>
+<td align="left">-like</td>
+<td align="left">-clike</td>
+</tr>
+</tbody></table>
+<p>-and 和-or用于逻辑运算。</p>
+<p>仍然以前面load的$data为例，我们要查看以W开头的进程的Handles和Name，那么命令为：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$data | ?&#123; $_.<span class="property">Name</span> -like <span class="string">&#x27;W*&#x27;</span>&#125;| select <span class="title class_">Handles</span>,<span class="title class_">Name</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>如果是多个条件，既要以w开头，还要VM大于100M的进程，那么命令为：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$data | ?&#123; $_.<span class="property">Name</span> -like <span class="string">&#x27;W*&#x27;</span> -and $_.<span class="property">VM</span> -gt 100MB&#125;| select <span class="title class_">Handles</span>,<span class="title class_">Name</span>,<span class="variable constant_">VM</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="Enumeration枚举"><a href="#Enumeration枚举" class="headerlink" title="Enumeration枚举"></a>Enumeration枚举</h2><p>枚举相当于C#中的Foreach函数，或者说是SQL中的游标，对于每一行数据，都进行一个运算或者函数处理。在PowerShell中对应的命令是ForEach-Object，可以简写为ForEach，还可以进一步简写为”%“。</p>
+<p>比如我们要将VM改为MB为单位，可以对每一行数据进行运算：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$data | % &#123;$_.<span class="property">VM</span>=$_.<span class="property">VM</span>/1MB&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>运行该命令后我们再查看$data就会发现VM列已经改变了。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$data | select <span class="title class_">Name</span>,<span class="variable constant_">VM</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>另外对于Foreach命令，还有两个比较有用的参数-Begin –End,用于在做For循环之前调用和循环结束后调用。</p>
+<p>比如我们想把某一列写入一个文件，我们可以在-Begin时创建文件，记录开始的时间，然后Foreach中Append内容到文件，最后把结束时间写入：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$data | % -<span class="title class_">Begin</span> &#123; <span class="title class_">Get</span>-<span class="title class_">Date</span> | <span class="title class_">Out</span>-<span class="title class_">File</span> <span class="attr">C</span>:\test.<span class="property">txt</span> &#125; -<span class="title class_">Process</span> &#123; $_.<span class="property">Name</span> | <span class="title class_">Out</span>-<span class="title class_">File</span> <span class="attr">C</span>:\test.<span class="property">txt</span> -<span class="title class_">Append</span>&#125; -<span class="title class_">End</span> &#123; <span class="title class_">Get</span>-<span class="title class_">Date</span> | <span class="title class_">Out</span>-<span class="title class_">File</span> <span class="attr">C</span>:\test.<span class="property">txt</span> -<span class="title class_">Append</span>&#125;</span><br></pre></td></tr></table></figure>
+
+
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-20220808-PhotoShop插件编写"
   class="article article-type-post"
   itemscope
@@ -1467,107 +1713,13 @@
 </article>
 
     
-    <article
-  id="post-20220801-UX交互设计网址"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/08/01/20220801-UX%E4%BA%A4%E4%BA%92%E8%AE%BE%E8%AE%A1%E7%BD%91%E5%9D%80/"
-    >20220801-UX交互设计网址</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/08/01/20220801-UX%E4%BA%A4%E4%BA%92%E8%AE%BE%E8%AE%A1%E7%BD%91%E5%9D%80/" class="article-date">
-  <time datetime="2022-08-01T00:44:40.000Z" itemprop="datePublished">2022-08-01</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>故事板：<a target="_blank" rel="noopener" href="https://www.storyboardthat.com/">https://www.storyboardthat.com/</a><br>图表：<a target="_blank" rel="noopener" href="https://live.amcharts.com/">https://live.amcharts.com/</a><br><a target="_blank" rel="noopener" href="https://www.pixton.com/">https://www.pixton.com/</a><br>云图制作：<br><a target="_blank" rel="noopener" href="http://www.picdata.cn/indexb.php">http://www.picdata.cn/indexb.php</a></p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20220801-epub电子书制作"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/08/01/20220801-epub%E7%94%B5%E5%AD%90%E4%B9%A6%E5%88%B6%E4%BD%9C/"
-    >20220801-epub电子书制作</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/08/01/20220801-epub%E7%94%B5%E5%AD%90%E4%B9%A6%E5%88%B6%E4%BD%9C/" class="article-date">
-  <time datetime="2022-08-01T00:31:38.000Z" itemprop="datePublished">2022-08-01</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>软件 zigil</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
   </article>
   
 
   
   <nav class="page-nav">
     
-    <a class="extend prev" rel="prev" href="/">上一页</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/3/">下一页</a>
+    <a class="extend prev" rel="prev" href="/">上一页</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" href="/page/3/">下一页</a>
   </nav>
   
 </section>
