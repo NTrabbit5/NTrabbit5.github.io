@@ -126,6 +126,52 @@
     
     
     <article
+  id="post-20220805-powershell判断路径是否存在"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/08/05/20220805-powershell%E5%88%A4%E6%96%AD%E8%B7%AF%E5%BE%84%E6%98%AF%E5%90%A6%E5%AD%98%E5%9C%A8/"
+    >20220805-powershell判断路径是否存在</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/08/05/20220805-powershell%E5%88%A4%E6%96%AD%E8%B7%AF%E5%BE%84%E6%98%AF%E5%90%A6%E5%AD%98%E5%9C%A8/" class="article-date">
+  <time datetime="2022-08-05T03:55:25.000Z" itemprop="datePublished">2022-08-05</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$CONFIG_PATH</span>=<span class="string">&quot;D:\powershell\2&quot;</span></span><br><span class="line"><span class="variable">$TRUE_FALSE</span>=(<span class="built_in">Test-Path</span> <span class="variable">$CONFIG_PATH</span>)</span><br><span class="line"><span class="keyword">if</span>(<span class="variable">$TRUE_FALSE</span> <span class="operator">-eq</span> <span class="string">&quot;True&quot;</span>)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">remove-Item</span> <span class="literal">-Recurse</span> <span class="literal">-Force</span> <span class="variable">$CONFIG_PATH</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure> 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-20220802-windows下tree的用法"
   class="article article-type-post"
   itemscope
@@ -1157,103 +1203,6 @@
     
     <footer class="article-footer">
        
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20220716-ranger插件"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/07/16/20220716-ranger%E6%8F%92%E4%BB%B6/"
-    >20220716-ranger插件</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/07/16/20220716-ranger%E6%8F%92%E4%BB%B6/" class="article-date">
-  <time datetime="2022-07-16T07:13:42.000Z" itemprop="datePublished">2022-07-16</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>http%3A&#x2F;&#x2F;ranger.github.io&#x2F;</p>
-<p>ranger 是一个终端文件管理器，通过ranger 可以实现和windows 中类似的资源管理器的展示功能</p>
-<p>ranger 分为三个部分</p>
-<p>左边为上级目录结构</p>
-<p>中间为当前可以操作的目录</p>
-<p>右边为当前目录下面所有的文件</p>
-<p>最底端的状态栏显示的是当前选中文件的一些文件信息，比如执行权限和上次修改的时间</p>
-<p>安装 sudo apt-get install ranger</p>
-<p>进入之后就可以使用 vim 的相关命令了，比如 hjkl 上下左右的操作 、:q 推出 等。</p>
-<p>常用命令组合</p>
-<p>除了最基本的 vim 操作的常用快捷键不在进行介绍之后，以下为常用的快捷键介绍。</p>
-<p>S 使用终端定位到当前所在目录<br>H 后退<br>cw 重命名</p>
-<p>on&#x2F;ob 根据文件名进行排序，<br>oc 根据改变时间进行排序<br>os 根据文件大小进行排序<br>ot 根据后缀名进行排序<br>oa 根据访问时间进行排序<br>om 根据修改进行排序</p>
-<p>utf-8 支持</p>
-<p>多栏显示<br>所选文件 目录的预览</p>
-<p>常用文件操作票</p>
-<p>类似vim 的控制台和热键</p>
-<p>一次重命名多个文件<br>自动确定文件类型并使用正确的程序运行它们<br>退出 ranger 后更改 shell 目录<br>标签、书签、鼠标支持<br>真彩色图像预览 [如何启用]<br>视频缩略图 [如何启用]<br>依赖项<br>Python（测试版本为 2.7、3.1、3.2、3.3、3.4），支持 ncurses 和（可选）宽 unicode。<br>寻呼机（默认为less ）<br>可选的：</p>
-<p>用于确定文件类型的文件<br>python 模块chardet，以防编码检测问题<br>“sudo”以使用“以 root 身份运行”功能<br>w3m用于以“真彩色”预览图像。<br>可选，用于增强文件预览（使用“scope.sh”）：</p>
-<p>img2txt（来自caca-utils）用于预览ASCII-art中的图像<br>highlight用于代码的语法高亮<br>用于预览档案的工具<br>lynx、w3m或elinks用于预览 html 页面<br>pdftotext 用于 pdf 预览<br>传输显示查看比特种子信息<br>mediainfo或 exiftool 用于查看有关媒体文件的信息</p>
-<p>ranger wiki <a target="_blank" rel="noopener" href="https://github.com/ranger/ranger/wiki">https://github.com/ranger/ranger/wiki</a></p>
-<p>配置文件<br>将默认配置文件复制到该文件~&#x2F;.config&#x2F;range<br>$ ranger –copy-config&#x3D;all<br>1<br>ranger 使用4个主要配置文件：<br>文件名 描述<br>commands.py 包含以Python编写的各种函数的实现，用于修改ranger’s行为<br>rc.conf 用于设置各种选项并将按键绑定到功能<br>rifle.conf  决定使用哪个程序打开哪个文件<br>scope.sh  是一个shell脚本，用于生成各种文件类型的预览<br>宏指令<br>宏指令可以用在 command 命令中达到缩写命令的目的。</p>
-<p>宏指令 功能<br>%f  高亮显示的文件<br>%d  当前文件夹的路径<br>%s  当前文件夹选择的文件<br>%t  当前文件夹所有标记的文件<br>%c  当前复制&#x2F;剪切文件的完整路径<br>%p  选择文件的完整路径<br>宏指令 %f、%d、%p 和 %s 有大写的变体，%F、%D、%P 和 %S，指下一个标记。为了表示一个特定的标记，可以在 % 和 字母 中间加一个数字，比如 %7s 指当前文件夹中第七个所选择的文件。<br>  %c 是唯一一个作用于当前文件夹以外的宏指令，所以你可以通过复制功能达到其他的目的。比如比较在两个在不同文件夹里的文件的不同：复制文件 A（键入 yy），然后切换到文件 B 的目录，并标记文件 B（键入 SPACE），最后键入 @，输入 shell: diff %c %s。对于文件路径的宏命令（%d、%c 和 %p）通常是转义了的，所以可以直接在 shell command 命令中使用。<br>  此外，如果你创建了使用 Key 的按键绑定，那么宏命令 %Key（或者 %Key0、%Key1、……)在 shell command 中就代表按下 Key 键几次。</p>
-<p>文件选择<br>标记&#x2F;取消标记：space<br>反选：v<br>视觉模式开启&#x2F;关闭：V，在视觉模式下，移动光标即可选择条目。也可以按 uV或者 ESC 退出。<br>取消当前目录的全部标记：uv</p>
-<p>黄色的 Mrk 符号位于终端右下角，表示此文件夹里有标记的文件。黄色的 Mrk 并不会因为切换目录而消失。</p>
-<p>文件操作<br>复制：yy<br>剪切：dd<br>粘贴：pp<br>删除：dD</p>
-<p>将不同目录的文件加入操作列表：ya<br>重命名：cw<br>在当前名称基础上重命名：A<br>类似A, 但是光标会跳到起始位置：I<br>向下翻一页：Ctrl+f或PAGEDOWN<br>向上翻一页：Ctrl+b或PAGEUP<br>向上翻半页：Ctrl+u或者K<br>向下翻半页：Ctrl+d或者 J<br>后退到上一个历史记录：H<br>前进到下一个历史记录：L</p>
-<p>目录跳转<br>父目录上移：[<br>父目录下移：]<br>如果当前选中高亮的是是链接目录，直接跳到原目录内：g L<br>如果当前目录是链接目录内，直接跳到原目录：g l<br>跳转目录：g+其他</p>
-<p>查看与编辑文件<br>操作  说明<br>i 或者 F3 调用 Pager 查看文件 与在终端中输入 pager + 文件名 一样。<br>E 或者 F4 调用默认编辑器编辑文件 可在终端中输入 select-editor 选择默认编辑器。<br>书签<br>新建书签：m<br>打开书签：&#96;<br>删除书签：um</p>
-<p>标签<br>多标签即多窗口工作。可以在每个窗口来回切换。</p>
-<p>新建标签：</p>
-<p>g n<br>Ctrl+n<br>切换标签：</p>
-<p>g t或g T<br>Tab 或 Shift+Tab<br>Alt+标签名<br>关闭标签：g c 或 Ctrl+w</p>
-<p>链接<br>粘贴绝对路径的链接：pl<br>粘贴相对路径的链接：pL<br>硬链接：phl</p>
-<p>排序<br>排序：o</p>
-<p>名词  描述<br>atime access time，访问时间<br>basename  基于文件名<br>ctime change time，改变时间，文件的权限组别和文件自身数据被修改的时间<br>extension 扩展名<br>mtime modified time，修改时间<br>任务管理<br>在执行某些操作(比如复制一个大文件)时不能立即完成, 这在 ranger 中就是一个任务. 你可以停止, 启动某个任务, 也可以对某个任务设置优先级.</p>
-<p>打开&#x2F;关闭任务视图：w<br>在打开的任务视图中：<br>终止一个任务：dd<br>降低当前任务的优先级：J<br>提升当前任务的优先级：K<br>预览<br>默认情况下，只能预览文本文件，但是你可以通过设定配置 use_preview_script 和 preview_files 为 true 来增加可以预览的文件类型。默认的预览脚本是 ~&#x2F;.config&#x2F;ranger&#x2F;scope.sh，安装如下工具（每种类型只需要一个）就预览对应的文件类型，scope.sh 会自动调用它们：</p>
-<p>工具  预览文件类型  安装<br>lynx<br>elinks<br>w3m 网页  sudo apt install lynx<br>sudo apt install elinks<br>sudo apt install w3m<br>highlight<br>pygmentize  高亮代码  sudo apt install highlight<br>pip install pygmentize<br>img2txt 图片  sudo apt install caca-utils<br>atool<br>bsdtar<br>unrar<br>7z  压缩包 sudo apt install atool<br>sudo apt install libarchive-tools<br>sudo apt install unrar<br>sudo apt install p7zip<br>pdftotext<br>mutool  PDF sudo apt install poppler-utils<br>sudo apt install mupdf-tools<br>mediainfo<br>exiftool  媒体  sudo apt install mediainfo<br>sudo apt install libimage-exiftool-perl<br>ffmpegthumbnailer 视频缩略图 sudo apt install ffmpegthumbnailer<br>fontimage 字体  sudo apt install fontforge<br>transmission-show 种子  sudo apt install transmission-cli<br>独立于 preview script，有一个通过将图像用字符画的形式直接绘制到终端中的预览功能。要启用此功能，将 preview_images 选项设置为 true 并将 preview_images_method 选项设置为一种图像预览模式（需要安装这些工具）：</p>
-<p>预览模式  是否适用于 ssh 注意  设置 preview_images_method 为<br>w3m 否 与 tmux 不兼容（尽管它可以工作）。  w3m<br>iTerm2  是 iTerm2 编译时必须添加 image preview support 选项。  iterm2<br>urxvt 否 urxvt 编译时必须添加 pixbuf support 选项。此模式本质上是将图像暂时设置为终端背景，这样它将破坏以前设置的任何图像背景。  urxvt<br>urxvt-full  否 与 urxvt 相同，但使用整个终端窗口预览图片。 urxvt-full<br>获取帮助<br>按下?时获取帮助，再使用按键选择帮助类型：</p>
-<p>m: opens the man page for ranger（打开官方man手册）<br>k: opens a list of keybindings（打开按键绑定列表）<br>c: opens a list of available commands and descriptions（打开命令列表）<br>s: opens a list of settings and their current values（打开设置列表）<br>官方man手册网站：<a target="_blank" rel="noopener" href="https://ranger.github.io/ranger.1.html">https://ranger.github.io/ranger.1.html</a></p>
-<p>其他<br>查找：f<br>搜索：&#x2F;<br>修改设置：z<br>显示隐藏文件：zh<br>打开&#x2F;关闭文件预览功能：zp<br>打开目录预览功能：zP<br>过滤器(如过滤pdf文件, zf+pdf,回车)：zf<br>在当前目录打开终端：S<br>目录展平：:flag (level)<br>批量重命名：标记选中后，输入:bulkrename</p>
-<p>参考<br>官方用户指南<br><a target="_blank" rel="noopener" href="http://www.mikewootc.com/wiki/linux/usage/ranger_file_manager.html">http://www.mikewootc.com/wiki/linux/usage/ranger_file_manager.html</a><br>博客链接【推荐】<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/xkfz008/article/details/7339530">https://blog.csdn.net/xkfz008/article/details/7339530</a></p>
-<p>安装插件<br>ranger也有很多预览时用的插件 :</p>
-<p>sudo apt-get install caca-utils # img2txt 图片<br>sudo apt-get install highlight  # 代码高亮<br>sudo apt-get install atool　    # 存档预览<br>sudo apt-get install w3m        # html页面预览<br>sudo apt-get install mediainfo  # 多媒体文件预览<br>1<br>2<br>3<br>4<br>5<br>当然还有其他文件格式的预览</p>
-<p>sudo apt-get install catdoc     # doc预览<br>sudo apt-get install docx2txt   # docx预览<br>sudo apt-get install xlsx2csv   # xlsx预览<br>1<br>2<br>3<br>其他 :<br>zh&#x2F;退回键    显示隐藏文件</p>
-<p>zp        打开&#x2F;关闭文件预览功能<br>zP        打开目录预览功能<br>1<br>2<br>3<br>4<br>当然ranger也是直接支持终端的基本命令的, 比如可以直接使用cd.</p>
-<p>其次也支持其他方便操作的快捷方式. 如 : g可以快速的通过按键进入指定的目录中. 还有d等操作</p>
-<p>最后, ranger还是直接支持鼠标点击.</p>
-<p>参考 :<br>Ranger<br><a target="_blank" rel="noopener" href="http://www.mikewootc.com/wiki/linux/usage/ranger_file_manager.html">http://www.mikewootc.com/wiki/linux/usage/ranger_file_manager.html</a></p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/" rel="tag">linux</a></li></ul>
-
     </footer>
   </div>
 

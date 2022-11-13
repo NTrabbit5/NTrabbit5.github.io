@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-CN">
+  
+
+    <head>
+      <meta charset="utf-8" />
+        
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1"
+      />
+      <title>20221113-用python发邮件 |  TeX_baitu blog</title>
+  <meta name="generator" content="hexo-theme-ayer">
+      
+      <link rel="shortcut icon" href="/favicon.ico" />
+       
+<link rel="stylesheet" href="/dist/main.css">
+
+      
+<link rel="stylesheet" href="/css/fonts/remixicon.css">
+
+      
+<link rel="stylesheet" href="/css/custom.css">
+ 
+      <script src="https://cdn.staticfile.org/pace/1.2.4/pace.min.js"></script>
+       
+ 
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma@5.0.1/bulma.min.css"
+      />
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+
+      <!-- mermaid -->
+      
+      <style>
+        .swal2-styled.swal2-confirm {
+          font-size: 1.6rem;
+        }
+      </style>
+    </head>
+  </html>
+</html>
+
+
+<body>
+  <div id="app">
+    
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-20221113-用python发邮件"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  20221113-用python发邮件
+</h1>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/11/13/20221113-%E7%94%A8python%E5%8F%91%E9%82%AE%E4%BB%B6/" class="article-date">
+  <time datetime="2022-11-13T09:33:43.000Z" itemprop="datePublished">2022-11-13</time>
+</a>   
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">1.5k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">5 分钟</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+    <div class="tocbot"></div>
+
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h2 id="0-前言"><a href="#0-前言" class="headerlink" title="0. 前言"></a><strong>0. 前言</strong></h2><p>发送电子邮件是个很常见的开发需求。比如你写了个监控天气的脚本，发现第二天要下雨，或者网站上关注的某个商品降价了，就可以发个邮件到邮箱来提醒自己。</p>
+<p>使用 Python 脚本发送邮件并不复杂。不过由于各家邮件的发送机制和安全策略不同，常常会因为一些配置问题造成发送失败。今天我们来举例讲讲如何使用 Python 发送邮件。</p>
+<p>本文主要内容包括，了解发邮件的思路，发送邮件需要的一些设置，发送一封简单的邮件，发送一封包含附件的邮件，在写代码过程中我们需要注意哪些问题等等。（完整参考代码地址见文末）</p>
+<h2 id="1-思路"><a href="#1-思路" class="headerlink" title="1. 思路"></a><strong>1. 思路</strong></h2><p>使用脚本发送邮件的思路其实和客户端发送邮件一样，过程都是：</p>
+<p><strong>登录 —&gt; 写邮件 —&gt; 发送</strong></p>
+<p>只不过通过脚本发送时我们需要考虑到整个过程的方方面面。以下为思路导图：</p>
+<p><img src="https://pic3.zhimg.com/80/v2-e98001644a72c8d492c6893be41d347e_720w.webp" alt="img"></p>
+<h2 id="2-Python-email-模块"><a href="#2-Python-email-模块" class="headerlink" title="2. Python-email 模块"></a><strong>2. Python-email 模块</strong></h2><p>与发送邮件相关的 Python 模块：</p>
+<p><strong>smtplib</strong></p>
+<p>是关于 SMTP（简单邮件传输协议）的操作模块，在发送邮件的过程中起到服务器之间互相通信的作用。</p>
+<p><strong>email</strong></p>
+<p>简单来说，即服务器之间通信的信息，包括信息头、信息主体等等。</p>
+<p>举个简单的例子，当你登录邮箱，写好邮件后点击发送，这部分是由 SMTP 接管；而写邮件、添加附件是由 email 模块控制。</p>
+<h2 id="3-开通电子邮箱的SMTP功能"><a href="#3-开通电子邮箱的SMTP功能" class="headerlink" title="3. 开通电子邮箱的SMTP功能"></a><strong>3. 开通电子邮箱的SMTP功能</strong></h2><p>在使用脚本发邮件之前，我们需要打开自己邮箱的 SMTP 功能，各家邮箱的设置方法就不一一讲述了，具体使用时可以百度一下，下面以 163 邮箱设置为例做一个简单的演示：</p>
+<p><img src="https://pic2.zhimg.com/80/v2-c5d999eca64f00177d2e3d97da7656b1_720w.webp" alt="img"></p>
+<h2 id="4-简单代码"><a href="#4-简单代码" class="headerlink" title="4. 简单代码"></a><strong>4. 简单代码</strong></h2><p>实践出真知，我们结合一个简单的代码来理解这一过程：登录 163 邮箱，向 qq 邮箱发送邮件。</p>
+<p>脚本分为三个步骤：</p>
+<ol>
+<li>设置好服务器端信息</li>
+<li>邮件主体信息</li>
+<li>登录发送</li>
+</ol>
+<p>另外在处理文本时，我们需要使用 MIMEText 类。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> smtplib</span><br><span class="line"><span class="keyword">from</span> email.mime.text <span class="keyword">import</span> MIMEText</span><br><span class="line"><span class="comment">#设置服务器所需信息</span></span><br><span class="line"><span class="comment">#163邮箱服务器地址</span></span><br><span class="line">mail_host = <span class="string">&#x27;smtp.163.com&#x27;</span>  </span><br><span class="line"><span class="comment">#163用户名</span></span><br><span class="line">mail_user = <span class="string">&#x27;159*****02&#x27;</span>  </span><br><span class="line"><span class="comment">#密码(部分邮箱为授权码) </span></span><br><span class="line">mail_pass = <span class="string">&#x27;7******x&#x27;</span>   </span><br><span class="line"><span class="comment">#邮件发送方邮箱地址</span></span><br><span class="line">sender = <span class="string">&#x27;159*****02@163.com&#x27;</span>  </span><br><span class="line"><span class="comment">#邮件接受方邮箱地址，注意需要[]包裹，这意味着你可以写多个邮件地址群发</span></span><br><span class="line">receivers = [<span class="string">&#x27;59*****02@qq.com&#x27;</span>]  </span><br><span class="line"></span><br><span class="line"><span class="comment">#设置email信息</span></span><br><span class="line"><span class="comment">#邮件内容设置</span></span><br><span class="line">message = MIMEText(<span class="string">&#x27;content&#x27;</span>,<span class="string">&#x27;plain&#x27;</span>,<span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line"><span class="comment">#邮件主题       </span></span><br><span class="line">message[<span class="string">&#x27;Subject&#x27;</span>] = <span class="string">&#x27;title&#x27;</span> </span><br><span class="line"><span class="comment">#发送方信息</span></span><br><span class="line">message[<span class="string">&#x27;From&#x27;</span>] = sender </span><br><span class="line"><span class="comment">#接受方信息     </span></span><br><span class="line">message[<span class="string">&#x27;To&#x27;</span>] = receivers[<span class="number">0</span>]  </span><br><span class="line"></span><br><span class="line"><span class="comment">#登录并发送邮件</span></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    smtpObj = smtplib.SMTP() </span><br><span class="line">    <span class="comment">#连接到服务器</span></span><br><span class="line">    smtpObj.connect(mail_host,<span class="number">25</span>)</span><br><span class="line">    <span class="comment">#登录到服务器</span></span><br><span class="line">    smtpObj.login(mail_user,mail_pass) </span><br><span class="line">    <span class="comment">#发送</span></span><br><span class="line">    smtpObj.sendmail(</span><br><span class="line">        sender,receivers,message.as_string()) </span><br><span class="line">    <span class="comment">#退出</span></span><br><span class="line">    smtpObj.quit() </span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;success&#x27;</span>)</span><br><span class="line"><span class="keyword">except</span> smtplib.SMTPException <span class="keyword">as</span> e:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;error&#x27;</span>,e) <span class="comment">#打印错误</span></span><br></pre></td></tr></table></figure>
+
+<p>结果：</p>
+<p><img src="https://pic4.zhimg.com/80/v2-633829da1a6cd9aff757287dc2468747_720w.webp" alt="img"></p>
+<p>注意事项：</p>
+<p>一些邮箱登录比如 QQ 邮箱需要 SSL 认证，所以 SMTP 已经不能满足要求，而需要SMTP_SSL，解决办法为：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#启动</span></span><br><span class="line">smtpObj = smtplib.SMTP()</span><br><span class="line"><span class="comment">#连接到服务器</span></span><br><span class="line">smtpObj.connect(mail_host,<span class="number">25</span>)</span><br><span class="line"><span class="comment">#######替换为########</span></span><br><span class="line">smtpObj = smtplib.SMTP_SSL(mail_host)</span><br></pre></td></tr></table></figure>
+
+<h2 id="5-带有附件的email"><a href="#5-带有附件的email" class="headerlink" title="5. 带有附件的email"></a><strong>5. 带有附件的email</strong></h2><p>上面我们介绍了发送字符串的邮件，但这明显不满足现代邮件的需求，下面我们介绍如何发送内容以 HTML 格式，并且带有图片和文本文件的邮件。</p>
+<p>处理多种形态的邮件主体我们需要 MIMEMultipart 类，而处理图片需要 MIMEImage 类。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> smtplib</span><br><span class="line"><span class="keyword">from</span> email.mime.text <span class="keyword">import</span> MIMEText</span><br><span class="line"><span class="keyword">from</span> email.mime.multipart <span class="keyword">import</span> MIMEMultipart</span><br><span class="line"><span class="keyword">from</span> email.mime.image <span class="keyword">import</span> MIMEImage</span><br><span class="line"></span><br><span class="line"><span class="comment">#设置登录及服务器信息</span></span><br><span class="line">mail_host = <span class="string">&#x27;smtp.163.com&#x27;</span></span><br><span class="line">mail_user = <span class="string">&#x27;159*****02&#x27;</span></span><br><span class="line">mail_pass = <span class="string">&#x27;7******x&#x27;</span></span><br><span class="line">sender = <span class="string">&#x27;159*****02@163.com&#x27;</span></span><br><span class="line">receivers = [<span class="string">&#x27;7******0@qq.com&#x27;</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment">#设置eamil信息</span></span><br><span class="line"><span class="comment">#添加一个MIMEmultipart类，处理正文及附件</span></span><br><span class="line">message = MIMEMultipart()</span><br><span class="line">message[<span class="string">&#x27;From&#x27;</span>] = sender</span><br><span class="line">message[<span class="string">&#x27;To&#x27;</span>] = receivers[<span class="number">0</span>]</span><br><span class="line">message[<span class="string">&#x27;Subject&#x27;</span>] = <span class="string">&#x27;title&#x27;</span></span><br><span class="line"><span class="comment">#推荐使用html格式的正文内容，这样比较灵活，可以附加图片地址，调整格式等</span></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&#x27;abc.html&#x27;</span>,<span class="string">&#x27;r&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">    content = f.read()</span><br><span class="line"><span class="comment">#设置html格式参数</span></span><br><span class="line">part1 = MIMEText(content,<span class="string">&#x27;html&#x27;</span>,<span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line"><span class="comment">#添加一个txt文本附件</span></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&#x27;abc.txt&#x27;</span>,<span class="string">&#x27;r&#x27;</span>)<span class="keyword">as</span> h:</span><br><span class="line">    content2 = h.read()</span><br><span class="line"><span class="comment">#设置txt参数</span></span><br><span class="line">part2 = MIMEText(content2,<span class="string">&#x27;plain&#x27;</span>,<span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line"><span class="comment">#附件设置内容类型，方便起见，设置为二进制流</span></span><br><span class="line">part2[<span class="string">&#x27;Content-Type&#x27;</span>] = <span class="string">&#x27;application/octet-stream&#x27;</span></span><br><span class="line"><span class="comment">#设置附件头，添加文件名</span></span><br><span class="line">part2[<span class="string">&#x27;Content-Disposition&#x27;</span>] = <span class="string">&#x27;attachment;filename=&quot;abc.txt&quot;&#x27;</span></span><br><span class="line"><span class="comment">#添加照片附件</span></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&#x27;1.png&#x27;</span>,<span class="string">&#x27;rb&#x27;</span>)<span class="keyword">as</span> fp:</span><br><span class="line">    picture = MIMEImage(fp.read())</span><br><span class="line">    <span class="comment">#与txt文件设置相似</span></span><br><span class="line">    picture[<span class="string">&#x27;Content-Type&#x27;</span>] = <span class="string">&#x27;application/octet-stream&#x27;</span></span><br><span class="line">    picture[<span class="string">&#x27;Content-Disposition&#x27;</span>] = <span class="string">&#x27;attachment;filename=&quot;1.png&quot;&#x27;</span></span><br><span class="line"><span class="comment">#将内容附加到邮件主体中</span></span><br><span class="line">message.attach(part1)</span><br><span class="line">message.attach(part2)</span><br><span class="line">message.attach(picture)</span><br><span class="line"></span><br><span class="line"><span class="comment">#登录并发送</span></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    smtpObj = smtplib.SMTP()</span><br><span class="line">    smtpObj.connect(mail_host,<span class="number">25</span>)</span><br><span class="line">    smtpObj.login(mail_user,mail_pass)</span><br><span class="line">    smtpObj.sendmail(</span><br><span class="line">        sender,receivers,message.as_string())</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;success&#x27;</span>)</span><br><span class="line">    smtpObj.quit()</span><br><span class="line"><span class="keyword">except</span> smtplib.SMTPException <span class="keyword">as</span> e:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;error&#x27;</span>,e)</span><br></pre></td></tr></table></figure>
+
+<h2 id="6-小结"><a href="#6-小结" class="headerlink" title="6.小结"></a><strong>6.小结</strong></h2><p>通过上面的代码，想必大家已经对发邮件有了基本的认识。</p>
+<p>从整体上我们要把握整个过程的思路：</p>
+<ol>
+<li>登录</li>
+<li>写邮件</li>
+<li>发送</li>
+</ol>
+<p>微观上我们需要了解：</p>
+<ul>
+<li>smtplib&#x2F;email 模块的代码规则；</li>
+<li>什么时候使用 SMTP，什么时候使用 SMTP_SSL？</li>
+<li>针对不同的邮件内容需要使用到不同的类，MIMEmultipart、MIMEText、MIMEIamge 等等；</li>
+<li>怎么去设置附件信息</li>
+</ul>
+<p>当然，看再多教程，不如亲自动手写一段代码。大家不妨都自己发一封邮件试一试。</p>
+ 
+      <!-- reward -->
+      
+      <div id="reword-out">
+        <div id="reward-btn">
+          打赏
+        </div>
+      </div>
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>版权声明： </strong>
+          
+          本博客所有文章除特别声明外，著作权归作者所有。转载请注明出处！
+          
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://example.com/2022/11/13/20221113-%E7%94%A8python%E5%8F%91%E9%82%AE%E4%BB%B6/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>  
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+    
+      <a href="/2022/11/12/20221112-80%E7%A7%8D%E5%86%9C%E6%9D%91%E8%B7%AF%E8%BE%B9%E9%87%8E%E8%8D%89/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">20221112-80种农村路边野草</div>
+      </a>
+    
+  </nav>
+
+  
+   
+    
+    <script src="https://cdn.staticfile.org/twikoo/1.4.18/twikoo.all.min.js"></script>
+    <div id="twikoo" class="twikoo"></div>
+    <script>
+        twikoo.init({
+            envId: ""
+        })
+    </script>
+ 
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2015-2022
+        <i class="ri-heart-fill heart_icon"></i> TeX_baitu
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+        
+        <span>
+  <span><i class="ri-user-3-fill"></i>访问人数:<span id="busuanzi_value_site_uv"></span></span>
+  <span class="division">|</span>
+  <span><i class="ri-eye-fill"></i>浏览次数:<span id="busuanzi_value_page_pv"></span></span>
+</span>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+        <script type="text/javascript" src='https://s9.cnzz.com/z_stat.php?id=1278069914&amp;web_id=1278069914'></script>
+        
+      </li>
+    </ul>
+  </div>
+</footer>    
+    </main>
+    <div class="float_btns">
+      <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+    </div>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/ayer-side.svg" alt="TeX_baitu blog"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags/%E6%97%85%E8%A1%8C/">旅行</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" target="_blank" rel="noopener" href="http://shenyu-vip.lofter.com">摄影</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/friends">友链</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/2019/about">关于我</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="搜索">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-3.6.0.min.js"></script>
+ 
+<script src="/js/lazyload.min.js"></script>
+
+<!-- Tocbot -->
+ 
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  tocbot.init({
+    tocSelector: ".tocbot",
+    contentSelector: ".article-entry",
+    headingSelector: "h1, h2, h3, h4, h5, h6",
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: "main",
+    positionFixedSelector: ".tocbot",
+    positionFixedClass: "is-position-fixed",
+    fixedSidebarOffset: "auto",
+  });
+</script>
+
+<script src="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.js"></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.css"
+/>
+<script src="https://cdn.staticfile.org/justifiedGallery/3.8.1/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+ <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/default-skin/default-skin.min.css">
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script> 
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+ 
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+ 
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+<!-- CodeCopy -->
+ 
+<link rel="stylesheet" href="/css/clipboard.css">
+ <script src="https://cdn.staticfile.org/clipboard.js/2.0.10/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+ 
+<!-- CanvasBackground -->
+
+<script>
+  if (window.mermaid) {
+    mermaid.initialize({ theme: "forest" });
+  }
+</script>
+
+
+    
+    
+
+  </div>
+</body>
+
+</html>
