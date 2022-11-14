@@ -126,6 +126,243 @@
     
     
     <article
+  id="post-20220722-PowerShell管道使用"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/07/22/20220722-PowerShell%E7%AE%A1%E9%81%93%E4%BD%BF%E7%94%A8/"
+    >20220722-PowerShell管道使用</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/07/22/20220722-PowerShell%E7%AE%A1%E9%81%93%E4%BD%BF%E7%94%A8/" class="article-date">
+  <time datetime="2022-07-22T03:42:57.000Z" itemprop="datePublished">2022-07-22</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p><a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-CN/powershell/module/microsoft.powershell.core/about/about_pipelines?view=powershell-7.2">https://docs.microsoft.com/zh-CN/powershell/module/microsoft.powershell.core/about/about_pipelines?view=powershell-7.2</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/lavender000/p/6941393.html">https://www.cnblogs.com/lavender000/p/6941393.html</a></p>
+<p>简短说明</p>
+<p>在powershell 中将命令合并到管道中</p>
+<p>长说明</p>
+<p>管道是一系列由管道运算符连接的命令 |</p>
+<p>可以发送第一个命令的输出，作为第二个命令的输入进行处理。 还可以将输出发送到另一个命令。 结果是一个复杂的命令链或 管道 ，由一系列简单的命令组成。</p>
+<p>例如，</p>
+<p>PowerShell</p>
+<p>复制</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Command-1 | Command-2 | Command-3</span><br></pre></td></tr></table></figure>
+<p>在此示例中，发出的对象 Command-1 将发送到 Command-2 。 Command-2 处理对象并将其发送到 Command-3 。 Command-3 处理对象并将其沿管道向下发送。 由于管道中没有更多命令，因此结果将显示在控制台上。</p>
+<p>在管道中，按从左到右的顺序处理命令。 处理将作为单个操作进行处理，并在生成时显示输出。</p>
+<p>下面是一个简单的示例。 以下命令将获取记事本进程，然后将其停止。</p>
+<p>例如，</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Get-Process notepad | Stop-Process</span><br></pre></td></tr></table></figure>
+
+<p>此管道示例获取当前目录中的文本文件，只选择长度超过10000个字节的文件，按长度对它们进行排序，并在表中显示每个文件的名称和长度。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Get-ChildItem -Path *.txt |</span><br><span class="line">  Where-Object &#123;$_.length -gt 10000&#125; |</span><br><span class="line">    Sort-Object -Property length |</span><br><span class="line">      Format-Table -Property name, length</span><br></pre></td></tr></table></figure>
+
+<p>此管道按指定顺序包含四个命令。 下图显示了每个命令的输出，因为它将传递到管道中的下一个命令。</p>
+<p>使用管道</p>
+<p>大多数powershell cmdlet 都设计为支持管道，在大多数情况下，你可以通过管道将Get cmdlet 的结果传递给相同名词的另一个cmdlet</p>
+<p>例如，可以通过管道将 cmdlet 的输出 Get-Service 传递给 Start-Service 或 Stop-Service cmdlet。</p>
+<p>此示例管道在计算机上启动 WMI 服务：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Get-Service wmi | Start-Service</span><br></pre></td></tr></table></figure>
+
+<p>再例如，你可以通过管道将 PowerShell 注册表提供程序的输出 Get-Item Get-ChildItem 传递给 New-ItemProperty cmdlet。 此示例将值为 8124 的新注册表项 NoOfEmployees 添加到 MyCompany 注册表项。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Get-Item -Path HKLM:\Software\MyCompany |</span><br><span class="line">  New-ItemProperty -Name NoOfEmployees -Value 8124</span><br></pre></td></tr></table></figure>
+
+<p>许多实用工具 cmdlet Get-Member （如、 Group-Object Where-Object Sort-Object 、、和 Measure-Object ）几乎只是在管道中使用。 可以通过管道将任何对象类型传递给这些 cmdlet。 此示例显示了如何按每个进程中打开的句柄数对计算机上的所有进程进行排序。</p>
+<p>PowerShell</p>
+<p>复制</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Get-Process | Sort-Object -Property handles</span><br></pre></td></tr></table></figure>
+<p>可以通过管道将对象传递给格式设置、导出和输出 cmdlet，例如 Format-List 、 Format-Table Export-Clixml Export-CSV 、、和。 Out-File</p>
+<p>此示例演示如何使用 Format-List cmdlet 显示进程对象的属性列表。</p>
+<p>PowerShell</p>
+<p>复制</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Get-Process winlogon | Format-List -Property *</span><br></pre></td></tr></table></figure>
+<p>还可以通过管道将本机命令的输出传递给 PowerShell cmdlet。 例如：</p>
+<p>PowerShell</p>
+<p>复制</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">PS&gt; ipconfig.exe | Select-String -Pattern &#x27;IPv4&#x27;</span><br><span class="line"></span><br><span class="line">   IPv4 Address. . . . . . . . . . . : 172.24.80.1</span><br><span class="line">   IPv4 Address. . . . . . . . . . . : 192.168.1.45</span><br><span class="line">   IPv4 Address. . . . . . . . . . . : 100.64.108.37</span><br></pre></td></tr></table></figure>
+<p> 重要</p>
+<p>成功 和 错误 流类似于其他 shell 的 stdin 和 stderr 流。 但 stdin 未连接到 PowerShell 管道进行输入。 有关详细信息，请参阅 about_Redirection。</p>
+<p>使用几个实践，你会发现将简单命令合并到管道可节省时间和键入内容，并使你的脚本更有效。</p>
+<h2 id="管道的工作方式"><a href="#管道的工作方式" class="headerlink" title="管道的工作方式"></a>管道的工作方式</h2><p>本部分介绍如何将输入对象绑定到 cmdlet 参数并在管道执行期间进行处理。</p>
+<h3 id="接受管道输入"><a href="#接受管道输入" class="headerlink" title="接受管道输入"></a>接受管道输入</h3><p>若要支持流水线，接收 cmdlet 必须具有接受管道输入的参数。 <code>Get-Help</code>使用带有 <strong>Full</strong> 或 <strong>Parameter</strong> 选项的命令来确定 cmdlet 接受管道输入的参数。</p>
+<p>例如，若要确定 cmdlet 的哪些参数 <code>Start-Service</code> 接受管道输入，请键入：</p>
+<p>PowerShell复制</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Get-Help</span> <span class="built_in">Start-Service</span> <span class="literal">-Full</span></span><br></pre></td></tr></table></figure>
+
+<p>或</p>
+<p>PowerShell复制</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Get-Help</span> <span class="built_in">Start-Service</span> <span class="literal">-Parameter</span> *</span><br></pre></td></tr></table></figure>
+
+<p>Cmdlet 的帮助 <code>Start-Service</code> 显示：只有 <strong>InputObject</strong> 和 <strong>Name</strong> 参数接受管道输入。</p>
+<p>Output复制</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">-InputObject &lt;ServiceController[]&gt;</span><br><span class="line">Specifies ServiceController objects representing the services to be started.</span><br><span class="line">Enter a variable that contains the objects, or type a command or expression</span><br><span class="line">that gets the objects.</span><br><span class="line"></span><br><span class="line">Required?                    true</span><br><span class="line">Position?                    0</span><br><span class="line">Default value                None</span><br><span class="line">Accept pipeline input?       True (ByValue)</span><br><span class="line">Accept wildcard characters?  false</span><br><span class="line"></span><br><span class="line">-Name &lt;String[]&gt;</span><br><span class="line">Specifies the service names for the service to be started.</span><br><span class="line"></span><br><span class="line">The parameter name is optional. You can use Name or its alias, ServiceName,</span><br><span class="line">or you can omit the parameter name.</span><br><span class="line"></span><br><span class="line">Required?                    true</span><br><span class="line">Position?                    0</span><br><span class="line">Default value                None</span><br><span class="line">Accept pipeline input?       True (ByPropertyName, ByValue)</span><br><span class="line">Accept wildcard characters?  false</span><br></pre></td></tr></table></figure>
+
+<p>当你通过管道将对象发送到 <code>Start-Service</code> 时，PowerShell 会尝试将对象与 <strong>InputObject</strong> 和 <strong>Name</strong> 参数相关联。</p>
+<h3 id="接受管道输入的方法"><a href="#接受管道输入的方法" class="headerlink" title="接受管道输入的方法"></a>接受管道输入的方法</h3><p>Cmdlet 参数可采用以下两种不同方式之一接受管道输入：</p>
+<ul>
+<li><p><strong>ByValue</strong>：参数接受与所需的 .net 类型匹配或可转换为该类型的值。</p>
+<p>例如，的 <strong>Name</strong> 参数 <code>Start-Service</code> 接受按值的管道输入。 它可以接受可以转换为字符串的字符串对象或对象。</p>
+</li>
+<li><p><strong>ByPropertyName</strong>：仅当输入对象具有与参数名称相同的属性时，此参数才接受输入。</p>
+<p>例如，的 <code>Start-Service</code> name 参数可以接受具有 <strong>Name</strong> 属性的对象。 若要列出某个对象的属性，请将其传递到 <code>Get-Member</code> 。</p>
+</li>
+</ul>
+<p>一些参数可以通过值或属性名称接受对象，使从管道中获取输入变得更加容易。</p>
+<h3 id="参数绑定"><a href="#参数绑定" class="headerlink" title="参数绑定"></a>参数绑定</h3><p>当你通过管道将对象从一个命令传递给另一个命令时，PowerShell 会尝试将管道对象与接收 cmdlet 的参数相关联。</p>
+<p>PowerShell 的参数绑定组件根据以下条件将输入对象与 cmdlet 参数关联：</p>
+<ul>
+<li>参数必须接受来自管道的输入。</li>
+<li>参数必须接受要发送的对象的类型或可转换为预期类型的类型。</li>
+<li>命令中未使用参数。</li>
+</ul>
+<p>例如， <code>Start-Service</code> cmdlet 具有多个参数，但其中只有两个参数、 <strong>名称</strong> 和 <strong>InputObject</strong> 接受管道输入。 <strong>Name</strong> 参数使用字符串， <strong>InputObject</strong> 参数使用服务对象。 因此，可以通过管道字符串、服务对象和具有可转换为字符串或服务对象的属性的对象。</p>
+<p>PowerShell 会尽可能有效地管理参数绑定。 不能建议或强制 PowerShell 绑定到特定参数。 如果 PowerShell 无法绑定管道对象，则该命令将失败。</p>
+<p>有关排除绑定错误的详细信息，请参阅本文后面的 <a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-CN/powershell/module/microsoft.powershell.core/about/about_pipelines?view=powershell-7.2#investigating-pipeline-errors">调查管道错误</a> 。</p>
+<h3 id="一次一次性处理"><a href="#一次一次性处理" class="headerlink" title="一次一次性处理"></a>一次一次性处理</h3><p>通过管道将对象传递给命令与使用命令的参数来提交对象非常类似。 让我们看一看管道示例。 在此示例中，我们使用管道来显示服务对象表。</p>
+<p>PowerShell复制</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Get-Service</span> | <span class="built_in">Format-Table</span> <span class="literal">-Property</span> Name, DependentServices</span><br></pre></td></tr></table></figure>
+
+<p>在功能上，这与使用的 <strong>InputObject</strong> 参数 <code>Format-Table</code> 来提交对象集合类似。</p>
+<p>例如，我们可以将服务集合保存到使用 <strong>InputObject</strong> 参数传递的变量。</p>
+<p>PowerShell复制</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$services</span> = <span class="built_in">Get-Service</span></span><br><span class="line"><span class="built_in">Format-Table</span> <span class="literal">-InputObject</span> <span class="variable">$services</span> <span class="literal">-Property</span> Name, DependentServices</span><br></pre></td></tr></table></figure>
+
+<p>或者，可以将该命令嵌入到 <strong>InputObject</strong> 参数中。</p>
+<p>PowerShell复制</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Format-Table</span> <span class="literal">-InputObject</span> (<span class="built_in">Get-Service</span>) <span class="literal">-Property</span> Name, DependentServices</span><br></pre></td></tr></table></figure>
+
+<p>但有一个重要的差异。 通过管道将多个对象传递给命令时，PowerShell 会一次将对象发送到命令。 使用命令参数时，对象将作为单个数组对象发送。 这种次要差别会产生重大后果。</p>
+<p>执行管道时，PowerShell 会自动枚举任何实现 <code>IEnumerable</code> 接口的类型，并一次通过管道发送成员。 异常是 <code>[hashtable]</code> ，这需要调用 <code>GetEnumerator()</code> 方法。</p>
+<p>在下面的示例中，将向 <code>Measure-Object</code> cmdlet 传递一个数组和一个哈希表，以计算从管道接收的对象数。 该数组具有多个成员，并且哈希表具有多个键值对。 一次只枚举一个数组。</p>
+<p>PowerShell复制</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">@</span>(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>) | <span class="built_in">Measure-Object</span></span><br></pre></td></tr></table></figure>
+
+<p>Output复制</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Count    : 3</span><br><span class="line">Average  :</span><br><span class="line">Sum      :</span><br><span class="line">Maximum  :</span><br><span class="line">Minimum  :</span><br><span class="line">Property :</span><br></pre></td></tr></table></figure>
+
+<p>PowerShell复制</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">@</span>&#123;<span class="string">&quot;One&quot;</span>=<span class="number">1</span>;<span class="string">&quot;Two&quot;</span>=<span class="number">2</span>&#125; | <span class="built_in">Measure-Object</span></span><br></pre></td></tr></table></figure>
+
+<p>Output复制</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Count    : 1</span><br><span class="line">Average  :</span><br><span class="line">Sum      :</span><br><span class="line">Maximum  :</span><br><span class="line">Minimum  :</span><br><span class="line">Property :</span><br></pre></td></tr></table></figure>
+
+<p>同样，如果你通过 <code>Get-Process</code> 管道将多个进程对象传递给 <code>Get-Member</code> cmdlet，则 PowerShell 会将每个进程对象一次发送到 <code>Get-Member</code> 。 <code>Get-Member</code> 显示 (类型的 .NET 类) 进程对象及其属性和方法。</p>
+<p>PowerShell复制</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Get-Process</span> | <span class="built_in">Get-Member</span></span><br></pre></td></tr></table></figure>
+
+<p>Output复制</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">TypeName: System.Diagnostics.Process</span><br><span class="line"></span><br><span class="line">Name      MemberType     Definition</span><br><span class="line">----      ----------     ----------</span><br><span class="line">Handles   AliasProperty  Handles = Handlecount</span><br><span class="line">Name      AliasProperty  Name = ProcessName</span><br><span class="line">NPM       AliasProperty  NPM = NonpagedSystemMemorySize</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<p> 备注</p>
+<p><code>Get-Member</code> 消除重复项，因此，如果所有对象都属于同一类型，则它只显示一种对象类型。</p>
+<p>但是，如果使用的 <strong>InputObject</strong> 参数 <code>Get-Member</code> ，则 <code>Get-Member</code> 会将 <strong>system.object</strong> 对象的数组作为单个单元接收。 它显示对象数组的属性。 (记下 array 符号 (<code>[]</code> 在 <strong>system.object</strong> 类型名称后面) 。 )</p>
+<p>例如，</p>
+<p>PowerShell复制</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Get-Member</span> <span class="literal">-InputObject</span> (<span class="built_in">Get-Process</span>)</span><br></pre></td></tr></table></figure>
+
+<p>Output复制</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">TypeName: System.Object[]</span><br><span class="line"></span><br><span class="line">Name               MemberType    Definition</span><br><span class="line">----               ----------    ----------</span><br><span class="line">Count              AliasProperty Count = Length</span><br><span class="line">Address            Method        System.Object&amp; Address(Int32 )</span><br><span class="line">Clone              Method        System.Object Clone()</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<p>此结果可能不是你所期望的结果。 但在理解后，就可以使用它了。 例如，所有数组对象都具有 <strong>Count</strong> 属性。 可以使用它来计算计算机上运行的进程数。</p>
+<p>例如，</p>
+<p>PowerShell复制</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(<span class="built_in">Get-Process</span>).count</span><br></pre></td></tr></table></figure>
+
+<p>请务必记住，在管道中发送的对象每次传递一次。</p>
+<h2 id="在管道中使用本机命令"><a href="#在管道中使用本机命令" class="headerlink" title="在管道中使用本机命令"></a>在管道中使用本机命令</h2><p>PowerShell 允许在管道中包含本机外部命令。 但是，请务必注意，PowerShell 的管道是面向对象的，不支持原始字节数据。</p>
+<p>从输出原始字节数据的本机程序对输出进行管道或重定向会将输出转换为 .NET 字符串。 这种转换可能会导致原始数据输出损坏。</p>
+<p>作为一种解决方法，使用 <code>cmd.exe /c</code> 或 <code>sh -c</code> 调用本机命令，并使用 <code>|</code> 本机 shell 提供的和 <code>&gt;</code> 运算符。</p>
+<h2 id="调查管道错误"><a href="#调查管道错误" class="headerlink" title="调查管道错误"></a>调查管道错误</h2><p>当 PowerShell 无法将管道对象与接收 cmdlet 的参数关联时，该命令将失败。</p>
+<p>在下面的示例中，我们尝试将注册表项从一个注册表项移到另一个注册表项。 该 <code>Get-Item</code> cmdlet 将获取目标路径，然后将该路径传递给 <code>Move-ItemProperty</code> cmdlet。 <code>Move-ItemProperty</code>命令指定要移动的注册表项的当前路径和名称。</p>
+<p>PowerShell复制</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Get-Item</span> <span class="literal">-Path</span> HKLM:\Software\MyCompany\sales |</span><br><span class="line"><span class="built_in">Move-ItemProperty</span> <span class="literal">-Path</span> HKLM:\Software\MyCompany\design <span class="literal">-Name</span> product</span><br></pre></td></tr></table></figure>
+
+<p>命令失败，PowerShell 将显示以下错误消息：</p>
+<p>Output复制</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Move-ItemProperty : The input object can&#x27;t be bound to any parameters for</span><br><span class="line">the command either because the command doesn&#x27;t take pipeline input or the</span><br><span class="line">input and its properties do not match any of the parameters that take</span><br><span class="line">pipeline input.</span><br><span class="line">At line:1 char:23</span><br><span class="line">+ $a | Move-ItemProperty &lt;&lt;&lt;&lt;  -Path HKLM:\Software\MyCompany\design -Name p</span><br></pre></td></tr></table></figure>
+
+<p>若要进行调查，请使用 <code>Trace-Command</code> cmdlet 跟踪 PowerShell 的参数绑定组件。 下面的示例跟踪管道的执行过程中的参数绑定。 <strong>PSHost</strong> 参数将跟踪结果显示在控制台中， <strong>FilePath</strong> 参数会将跟踪结果发送到 <code>debug.txt</code> 文件，供以后参考。</p>
+<p>PowerShell复制</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Trace-Command</span> <span class="literal">-Name</span> ParameterBinding <span class="literal">-PSHost</span> <span class="literal">-FilePath</span> debug.txt <span class="literal">-Expression</span> &#123;</span><br><span class="line">  <span class="built_in">Get-Item</span> <span class="literal">-Path</span> HKLM:\Software\MyCompany\sales |</span><br><span class="line">    <span class="built_in">Move-ItemProperty</span> <span class="literal">-Path</span> HKLM:\Software\MyCompany\design <span class="literal">-Name</span> product</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>跟踪的结果很长，但会显示绑定到 <code>Get-Item</code> cmdlet 的值，然后显示绑定到 <code>Move-ItemProperty</code> cmdlet 的命名值。</p>
+<p>Output复制</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">BIND NAMED cmd line args [`Move-ItemProperty`]</span><br><span class="line">BIND arg [HKLM:\Software\MyCompany\design] to parameter [Path]</span><br><span class="line">...</span><br><span class="line">BIND arg [product] to parameter [Name]</span><br><span class="line">...</span><br><span class="line">BIND POSITIONAL cmd line args [`Move-ItemProperty`]</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<p>最后，它显示尝试将路径绑定到的 <code>Move-ItemProperty</code> <strong>目标</strong> 参数失败。</p>
+<p>Output复制</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">BIND PIPELINE object to parameters: [`Move-ItemProperty`]</span><br><span class="line">PIPELINE object TYPE = [Microsoft.Win32.RegistryKey]</span><br><span class="line">RESTORING pipeline parameter&#x27;s original values</span><br><span class="line">Parameter [Destination] PIPELINE INPUT ValueFromPipelineByPropertyName NO</span><br><span class="line">COERCION</span><br><span class="line">Parameter [Credential] PIPELINE INPUT ValueFromPipelineByPropertyName NO</span><br><span class="line">COERCION</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<p><code>Get-Help</code>使用 cmdlet 查看 <strong>目标</strong> 参数的属性。</p>
+<p>Output复制</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Get-Help Move-ItemProperty -Parameter Destination</span><br><span class="line"></span><br><span class="line">-Destination &lt;String&gt;</span><br><span class="line">    Specifies the path to the destination location.</span><br><span class="line"></span><br><span class="line">    Required?                    true</span><br><span class="line">    Position?                    1</span><br><span class="line">    Default value                None</span><br><span class="line">    Accept pipeline input?       True (ByPropertyName)</span><br><span class="line">    Accept wildcard characters?  false</span><br></pre></td></tr></table></figure>
+
+<p>结果显示 <strong>目标</strong> 仅按属性名称获取管道输入。 因此，管道对象必须具有一个名为 “ <strong>Destination</strong>“ 的属性。</p>
+<p>使用 <code>Get-Member</code> 可查看来自的对象 <code>Get-Item</code> 的属性。</p>
+<p>PowerShell复制</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Get-Item</span> <span class="literal">-Path</span> HKLM:\Software\MyCompany\sales | <span class="built_in">Get-Member</span></span><br></pre></td></tr></table></figure>
+
+<p>输出显示该项目是没有 <strong>目标</strong> 属性的 <strong>Microsoft. Win32</strong> 对象。 这说明了命令失败的原因。</p>
+<p><strong>Path</strong> 参数按名称或值接受管道输入。</p>
+<p>Output复制</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Get-Help Move-ItemProperty -Parameter Path</span><br><span class="line"></span><br><span class="line">-Path &lt;String[]&gt;</span><br><span class="line">    Specifies the path to the current location of the property. Wildcard</span><br><span class="line">    characters are permitted.</span><br><span class="line"></span><br><span class="line">    Required?                    true</span><br><span class="line">    Position?                    0</span><br><span class="line">    Default value                None</span><br><span class="line">    Accept pipeline input?       True (ByPropertyName, ByValue)</span><br><span class="line">    Accept wildcard characters?  true</span><br></pre></td></tr></table></figure>
+
+<p>若要修复此命令，必须在 cmdlet 中 <code>Move-ItemProperty</code> 指定目标，并使用 <code>Get-Item</code> 获取要移动的项的 <strong>路径</strong> 。</p>
+<p>例如，</p>
+<p>PowerShell复制</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Get-Item</span> <span class="literal">-Path</span> HKLM:\Software\MyCompany\design |</span><br><span class="line"><span class="built_in">Move-ItemProperty</span> <span class="literal">-Destination</span> HKLM:\Software\MyCompany\sales <span class="literal">-Name</span> product</span><br></pre></td></tr></table></figure>
+
+<h2 id="内部续行符"><a href="#内部续行符" class="headerlink" title="内部续行符"></a>内部续行符</h2><p>正如前面所讨论的，管道是一系列由管道运算符连接的命令 (<code>|</code>) ，通常在一行上写入。 但是，为了提高可读性，PowerShell 允许跨多个行拆分管道。 当管道运算符是行上的最后一个标记时，PowerShell 分析器会将下一行连接到当前命令以继续构造管道。</p>
+<p>例如，以下单行管道：</p>
+<p>PowerShell复制</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Command<span class="literal">-1</span> | Command<span class="literal">-2</span> | Command<span class="literal">-3</span></span><br></pre></td></tr></table></figure>
+
+<p>可以编写为：</p>
+<p>PowerShell复制</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Command<span class="literal">-1</span> |</span><br><span class="line">  Command<span class="literal">-2</span> |</span><br><span class="line">    Command<span class="literal">-3</span></span><br></pre></td></tr></table></figure>
+
+<p>后续行中的前导空格并不重要。 缩进增强了可读性。</p>
+<p>PowerShell 7 增加了对管道的延续的支持，并在行的开头提供管道字符。 下面的示例演示如何使用此新功能。</p>
+<p>PowerShell复制</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Wrapping with a pipe at the beginning of a line (no backtick required)</span></span><br><span class="line"><span class="built_in">Get-Process</span> | <span class="built_in">Where-Object</span> CPU | <span class="built_in">Where-Object</span> Path</span><br><span class="line">    | <span class="built_in">Get-Item</span> | <span class="built_in">Where-Object</span> FullName <span class="operator">-match</span> <span class="string">&quot;AppData&quot;</span></span><br><span class="line">    | <span class="built_in">Sort-Object</span> FullName <span class="literal">-Unique</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Wrapping with a pipe on a line by itself</span></span><br><span class="line"><span class="built_in">Get-Process</span> | <span class="built_in">Where-Object</span> CPU | <span class="built_in">Where-Object</span> Path</span><br><span class="line">    |</span><br><span class="line">    <span class="built_in">Get-Item</span> | <span class="built_in">Where-Object</span> FullName <span class="operator">-match</span> <span class="string">&quot;AppData&quot;</span></span><br><span class="line">    |</span><br><span class="line">    <span class="built_in">Sort-Object</span> FullName <span class="literal">-Unique</span></span><br></pre></td></tr></table></figure>
+
+<p> 重要</p>
+<p>在 shell 中以交互方式工作时，仅当使用Ctrl + V粘贴时，才将代码粘贴到行的开头。 右键单击 “粘贴操作”，一次插入一个行。 因为行不以管道字符结尾，所以 PowerShell 会将输入视为已完成，并按输入执行该行。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-20220716-ranger插件"
   class="article article-type-post"
   itemscope
@@ -663,54 +900,6 @@
        
   <p>[TOC]</p>
 <h2 id="0x01"><a href="#0x01" class="headerlink" title="0x01"></a>0x01</h2><h2 id="0x02"><a href="#0x02" class="headerlink" title="0x02"></a>0x02</h2><h2 id="0x03"><a href="#0x03" class="headerlink" title="0x03"></a>0x03</h2><h2 id="0x04"><a href="#0x04" class="headerlink" title="0x04"></a>0x04</h2> 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20220427-电影《英雄儿女》"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/04/27/20220427-%E7%94%B5%E5%BD%B1%E3%80%8A%E8%8B%B1%E9%9B%84%E5%84%BF%E5%A5%B3%E3%80%8B/"
-    >电影《英雄儿女》</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/04/27/20220427-%E7%94%B5%E5%BD%B1%E3%80%8A%E8%8B%B1%E9%9B%84%E5%84%BF%E5%A5%B3%E3%80%8B/" class="article-date">
-  <time datetime="2022-04-27T14:48:40.000Z" itemprop="datePublished">2022-04-27</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>《英雄赞歌》</p>
-<p>烽烟滚滚唱英雄，<br>四面青山侧耳听，侧耳听<br>晴天响雷敲金鼓，<br>大海扬波作和声<br>人民战士驱虎豹，<br>舍生忘死保和平<br>为什么战旗美如画，<br>英雄的鲜血染红了它<br>为什么大地春常在，<br>英雄的生命开鲜花；<br>英雄猛跳出战壕，<br>一道电光裂长空，裂长空<br>地陷进去独身挡，<br>天塌下来只手擎<br>两脚熊熊趟烈火，<br>浑身闪闪披彩虹<br>为什么战旗美如画，<br>英雄的鲜血染红了它<br>为什么大地春常在，<br>英雄的生命开鲜花；<br>一声呼叫炮声隆，<br>翻江倒海天地崩，天地崩<br>双手紧握爆破筒，<br>怒目喷火热血涌<br>敌人腐烂变泥土，<br>勇士辉煌化金星<br>为什么战旗美如画，<br>英雄的鲜血染红了它<br>为什么大地春常在，<br>英雄的生命开鲜花！</p>
- 
       <!-- reward -->
       
     </div>
