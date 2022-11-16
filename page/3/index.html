@@ -126,6 +126,53 @@
     
     
     <article
+  id="post-20220808-Manim入门教程"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/08/08/20220808-Manim%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B/"
+    >20220808-Manim入门教程</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/08/08/20220808-Manim%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B/" class="article-date">
+  <time datetime="2022-08-08T07:21:07.000Z" itemprop="datePublished">2022-08-08</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>git clone <a target="_blank" rel="noopener" href="https://github.com/leekunhwee/manim.git">https://github.com/leekunhwee/manim.git</a></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#假设文件保存为text.py</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> manimlib.imports <span class="keyword">import</span> *  <span class="comment">#引用包，后续代码该行默认有</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#动画执行指令</span></span><br><span class="line"><span class="comment">#python3 -m manim text.py BasicWrite -pl</span></span><br><span class="line"><span class="comment">#最基本的写字</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">BasicWrite</span>(<span class="title class_ inherited__">Scene</span>): </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">construct</span>(<span class="params">self</span>): </span><br><span class="line">        <span class="comment">#text = TextMobject(&quot;Hello, I am dodo&quot;)</span></span><br><span class="line">        text = TextMobject(<span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">            text,</span></span><br><span class="line"><span class="string">            $\\frac&#123;a&#125;&#123;d&#125;$,  #行内公式</span></span><br><span class="line"><span class="string">            $$a^2+d^2=o^2$$  #自动换行的公式</span></span><br><span class="line"><span class="string">            &quot;&quot;&quot;</span>)</span><br><span class="line">        self.play(Write(text))  <span class="comment">#逐个字母写出text内容</span></span><br><span class="line">        <span class="comment">#self.add(text)  #一次性直接出现所有字母</span></span><br><span class="line">        <span class="comment">#self.remove(text)  #一次性删除字符串</span></span><br><span class="line">        self.wait(<span class="number">3</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#动画执行指令</span></span><br><span class="line"><span class="comment">#python3 -m manim text.py TextWithPosition -pl</span></span><br><span class="line"><span class="comment">#在不同位置写字</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">TextWithPosition</span>(<span class="title class_ inherited__">Scene</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">construct</span>(<span class="params">self</span>):</span><br><span class="line">        text = TextMobject(<span class="string">&quot;Andodo&quot;</span>)</span><br><span class="line">        text.to_edge(UP)</span><br><span class="line">        <span class="comment">#text.to_edge(DOWN)</span></span><br><span class="line">        <span class="comment">#text.to_edge(Right)</span></span><br><span class="line">        <span class="comment">#text.to_edge(LEFT)</span></span><br><span class="line">        <span class="comment">#text.to_edge(UP+RIGHT)</span></span><br><span class="line">        <span class="comment">#text.to_edge(UP+LEFT)</span></span><br><span class="line">        <span class="comment">#text.to_edge(RIGHT+DOWN)</span></span><br><span class="line">        <span class="comment">#text.to_edge(LEFT+DOWN)</span></span><br><span class="line">        self.play(Write(text))</span><br><span class="line">        self.wait(<span class="number">3</span>)</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure> 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-20220806-好用的本地视频播放器推荐"
   class="article article-type-post"
   itemscope
@@ -851,53 +898,6 @@
 <p>若要使用此命令配置定期计划的备份，您必须是 Administrators 组的成员。 若要使用此命令执行所有其他任务，您必须是 Backup Operators 组或 Administrators 组的成员，或者您必须被委派了适当的权限。</p>
 <p>必须从提升的命令提示符运行 wbadmin ，方法是右键单击 “ 命令提示符”，然后选择 “以 管理员身份运行”。</p>
 <p>参数<br>参数  说明<br>wbadmin delete catalog  删除本地计算机上的备份目录。 仅当此计算机上的备份目录已损坏，并且你没有将备份存储在可用于还原目录的其他位置时，才使用此命令。<br>wbadmin delete systemstatebackup  删除一个或多个系统状态备份。<br>wbadmin disable backup  禁用日常备份。<br>wbadmin enable backup 配置并启用定期计划的备份。<br>wbadmin get disks 列出当前处于联机状态的磁盘。<br>wbadmin get items 列出备份中包含的项。<br>wbadmin get status  显示当前正在运行的备份或恢复操作的状态。<br>wbadmin get versions  列出从本地计算机恢复的备份的详细信息，或者，如果指定了其他位置，则从另一台计算机。<br>wbadmin restore catalog 在本地计算机上的备份目录已损坏的情况下，从指定的存储位置恢复备份目录。<br>wbadmin start backup  运行一次性备份。 如果与不带参数一起使用，则将使用每日备份计划的设置。<br>wbadmin start recovery  运行指定的卷、应用程序、文件或文件夹的恢复。<br>wbadmin start sysrecovery 运行完整系统的恢复 (至少包含操作系统状态) 的所有卷。 仅当使用 Windows 恢复环境时，此命令才可用。<br>wbadmin start systemstatebackup 运行系统状态备份。<br>wbadmin start systemstaterecovery 运行系统状态恢复。<br>wbadmin stop job  停止当前正在运行的备份或恢复操作。</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20220726-恋爱时的聊天话题"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/07/26/20220726-%E6%81%8B%E7%88%B1%E6%97%B6%E7%9A%84%E8%81%8A%E5%A4%A9%E8%AF%9D%E9%A2%98/"
-    >20220726-恋爱时的聊天话题</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/07/26/20220726-%E6%81%8B%E7%88%B1%E6%97%B6%E7%9A%84%E8%81%8A%E5%A4%A9%E8%AF%9D%E9%A2%98/" class="article-date">
-  <time datetime="2022-07-25T23:26:44.000Z" itemprop="datePublished">2022-07-26</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>聊对近期某个电影的看法<br>聊新开的某家餐厅<br>聊有喜欢喝的饮料<br>聊一点点的奶茶<br>聊对人生的看法<br>聊有没有近期的规划<br>聊想实现的心愿<br>聊最想得到的东西<br>聊小时候的故事<br>聊同桌的她<br>聊那个讨厌的班主任<br>聊那个难忘的考试<br>聊家庭的构成<br>聊父母的和睦<br>聊父母的爱好<br>聊可爱的弟弟<br>聊那些柜子里不穿的衣服<br>聊多久打扫的房间<br>聊地板的颜色<br>聊洗衣服的分类<br>聊今天发生的趣事<br>聊那个给你买棒冰的闺蜜<br>聊最好的朋友<br>聊送出祝福的初恋<br>聊没看出来的化妆<br>聊夏天出来防晒的霜<br>聊带出来的帽子<br>聊装饰的项链<br>聊初次见面时的尴尬<br>聊没有表现好的那个谈话<br>聊没来得及说的漂亮的鞋子<br>聊这个包与你衣服很配<br>聊习惯的猫猫狗狗<br>聊种死的那盆肉肉<br>聊习惯的花<br>聊习惯的香味<br>聊大学怎么过来的<br>聊难忘的实习<br>聊实习的那个师父<br>聊一起实习的那些人<br>聊眼镜的度数<br>聊眼镜的起源<br>聊隐形眼镜<br>聊你们工资<br>聊你们的福利<br>聊公司组织出去旅游<br>聊有意义的福利发放经历<br>聊看的书<br>聊看的电视剧<br>聊当前的比赛<br>聊此刻的电影频道<br>聊最喜欢的节目</p>
  
       <!-- reward -->
       
