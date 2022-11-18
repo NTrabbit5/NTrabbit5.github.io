@@ -11,7 +11,7 @@
         name="viewport"
         content="width=device-width, initial-scale=1, maximum-scale=1"
       />
-      <title>归档 |  TeX_baitu blog</title>
+      <title>20221118-python读取ini配置文件 |  TeX_baitu blog</title>
   <meta name="generator" content="hexo-theme-ayer">
       
       <link rel="shortcut icon" href="/favicon.ico" />
@@ -52,246 +52,187 @@
       
     <main class="content on">
       <section class="outer">
-  
-  
-  <article class="articles">
+  <article
+  id="post-20221118-python读取ini配置文件"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
     
-    
-    <h1 class="page-type-title">归档</h1>
-    
-    
-  
-  
-  
-  
-  
-  
-  <div class="archives-wrap">
-    <div class="archive-year-wrap">
-      <a href="/archives/2022" class="archive-year">2022</a>
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  20221118-python读取ini配置文件
+</h1>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/11/18/20221118-python%E8%AF%BB%E5%8F%96ini%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/" class="article-date">
+  <time datetime="2022-11-18T05:30:14.000Z" itemprop="datePublished">2022-11-18</time>
+</a>   
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">423</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">1 分钟</span>
+        </span>
+    </span>
+</div>
+ 
     </div>
-    <div class="archives">
       
-      <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2022/03/21/20220321-MU5737/" class="archive-article-date">
-  <time datetime="2022-03-21T11:44:02.000Z" itemprop="datePublished">03/21</time>
-</a>
-       
-<h2 itemprop="name">
-  <a class="archive-article-title" href="/2022/03/21/20220321-MU5737/"
-    >MU5737</a> 
-</h2>
- 
 
-    </header>
-    
-    
-  </div>
-</article>
-      
-  
-  
-      <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2022/03/21/20220321-blender%E5%BB%BA%E6%A8%A1%E8%BD%AF%E4%BB%B6%E7%9A%84%E5%AD%A6%E4%B9%A0/" class="archive-article-date">
-  <time datetime="2022-03-21T07:59:18.000Z" itemprop="datePublished">03/21</time>
-</a>
-       
-<h2 itemprop="name">
-  <a class="archive-article-title" href="/2022/03/21/20220321-blender%E5%BB%BA%E6%A8%A1%E8%BD%AF%E4%BB%B6%E7%9A%84%E5%AD%A6%E4%B9%A0/"
-    >blender建模软件的学习</a> 
-</h2>
- 
 
-    </header>
-    
-    
-  </div>
-</article>
-      
-  
-  
-      <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2022/03/21/20220321-%E8%A3%85%E4%BF%AE%E6%94%B9%E9%80%A0%E5%B7%A5%E5%85%B7%E4%BB%8B%E7%BB%8D/" class="archive-article-date">
-  <time datetime="2022-03-21T07:48:44.000Z" itemprop="datePublished">03/21</time>
-</a>
-       
-<h2 itemprop="name">
-  <a class="archive-article-title" href="/2022/03/21/20220321-%E8%A3%85%E4%BF%AE%E6%94%B9%E9%80%A0%E5%B7%A5%E5%85%B7%E4%BB%8B%E7%BB%8D/"
-    >装修改造工具介绍</a> 
-</h2>
- 
 
-    </header>
-    
-    
-  </div>
-</article>
-      
   
-  
-      <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2022/03/21/20220321-%E5%A5%BD%E5%8F%A5%E6%91%98%E5%BD%95/" class="archive-article-date">
-  <time datetime="2022-03-21T07:41:47.000Z" itemprop="datePublished">03/21</time>
-</a>
+    <div class="article-entry" itemprop="articleBody">
        
-<h2 itemprop="name">
-  <a class="archive-article-title" href="/2022/03/21/20220321-%E5%A5%BD%E5%8F%A5%E6%91%98%E5%BD%95/"
-    >好句摘录</a> 
-</h2>
- 
+  <p>在详解python读取ini文件之前，我们先说明一个ini文件的组成；</p>
+<p>一个ini文件是由多个section组成，每个section中以key&#x3D;vlaue形式存储数据；</p>
+<p><img src="https://img2018.cnblogs.com/i-beta/1857864/201911/1857864-20191126141947240-1291136423.png" alt="img"></p>
+<p>然后我们来使用python读取ini文件中的数据；</p>
+<p>1导包</p>
+<p><a href="javascript:void(0);"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># 导包</span><br><span class="line">import configparser</span><br><span class="line">config = configparser.ConfigParser() # 类实例化</span><br><span class="line"></span><br><span class="line"># 定义文件路径</span><br><span class="line">path = r&#x27;D:\Python_Script\new_framework\source_file\broswer_config.ini&#x27;</span><br></pre></td></tr></table></figure>
 
-    </header>
-    
-    
-  </div>
-</article>
-      
-  
-  
-      <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2022/03/21/20220321-%E4%B9%A6%E5%8D%95/" class="archive-article-date">
-  <time datetime="2022-03-21T07:13:01.000Z" itemprop="datePublished">03/21</time>
-</a>
-       
-<h2 itemprop="name">
-  <a class="archive-article-title" href="/2022/03/21/20220321-%E4%B9%A6%E5%8D%95/"
-    >书单</a> 
-</h2>
- 
+<p><a href="javascript:void(0);"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a></p>
+<p>2.读取文件内容</p>
+<p><a href="javascript:void(0);"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># 第一种读取ini文件方式,通过read方法</span><br><span class="line">config.read(path)</span><br><span class="line">value = config[&#x27;select&#x27;][&#x27;url&#x27;]</span><br><span class="line">print(&#x27;第一种方法读取到的值：&#x27;,value)</span><br><span class="line"></span><br><span class="line"># 第二种读取ini文件方式，通过get方法</span><br><span class="line">value = config.get(&#x27;select&#x27;,&#x27;url&#x27;)</span><br><span class="line">print(&#x27;第二种方法读取到的值：&#x27;,value)</span><br><span class="line"># 第三种读取ini文件方式，读取到一个section中的所有数据，返回一个列表</span><br><span class="line">value = config.items(&#x27;select&#x27;)</span><br><span class="line">print(&#x27;第三种方法读取到的值：&#x27;,value)</span><br></pre></td></tr></table></figure>
 
-    </header>
-    
-    
-  </div>
-</article>
-      
-  
-  
-      <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2022/03/21/20220321-%E7%94%B5%E5%BD%B1%E3%80%8A%E6%AD%BB%E4%BA%A1%E8%AF%97%E7%A4%BE%E3%80%8B%E7%BB%8F%E5%85%B8%E5%8F%B0%E8%AF%8D/" class="archive-article-date">
-  <time datetime="2022-03-21T06:18:42.000Z" itemprop="datePublished">03/21</time>
-</a>
-       
-<h2 itemprop="name">
-  <a class="archive-article-title" href="/2022/03/21/20220321-%E7%94%B5%E5%BD%B1%E3%80%8A%E6%AD%BB%E4%BA%A1%E8%AF%97%E7%A4%BE%E3%80%8B%E7%BB%8F%E5%85%B8%E5%8F%B0%E8%AF%8D/"
-    >电影《死亡诗社》经典台词</a> 
-</h2>
- 
+<p><a href="javascript:void(0);"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a></p>
+<p><img src="https://img2018.cnblogs.com/i-beta/1857864/201911/1857864-20191126143140445-1027724830.png" alt="img"></p>
+<p><img src="https://img2018.cnblogs.com/i-beta/1857864/201911/1857864-20191126145850349-1682504070.png" alt="img"></p>
+<p>3.通过上面两种方式，我们发现读取到的数据全部是str类型。如果我们想要得到指定数据类型的数据可以使用以下方法：</p>
+<p>getint()     getfloat()     getboolean()  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">value = config.getint(&#x27;connect_mysql&#x27;,&#x27;port&#x27;)</span><br><span class="line">print(&#x27;这是第三种方法读取到的值：&#x27;,value)</span><br><span class="line">print(&#x27;这是第三种方法读取到的值的数据类型：&#x27;,type(value))</span><br></pre></td></tr></table></figure>
 
-    </header>
-    
-    
-  </div>
-</article>
-      
-  
-  
-      <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2022/03/21/20220321-%E5%90%89%E5%A7%93%E8%AF%97%E6%84%8F%E5%90%8D%E5%AD%97/" class="archive-article-date">
-  <time datetime="2022-03-21T05:56:44.000Z" itemprop="datePublished">03/21</time>
-</a>
-       
-<h2 itemprop="name">
-  <a class="archive-article-title" href="/2022/03/21/20220321-%E5%90%89%E5%A7%93%E8%AF%97%E6%84%8F%E5%90%8D%E5%AD%97/"
-    >诗意名字</a> 
-</h2>
- 
+<p><img src="https://img2018.cnblogs.com/i-beta/1857864/201911/1857864-20191126143345735-444114163.png" alt="img"></p>
+<p>4.写入数据到ini文件中</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># 将数据写入到ini文件中</span><br><span class="line">config.add_section(&#x27;login&#x27;) # 首先添加一个新的section</span><br><span class="line">config.set(&#x27;login&#x27;,&#x27;username&#x27;,&#x27;admin&#x27;)  # 写入数据</span><br><span class="line">config.set(&#x27;login&#x27;,&#x27;password&#x27;,&#x27;123456&#x27;) # 写入数据</span><br><span class="line">config.write(open(path,&#x27;a&#x27;))            #保存数据</span><br></pre></td></tr></table></figure>
 
-    </header>
-    
-    
-  </div>
-</article>
-      
-  
-  
-      <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2022/03/21/20220321-iphone%E4%B8%AD%E5%9B%BD%E8%B0%83%E4%BC%91%E6%97%A5%E5%8E%86%E8%AE%A2%E9%98%85/" class="archive-article-date">
-  <time datetime="2022-03-21T05:40:53.000Z" itemprop="datePublished">03/21</time>
-</a>
-       
-<h2 itemprop="name">
-  <a class="archive-article-title" href="/2022/03/21/20220321-iphone%E4%B8%AD%E5%9B%BD%E8%B0%83%E4%BC%91%E6%97%A5%E5%8E%86%E8%AE%A2%E9%98%85/"
-    >iPhone中国调休日历订阅</a> 
-</h2>
- 
+<p><img src="https://img2018.cnblogs.com/i-beta/1857864/201911/1857864-20191126144910298-816876494.png" alt="img"></p>
+<p> 5.获取到ini文件所有的section</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># 读取ini文件中所有的section</span><br><span class="line">section = config.sections()</span><br><span class="line">print(section)</span><br></pre></td></tr></table></figure>
 
-    </header>
-    
-    
-  </div>
-</article>
-      
-  
-  
-      <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2022/03/20/20220320-%E3%80%8A%E6%89%AC%E5%B7%9E%E6%85%A2%E3%80%8B/" class="archive-article-date">
-  <time datetime="2022-03-20T13:56:59.000Z" itemprop="datePublished">03/20</time>
-</a>
-       
-<h2 itemprop="name">
-  <a class="archive-article-title" href="/2022/03/20/20220320-%E3%80%8A%E6%89%AC%E5%B7%9E%E6%85%A2%E3%80%8B/"
-    >《扬州慢》</a> 
-</h2>
+<p><img src="https://img2018.cnblogs.com/i-beta/1857864/201911/1857864-20191126150049367-723414604.png" alt="img"></p>
  
-
-    </header>
-    
-    
-  </div>
-</article>
+      <!-- reward -->
       
-  
-  
-      <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2022/03/19/20220319-%E3%80%8A%E9%93%81%E9%BD%BF%E9%93%9C%E7%89%99%E7%BA%AA%E6%99%93%E5%B2%9A%E3%80%8B4/" class="archive-article-date">
-  <time datetime="2022-03-19T03:37:09.000Z" itemprop="datePublished">03/19</time>
-</a>
-       
-<h2 itemprop="name">
-  <a class="archive-article-title" href="/2022/03/19/20220319-%E3%80%8A%E9%93%81%E9%BD%BF%E9%93%9C%E7%89%99%E7%BA%AA%E6%99%93%E5%B2%9A%E3%80%8B4/"
-    >《铁齿铜牙纪晓岚》4</a> 
-</h2>
- 
-
-    </header>
-    
-    
-  </div>
-</article>
-      
+      <div id="reword-out">
+        <div id="reward-btn">
+          打赏
+        </div>
+      </div>
       
     </div>
-  </div>
-  
-  
-
-  
-  <nav class="page-nav">
     
-    <a class="extend prev" rel="prev" href="/archives/page/7/">上一页</a><a class="page-number" href="/archives/">1</a><span class="space">&hellip;</span><a class="page-number" href="/archives/page/6/">6</a><a class="page-number" href="/archives/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/archives/page/9/">9</a><a class="page-number" href="/archives/page/10/">10</a><a class="extend next" rel="next" href="/archives/page/9/">下一页</a>
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>版权声明： </strong>
+          
+          本博客所有文章除特别声明外，著作权归作者所有。转载请注明出处！
+          
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://example.com/2022/11/18/20221118-python%E8%AF%BB%E5%8F%96ini%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>  
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+    
+      <a href="/2022/11/17/20221117-%E6%B1%87%E7%BC%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">20221117-汇编学习笔记</div>
+      </a>
+    
   </nav>
+
   
+   
+    
+    <script src="https://cdn.staticfile.org/twikoo/1.4.18/twikoo.all.min.js"></script>
+    <div id="twikoo" class="twikoo"></div>
+    <script>
+        twikoo.init({
+            envId: ""
+        })
+    </script>
+ 
+</article>
+
 </section>
       <footer class="footer">
   <div class="outer">
@@ -430,6 +371,22 @@
 <script src="/js/lazyload.min.js"></script>
 
 <!-- Tocbot -->
+ 
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  tocbot.init({
+    tocSelector: ".tocbot",
+    contentSelector: ".article-entry",
+    headingSelector: "h1, h2, h3, h4, h5, h6",
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: "main",
+    positionFixedSelector: ".tocbot",
+    positionFixedClass: "is-position-fixed",
+    fixedSidebarOffset: "auto",
+  });
+</script>
 
 <script src="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.js"></script>
 <link
