@@ -11,7 +11,7 @@
         name="viewport"
         content="width=device-width, initial-scale=1, maximum-scale=1"
       />
-      <title>20221118-python读取ini配置文件 |  TeX_baitu blog</title>
+      <title>20221119-即时通讯IM记录的存储 |  TeX_baitu blog</title>
   <meta name="generator" content="hexo-theme-ayer">
       
       <link rel="shortcut icon" href="/favicon.ico" />
@@ -53,7 +53,7 @@
     <main class="content on">
       <section class="outer">
   <article
-  id="post-20221118-python读取ini配置文件"
+  id="post-20221119-即时通讯IM记录的存储"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -64,7 +64,7 @@
     <header class="article-header">
        
 <h1 class="article-title sea-center" style="border-left:0" itemprop="name">
-  20221118-python读取ini配置文件
+  20221119-即时通讯IM记录的存储
 </h1>
  
 
@@ -72,15 +72,15 @@
     </header>
      
     <div class="article-meta">
-      <a href="/2022/11/18/20221118-python%E8%AF%BB%E5%8F%96ini%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/" class="article-date">
-  <time datetime="2022-11-18T05:30:14.000Z" itemprop="datePublished">2022-11-18</time>
+      <a href="/2022/11/19/20221119-%E5%8D%B3%E6%97%B6%E9%80%9A%E8%AE%AFIM%E8%AE%B0%E5%BD%95%E7%9A%84%E5%AD%98%E5%82%A8/" class="article-date">
+  <time datetime="2022-11-19T06:06:27.000Z" itemprop="datePublished">2022-11-19</time>
 </a>   
 <div class="word_count">
     <span class="post-time">
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> 字数统计:</span>
-            <span class="post-count">423</span>
+            <span class="post-count">1.5k</span>
         </span>
     </span>
 
@@ -89,48 +89,68 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> 阅读时长≈</span>
-            <span class="post-count">1 分钟</span>
+            <span class="post-count">5 分钟</span>
         </span>
     </span>
 </div>
  
     </div>
       
+    <div class="tocbot"></div>
+
 
 
 
   
     <div class="article-entry" itemprop="articleBody">
        
-  <p>在详解python读取ini文件之前，我们先说明一个ini文件的组成；</p>
-<p>一个ini文件是由多个section组成，每个section中以key&#x3D;vlaue形式存储数据；</p>
-<p><img src="https://img2018.cnblogs.com/i-beta/1857864/201911/1857864-20191126141947240-1291136423.png" alt="img"></p>
-<p>然后我们来使用python读取ini文件中的数据；</p>
-<p>1导包</p>
-<p><a href="javascript:void(0);"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># 导包</span><br><span class="line">import configparser</span><br><span class="line">config = configparser.ConfigParser() # 类实例化</span><br><span class="line"></span><br><span class="line"># 定义文件路径</span><br><span class="line">path = r&#x27;D:\Python_Script\new_framework\source_file\broswer_config.ini&#x27;</span><br></pre></td></tr></table></figure>
+  <p>原文链接 <a target="_blank" rel="noopener" href="https://juejin.cn/post/6983824498201985037">https://juejin.cn/post/6983824498201985037</a></p>
+<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>即时通讯(Instant Messaging)，也就是我们常说的 IM，其实在很多业务场景上都会有或多或少的应用，有的会是核心，有的会是辅助。</p>
+<p>既然是聊天，那么必然就会产生聊天记录，而且聊天记录随着人数的增加和时间的推移，很容易出现爆炸式的增长，这个对存储其实压力是很大的。</p>
+<p>举个大家都很熟悉的例子，一个群聊，几分钟不看，再打开就是 99+ 的未读消息。</p>
+<p>把即时通讯这个技术，放到医疗环境下，也是同样适用的。</p>
+<p>患者去线下医院看病，肯定离不开和医生的问答，这些问答，对系统来说，其实都是聊天记录。</p>
+<p>如果把这个场景放到线上进行，也就是正常的和我们在微信聊天那样了。</p>
+<p>说了那么多有的没的，也算是把大背景交代了一下，那么接下来就看看这个聊天记录存储的选型吧。</p>
+<h2 id="技术选型"><a href="#技术选型" class="headerlink" title="技术选型"></a>技术选型</h2><p>既然要存储，那么肯定就会有很多选择，关系型数据库，非关系型数据库等。</p>
+<p>当然这个很大程度上是和具体业务场景挂钩的，离开了业务场景，基本就是在空谈。</p>
+<p>在医患关系里面的聊天记录，是一个十分十分核心的内容，并且必需要长期保存，不能丢，可查询。</p>
+<p>并且这些聊天记录是和某次问诊强关联的，所以单独拿出几条聊天记录出来，是没有意义的，因为他们没有关联，串联不起来。</p>
+<p>按照以往的经验看，一次问诊，医生和患者之间的聊天记录在 50 条之内的占据了大部分，超过50条的，占少数。</p>
+<p>这个和其他的 IM 情景可能不太一样。</p>
+<h3 id="MySQL"><a href="#MySQL" class="headerlink" title="MySQL"></a>MySQL</h3><p>业务开始，大概率就是选用 MySQL 去存了这些数据了，单库单表，但是这种情况下很容易达到单表千万和上亿的级别。</p>
+<p>后面面临的基本就是分库分表的操作了。</p>
+<p>分库分表，基本就是根据问诊号去进行哈希，然后放到不同的库不同的表。</p>
+<p>这里会有一个不确定因素，分多少个库和分多少张表？</p>
+<p>分的多，囊中羞涩；分的少，再一次达到量级的时候又要重新分，大动干戈，这个时候最怕的就是动到了哈希的规则。</p>
+<p>所以选 MySQL 的话，到了中后期确实还是会有一点力不从心。线性扩展对这一块还是非常重要的。</p>
+<p>如果想改动小，避免分库分表，或许可以试试 TiDB，但是它要的配置，也不是中小企业所能接受的，80% 以上的概率会被 Pass 掉。</p>
+<p><a href="https://link.juejin.cn/?target=https://docs.pingcap.com/zh/tidb/stable/hardware-and-software-requirements">docs.pingcap.com&#x2F;zh&#x2F;tidb&#x2F;sta…</a></p>
+<h3 id="Cassandra"><a href="#Cassandra" class="headerlink" title="Cassandra"></a>Cassandra</h3><p>Cassandra 是一个分布式、无中心、弹性可扩展的 NoSQL 数据库，基于 Amazon Dynamo 的分布式设计和 Google Bigtable 的数据模型。</p>
+<p><a href="https://link.juejin.cn/?target=https://cassandra.apache.org/doc/latest/architecture/overview.html">cassandra.apache.org&#x2F;doc&#x2F;latest&#x2F;…</a></p>
+<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/c02b83328e38462d9f95b2dd06b3779e~tplv-k3u1fbpfcp-zoom-in-crop-mark:4536:0:0:0.awebp" alt="img"></p>
+<p>为什么考虑选型 Cassandra 呢？ 对上面说的医患场景，严格上是属于写多读少的，查询基本只会基于问诊号去查询，这个是相对比较明确的。</p>
+<p>Discord 在 2017 年的时候有一篇博客讲述了他们是怎么存储数十亿消息记录的 ，说的比较详细了。</p>
+<p><a href="https://link.juejin.cn/?target=https://blog.discord.com/how-discord-stores-billions-of-messages-7fa6ec7ee4c7">blog.discord.com&#x2F;how-discord…</a></p>
+<p>其实他们选数据库的诉求，也是符合大部分涉及 IM 这一块的。</p>
+<p>老黄也是从这里受到了启发，认识了这个数据库。</p>
+<p>经常拿来比较的话，应该是 HBase，一个在国内火，一个在国外受欢迎。</p>
+<p>可以看看这个对比，了解一下两者的异同： <a href="https://link.juejin.cn/?target=https://www.scnsoft.com/blog/cassandra-vs-hbase">www.scnsoft.com/blog/cassan…</a></p>
+<p>如果选择要用 Cassandra， 那么数据模型的设计，一定是所有环节中最为重要的一步，如果这一步没有做好的话，那后面基本上会是灾难级别，基本不能愉快的玩耍。</p>
+<p>那么对医患关系里面的这个聊天模型其实比较简单。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> IF <span class="keyword">NOT</span> <span class="keyword">EXISTS</span> messages(</span><br><span class="line">    inq_id text,</span><br><span class="line">    send_time <span class="type">bigint</span>,</span><br><span class="line">    sender_id text,</span><br><span class="line">    sender_role tinyint,</span><br><span class="line">    msg_type tinyint,</span><br><span class="line">    msg_body text,</span><br><span class="line">    <span class="keyword">PRIMARY</span> KEY (inq_id, send_time)</span><br><span class="line">) <span class="keyword">WITH</span> CLUSTERING <span class="keyword">ORDER</span> <span class="keyword">BY</span> (send_time <span class="keyword">ASC</span>)</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
 
-<p><a href="javascript:void(0);"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a></p>
-<p>2.读取文件内容</p>
-<p><a href="javascript:void(0);"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># 第一种读取ini文件方式,通过read方法</span><br><span class="line">config.read(path)</span><br><span class="line">value = config[&#x27;select&#x27;][&#x27;url&#x27;]</span><br><span class="line">print(&#x27;第一种方法读取到的值：&#x27;,value)</span><br><span class="line"></span><br><span class="line"># 第二种读取ini文件方式，通过get方法</span><br><span class="line">value = config.get(&#x27;select&#x27;,&#x27;url&#x27;)</span><br><span class="line">print(&#x27;第二种方法读取到的值：&#x27;,value)</span><br><span class="line"># 第三种读取ini文件方式，读取到一个section中的所有数据，返回一个列表</span><br><span class="line">value = config.items(&#x27;select&#x27;)</span><br><span class="line">print(&#x27;第三种方法读取到的值：&#x27;,value)</span><br></pre></td></tr></table></figure>
+<p>对照正常的 IM 群聊， 这个问诊号 (inq_id) 就可以认为是一个群聊，一个频道。</p>
+<p>为什么没有消息Id这样的字段呢？多来源，非自研，无实际意义。</p>
+<p>下面再来看看如何在 C# 里面进行操作， 这里用的是 DataStax 提供的 <strong>CassandraCSharpDriver</strong> 客户端。</p>
+<p>写入：</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> cluster = Cassandra.Cluster.Builder()</span><br><span class="line">                        .AddContactPoints(<span class="string">&quot;127.0.0.1&quot;</span>)</span><br><span class="line">                        .WithDefaultKeyspace(<span class="string">&quot;messaging&quot;</span>)</span><br><span class="line">                        .Build();</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> inqId = <span class="string">&quot;xxxxxx&quot;</span>;</span><br><span class="line"><span class="keyword">var</span> sendTime = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();</span><br><span class="line"><span class="keyword">var</span> senderId = <span class="string">&quot;xxxx&quot;</span>;</span><br><span class="line"><span class="keyword">var</span> senderRole = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">var</span> msgType = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">var</span> msgBody = <span class="string">&quot;zzzz&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">string</span> INSERT_SQL = <span class="string">@&quot; INSERT INTO messages(inq_id, send_time, sender_id, sender_role, msg_type, msg_body)</span></span><br><span class="line"><span class="string">VALUES (?, ?, ?, ?, ?, ?) &quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> session = cluster.Connect();</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> stmt = session.Prepare(INSERT_SQL).Bind(inqId, sendTime, senderId, senderRole, msgType, msgBody));</span><br><span class="line"></span><br><span class="line">session.Execute(stmt);</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
 
-<p><a href="javascript:void(0);"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a></p>
-<p><img src="https://img2018.cnblogs.com/i-beta/1857864/201911/1857864-20191126143140445-1027724830.png" alt="img"></p>
-<p><img src="https://img2018.cnblogs.com/i-beta/1857864/201911/1857864-20191126145850349-1682504070.png" alt="img"></p>
-<p>3.通过上面两种方式，我们发现读取到的数据全部是str类型。如果我们想要得到指定数据类型的数据可以使用以下方法：</p>
-<p>getint()     getfloat()     getboolean()  </p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">value = config.getint(&#x27;connect_mysql&#x27;,&#x27;port&#x27;)</span><br><span class="line">print(&#x27;这是第三种方法读取到的值：&#x27;,value)</span><br><span class="line">print(&#x27;这是第三种方法读取到的值的数据类型：&#x27;,type(value))</span><br></pre></td></tr></table></figure>
+<p>读取：</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> cluster = Cassandra.Cluster.Builder()</span><br><span class="line">                .AddContactPoints(<span class="string">&quot;127.0.0.1&quot;</span>)</span><br><span class="line">                .WithDefaultKeyspace(<span class="string">&quot;messaging&quot;</span>)</span><br><span class="line">                .Build();</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> inqId = <span class="string">&quot;xxxxxx&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">string</span> GET_MSG_SQL = <span class="string">@&quot; SELECT * FROM messages WHERE inq_id = ? &quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> session = cluster.Connect();</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> stmt = session.Prepare(GET_MSG_SQL).Bind(inqId);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> rowset = session.Execute(stmt);</span><br><span class="line"></span><br><span class="line">Console.WriteLine(<span class="string">&quot;患者\t\t\t\t\t医生&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">foreach</span> (<span class="keyword">var</span> row <span class="keyword">in</span> rowset)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// 解析从 cassandra 中返回的行</span></span><br><span class="line">    <span class="keyword">var</span> msg_body = row.GetValue&lt;<span class="built_in">string</span>&gt;(<span class="string">&quot;msg_body&quot;</span>);</span><br><span class="line">    <span class="keyword">var</span> sender_role = row.GetValue&lt;<span class="built_in">sbyte</span>&gt;(<span class="string">&quot;sender_role&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (sender_role == <span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">$&quot;<span class="subst">&#123;msg_body&#125;</span>\t\t\t\t\t&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">$&quot;\t\t\t\t\t<span class="subst">&#123;msg_body&#125;</span>&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
 
-<p><img src="https://img2018.cnblogs.com/i-beta/1857864/201911/1857864-20191126143345735-444114163.png" alt="img"></p>
-<p>4.写入数据到ini文件中</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># 将数据写入到ini文件中</span><br><span class="line">config.add_section(&#x27;login&#x27;) # 首先添加一个新的section</span><br><span class="line">config.set(&#x27;login&#x27;,&#x27;username&#x27;,&#x27;admin&#x27;)  # 写入数据</span><br><span class="line">config.set(&#x27;login&#x27;,&#x27;password&#x27;,&#x27;123456&#x27;) # 写入数据</span><br><span class="line">config.write(open(path,&#x27;a&#x27;))            #保存数据</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://img2018.cnblogs.com/i-beta/1857864/201911/1857864-20191126144910298-816876494.png" alt="img"></p>
-<p> 5.获取到ini文件所有的section</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># 读取ini文件中所有的section</span><br><span class="line">section = config.sections()</span><br><span class="line">print(section)</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://img2018.cnblogs.com/i-beta/1857864/201911/1857864-20191126150049367-723414604.png" alt="img"></p>
+<h2 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h2><p>存储的选择其实还是有点门道的，根据不同的应用场景，找出比较适合当前场景的几个方案，再选择一个成本没这么高的。</p>
+<p>Cassandra 对聊天记录这个场景的存储还是有一定优势的，可以应对高速的数据增长，而不用在业务代码层做过多的适配；部署相对简单，无特殊依赖，运维成本相对较低。</p>
  
       <!-- reward -->
       
@@ -201,7 +221,7 @@
     <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://example.com/2022/11/18/20221118-python%E8%AF%BB%E5%8F%96ini%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/" alt="微信分享二维码">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://example.com/2022/11/19/20221119-%E5%8D%B3%E6%97%B6%E9%80%9A%E8%AE%AFIM%E8%AE%B0%E5%BD%95%E7%9A%84%E5%AD%98%E5%82%A8/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -212,19 +232,10 @@
    
   <nav class="article-nav">
     
-      <a href="/2022/11/18/20221118-CPU%E5%AF%84%E5%AD%98%E5%99%A8/" class="article-nav-link">
-        <strong class="article-nav-caption">上一篇</strong>
-        <div class="article-nav-title">
-          
-            20221118-CPU寄存器
-          
-        </div>
-      </a>
     
-    
-      <a href="/2022/11/17/20221117-%E6%B1%87%E7%BC%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="article-nav-link">
+      <a href="/2022/11/19/20221119-%E6%B5%B7%E5%BA%B7%E5%A8%81%E8%A7%86%E7%BD%91%E7%BB%9C%E6%91%84%E5%83%8F%E5%A4%B4%E8%B4%AD%E4%B9%B0%E6%8C%87%E5%8D%97%EF%BC%88%E7%84%A6%E8%B7%9D-%E5%83%8F%E7%B4%A0%E7%AD%89%E5%8F%82%E6%95%B0%EF%BC%89/" class="article-nav-link">
         <strong class="article-nav-caption">下一篇</strong>
-        <div class="article-nav-title">20221117-汇编学习笔记</div>
+        <div class="article-nav-title">20221119-海康威视网络摄像头购买指南（焦距-像素等参数）</div>
       </a>
     
   </nav>
