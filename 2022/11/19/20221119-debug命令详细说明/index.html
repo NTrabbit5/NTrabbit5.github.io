@@ -11,7 +11,7 @@
         name="viewport"
         content="width=device-width, initial-scale=1, maximum-scale=1"
       />
-      <title>20221119-海康威视网络摄像头购买指南（焦距 |  TeX_baitu blog</title>
+      <title>20221119-debug命令详细说明 |  TeX_baitu blog</title>
   <meta name="generator" content="hexo-theme-ayer">
       
       <link rel="shortcut icon" href="/favicon.ico" />
@@ -53,7 +53,7 @@
     <main class="content on">
       <section class="outer">
   <article
-  id="post-20221119-海康威视网络摄像头购买指南（焦距"
+  id="post-20221119-debug命令详细说明"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -64,7 +64,7 @@
     <header class="article-header">
        
 <h1 class="article-title sea-center" style="border-left:0" itemprop="name">
-  20221119-海康威视网络摄像头购买指南（焦距
+  20221119-debug命令详细说明
 </h1>
  
 
@@ -72,15 +72,15 @@
     </header>
      
     <div class="article-meta">
-      <a href="/2022/11/19/20221119-%E6%B5%B7%E5%BA%B7%E5%A8%81%E8%A7%86%E7%BD%91%E7%BB%9C%E6%91%84%E5%83%8F%E5%A4%B4%E8%B4%AD%E4%B9%B0%E6%8C%87%E5%8D%97%EF%BC%88%E7%84%A6%E8%B7%9D/" class="article-date">
-  <time datetime="2022-11-19T06:03:05.000Z" itemprop="datePublished">2022-11-19</time>
+      <a href="/2022/11/19/20221119-debug%E5%91%BD%E4%BB%A4%E8%AF%A6%E7%BB%86%E8%AF%B4%E6%98%8E/" class="article-date">
+  <time datetime="2022-11-19T11:52:07.000Z" itemprop="datePublished">2022-11-19</time>
 </a>   
 <div class="word_count">
     <span class="post-time">
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> 字数统计:</span>
-            <span class="post-count">2</span>
+            <span class="post-count">3.1k</span>
         </span>
     </span>
 
@@ -89,7 +89,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> 阅读时长≈</span>
-            <span class="post-count">1 分钟</span>
+            <span class="post-count">11 分钟</span>
         </span>
     </span>
 </div>
@@ -104,8 +104,105 @@
   
     <div class="article-entry" itemprop="articleBody">
        
-  <p>[TOC]</p>
-<h2 id="0x01"><a href="#0x01" class="headerlink" title="0x01"></a>0x01</h2><h2 id="0x02"><a href="#0x02" class="headerlink" title="0x02"></a>0x02</h2><h2 id="0x03"><a href="#0x03" class="headerlink" title="0x03"></a>0x03</h2><h2 id="0x04"><a href="#0x04" class="headerlink" title="0x04"></a>0x04</h2> 
+  <h2 id="启动DEBUG"><a href="#启动DEBUG" class="headerlink" title="启动DEBUG"></a>启动DEBUG</h2><h4 id="1-打开Windows命令窗口"><a href="#1-打开Windows命令窗口" class="headerlink" title="1.打开Windows命令窗口"></a>1.打开Windows命令窗口</h4><p>在Windows 95&#x2F;98的环境中，打开命令窗口的步骤为：点击“开始”→“运行”，输入“command”命令； 在WindowsXP及WIN7的环境中，打开命令窗口的步骤为：点击“开始”→“运行”，输入“cmd”命令；</p>
+<h4 id="2-启动DEBUG"><a href="#2-启动DEBUG" class="headerlink" title="2.启动DEBUG"></a>2.启动DEBUG</h4><p>在命令窗口中启动DEBUG，启动命令一般为：DEBUG  [文件名] [参数表]。其中：文件名指定被调试的文件，其包括名和后缀，参数表是被调试文件运行时所需要的参数。被调试的文件可以是系统中的任何文件，但通常它们的后缀为.EXE或.COM。 当DEBUG启动成功后，将显示连接符“-”，这时，可输入各种DEBUG命令。DEBUG中所有命令及其含义如<a target="_blank" rel="noopener" href="http://www.shelwee.com/html/archives/65556.html">DEBUG各命令功能说明</a>表所示。 关于使用命令的几点说明：在提示符“-”下才能输入命令，在按“回车”键后，该命令才开始执行命令是单个字母，命令和参数的大小写可混合输入可用F1、F2、F3、Ins、Del、左移键、右移键等编辑键来编辑本行命令当命令出现语法错误时，将在出错位置显示“^ Error”可用Ctrl+C或Ctrl+Break来终止当前命令的执行，还可用Ctrl+S或Ctrl+Num Lock来暂停屏幕显示(当连续不断地显示信息时)<br>以下通过实现十九个示例来熟悉DEBUG的命令集和基本的汇编指令。</p>
+<h3 id="R命令的使用"><a href="#R命令的使用" class="headerlink" title="R命令的使用"></a>R命令的使用</h3><p>R命令作用：观看和修改寄存器的值。</p>
+<p>在提示符“-”下输入以下命令：R。DEBUG将会显示出当前所有寄存器和标志位的状态。</p>
+<p>接下来再输入命令RCX。在提示符“：”后输入100。该命令的作用是将寄存器CX的值设置为100（注意：DEBUG使用的是十六进制，这里的100相当于十进制的256。）</p>
+<p>最后再执行R命令，观看修改后的寄存器值。</p>
+<h3 id="H命令的使用"><a href="#H命令的使用" class="headerlink" title="H命令的使用"></a>H命令的使用</h3><p>H命令作用：计算两个十六进制数的和与差。</p>
+<p>在提示符“–”下输入以下命令：H 10 1。观看命令执行结果。</p>
+<p><img src="http://shelwee.qiniudn.com/wp-content/uploads/2011/04/debug-h.png" alt="debug-h"></p>
+<p>运行结果的前一个数是计算出来的和，后一个数是计算出来的差。计算结果均用十六进制形式表示。</p>
+<h3 id="D命令的使用"><a href="#D命令的使用" class="headerlink" title="D命令的使用"></a>D命令的使用</h3><p>D命令作用：显示内存区域的内容。</p>
+<p>在提示符“–”下连续执行命令R、D、D。观看命令执行结果。</p>
+<p>前面已经介绍过了，命令R的作用是显示当前寄存器的值。而命令D的作用是显示内存区域的内容，最左边是内存的起始地址，中间以十六进制的形式显示内存值，最右边是以ASCII码的形式显示内存值。每行最多显示16个字节的内容。</p>
+<p>命令D可以带参数也可省略参数。设DEBUG启动时DS的值为X，当省略参数时，命令D显示内容以X：100为起始，每次显示128个字节的内容。以后再执行不带参数的命令D时，DEBUG将按上次的位置接着显示下去。</p>
+<p>带参数时DEBUG能够显示指定地址范围的内容。带参数的方式有三种：</p>
+<p>方式一：d [起始位置]。DEBUG从起始位置开始显示128个字节的内容。在提示符“-”下执行命令D 1AF5:100。观看命令执行结果。</p>
+<p>方式二：d [起始位置] [结束位置]。DEBUG从起始位置开始一直显示到结束位置。在提示符“-”下执行命令D DS:100 1FF。观看命令执行结果。</p>
+<p>方式三：d [起始位置] [L长度]，长度以L参数为标识。DEBUG从起始位置开始显示指定长度的内容。在提示符“-”下执行命令D DS:100 L10。观看命令执行结果。</p>
+<h3 id="E命令的使用"><a href="#E命令的使用" class="headerlink" title="E命令的使用"></a>E命令的使用</h3><p>E命令作用：改变内存单位的内容。</p>
+<p>E命令的使用方式为：E [起始位置]。</p>
+<p>在提示符“-”下输入以下命令：E 1AF5:100。</p>
+<p><img src="http://shelwee.qiniudn.com/wp-content/uploads/2011/04/debug-e.png" alt="debug-e"></p>
+<p>DEBUG首先显示[1AF5:0000]的内容00.，这时可以修改该字节的值。如果还要修改后续的内容，可以按空格键继续。当要跳过某个字节时，可以按连续的两个空格跳到后一个字节去。</p>
+<h3 id="F命令的使用"><a href="#F命令的使用" class="headerlink" title="F命令的使用"></a>F命令的使用</h3><p>F命令作用：使用指定的值填充指定内存区域中的地址。</p>
+<p>F命令的使用方式为：F [范围] [填充列表]。</p>
+<p>在提示符“-”下输入以下命令：F 1AF5:100 L20 1 2 3 4 5。执行命令D 1AF5:100观看命令执行结果。</p>
+<p>说明：该命令是用字节序列01、02、03、04、05轮流填充从1AF5:100开始长度为20H的内存区域。</p>
+<p>在提示符“-”下输入以下命令：F 1AF5:100 13F 41 42 43 44。</p>
+<p>说明：该命令是用字节序列41、42、43、44轮流填充从1AF5:100开始一直到1AF5:13F的内存区域。</p>
+<h3 id="M命令的使用"><a href="#M命令的使用" class="headerlink" title="M命令的使用"></a>M命令的使用</h3><p>M命令作用：将指定内存区域的数据复制到指定的地址去。</p>
+<p>M命令的使用方式为：M [范围] [指定地址]。</p>
+<p>在提示符“-”下输入以下命令：M 1AF5:100 13F 1AF5:140。执行命令D 1AF5:100观看命令执行结果。</p>
+<h3 id="C命令的使用"><a href="#C命令的使用" class="headerlink" title="C命令的使用"></a>C命令的使用</h3><p>C命令作用：将两块内存的内容进行比较。</p>
+<p>C命令的使用方式为：C [范围] [指定地址]，意思就是将指定范围的内存区域与从指定地址开始的相同长度的内存区域逐个字节进行比较，列出不同的内容。</p>
+<p>在提示符“-”下输入以下命令：C 1AF5:100 13F 1AF5:140。由于两块内容完全相同，所以命令执行后没有任何显示。</p>
+<p>在提示符“-”下输入以下命令：C 1AF5:100 107 1AF5:180，比较的区域长度为8个字节。命令执行后列出比较结果不同的各个字节。</p>
+<h3 id="S命令的使用"><a href="#S命令的使用" class="headerlink" title="S命令的使用"></a>S命令的使用</h3><p>S命令作用：在指定的内存区域中搜索指定的串。</p>
+<p>S命令的使用方式为：S [范围] [指定串]。</p>
+<p>在提示符“-”下输入以下命令：D 1AF5:100 11F。显示该区域的内存值。</p>
+<p>在提示符“-”下输入以下命令：S 1AF5:100 11F 41 42 43 44。搜索该区域是否存在字节串41 42 43 44，并将搜索结果一一列出。</p>
+<p>从执行结果可以看出，总共搜索到八处。</p>
+<h3 id="A命令的使用"><a href="#A命令的使用" class="headerlink" title="A命令的使用"></a>A命令的使用</h3><p>A命令作用：输入汇编指令。</p>
+<p>以下的程序要在屏幕上显示“ABCD”四个字符。</p>
+<p>首先用E命令将“ABCD$”四个字符预先放在内存CS:200处，然后执行A100命令输入汇编程序代码：</p>
+<p>MOV AX,CS</p>
+<p>MOV DS,AX</p>
+<p>MOV DX,200</p>
+<p>MOV AH,9</p>
+<p>INT 21</p>
+<p>INT 20</p>
+<p>（说明：前两行汇编指令用于将段寄存器CS的值赋给段寄存器DS。第三到第五行汇编代码的作用是显示以“$”为结尾的字符串。最后一行用于结束程序。</p>
+<h3 id="G命令的使用"><a href="#G命令的使用" class="headerlink" title="G命令的使用"></a>G命令的使用</h3><p>G命令作用：执行汇编指令。</p>
+<p>G命令的使用方法是：G [&#x3D;起始地址]  [断点地址]，意思是从起始地址开始执行到断点地址。如果不设置断点，则程序一直运行到中止指令才停止。</p>
+<p>在设置完示例九的的内存数据并且输入完示例九的程序后运行这些汇编代码。在DEBUG中执行命令G&#x3D;100，观看运行结果。</p>
+<p>汇编程序运行后在屏幕上显示出“ABCD”四个字符。</p>
+<p>接下来在DEBUG中执行G&#x3D;100 10B，意思是从地址CS：100开始，一直运行到CS：10B停止。观看运行结果。</p>
+<p>命令执行后，不但显示出字符串“ABCD”，而且列出当前寄存器和标志位的值。</p>
+<h3 id="U命令的使用"><a href="#U命令的使用" class="headerlink" title="U命令的使用"></a>U命令的使用</h3><p>U命令作用：对机器代码反汇编显示。</p>
+<p>U命令的使用方法是：U [范围]。如果范围参数只输入了起始地址，则只对20H个字节的机器代码反汇编。执行命令U100，观看反汇编结果。</p>
+<p>执行命令U100 10B，观看反汇编结果。该命令的作用是对从100到10B的机器代码进行反汇编。</p>
+<h3 id="N命令的使用"><a href="#N命令的使用" class="headerlink" title="N命令的使用"></a>N命令的使用</h3><p>N命令作用：设置文件名，为将刚才编写的汇编程序存盘做准备。</p>
+<p>以下的DEBUG命令序列作用将刚才的汇编程序存为磁盘的COM可执行程序。</p>
+<p>D200 20F</p>
+<p>U100 10C</p>
+<p>N  E:\FIRST.COM</p>
+<p>RCX</p>
+<p>:110</p>
+<p>W</p>
+<p>第一和第二条命令的作用是检查一下刚才编写的汇编指令。第三条命令的作用是设置存盘文件名为E:\FIRST.COM，第四条命令的作用是设置存盘文件大小为110H个字节。最后一条命令是将文件存盘。</p>
+<p>文件存盘后执行E:\FIRST.COM，观看存盘的可执行文件的运行效果。</p>
+<h3 id="W命令的使用"><a href="#W命令的使用" class="headerlink" title="W命令的使用"></a>W命令的使用</h3><p>W命令作用：将文件或者特定扇区写入磁盘。</p>
+<p>在示例“N命令的使用”中已经实验了如何使用W命令将文件存盘。</p>
+<p>在没有很好地掌握汇编语言和磁盘文件系统前，暂时不要使用W命令写磁盘扇区，否则很容易损坏磁盘文件，甚至破坏整个磁盘的文件系统。</p>
+<h3 id="L命令的使用"><a href="#L命令的使用" class="headerlink" title="L命令的使用"></a>L命令的使用</h3><p>L命令作用：从磁盘中将文件或扇区内容读入内存。</p>
+<p>将文件调入内存必须先用DEBUG的N命令设定文件名。以下例子是将E:\FIRST.COM读入内容。</p>
+<p>N FIRST.COM</p>
+<p>L</p>
+<p>观看调入程序的汇编代码可以使用DEBUG的U命令，用U100观看调入的COM文件。</p>
+<p>读取磁盘扇区的方式是：L [内存地址] [磁盘驱动器号] [起始扇区] [扇区数]。“内存地址”指定要在其中加载文件或扇区内容的内存位置，如果不指定“内存地址”的话，DEBUG将使用CS寄存器中的当前地址。“磁盘驱动器号”指定包含读取指定扇区的磁盘的驱动器，该值是数值型：0&#x3D;A，1&#x3D;B，2&#x3D;C等。“起始扇区”指定要加载其内容的第一个扇区的十六进制数。“扇区数”指定要加载其内容的连续扇区的十六进制数。</p>
+<p>只有要加载特定扇区的内容而不是加载文件时，才能使用[磁盘驱动器号] [起始扇区] [扇区数]参数。</p>
+<p>例如：要将C盘第一扇区读取到内存DS:300的位置，相应的DEBUG命令为L DS:300 2 1 1。但是由于Windows操作系统对文件系统的保护，这条命令可能会被操作系统禁止运行。</p>
+<h3 id="T命令的使用"><a href="#T命令的使用" class="headerlink" title="T命令的使用"></a>T命令的使用</h3><p>T命令作用：执行汇编程序，单步跟踪。</p>
+<p>T命令的使用方式是T [&#x3D;地址] [指令数]。如果忽略“地址”的话，T命令从CS:IP处开始运行。“指令数”是要单步执行的指令的数量。</p>
+<p>以下示例对E:\FIRST.COM进行单步跟踪。</p>
+<p>N E:\FIRST.COM</p>
+<p>L</p>
+<p>U100 10B</p>
+<p>R</p>
+<p>T&#x3D;100</p>
+<p>T</p>
+<p>第一、二条命令是装入文件，第三条命令是列出程序反汇编代码，第四条命令是显示当前寄存器值，第五条命令是从CS:100处开始单步跟踪，第六条命令是继续跟踪后续的指令。</p>
+<h3 id="P命令的使用"><a href="#P命令的使用" class="headerlink" title="P命令的使用"></a>P命令的使用</h3><p>P命令作用：执行汇编程序，单步跟踪。与T命令不同的是：P命令不会跟踪进入子程序或软中断。</p>
+<p>P命令的使用方式与T命令的使用方式完全相同。</p>
+<h3 id="I命令的使用"><a href="#I命令的使用" class="headerlink" title="I命令的使用"></a>I命令的使用</h3><p>I命令作用：从计算机输入端口读取数据并显示。</p>
+<p>I命令的用法是I [端口地址]。例如从3F8号端口读取数据并显示的命令为：I 3F8。这里不对该命令做解释。</p>
+<h3 id="O命令的使用"><a href="#O命令的使用" class="headerlink" title="O命令的使用"></a>O命令的使用</h3><p>O命令作用：向计算机输出端口送出数据。</p>
+<p>O命令的用法是O [端口地址] [字节值]。例如向278号端口发出数据20H的命令为：I 278 20。这里不对该命令做解释。</p>
+<h3 id="Q命令的使用"><a href="#Q命令的使用" class="headerlink" title="Q命令的使用"></a>Q命令的使用</h3><p>Q命令的作用是退出DEBUG，回到DOS状态。</p>
+ 
       <!-- reward -->
       
       <div id="reword-out">
@@ -175,7 +272,7 @@
     <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://example.com/2022/11/19/20221119-%E6%B5%B7%E5%BA%B7%E5%A8%81%E8%A7%86%E7%BD%91%E7%BB%9C%E6%91%84%E5%83%8F%E5%A4%B4%E8%B4%AD%E4%B9%B0%E6%8C%87%E5%8D%97%EF%BC%88%E7%84%A6%E8%B7%9D/" alt="微信分享二维码">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://example.com/2022/11/19/20221119-debug%E5%91%BD%E4%BB%A4%E8%AF%A6%E7%BB%86%E8%AF%B4%E6%98%8E/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -186,19 +283,19 @@
    
   <nav class="article-nav">
     
-      <a href="/2022/11/19/20221119-%E6%B5%B7%E5%BA%B7%E5%A8%81%E8%A7%86%E7%BD%91%E7%BB%9C%E6%91%84%E5%83%8F%E5%A4%B4%E8%B4%AD%E4%B9%B0%E6%8C%87%E5%8D%97%EF%BC%88%E7%84%A6%E8%B7%9D-%E5%83%8F%E7%B4%A0%E7%AD%89%E5%8F%82%E6%95%B0%EF%BC%89/" class="article-nav-link">
+      <a href="/2022/11/20/20221120-%E8%89%B2%E5%9F%9F%E9%A9%AC%E8%B9%84%E5%9B%BE%E6%98%AF%E6%80%8E%E4%B9%88%E6%9D%A5%E7%9A%84-CIE1931XYZ%E8%89%B2%E5%BD%A9%E7%A9%BA%E9%97%B4%E8%AF%A6%E8%A7%A3/" class="article-nav-link">
         <strong class="article-nav-caption">上一篇</strong>
         <div class="article-nav-title">
           
-            20221119-海康威视网络摄像头购买指南（焦距-像素等参数）
+            20221120-色域马蹄图是怎么来的-CIE1931XYZ色彩空间详解
           
         </div>
       </a>
     
     
-      <a href="/2022/11/18/20221118-CPU%E5%AF%84%E5%AD%98%E5%99%A8/" class="article-nav-link">
+      <a href="/2022/11/19/20221119-%E5%8D%B3%E6%97%B6%E9%80%9A%E8%AE%AFIM%E8%AE%B0%E5%BD%95%E7%9A%84%E5%AD%98%E5%82%A8/" class="article-nav-link">
         <strong class="article-nav-caption">下一篇</strong>
-        <div class="article-nav-title">20221118-CPU寄存器</div>
+        <div class="article-nav-title">20221119-即时通讯IM记录的存储</div>
       </a>
     
   </nav>
