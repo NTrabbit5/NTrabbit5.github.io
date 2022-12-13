@@ -11,7 +11,7 @@
         name="viewport"
         content="width=device-width, initial-scale=1, maximum-scale=1"
       />
-      <title>20221130-eps32wifi协议 |  TeX_baitu blog</title>
+      <title>20221212-SPI协议详解 |  TeX_baitu blog</title>
   <meta name="generator" content="hexo-theme-ayer">
       
       <link rel="shortcut icon" href="/favicon.ico" />
@@ -53,7 +53,7 @@
     <main class="content on">
       <section class="outer">
   <article
-  id="post-20221130-eps32wifi协议"
+  id="post-20221212-SPI协议详解"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -64,7 +64,7 @@
     <header class="article-header">
        
 <h1 class="article-title sea-center" style="border-left:0" itemprop="name">
-  20221130-eps32wifi协议
+  20221212-SPI协议详解
 </h1>
  
 
@@ -72,15 +72,15 @@
     </header>
      
     <div class="article-meta">
-      <a href="/2022/11/30/20221130-eps32wifi%E5%8D%8F%E8%AE%AE/" class="article-date">
-  <time datetime="2022-11-30T11:08:37.000Z" itemprop="datePublished">2022-11-30</time>
+      <a href="/2022/12/12/20221212-SPI%E5%8D%8F%E8%AE%AE%E8%AF%A6%E8%A7%A3/" class="article-date">
+  <time datetime="2022-12-12T11:58:24.000Z" itemprop="datePublished">2022-12-12</time>
 </a>   
 <div class="word_count">
     <span class="post-time">
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> 字数统计:</span>
-            <span class="post-count">2.2k</span>
+            <span class="post-count">2.6k</span>
         </span>
     </span>
 
@@ -89,46 +89,103 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> 阅读时长≈</span>
-            <span class="post-count">8 分钟</span>
+            <span class="post-count">9 分钟</span>
         </span>
     </span>
 </div>
  
     </div>
       
+    <div class="tocbot"></div>
+
 
 
 
   
     <div class="article-entry" itemprop="articleBody">
        
-  <p>router<br><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Dd4y1B7RT">https://www.bilibili.com/video/BV1Dd4y1B7RT</a></p>
-<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/21951093">https://zhuanlan.zhihu.com/p/21951093</a></p>
-<p>802.11 协议精读19 wifi 的起源，诞生与发展</p>
-<p>本来这一节打算开始讨论802.11e的内容，因为从无线局域网诞生到成型，尤其是演进的过程中，一个重要的起步点就是802.11e，很多在802.11n，802.11ac，802.11ah之中所引入的内容，实际上在802.11e中都可以发现其的引导，更一般而言，先行的802.11的MAC层协议基本都是按照802.11e中的EDCF，而不是传统的DCF。</p>
-<p>然而，如果直接从802.11e开始谈及802.11协议的演进也有点冲突，因为从协议开始之初，或者说协议开始之前，实际上就一直处于演进的过程。所以本文就笔者个人所了解的部分，梳理下无线局域网协议WLAN的大致演进过程。</p>
-<p>本文中的一些内容部分参考自下述引文：</p>
-<p>《The Innovation Journey of Wi-Fi (The Road to Global Success)》<br>“THE HISTORY OF WI-FI”<br>《Ethernet:The Definitive Guide》</p>
-<p>wifi 协议的起源</p>
-<p>wifi 是一种WLAN 协议，即无线局域网协议，其历史或者说网络协议中的多地址接入协议的历史都可以追述到1971 年的ALOHAnet</p>
-<p>Aloha协议的思想如下：“一个aloha节点只要有数据的话，该节点就可以立即发送。当该节点数据发送完之后，其需要等待接收方反馈的ACK。若成功接收到ACK之后，那么这一次传输成功。如果没有收到ACK的话，那么这一次传输失败。该aloha节点会认为网络中还存在另外一个aloha节点也在发送数据，所以造成接收方发生了冲突。最后这些冲突的节点会随机选择一个时间进行回退（backoff），以避免下一次冲突。若冲突节点回退完成，其才可以重新进行发送”。</p>
-<p>CSMA&#x2F;CD协议的思想如下：“节点发送数据之前需要持续监听信道，一旦节点发现信道空闲，则立刻发送数据，<br>。在发送数据的同时，节点持续监听信道，”探测” 是否有别的节点也在该时刻发送数据。<br>若传输过程中没有检测到别的节点的传输，那么成功传输。在成功传输后，节点需要等待帧间间隔IFG（interframe gap）时间后，可以进行下一次传输。<br>若在传输过程中，探测到别的节点也在传输，那么则检测到冲突。发生冲突后，节点立刻停止当前的传输，并且发送特定的干扰序列（JAM序列），用以加强该次冲突（用以保证其余所有节点都检测到该次冲突），在JAM序列发送完之后，节点随机选择一个时间倒数进行backoff。当backoff完成之后，节点可以尝试再次重传”。</p>
-<p>IEEE 802 委员会所颁布的标准体系比较完善，其设置了多个不同的Group 用来指定不同场景下对应的协议</p>
-<p>在网络发展中，无线通信不仅仅是无线局域网这一条发展脉络，其最主要的还是通信网络，不过由于本文仅仅是讨论无线局域网，对于通信网络的发展，笔者涉猎优先，所以不进行开展</p>
-<p>民用网络的发展往往首先要通过政策许可这一关，在网络发展的起源地美国，其政策指的即是美国联邦通信委员会 (US Federal Communications Commission，FCC) 所派发的牌照（即无线电频段的使用许可）。考虑到避免干扰雷达所使用的无线电频段，于1985年，FCC颁发了为工业（industrial）、科学（scientific）和医疗（medical）行业颁发了ISM牌照，这一次的频段许可开放了900MHz，2.4GHz，和5.8GHz这三个频段，当时仅仅允许节点采用扩频技术（spread-spectrum）来进行通信。</p>
-<p>在ISM 频段之前，无线通信，比如无线广播以及电视广播都是采用专用的频段，这可以避免一些有害无线电干扰，而ism 频段之所以选择这些频段，是对于主要业务不重要，同时也是容易受到无线电干扰的频段</p>
-<p>MAC层初始设计时就存在两种声音，一种是由IBM所代表的中心式控制（Merits of Central），一种是由NCR代表（包含NCR&#x2F;Symbol Technologies&#x2F;Xircom）所代表的分布式控制（Distributed Control Architecture）。最终是由NCR所代表的分布式控制思路获得初步的胜利。从笔者的角度而言，这也是后来在Wi-Fi协议，始终存在分布式（DCF，EDCA）和中心式（PCF，HCCA）兼容设计的开始。<br>PHY的初始设计中包含两种可能的扩频方式，跳频（Frequency Hopping）和直序扩频（Direct Sequence）。 这也是由于FCC一开始发放的ISM牌照，其仅仅允许扩频通信的方案存在。在协议设计之初，团队就无法在两者中仅仅取决一种，所以在初始协议最终颁布时，两种物理层扩频方案都是被支持的。</p>
-<p>当下的hotspot 更强调的是一共为公共区域提供网络服务的热点业务，而最初hotspot 就是我们当前无线局域网基础架构模式，即存在一个无线AP 然后通过其连接如公网的架构</p>
-<p>hotspot 的概念也是wifi 协议能够成功的关键因素之一，其是wifi 在商业应用中最重要的组成部分之一，hotspot 的需求也大大推进了wifi 协议的发展，其中的漫游 安全  多AP 扩展的ESS 模式也都是由此发展而来的</p>
-<p>实际上大家开始接触wifi 很多也是从802.11b 开始的，802.11b 是802.11 协议中的第一个里程碑，早期的带wifi 功能的笔记本，或者PSP游戏机，其所带的无线功能都是基于802.11b的 </p>
-<p>802.11a引入了一种新的物理层技术OFDM（Orthogonal Frequency Division Multiplexing）。OFDM技术是于20世纪60年代就提出的，但是当时其核心算法FFT复杂度较高，随着集成电路技术的发展，到90年代时OFDM技术开始通信工程具体采用。相比扩频技术，OFDM技术有更高的频谱利用率。如上图所示，OFDM是通过时频关系的映射，将多个数字信号搭载到多个频域子载波上（如上图所示），然后通过IFFT合成，将这些数字信号一次性发送出去。通过OFDM，能够获得更高的频谱利用率，提高传输速率。对于OFDM的细节，我们也会在以后进行展开，这里就不详细展开了。</p>
-<p>802.11a当时没有受到很好的效果，主要还是频段的问题。因为当时FCC仅在5GHz频段上开放了OFDM技术，据《Next Generation Wireless LANs.802.11n and 802.11ac》一书所言，在1999~2000年间，美国非军事使用的5G频段仅仅只有几个指定的信道。而且由于802.11a和802.11b所在频段不同，所以新出的设备要同时兼容802.11b和802.11a就会造成成本增加，所以实际802.11a的实际应用很少。</p>
-<p>当初实际上也是FCC 不允许在2.4GHz 频段上使用OFDM 技术，仅仅只允许扩频技术</p>
-<p>2.4GHz 频段上也可以使用OFDM 技术</p>
-<p>在2004年时，由于传统Wi-Fi的发展都在于其PHY层和MAC层的性能上，协议的安全性并没有得到很好的保证。故在04年时，专门针对Wi-Fi安全的协议标准802.11i正式颁布，实际上，这个时期也有一个中国尝试发起的协议WAPI，也是针对该问题而言的。</p>
-<p>802.11n 的核心技术概念是MIMO 之前的无线通信我们都是单天线的传输系统，在mimo 的设计上，我们可以通过多根天线，并行传输多个不同数据，从而提高传输速率，提供更高的系统带宽</p>
-<p>实际上在网络发展中，各个不同源头的技术实际上是时有交互的，然而，是否成功，还是要根据市场和时机的检验，<br>好比wifi 虽然获得了比较大的成功，而wimax 则没有被广泛采用</p>
-<p>在2010年时候，在时任美国总统奥巴马的支持下，FCC同意在未来增加500MHz新频段用以无线通信，该500MHz是分散在多个不同的频段下，具体是根据具体的功能需求进行的设定。</p>
+  <p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/290620901">https://zhuanlan.zhihu.com/p/290620901</a></p>
+<p>UART 没有时钟信号，无法控制何时发送数据，也无法保证双方按照完全相同的速度接收数据，因此，双方以不同的速度进行数据接收和发送，就会出现问题</p>
+<p>如果要解决这个问题，uart 为每个字节添加额外的起始位和停止位，以帮助接收器在数据到达时进行同步</p>
+<p>双方还必须事先就传输速度达成共识，设置相同的波特率 例如每秒9600位</p>
+<p>传输速率如果有微小差异不是问题，因为接收器会在每个字节的开头重新同步</p>
+<p>如果您注意到上图中的11001010不等于0x53，这是一个细节。串口协议通常会首先发送最低有效位，因此最小位在最左边LSB。低四位字节实际上是0011 &#x3D; 0x3，高四位字节是0101 &#x3D; 0x5。</p>
+<p>异步串行工作得很好，但是在每个字节发送的时候都需要额外的起始位和停止位 以及在发送和接收数据所需的复杂硬件方面都有很多开销</p>
+<p>不难发现，如果接收端和发送端设置的速度都不一致，那么接收到的数据将是垃圾 乱码</p>
+<h2 id="SPI-通讯协议"><a href="#SPI-通讯协议" class="headerlink" title="SPI 通讯协议"></a>SPI 通讯协议</h2><p>spi 是一个同步的数据总线，也就是说它是用单独的数据线和一个单独的时钟信号来保证发送端和接收端的完美同步</p>
+<p>时钟是一个振荡信号，它告诉接收端在确切的时机对数据线上的信号进行采样</p>
+<p>产生时钟的一侧称为主机，另一侧为从机，总是只有一个主机 一般来说可以是微控制器 MCU 但是可以有多个从机</p>
+<p>数据的采集时机可能是时钟信号的上升沿 或下降沿</p>
+<p>具体要看对 spi 的配置</p>
+<p>整体的传输大概可以分为以下几个过程</p>
+<p>主机先将NSS 信号拉低，这样保证开始接收数据</p>
+<p>当接收端检测到时钟的边沿信号时，它将立即读取数据线上的信号，这样就得到了一位数据 1bit</p>
+<p>由于时钟是随数据一起发送的，因此指定数据的传输速度并不重要，尽管设备将具有可以运行的最高速度</p>
+<p>主机发送到从机时：主机产生相应的时钟信号，然后数据一位一位地将从MOSI信号线上进行发送到从机；<br>主机接收从机数据：如果从机需要将数据发送回主机，则主机将继续生成预定数量的时钟信号，并且从机会将数据通过MISO信号线发送；</p>
+<p>注意  spi 是全双工 具有单独的发送和接收线路，因此可以在同一时间发送和接收数据，另外 spi 的接收硬件可以是一个简单的移位寄存器，这笔异步串行通信所需的完整uart 要简单得多，并且更加便宜</p>
+<p>spi 特性</p>
+<p>spi 总线包括4条 逻辑线，定义如下</p>
+<p>MISO 主机输入，从机输出，数据来自从机</p>
+<p>MOSI 主机输出，从机输入</p>
+<p>SCLK 串行时钟信号，由主机产生发送给从机</p>
+<p>SS 片选信号，由主机发送，以控制与哪个从机通信，通常是低电平有效信号</p>
+<p>其他制造商可能会遵循其他命名规则，但是最终他们指的相同的含义。以下是一些常用术语；</p>
+<p>MISO也可以是SIMO，DOUT，DO，SDO或SO（在主机端）;<br>MOSI也可以是SOMI，DIN，DI，SDI或SI（在主机端）;<br>NSS也可以是CE，CS或SSEL;<br>SCLK也可以是SCK;<br>本文将按照以下命名进行讲解[MISO, MOSI, SCK，NSS]</p>
+<p>时钟频率</p>
+<p>SPI 总线上的主机必须在通信开始时候配置并生成相应的时钟信号，在每个SPI 时钟周期内，都会发生全双工数据传输</p>
+<p>主机在mosi 线上发送一位数据，从机读取它，而从机在miso 线上发送一位数据，主机读取它</p>
+<p>就算只进行单向的数据传输，也要保持这样的顺序，这就意味着无论接收任何数据，必须实际发送一些东西，在这种情况下，我们称其为虚拟数据</p>
+<p>从理论上讲，只要实际可行，时钟速率就可以是您想要的任何速率，当然这个速率受限于每个系统能提供多大的系统时钟频率，以及最大的SPI传输速率。</p>
+<p>时钟极性 CKP Clock Polarity</p>
+<p>除了配置串行时钟频率 外，SPI 主设备还需要配置时钟极性</p>
+<p>根据硬件制造商的命名规则不同，时钟极性通常写为CKP或CPOL。时钟极性和相位共同决定读取数据的方式，比如信号上升沿读取数据还是信号下降沿读取数据；</p>
+<p>CKP 可以配置为1或0 ，这意味着您可以根据需要将时钟的默认状态 IDLE 设置为高或低，极性反转可以通过简单的逻辑逆变器实现，您必须参考设备的数据手册才能正确设置CKP 和CKE</p>
+<p>CKP &#x3D; 0：时钟空闲IDLE为低电平0；<br>CKP &#x3D; 1：时钟空闲IDLE为高电平1；</p>
+<p>时钟相位 CKE Clock Phase Edge</p>
+<p>除配置串行时钟速率和极性外，SPI 主设备还应配置时钟相位，根据硬件制造商的不同，时钟相位通常写为CKE 或CPHA</p>
+<p>顾明思义，时钟相位&#x2F;边沿，也就是采集数据时是在时钟信号的具体相位或者边沿</p>
+<p>CKE &#x3D; 0 在时钟信号SCK 的第一个跳变沿采样</p>
+<p>CKE &#x3D; 1 在时钟信号SCK 的第二个跳变沿采样</p>
+<p>时钟配置总结</p>
+<p>综上几种情况，下图总结了所有时钟配置组合，并突出显示了实际采样数据的时刻</p>
+<p>其中黑色线为采样数据的时刻</p>
+<p>蓝色线为SCK 时钟信号</p>
+<p>具体如下图所示</p>
+<p>模式编号</p>
+<p>SPI 的时钟极性和相位的配置通常称为SPI 模式，所有可能的模式都遵循以下约定，具体如下表所示</p>
+<p>除此之外，我们还应该仔细检查微控制器数据手册中包含的模式表，以确保一切正常</p>
+<p>多从机模式</p>
+<p>前面说到的SPI 总线必须有一个主机，可以有多个从机，那么具体连接到SPI 总线的方法有以下两种</p>
+<p>第一种方法 多NSS</p>
+<p>通常，每个从机都需要一条单独的SS 线</p>
+<p>如果要和特定的从机进行通讯，可以将相应的NSS 信号线拉低，并保持其他NSS 信号线的状态为高电平，如果同时将两个NSS 信号线拉低，则可能会出现乱码，因为从机可能都试图在同一条MISO 线上传输数据，最终导致接收数据乱码</p>
+<p>具体连接方式如下图所示</p>
+<p>第二种方法 菊花链</p>
+<p>在数字通信世界中，在设备信号 （总线信号或中断信号） 以串行的方式从一个设备依次传到下一个设备，不断循环直到数据到达目标设备的方式被称为菊花链</p>
+<ol>
+<li>菊花链的最大缺点是因为信号串行传输，所以一旦数据链路中的某设备发生故障的时候，它下面优先级较低的设备就不可能得到服务了</li>
+</ol>
+<p>另一方面，距离主机越远的从机，获得服务的优先级越低，所以需要安排好从机的优先级，并且设置总线检测器，如果某个从机超时，则对该从机进行短路，防止单个从机损坏造成整个链路崩溃的情况</p>
+<p>具体的连接如下图所示</p>
+<p>其中红线加粗为数据的流向</p>
+<p>所以最终的数据流向图可以表示为</p>
+<p>SCK 为时钟信号，8clks 表示8个边沿信号</p>
+<p>其中D 为数据，X 为无效数据</p>
+<p>所以不难发现，菊花链模式充分使用了SPI 其移位寄存器的功能，整个链充当通信移位寄存器，每个从机在下一个时钟周期将输入数据复制到输出</p>
+<p>优缺点</p>
+<p>SPI 通讯的优势</p>
+<p>使SPI 作为串口通信接口脱颖而出的原因很多</p>
+<p>全双工串行通信；<br>高速数据传输速率。<br>简单的软件配置；<br>极其灵活的数据传输，不限于8位，它可以是任意大小的字；<br>非常简单的硬件结构。从站不需要唯一地址（与I2C不同）。从机使用主机时钟，不需要精密时钟振荡器&#x2F;晶振（与UART不同）。不需要收发器（与CAN不同）。</p>
+<p>SPI 的缺点 </p>
+<p>没有硬件从机应答信号  主机可能在不知情的情况下无处发送</p>
+<p>通常仅支持一个主设备</p>
+<p>需要更多的引脚 与I2C 不同</p>
+<p>没有定义硬件级别的错误检查协议</p>
+<p>与RS232 和CAN 总线相比，只能支持非常短的距离</p>
+<p>编程实现<br>下面是通过STM32的cubemx自动生成的HAL库代码，比较简单，截取了其中一部分，具体如下；</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">static</span> <span class="type">void</span> <span class="title function_">MX_SPI1_Init</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    hspi1.Instance = SPI1;</span><br><span class="line">    hspi1.Init.Mode = SPI_MODE_MASTER;    <span class="comment">//主机模式</span></span><br><span class="line">    hspi1.Init.Direction = SPI_DIRECTION_2LINES; <span class="comment">//全双工</span></span><br><span class="line">    hspi1.Init.DataSize = SPI_DATASIZE_8BIT;  <span class="comment">//数据位为8位</span></span><br><span class="line">    hspi1.Init.CLKPolarity = SPI_POLARITY_LOW;  <span class="comment">//CPOL=0</span></span><br><span class="line">    hspi1.Init.CLKPhase = SPI_PHASE_1EDGE;   <span class="comment">//CPHA为数据线的第一个变化沿</span></span><br><span class="line">    hspi1.Init.NSS = SPI_NSS_SOFT;     <span class="comment">//软件控制NSS</span></span><br><span class="line">    hspi1.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_2;<span class="comment">//2分频，32M/2=16MHz</span></span><br><span class="line">    hspi1.Init.FirstBit = SPI_FIRSTBIT_MSB;   <span class="comment">//最高位先发送</span></span><br><span class="line">    hspi1.Init.TIMode = SPI_TIMODE_DISABLE;   <span class="comment">//TIMODE模式关闭</span></span><br><span class="line">    hspi1.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;<span class="comment">//CRC关闭</span></span><br><span class="line">    hspi1.Init.CRCPolynomial = <span class="number">10</span>;     <span class="comment">//默认值，无效</span></span><br><span class="line">    <span class="keyword">if</span> (HAL_SPI_Init(&amp;hspi1) != HAL_OK)    <span class="comment">//初始化</span></span><br><span class="line">    &#123;</span><br><span class="line">        _Error_Handler(__FILE__, __LINE__);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">    </span><br><span class="line"><span class="comment">//发送数据</span></span><br><span class="line">HAL_StatusTypeDef  </span><br><span class="line"><span class="title function_">HAL_SPI_Transmit</span><span class="params">(SPI_HandleTypeDef *hspi, </span></span><br><span class="line"><span class="params">                 <span class="type">uint8_t</span> *pData, </span></span><br><span class="line"><span class="params">                 <span class="type">uint16_t</span> Size, </span></span><br><span class="line"><span class="params">                 <span class="type">uint32_t</span> Timeout)</span>;</span><br><span class="line"><span class="comment">//接收数据</span></span><br><span class="line">HAL_StatusTypeDef  </span><br><span class="line"><span class="title function_">HAL_SPI_Receive</span><span class="params">(SPI_HandleTypeDef *hspi, </span></span><br><span class="line"><span class="params">                <span class="type">uint8_t</span> *pData, </span></span><br><span class="line"><span class="params">                <span class="type">uint16_t</span> Size, </span></span><br><span class="line"><span class="params">                <span class="type">uint32_t</span> Timeout)</span>;</span><br></pre></td></tr></table></figure>
+
+<p>% SPI、UART、RS232、RS485、IIC 5</p>
  
       <!-- reward -->
       
@@ -199,7 +256,7 @@
     <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://example.com/2022/11/30/20221130-eps32wifi%E5%8D%8F%E8%AE%AE/" alt="微信分享二维码">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://example.com/2022/12/12/20221212-SPI%E5%8D%8F%E8%AE%AE%E8%AF%A6%E8%A7%A3/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -210,19 +267,19 @@
    
   <nav class="article-nav">
     
-      <a href="/2022/12/01/20221201-python%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%95%B0%E7%BB%84%E8%BD%AC%E6%B5%AE%E7%82%B9%E6%95%B0%E7%BB%84/" class="article-nav-link">
+      <a href="/2022/12/13/20221213-VGA%E6%98%BE%E7%A4%BA%E5%9B%BE%E5%83%8F%E8%AF%A6%E7%BB%86%E6%80%BB%E7%BB%93/" class="article-nav-link">
         <strong class="article-nav-caption">上一篇</strong>
         <div class="article-nav-title">
           
-            20221201-python字符串数组转浮点数组
+            20221213-VGA显示图像详细总结
           
         </div>
       </a>
     
     
-      <a href="/2022/11/29/20221129-%E5%A4%A7%E7%96%86%E6%A8%A1%E6%8B%9F%E5%99%A8%E9%94%AE%E7%9B%98%E8%A1%A8%E7%A4%BA/" class="article-nav-link">
+      <a href="/2022/12/12/20221212-RS2329%E9%92%88%E4%B8%B2%E5%8F%A3%E5%AE%9A%E4%B9%89/" class="article-nav-link">
         <strong class="article-nav-caption">下一篇</strong>
-        <div class="article-nav-title">20221129-大疆模拟器键盘表示</div>
+        <div class="article-nav-title">20221212-RS2329针串口定义</div>
       </a>
     
   </nav>

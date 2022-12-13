@@ -11,7 +11,7 @@
         name="viewport"
         content="width=device-width, initial-scale=1, maximum-scale=1"
       />
-      <title>20221130-eps32wifi协议 |  TeX_baitu blog</title>
+      <title>20221213-UART串口通信介绍 |  TeX_baitu blog</title>
   <meta name="generator" content="hexo-theme-ayer">
       
       <link rel="shortcut icon" href="/favicon.ico" />
@@ -53,7 +53,7 @@
     <main class="content on">
       <section class="outer">
   <article
-  id="post-20221130-eps32wifi协议"
+  id="post-20221213-UART串口通信介绍"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -64,7 +64,7 @@
     <header class="article-header">
        
 <h1 class="article-title sea-center" style="border-left:0" itemprop="name">
-  20221130-eps32wifi协议
+  20221213-UART串口通信介绍
 </h1>
  
 
@@ -72,15 +72,15 @@
     </header>
      
     <div class="article-meta">
-      <a href="/2022/11/30/20221130-eps32wifi%E5%8D%8F%E8%AE%AE/" class="article-date">
-  <time datetime="2022-11-30T11:08:37.000Z" itemprop="datePublished">2022-11-30</time>
+      <a href="/2022/12/13/20221213-UART%E4%B8%B2%E5%8F%A3%E9%80%9A%E4%BF%A1%E4%BB%8B%E7%BB%8D/" class="article-date">
+  <time datetime="2022-12-13T04:16:06.000Z" itemprop="datePublished">2022-12-13</time>
 </a>   
 <div class="word_count">
     <span class="post-time">
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> 字数统计:</span>
-            <span class="post-count">2.2k</span>
+            <span class="post-count">1.9k</span>
         </span>
     </span>
 
@@ -89,7 +89,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> 阅读时长≈</span>
-            <span class="post-count">8 分钟</span>
+            <span class="post-count">7 分钟</span>
         </span>
     </span>
 </div>
@@ -102,33 +102,50 @@
   
     <div class="article-entry" itemprop="articleBody">
        
-  <p>router<br><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Dd4y1B7RT">https://www.bilibili.com/video/BV1Dd4y1B7RT</a></p>
-<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/21951093">https://zhuanlan.zhihu.com/p/21951093</a></p>
-<p>802.11 协议精读19 wifi 的起源，诞生与发展</p>
-<p>本来这一节打算开始讨论802.11e的内容，因为从无线局域网诞生到成型，尤其是演进的过程中，一个重要的起步点就是802.11e，很多在802.11n，802.11ac，802.11ah之中所引入的内容，实际上在802.11e中都可以发现其的引导，更一般而言，先行的802.11的MAC层协议基本都是按照802.11e中的EDCF，而不是传统的DCF。</p>
-<p>然而，如果直接从802.11e开始谈及802.11协议的演进也有点冲突，因为从协议开始之初，或者说协议开始之前，实际上就一直处于演进的过程。所以本文就笔者个人所了解的部分，梳理下无线局域网协议WLAN的大致演进过程。</p>
-<p>本文中的一些内容部分参考自下述引文：</p>
-<p>《The Innovation Journey of Wi-Fi (The Road to Global Success)》<br>“THE HISTORY OF WI-FI”<br>《Ethernet:The Definitive Guide》</p>
-<p>wifi 协议的起源</p>
-<p>wifi 是一种WLAN 协议，即无线局域网协议，其历史或者说网络协议中的多地址接入协议的历史都可以追述到1971 年的ALOHAnet</p>
-<p>Aloha协议的思想如下：“一个aloha节点只要有数据的话，该节点就可以立即发送。当该节点数据发送完之后，其需要等待接收方反馈的ACK。若成功接收到ACK之后，那么这一次传输成功。如果没有收到ACK的话，那么这一次传输失败。该aloha节点会认为网络中还存在另外一个aloha节点也在发送数据，所以造成接收方发生了冲突。最后这些冲突的节点会随机选择一个时间进行回退（backoff），以避免下一次冲突。若冲突节点回退完成，其才可以重新进行发送”。</p>
-<p>CSMA&#x2F;CD协议的思想如下：“节点发送数据之前需要持续监听信道，一旦节点发现信道空闲，则立刻发送数据，<br>。在发送数据的同时，节点持续监听信道，”探测” 是否有别的节点也在该时刻发送数据。<br>若传输过程中没有检测到别的节点的传输，那么成功传输。在成功传输后，节点需要等待帧间间隔IFG（interframe gap）时间后，可以进行下一次传输。<br>若在传输过程中，探测到别的节点也在传输，那么则检测到冲突。发生冲突后，节点立刻停止当前的传输，并且发送特定的干扰序列（JAM序列），用以加强该次冲突（用以保证其余所有节点都检测到该次冲突），在JAM序列发送完之后，节点随机选择一个时间倒数进行backoff。当backoff完成之后，节点可以尝试再次重传”。</p>
-<p>IEEE 802 委员会所颁布的标准体系比较完善，其设置了多个不同的Group 用来指定不同场景下对应的协议</p>
-<p>在网络发展中，无线通信不仅仅是无线局域网这一条发展脉络，其最主要的还是通信网络，不过由于本文仅仅是讨论无线局域网，对于通信网络的发展，笔者涉猎优先，所以不进行开展</p>
-<p>民用网络的发展往往首先要通过政策许可这一关，在网络发展的起源地美国，其政策指的即是美国联邦通信委员会 (US Federal Communications Commission，FCC) 所派发的牌照（即无线电频段的使用许可）。考虑到避免干扰雷达所使用的无线电频段，于1985年，FCC颁发了为工业（industrial）、科学（scientific）和医疗（medical）行业颁发了ISM牌照，这一次的频段许可开放了900MHz，2.4GHz，和5.8GHz这三个频段，当时仅仅允许节点采用扩频技术（spread-spectrum）来进行通信。</p>
-<p>在ISM 频段之前，无线通信，比如无线广播以及电视广播都是采用专用的频段，这可以避免一些有害无线电干扰，而ism 频段之所以选择这些频段，是对于主要业务不重要，同时也是容易受到无线电干扰的频段</p>
-<p>MAC层初始设计时就存在两种声音，一种是由IBM所代表的中心式控制（Merits of Central），一种是由NCR代表（包含NCR&#x2F;Symbol Technologies&#x2F;Xircom）所代表的分布式控制（Distributed Control Architecture）。最终是由NCR所代表的分布式控制思路获得初步的胜利。从笔者的角度而言，这也是后来在Wi-Fi协议，始终存在分布式（DCF，EDCA）和中心式（PCF，HCCA）兼容设计的开始。<br>PHY的初始设计中包含两种可能的扩频方式，跳频（Frequency Hopping）和直序扩频（Direct Sequence）。 这也是由于FCC一开始发放的ISM牌照，其仅仅允许扩频通信的方案存在。在协议设计之初，团队就无法在两者中仅仅取决一种，所以在初始协议最终颁布时，两种物理层扩频方案都是被支持的。</p>
-<p>当下的hotspot 更强调的是一共为公共区域提供网络服务的热点业务，而最初hotspot 就是我们当前无线局域网基础架构模式，即存在一个无线AP 然后通过其连接如公网的架构</p>
-<p>hotspot 的概念也是wifi 协议能够成功的关键因素之一，其是wifi 在商业应用中最重要的组成部分之一，hotspot 的需求也大大推进了wifi 协议的发展，其中的漫游 安全  多AP 扩展的ESS 模式也都是由此发展而来的</p>
-<p>实际上大家开始接触wifi 很多也是从802.11b 开始的，802.11b 是802.11 协议中的第一个里程碑，早期的带wifi 功能的笔记本，或者PSP游戏机，其所带的无线功能都是基于802.11b的 </p>
-<p>802.11a引入了一种新的物理层技术OFDM（Orthogonal Frequency Division Multiplexing）。OFDM技术是于20世纪60年代就提出的，但是当时其核心算法FFT复杂度较高，随着集成电路技术的发展，到90年代时OFDM技术开始通信工程具体采用。相比扩频技术，OFDM技术有更高的频谱利用率。如上图所示，OFDM是通过时频关系的映射，将多个数字信号搭载到多个频域子载波上（如上图所示），然后通过IFFT合成，将这些数字信号一次性发送出去。通过OFDM，能够获得更高的频谱利用率，提高传输速率。对于OFDM的细节，我们也会在以后进行展开，这里就不详细展开了。</p>
-<p>802.11a当时没有受到很好的效果，主要还是频段的问题。因为当时FCC仅在5GHz频段上开放了OFDM技术，据《Next Generation Wireless LANs.802.11n and 802.11ac》一书所言，在1999~2000年间，美国非军事使用的5G频段仅仅只有几个指定的信道。而且由于802.11a和802.11b所在频段不同，所以新出的设备要同时兼容802.11b和802.11a就会造成成本增加，所以实际802.11a的实际应用很少。</p>
-<p>当初实际上也是FCC 不允许在2.4GHz 频段上使用OFDM 技术，仅仅只允许扩频技术</p>
-<p>2.4GHz 频段上也可以使用OFDM 技术</p>
-<p>在2004年时，由于传统Wi-Fi的发展都在于其PHY层和MAC层的性能上，协议的安全性并没有得到很好的保证。故在04年时，专门针对Wi-Fi安全的协议标准802.11i正式颁布，实际上，这个时期也有一个中国尝试发起的协议WAPI，也是针对该问题而言的。</p>
-<p>802.11n 的核心技术概念是MIMO 之前的无线通信我们都是单天线的传输系统，在mimo 的设计上，我们可以通过多根天线，并行传输多个不同数据，从而提高传输速率，提供更高的系统带宽</p>
-<p>实际上在网络发展中，各个不同源头的技术实际上是时有交互的，然而，是否成功，还是要根据市场和时机的检验，<br>好比wifi 虽然获得了比较大的成功，而wimax 则没有被广泛采用</p>
-<p>在2010年时候，在时任美国总统奥巴马的支持下，FCC同意在未来增加500MHz新频段用以无线通信，该500MHz是分散在多个不同的频段下，具体是根据具体的功能需求进行的设定。</p>
+  <p>串口通信 UART 介绍</p>
+<p>通用异步收发传输器 ，通常称作UART ，是一种异步收发传输器</p>
+<p>首先先来介绍一下同步和异步通信</p>
+<p>在常见通信总线协议中，I2C SPI 属于同步通信而UART 属于异步通信</p>
+<p>在UART 通信中，数据起始位和停止位是必不可少的</p>
+<p>硬件层</p>
+<p>常用RS-232标准，这里不详细解释，主要是对应设备的Tx 线和Rx 线要对应正确</p>
+<p>协议层 </p>
+<p>协议层中，规定了数据包的内容，它由起始位，主体数据，校验位以及停止位组成，通信双方的数据包格式要约定一致才能正常收发数据</p>
+<p>波特率  异步通信中由于没有时钟信号，所以2个通信设备需约定好波特率，常见的有4800 9600 15200 等</p>
+<p>通信的起始和停止信号，串口通信的一个数据包从起始信号开始，知道停止信号结束，数据包的起始信号由一个逻辑0 的数据位表示，而数据包的停止信号可由0.5 1 1.5 2 个逻辑1 的数据位表示，只要双方约定一致即可</p>
+<p>有效数据，在数据包的起始位置之后紧接着的就是要传输的主体数据内容，也称为有效数据，有效数据的长度常被约定为8位或9位长</p>
+<p>数据校验  可以在传输过程中加上校验位来解决这个问题，校验方法有奇校验 偶校验 0校验 1校验 以及无校验</p>
+<p>奇校验要求有效数据和校验位中“1”的个数为奇数，比如一个 8 位长的有效数据为：01101001，此时总共有 4 个“1”，为达到奇校验效果，校验位为“1”，最后传输的数据将是 8 位的有效数据加上 1 位的校验位总共 9 位。偶校验与奇校验要求刚好相反，要求帧数据和校验位中“1”的个数为偶数，比如数据帧：11001010，此时数据帧“1”的个数为 4 个，所以偶校验位为“0”。0 校验是不管有效数据中的内容是什么，校验位总为“0”，1 校验是校验位总为“1”。</p>
+<p>UART 功能框图剖析</p>
+<p>这张图是当年上学时使用system C 对uart 建模的模块图，对于接口部分，重要的即为Tx Rx 数据输出，接受接口，clk 提供波特率生成模块的初始时钟信号，</p>
+<p>有关控制器部分，在这里使用逻辑电路来实现，具体控制输出&#x2F;接收使能，设备使能等</p>
+<p>在目前的微控制器上，数字电路控制部分已被封装，现在只需要操作对应寄存器的对应位即可实现对UART  的控制<br>下图是uart 框图 </p>
+<p>波特率生成模块</p>
+<p>USART 的发送器和接收器使用相同的波特率，有以下的计算公式</p>
+<p>其中，fck为 USART 时钟， USARTDIV 是一个存放在波特率寄存器(USART_BRR)的一个无符号定点数。其中 DIV_Mantissa[11:0]位定义 USARTDIV 的整数部分，DIV_Fraction[3:0]位定义 USARTDIV 的小数部分。</p>
+<p>例如：DIV_Mantissa&#x3D;24(0x18)，DIV_Fraction&#x3D;10(0x0A)，此时 USART_BRR 值为0x18A；那么USARTDIV的小数位10&#x2F;16&#x3D;0.625；整数位24，最终USARTDIV的值为24.625。</p>
+<p>波特率的常用值有 2400、9600、19200、115200。下面以实例讲解如何设定寄存器值得到波特率的值。我们知道 USART1 使用APB2总线时钟，最高可达72MHz，其他USART的最高频率为36MHz。我们选取USART1作为实例讲解，即fck&#x3D;72MHz。为得到115200bps的波特率，此时：115200&#x3D;72000000&#x2F;(16∗USARTDIV)，解得USARTDIV&#x3D;39.0625，可算得DIV_Fraction&#x3D;0.0625*16&#x3D;1&#x3D;0x01，DIV_Mantissa&#x3D;39&#x3D;0x27，即应该设置USART_BRR的值为0x171。</p>
+<p>数据寄存器</p>
+<p>UART 数据寄存器 只有低9位有效，并且第9位 数据是否有效要取决于uart 控制寄存器1的M 位设置，当M 位为0 时表示8位数据字长，当M 位为1 表示9位数据字长，我们一般使用8位数据字长</p>
+<p>USART_DR包含了已发送的数据或者接收到的数据。USART_DR实际是包含了两个寄存器，一个专门用于发送的可写TDR，一个专门用于接收的可读RDR。当进行发送操作时，往USART_DR写入数据会自动存储在TDR内；当进行读取操作时，向USART_DR读取数据会自动提取RDR数据。</p>
+<p>TDR和RDR都是介于系统总线和移位寄存器之间。串行通信是一个位一个位传输的，发送时把TDR内容转移到发送移位寄存器，然后把移位寄存器数据每一位发送出去，接时把接收到的每一位顺序保存在接收移位寄存器内然后才转移到RDR。</p>
+<p>UART支持DMA传输，可以实现高速数据传输(不经过CPU),使能UART的DMA功能需要将USART_CR1寄存器DMAT位置1。</p>
+<p>控制器</p>
+<p>UART 有专门控制发送的发送器，控制接收的接收器，还有唤醒单元，中断控制等，使用uart 之前需要向 usart_CR1 寄存器的ue位置使能UART UE 位用于开启供给串口的时钟</p>
+<p>发送器</p>
+<p>当USART_CR1寄存器的发送使能位TE置1时，启动数据发送，发送移位寄存器的数据会在TX引脚输出，低位在前，高位在后。</p>
+<p>一个字符帧发送需要3部分，起始位 数据帧  停止位，起始位是一个位周期的低电平，位周期就是每一位占用的时间，数据帧就是我们要发送的8 或9 位数据，数据是最低位开始传输的，停止位是一定时间周期的高电平</p>
+<p>停止位的时间长短可以通过UART控制寄存器2（USART_CR2）的STOP[1:0]位控制，可选0.5个、1个、1.5个、2个停止位。默认使用1个停止位。2个停止位适用于正常USART模式、单线模式和调制解调器模式。0.5和1.5个停止位用于智能卡模式。</p>
+<p>当发使能位TE置1之后，发送器开始会发送一个空闲帧（一个数据帧长度的高电平），接下来就可以往USART_DR寄存器写入要发送的数据。在写入最后一个数据后，需等待UART状态寄存器（USART_SR）的TC位为1，表示数据传输完成。USART_CR1寄存器的TCIE位置1，则产生中断。</p>
+<p>发送数据时，几个重要的标志位如下</p>
+<p>TE 发送使能<br>TXE 发送寄存器为空，发送单个字节时使用<br>TC 发送完成，发送多个字节数据时候使用<br>TXIE 发送完成中断使能</p>
+<p>接收器</p>
+<p>将CR1寄存器的RE位置1，使能USART接收，使得接收器在RX线开始搜索起始位。在确定起始位后，就根据RX线电平状态把数据存放在接收移位寄存器内。接收完成后就把接收移位寄存器的数据移到PDR内，并把USART_SR寄存器的RXNE位置。如果USART_CR2寄存器的RXNEIE置1可以产生中断。</p>
+<p>接收数据时，几个重要的标志位如下</p>
+<p>RE 接收使能<br>RXNE:读数据寄存器非空。</p>
+<p>RXNEIE:发送完成中断使能。</p>
+<p>USART_CR1寄存器：<br>USART_CR2寄存器：<br>USART_CR3寄存器：</p>
+<p>之后会基于STM32继续介绍怎样配置并使用UART，包括串口轮询&#x2F;中断&#x2F;DMA方式发送&#x2F;接收数据。</p>
  
       <!-- reward -->
       
@@ -199,7 +216,7 @@
     <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://example.com/2022/11/30/20221130-eps32wifi%E5%8D%8F%E8%AE%AE/" alt="微信分享二维码">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://example.com/2022/12/13/20221213-UART%E4%B8%B2%E5%8F%A3%E9%80%9A%E4%BF%A1%E4%BB%8B%E7%BB%8D/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -210,19 +227,19 @@
    
   <nav class="article-nav">
     
-      <a href="/2022/12/01/20221201-python%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%95%B0%E7%BB%84%E8%BD%AC%E6%B5%AE%E7%82%B9%E6%95%B0%E7%BB%84/" class="article-nav-link">
+      <a href="/2022/12/13/20221213-RS485%E9%80%9A%E8%AE%AF%E5%9F%BA%E7%A1%80%E5%8F%8A%E9%80%9A%E8%AE%AF%E5%BA%94%E7%94%A8%E8%AF%A6%E8%A7%A3/" class="article-nav-link">
         <strong class="article-nav-caption">上一篇</strong>
         <div class="article-nav-title">
           
-            20221201-python字符串数组转浮点数组
+            20221213-RS485通讯基础及通讯应用详解
           
         </div>
       </a>
     
     
-      <a href="/2022/11/29/20221129-%E5%A4%A7%E7%96%86%E6%A8%A1%E6%8B%9F%E5%99%A8%E9%94%AE%E7%9B%98%E8%A1%A8%E7%A4%BA/" class="article-nav-link">
+      <a href="/2022/12/13/20221213-VGA%E6%98%BE%E7%A4%BA%E5%9B%BE%E5%83%8F%E8%AF%A6%E7%BB%86%E6%80%BB%E7%BB%93/" class="article-nav-link">
         <strong class="article-nav-caption">下一篇</strong>
-        <div class="article-nav-title">20221129-大疆模拟器键盘表示</div>
+        <div class="article-nav-title">20221213-VGA显示图像详细总结</div>
       </a>
     
   </nav>

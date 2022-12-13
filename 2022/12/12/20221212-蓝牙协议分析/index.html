@@ -80,7 +80,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> 字数统计:</span>
-            <span class="post-count">1.1k</span>
+            <span class="post-count">1.9k</span>
         </span>
     </span>
 
@@ -89,7 +89,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> 阅读时长≈</span>
-            <span class="post-count">3 分钟</span>
+            <span class="post-count">6 分钟</span>
         </span>
     </span>
 </div>
@@ -133,6 +133,19 @@
 <p>主机 Host 主机部分由核心协议层 和核心规范构成</p>
 <p>控制器 此部分拆分为低功耗蓝牙和经典蓝牙两个章节说明</p>
 <p>HCI 此部分定义了主机和控制器之间通信的接口标准，可以是UART USB 等通信方式 </p>
+<p>上图中红色部分是 BR&#x2F;RED 经典蓝牙的必选项，绿色部分是LE 低功耗蓝牙必选项，蓝色部分是公共部分，当然经典蓝牙也可以具备绿色部分特性，HCI 接口根据芯片架构有关，是可选项，两者在物理层的差异性图中没有体现，不涉及芯片设计，这块可暂不关注 </p>
+<p>GPA 规范，通用接入规范，定义了所有蓝牙设备的基础功能，设备键发现，连接、配对，绑定的流程，蓝牙设备中四种角色，广播和扫描响应报文的格式，还有一些通用蓝牙参数定义，比如设备地址，名称、配对密钥和设备的外观特征值，用于区分是什么设备，手机还是电脑；明确了作为一个低功耗蓝牙设备的基本需求，包含哪些层级以及如何协同工作的，规范了一些通用的蓝牙参数，蓝牙设备地址、设备名称、配对密钥、外观特征值  用于区分是手机还是电脑</p>
+<p>ATT 属性协议，定义了访问对端设备上数据的一组规则，是GATT 规范的基础，也是低功耗蓝牙的基石，定义了host 端属性报文格式和报文类型</p>
+<p>GATT 通用属性规范，位于ATT 之上，定义了属性的类型及其使用方法，GATT 用来规范attribute 中的数据内容，并运用 group 的概念对attribute 进行分类管理，没有GATT BLE 协议栈也能跑，但互联互通就会出现问题</p>
+<p>L2CAP 层，屏蔽了控制器传输协议中的许多特性，方便高层协议的开发，报文分片和重组，SAR 流控，重传 报文完整性校验等</p>
+<p>SMP 安全管理协议，定义了蓝牙设备配对，认证，解密等行为的安全操作</p>
+<p>LLCP LL 链路层控制，</p>
+<p>PHY 物理层，低功耗蓝牙采用40个信道，分为数据信道和广播信道；广播信道占用3个，用于发现设备、建立连接、广播数据；数据信道占用37个，用于已建立连接设备间的数据通信。建立连接的两个设备，必须同一时间处于同一信道上才能通信。</p>
+<ol start="3">
+<li>学习路线</li>
+</ol>
+<p>此部分给出低功耗蓝牙的基本学习路线，不一定适合所有人</p>
+<p>初步理解协议栈基本组成、专业术语，对协议栈有整体的认识。<br>结合相关项目抓包分析，结合理论和实际表现分析每个子过程，比如ble广播功能、ble建立连接等。有条件的可以整个开发板，都有配套教程代码，可以直接运行的。<br>相关协议栈源码移植和学习，推荐Zephyr.<br>4. 协议文档<br>蓝牙联盟官方下载入口：<a target="_blank" rel="noopener" href="http://www.bluetooth.com/">http://www.bluetooth.com</a><br>个人网盘分享：<a target="_blank" rel="noopener" href="https://www.aliyundrive.com/s/dhKyo">https://www.aliyundrive.com/s/dhKyo</a></p>
  
       <!-- reward -->
       
@@ -213,6 +226,15 @@
 
    
   <nav class="article-nav">
+    
+      <a href="/2022/12/12/20221212-RS2329%E9%92%88%E4%B8%B2%E5%8F%A3%E5%AE%9A%E4%B9%89/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            20221212-RS2329针串口定义
+          
+        </div>
+      </a>
     
     
       <a href="/2022/12/12/20221212-MQTT%E5%8D%8F%E8%AE%AE%E7%AC%94%E8%AE%B0/" class="article-nav-link">
