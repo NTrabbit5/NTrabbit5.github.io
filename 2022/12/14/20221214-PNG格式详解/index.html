@@ -11,7 +11,7 @@
         name="viewport"
         content="width=device-width, initial-scale=1, maximum-scale=1"
       />
-      <title>20221213-USB协议简析 |  TeX_baitu blog</title>
+      <title>20221214-PNG格式详解 |  TeX_baitu blog</title>
   <meta name="generator" content="hexo-theme-ayer">
       
       <link rel="shortcut icon" href="/favicon.ico" />
@@ -53,7 +53,7 @@
     <main class="content on">
       <section class="outer">
   <article
-  id="post-20221213-USB协议简析"
+  id="post-20221214-PNG格式详解"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -64,7 +64,7 @@
     <header class="article-header">
        
 <h1 class="article-title sea-center" style="border-left:0" itemprop="name">
-  20221213-USB协议简析
+  20221214-PNG格式详解
 </h1>
  
 
@@ -72,15 +72,15 @@
     </header>
      
     <div class="article-meta">
-      <a href="/2022/12/13/20221213-USB%E5%8D%8F%E8%AE%AE%E7%AE%80%E6%9E%90/" class="article-date">
-  <time datetime="2022-12-13T07:41:21.000Z" itemprop="datePublished">2022-12-13</time>
+      <a href="/2022/12/14/20221214-PNG%E6%A0%BC%E5%BC%8F%E8%AF%A6%E8%A7%A3/" class="article-date">
+  <time datetime="2022-12-14T03:35:43.000Z" itemprop="datePublished">2022-12-14</time>
 </a>   
 <div class="word_count">
     <span class="post-time">
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> 字数统计:</span>
-            <span class="post-count">1.5k</span>
+            <span class="post-count">2.1k</span>
         </span>
     </span>
 
@@ -89,55 +89,266 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> 阅读时长≈</span>
-            <span class="post-count">5 分钟</span>
+            <span class="post-count">7 分钟</span>
         </span>
     </span>
 </div>
  
     </div>
       
+    <div class="tocbot"></div>
+
 
 
 
   
     <div class="article-entry" itemprop="articleBody">
        
-  <p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/431163780">https://zhuanlan.zhihu.com/p/431163780</a></p>
-<p>USB 4将我的这种想法给部分实现，通过一种隧道技术的方式，将DP&#x2F;USB3&#x2F;PCIe信号集成到通信隧道里面去，接收端再通过数据包头来区分数据（这就有点像交换机里的数据分发，通过MAC地址或者报文帧头确定数据包目的地）。</p>
-<p>因为硬件的局限性和可能的分发芯片性能功能问题，每个分发数据的协议速率是由各自的上限的，不能够动态调整每个接口的最大速度，</p>
-<p>USB与I2C&#x2F;SPI&#x2F;UART类似，都是一种传输数据的协议规范，但USB主要设计是用于计算机与外接设备的数据交互和文件传输，这一点也正是它现在演变为相对高速的对外接口的原因，最高速的当然是PCIe。</p>
-<p>特点</p>
-<p>服务器交换机目前还是使用USB 2.0 居多</p>
-<p>USB 3 开始和typeC 结合，将曾经的文件传输接口增加为文件加视频传输接口，并且视频一上来就是最新的DP 接口 </p>
-<p>USB 4，这兄弟更猛，除了USB、DP，还额外增加了PCIe的功能，1 LANE支持到10Gbps，通过隧道技术来最大限度发挥物理带宽性能，这个还没有开始投向商用，应该还要一两年。</p>
-<p>技术细节</p>
-<p>USB 3.2 </p>
-<p>就只有 type-C</p>
-<p>pin location pin name function </p>
-<p>USB2.0 数据信号4个，其实是两个，为了满足正反插需求所以正反都有</p>
-<p>USB3.2 数据信号8个，包含两个通道的差分收发信号，VBUS 信号4个，GND 信号4个，一个8个信号处理电源<br>CC 信号两个，SBU 信号两个 </p>
-<p>全称Configuration　Channel，分为CC1和CC2，在type C接口被引用，主要是为了解决正反插的信号交错问题和侦测插入的接口类型。</p>
-<p>目前主要是在source端设计上拉电阻，sink端设计下拉电阻，通过不同电阻的配比来表示当前的设备类型和插入方式。具体方式比较复杂，参考type C spec里的两个截图，两个CC信号用来侦测正反插情况和设备信息。以后有机会调试CC信号再深入了解。</p>
-<p>SBU信号是为USB 4.0 预留的，3.2里没有用到这个信号，不过这两个信号又在Alternate Mode（主要是DP）和Audio Adapter Accessory Mode里有使用，后面讲到这两个模式再具体分析。</p>
-<p>信号完整性 </p>
-<p>此时开始引入redriver 来解决信号完整性的问题</p>
-<p>repeater 分为两种，redriver 和retimer</p>
-<p>retimer 指的是这种器件包含有CDR 电路，可以重新编码信号，好处是不会引入一些高频抖动</p>
-<p>Redriver 指的是器件使用模拟电路的方式来增强信号，不会对码流进行操作，中间会有均衡放大和发送的部分</p>
-<p>一个链路中能够使用的repeater个数是没有限制的，只要总体的时延和抖动能够满足要求，但一般是sink和source端各自处理自己接口上的信号质量，能满足协议规范就可以了，如果是cable厂商，可能也需要在cable中集成一到两个repeater。</p>
-<p>USB 4.0 </p>
-<p>对于USB 4 来说，规定了一种可以同时传输三种通信协议的方式，但这是在芯片内部或者协议端实现的，物理层和逻辑层与所谓的通道互相独立，传输层和配置层需要针对通道方式做出改变</p>
-<p>隧道技术采用了TMUS 来处理每一个交换功能，网上并不能看到太多有关这个技术的细节，但从上面的分析，有理由得出一下的猜测</p>
-<p>TMUs位于芯片内部或者就是纯软件，与USB 4 协议是配套使用，在物理层和传输层没有体现<br>由第一点，如果device端是USB 4，则也需要集成TMU，如果只是三种协议中的一种，就要看host端是否有向下兼容的能力（USB3和DP是必须的，PCIe目前是可选）。<br>再来看下图就会对USB 4的整个拓扑有更多的了解。</p>
-<p>简单来说，USB 4 host可以直接支持USB 3x，DP，PCIe的device；也可以通过USB Hub的方式去fan out直接输出USB 4隧道信号，让Hub来分发；更可以直接插入支持USB 4 的device来一根cable传输这三个协议的信号。</p>
-<p>第一张图里有看到，不同的协议影响的是红圈中的设计，也即Adapter的选择；在USB 4的整个通信过程中，这些具体的协议是已经在比较上层的地方，所以对于不同协议的支持，需要做的有两点：</p>
-<p>在USB 4 的block内有对应支持的协议种类的Adapter<br>在USB 4 与CPU更上层的连接中有对应的通信路径，例如PCIe需要有PCIe Switch或者链接到Root Port的Root Complex<br>当满足以上两点，从芯片对外提供的USB 4 interface上来看，它就可以支持所有的四种协议：USB 4，USB 3，DP，PCIe（目前只到Gen 1）,根据插入的设备类型做到向下兼容。</p>
-<p>SBU 信号 </p>
-<p>SBU 在usb4开始被引入，速度为1Mbps 有三个功能</p>
-<p>配置USB4通道，进行初始化</p>
-<p>和retimer进行交互，完成USB 4 Link TxFFE的握手<br>确保USB 4 通道的发送和retimer的上电或者wake up sequence的正确完成<br>与TMT3的兼容<br>Thunderbolt™ 3是Intel发布的Light Peak技术。Thunderbolt连接技术融合了PCI Express（PCI-E）数据传输技术和Display Port（DP）显示技术，可以同时对数据和视频信号进行传输。</p>
-<p>具体细节不展开了，有一个点需要注意，当以兼容TMT3模式运行时，adapter需要在TBT3兼容的速度下运行，也即Gen 2 是10.3125Gbps，Gen 3 是20.625Gbps。</p>
- 
+  <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>png 是20世纪90年代开始开发的图像文件存储格式，其目的是替代gif 和tiff 文件格式，同时增加一些gif 文件格式所不具备的特性，流式网络图形格式名称来源于非官方的  是一种位图文件存储格式，读成ping 。png 用来存储灰度图像时，灰度图像的深度可多到16位，存储彩色图像时，彩色图像的深度可多到48位，并且还可存储多到16位的alpha 通道，png 使用从LZ77 派生的无损数据压缩算法</p>
+<h3 id="特性"><a href="#特性" class="headerlink" title="特性"></a>特性</h3><p>使用调色板技术可支持256种颜色的彩色图像  必须的</p>
+<p>流式读 写性，图像文件格式允许连续读出和写入图像数据 因此适于网络传播</p>
+<p>逐次逼近显示，这种特性可使在通信链路上传输图像文件的同时就在终端上显示图像，把整个轮廓显示出来之后逐步显示图像的细节，也就是先用低分辨率显示图像，然后逐步提高它的分辨率  类似马赛克逐渐消除的过程</p>
+<p>透明性，这个性能可使图像中某些部分不显示出来，用来创建一些有特色的图像</p>
+<p>辅助信息，这个特性可用来在图像文件中存储一些文本注释信息  就是可以说一些废话</p>
+<p>独立于计算机硬件环境</p>
+<p>使用无损压缩</p>
+<p>可在一个文件中存储多幅图像</p>
+<h2 id="文件结构"><a href="#文件结构" class="headerlink" title="文件结构"></a>文件结构</h2><p>png 图像格式文件由文件署名和数据块 组成</p>
+<p>文件署名域</p>
+<p>8字节的png 文件署名域用来识别该文件是不是png 文件，该域的值是 </p>
+<p>十进制数  十六进制数<br>137 89<br>80  50<br>78  4e<br>71  47<br>13  0d<br>10  0a<br>26  1a<br>10  0a<br>这个文件署名就是在《利用文件头标志判断文件类型》中提到的文件头标志了，很简单。</p>
+<p>数据块</p>
+<p>这里有两种类型的数据块，一种是称为关键数据块，就是必须要有的块，另一种叫做辅助数据块</p>
+<p>每个数据块都由下表所示的4个域组成</p>
+<p>名称  字节数 说明<br>Length(长度)  4字节 指定数据块中数据域的长度，其长度不超过(231−1)(231−1)字节<br>Chunk Type Code(数据块类型码) 4字节 数据块类型码由ASCII字母(A-Z和a-z)组成<br>Chunk Data(数据块实际内容  可变长度  存储按照Chunk Type Code指定的数据<br>CRC(循环冗余检测  4字节 存储用来检测是否有错误的循环冗余码</p>
+<p>其中CRC 域中的值是对chunk type code 域和chunk data 域中的数据进行计算得到的，可以看作一种校验码</p>
+<p>关键数据块</p>
+<p>关键数据块中的4个标准数据块是</p>
+<p>文件头数据块 IHDR</p>
+<p>它包含有png 文件中存储的图像数据的基本信息，并要作为第一个数据块出现在png 数据流中，而且一个png 数据流中只能有一个文件头数据块</p>
+<p>文件头数据块由13字节，组成结构如下</p>
+<table>
+<thead>
+<tr>
+<th>域的名称</th>
+<th>字节数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Width</td>
+<td>4 bytes</td>
+<td>图像宽度，以像素为单位</td>
+</tr>
+<tr>
+<td>Height</td>
+<td>4 bytes</td>
+<td>图像高度，以像素为单位</td>
+</tr>
+<tr>
+<td>Bit depth</td>
+<td>1 byte</td>
+<td>图像深度：索引彩色图像：1，2，4或8 ;灰度图像：1，2，4，8或16 ;真彩色图像：8或16</td>
+</tr>
+<tr>
+<td>ColorType</td>
+<td>1 byte</td>
+<td>颜色类型：0：灰度图像, 1，2，4，8或16;2：真彩色图像，8或16;3：索引彩色图像，1，2，4或84：带α通道数据的灰度图像，8或16;6：带α通道数据的真彩色图像，8或16</td>
+</tr>
+<tr>
+<td>Compression method</td>
+<td>1 byte</td>
+<td>压缩方法(LZ77派生算法)</td>
+</tr>
+<tr>
+<td>Filter method</td>
+<td>1 byte</td>
+<td>滤波器方法</td>
+</tr>
+<tr>
+<td>Interlace method</td>
+<td>1 byte</td>
+<td>隔行扫描方法：0：非隔行扫描;1： Adam7(由Adam M. Costello开发的7遍隔行扫描方法)</td>
+</tr>
+</tbody></table>
+<p>调色板数据块PLTE</p>
+<p>它包含有与索引彩色图像相关的彩色变换数据，它仅与索引彩色图像有关，而且要放在图像数据块之前，真彩色的png 数据流也可以有调色板数据块，目的是便于非真彩色显示程序用它来量化图像数据，从而显示该图像，结构如下</p>
+<p>|颜色|字节|意义|<br>|Red|1 byte | 0 &#x3D; 黑色, 255 &#x3D; 红|<br>|Green|1 byte | 0 &#x3D; 黑色, 255 &#x3D; 绿色|<br>|Blue|1 byte | 0 &#x3D; 黑色, 255 &#x3D; 蓝色|</p>
+<p>PLTE 数据块是定义图像的调色板信息，PLTE 可以包含1-256 个调色板信息，每个调色板信息由3个字节组成，因此调色板数据块所包含的最大字节数为768 调色板的长度应该是3的倍数，否则，这将使一个非法的调色板</p>
+<p>对于索引图像，调色板信息是必须的，调色板的颜色索引从0开始编号，然后是 1 2 调色板的颜色数不能超过色深中规定的颜色数，否则，这将导致png 图像不合法</p>
+<p>图像数据块 IDAT </p>
+<p>它存储实际的数据，在数据流中可包含多个连续顺序的图像数据块<br>IDAT 存放着图像真正的数据信息，因此，如果能够了解IDAT 的结构，我们就可以很方便的生成PNG 图像</p>
+<p>图像结束数据IEND </p>
+<p>它用来标记png 文件或者数据流已经结束，并且必须要放在文件的尾部</p>
+<p>如果我们仔细观察PNG文件，我们会发现，文件的结尾12个字符看起来总应该是这样的：</p>
+<p>00 00 00 00 49 45 4E 44 AE 42 60 82</p>
+<p>不难明白，由于数据块结构的定义，IEND 数据块的长度总是0 0000000除非认为加入信息，数据标识总是iend 因此，CRC码也总是AE 42 60 82</p>
+<p>最后，除了表示数据块开始IHDR 必须放在最前面，表示png 文件结束的iend 数据块放在最后面，其他数据块的存放顺序没有限制</p>
+<p>辅助数据块</p>
+<p>比较杂 ，不需要全部了解透</p>
+<p>PNG 文件格式规范指定的10个辅助数据块是</p>
+<p>背景颜色数据块 bKGD</p>
+<p>基色和白色度数块cHRM 所谓白色度是指当 R G B 最大值时在显示器上产生的白色度</p>
+<p>图像gamma 数据块 gAMA</p>
+<p>图像直方图数据块hIST<br>物理像素尺寸数据块 pHYs</p>
+<p>样本有效位数据块 sBIT</p>
+<p>文本信息数据块 tEXt<br>图像最后修改时间数据块 tIME<br>图像透明数据块 tRNS </p>
+<p>压缩文本数据块 zTXt</p>
+<h2 id="数据块摘要"><a href="#数据块摘要" class="headerlink" title="数据块摘要"></a>数据块摘要</h2><p>关键数据块，辅助数据块和专用公共数据块 综合下表中</p>
+<table>
+<thead>
+<tr>
+<th>数据块符号</th>
+<th>数据块名称</th>
+<th>多数据块</th>
+<th>可选否</th>
+<th>位置限制</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>IHDR</td>
+<td>文件头数据块</td>
+<td>否</td>
+<td>否</td>
+<td>第一块</td>
+</tr>
+<tr>
+<td>cHRM</td>
+<td>基色和白色点数据块</td>
+<td>否</td>
+<td>是</td>
+<td>在PLTE和IDAT之前</td>
+</tr>
+<tr>
+<td>gAMA</td>
+<td>图像γ数据块</td>
+<td>否</td>
+<td>是</td>
+<td>在PLTE和IDAT之前</td>
+</tr>
+<tr>
+<td>sBIT</td>
+<td>样本有效位数据块</td>
+<td>否</td>
+<td>是</td>
+<td>在PLTE和IDAT之前</td>
+</tr>
+<tr>
+<td>PLTE</td>
+<td>调色板数据块</td>
+<td>否</td>
+<td>是</td>
+<td>在IDAT之前</td>
+</tr>
+<tr>
+<td>bKGD</td>
+<td>背景颜色数据块</td>
+<td>否</td>
+<td>是</td>
+<td>在PLTE之后IDAT之前</td>
+</tr>
+<tr>
+<td>hIST</td>
+<td>图像直方图数据块</td>
+<td>否</td>
+<td>是</td>
+<td>在PLTE之后IDAT之前</td>
+</tr>
+<tr>
+<td>tRNS</td>
+<td>图像透明数据块</td>
+<td>否</td>
+<td>是</td>
+<td>在PLTE之后IDAT之前</td>
+</tr>
+<tr>
+<td>oFFs</td>
+<td>(专用公共数据块)</td>
+<td>否</td>
+<td>是</td>
+<td>在IDAT之前</td>
+</tr>
+<tr>
+<td>pHYs</td>
+<td>物理像素尺寸数据块</td>
+<td>否</td>
+<td>是</td>
+<td>在IDAT之前</td>
+</tr>
+<tr>
+<td>sCAL</td>
+<td>(专用公共数据块)</td>
+<td>否</td>
+<td>是</td>
+<td>在IDAT之前</td>
+</tr>
+<tr>
+<td>IDAT</td>
+<td>图像数据块</td>
+<td>是</td>
+<td>否</td>
+<td>与其他IDAT连续</td>
+</tr>
+<tr>
+<td>tIME</td>
+<td>图像最后修改时间数据块</td>
+<td>否</td>
+<td>是</td>
+<td>无限制</td>
+</tr>
+<tr>
+<td>tEXt</td>
+<td>文本信息数据块</td>
+<td>是</td>
+<td>是</td>
+<td>无限制</td>
+</tr>
+<tr>
+<td>zTXt</td>
+<td>压缩文本数据块</td>
+<td>是</td>
+<td>是</td>
+<td>无限制</td>
+</tr>
+<tr>
+<td>fRAc</td>
+<td>(专用公共数据块)</td>
+<td>是</td>
+<td>是</td>
+<td>无限制</td>
+</tr>
+<tr>
+<td>gIFg</td>
+<td>(专用公共数据块)</td>
+<td>是</td>
+<td>是</td>
+<td>无限制</td>
+</tr>
+<tr>
+<td>gIFt</td>
+<td>(专用公共数据块)</td>
+<td>是</td>
+<td>是</td>
+<td>无限制</td>
+</tr>
+<tr>
+<td>gIFx</td>
+<td>(专用公共数据块)</td>
+<td>是</td>
+<td>是</td>
+<td>无限制</td>
+</tr>
+<tr>
+<td>IEND</td>
+<td>图像结束数据</td>
+<td>否</td>
+<td>否</td>
+<td>最后一个数据块</td>
+</tr>
+</tbody></table>
+<p>tEXt和zTXt数据块中的标准关键字：</p>
+<p>关键字 说明<br>Title 图像名称或者标题<br>Author  图像作者名<br>Description 图像说明<br>Copyright 版权声明<br>CreationTime  原图创作时间<br>Software  创作图像使用的软件<br>Disclaimer  弃权<br>Warning 图像内容警告<br>Source  创作图像使用的设备<br>Comment 各种注释<br>一个例子</p>
+<!-- http://qr61.cn/o8bjsz/qEp8BlI --> 
       <!-- reward -->
       
       <div id="reword-out">
@@ -207,7 +418,7 @@
     <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://example.com/2022/12/13/20221213-USB%E5%8D%8F%E8%AE%AE%E7%AE%80%E6%9E%90/" alt="微信分享二维码">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://example.com/2022/12/14/20221214-PNG%E6%A0%BC%E5%BC%8F%E8%AF%A6%E8%A7%A3/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -218,19 +429,19 @@
    
   <nav class="article-nav">
     
-      <a href="/2022/12/13/20221213-BMP%E6%A0%BC%E5%BC%8F%E7%BB%93%E6%9E%84/" class="article-nav-link">
+      <a href="/2022/12/14/20221214-PDF%E6%96%87%E6%9C%AC%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%BB%93%E6%9E%84/" class="article-nav-link">
         <strong class="article-nav-caption">上一篇</strong>
         <div class="article-nav-title">
           
-            20221213-BMP格式结构
+            20221214-PDF文本的基本结构
           
         </div>
       </a>
     
     
-      <a href="/2022/12/13/20221213-%E6%95%B0%E5%AD%97%E8%8A%AF%E7%89%87%E4%B8%AD%E4%BD%BF%E8%83%BD%E4%BF%A1%E5%8F%B7%E7%9A%84%E4%BD%9C%E7%94%A8/" class="article-nav-link">
+      <a href="/2022/12/13/20221213-BMP%E6%A0%BC%E5%BC%8F%E7%BB%93%E6%9E%84/" class="article-nav-link">
         <strong class="article-nav-caption">下一篇</strong>
-        <div class="article-nav-title">20221213-数字芯片中使能信号的作用</div>
+        <div class="article-nav-title">20221213-BMP格式结构</div>
       </a>
     
   </nav>
