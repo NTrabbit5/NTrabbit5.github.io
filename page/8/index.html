@@ -126,6 +126,180 @@
     
     
     <article
+  id="post-20220713-电子书管理工作流"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/07/13/20220713-%E7%94%B5%E5%AD%90%E4%B9%A6%E7%AE%A1%E7%90%86%E5%B7%A5%E4%BD%9C%E6%B5%81/"
+    >20220713-电子书管理工作流</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/07/13/20220713-%E7%94%B5%E5%AD%90%E4%B9%A6%E7%AE%A1%E7%90%86%E5%B7%A5%E4%BD%9C%E6%B5%81/" class="article-date">
+  <time datetime="2022-07-12T23:58:42.000Z" itemprop="datePublished">2022-07-13</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>基于zotero+zotfile+syncthing+ReadEra，实现电脑+手机两端同步的电子书管理流程</p>
+<p>视频大纲：<a target="_blank" rel="noopener" href="https://logseq.fishyer.com/#/page/%E7%94%B5%E5%AD%90%E4%B9%A6%E7%AE%A1%E7%90%86%E5%B7%A5%E4%BD%9C%E6%B5%81">https://logseq.fishyer.com/#/page/%E7%94%B5%E5%AD%90%E4%B9%A6%E7%AE%A1%E7%90%86%E5%B7%A5%E4%BD%9C%E6%B5%81</a></p>
+<p>更多工具推荐，欢迎查看 <a target="_blank" rel="noopener" href="https://logseq.fishyer.com/">https://logseq.fishyer.com</a></p>
+<p>public:true<br>1-用Zlibrary下载书，或者是其他网络渠道，比如百度网盘、阿里网盘、淘宝<br>2-导入到Zotero里面<br>安装Zotfile插件，配置附件路径为Dropbox网盘下的路径<br>3-配置Syncthing，同步书籍文件夹到Android手机上<br>电脑-Windows<br>C:\Users\Administrator\Dropbox\MyObsidian\MyAttachment\MyZotoreFile<br>手机-Android<br>&#x2F;storage&#x2F;emulated&#x2F;0&#x2F;MyObsidian<br>主要就是同步MyObsidian文件夹，下面的子文件夹自然就同步了<br>其实Mac电脑也支持，不过ios手机的话就稍稍麻烦一点<br>4-阅读方式<br>PDF就在电脑上用Zotero本身看<br>很方便截图标注<br>epub等其他格式，就直接在Android手机上ReadEra看<br>其实也可以用Calibre将其他类型转换为PDF，但是我现在的主力阅读器是手机，所以就不转PDF了<br>作用<br>Zotero-书架，添加标签和添加分类等<br>ReadEra-阅读器，方便随时随地看书</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-20220713-计算机定时启动程序"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/07/13/20220713-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%AE%9A%E6%97%B6%E5%90%AF%E5%8A%A8%E7%A8%8B%E5%BA%8F/"
+    >20220713-计算机定时启动程序</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/07/13/20220713-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%AE%9A%E6%97%B6%E5%90%AF%E5%8A%A8%E7%A8%8B%E5%BA%8F/" class="article-date">
+  <time datetime="2022-07-12T23:56:32.000Z" itemprop="datePublished">2022-07-13</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>首先，shutdown.exe 的参数 -h 是睡眠。其次，在windows10的控制面板-管理工具-任务计划程序（当然，你从其他路径进去也一样）</p>
+<ol>
+<li><p>打开任务计划程序，在操作里选择创建基本任务。</p>
+</li>
+<li><p>第一步页面是让你写个你的任务名称，这个随意。</p>
+</li>
+<li><p>点下一步后会来到触发器页面，在这里你选每天。</p>
+</li>
+<li><p>继续下一步会来到每日页面，在这里设置一个开始的时间，然后间隔是一天。</p>
+</li>
+<li><p>再下一步会来到操作页面，选择启动程序。</p>
+</li>
+<li><p>再再下一步会来到完成页面，程序填shutdown.exe，然后添加参数（可选）里填 -h </p>
+</li>
+<li><p>完成。</p>
+</li>
+</ol>
+<p>到时间电脑就会睡眠了，然后再开机后你会发现电脑之前打开的页面都还原封不动在。你可以先测试下。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-20220609-python-yield-use"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/06/09/20220609-python-yield-use/"
+    >python中的yield用法</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/06/09/20220609-python-yield-use/" class="article-date">
+  <time datetime="2022-06-09T10:51:32.000Z" itemprop="datePublished">2022-06-09</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>yield 关键字做了什么</p>
+<p>可以先把yield 当作return 的同胞兄弟来看</p>
+<p>有return的函数直接返回所有结果，程序终止不再运行，并销毁局部变量</p>
+<p>而有yield 的函数则返回一个可迭代的generator 生成器对象，你可以使用for 循环或者调用next 方法遍历生成器对象来提取结果</p>
+<p>在python中，使用了yield 的函数被称为生成器，有点套娃的感觉</p>
+<p>调用一个yield ，就会返回一个生成器对象</p>
+<p>在调用生成器函数的过程中，每次遇到yield 时函数会暂停并保存当前所有的运行信息，保留局部变量，返回yield 的值，并在下一次执行next 方法时从当前位置继续运行，直到生成器全部遍历完</p>
+<p>可以看到，simple——generator 函数返回一个生成器，调用next 方法后，函数开始运行，遇到第一个yield 关键字，返回生成的值 1 ，程序暂停</p>
+<p>带yield 的函数是一个生成器，这个生成器有一个方法就是next next 就相当于 下一步 生成那个数，这一次的next 开始的地方是接着上一次的next 停止的地方执行的</p>
+<p>所以调用next 的时候，生成器并不会从函数的开始执行，只是接着上一步停止的地方开始，然后遇到yield 后，return 出要生成的数，此步就结束</p>
+<p>生成器有哪些作用，如果想具体化数据的形式，他唱会将数据存储在一个列表中，但这样做，列表的内容将占用有形内存，列表越大，占用的内存资源就越多</p>
+<p>但是，如果数据集有某种逻辑，就不必存储在一个列表中，只需编写一个生成器，它将在需要时生成这些值，基本不占用内存</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-20220519-sublime修改光标颜色"
   class="article article-type-post"
   itemscope
@@ -701,153 +875,6 @@
 <p><strong>文件头混淆</strong></p>
 <p>Rtf文档正常的文件头是**{rtf1**，但解析器只识别前四个字节{rt}，所以可以通过修改文件头达到样本混淆的效果。</p>
 <p>{rt</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20220426-秋瑾"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/04/26/20220426-%E7%A7%8B%E7%91%BE/"
-    >秋瑾</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/04/26/20220426-%E7%A7%8B%E7%91%BE/" class="article-date">
-  <time datetime="2022-04-26T10:38:53.000Z" itemprop="datePublished">2022-04-26</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>陶澹人</p>
-<p>出自清代的《秋暮遣怀》</p>
-<p>人生天地一叶萍，利名役役三秋草。<br>秋草能为春草新，苍颜难换朱颜好。<br>篱前黄菊未开花，寂寞清樽冷怀抱。<br><strong>秋风秋雨愁煞人，寒宵独坐心如捣</strong>。<br>出门拔剑壮槃游，霜华拂处尘氛少。<br>朝凌五岳暮三洲，人世风波岂能保。<br>不如归去卧糟丘，老死蓬蒿事幽讨。</p>
-<p>事已至此，余位卑言轻，愧无力成全，然汝死非我意，幸亮之也</p>
-<p>《勉女权歌》<br>【年代】清<br>【作者】秋瑾</p>
-<p>吾辈爱自由，勉励自由一杯酒。<br>男女平权天赋就，岂甘居牛后？<br>愿奋然自拔，一洗从前羞耻垢。<br>愿安作同俦，恢复江山劳素手。<br>旧习最堪羞，女子竟同牛马偶。<br>曙光新放文明侯，独去占头筹。<br>愿奴隶根除，智识学问历练就。<br>责任上肩头，国民女杰期无负。</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20220425-乐高"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/04/25/20220425-%E4%B9%90%E9%AB%98/"
-    >乐高</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/04/25/20220425-%E4%B9%90%E9%AB%98/" class="article-date">
-  <time datetime="2022-04-25T09:41:11.000Z" itemprop="datePublished">2022-04-25</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>乐高LDD 软件</p>
-<p>Lego Digital Designer</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20220416-《春日宴》"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/04/16/20220416-%E3%80%8A%E6%98%A5%E6%97%A5%E5%AE%B4%E3%80%8B/"
-    >《春日宴》</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/04/16/20220416-%E3%80%8A%E6%98%A5%E6%97%A5%E5%AE%B4%E3%80%8B/" class="article-date">
-  <time datetime="2022-04-16T10:26:23.000Z" itemprop="datePublished">2022-04-16</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h2 id="《春日宴》是顾如愿填词，夏喘喘演唱的一首歌曲。"><a href="#《春日宴》是顾如愿填词，夏喘喘演唱的一首歌曲。" class="headerlink" title="《春日宴》是顾如愿填词，夏喘喘演唱的一首歌曲。"></a>《春日宴》是顾如愿填词，夏喘喘演唱的一首歌曲。</h2><p>浊酒一盏青竹浮<br>垂目 三两芙蓉杯上镀<br>四方风入松木<br>指秉五经灯影独<br>书上字句 行行尽沾珠玑蛊<br>七痴六嗔烹入壶<br>身顾 道声来饮一杯无<br>九天八荒皆苦<br>仰却当年花月误<br>日浮春雾 只她合十将愿付<br>绿酒杯杯歌遍 再拜陈愿 一愿君岁千<br>二愿身健 三愿如燕 岁岁长相见<br>踏碎飞柳云片 踏碎弑己噬心之砭<br>还见照旧清艳一笑靥<br>长林欢宴梦不赴<br>不恕 教他捧心跌喧俗<br>眉峰小聚稍蹙<br>将她喃喃唇齿处<br>夜烛流途 银钩虿尾翻然书<br>绿酒杯杯歌遍 再拜陈愿 一愿君岁千<br>二愿身健 三愿如燕 岁岁长相见<br>踏碎飞柳云片 踏碎弑己噬心之砭<br>还见照旧清艳一笑靥<br>云篦发边偷敛 裙裾暗曳 便胜却人间<br>晓风化笺 宫阙难歇 微雨捎片叶<br>仍是喜君不倦 仍是万岁山河比肩<br>唇边欲烙一场春日宴</p>
  
       <!-- reward -->
       

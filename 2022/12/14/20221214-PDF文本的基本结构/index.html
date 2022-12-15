@@ -80,7 +80,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> 字数统计:</span>
-            <span class="post-count">35</span>
+            <span class="post-count">217</span>
         </span>
     </span>
 
@@ -103,6 +103,14 @@
     <div class="article-entry" itemprop="articleBody">
        
   <p>PDF 文件是可以有效随机存取和增量更新的，根据基本规则，一个PDF 文件由四部分组成</p>
+<ol>
+<li>header部分：占一行，标识PDF规范的版本；</li>
+<li>body部分：包含PDF文件中的所有obj对象；</li>
+<li>cross-reference table 部分：交叉引用表，包含文件中间接对象的信息；</li>
+<li>trailer部分：包含交叉引用表和文件正文中某些特殊对象的位置；</li>
+</ol>
+<p>按照惯例，PDF 文件中的标记按行排列，每行的终止标记可以是回车、换行、或两者兼有，包含二进制数据的PDF 文件可以有任意长的行</p>
+<p>为了提高PDF 文件的兼容性，不属于流对象的数据行限制为不超过255个字符，但有一个例外，签名字典的内容字符串不受行长度限制</p>
  
       <!-- reward -->
       
@@ -183,6 +191,15 @@
 
    
   <nav class="article-nav">
+    
+      <a href="/2022/12/14/20221214-%E4%BA%8C%E7%BB%B4%E7%A0%81%E7%89%88%E6%9C%AC%E4%B8%8E%E5%AE%B9%E9%87%8F/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            20221214-二维码版本与容量
+          
+        </div>
+      </a>
     
     
       <a href="/2022/12/14/20221214-PNG%E6%A0%BC%E5%BC%8F%E8%AF%A6%E8%A7%A3/" class="article-nav-link">
