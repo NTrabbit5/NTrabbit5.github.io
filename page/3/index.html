@@ -126,6 +126,419 @@
     
     
     <article
+  id="post-20221212-MQTT协议笔记"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/12/12/20221212-MQTT%E5%8D%8F%E8%AE%AE%E7%AC%94%E8%AE%B0/"
+    >20221212-MQTT协议笔记</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/12/12/20221212-MQTT%E5%8D%8F%E8%AE%AE%E7%AC%94%E8%AE%B0/" class="article-date">
+  <time datetime="2022-12-12T08:18:48.000Z" itemprop="datePublished">2022-12-12</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p><a target="_blank" rel="noopener" href="https://www.runoob.com/w3cnote/mqtt-intro.html">https://www.runoob.com/w3cnote/mqtt-intro.html</a></p>
+<p>MQTT 入门介绍</p>
+<p>MQTT 消息队列遥测传输协议，是一种基于发布&#x2F;订阅模式的轻量级 通讯协议，该协议构建于TCP&#x2F;IP 协议上，由IBM 在1999年发布，MQTT 最大优点在于，可以以极少的代码和有限的带宽，为连接远程设备提供实时可靠的消息服务，作为一种低开销，低带宽占用的即时通讯协议，使其在物联网、小型设备、移动应用等方面有较广泛的应用</p>
+<p>MQTT 是一个基于客户端-服务器的消息发布&#x2F;订阅传输协议。MQTT协议是轻量、简单、开放和易于实现的，这些特点使它适用范围非常广泛。在很多情况下，包括受限的环境中，如：机器与机器（M2M）通信和物联网（IoT）。其在，通过卫星链路通信传感器、偶尔拨号的医疗设备、智能家居、及一些小型化设备中已广泛使用。</p>
+<p>二、设计规范</p>
+<p>由于物联网的环境是非常特别的，所以MQTT 遵循以下设计原则</p>
+<p>精简，不添加有可无的功能</p>
+<p>发布&#x2F;订阅 模式，方便消息在传感器之间传递</p>
+<p>允许用户动态创建主题，零运维成本</p>
+<p>把传输量降到最低以提高传输效率</p>
+<p>把低带宽、高延迟、不稳定的网络等因素考虑在内</p>
+<p>支持连续的会话控制</p>
+<p>理解客户端计算能力可能很低</p>
+<p>提供服务质量管理</p>
+<p>假设数据不可知，不强求传输数据的类型与格式，保持灵活性</p>
+<h2 id="三、主要特性"><a href="#三、主要特性" class="headerlink" title="三、主要特性"></a>三、主要特性</h2><p>MQTT 协议工作在低带宽、不可靠的网络的远程传感器和控制设备通讯而设计的协议，它具有以下主要的几项特性。</p>
+<p>使用发布&#x2F;订阅消息模式，提供一对多的消息发布，解除应用程序耦合</p>
+<p>这一点很类似于XMPP，但是MQTT 的信息冗余远小于XMPP，因为XMPP 使用XML 格式文本来传递数据</p>
+<p>对负载内容屏蔽的消息传输</p>
+<p>使用TCP&#x2F;IP提供网络连接</p>
+<p>主流的MQTT 是基于TCP 连接进行数据推送的，但是同样有基于UDP 的版本，叫做MQTT-SN 这两种版本由于基于不同的连接方式，优缺点自然也就各有不同了</p>
+<p>有三种消息发布服务质量</p>
+<p>至多一次，消息发布完全依赖底层TCP&#x2F;IP 网络，会发生消息丢失或重复，这一级别可用于如下情况，环境传感器数据，丢失一次读记录无所谓，因为不久后还会有第二次发送，这一种方式主要普通APP 的推送，倘若你的智能设备在消息推送时未联网，推送过去没收到，再次联网也就收不到了</p>
+<p>至少一次，确保消息到达，但消息重复可能会发生</p>
+<p>只有一次，确保消息到达一次。在一些要求比较严格的计费系统中，可以使用此级别，在计费系统中，消息重复或丢失会导致不正确的结果，这种最高质量的消息发布服务还可以用于即时通讯类的app 的推送，确保用户收到且只会收到一次</p>
+<p>小型传输，开销很小，协议交换最小化，以降低网络流量。这就是为什么在介绍里说它非常适合  在物联网领域，传感器与服务器的通信，信息的收集，要知道嵌入式设备的运算能力和带宽都相对薄弱，使用这种协议来传递消息再适合不过了</p>
+<p>使用 last will 和testament特性通知有关各客户端异常中断的机制</p>
+<p>last will  即遗言机制，用于同位置同一主题下的其他设备发送遗言的设备已经断开了连接</p>
+<p>testament  医嘱机制，功能类似于  last will </p>
+<p>MQTT 协议原理 </p>
+<p>实现MQTT 协议需要客户端和服务器端通讯完成，在通讯过程中，MQTT 协议中有三种身份 发布者，代理，服务器，订阅者，其中，消息的发布者和订阅者都是客户端，消息代理是服务器，消息发布者可以同时是订阅者</p>
+<p>MQTT 传输的消息分为，主题，和负载 两部分</p>
+<p>topic 可以理解为消息的类型，订阅者订阅后，就会收到该主题的消息内容</p>
+<p>payload 可以理解为消息的内容，是指订阅者具体要使用的内容</p>
+<p>4.2 网络传输与应用消息</p>
+<p>MQTT 会构建底层网络传输，它将建立客户端到服务器的连接，提供两者之间的一个有序的、无损的、基于字节流的双向传输</p>
+<p>当应用数据通过MQTT 网络发送时，MQTT 会把与之相关的服务质量和主题名 相关连</p>
+<p>MQTT 客户端</p>
+<p>一个使用MQTT 协议的应用程序或者设备，它总是建立到服务器的网络连接，客户端可以</p>
+<p>发布其他客户端可能会订阅的信息</p>
+<p>订阅其他客户端发布的消息</p>
+<p>退订或删除应用程序的消息</p>
+<p>断开与服务器连接</p>
+<p>4.4 MQTT 服务器</p>
+<p>MQTT 服务器以称为消息代理，可以是一个应用程序或一台设备，它是位于消息发布者和订阅者之间，它可以</p>
+<p>接受来自客户的网络连接</p>
+<p>接受客户发布的应用信息</p>
+<p>处理来自客户端的订阅和退订请求</p>
+<p>向订阅的客户转发应用程序消息</p>
+<p>4.5 MQTT 协议中的订阅、主题、会话</p>
+<p>订阅 </p>
+<p>订阅包含主题筛选器 和最大服务质量，订阅会与一个会话关联，一个会话可以包含多个订阅，每一个会话中的每个订阅都有一个不同的主题筛选器</p>
+<p>会话</p>
+<p>每个客户端与服务器建立连接后就是一个会话，客户端和服务器之间有状态交互，会话存在于一个网络之间，也可能在客户端和服务器之间跨越多个连续的网络连接、</p>
+<p>主题名</p>
+<p>连接到一个应用程序消息的标签，该标签与服务器的订阅相匹配，服务器会将消息发送给订阅所匹配标签的每个客户端</p>
+<p>主题筛选器</p>
+<p>一个对主题名通配符筛选器，在订阅表达式中使用，表示订阅所匹配到的多个主题</p>
+<p>负载</p>
+<p>消息订阅者所具体接收的内容</p>
+<p>MQTT 协议中的方法</p>
+<p>MQTT 协议中定义了一些方法 也被称为动作，来于表示对确定资源所进行操作，这个资源可以代表预先存在的数据或动态生成数据，这取决于服务器的实现，通常来说，资源指服务器上的文件或输出，主要方法有</p>
+<p>connect 等待与服务器建立连接</p>
+<p>disconnect 等待MQTT 客户端完成所做的工作，并与服务器断开TCP&#x2F;IP 会话</p>
+<p>subscribe 等待完成订阅</p>
+<p>unsubscribe 等待服务器取消客户端的一个或多个topics 订阅 </p>
+<p>publish MQTT 客户端发送消息请求，发送完成后返回应用程序线程</p>
+<p>MQTT 协议数据包结构</p>
+<p>在MQTT 协议中，一个MQTT 数据包由固定头，可变头，消息体 三部分构成，MQTT 数据包结构如下</p>
+<p>固定头 fixed header  存在于所有MQTT 数据包中，表示数据包类型及数据包的分组类表示</p>
+<p>可变头  存在于部分MQTT 数据包中，数据包类型 决定了可变头是否存在及其具体内容</p>
+<p>消息体 pyload  存在于部分MQTT 数据包中，表示客户端收到的具体内容</p>
+<p>MQTT 固定头  </p>
+<p>固定头存在于所有MQTT 数据包中，其结构如下</p>
+<p>MQTT 数据包类型 </p>
+<p>位置byte1 中bits 7-4 </p>
+<p>相当于一个4位的无符号值，类型，取值及描述如下</p>
+<p>标识位</p>
+<p>在不使用标识位的消息类型中，标识位被作为保留位，如果收到无效的标志时，接收端必须关闭网络连接</p>
+<p>DUP 发布消息 的副本，用来在保证消息的可靠传输，如果设置为1  则在下面的变长中增加 messageid 并且需要回复确认，以保证消息传输完成，但不能用于检测消息重复发送</p>
+<p>QoS 发布消息的服务质量，即：保证消息传递的次数</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Ø00：最多一次，即：&lt;=1</span><br><span class="line"></span><br><span class="line">Ø01：至少一次，即：&gt;=1</span><br><span class="line"></span><br><span class="line">Ø10：一次，即：=1</span><br><span class="line"></span><br><span class="line">Ø11：预留</span><br></pre></td></tr></table></figure>
+
+<p>RETAIN 发布保留标识，表示服务器要保留这次推送的信息，如果有新的订阅者出现，就把消息推送给它，如果没有那么推送至当前订阅者后释放</p>
+<p>剩余长度</p>
+<p>固定头的第二字节用来保存变长头部和消息体的总大小，但不是直接保存的，这一字节是可以扩展的，其保存机制，前7位用于保存长度，后一部用作标识，当最后一位为1时，表示长度不足，需要使用两个字节继续保存，例如，计算出后面的大小为0 </p>
+<p>MQTT 可变头 </p>
+<p>MQTT 数据包中包含一个可变头，它驻位于固定的头和负载之间，可变头的内容因数据包类型而不同，较常的应用是作为包的标识</p>
+<p>很多类型数据包中都包括一个2字节的数据包标识字段，这些类型的包有</p>
+<p>PUBLISH (QoS &gt; 0)、PUBACK、PUBREC、PUBREL、PUBCOMP、SUBSCRIBE、SUBACK、UNSUBSCRIBE、UNSUBACK。</p>
+<p>Payload 消息体 </p>
+<p>payload 消息体位MQTT 数据包的第三部分，包含 connect subscribe  subback unsubscribe 四种类型的消息</p>
+<p>connect 消息体内容主要是客户端的clientID 订阅的topic message 以及用户名和密码 </p>
+<p>subscribe 消息体内容是一系列的要订阅的主题以及QoS</p>
+<p>suback 消息体内容是服务器对于subscribe 所申请的主题及QoS 进行确认和回复</p>
+<p>unsubscribe  消息体内容是要订阅的主题</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-20221212-贪吃蛇小游戏"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/12/12/20221212-%E8%B4%AA%E5%90%83%E8%9B%87%E5%B0%8F%E6%B8%B8%E6%88%8F/"
+    >20221212-贪吃蛇小游戏</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/12/12/20221212-%E8%B4%AA%E5%90%83%E8%9B%87%E5%B0%8F%E6%B8%B8%E6%88%8F/" class="article-date">
+  <time datetime="2022-12-12T04:59:14.000Z" itemprop="datePublished">2022-12-12</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;conio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;time.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;windows.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdbool.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> H 23</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> W 75</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> WAIT_TIME 500</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//定义direction的每个值代表的方向</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> UP 0</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> DOWN 1</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> LEFT 2</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> RIGHT 3</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> a[H][W];        <span class="comment">//地图数组</span></span><br><span class="line"><span class="type">int</span> s[H*W][<span class="number">2</span>];      <span class="comment">//蛇身坐标数组</span></span><br><span class="line"><span class="type">int</span> sLength;        <span class="comment">//蛇的长度</span></span><br><span class="line"><span class="type">int</span> direction;      <span class="comment">//蛇的方向</span></span><br><span class="line"><span class="type">bool</span> eated=<span class="literal">false</span>;   <span class="comment">//标记是否吃到食物</span></span><br><span class="line"><span class="type">int</span> score=<span class="number">0</span>;        <span class="comment">//得分</span></span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">init</span><span class="params">()</span>         <span class="comment">//程序开始时的初始化操作</span></span><br><span class="line">&#123;</span><br><span class="line">    srand((<span class="type">unsigned</span>)time(<span class="literal">NULL</span>));            <span class="comment">//设置随机数种子为现在的时间</span></span><br><span class="line">    CONSOLE_CURSOR_INFO cursor_info = &#123;<span class="number">1</span>, <span class="number">0</span>&#125;;</span><br><span class="line">    SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &amp;cursor_info);    <span class="comment">//隐藏关标</span></span><br><span class="line">    <span class="type">int</span> i,j;</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>; i&lt;H; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        a[i][<span class="number">0</span>]=<span class="number">1</span>;          <span class="comment">//让第一列为1</span></span><br><span class="line">        a[i][W<span class="number">-1</span>]=<span class="number">1</span>;        <span class="comment">//让最后一列为1</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(j=<span class="number">0</span>; j&lt;W; j++)</span><br><span class="line">    &#123;</span><br><span class="line">        a[<span class="number">0</span>][j]=<span class="number">1</span>;      <span class="comment">//让第一行为1</span></span><br><span class="line">        a[H<span class="number">-1</span>][j]=<span class="number">1</span>;    <span class="comment">//让最后一行为1</span></span><br><span class="line">    &#125;</span><br><span class="line">    sLength=<span class="number">4</span>;          <span class="comment">//让蛇的最初长度为4</span></span><br><span class="line">    s[<span class="number">0</span>][<span class="number">0</span>]=H/<span class="number">2</span>;</span><br><span class="line">    s[<span class="number">0</span>][<span class="number">1</span>]=W/<span class="number">2</span>;        <span class="comment">//给蛇头坐标赋值</span></span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">1</span>; i&lt;<span class="number">4</span>; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        s[i][<span class="number">0</span>]=s[<span class="number">0</span>][<span class="number">0</span>]+i;</span><br><span class="line">        s[i][<span class="number">1</span>]=s[<span class="number">0</span>][<span class="number">1</span>];  <span class="comment">//给刚开始的蛇身几个初始坐标</span></span><br><span class="line">    &#125;</span><br><span class="line">    direction=UP;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">gotoxy</span><span class="params">(<span class="type">int</span> i,<span class="type">int</span> j)</span>        <span class="comment">//移动光标</span></span><br><span class="line">&#123;</span><br><span class="line">    COORD position= &#123;j,i&#125;;</span><br><span class="line">    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE),position);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">check</span><span class="params">(<span class="type">int</span> ii,<span class="type">int</span> jj)</span>        <span class="comment">//判断这个点能不能放食物，可以放返回1，不能放返回0</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span>(a[ii][jj]==<span class="number">1</span>)        <span class="comment">//如果有障碍物，返回0</span></span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    <span class="type">int</span> i;</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>; i&lt;sLength; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(ii==s[i][<span class="number">0</span>]&amp;&amp;jj==s[i][<span class="number">1</span>])      <span class="comment">//如果和其中一个蛇身重合，就返回0</span></span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(ii==<span class="number">0</span>||ii==H<span class="number">-1</span>||jj==<span class="number">0</span>||jj==W<span class="number">-1</span>)      <span class="comment">//如果在边界上面，返回0</span></span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>;                       <span class="comment">//最后筛选 过后的是符合条件的点</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">food</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> i,j;</span><br><span class="line">    <span class="keyword">do</span></span><br><span class="line">    &#123;</span><br><span class="line">        i=rand()%H;                 <span class="comment">//生成0~H-1之间的一个数</span></span><br><span class="line">        j=rand()%W;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span>(check(i,j)==<span class="number">0</span>);           <span class="comment">//生成点直到满足条件</span></span><br><span class="line">    a[i][j]=<span class="number">-1</span>;                     <span class="comment">//标记为食物</span></span><br><span class="line">    gotoxy(i,j);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;$&quot;</span>);                    <span class="comment">//画出食物</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">drawMap</span><span class="params">()</span>                  <span class="comment">//画地图</span></span><br><span class="line">&#123;</span><br><span class="line">    gotoxy(<span class="number">0</span>,<span class="number">0</span>);</span><br><span class="line">    <span class="type">int</span> i,j;</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>; i&lt;H; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span>(j=<span class="number">0</span>; j&lt;W; j++)          <span class="comment">//两重for循环遍历数组</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(a[i][j]==<span class="number">0</span>)          <span class="comment">//为0输出空格</span></span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">&quot; &quot;</span>);</span><br><span class="line">            <span class="keyword">else</span>                    <span class="comment">//为1输出#</span></span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">&quot;#&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;\n&quot;</span>);               <span class="comment">//别忘了换行</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">move</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> i;</span><br><span class="line">    gotoxy(s[sLength<span class="number">-1</span>][<span class="number">0</span>],s[sLength<span class="number">-1</span>][<span class="number">1</span>]);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot; &quot;</span>);                            <span class="comment">//在尾巴上面画空格以擦除尾巴</span></span><br><span class="line">    <span class="keyword">if</span>(eated)               <span class="comment">//如果吃到了食物</span></span><br><span class="line">    &#123;</span><br><span class="line">        sLength++;</span><br><span class="line">        eated=<span class="literal">false</span>;        <span class="comment">//设置为false，不然无限变长</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(i=sLength<span class="number">-1</span>; i&gt;<span class="number">0</span>; i--)  <span class="comment">//从尾巴开始，每一个点的位置等于它前面一个点的位置</span></span><br><span class="line">    &#123;</span><br><span class="line">        s[i][<span class="number">0</span>]=s[i<span class="number">-1</span>][<span class="number">0</span>];</span><br><span class="line">        s[i][<span class="number">1</span>]=s[i<span class="number">-1</span>][<span class="number">1</span>];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">switch</span>(direction)</span><br><span class="line">    &#123;</span><br><span class="line">    <span class="keyword">case</span> UP:</span><br><span class="line">        s[<span class="number">0</span>][<span class="number">0</span>]--;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> DOWN:</span><br><span class="line">        s[<span class="number">0</span>][<span class="number">0</span>]++;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> LEFT:</span><br><span class="line">        s[<span class="number">0</span>][<span class="number">1</span>]--;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> RIGHT:</span><br><span class="line">        s[<span class="number">0</span>][<span class="number">1</span>]++;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">drawSnake</span><span class="params">()</span>                <span class="comment">//画蛇</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> i;</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>; i&lt;sLength; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        gotoxy(s[i][<span class="number">0</span>],s[i][<span class="number">1</span>]);        <span class="comment">//移动关标到蛇的坐标</span></span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;@&quot;</span>);                    <span class="comment">//在这个位置画蛇</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">key</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span>(kbhit()!=<span class="number">0</span>)          <span class="comment">//如果有键盘输入</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="type">char</span> in;</span><br><span class="line">        <span class="keyword">while</span>(!kbhit()==<span class="number">0</span>)  <span class="comment">//如果玩家输入了多个按键，以最后一个按键为准</span></span><br><span class="line">            in=getch();</span><br><span class="line">        <span class="keyword">switch</span>(in)</span><br><span class="line">        &#123;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">&#x27;w&#x27;</span>:</span><br><span class="line">        <span class="keyword">case</span> <span class="string">&#x27;W&#x27;</span>:</span><br><span class="line">            <span class="keyword">if</span>(direction!=DOWN)         <span class="comment">//不能缩头吧。。。。</span></span><br><span class="line">                direction=UP;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">&#x27;s&#x27;</span>:</span><br><span class="line">        <span class="keyword">case</span> <span class="string">&#x27;S&#x27;</span>:</span><br><span class="line">            <span class="keyword">if</span>(direction!=UP)</span><br><span class="line">                direction=DOWN;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">&#x27;a&#x27;</span>:</span><br><span class="line">        <span class="keyword">case</span> <span class="string">&#x27;A&#x27;</span>:</span><br><span class="line">            <span class="keyword">if</span>(direction!=RIGHT)</span><br><span class="line">                direction=LEFT;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">&#x27;d&#x27;</span>:</span><br><span class="line">        <span class="keyword">case</span> <span class="string">&#x27;D&#x27;</span>:</span><br><span class="line">            <span class="keyword">if</span>(direction!=LEFT)</span><br><span class="line">                direction=RIGHT;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">&#x27;p&#x27;</span>:</span><br><span class="line">        <span class="keyword">case</span> <span class="string">&#x27;P&#x27;</span>:</span><br><span class="line">            gotoxy(H,<span class="number">0</span>);        <span class="comment">//将光标移动到下面</span></span><br><span class="line">            system(<span class="string">&quot;pause&quot;</span>);</span><br><span class="line">            gotoxy(H,<span class="number">0</span>);</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;                   &quot;</span>);  <span class="comment">//消去下面的按任意键继续</span></span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">bool</span> <span class="title function_">gameOver</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">bool</span> isGameOver=<span class="literal">false</span>;</span><br><span class="line">    <span class="type">int</span> sX=s[<span class="number">0</span>][<span class="number">0</span>],sY=s[<span class="number">0</span>][<span class="number">1</span>];      <span class="comment">//蛇头的x坐标和y坐标</span></span><br><span class="line">    <span class="keyword">if</span>(sX==<span class="number">0</span>||sX==H<span class="number">-1</span>||sY==<span class="number">0</span>||sY==W<span class="number">-1</span>)</span><br><span class="line">        isGameOver=<span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>; i&lt;sLength; i++)    <span class="comment">//判断有没有吃到自己</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(s[i][<span class="number">0</span>]==sX&amp;&amp;s[i][<span class="number">1</span>]==sY)</span><br><span class="line">            isGameOver=<span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> isGameOver;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">printScore</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    gotoxy(<span class="number">0</span>,W+<span class="number">2</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;  贪吃蛇小游戏&quot;</span>);</span><br><span class="line">    gotoxy(<span class="number">1</span>,W+<span class="number">2</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;  TeX白兔 制作&quot;</span>);</span><br><span class="line">    gotoxy(<span class="number">4</span>,W+<span class="number">2</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;  得分:%d&quot;</span>,score);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    init();                     <span class="comment">//程序开始时的初始化操作</span></span><br><span class="line">    drawMap();                  <span class="comment">//画地图</span></span><br><span class="line">    food();</span><br><span class="line">    <span class="keyword">while</span>(<span class="number">1</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        drawSnake();                <span class="comment">//画蛇</span></span><br><span class="line">        printScore();</span><br><span class="line">        Sleep(WAIT_TIME);           <span class="comment">//等待一段时间</span></span><br><span class="line">        key();</span><br><span class="line">        move();                     <span class="comment">//移动蛇（主要是修改蛇身数组的数据）</span></span><br><span class="line">        <span class="keyword">if</span>(gameOver())</span><br><span class="line">        &#123;</span><br><span class="line">            system(<span class="string">&quot;cls&quot;</span>);          <span class="comment">//清除屏幕内容</span></span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;Game Over\n&quot;</span>);</span><br><span class="line">            system(<span class="string">&quot;pause&quot;</span>);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(a[s[<span class="number">0</span>][<span class="number">0</span>]][s[<span class="number">0</span>][<span class="number">1</span>]]==<span class="number">-1</span>) <span class="comment">//如果蛇头碰到食物，就重新投放食物，并且把食物点重置为0</span></span><br><span class="line">        &#123;</span><br><span class="line">            eated=<span class="literal">true</span>;             <span class="comment">//标记已经吃到食物</span></span><br><span class="line">            score+=<span class="number">10</span>;</span><br><span class="line">            food();</span><br><span class="line">            a[s[<span class="number">0</span>][<span class="number">0</span>]][s[<span class="number">0</span>][<span class="number">1</span>]]=<span class="number">0</span>;  <span class="comment">//去掉食物</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure> 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-20221203-《登泰山记》"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/12/03/20221203-%E3%80%8A%E7%99%BB%E6%B3%B0%E5%B1%B1%E8%AE%B0%E3%80%8B/"
+    >20221203-《登泰山记》</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/12/03/20221203-%E3%80%8A%E7%99%BB%E6%B3%B0%E5%B1%B1%E8%AE%B0%E3%80%8B/" class="article-date">
+  <time datetime="2022-12-03T12:09:59.000Z" itemprop="datePublished">2022-12-03</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>《登泰山记》</p>
+<p>姚鼐 〔清代〕</p>
+<p>泰山之阳，汶水西流；其阴，济水东流。阳谷皆入汶，阴谷皆入济。当其南北分者，古长城也。最高日观峰，在长城南十五里。</p>
+<p>余以乾隆三十九年十二月，自京师乘风雪，历齐河、长清，穿泰山西北谷，越长城之限，至于泰安。是月丁未，与知府朱孝纯子颍由南麓登。四十五里，道皆砌石为磴，其级七千有余。泰山正南面有三谷。中谷绕泰安城下，郦道元所谓环水也。余始循以入，道少半，越中岭，复循西谷，遂至其巅。古时登山，循东谷入，道有天门。东谷者，古谓之天门溪水，余所不至也。今所经中岭及山巅，崖限当道者，世皆谓之天门云。道中迷雾冰滑，磴几不可登。及既上，苍山负雪，明烛天南。望晚日照城郭，汶水、徂徕如画，而半山居雾若带然。</p>
+<p>戊申晦，五鼓，与子颍坐日观亭，待日出。大风扬积雪击面。亭东自足下皆云漫。稍见云中白若樗蒱数十立者，山也。极天云一线异色，须臾成五采。日上，正赤如丹，下有红光动摇承之。或曰，此东海也。回视日观以西峰，或得日或否，绛皓驳色，而皆若偻。</p>
+<p>亭西有岱祠，又有碧霞元君祠。皇帝行宫在碧霞元君祠东。是日观道中石刻，自唐显庆以来；其远古刻尽漫失。僻不当道者，皆不及往。</p>
+<p>山多石，少土。石苍黑色，多平方，少圜。少杂树，多松，生石罅，皆平顶。冰雪，无瀑水，无鸟兽音迹。至日观数里内无树，而雪与人膝齐。</p>
+<p>桐城姚鼐记。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-20221202-fontfamily-sansa-serif-notfound解决方法"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/12/02/20221202-fontfamily-sansa-serif-notfound%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/"
+    >20221202-fontfamily-sansa-serif-notfound解决方法</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/12/02/20221202-fontfamily-sansa-serif-notfound%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/" class="article-date">
+  <time datetime="2022-12-02T09:11:31.000Z" itemprop="datePublished">2022-12-02</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h2 id="windows"><a href="#windows" class="headerlink" title="windows"></a>windows</h2><p>删除 缓存路径 <code>C:\Users\ASUS\.matplotlib</code><br>刷新即可</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-20221201-python字符串数组转浮点数组"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/12/01/20221201-python%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%95%B0%E7%BB%84%E8%BD%AC%E6%B5%AE%E7%82%B9%E6%95%B0%E7%BB%84/"
+    >20221201-python字符串数组转浮点数组</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/12/01/20221201-python%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%95%B0%E7%BB%84%E8%BD%AC%E6%B5%AE%E7%82%B9%E6%95%B0%E7%BB%84/" class="article-date">
+  <time datetime="2022-12-01T12:44:24.000Z" itemprop="datePublished">2022-12-01</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>12月11日 完成初稿 Chang Liu<a href="mailto:&#x43;&#x68;&#97;&#110;&#x67;&#x2e;&#76;&#x69;&#117;&#x40;&#x72;&#x65;&#115;&#111;&#x6e;&#97;&#x6e;&#x7a;&#x63;&#x61;&#112;&#105;&#x74;&#97;&#x6c;&#46;&#x63;&#x6f;&#x6d;">&#x43;&#x68;&#97;&#110;&#x67;&#x2e;&#76;&#x69;&#117;&#x40;&#x72;&#x65;&#115;&#111;&#x6e;&#97;&#x6e;&#x7a;&#x63;&#x61;&#112;&#105;&#x74;&#97;&#x6c;&#46;&#x63;&#x6f;&#x6d;</a> 费用: 3000 记录好 有个新的样式要做</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">arr = [<span class="string">&#x27;22&#x27;</span>,<span class="string">&#x27;44&#x27;</span>,<span class="string">&#x27;66&#x27;</span>,<span class="string">&#x27;88&#x27;</span>]</span><br><span class="line"></span><br><span class="line">arr = <span class="built_in">list</span>(<span class="built_in">map</span>(<span class="built_in">float</span>,arr))</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(arr)</span><br><span class="line"></span><br><span class="line">[<span class="number">22</span>, <span class="number">44</span>, <span class="number">66</span>, <span class="number">88</span>]</span><br></pre></td></tr></table></figure>
+
+<h2 id="python-matplotlib-画廊-gallery"><a href="#python-matplotlib-画廊-gallery" class="headerlink" title="python matplotlib 画廊 gallery"></a>python matplotlib 画廊 gallery</h2><p><a target="_blank" rel="noopener" href="https://www.matplotlib.org.cn/gallery/#lines-bars-and-markers">https://www.matplotlib.org.cn/gallery/#lines-bars-and-markers</a></p>
+<h2 id="matplotlib中文文档"><a href="#matplotlib中文文档" class="headerlink" title="matplotlib中文文档"></a>matplotlib中文文档</h2><p><a target="_blank" rel="noopener" href="http://www.matplotlib.org.cn/">www.matplotlib.org.cn/</a></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-20221130-eps32wifi协议"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/11/30/20221130-eps32wifi%E5%8D%8F%E8%AE%AE/"
+    >20221130-eps32wifi协议</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/11/30/20221130-eps32wifi%E5%8D%8F%E8%AE%AE/" class="article-date">
+  <time datetime="2022-11-30T11:08:37.000Z" itemprop="datePublished">2022-11-30</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>router<br><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Dd4y1B7RT">https://www.bilibili.com/video/BV1Dd4y1B7RT</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/21951093">https://zhuanlan.zhihu.com/p/21951093</a></p>
+<p>802.11 协议精读19 wifi 的起源，诞生与发展</p>
+<p>本来这一节打算开始讨论802.11e的内容，因为从无线局域网诞生到成型，尤其是演进的过程中，一个重要的起步点就是802.11e，很多在802.11n，802.11ac，802.11ah之中所引入的内容，实际上在802.11e中都可以发现其的引导，更一般而言，先行的802.11的MAC层协议基本都是按照802.11e中的EDCF，而不是传统的DCF。</p>
+<p>然而，如果直接从802.11e开始谈及802.11协议的演进也有点冲突，因为从协议开始之初，或者说协议开始之前，实际上就一直处于演进的过程。所以本文就笔者个人所了解的部分，梳理下无线局域网协议WLAN的大致演进过程。</p>
+<p>本文中的一些内容部分参考自下述引文：</p>
+<p>《The Innovation Journey of Wi-Fi (The Road to Global Success)》<br>“THE HISTORY OF WI-FI”<br>《Ethernet:The Definitive Guide》</p>
+<p>wifi 协议的起源</p>
+<p>wifi 是一种WLAN 协议，即无线局域网协议，其历史或者说网络协议中的多地址接入协议的历史都可以追述到1971 年的ALOHAnet</p>
+<p>Aloha协议的思想如下：“一个aloha节点只要有数据的话，该节点就可以立即发送。当该节点数据发送完之后，其需要等待接收方反馈的ACK。若成功接收到ACK之后，那么这一次传输成功。如果没有收到ACK的话，那么这一次传输失败。该aloha节点会认为网络中还存在另外一个aloha节点也在发送数据，所以造成接收方发生了冲突。最后这些冲突的节点会随机选择一个时间进行回退（backoff），以避免下一次冲突。若冲突节点回退完成，其才可以重新进行发送”。</p>
+<p>CSMA&#x2F;CD协议的思想如下：“节点发送数据之前需要持续监听信道，一旦节点发现信道空闲，则立刻发送数据，<br>。在发送数据的同时，节点持续监听信道，”探测” 是否有别的节点也在该时刻发送数据。<br>若传输过程中没有检测到别的节点的传输，那么成功传输。在成功传输后，节点需要等待帧间间隔IFG（interframe gap）时间后，可以进行下一次传输。<br>若在传输过程中，探测到别的节点也在传输，那么则检测到冲突。发生冲突后，节点立刻停止当前的传输，并且发送特定的干扰序列（JAM序列），用以加强该次冲突（用以保证其余所有节点都检测到该次冲突），在JAM序列发送完之后，节点随机选择一个时间倒数进行backoff。当backoff完成之后，节点可以尝试再次重传”。</p>
+<p>IEEE 802 委员会所颁布的标准体系比较完善，其设置了多个不同的Group 用来指定不同场景下对应的协议</p>
+<p>在网络发展中，无线通信不仅仅是无线局域网这一条发展脉络，其最主要的还是通信网络，不过由于本文仅仅是讨论无线局域网，对于通信网络的发展，笔者涉猎优先，所以不进行开展</p>
+<p>民用网络的发展往往首先要通过政策许可这一关，在网络发展的起源地美国，其政策指的即是美国联邦通信委员会 (US Federal Communications Commission，FCC) 所派发的牌照（即无线电频段的使用许可）。考虑到避免干扰雷达所使用的无线电频段，于1985年，FCC颁发了为工业（industrial）、科学（scientific）和医疗（medical）行业颁发了ISM牌照，这一次的频段许可开放了900MHz，2.4GHz，和5.8GHz这三个频段，当时仅仅允许节点采用扩频技术（spread-spectrum）来进行通信。</p>
+<p>在ISM 频段之前，无线通信，比如无线广播以及电视广播都是采用专用的频段，这可以避免一些有害无线电干扰，而ism 频段之所以选择这些频段，是对于主要业务不重要，同时也是容易受到无线电干扰的频段</p>
+<p>MAC层初始设计时就存在两种声音，一种是由IBM所代表的中心式控制（Merits of Central），一种是由NCR代表（包含NCR&#x2F;Symbol Technologies&#x2F;Xircom）所代表的分布式控制（Distributed Control Architecture）。最终是由NCR所代表的分布式控制思路获得初步的胜利。从笔者的角度而言，这也是后来在Wi-Fi协议，始终存在分布式（DCF，EDCA）和中心式（PCF，HCCA）兼容设计的开始。<br>PHY的初始设计中包含两种可能的扩频方式，跳频（Frequency Hopping）和直序扩频（Direct Sequence）。 这也是由于FCC一开始发放的ISM牌照，其仅仅允许扩频通信的方案存在。在协议设计之初，团队就无法在两者中仅仅取决一种，所以在初始协议最终颁布时，两种物理层扩频方案都是被支持的。</p>
+<p>当下的hotspot 更强调的是一共为公共区域提供网络服务的热点业务，而最初hotspot 就是我们当前无线局域网基础架构模式，即存在一个无线AP 然后通过其连接如公网的架构</p>
+<p>hotspot 的概念也是wifi 协议能够成功的关键因素之一，其是wifi 在商业应用中最重要的组成部分之一，hotspot 的需求也大大推进了wifi 协议的发展，其中的漫游 安全  多AP 扩展的ESS 模式也都是由此发展而来的</p>
+<p>实际上大家开始接触wifi 很多也是从802.11b 开始的，802.11b 是802.11 协议中的第一个里程碑，早期的带wifi 功能的笔记本，或者PSP游戏机，其所带的无线功能都是基于802.11b的 </p>
+<p>802.11a引入了一种新的物理层技术OFDM（Orthogonal Frequency Division Multiplexing）。OFDM技术是于20世纪60年代就提出的，但是当时其核心算法FFT复杂度较高，随着集成电路技术的发展，到90年代时OFDM技术开始通信工程具体采用。相比扩频技术，OFDM技术有更高的频谱利用率。如上图所示，OFDM是通过时频关系的映射，将多个数字信号搭载到多个频域子载波上（如上图所示），然后通过IFFT合成，将这些数字信号一次性发送出去。通过OFDM，能够获得更高的频谱利用率，提高传输速率。对于OFDM的细节，我们也会在以后进行展开，这里就不详细展开了。</p>
+<p>802.11a当时没有受到很好的效果，主要还是频段的问题。因为当时FCC仅在5GHz频段上开放了OFDM技术，据《Next Generation Wireless LANs.802.11n and 802.11ac》一书所言，在1999~2000年间，美国非军事使用的5G频段仅仅只有几个指定的信道。而且由于802.11a和802.11b所在频段不同，所以新出的设备要同时兼容802.11b和802.11a就会造成成本增加，所以实际802.11a的实际应用很少。</p>
+<p>当初实际上也是FCC 不允许在2.4GHz 频段上使用OFDM 技术，仅仅只允许扩频技术</p>
+<p>2.4GHz 频段上也可以使用OFDM 技术</p>
+<p>在2004年时，由于传统Wi-Fi的发展都在于其PHY层和MAC层的性能上，协议的安全性并没有得到很好的保证。故在04年时，专门针对Wi-Fi安全的协议标准802.11i正式颁布，实际上，这个时期也有一个中国尝试发起的协议WAPI，也是针对该问题而言的。</p>
+<p>802.11n 的核心技术概念是MIMO 之前的无线通信我们都是单天线的传输系统，在mimo 的设计上，我们可以通过多根天线，并行传输多个不同数据，从而提高传输速率，提供更高的系统带宽</p>
+<p>实际上在网络发展中，各个不同源头的技术实际上是时有交互的，然而，是否成功，还是要根据市场和时机的检验，<br>好比wifi 虽然获得了比较大的成功，而wimax 则没有被广泛采用</p>
+<p>在2010年时候，在时任美国总统奥巴马的支持下，FCC同意在未来增加500MHz新频段用以无线通信，该500MHz是分散在多个不同的频段下，具体是根据具体的功能需求进行的设定。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-20221129-大疆模拟器键盘表示"
   class="article article-type-post"
   itemscope
@@ -989,544 +1402,13 @@
 </article>
 
     
-    <article
-  id="post-20221126-大疆飞机教程学习笔记"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/11/26/20221126-%E5%A4%A7%E7%96%86%E9%A3%9E%E6%9C%BA%E6%95%99%E7%A8%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"
-    >20221126-大疆飞机教程学习笔记</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/11/26/20221126-%E5%A4%A7%E7%96%86%E9%A3%9E%E6%9C%BA%E6%95%99%E7%A8%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="article-date">
-  <time datetime="2022-11-26T11:00:12.000Z" itemprop="datePublished">2022-11-26</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>[TOC]</p>
-<h2 id="0x01"><a href="#0x01" class="headerlink" title="0x01"></a>0x01</h2><h2 id="0x02"><a href="#0x02" class="headerlink" title="0x02"></a>0x02</h2><h2 id="0x03"><a href="#0x03" class="headerlink" title="0x03"></a>0x03</h2><h2 id="0x04"><a href="#0x04" class="headerlink" title="0x04"></a>0x04</h2> 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20221126-随笔"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/11/26/20221126-%E9%9A%8F%E7%AC%94/"
-    >20221126-随笔</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/11/26/20221126-%E9%9A%8F%E7%AC%94/" class="article-date">
-  <time datetime="2022-11-26T08:38:56.000Z" itemprop="datePublished">2022-11-26</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>工作日记</p>
-<p>对问题，认真研究，开研思想，能发表意见，题出看法。解决问题有自己办法。发浑出创造性。</p>
-<p>——一个人的才能</p>
-<p>每个人活在这个世界上都非常不容易的<br>每个人用自己有限的资源条件和能力<br>去创造属于自己独一无二的生活</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20221125-python给视频添加字幕"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/11/25/20221125-python%E7%BB%99%E8%A7%86%E9%A2%91%E6%B7%BB%E5%8A%A0%E5%AD%97%E5%B9%95/"
-    >20221125-python给视频添加字幕</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/11/25/20221125-python%E7%BB%99%E8%A7%86%E9%A2%91%E6%B7%BB%E5%8A%A0%E5%AD%97%E5%B9%95/" class="article-date">
-  <time datetime="2022-11-25T04:17:00.000Z" itemprop="datePublished">2022-11-25</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>前言<br>最近尝试用python实现给一个视频添加字幕和语音，查了很多博客后有了一个拼拼凑凑的方法：</p>
-<p>使用”pyttsx3”来实现“文字到音频”的转换；<br>使用”pydub”来对得到的音频进行加工和处理；<br>使用”moviepy”来合成字幕和语音文件。<br>（注：本篇仅作为个人小白的学习记录）</p>
-<p>一、”pyttsx3”实现“文字到音频”的转换<br>pyttsx3是一个很方便的实现从“文字”到“语音”的库，安装和使用都很简单，windows下安装只需要：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install pyttsx3</span><br></pre></td></tr></table></figure>
-
-<p>参考链接</p>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_48047296/article/details/124221568">https://blog.csdn.net/qq_48047296/article/details/124221568</a></p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20221120-色域马蹄图是怎么来的-CIE1931XYZ色彩空间详解"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/11/20/20221120-%E8%89%B2%E5%9F%9F%E9%A9%AC%E8%B9%84%E5%9B%BE%E6%98%AF%E6%80%8E%E4%B9%88%E6%9D%A5%E7%9A%84-CIE1931XYZ%E8%89%B2%E5%BD%A9%E7%A9%BA%E9%97%B4%E8%AF%A6%E8%A7%A3/"
-    >20221120-色域马蹄图是怎么来的-CIE1931XYZ色彩空间详解</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/11/20/20221120-%E8%89%B2%E5%9F%9F%E9%A9%AC%E8%B9%84%E5%9B%BE%E6%98%AF%E6%80%8E%E4%B9%88%E6%9D%A5%E7%9A%84-CIE1931XYZ%E8%89%B2%E5%BD%A9%E7%A9%BA%E9%97%B4%E8%AF%A6%E8%A7%A3/" class="article-date">
-  <time datetime="2022-11-20T06:32:20.000Z" itemprop="datePublished">2022-11-20</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在这个一年就要发布十几台旗舰级手机的时代，手机屏幕的色彩的精准性与范围总是被强调，所以相信绝大多数关注数码领域的爱好者都见过与封面上的这张图类似的色域图。</p>
-<p>起先虽然我也见过这张图，但真正想要去搞清楚这张图的含义倒并不是因为看到手机屏幕参数的时候产生疑惑，而是源于一个关于色彩的问题而产生的好奇驱使我去了解这张图背后的故事。</p>
-<p>经过几天的文献查阅与思考，今天我就来详细解释一下这张色域图来源的细节。</p>
-<h2 id="开始之前你需要了解的几个概念"><a href="#开始之前你需要了解的几个概念" class="headerlink" title="开始之前你需要了解的几个概念"></a>开始之前你需要了解的几个概念</h2><p>色刺激：进入人眼能引起有彩色或无彩色感觉的可见光辐射。</p>
-<p>三刺激值：在三色系统中，与待测光达到色匹配所需的三种原刺激的量。</p>
-<p>光谱三刺激值：在三色系统中，等能单色辐射的三刺激值。</p>
-<p>色品坐标：三刺激之值与它们之和的比。</p>
-<h2 id="色彩匹配实验"><a href="#色彩匹配实验" class="headerlink" title="色彩匹配实验"></a>色彩匹配实验</h2><p>我们知道不同的色光混合起来会产生其他的颜色，这其实是人眼的一种生理反应。为了了解到底人眼是怎么融合不同颜色色光的，有人设计了一个实验来定量测量到底参入多少红、绿、蓝三原色会让人眼觉得待测色光和三色光混合色感觉完全一样。实验原理如下图所示：</p>
-<p><img src="https://pic1.zhimg.com/80/v2-36b3af8900fe502236344c6622be4f78_720w.webp" alt="img"></p>
-<p>图1：色彩匹配实验</p>
-<p>上图中红绿蓝三色光照在白屏的右侧，待测色照在白屏的左侧，左侧和右侧之间有一个黑色的档片。人眼透过一个小孔观察白屏，人眼的观测视角大概为 2∘ ，观测到的视场如上图右下角所示。当我们加载待测色之后，通过调节红绿蓝三色光的强度，最后使得人眼看到的颜色分界线感觉消失，待测色光即与三原色混合色光达到匹配，记录此时三色光的强度。</p>
-<p>这样不同颜色的色光都能通过这个实验得到其对应的三原色光强度值，我们把其称之为三刺激值。</p>
-<p>颜色匹配过程可以用公式表述如下：</p>
-<p>C(C)≡R(R)+G(G)+B(B) （1）</p>
-<p>式中“ ≡ ”号表示视觉上相等，即颜色匹配； 、、R、G、B 为代数量，可为负值。 C 为待测光的代数量。</p>
-<p>颜色匹配也可以用几何表示：</p>
-<p><img src="https://pic1.zhimg.com/80/v2-017e41c01bd912462c62c547659d1780_720w.webp" alt="img"></p>
-<p>图2: 颜色匹配矢量</p>
-<p>上图表示待测色光C可以分解为三原色R，G，B三个矢量相加。</p>
-<p><img src="https://pic1.zhimg.com/80/v2-6512461cbe920880345371e89e58d5e0_720w.webp" alt="img"></p>
-<p>图3: 常用的颜色几何匹配方式：设置坐标的单位向量的模长为1</p>
-<p>通常为了后续表示方便，R，G，B三色的单位矢量模长数量都取1。我们把单位矢量的顶端连接起来可以得到单位平面，每个颜色矢量 C 只会与单位平面有一个交点 Cp ，且此时交点的坐标满足单位平面的方程， |OCp¯|&#x3D;1 。</p>
-<p><strong>光谱三刺激值</strong></p>
-<p>如果待测色光是辐射能量都相同的单色光（光谱色，光波段为380-760nm），我们把得到的三原色光强度值称之为：光谱三刺激值，用 r¯,g¯,b¯ 表示。颜色匹配过程可用公式表示如下：</p>
-<p>Cλ&#x3D;r¯(R)+g¯(G)+b¯(B) （2）</p>
-<p>根据光谱色的颜色匹配实验结果可以得到以下曲线：</p>
-<p><img src="https://pic2.zhimg.com/80/v2-e30a0ff2b718e91639425f737e00afc9_720w.webp" alt="img"></p>
-<p>图4: 光谱三刺激值曲线图</p>
-<p>从上图我们看到，光谱三刺激值红光刺激值很大一部分出现负值。这是因为当投射到半视场的某些光谱色用无论怎么也无法用另一半视场的三原色来匹配时，只有在光谱色半视场加入红色原色才能达到匹配。也就是此时的红色光是加载到图1中 左侧白板上的，如果规定往右侧加入的色光量为正值，那么左侧就相应的为负值。</p>
-<h2 id="色品坐标"><a href="#色品坐标" class="headerlink" title="色品坐标"></a>色品坐标</h2><p>当 C&#x3D;1 时，也就是该待测色光在单位平面上，方程（1）可以写为：</p>
-<p>C&#x3D;RR+G+B(R)+GR+G+B(G)+BR+G+B(B) (3)</p>
-<p>上式说明对于一个单位颜色 C 的色品只决定于三原色的刺激值在R+G+B总量中的相对比例，我们把这个比例叫做色品坐标，用 ，，r，g，b 表示：</p>
-<p>，，r&#x3D;RR+G+B，g&#x3D;GR+G+B，b&#x3D;BR+G+B （4）</p>
-<p>色品坐标因为在单位平面上所以满足： r+g+b&#x3D;1 ，根据这个关系，我们其实只要知道两个量就能得到第三个量的值。</p>
-<p>公式（3）也可以写成以下形式：</p>
-<p>C&#x3D;r(R)+g(G)+b(B) (5)</p>
-<h2 id="CIE-1931-RGB-色度系统"><a href="#CIE-1931-RGB-色度系统" class="headerlink" title="CIE 1931-RGB 色度系统"></a>CIE 1931-RGB 色度系统</h2><p>CIE使用的三原色波长分别为700nm (R）、546.1nm (G）、435.8nm (B）(因为这三种波长能够精确的产生)，对应的光谱三刺激值如图4所示。</p>
-<p><img src="https://pic3.zhimg.com/80/v2-c168a38b726b38cf7e3ef851039ac406_720w.webp" alt="img"></p>
-<p>图4: 光谱三刺激值曲线图</p>
-<p>光谱三刺激值与色品坐标的对应关系如下：</p>
-<p>r&#x3D;r¯r¯+g¯+b¯,g&#x3D;g¯r¯+g¯+b¯,b&#x3D;b¯r¯+g¯+b¯ (6)</p>
-<p>通过上式我们可以从光谱三刺激值计算出其对应的色品坐标，最后连接各个波长的色品坐标形成光谱轨迹得到下图：</p>
-<p><img src="https://pic4.zhimg.com/80/v2-39313d9bcec625786ea318b64cbd8f77_720w.webp" alt="img"></p>
-<p>图5: CIE 1931 r，g色品图的光谱轨迹</p>
-<p>上图中380nm的波长那里其实包括了380-435.8nm的波长，700nm的波长其实包括了700-780nm的波长。</p>
-<p>上图中的 E 代表了等能白点，该点的r，g，b坐标为(0.33,0.33,0.33)，它的意思是等量R，G，B原色混合可以产生等能的白光。</p>
-<p>从上图我们看到，由于光谱的三刺激值中有负值，所以造成上图中光迹曲线坐标有很大一部分在 r 的负轴上，不便于我们对色彩进行理解。因此我们需要对其进行坐标变换以使得色品图内的曲线上的所有点在新坐标下对应的值为正值。</p>
-<h2 id="CIE-1931-XYX-色度系统"><a href="#CIE-1931-XYX-色度系统" class="headerlink" title="CIE 1931 XYX 色度系统"></a>CIE 1931 XYX 色度系统</h2><p>那么问题来了，我们怎样选取新的三原色才能使得图5中的光谱轨迹曲线全部都落在新坐标系内的第一象限？（也就是光谱轨迹曲线色品坐标全部为正）</p>
-<p>CIE主要考虑了以下三点内容：</p>
-<ol>
-<li>规定(X)，(Z)两原色只代表色度（颜色中红色和蓝色的比例），没有亮度。光度量只与三刺激值(Y) 成比例。XZ 线称为无亮度线。</li>
-<li>新的三原色(X)，(Y)，(Z)连成的三角形要包含光迹曲线。</li>
-<li>光谱轨迹从 540nm 附近至 700nm，在 RGB 色品图上基本是一段直线，用这段线上的两个颜色相混合可以得到两色之间的各种光谱色，新的 XYZ 三角形的 XY 边应与这段直线重合，因为在这段线上光谱轨迹只涉及(X)原色和(Y)原色的变化，不涉及(Z)原色。</li>
-</ol>
-<p>这三点为什么这样设置，我自己的理解如下：</p>
-<p>对于<strong>第一点</strong>：为什么亮度只设置与(Y)原色有关？而(X)，(Z)原色不包含亮度？</p>
-<p>因为人眼对绿光波长最敏感，RGB系统三原色的相对亮度（不是数量的多少）比为： lR:lG:lB&#x3D;1.000:4.5907:0.0601 （这意味着蓝色给人的感觉非常暗,绿色给人感觉最亮）。因此这里设置原色Y代表亮度和绿色的在颜色中的比例也比较也合理（颜色Y值越大，人眼感觉越亮，也代表颜色中绿色的比例越高）。</p>
-<p>另外由于颜色匹配也包括其亮度的匹配，因此方程(1)可以将三原色相对亮度代入可得到亮度方程 l(C)&#x3D;r+4.5907g+0.0601b ，如果颜色在无亮度l(C)&#x3D;0 线上，则r+4.5907g+0.0601b&#x3D;0 , 代入b&#x3D;1−r−g ，整理后可得 XZ 线的方程。</p>
-<p>对于<strong>第二点</strong>：应该大家都能理解，新的坐标系肯定是在得让光谱轨迹曲线只落在第一象限，保证其值为正。</p>
-<p>对于<strong>第三点</strong>：这意味着这条直线的两端对应的肯定对应着两种原色，也就是(Y)和(X)。XY线的方程很容易获得。</p>
-<p>现在，我们已经确定了两条由新三原色组成的线即，无亮度线XZ，与XY线。而第三条线YZ，CIE选取的为波长503nm出的点相切的直线。其方程也很容易得到。</p>
-<p>所以根据上面，我们可以在图5中看到由这三条新由三原色连成的三角形。虽然这里看到的是二维的三角形，其实它是在三维空间中：</p>
-<p><img src="https://pic4.zhimg.com/80/v2-de12870d48a6d9a9a9f95a344545341b_720w.webp" alt="img"></p>
-<p>图6: CIE 1931 RGB向XYZ系统转换</p>
-<p>此外，通过这三条直线，我们可以确定新三原色在R，G，B色品系统下的坐标，进而得到新色品坐标系与旧色品坐标系之间的转换矩阵。然后根据转换矩阵我们就能将图5的光谱轨迹曲线转换到由新三原色构成的新坐标的第一象限中。转换后的光谱轨迹曲线，新三原色三刺激值曲线结果如下图所示：</p>
-<p><img src="https://pic4.zhimg.com/80/v2-be28903e6bd5ff7e817708f4f6f87b3f_720w.webp" alt="img"></p>
-<p>图7: CIE 1931 x，y色品图上的光谱轨迹</p>
-<p><img src="https://pic4.zhimg.com/80/v2-efc0644532ebba6b70f873d6aefe689b_720w.webp" alt="img"></p>
-<p>图8: CIE 1931 XYZ系统光谱三刺激值曲线图</p>
-<p>图7中的x，y为新系统的色品坐标，其值为：</p>
-<p>x&#x3D;XX+Y+Z,y&#x3D;YX+Y+Z (7)</p>
-<p>等能白点的坐标 E 为(0.33,0.33)。</p>
-<p>现在我们将RGB系统转换到了XYZ系统，且光谱轨迹全部落在了第一象限。</p>
-<h2 id="待测色的CIE-1931-XYZ色品坐标计算"><a href="#待测色的CIE-1931-XYZ色品坐标计算" class="headerlink" title="待测色的CIE 1931 XYZ色品坐标计算"></a>待测色的CIE 1931 XYZ色品坐标计算</h2><p>虽然我们得到了光谱在CIE x，y色品坐标系下的值，但是光谱轨迹曲线所包含的面积内的颜色的色品坐标值如何计算呢？</p>
-<p>我们可以使用以下积分公式计算待测色的CIE三刺激值：</p>
-<p>X&#x3D;k∫380780φ(λ)x¯dλ,Y&#x3D;k∫380780φ(λ)y¯dλ,Z&#x3D;k∫380780φ(λ)z¯dλ (8)</p>
-<p>上式 k 为常数(归化系数)， φ(λ)为光源发出或经过物体反射投射进入人眼产生颜色感觉的光谱能量。当待测色是光源直接发出的， φ(λ) 则为光源的辐射的相对光谱功率分布 P(λ) (可以通过测量获得，得到的图类似于下图）。由图8我们可以获得 x¯,y¯,z¯ 。</p>
-<p><img src="https://pic3.zhimg.com/80/v2-bc131d2894c6d3e73206bfb26ca2bdd2_720w.webp" alt="img"></p>
-<p>图9: 光源的辐射的相对光谱功率分布示意图</p>
-<p>因此待测色的三刺激值可以通过公式8来进行计算，然后通过三刺激值到色品坐标的转换，这样光谱曲线所包围的曲面内的所有颜色的色品坐标我们都可以通过公式（8）计算得到。</p>
-<p>而对于混合色我们还可以根据格拉斯曼颜色混合定律得到（具体的方法主要有直接计算法，画图法）。</p>
-<p>最终得到的色度图如下：</p>
-<p><img src="https://pic3.zhimg.com/80/v2-21b121ab49d3ffae0c09483f9cddaf5a_720w.webp" alt="img"></p>
-<p>图10: CIE 1931 xy色度图</p>
-<p>图10，CIE x，y色品图上的光谱轨迹具有以下颜色视觉特点:</p>
-<ol>
-<li>靠近波长末端 700-770nm 光谱波段具有一个恒定的色品值，故在色品图上只由一个点来代表。</li>
-<li>光谱轨迹 540-700nm 段是一条与 XY 边基本重合的直线。在这段光谱范围内的任何光谱色都可通过 540nm 和 700nm 两种波长的光以一定比例相加混合产生。</li>
-<li>光谱轨迹 380-540nm 段是曲线，在此范围内的一对光谱色的混合不能产生二者之间位于光谱轨迹上的颜色，而只能产生光谱轨迹所包围面积内的混合色。光谱轨迹上的颜色饱和度最高。图上越靠近等能白点E 点的颜色饱和度越低。</li>
-<li>连接色度点 400nm 和 700nm 的直线称为紫红轨迹，也称紫线。因为将 400nm 的蓝色刺激与 700nm 的红色刺激混合后会产生紫色（也就是说紫色和红色之间还有已知的颜色，而不是断裂的）。</li>
-<li>Y&#x3D;0 的直线（XZ）与亮度没有关系，即无亮度线。光谱轨迹的短波段紧靠这条线，意味着短波端的光虽然能够引起标准观察者的反应，但 380-420nm 波长在视觉上引起的亮度感觉很低。</li>
-<li>曲线内包含的色彩是我们人眼全部能感知的色彩。</li>
-<li>曲线是三维曲线，我们看到的是其在x，y平面上的投影。</li>
-</ol>
-<h2 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h2><p>本文只是对CIE 1931 XYZ色彩空间的来源进行了介绍，限于篇幅与我所了解的内容的多少，这里就没有对其应用与扩展内容进行介绍。</p>
-<p>但是如果你感兴趣深入可以去看参考中所列出的书籍，可以找到关于混合色的色品坐标如何计算，颜色空间均匀性的讨论，颜色主波长如何确定，色差的评价，同色异谱现象等等关于色彩的详尽内容。</p>
-<p>你还可以以看看参考中其他人对于色彩的回答，相信对你了解色域图的应用会有帮助。</p>
-<p>此外本文图片均来源与wiki百科和参考中所列出的两本书籍，本人只对其进行了标注。</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20221119-debug命令详细说明"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/11/19/20221119-debug%E5%91%BD%E4%BB%A4%E8%AF%A6%E7%BB%86%E8%AF%B4%E6%98%8E/"
-    >20221119-debug命令详细说明</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/11/19/20221119-debug%E5%91%BD%E4%BB%A4%E8%AF%A6%E7%BB%86%E8%AF%B4%E6%98%8E/" class="article-date">
-  <time datetime="2022-11-19T11:52:07.000Z" itemprop="datePublished">2022-11-19</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h2 id="启动DEBUG"><a href="#启动DEBUG" class="headerlink" title="启动DEBUG"></a>启动DEBUG</h2><h4 id="1-打开Windows命令窗口"><a href="#1-打开Windows命令窗口" class="headerlink" title="1.打开Windows命令窗口"></a>1.打开Windows命令窗口</h4><p>在Windows 95&#x2F;98的环境中，打开命令窗口的步骤为：点击“开始”→“运行”，输入“command”命令； 在WindowsXP及WIN7的环境中，打开命令窗口的步骤为：点击“开始”→“运行”，输入“cmd”命令；</p>
-<h4 id="2-启动DEBUG"><a href="#2-启动DEBUG" class="headerlink" title="2.启动DEBUG"></a>2.启动DEBUG</h4><p>在命令窗口中启动DEBUG，启动命令一般为：DEBUG  [文件名] [参数表]。其中：文件名指定被调试的文件，其包括名和后缀，参数表是被调试文件运行时所需要的参数。被调试的文件可以是系统中的任何文件，但通常它们的后缀为.EXE或.COM。 当DEBUG启动成功后，将显示连接符“-”，这时，可输入各种DEBUG命令。DEBUG中所有命令及其含义如<a target="_blank" rel="noopener" href="http://www.shelwee.com/html/archives/65556.html">DEBUG各命令功能说明</a>表所示。 关于使用命令的几点说明：在提示符“-”下才能输入命令，在按“回车”键后，该命令才开始执行命令是单个字母，命令和参数的大小写可混合输入可用F1、F2、F3、Ins、Del、左移键、右移键等编辑键来编辑本行命令当命令出现语法错误时，将在出错位置显示“^ Error”可用Ctrl+C或Ctrl+Break来终止当前命令的执行，还可用Ctrl+S或Ctrl+Num Lock来暂停屏幕显示(当连续不断地显示信息时)<br>以下通过实现十九个示例来熟悉DEBUG的命令集和基本的汇编指令。</p>
-<h3 id="R命令的使用"><a href="#R命令的使用" class="headerlink" title="R命令的使用"></a>R命令的使用</h3><p>R命令作用：观看和修改寄存器的值。</p>
-<p>在提示符“-”下输入以下命令：R。DEBUG将会显示出当前所有寄存器和标志位的状态。</p>
-<p>接下来再输入命令RCX。在提示符“：”后输入100。该命令的作用是将寄存器CX的值设置为100（注意：DEBUG使用的是十六进制，这里的100相当于十进制的256。）</p>
-<p>最后再执行R命令，观看修改后的寄存器值。</p>
-<h3 id="H命令的使用"><a href="#H命令的使用" class="headerlink" title="H命令的使用"></a>H命令的使用</h3><p>H命令作用：计算两个十六进制数的和与差。</p>
-<p>在提示符“–”下输入以下命令：H 10 1。观看命令执行结果。</p>
-<p><img src="http://shelwee.qiniudn.com/wp-content/uploads/2011/04/debug-h.png" alt="debug-h"></p>
-<p>运行结果的前一个数是计算出来的和，后一个数是计算出来的差。计算结果均用十六进制形式表示。</p>
-<h3 id="D命令的使用"><a href="#D命令的使用" class="headerlink" title="D命令的使用"></a>D命令的使用</h3><p>D命令作用：显示内存区域的内容。</p>
-<p>在提示符“–”下连续执行命令R、D、D。观看命令执行结果。</p>
-<p>前面已经介绍过了，命令R的作用是显示当前寄存器的值。而命令D的作用是显示内存区域的内容，最左边是内存的起始地址，中间以十六进制的形式显示内存值，最右边是以ASCII码的形式显示内存值。每行最多显示16个字节的内容。</p>
-<p>命令D可以带参数也可省略参数。设DEBUG启动时DS的值为X，当省略参数时，命令D显示内容以X：100为起始，每次显示128个字节的内容。以后再执行不带参数的命令D时，DEBUG将按上次的位置接着显示下去。</p>
-<p>带参数时DEBUG能够显示指定地址范围的内容。带参数的方式有三种：</p>
-<p>方式一：d [起始位置]。DEBUG从起始位置开始显示128个字节的内容。在提示符“-”下执行命令D 1AF5:100。观看命令执行结果。</p>
-<p>方式二：d [起始位置] [结束位置]。DEBUG从起始位置开始一直显示到结束位置。在提示符“-”下执行命令D DS:100 1FF。观看命令执行结果。</p>
-<p>方式三：d [起始位置] [L长度]，长度以L参数为标识。DEBUG从起始位置开始显示指定长度的内容。在提示符“-”下执行命令D DS:100 L10。观看命令执行结果。</p>
-<h3 id="E命令的使用"><a href="#E命令的使用" class="headerlink" title="E命令的使用"></a>E命令的使用</h3><p>E命令作用：改变内存单位的内容。</p>
-<p>E命令的使用方式为：E [起始位置]。</p>
-<p>在提示符“-”下输入以下命令：E 1AF5:100。</p>
-<p><img src="http://shelwee.qiniudn.com/wp-content/uploads/2011/04/debug-e.png" alt="debug-e"></p>
-<p>DEBUG首先显示[1AF5:0000]的内容00.，这时可以修改该字节的值。如果还要修改后续的内容，可以按空格键继续。当要跳过某个字节时，可以按连续的两个空格跳到后一个字节去。</p>
-<h3 id="F命令的使用"><a href="#F命令的使用" class="headerlink" title="F命令的使用"></a>F命令的使用</h3><p>F命令作用：使用指定的值填充指定内存区域中的地址。</p>
-<p>F命令的使用方式为：F [范围] [填充列表]。</p>
-<p>在提示符“-”下输入以下命令：F 1AF5:100 L20 1 2 3 4 5。执行命令D 1AF5:100观看命令执行结果。</p>
-<p>说明：该命令是用字节序列01、02、03、04、05轮流填充从1AF5:100开始长度为20H的内存区域。</p>
-<p>在提示符“-”下输入以下命令：F 1AF5:100 13F 41 42 43 44。</p>
-<p>说明：该命令是用字节序列41、42、43、44轮流填充从1AF5:100开始一直到1AF5:13F的内存区域。</p>
-<h3 id="M命令的使用"><a href="#M命令的使用" class="headerlink" title="M命令的使用"></a>M命令的使用</h3><p>M命令作用：将指定内存区域的数据复制到指定的地址去。</p>
-<p>M命令的使用方式为：M [范围] [指定地址]。</p>
-<p>在提示符“-”下输入以下命令：M 1AF5:100 13F 1AF5:140。执行命令D 1AF5:100观看命令执行结果。</p>
-<h3 id="C命令的使用"><a href="#C命令的使用" class="headerlink" title="C命令的使用"></a>C命令的使用</h3><p>C命令作用：将两块内存的内容进行比较。</p>
-<p>C命令的使用方式为：C [范围] [指定地址]，意思就是将指定范围的内存区域与从指定地址开始的相同长度的内存区域逐个字节进行比较，列出不同的内容。</p>
-<p>在提示符“-”下输入以下命令：C 1AF5:100 13F 1AF5:140。由于两块内容完全相同，所以命令执行后没有任何显示。</p>
-<p>在提示符“-”下输入以下命令：C 1AF5:100 107 1AF5:180，比较的区域长度为8个字节。命令执行后列出比较结果不同的各个字节。</p>
-<h3 id="S命令的使用"><a href="#S命令的使用" class="headerlink" title="S命令的使用"></a>S命令的使用</h3><p>S命令作用：在指定的内存区域中搜索指定的串。</p>
-<p>S命令的使用方式为：S [范围] [指定串]。</p>
-<p>在提示符“-”下输入以下命令：D 1AF5:100 11F。显示该区域的内存值。</p>
-<p>在提示符“-”下输入以下命令：S 1AF5:100 11F 41 42 43 44。搜索该区域是否存在字节串41 42 43 44，并将搜索结果一一列出。</p>
-<p>从执行结果可以看出，总共搜索到八处。</p>
-<h3 id="A命令的使用"><a href="#A命令的使用" class="headerlink" title="A命令的使用"></a>A命令的使用</h3><p>A命令作用：输入汇编指令。</p>
-<p>以下的程序要在屏幕上显示“ABCD”四个字符。</p>
-<p>首先用E命令将“ABCD$”四个字符预先放在内存CS:200处，然后执行A100命令输入汇编程序代码：</p>
-<p>MOV AX,CS</p>
-<p>MOV DS,AX</p>
-<p>MOV DX,200</p>
-<p>MOV AH,9</p>
-<p>INT 21</p>
-<p>INT 20</p>
-<p>（说明：前两行汇编指令用于将段寄存器CS的值赋给段寄存器DS。第三到第五行汇编代码的作用是显示以“$”为结尾的字符串。最后一行用于结束程序。</p>
-<h3 id="G命令的使用"><a href="#G命令的使用" class="headerlink" title="G命令的使用"></a>G命令的使用</h3><p>G命令作用：执行汇编指令。</p>
-<p>G命令的使用方法是：G [&#x3D;起始地址]  [断点地址]，意思是从起始地址开始执行到断点地址。如果不设置断点，则程序一直运行到中止指令才停止。</p>
-<p>在设置完示例九的的内存数据并且输入完示例九的程序后运行这些汇编代码。在DEBUG中执行命令G&#x3D;100，观看运行结果。</p>
-<p>汇编程序运行后在屏幕上显示出“ABCD”四个字符。</p>
-<p>接下来在DEBUG中执行G&#x3D;100 10B，意思是从地址CS：100开始，一直运行到CS：10B停止。观看运行结果。</p>
-<p>命令执行后，不但显示出字符串“ABCD”，而且列出当前寄存器和标志位的值。</p>
-<h3 id="U命令的使用"><a href="#U命令的使用" class="headerlink" title="U命令的使用"></a>U命令的使用</h3><p>U命令作用：对机器代码反汇编显示。</p>
-<p>U命令的使用方法是：U [范围]。如果范围参数只输入了起始地址，则只对20H个字节的机器代码反汇编。执行命令U100，观看反汇编结果。</p>
-<p>执行命令U100 10B，观看反汇编结果。该命令的作用是对从100到10B的机器代码进行反汇编。</p>
-<h3 id="N命令的使用"><a href="#N命令的使用" class="headerlink" title="N命令的使用"></a>N命令的使用</h3><p>N命令作用：设置文件名，为将刚才编写的汇编程序存盘做准备。</p>
-<p>以下的DEBUG命令序列作用将刚才的汇编程序存为磁盘的COM可执行程序。</p>
-<p>D200 20F</p>
-<p>U100 10C</p>
-<p>N  E:\FIRST.COM</p>
-<p>RCX</p>
-<p>:110</p>
-<p>W</p>
-<p>第一和第二条命令的作用是检查一下刚才编写的汇编指令。第三条命令的作用是设置存盘文件名为E:\FIRST.COM，第四条命令的作用是设置存盘文件大小为110H个字节。最后一条命令是将文件存盘。</p>
-<p>文件存盘后执行E:\FIRST.COM，观看存盘的可执行文件的运行效果。</p>
-<h3 id="W命令的使用"><a href="#W命令的使用" class="headerlink" title="W命令的使用"></a>W命令的使用</h3><p>W命令作用：将文件或者特定扇区写入磁盘。</p>
-<p>在示例“N命令的使用”中已经实验了如何使用W命令将文件存盘。</p>
-<p>在没有很好地掌握汇编语言和磁盘文件系统前，暂时不要使用W命令写磁盘扇区，否则很容易损坏磁盘文件，甚至破坏整个磁盘的文件系统。</p>
-<h3 id="L命令的使用"><a href="#L命令的使用" class="headerlink" title="L命令的使用"></a>L命令的使用</h3><p>L命令作用：从磁盘中将文件或扇区内容读入内存。</p>
-<p>将文件调入内存必须先用DEBUG的N命令设定文件名。以下例子是将E:\FIRST.COM读入内容。</p>
-<p>N FIRST.COM</p>
-<p>L</p>
-<p>观看调入程序的汇编代码可以使用DEBUG的U命令，用U100观看调入的COM文件。</p>
-<p>读取磁盘扇区的方式是：L [内存地址] [磁盘驱动器号] [起始扇区] [扇区数]。“内存地址”指定要在其中加载文件或扇区内容的内存位置，如果不指定“内存地址”的话，DEBUG将使用CS寄存器中的当前地址。“磁盘驱动器号”指定包含读取指定扇区的磁盘的驱动器，该值是数值型：0&#x3D;A，1&#x3D;B，2&#x3D;C等。“起始扇区”指定要加载其内容的第一个扇区的十六进制数。“扇区数”指定要加载其内容的连续扇区的十六进制数。</p>
-<p>只有要加载特定扇区的内容而不是加载文件时，才能使用[磁盘驱动器号] [起始扇区] [扇区数]参数。</p>
-<p>例如：要将C盘第一扇区读取到内存DS:300的位置，相应的DEBUG命令为L DS:300 2 1 1。但是由于Windows操作系统对文件系统的保护，这条命令可能会被操作系统禁止运行。</p>
-<h3 id="T命令的使用"><a href="#T命令的使用" class="headerlink" title="T命令的使用"></a>T命令的使用</h3><p>T命令作用：执行汇编程序，单步跟踪。</p>
-<p>T命令的使用方式是T [&#x3D;地址] [指令数]。如果忽略“地址”的话，T命令从CS:IP处开始运行。“指令数”是要单步执行的指令的数量。</p>
-<p>以下示例对E:\FIRST.COM进行单步跟踪。</p>
-<p>N E:\FIRST.COM</p>
-<p>L</p>
-<p>U100 10B</p>
-<p>R</p>
-<p>T&#x3D;100</p>
-<p>T</p>
-<p>第一、二条命令是装入文件，第三条命令是列出程序反汇编代码，第四条命令是显示当前寄存器值，第五条命令是从CS:100处开始单步跟踪，第六条命令是继续跟踪后续的指令。</p>
-<h3 id="P命令的使用"><a href="#P命令的使用" class="headerlink" title="P命令的使用"></a>P命令的使用</h3><p>P命令作用：执行汇编程序，单步跟踪。与T命令不同的是：P命令不会跟踪进入子程序或软中断。</p>
-<p>P命令的使用方式与T命令的使用方式完全相同。</p>
-<h3 id="I命令的使用"><a href="#I命令的使用" class="headerlink" title="I命令的使用"></a>I命令的使用</h3><p>I命令作用：从计算机输入端口读取数据并显示。</p>
-<p>I命令的用法是I [端口地址]。例如从3F8号端口读取数据并显示的命令为：I 3F8。这里不对该命令做解释。</p>
-<h3 id="O命令的使用"><a href="#O命令的使用" class="headerlink" title="O命令的使用"></a>O命令的使用</h3><p>O命令作用：向计算机输出端口送出数据。</p>
-<p>O命令的用法是O [端口地址] [字节值]。例如向278号端口发出数据20H的命令为：I 278 20。这里不对该命令做解释。</p>
-<h3 id="Q命令的使用"><a href="#Q命令的使用" class="headerlink" title="Q命令的使用"></a>Q命令的使用</h3><p>Q命令的作用是退出DEBUG，回到DOS状态。</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20221119-即时通讯IM记录的存储"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/11/19/20221119-%E5%8D%B3%E6%97%B6%E9%80%9A%E8%AE%AFIM%E8%AE%B0%E5%BD%95%E7%9A%84%E5%AD%98%E5%82%A8/"
-    >20221119-即时通讯IM记录的存储</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/11/19/20221119-%E5%8D%B3%E6%97%B6%E9%80%9A%E8%AE%AFIM%E8%AE%B0%E5%BD%95%E7%9A%84%E5%AD%98%E5%82%A8/" class="article-date">
-  <time datetime="2022-11-19T06:06:27.000Z" itemprop="datePublished">2022-11-19</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>原文链接 <a target="_blank" rel="noopener" href="https://juejin.cn/post/6983824498201985037">https://juejin.cn/post/6983824498201985037</a></p>
-<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>即时通讯(Instant Messaging)，也就是我们常说的 IM，其实在很多业务场景上都会有或多或少的应用，有的会是核心，有的会是辅助。</p>
-<p>既然是聊天，那么必然就会产生聊天记录，而且聊天记录随着人数的增加和时间的推移，很容易出现爆炸式的增长，这个对存储其实压力是很大的。</p>
-<p>举个大家都很熟悉的例子，一个群聊，几分钟不看，再打开就是 99+ 的未读消息。</p>
-<p>把即时通讯这个技术，放到医疗环境下，也是同样适用的。</p>
-<p>患者去线下医院看病，肯定离不开和医生的问答，这些问答，对系统来说，其实都是聊天记录。</p>
-<p>如果把这个场景放到线上进行，也就是正常的和我们在微信聊天那样了。</p>
-<p>说了那么多有的没的，也算是把大背景交代了一下，那么接下来就看看这个聊天记录存储的选型吧。</p>
-<h2 id="技术选型"><a href="#技术选型" class="headerlink" title="技术选型"></a>技术选型</h2><p>既然要存储，那么肯定就会有很多选择，关系型数据库，非关系型数据库等。</p>
-<p>当然这个很大程度上是和具体业务场景挂钩的，离开了业务场景，基本就是在空谈。</p>
-<p>在医患关系里面的聊天记录，是一个十分十分核心的内容，并且必需要长期保存，不能丢，可查询。</p>
-<p>并且这些聊天记录是和某次问诊强关联的，所以单独拿出几条聊天记录出来，是没有意义的，因为他们没有关联，串联不起来。</p>
-<p>按照以往的经验看，一次问诊，医生和患者之间的聊天记录在 50 条之内的占据了大部分，超过50条的，占少数。</p>
-<p>这个和其他的 IM 情景可能不太一样。</p>
-<h3 id="MySQL"><a href="#MySQL" class="headerlink" title="MySQL"></a>MySQL</h3><p>业务开始，大概率就是选用 MySQL 去存了这些数据了，单库单表，但是这种情况下很容易达到单表千万和上亿的级别。</p>
-<p>后面面临的基本就是分库分表的操作了。</p>
-<p>分库分表，基本就是根据问诊号去进行哈希，然后放到不同的库不同的表。</p>
-<p>这里会有一个不确定因素，分多少个库和分多少张表？</p>
-<p>分的多，囊中羞涩；分的少，再一次达到量级的时候又要重新分，大动干戈，这个时候最怕的就是动到了哈希的规则。</p>
-<p>所以选 MySQL 的话，到了中后期确实还是会有一点力不从心。线性扩展对这一块还是非常重要的。</p>
-<p>如果想改动小，避免分库分表，或许可以试试 TiDB，但是它要的配置，也不是中小企业所能接受的，80% 以上的概率会被 Pass 掉。</p>
-<p><a href="https://link.juejin.cn/?target=https://docs.pingcap.com/zh/tidb/stable/hardware-and-software-requirements">docs.pingcap.com&#x2F;zh&#x2F;tidb&#x2F;sta…</a></p>
-<h3 id="Cassandra"><a href="#Cassandra" class="headerlink" title="Cassandra"></a>Cassandra</h3><p>Cassandra 是一个分布式、无中心、弹性可扩展的 NoSQL 数据库，基于 Amazon Dynamo 的分布式设计和 Google Bigtable 的数据模型。</p>
-<p><a href="https://link.juejin.cn/?target=https://cassandra.apache.org/doc/latest/architecture/overview.html">cassandra.apache.org&#x2F;doc&#x2F;latest&#x2F;…</a></p>
-<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/c02b83328e38462d9f95b2dd06b3779e~tplv-k3u1fbpfcp-zoom-in-crop-mark:4536:0:0:0.awebp" alt="img"></p>
-<p>为什么考虑选型 Cassandra 呢？ 对上面说的医患场景，严格上是属于写多读少的，查询基本只会基于问诊号去查询，这个是相对比较明确的。</p>
-<p>Discord 在 2017 年的时候有一篇博客讲述了他们是怎么存储数十亿消息记录的 ，说的比较详细了。</p>
-<p><a href="https://link.juejin.cn/?target=https://blog.discord.com/how-discord-stores-billions-of-messages-7fa6ec7ee4c7">blog.discord.com&#x2F;how-discord…</a></p>
-<p>其实他们选数据库的诉求，也是符合大部分涉及 IM 这一块的。</p>
-<p>老黄也是从这里受到了启发，认识了这个数据库。</p>
-<p>经常拿来比较的话，应该是 HBase，一个在国内火，一个在国外受欢迎。</p>
-<p>可以看看这个对比，了解一下两者的异同： <a href="https://link.juejin.cn/?target=https://www.scnsoft.com/blog/cassandra-vs-hbase">www.scnsoft.com/blog/cassan…</a></p>
-<p>如果选择要用 Cassandra， 那么数据模型的设计，一定是所有环节中最为重要的一步，如果这一步没有做好的话，那后面基本上会是灾难级别，基本不能愉快的玩耍。</p>
-<p>那么对医患关系里面的这个聊天模型其实比较简单。</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> IF <span class="keyword">NOT</span> <span class="keyword">EXISTS</span> messages(</span><br><span class="line">    inq_id text,</span><br><span class="line">    send_time <span class="type">bigint</span>,</span><br><span class="line">    sender_id text,</span><br><span class="line">    sender_role tinyint,</span><br><span class="line">    msg_type tinyint,</span><br><span class="line">    msg_body text,</span><br><span class="line">    <span class="keyword">PRIMARY</span> KEY (inq_id, send_time)</span><br><span class="line">) <span class="keyword">WITH</span> CLUSTERING <span class="keyword">ORDER</span> <span class="keyword">BY</span> (send_time <span class="keyword">ASC</span>)</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
-
-<p>对照正常的 IM 群聊， 这个问诊号 (inq_id) 就可以认为是一个群聊，一个频道。</p>
-<p>为什么没有消息Id这样的字段呢？多来源，非自研，无实际意义。</p>
-<p>下面再来看看如何在 C# 里面进行操作， 这里用的是 DataStax 提供的 <strong>CassandraCSharpDriver</strong> 客户端。</p>
-<p>写入：</p>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> cluster = Cassandra.Cluster.Builder()</span><br><span class="line">                        .AddContactPoints(<span class="string">&quot;127.0.0.1&quot;</span>)</span><br><span class="line">                        .WithDefaultKeyspace(<span class="string">&quot;messaging&quot;</span>)</span><br><span class="line">                        .Build();</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> inqId = <span class="string">&quot;xxxxxx&quot;</span>;</span><br><span class="line"><span class="keyword">var</span> sendTime = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();</span><br><span class="line"><span class="keyword">var</span> senderId = <span class="string">&quot;xxxx&quot;</span>;</span><br><span class="line"><span class="keyword">var</span> senderRole = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">var</span> msgType = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">var</span> msgBody = <span class="string">&quot;zzzz&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">string</span> INSERT_SQL = <span class="string">@&quot; INSERT INTO messages(inq_id, send_time, sender_id, sender_role, msg_type, msg_body)</span></span><br><span class="line"><span class="string">VALUES (?, ?, ?, ?, ?, ?) &quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> session = cluster.Connect();</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> stmt = session.Prepare(INSERT_SQL).Bind(inqId, sendTime, senderId, senderRole, msgType, msgBody));</span><br><span class="line"></span><br><span class="line">session.Execute(stmt);</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
-
-<p>读取：</p>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> cluster = Cassandra.Cluster.Builder()</span><br><span class="line">                .AddContactPoints(<span class="string">&quot;127.0.0.1&quot;</span>)</span><br><span class="line">                .WithDefaultKeyspace(<span class="string">&quot;messaging&quot;</span>)</span><br><span class="line">                .Build();</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> inqId = <span class="string">&quot;xxxxxx&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">string</span> GET_MSG_SQL = <span class="string">@&quot; SELECT * FROM messages WHERE inq_id = ? &quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> session = cluster.Connect();</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> stmt = session.Prepare(GET_MSG_SQL).Bind(inqId);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> rowset = session.Execute(stmt);</span><br><span class="line"></span><br><span class="line">Console.WriteLine(<span class="string">&quot;患者\t\t\t\t\t医生&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">foreach</span> (<span class="keyword">var</span> row <span class="keyword">in</span> rowset)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// 解析从 cassandra 中返回的行</span></span><br><span class="line">    <span class="keyword">var</span> msg_body = row.GetValue&lt;<span class="built_in">string</span>&gt;(<span class="string">&quot;msg_body&quot;</span>);</span><br><span class="line">    <span class="keyword">var</span> sender_role = row.GetValue&lt;<span class="built_in">sbyte</span>&gt;(<span class="string">&quot;sender_role&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (sender_role == <span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">$&quot;<span class="subst">&#123;msg_body&#125;</span>\t\t\t\t\t&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">$&quot;\t\t\t\t\t<span class="subst">&#123;msg_body&#125;</span>&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
-
-<h2 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h2><p>存储的选择其实还是有点门道的，根据不同的应用场景，找出比较适合当前场景的几个方案，再选择一个成本没这么高的。</p>
-<p>Cassandra 对聊天记录这个场景的存储还是有一定优势的，可以应对高速的数据增长，而不用在业务代码层做过多的适配；部署相对简单，无特殊依赖，运维成本相对较低。</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
   </article>
   
 
   
   <nav class="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/2/">上一页</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/">13</a><a class="extend next" rel="next" href="/page/4/">下一页</a>
+    <a class="extend prev" rel="prev" href="/page/2/">上一页</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><a class="extend next" rel="next" href="/page/4/">下一页</a>
   </nav>
   
 </section>
