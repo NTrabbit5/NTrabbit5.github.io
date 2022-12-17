@@ -80,7 +80,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> 字数统计:</span>
-            <span class="post-count">1.5k</span>
+            <span class="post-count">1.9k</span>
         </span>
     </span>
 
@@ -89,7 +89,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> 阅读时长≈</span>
-            <span class="post-count">5 分钟</span>
+            <span class="post-count">7 分钟</span>
         </span>
     </span>
 </div>
@@ -170,18 +170,18 @@
 <p>对于上面变量的声明，如果我们使用typedef 来给它定义一个别名，这会非常有意义，如下面的代码所示</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// PFun是我们创建的一个类型别名</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="type">int</span> *(*PFun)(<span class="type">int</span>,<span class="type">char</span>*);</span><br><span class="line"><span class="comment">// 使用定义的新类型来声明对象，等价于int*(*a[5])(int,char*);</span></span><br><span class="line">PFun a[<span class="number">5</span>];</span><br></pre></td></tr></table></figure>
 
+<h2 id="小心使用typedef-带来的陷阱"><a href="#小心使用typedef-带来的陷阱" class="headerlink" title="小心使用typedef 带来的陷阱"></a>小心使用typedef 带来的陷阱</h2><p>接下来看一个简单的typedef 使用示例，如下面的代码所示</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="type">char</span>* PCHAR;</span><br><span class="line"><span class="type">int</span> <span class="title function_">strcmp</span><span class="params">(<span class="type">const</span> PCHAR,<span class="type">const</span> PCHAR)</span>;</span><br></pre></td></tr></table></figure>
 
+<p>在上面的代码中，<code>const PCHAR</code> 使用相当于const char* 呢</p>
+<p>答案是否定的，原因很简单，typedef 是用来定义一种类型的新别名的，它不同于宏，不是简单的字符串替换，因此，const PCHAR 中的const 给予了整个指针本身常量性，也就是形成了常量指针，<code>char *const</code> 一个指向char 的常量指针。即它实际上相当于“char<em>const”，而不是“const char</em>（指向常量 char 的指针）”。当然，要想让 const PCHAR 相当于 const char* 也很容易，如下面的代码所示：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="type">const</span> <span class="type">char</span>* PCHAR;</span><br><span class="line"><span class="type">int</span> <span class="title function_">strcmp</span><span class="params">(PCHAR， PCHAR)</span>;</span><br></pre></td></tr></table></figure>
 
+<p>其实，无论什么时候，只要为指针声明 typedef ，那么就应该在最终的typedef 名称中加一个const 以使得指针本身是常量</p>
+<p>还需要特别注意的是，虽然typedef 并不真正影响对象的存储特性，但在语法上它还是一个存储类的关键字，就像auto extern static 和register 等关键字一样，因此，像下面这种声明是不可行的</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="type">static</span> <span class="type">int</span> INT_STATIC;</span><br></pre></td></tr></table></figure>
 
-
-
-
-
-
-
-
-
-
+<p>不可行的原因是不能声明多个存储类关键字，由于 typedef 已经占据了存储类关键字的位置，因此，在 typedef 声明中就不能够再使用 static 或任何其他存储类关键字了。当然，编译器也会报错，如在 VC++2010 中的报错信息为“无法指定多个存储类”。</p>
  
       <!-- reward -->
       
