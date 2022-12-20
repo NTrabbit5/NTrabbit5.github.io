@@ -126,6 +126,328 @@
     
     
     <article
+  id="post-20221217-TX-RX通信模块笔记"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/12/17/20221217-TX-RX%E9%80%9A%E4%BF%A1%E6%A8%A1%E5%9D%97%E7%AC%94%E8%AE%B0/"
+    >20221217-TX-RX通信模块笔记</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/12/17/20221217-TX-RX%E9%80%9A%E4%BF%A1%E6%A8%A1%E5%9D%97%E7%AC%94%E8%AE%B0/" class="article-date">
+  <time datetime="2022-12-17T04:51:07.000Z" itemprop="datePublished">2022-12-17</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>T 代表 Transmit<br>R 代表 Receive<br>X 代表交叉，也就是说A 方的TX 接B方的RX  B 放的TX 接A 放的RX</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-20221217-低功耗蓝牙BLE学习笔记"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/12/17/20221217-%E4%BD%8E%E5%8A%9F%E8%80%97%E8%93%9D%E7%89%99BLE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"
+    >20221217-低功耗蓝牙BLE学习笔记</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/12/17/20221217-%E4%BD%8E%E5%8A%9F%E8%80%97%E8%93%9D%E7%89%99BLE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="article-date">
+  <time datetime="2022-12-17T04:38:23.000Z" itemprop="datePublished">2022-12-17</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p><a target="_blank" rel="noopener" href="http://doc.iotxx.com/BLE%E6%8A%80%E6%9C%AF%E6%8F%AD%E7%A7%98">http://doc.iotxx.com/BLE%E6%8A%80%E6%9C%AF%E6%8F%AD%E7%A7%98</a></p>
+<p>蓝牙4.0 版本分两种模式，单模蓝牙 和双模蓝牙</p>
+<p>常见的蓝牙音箱，是典型的双模蓝牙，它需要传输大量的音频数据，而小米手环，蓝牙温度计则属于单模蓝牙，行业里一般不讲单模蓝牙，而是统一称为低功耗蓝牙</p>
+<p>蓝牙5.0 已经发布和应用，4倍通信速度，2倍的通信距离以及Mesh 组网特性，将使蓝牙成为物联网领域的重要的技术之一</p>
+<ol>
+<li>蓝牙简介</li>
+</ol>
+<p>蓝牙是一种近距离无线通信技术，运行在2.4GHz免费频段，目前已大量应用于各种移动终端，物联网，健康医疗，智能家居等行业。蓝牙4.0以后的版本分为两种模式，单模蓝牙和双模蓝牙。</p>
+<p>单模蓝牙  即低功耗蓝牙模式，是蓝牙4.0 中的重点技术，低功耗，块连接，长距离</p>
+<p>双模蓝牙，支持低功耗蓝牙的同时还兼容经典蓝牙，经典蓝牙的特点是大数据高速率，例如音频、视频等数据传输。</p>
+<p>经典蓝牙支持音频（HFP&#x2F;HSP, A2DP）和数据（SPP, HID等）两大类协议，在音箱，耳机，汽车电子及传统数传行业，由于苹果对经典蓝牙数据传输接口有限制（需要过MFI认证），加上功耗偏大，因此在目前移动互联应用中慢慢地被边缘化。因此低功耗蓝牙顺势而出，由于可支持苹果4S以上及安卓4.3系统以上的数据传输，且功耗极低，目前正在被越来越多的移动互联设备所采用，但低功耗蓝牙不支持音频协议，并且受数据传输速度限制，其应用也被限制在小数据传输行业。</p>
+<p>蓝牙双模则是综合了两者的优缺点，既可以支持音频传输，同样可支持数据传输，并且兼容性也是两者之和，在对功耗要求不苛刻的情况下，是比较理想的选择</p>
+<p>2 BLE特点</p>
+<p>低功耗蓝牙瞄准多个市场，特别是移动智能终端，智能家居，互联设备等领域，主要特点包括</p>
+<p>低功耗<br>快连接<br>远距离</p>
+<p>为低功耗蓝牙定义了一些标准Profile ，Profile 理解为数据规范，只要遵守该规范，任意厂家的蓝牙设备，均可以相互连接与通信，例如无线蓝牙键盘鼠标，无论是安卓或是iOS还是Windows，均是即插即用，这便是“标准”的力量。低功耗蓝牙支持的标准Profile有：</p>
+<p>HID 用于无线鼠标，键盘或其他遥控设备</p>
+<p>BatteryServices 电池状态服务，用于告知电池电量状态</p>
+<p>HRP 心率计，Profile 用于心率 采集，等等</p>
+<p>另外，低功耗蓝牙还可以自定义Profile ，伴随着智能手机的发展和普及，低功耗蓝牙的这个特性得到了发扬光大，同时也拓宽了低功耗蓝牙的应用领域。例如，可以自定义一个开关量的Profile，数据01表示开灯，数据00表示关灯，然后手机发送数据01和00就可以控制灯的亮和灭。类似的应用案例有很多，下面总结应用特点</p>
+<p>支持自定义Profile ，可以收发任意格式的数据，如01 和 00<br>支持自定义设备，支持任意设备的连接和通信，例如 只能蓝牙插座等等</p>
+<p>提示：低功耗蓝牙的Profile均基于GATT（通用属性规范，后面会详解）之上，如HID over GATT。也就是说，经典蓝牙中的HID规范与低功耗蓝牙中的HID规范用的是两个不同的通道。</p>
+<p>BLE 工作流程<br>为后面的低功耗蓝牙协议的学习准备基础</p>
+<p>角色</p>
+<p>BLE 设备角色主要分为两种角色，主机和从机，，当主机和从机建立连接之后才能相互收发数据</p>
+<p>主机，主机可以发起对从机的扫描连接，例如手机，通常作为BLE 的主机设备</p>
+<p>从机，从机只能广播并等待主机的连接，例如智能手环，是作为BLE 的从机设备</p>
+<p>另外还有观察者和广播者，这两种角色不常使用，但也十分有用，例如iBeacon 就可以使用广播者 角色来做，只需要广播特定内容即可</p>
+<p>观察者，观察者角色监听空中的广播事件，和主机的区别是不能发起连接，只能持续扫描从机</p>
+<p>广播者 广播者可以持续广播信息，和从机的唯一区别是不能被主机连接，只能广播数据</p>
+<p>蓝牙协议栈没呀限制设备的角色范围，同一个BLE 设备，可以作为主机，也可以作为从机，我们称之为主从一体，主从一体的好处是，每个BLE 设备都是对等的，可以发起连接，也可以被别人连接，更加实用</p>
+<p>广播</p>
+<p>广播是指从机没经过一个时间间隔发送一次广播数据包，这个时间间隔称为广播间隔，这个广播动作叫做广播事件，只有当从机处于广播状态时，主机从能发现该从机</p>
+<p>在每个广播事件中，广播包会分别在37 38 和 39 三个信道上依次广播，如下所示</p>
+<p>广播时间间隔的范围是从20ms到10.24s，广播间隔影响建立连接的时间。广播间隔越大，连接的时间越长。</p>
+<p>另外BLE 链路层会在两个广播事件之间添加0-10 ms 的随机演示，保证多个设备广播时，不会一直碰撞广播，也就是说，设置100ms 的广播间隔，实际上两次广播事件的时间间隔可能是100-110 ms 之间的任意时间</p>
+<p>广播数据包最多能携带31个字节的数据，一般包含可读的设备名称，设备是否可连接等信息</p>
+<p>当主机收到从机广播的数据包后，它可以再发送获取更多数据包的请求，这个时候从机将广播 扫描回应 数据包，扫描回应数据包和广播包一样，可以携带31个字节的数据</p>
+<p>提示：蓝牙4.x，广播有效载荷最多是31个字节。而在蓝牙5.0中，通过添加额外的广播信道和新的广播PDU，将有效载荷增加到了255个字节</p>
+<ol start="3">
+<li>扫描</li>
+</ol>
+<p>扫描是主机监听从机广播数据包和发送扫描请求的过程，主机通过扫描，可以获取到从机的广播包以及扫描回应数据包，主机可以对已扫描到的从机设备发起连接请求，从而连接从机设备并通信</p>
+<p>扫描动作由两个比较重要的时间参数，扫描窗口 和扫描间隔，如果扫描窗口等于扫描间隔，那么主机将一直处于扫描状态中，持续监听从机广播包</p>
+<p>被动扫描，主机监听广播信道的数据，当接收到广播包时，协议栈将向上层 也就是应用层，用户可编程  传递广播包</p>
+<p>主动扫描，主动扫描除了完成被动扫描的动作外，还会向从机发送一个扫描请求，从机收到该请求时，会再次发送一个称作 扫描回应 的广播包</p>
+<p>主动扫描比被动扫描，可以多收到扫描回应数据包</p>
+<p>连接</p>
+<p>在BLE 连接中，使用调频方案，两个设备在特定时间、特定频道上彼此发送和接收数据，这些设备稍后在新的通道（协议栈的链路层处理通道切换）上通过这个约定的时间相遇，这次用于收发数据的相遇称为连接事件，如果没有有发送或接收的应用数据，则交换链路层数据来维护连接，两个连接事件之间的时间跨度称为连接间隔，是以1.25ms 为单位，范围从最小值 7.5 ms 到最大值 4.0s</p>
+<p>连接参数</p>
+<p>Connection Interval 连接间隔，两次连接事件之间的时间间隔称为连接间隔，1.25ms 为单位，范围从</p>
+<p>蓝牙广播</p>
+<p>蓝牙状态切换</p>
+<p>蓝牙服务和特性</p>
+<p>SPP 协议， MID 协议</p>
+<p>HID 协议 等等</p>
+<p>MicroPython  BLE</p>
+<p>NodeMCU-32</p>
+<p>蓝牙广播 advertising</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-20221216-Appinventor学习环境搭建"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/12/16/20221216-Appinventor%E5%AD%A6%E4%B9%A0%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/"
+    >20221216-Appinventor学习环境搭建</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/12/16/20221216-Appinventor%E5%AD%A6%E4%B9%A0%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" class="article-date">
+  <time datetime="2022-12-16T12:44:55.000Z" itemprop="datePublished">2022-12-16</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>[TOC]</p>
+<h2 id="0x01"><a href="#0x01" class="headerlink" title="0x01"></a>0x01</h2><h2 id="0x02"><a href="#0x02" class="headerlink" title="0x02"></a>0x02</h2><h2 id="0x03"><a href="#0x03" class="headerlink" title="0x03"></a>0x03</h2><h2 id=""><a href="#" class="headerlink" title=""></a></h2> 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-20221216-HC-06蓝牙模块"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/12/16/20221216-HC-06%E8%93%9D%E7%89%99%E6%A8%A1%E5%9D%97/"
+    >20221216-HC-06蓝牙模块</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/12/16/20221216-HC-06%E8%93%9D%E7%89%99%E6%A8%A1%E5%9D%97/" class="article-date">
+  <time datetime="2022-12-16T11:46:36.000Z" itemprop="datePublished">2022-12-16</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>主机：用于向从机下发指令，能够搜索并主动建立连接的一方</p>
+<p>从机：用于接收主机下发的命令，不能主动建立连接，只能等别人连接自己。（HC-06只能工作在从机模式下。）<br>主从一体：能够在主机和从机模式间切换，即可做主机也可作从机。如：HC-05既可以设置为主机也可以设置为从机。</p>
+<p>引脚说明</p>
+<p>HC-05 和HC-06的硬件相同，都采用CSR 公司的BC417143 芯片，支持蓝牙2.1+EDR 规范，只是芯片内部的控制程序不同</p>
+<p>通常可采用万用表「电阻」档，测量底板RxD引脚和蓝牙模块本身（就是焊接上去那块板）的第2脚，如果电阻值为接近于0，则代表沒有限流电阻。如下图：</p>
+<p>使用AT 指令前，最好由一块USB 转TTL 的模块，将蓝牙模块与usb 转ttl 模块连接完成，</p>
+<p>AT指令<br>终端返回信息<br>功能描述<br>AT<br>oK<br>确认连接状态<br>AT+VERSION<br>OK linvor V1.8<br>查看软件版本号<br>AT+NAMEOOo<br>oK setname<br>设置蓝牙名称<br>AT+PINOO0o<br>oK setPIN<br>设定密码<br>AT+BAUD1<br>OK 1200<br>将波特率设置为:1200<br>AT+BAUD2<br>OK 2400<br>将波特率设置为:2400<br>AT+BAUD3<br>OK 4800<br>将波特率设置为:4800<br>AT+BAUD4<br>oK 9600<br>将波特率设置为:9600<br>AT+BAUD5<br>OK 19200<br>将波特率设置为:19200<br>AT+BAUD6<br>OK 38400<br>将波特率设置为:38400<br>AT+BAUD7<br>OK 57600<br>将波特率设置为:57600<br>AT+BAUD8<br>OK 115200<br>将波特率设置为::115200 dn.net&#x2F;O17136(</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-20221216-AT指令介绍"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/12/16/20221216-AT%E6%8C%87%E4%BB%A4%E4%BB%8B%E7%BB%8D/"
+    >20221216-AT指令介绍</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/12/16/20221216-AT%E6%8C%87%E4%BB%A4%E4%BB%8B%E7%BB%8D/" class="article-date">
+  <time datetime="2022-12-16T08:37:08.000Z" itemprop="datePublished">2022-12-16</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>AT 指令最初是用来指导modem 工作的，</p>
+<p>虽然在PC 端，手机上已经没有了AT 的使用，但其却在嵌入式行业里各类联网模块中发挥着重要的作用，而且不仅仅只应用在蜂窝模块，还应用到了wifi ble 等模块中</p>
+<p>相关标准</p>
+<p>随着技术的发展，目前 AT 指令发展过程中形成两个重要标准</p>
+<p>V.250：该标准于 1995 年建立，1998 年重命名为 V.250<br>ETSI GSM 07.07（3GPP TS 27.007）：用于控制 GSM modem 的 AT 指令集<br>GSM 07.07 是基于 V.250 标准的。是目前最新的 AT 标准。</p>
+<p>当下AT 指令的应用</p>
+<p>目前 的AT 指令着重应用在蜂窝模块 wifi 模块，ble 模块，目的是为了简化嵌入式设备联网的复杂度</p>
+<p>AT 标准定义了At 命令的格式本身，比如命令以 AT 为前缀，以 或者 结尾，这被现有的AT 模块所延用</p>
+<p>但是，由于每个厂家的模块不一样，实现的功能不一样，导致每个 AT 模块厂家有自己的一套私有的 AT 命令集，每一个 AT 模块厂家实现的 AT 指令集解析器也不一样（解析器实现的 AT 标准功能也参差不齐）。像上图所示的 AT 命令使用方式不被大多数模块厂家所实现。</p>
+<p>AT模块的应用框图</p>
+<p>既然是指令集，那么必然会有指令集的解析处理，通常，我们把AT 模块端的解析处理程序称为AT Server，而将控制AT 模块的处理器端的解析处理程序称为AT client 由AT client 发起命令请求，AT Server 通过URC 来主动给AT client 发送数据</p>
+<p>一些约定</p>
+<p>AT 命令的常用格式</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">AT+CMD=&lt;xxx&gt;[,&lt;xxx&gt;,&lt;xxx&gt;]</span><br></pre></td></tr></table></figure>
+
+<p>AT命令以AT 开始，以 \r 或者 \r\n 结尾，参数之间使用 , 隔开，字符串参数使用双引号 “” 包裹，整形参数不适用双引号。</p>
+<p><CR>：回车符<br><LF>：换行符<br><xxx><br>尖括号中的名称 xxx 在 AT 里是一个语法元素，要求必须指定。尖括号本身不会出现在命令行里。<br>[xxx]<br>中括号中的名称 xxx 在 AT 里是一个语法元素，表示可选择指定。中括号本身不出现在命令行里。</p>
+<p>四类AT 命令</p>
+<p>Test 命令：AT+<x>&#x3D;?<br>测试指令类似于命令行里的 help 指令，用于提供该命令的使用信息，以及命令参数的取值范围。<br>Read 命令：AT+<x>?<br>用于查询该指令对应功能的当前值。<br>Set 命令：AT+<x>&#x3D;&lt;…&gt;<br>设置用户指定的参数到对应的功能里。<br>Execute 命令：AT+<x><br>执行相关操作。</p>
+<p>响应结果字符串</p>
+<p>AT 标准定义了标准的响应结果字符串：</p>
+<p>\r\nOK\r\n<br>如果 AT 指令被 AT Server 识别，并正确执行，则返回该结果。<br>“ 标准中的 V1 模式下响应结果代码的方式。V0 模式下返回 0\r。<br>”<br>\r\nERROR\r\n<br>“ 标准中的 V1 模式下响应结果代码的方式。V0 模式下返回 4\r。<br>”</p>
+<h2 id="数据模式与指令模式"><a href="#数据模式与指令模式" class="headerlink" title="数据模式与指令模式"></a>数据模式与指令模式</h2><p>在收到 +++，并且接下来 1s 内未收到其他数据的话，将从数据模式切换到指令模式。</p>
+<p>数据模式，可以透传数据，client 发什么，server 就原封不动发出去。指令模式时，AT Server 需要解析 AT 指令，并作出响应。</p>
+<!-- AT+name=”LiMou” --> 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-20221216-蓝牙模块与单片机如何连接"
   class="article article-type-post"
   itemscope
@@ -460,1035 +782,13 @@
 </article>
 
     
-    <article
-  id="post-20221215-使用wttr-in在你的终端中显示天气预报"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/12/15/20221215-%E4%BD%BF%E7%94%A8wttr-in%E5%9C%A8%E4%BD%A0%E7%9A%84%E7%BB%88%E7%AB%AF%E4%B8%AD%E6%98%BE%E7%A4%BA%E5%A4%A9%E6%B0%94%E9%A2%84%E6%8A%A5/"
-    >20221215-使用wttr.in在你的终端中显示天气预报</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/12/15/20221215-%E4%BD%BF%E7%94%A8wttr-in%E5%9C%A8%E4%BD%A0%E7%9A%84%E7%BB%88%E7%AB%AF%E4%B8%AD%E6%98%BE%E7%A4%BA%E5%A4%A9%E6%B0%94%E9%A2%84%E6%8A%A5/" class="article-date">
-  <time datetime="2022-12-15T02:04:16.000Z" itemprop="datePublished">2022-12-15</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>wttr.in 是一个功能丰富的天气预报服务，它支持在命令行显示天气，它可以 根据你的ip 地址<br>自动检测你的位置，也支持指定位置或搜索地理位置，如城市，山区等，另外，你不需要安装它，你只需要使用curl 或wget </p>
-<p>wttr.in 功能包括</p>
-<p>显示当前天气以及3天内的天气预报，分为早晨，中午、傍晚和夜晚 包括温度范围、风速和风向 可见度，降水量 和概率</p>
-<p>可以显示月相</p>
-<p>基于你的ip地址自动检测位置</p>
-<p>允许指定城市名称，3字母的机场代码，区域代码，GPS坐标，IP 地址或域名，你还可以指定地理位置，如湖泊 山脉，地标等</p>
-<p>支持多语言位置名称  查询字符串必须以unicode 指定</p>
-<p>支持指定天气预报显示的语言  它支持超过50种语言</p>
-<p>来自美国的查询使用uscs 单位用于，世界其他地方使用公制系统，但你可以通过附加?u 使用uscs 附加?m 使用公制系统</p>
-<p>3种输出格式，终端的ansi 浏览器的html 和png </p>
-<p>或者你可以安装wego 这是一个使用wtter.in 的终端气候应用，虽然wego 要求注册一个api 密钥来安装</p>
-<p><a target="_blank" rel="noopener" href="http://wttr.in/">http://wttr.in</a> 命令行示例<br>获取你所在位置的天气（<a target="_blank" rel="noopener" href="http://wttr.in/">http://wttr.in</a> 会根据你的 IP 地址猜测你的位置）：</p>
-<p>curl wttr.in<br>通过在 curl 之后添加 -4，强制 cURL 将名称解析为 IPv4 地址（如果你用 IPv6 访问 wttr.in 有问题）：</p>
-<p>curl -4 wttr.in<br>如果你想检索天气预报保存为 png，还可以使用 Wget（而不是 cURL），或者你想这样使用它：</p>
-<p>wget -O- -q wttr.in<br>如果相对 cURL 你更喜欢 Wget ，可以在下面的所有命令中用 wget -O- -q 替换 curl。</p>
-<p>指定位置：</p>
-<p>curl wttr.in&#x2F;Dublin<br>显示地标的天气信息（本例中为艾菲尔铁塔）：</p>
-<p>curl wttr.in&#x2F;~Eiffel+Tower<br>获取 IP 地址位置的天气信息（以下 IP 属于 GitHub）：</p>
-<p>curl wttr.in&#x2F;@192.30.253.113<br>使用 USCS 单位检索天气：</p>
-<p>curl wttr.in&#x2F;Paris?u<br>如果你在美国，强制 <a target="_blank" rel="noopener" href="http://wttr.in/">http://wttr.in</a> 使用公制系统（SI）：</p>
-<p>curl wttr.in&#x2F;New+York?m<br>使用 Wget 将当前天气和 3 天预报下载为 PNG 图像：</p>
-<p>wget wttr.in&#x2F;Istanbul.png<br>你可以指定 PNG 的透明度，这在你要使用一个脚本自动添加天气信息到某些图片（比如墙纸）上有用。</p>
-<p>对于其他示例，请查看wttr.in 项目页面或在终端中输入 </p>
-<p>curl wttr.in&#x2F;:help</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20221214-通过Content-Type和文件头判断文件类型"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/12/14/20221214-%E9%80%9A%E8%BF%87Content-Type%E5%92%8C%E6%96%87%E4%BB%B6%E5%A4%B4%E5%88%A4%E6%96%AD%E6%96%87%E4%BB%B6%E7%B1%BB%E5%9E%8B/"
-    >20221214-通过Content-Type和文件头判断文件类型</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/12/14/20221214-%E9%80%9A%E8%BF%87Content-Type%E5%92%8C%E6%96%87%E4%BB%B6%E5%A4%B4%E5%88%A4%E6%96%AD%E6%96%87%E4%BB%B6%E7%B1%BB%E5%9E%8B/" class="article-date">
-  <time datetime="2022-12-14T12:43:46.000Z" itemprop="datePublished">2022-12-14</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h1 id="通过Content-Type和文件头判断文件类型"><a href="#通过Content-Type和文件头判断文件类型" class="headerlink" title="通过Content-Type和文件头判断文件类型"></a>通过Content-Type和文件头判断文件类型</h1><h2 id="关于MIME"><a href="#关于MIME" class="headerlink" title="关于MIME"></a>关于MIME</h2><p><strong>MIME</strong>的全称是Multipurpose Internet Mail Extensions，即多用途互联网邮件扩展，尽管读起来有些拗口，但大多数人可能都知道，<br>这是HTTP协议中用来定义文档性质及格式的标准。<a target="_blank" rel="noopener" href="https://tools.ietf.org/html/rfc6838">IETF RFC 6838</a>，对HTTP传输内容类型进行了全面定义。<br>而<strong>IANA</strong>(互联网号码分配机构)是负责管理所有标准MIME类型的官方机构。可以<a target="_blank" rel="noopener" href="https://www.iana.org/assignments/media-types/media-types.xhtml">在这里</a>)找到所有的标准MIME</p>
-<p><strong>服务器通过MIME告知响应内容类型，而浏览器则通过MIME类型来确定如何处理文档；</strong><br><strong>因此为传输内容(文档、图片等)设置正确的MIME非常重要</strong>。</p>
-<p>通常Server会在HTTP响应中设置<strong>Content-Type</strong>，如下面的响应：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CodeHTTP/1.1 200 OKServer: Golfe2    Content-Length: 233Content-Type: application/htmlDate: Sun, 28 Dec 2018 02:55:19 GMT12345</span><br></pre></td></tr></table></figure>
-
-<p>这表示服务端将返回html格式的文档，而同样客户端也可以在HTTP请求中设置<strong>Content-Type</strong>以告知服务器当前所发送内容的格式。<br>如下面的请求体：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CodePOST / HTTP/1.1Host: localhost:8000User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:50.0) Gecko/20100101 Firefox/50.0Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8Connection: keep-aliveContent-Type: application/jsonContent-Length: 4651234567</span><br></pre></td></tr></table></figure>
-
-<p>这表示客户端会发送application&#x2F;json格式的数据到服务端，同时应该注意到<strong>Accept</strong>请求头，这个选项用于告知服务器应该返回什么样的数据格式(由客户端接收并完成解析)。</p>
-<p><strong>MIME的格式</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Codetype/subtype1</span><br></pre></td></tr></table></figure>
-
-<p>这是一个两级的分类，比较容易理解，第一级分类通常包含：</p>
-<table>
-<thead>
-<tr>
-<th>类型</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>text</td>
-<td>普通文本</td>
-</tr>
-<tr>
-<td>image</td>
-<td>某种图像</td>
-</tr>
-<tr>
-<td>audio</td>
-<td>某种音频文件</td>
-</tr>
-<tr>
-<td>video</td>
-<td>某种视频文件</td>
-</tr>
-<tr>
-<td>application</td>
-<td>应用数据</td>
-</tr>
-<tr>
-<td>multi-part</td>
-<td>复合内容</td>
-</tr>
-</tbody></table>
-<p>而二级类型则非常多，以下是一些常用的MIME：</p>
-<table>
-<thead>
-<tr>
-<th>MIME</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>audio&#x2F;wav</td>
-<td>wave音频流媒体文件</td>
-</tr>
-<tr>
-<td>audio&#x2F;webm</td>
-<td>webm 音频文件格式</td>
-</tr>
-<tr>
-<td>audio&#x2F;ogg</td>
-<td>ogg多媒体文件格式的音频文件</td>
-</tr>
-<tr>
-<td>audio&#x2F;mpeg</td>
-<td>mpeg多媒体文件格式的音频文件</td>
-</tr>
-<tr>
-<td>image&#x2F;gif</td>
-<td>gif图片</td>
-</tr>
-<tr>
-<td>image&#x2F;jpeg</td>
-<td>jpeg图片</td>
-</tr>
-<tr>
-<td>image&#x2F;png</td>
-<td>png图片</td>
-</tr>
-<tr>
-<td>image&#x2F;svg+xml</td>
-<td>svg矢量图片</td>
-</tr>
-<tr>
-<td>application&#x2F;json</td>
-<td>json格式</td>
-</tr>
-<tr>
-<td>application&#x2F;xml</td>
-<td>xml格式</td>
-</tr>
-<tr>
-<td>application&#x2F;xhtml+xml</td>
-<td>扩展html格式</td>
-</tr>
-<tr>
-<td>application&#x2F;x-www-form-urlencoded</td>
-<td>表单url内容编码</td>
-</tr>
-<tr>
-<td>application&#x2F;octet-stream</td>
-<td>二进制格式</td>
-</tr>
-<tr>
-<td>application&#x2F;pdf</td>
-<td>pdf文档</td>
-</tr>
-<tr>
-<td>application&#x2F;atom+xml</td>
-<td>atom订阅feed流</td>
-</tr>
-<tr>
-<td>multipart&#x2F;form-data</td>
-<td>多文档格式</td>
-</tr>
-<tr>
-<td>text&#x2F;plain</td>
-<td>普通文本</td>
-</tr>
-<tr>
-<td>text&#x2F;html</td>
-<td>html文档</td>
-</tr>
-<tr>
-<td>text&#x2F;css</td>
-<td>css文件</td>
-</tr>
-<tr>
-<td>text&#x2F;javascript</td>
-<td>javascript文件</td>
-</tr>
-<tr>
-<td>text&#x2F;markdown</td>
-<td>markdown文档</td>
-</tr>
-<tr>
-<td>video&#x2F;mpeg</td>
-<td>mpeg多媒体视频文件</td>
-</tr>
-<tr>
-<td>video&#x2F;quicktime</td>
-<td>mov多媒体视频文件</td>
-</tr>
-</tbody></table>
-<h4 id="MIME-Type-与-Content-Type-的关系"><a href="#MIME-Type-与-Content-Type-的关系" class="headerlink" title="MIME Type 与 Content-Type 的关系"></a>MIME Type 与 Content-Type 的关系</h4><p>首先看看tomcat服务器中默认的web.xml中的描述：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Code&lt;!-- ===================== Default MIME Type Mappings =================== --&gt;&lt;!-- When serving static resources, Tomcat will automatically generate    --&gt;&lt;!-- a &quot;Content-Type&quot; header based on the resource&#x27;s filename extension, --&gt;&lt;!-- based on these mappings. Additional mappings can be added here (to --&gt;&lt;!-- apply to all web applications), or in your own application&#x27;s web.xml --&gt;&lt;!-- deployment descriptor.   --&gt;123456</span><br></pre></td></tr></table></figure>
-
-<p>再看看apache服务器中mime.types的描述：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CodeThis file controls what Internet media types are sent to the client forgiven file extension(s). Sending the correct media type to the clientis important so they know how to handle the content of the file.Extra types can either be added here or by using an AddType directivein your config files. For more information about Internet media types,please read RFC 2045, 2046, 2047, 2048, and 2077. The Internet media type registry is at http://www.iana.org/assignments/media-types/.123456</span><br></pre></td></tr></table></figure>
-
-<p><strong>当web服务器收到静态的资源文件请求时，依据请求文件的后缀名在服务器的MIME配置文件中找到对应的MIME Type，再根据MIME Type设置HTTP Response的Content-Type，然后浏览器根据Content-Type的值处理文件。</strong></p>
-<p>也就是说, <strong>文件扩展名&#x3D;&gt;MIME Type&#x3D;&gt;Content-Type</strong></p>
-<h2 id="通过文件头识别文件"><a href="#通过文件头识别文件" class="headerlink" title="通过文件头识别文件"></a>通过文件头识别文件</h2><p>不同的文件类型有不同的文件头, 而文件头部的几个字节被称为Magic Number, 通常用十六进制表示, 可用来判断文件类型.</p>
-<p>比如png文件的文件头Magic Number是0x89504E开始的, java class文件Magic Number为Oxcafebabe</p>
-<p>我们可以通过判断文件的文件头信息来判断文件的类型, 而且<strong>即使改变文件扩展名文件头信息也是不改变的</strong>.</p>
-<p>通过java代码判断文件类型:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Javapublic class FileType &#123;    //默认判断文件头前三个字节内容    public static int CHECK_BYTES_NUMBER = 3;    public final static Map&lt;String, String&gt; FILE_TYPE_MAP = new HashMap&lt;String, String&gt;();    private FileType()&#123;&#125;    static&#123;        getAllFileType(); //初始化文件类型信息    &#125;    /**     * Discription:[getAllFileType,常见文件头信息]     */    private static void getAllFileType()    &#123;        FILE_TYPE_MAP.put(&quot;ffd8ffe000104a464946&quot;, &quot;jpg&quot;); //JPEG (jpg)        FILE_TYPE_MAP.put(&quot;89504e470d0a1a0a0000&quot;, &quot;png&quot;); //PNG (png)        FILE_TYPE_MAP.put(&quot;47494638396126026f01&quot;, &quot;gif&quot;); //GIF (gif)        FILE_TYPE_MAP.put(&quot;49492a00227105008037&quot;, &quot;tif&quot;); //TIFF (tif)        FILE_TYPE_MAP.put(&quot;424d228c010000000000&quot;, &quot;bmp&quot;); //16色位图(bmp)        FILE_TYPE_MAP.put(&quot;424d8240090000000000&quot;, &quot;bmp&quot;); //24位位图(bmp)        FILE_TYPE_MAP.put(&quot;424d8e1b030000000000&quot;, &quot;bmp&quot;); //256色位图(bmp)        FILE_TYPE_MAP.put(&quot;41433130313500000000&quot;, &quot;dwg&quot;); //CAD (dwg)        FILE_TYPE_MAP.put(&quot;3c21444f435459504520&quot;, &quot;html&quot;); //HTML (html)        FILE_TYPE_MAP.put(&quot;3c21646f637479706520&quot;, &quot;htm&quot;); //HTM (htm)        FILE_TYPE_MAP.put(&quot;48544d4c207b0d0a0942&quot;, &quot;css&quot;); //css        FILE_TYPE_MAP.put(&quot;696b2e71623d696b2e71&quot;, &quot;js&quot;); //js        FILE_TYPE_MAP.put(&quot;7b5c727466315c616e73&quot;, &quot;rtf&quot;); //Rich Text Format (rtf)        FILE_TYPE_MAP.put(&quot;38425053000100000000&quot;, &quot;psd&quot;); //Photoshop (psd)        FILE_TYPE_MAP.put(&quot;46726f6d3a203d3f6762&quot;, &quot;eml&quot;); //Email [Outlook Express 6] (eml)        FILE_TYPE_MAP.put(&quot;d0cf11e0a1b11ae10000&quot;, &quot;doc&quot;); //MS Excel 注意：word、msi 和 excel的文件头一样        FILE_TYPE_MAP.put(&quot;d0cf11e0a1b11ae10000&quot;, &quot;vsd&quot;); //Visio 绘图        FILE_TYPE_MAP.put(&quot;5374616E64617264204A&quot;, &quot;mdb&quot;); //MS Access (mdb)        FILE_TYPE_MAP.put(&quot;252150532D41646F6265&quot;, &quot;ps&quot;);        FILE_TYPE_MAP.put(&quot;255044462d312e350d0a&quot;, &quot;pdf&quot;); //Adobe Acrobat (pdf)        FILE_TYPE_MAP.put(&quot;2e524d46000000120001&quot;, &quot;rmvb&quot;); //rmvb/rm相同        FILE_TYPE_MAP.put(&quot;464c5601050000000900&quot;, &quot;flv&quot;); //flv与f4v相同        FILE_TYPE_MAP.put(&quot;00000020667479706d70&quot;, &quot;mp4&quot;);        FILE_TYPE_MAP.put(&quot;49443303000000002176&quot;, &quot;mp3&quot;);        FILE_TYPE_MAP.put(&quot;000001ba210001000180&quot;, &quot;mpg&quot;); //        FILE_TYPE_MAP.put(&quot;3026b2758e66cf11a6d9&quot;, &quot;wmv&quot;); //wmv与asf相同        FILE_TYPE_MAP.put(&quot;52494646e27807005741&quot;, &quot;wav&quot;); //Wave (wav)        FILE_TYPE_MAP.put(&quot;52494646d07d60074156&quot;, &quot;avi&quot;);        FILE_TYPE_MAP.put(&quot;4d546864000000060001&quot;, &quot;mid&quot;); //MIDI (mid)        FILE_TYPE_MAP.put(&quot;504b0304140000000800&quot;, &quot;zip&quot;);        FILE_TYPE_MAP.put(&quot;526172211a0700cf9073&quot;, &quot;rar&quot;);        FILE_TYPE_MAP.put(&quot;235468697320636f6e66&quot;, &quot;ini&quot;);        FILE_TYPE_MAP.put(&quot;504b03040a0000000000&quot;, &quot;jar&quot;);        FILE_TYPE_MAP.put(&quot;4d5a9000030000000400&quot;, &quot;exe&quot;);//可执行文件        FILE_TYPE_MAP.put(&quot;3c25402070616765206c&quot;, &quot;jsp&quot;);//jsp文件        FILE_TYPE_MAP.put(&quot;4d616e69666573742d56&quot;, &quot;mf&quot;);//MF文件        FILE_TYPE_MAP.put(&quot;3c3f786d6c2076657273&quot;, &quot;xml&quot;);//xml文件        FILE_TYPE_MAP.put(&quot;494e5345525420494e54&quot;, &quot;sql&quot;);//xml文件        FILE_TYPE_MAP.put(&quot;7061636b616765207765&quot;, &quot;java&quot;);//java文件        FILE_TYPE_MAP.put(&quot;406563686f206f66660d&quot;, &quot;bat&quot;);//bat文件        FILE_TYPE_MAP.put(&quot;1f8b0800000000000000&quot;, &quot;gz&quot;);//gz文件        FILE_TYPE_MAP.put(&quot;6c6f67346a2e726f6f74&quot;, &quot;properties&quot;);//bat文件        FILE_TYPE_MAP.put(&quot;cafebabe0000002e0041&quot;, &quot;class&quot;);//bat文件        FILE_TYPE_MAP.put(&quot;49545346030000006000&quot;, &quot;chm&quot;);//bat文件        FILE_TYPE_MAP.put(&quot;04000000010000001300&quot;, &quot;mxp&quot;);//bat文件        FILE_TYPE_MAP.put(&quot;504b0304140006000800&quot;, &quot;docx&quot;);//docx文件        FILE_TYPE_MAP.put(&quot;d0cf11e0a1b11ae10000&quot;, &quot;wps&quot;);//WPS文字wps、表格et、演示dps都是一样的        FILE_TYPE_MAP.put(&quot;6431303a637265617465&quot;, &quot;torrent&quot;);        FILE_TYPE_MAP.put(&quot;6D6F6F76&quot;, &quot;mov&quot;); //Quicktime (mov)        FILE_TYPE_MAP.put(&quot;FF575043&quot;, &quot;wpd&quot;); //WordPerfect (wpd)        FILE_TYPE_MAP.put(&quot;CFAD12FEC5FD746F&quot;, &quot;dbx&quot;); //Outlook Express (dbx)        FILE_TYPE_MAP.put(&quot;2142444E&quot;, &quot;pst&quot;); //Outlook (pst)        FILE_TYPE_MAP.put(&quot;AC9EBD8F&quot;, &quot;qdf&quot;); //Quicken (qdf)        FILE_TYPE_MAP.put(&quot;E3828596&quot;, &quot;pwl&quot;); //Windows Password (pwl)        FILE_TYPE_MAP.put(&quot;2E7261FD&quot;, &quot;ram&quot;); //Real Audio (ram)    &#125;    /**     * 根据制定文件的文件头判断其文件类型     * @param filePaht     * @return     */    public static String getFileType(String filePaht)&#123;        String res = null;        try &#123;            FileInputStream is = new FileInputStream(filePaht);            getFileType(is);        &#125; catch (FileNotFoundException e) &#123;            e.printStackTrace();        &#125;        return res;    &#125;    public static String getFileType(InputStream in)&#123;        String res = null;        try &#123;            byte[] b = new byte[CHECK_BYTES_NUMBER];            in.read(b, 0, b.length);            String fileCode = bytesToHexString(b);//            System.out.println(fileCode);            //这种方法在字典的头代码不够位数的时候可以用但是速度相对慢一点            Iterator&lt;String&gt; keyIter = FILE_TYPE_MAP.keySet().iterator();            while(keyIter.hasNext())&#123;                String key = keyIter.next();                if(key.toLowerCase().startsWith(fileCode.toLowerCase()) || fileCode.toLowerCase().startsWith(key.toLowerCase()))&#123;                    res = FILE_TYPE_MAP.get(key);                    break;                &#125;            &#125;        &#125; catch (FileNotFoundException e) &#123;            e.printStackTrace();        &#125; catch (IOException e) &#123;            e.printStackTrace();        &#125;        return res;    &#125;    /**     * 得到上传文件的文件头     * @param src     * @return     */    public static String bytesToHexString(byte[] src) &#123;        StringBuilder stringBuilder = new StringBuilder();        if (src == null || src.length &lt;= 0) &#123;            return null;        &#125;        for (int i = 0; i &lt; src.length; i++) &#123;            int v = src[i] &amp; 0xFF;            String hv = Integer.toHexString(v);            if (hv.length() &lt; 2) &#123;                stringBuilder.append(0);            &#125;            stringBuilder.append(hv);        &#125;        return stringBuilder.toString();    &#125;    public static int getCheckBytesNumber() &#123;        return CHECK_BYTES_NUMBER;    &#125;    public static void setCheckBytesNumber(int checkBytesNumber) &#123;        CHECK_BYTES_NUMBER = checkBytesNumber;    &#125;&#125;123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103104105106107108109110111112113114115116117118119120121122123124125126127128129130131132133134135136137138139140141142143144145146147148149150</span><br></pre></td></tr></table></figure>
-
-<p>常见文件头表示如下:</p>
-<p>255044PDF<br>526563 EML<br>D0CF11 PPT<br>4D5AEE COM<br>E93B03 COM<br>4D5A90 EXE<br>424D3E BMP<br>49492A TIF<br>384250 PSD<br>C5D0D3 EPS<br>0A0501 PCS<br>89504E PNG<br>060500 RAW<br>000002 TGA<br>60EA27 ARJ<br>526172 RAR<br>504B03 ZIP<br>495363 CAB<br>1F9D8C Z<br>524946 WAV<br>435753 SWF<br>3026B2 WMV<br>3026B2 WMA<br>2E524D RM<br>00000F MOV<br>000077 MOV<br>000001 MPA<br>FFFB50 MP3<br>234558 m3u<br>3C2144 HTM<br>FFFE3C XSL<br>3C3F78 XML<br>3C3F78 MSC<br>4C0000 LNK<br>495453 CHM<br>805343 scm<br>D0CF11 XLS<br>31BE00 WRI<br>00FFFF MDF<br>4D4544 MDS<br>5B436C CCD<br>00FFFF IMG<br>FFFFFF SUB<br>17A150 PCB<br>2A5052 ECO<br>526563 PPC<br>000100 DDB<br>42494C LDB<br>2A7665 SCH<br>2A2420 LIB<br>434841 FNT<br>7B5C72 RTF<br>7B5072 GTD<br>234445 PRG<br>000007 PJT<br>202020 BAS<br>000002 TAG<br>4D5A90 dll<br>4D5A90 OCX<br>4D5A50 DPL<br>3F5F03 HLP<br>4D5A90 OLB<br>4D5A90 IMM<br>4D5A90 IME<br>3F5F03 LHP<br>C22020 NLS<br>5B5769 CPX<br>4D5A16 DRV<br>5B4144 PBK<br>24536F PLL<br>4E4553 NES<br>87F53E GBC<br>00FFFF SMD<br>584245 XBE<br>005001 XMV<br>000100 TTF<br>484802 PDG<br>000100 TST<br>414331 dwg<br>D0CF11 max</p>
-<p>另外还有一些重要的文件，<strong>没有固定的文件头</strong>，如下：</p>
-<p><strong>TXT 没固定文件头定义</strong><br>TMP 没固定文件头定义<br>INI 没固定文件头定义<br>BIN 没固定文件头定义<br>DBF 没固定文件头定义<br>C 没没固定文件头定义<br>CPP 没固定文件头定义<br>H 没固定文件头定义<br>BAT 没固定文件头定义</p>
-<p>还有一些不同的文件有相同的文件头，最典型的就是下面：</p>
-<p>4D5A90 EXE<br>4D5A90 dll<br>4D5A90 OCX<br>4D5A90 OLB<br>4D5A90 IMM<br>4D5A90 IME</p>
-<h2 id="文件上传"><a href="#文件上传" class="headerlink" title="文件上传"></a>文件上传</h2><p>当我们需要实现上传文件的时候, 为了安全起见, 我们需要判断上传文件的格式, 防止将病毒木马等有害的文件上传到服务器上.</p>
-<p>判断文件类型的三种方式</p>
-<ul>
-<li><p>通过文件后缀名</p>
-<p>这个方法只要修改后缀名就可以了</p>
-</li>
-<li><p>通过Content-Type判断</p>
-<p>但是Content-Type取决于文件类型, 文件类型取决于文件扩展名, 所以改变了文件扩展名就改变了Content-Type</p>
-</li>
-<li><p>通过文件头判断文件, 即使文件扩展名改变了文件头也不会改变</p>
-</li>
-</ul>
-<p>文件上传的思路: 先判断Content-Type, Content-Type符合条件的再判断文件头信息</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Java<span class="meta">@ResponseBody</span>    <span class="meta">@GetMapping(&quot;validate&quot;)</span>    <span class="keyword">public</span> Map&lt;String, String&gt; <span class="title function_">validate</span><span class="params">(<span class="meta">@Validated(&#123;AllFiled.class&#125;)</span> UserInfo userInfo, BindingResult result)</span>&#123;<span class="comment">//        SpringValidatorAdapter adapter = (SpringValidatorAdapter)result;        Map&lt;String, String&gt; map = new HashMap&lt;String, String&gt;();        if (result.hasErrors()) &#123;            List&lt;ObjectError&gt; list  = result.getAllErrors();            for (ObjectError error :                    list) &#123;                FieldError fieldError = (FieldError)error;                String defaultMessage = fieldError.getDefaultMessage();                String field = fieldError.getField();                map.put(field, defaultMessage);            &#125;        &#125;        return map;    &#125;//    consumes = &#123;//        MediaType.MULTIPART_FORM_DATA_VALUE &#125;, produces = MediaType.TEXT_PLAIN_VALUE    @PostMapping(value = &quot;file&quot;)    @ResponseBody    public String file(@RequestParam(&quot;username&quot;) String name, MultipartFile file) throws IOException &#123;        //获取文件名        String fileName = file.getOriginalFilename();        //获取表单提交文件使用的字段        String partName = file.getName();        //判断文件是否为空        boolean empty = file.isEmpty();        //获取ContentType        String contentType = file.getContentType();        //获取文件直接数        Long size = file.getSize();        //获取文件所有字节        byte[] bytes = file.getBytes();        //获取InputStream        InputStream in = file.getInputStream();        //根据文件头获取文件类型        String type = FileType.getFileType(in);                //业务.....        StringBuilder builder = new StringBuilder();        //存储文件        File root = new File(&quot;D:/temp&quot;);        if (!root.isDirectory()) &#123;            root.mkdirs();        &#125;        try &#123;            file.transferTo(new File(root, name));            return String.format(&quot;Upload to %s&quot;, fileName);        &#125; catch (IllegalStateException e) &#123;            e.printStackTrace();        &#125; catch (IOException e) &#123;            e.printStackTrace();        &#125;        return &quot;Upload Failed&quot;;    &#125;</span></span><br></pre></td></tr></table></figure>
-
-
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20221214-二维码版本与容量"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/12/14/20221214-%E4%BA%8C%E7%BB%B4%E7%A0%81%E7%89%88%E6%9C%AC%E4%B8%8E%E5%AE%B9%E9%87%8F/"
-    >20221214-二维码版本与容量</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/12/14/20221214-%E4%BA%8C%E7%BB%B4%E7%A0%81%E7%89%88%E6%9C%AC%E4%B8%8E%E5%AE%B9%E9%87%8F/" class="article-date">
-  <time datetime="2022-12-14T12:07:19.000Z" itemprop="datePublished">2022-12-14</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>二维码 QR - 版本与容量</p>
-<table>
-<thead>
-<tr>
-<th>版本</th>
-<th>矩阵大小</th>
-<th>纠错等级</th>
-<th>八位字节</th>
-<th>数字</th>
-<th>字母数字</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>1</td>
-<td>21</td>
-<td>L</td>
-<td>17</td>
-<td>41</td>
-<td>25</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td>M</td>
-<td>14</td>
-<td>34</td>
-<td>20</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td>Q</td>
-<td>11</td>
-<td>27</td>
-<td>16</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td>H</td>
-<td>7</td>
-<td>17</td>
-<td>10</td>
-</tr>
-<tr>
-<td>2</td>
-<td>25</td>
-<td>L</td>
-<td>32</td>
-<td>77</td>
-<td>47</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td>M</td>
-<td>26</td>
-<td>63</td>
-<td>38</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td>Q</td>
-<td>20</td>
-<td>48</td>
-<td>29</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td>H</td>
-<td>14</td>
-<td>34</td>
-<td>20</td>
-</tr>
-<tr>
-<td>3</td>
-<td>29</td>
-<td>L</td>
-<td>53</td>
-<td>127</td>
-<td>77</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td>M</td>
-<td>42</td>
-<td>101</td>
-<td>61</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td>Q</td>
-<td>32</td>
-<td>77</td>
-<td>47</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td>H</td>
-<td>24</td>
-<td>58</td>
-<td>35</td>
-</tr>
-<tr>
-<td>4</td>
-<td>33</td>
-<td>L</td>
-<td>78</td>
-<td>187</td>
-<td>114</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td>M</td>
-<td>62</td>
-<td>149</td>
-<td>90</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td>Q</td>
-<td>46</td>
-<td>111</td>
-<td>67</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td>H</td>
-<td>34</td>
-<td>82</td>
-<td>50</td>
-</tr>
-<tr>
-<td>5</td>
-<td>37</td>
-<td>L</td>
-<td>106</td>
-<td>255</td>
-<td>154</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td>M</td>
-<td>84</td>
-<td>202</td>
-<td>122</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td>Q</td>
-<td>60</td>
-<td>144</td>
-<td>87</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td>H</td>
-<td>44</td>
-<td>106</td>
-<td>64</td>
-</tr>
-<tr>
-<td>6</td>
-<td>41</td>
-<td>L</td>
-<td>134</td>
-<td>322</td>
-<td>195</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td>M</td>
-<td>106</td>
-<td>255</td>
-<td>154</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td>Q</td>
-<td>74</td>
-<td>178</td>
-<td>108</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td>H</td>
-<td>58</td>
-<td>139</td>
-<td>84</td>
-</tr>
-<tr>
-<td>7</td>
-<td>45</td>
-<td>L</td>
-<td>154</td>
-<td>370</td>
-<td>224</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td>M</td>
-<td>122</td>
-<td>293</td>
-<td>178</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td>Q</td>
-<td>86</td>
-<td>207</td>
-<td>125</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td>H</td>
-<td>64</td>
-<td>154</td>
-<td>93</td>
-</tr>
-<tr>
-<td>8</td>
-<td>49</td>
-<td>L</td>
-<td>192</td>
-<td>461</td>
-<td>279</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td>M</td>
-<td>152</td>
-<td>365</td>
-<td>221</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td>Q</td>
-<td>108</td>
-<td>259</td>
-<td>157</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td>H</td>
-<td>84</td>
-<td>202</td>
-<td>122</td>
-</tr>
-<tr>
-<td>9</td>
-<td>53</td>
-<td>L</td>
-<td>230</td>
-<td>552</td>
-<td>335</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td>M</td>
-<td>180</td>
-<td>432</td>
-<td>262</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td>Q</td>
-<td>130</td>
-<td>312</td>
-<td>189</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td>H</td>
-<td>98</td>
-<td>235</td>
-<td>143</td>
-</tr>
-<tr>
-<td>10</td>
-<td>57</td>
-<td>L</td>
-<td>271</td>
-<td>652</td>
-<td>395</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td>M</td>
-<td>213</td>
-<td>513</td>
-<td>311</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td>Q</td>
-<td>151</td>
-<td>364</td>
-<td>221</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td>H</td>
-<td>119</td>
-<td>288</td>
-<td>174</td>
-</tr>
-</tbody></table>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20221214-PDF文本的基本结构"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/12/14/20221214-PDF%E6%96%87%E6%9C%AC%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%BB%93%E6%9E%84/"
-    >20221214-PDF文本的基本结构</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/12/14/20221214-PDF%E6%96%87%E6%9C%AC%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%BB%93%E6%9E%84/" class="article-date">
-  <time datetime="2022-12-14T06:11:47.000Z" itemprop="datePublished">2022-12-14</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>PDF 文件是可以有效随机存取和增量更新的，根据基本规则，一个PDF 文件由四部分组成</p>
-<ol>
-<li>header部分：占一行，标识PDF规范的版本；</li>
-<li>body部分：包含PDF文件中的所有obj对象；</li>
-<li>cross-reference table 部分：交叉引用表，包含文件中间接对象的信息；</li>
-<li>trailer部分：包含交叉引用表和文件正文中某些特殊对象的位置；</li>
-</ol>
-<p>按照惯例，PDF 文件中的标记按行排列，每行的终止标记可以是回车、换行、或两者兼有，包含二进制数据的PDF 文件可以有任意长的行</p>
-<p>为了提高PDF 文件的兼容性，不属于流对象的数据行限制为不超过255个字符，但有一个例外，签名字典的内容字符串不受行长度限制</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20221214-PNG格式详解"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/12/14/20221214-PNG%E6%A0%BC%E5%BC%8F%E8%AF%A6%E8%A7%A3/"
-    >20221214-PNG格式详解</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/12/14/20221214-PNG%E6%A0%BC%E5%BC%8F%E8%AF%A6%E8%A7%A3/" class="article-date">
-  <time datetime="2022-12-14T03:35:43.000Z" itemprop="datePublished">2022-12-14</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>png 是20世纪90年代开始开发的图像文件存储格式，其目的是替代gif 和tiff 文件格式，同时增加一些gif 文件格式所不具备的特性，流式网络图形格式名称来源于非官方的  是一种位图文件存储格式，读成ping 。png 用来存储灰度图像时，灰度图像的深度可多到16位，存储彩色图像时，彩色图像的深度可多到48位，并且还可存储多到16位的alpha 通道，png 使用从LZ77 派生的无损数据压缩算法</p>
-<h3 id="特性"><a href="#特性" class="headerlink" title="特性"></a>特性</h3><p>使用调色板技术可支持256种颜色的彩色图像  必须的</p>
-<p>流式读 写性，图像文件格式允许连续读出和写入图像数据 因此适于网络传播</p>
-<p>逐次逼近显示，这种特性可使在通信链路上传输图像文件的同时就在终端上显示图像，把整个轮廓显示出来之后逐步显示图像的细节，也就是先用低分辨率显示图像，然后逐步提高它的分辨率  类似马赛克逐渐消除的过程</p>
-<p>透明性，这个性能可使图像中某些部分不显示出来，用来创建一些有特色的图像</p>
-<p>辅助信息，这个特性可用来在图像文件中存储一些文本注释信息  就是可以说一些废话</p>
-<p>独立于计算机硬件环境</p>
-<p>使用无损压缩</p>
-<p>可在一个文件中存储多幅图像</p>
-<h2 id="文件结构"><a href="#文件结构" class="headerlink" title="文件结构"></a>文件结构</h2><p>png 图像格式文件由文件署名和数据块 组成</p>
-<p>文件署名域</p>
-<p>8字节的png 文件署名域用来识别该文件是不是png 文件，该域的值是 </p>
-<p>十进制数  十六进制数<br>137 89<br>80  50<br>78  4e<br>71  47<br>13  0d<br>10  0a<br>26  1a<br>10  0a<br>这个文件署名就是在《利用文件头标志判断文件类型》中提到的文件头标志了，很简单。</p>
-<p>数据块</p>
-<p>这里有两种类型的数据块，一种是称为关键数据块，就是必须要有的块，另一种叫做辅助数据块</p>
-<p>每个数据块都由下表所示的4个域组成</p>
-<p>名称  字节数 说明<br>Length(长度)  4字节 指定数据块中数据域的长度，其长度不超过(231−1)(231−1)字节<br>Chunk Type Code(数据块类型码) 4字节 数据块类型码由ASCII字母(A-Z和a-z)组成<br>Chunk Data(数据块实际内容  可变长度  存储按照Chunk Type Code指定的数据<br>CRC(循环冗余检测  4字节 存储用来检测是否有错误的循环冗余码</p>
-<p>其中CRC 域中的值是对chunk type code 域和chunk data 域中的数据进行计算得到的，可以看作一种校验码</p>
-<p>关键数据块</p>
-<p>关键数据块中的4个标准数据块是</p>
-<p>文件头数据块 IHDR</p>
-<p>它包含有png 文件中存储的图像数据的基本信息，并要作为第一个数据块出现在png 数据流中，而且一个png 数据流中只能有一个文件头数据块</p>
-<p>文件头数据块由13字节，组成结构如下</p>
-<table>
-<thead>
-<tr>
-<th>域的名称</th>
-<th>字节数</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>Width</td>
-<td>4 bytes</td>
-<td>图像宽度，以像素为单位</td>
-</tr>
-<tr>
-<td>Height</td>
-<td>4 bytes</td>
-<td>图像高度，以像素为单位</td>
-</tr>
-<tr>
-<td>Bit depth</td>
-<td>1 byte</td>
-<td>图像深度：索引彩色图像：1，2，4或8 ;灰度图像：1，2，4，8或16 ;真彩色图像：8或16</td>
-</tr>
-<tr>
-<td>ColorType</td>
-<td>1 byte</td>
-<td>颜色类型：0：灰度图像, 1，2，4，8或16;2：真彩色图像，8或16;3：索引彩色图像，1，2，4或84：带α通道数据的灰度图像，8或16;6：带α通道数据的真彩色图像，8或16</td>
-</tr>
-<tr>
-<td>Compression method</td>
-<td>1 byte</td>
-<td>压缩方法(LZ77派生算法)</td>
-</tr>
-<tr>
-<td>Filter method</td>
-<td>1 byte</td>
-<td>滤波器方法</td>
-</tr>
-<tr>
-<td>Interlace method</td>
-<td>1 byte</td>
-<td>隔行扫描方法：0：非隔行扫描;1： Adam7(由Adam M. Costello开发的7遍隔行扫描方法)</td>
-</tr>
-</tbody></table>
-<p>调色板数据块PLTE</p>
-<p>它包含有与索引彩色图像相关的彩色变换数据，它仅与索引彩色图像有关，而且要放在图像数据块之前，真彩色的png 数据流也可以有调色板数据块，目的是便于非真彩色显示程序用它来量化图像数据，从而显示该图像，结构如下</p>
-<p>|颜色|字节|意义|<br>|Red|1 byte | 0 &#x3D; 黑色, 255 &#x3D; 红|<br>|Green|1 byte | 0 &#x3D; 黑色, 255 &#x3D; 绿色|<br>|Blue|1 byte | 0 &#x3D; 黑色, 255 &#x3D; 蓝色|</p>
-<p>PLTE 数据块是定义图像的调色板信息，PLTE 可以包含1-256 个调色板信息，每个调色板信息由3个字节组成，因此调色板数据块所包含的最大字节数为768 调色板的长度应该是3的倍数，否则，这将使一个非法的调色板</p>
-<p>对于索引图像，调色板信息是必须的，调色板的颜色索引从0开始编号，然后是 1 2 调色板的颜色数不能超过色深中规定的颜色数，否则，这将导致png 图像不合法</p>
-<p>图像数据块 IDAT </p>
-<p>它存储实际的数据，在数据流中可包含多个连续顺序的图像数据块<br>IDAT 存放着图像真正的数据信息，因此，如果能够了解IDAT 的结构，我们就可以很方便的生成PNG 图像</p>
-<p>图像结束数据IEND </p>
-<p>它用来标记png 文件或者数据流已经结束，并且必须要放在文件的尾部</p>
-<p>如果我们仔细观察PNG文件，我们会发现，文件的结尾12个字符看起来总应该是这样的：</p>
-<p>00 00 00 00 49 45 4E 44 AE 42 60 82</p>
-<p>不难明白，由于数据块结构的定义，IEND 数据块的长度总是0 0000000除非认为加入信息，数据标识总是iend 因此，CRC码也总是AE 42 60 82</p>
-<p>最后，除了表示数据块开始IHDR 必须放在最前面，表示png 文件结束的iend 数据块放在最后面，其他数据块的存放顺序没有限制</p>
-<p>辅助数据块</p>
-<p>比较杂 ，不需要全部了解透</p>
-<p>PNG 文件格式规范指定的10个辅助数据块是</p>
-<p>背景颜色数据块 bKGD</p>
-<p>基色和白色度数块cHRM 所谓白色度是指当 R G B 最大值时在显示器上产生的白色度</p>
-<p>图像gamma 数据块 gAMA</p>
-<p>图像直方图数据块hIST<br>物理像素尺寸数据块 pHYs</p>
-<p>样本有效位数据块 sBIT</p>
-<p>文本信息数据块 tEXt<br>图像最后修改时间数据块 tIME<br>图像透明数据块 tRNS </p>
-<p>压缩文本数据块 zTXt</p>
-<h2 id="数据块摘要"><a href="#数据块摘要" class="headerlink" title="数据块摘要"></a>数据块摘要</h2><p>关键数据块，辅助数据块和专用公共数据块 综合下表中</p>
-<table>
-<thead>
-<tr>
-<th>数据块符号</th>
-<th>数据块名称</th>
-<th>多数据块</th>
-<th>可选否</th>
-<th>位置限制</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>IHDR</td>
-<td>文件头数据块</td>
-<td>否</td>
-<td>否</td>
-<td>第一块</td>
-</tr>
-<tr>
-<td>cHRM</td>
-<td>基色和白色点数据块</td>
-<td>否</td>
-<td>是</td>
-<td>在PLTE和IDAT之前</td>
-</tr>
-<tr>
-<td>gAMA</td>
-<td>图像γ数据块</td>
-<td>否</td>
-<td>是</td>
-<td>在PLTE和IDAT之前</td>
-</tr>
-<tr>
-<td>sBIT</td>
-<td>样本有效位数据块</td>
-<td>否</td>
-<td>是</td>
-<td>在PLTE和IDAT之前</td>
-</tr>
-<tr>
-<td>PLTE</td>
-<td>调色板数据块</td>
-<td>否</td>
-<td>是</td>
-<td>在IDAT之前</td>
-</tr>
-<tr>
-<td>bKGD</td>
-<td>背景颜色数据块</td>
-<td>否</td>
-<td>是</td>
-<td>在PLTE之后IDAT之前</td>
-</tr>
-<tr>
-<td>hIST</td>
-<td>图像直方图数据块</td>
-<td>否</td>
-<td>是</td>
-<td>在PLTE之后IDAT之前</td>
-</tr>
-<tr>
-<td>tRNS</td>
-<td>图像透明数据块</td>
-<td>否</td>
-<td>是</td>
-<td>在PLTE之后IDAT之前</td>
-</tr>
-<tr>
-<td>oFFs</td>
-<td>(专用公共数据块)</td>
-<td>否</td>
-<td>是</td>
-<td>在IDAT之前</td>
-</tr>
-<tr>
-<td>pHYs</td>
-<td>物理像素尺寸数据块</td>
-<td>否</td>
-<td>是</td>
-<td>在IDAT之前</td>
-</tr>
-<tr>
-<td>sCAL</td>
-<td>(专用公共数据块)</td>
-<td>否</td>
-<td>是</td>
-<td>在IDAT之前</td>
-</tr>
-<tr>
-<td>IDAT</td>
-<td>图像数据块</td>
-<td>是</td>
-<td>否</td>
-<td>与其他IDAT连续</td>
-</tr>
-<tr>
-<td>tIME</td>
-<td>图像最后修改时间数据块</td>
-<td>否</td>
-<td>是</td>
-<td>无限制</td>
-</tr>
-<tr>
-<td>tEXt</td>
-<td>文本信息数据块</td>
-<td>是</td>
-<td>是</td>
-<td>无限制</td>
-</tr>
-<tr>
-<td>zTXt</td>
-<td>压缩文本数据块</td>
-<td>是</td>
-<td>是</td>
-<td>无限制</td>
-</tr>
-<tr>
-<td>fRAc</td>
-<td>(专用公共数据块)</td>
-<td>是</td>
-<td>是</td>
-<td>无限制</td>
-</tr>
-<tr>
-<td>gIFg</td>
-<td>(专用公共数据块)</td>
-<td>是</td>
-<td>是</td>
-<td>无限制</td>
-</tr>
-<tr>
-<td>gIFt</td>
-<td>(专用公共数据块)</td>
-<td>是</td>
-<td>是</td>
-<td>无限制</td>
-</tr>
-<tr>
-<td>gIFx</td>
-<td>(专用公共数据块)</td>
-<td>是</td>
-<td>是</td>
-<td>无限制</td>
-</tr>
-<tr>
-<td>IEND</td>
-<td>图像结束数据</td>
-<td>否</td>
-<td>否</td>
-<td>最后一个数据块</td>
-</tr>
-</tbody></table>
-<p>tEXt和zTXt数据块中的标准关键字：</p>
-<p>关键字 说明<br>Title 图像名称或者标题<br>Author  图像作者名<br>Description 图像说明<br>Copyright 版权声明<br>CreationTime  原图创作时间<br>Software  创作图像使用的软件<br>Disclaimer  弃权<br>Warning 图像内容警告<br>Source  创作图像使用的设备<br>Comment 各种注释<br>一个例子</p>
-<!-- http://qr61.cn/o8bjsz/qEp8BlI --> 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
   </article>
   
 
   
   <nav class="page-nav">
     
-    <a class="extend prev" rel="prev" href="/">上一页</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><a class="extend next" rel="next" href="/page/3/">下一页</a>
+    <a class="extend prev" rel="prev" href="/">上一页</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/3/">下一页</a>
   </nav>
   
 </section>
