@@ -126,6 +126,193 @@
     
     
     <article
+  id="post-20221216-Appinventor学习环境搭建"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/12/16/20221216-Appinventor%E5%AD%A6%E4%B9%A0%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/"
+    >20221216-Appinventor学习环境搭建</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/12/16/20221216-Appinventor%E5%AD%A6%E4%B9%A0%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" class="article-date">
+  <time datetime="2022-12-16T12:44:55.000Z" itemprop="datePublished">2022-12-16</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>[TOC]</p>
+<h2 id="0x01"><a href="#0x01" class="headerlink" title="0x01"></a>0x01</h2><h2 id="0x02"><a href="#0x02" class="headerlink" title="0x02"></a>0x02</h2><h2 id="0x03"><a href="#0x03" class="headerlink" title="0x03"></a>0x03</h2><h2 id=""><a href="#" class="headerlink" title=""></a></h2> 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-20221216-AT指令介绍"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/12/16/20221216-AT%E6%8C%87%E4%BB%A4%E4%BB%8B%E7%BB%8D/"
+    >20221216-AT指令介绍</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/12/16/20221216-AT%E6%8C%87%E4%BB%A4%E4%BB%8B%E7%BB%8D/" class="article-date">
+  <time datetime="2022-12-16T08:37:08.000Z" itemprop="datePublished">2022-12-16</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>AT 指令最初是用来指导modem 工作的，</p>
+<p>虽然在PC 端，手机上已经没有了AT 的使用，但其却在嵌入式行业里各类联网模块中发挥着重要的作用，而且不仅仅只应用在蜂窝模块，还应用到了wifi ble 等模块中</p>
+<p>相关标准</p>
+<p>随着技术的发展，目前 AT 指令发展过程中形成两个重要标准</p>
+<p>V.250：该标准于 1995 年建立，1998 年重命名为 V.250<br>ETSI GSM 07.07（3GPP TS 27.007）：用于控制 GSM modem 的 AT 指令集<br>GSM 07.07 是基于 V.250 标准的。是目前最新的 AT 标准。</p>
+<p>当下AT 指令的应用</p>
+<p>目前 的AT 指令着重应用在蜂窝模块 wifi 模块，ble 模块，目的是为了简化嵌入式设备联网的复杂度</p>
+<p>AT 标准定义了At 命令的格式本身，比如命令以 AT 为前缀，以 或者 结尾，这被现有的AT 模块所延用</p>
+<p>但是，由于每个厂家的模块不一样，实现的功能不一样，导致每个 AT 模块厂家有自己的一套私有的 AT 命令集，每一个 AT 模块厂家实现的 AT 指令集解析器也不一样（解析器实现的 AT 标准功能也参差不齐）。像上图所示的 AT 命令使用方式不被大多数模块厂家所实现。</p>
+<p>AT模块的应用框图</p>
+<p>既然是指令集，那么必然会有指令集的解析处理，通常，我们把AT 模块端的解析处理程序称为AT Server，而将控制AT 模块的处理器端的解析处理程序称为AT client 由AT client 发起命令请求，AT Server 通过URC 来主动给AT client 发送数据</p>
+<p>一些约定</p>
+<p>AT 命令的常用格式</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">AT+CMD=&lt;xxx&gt;[,&lt;xxx&gt;,&lt;xxx&gt;]</span><br></pre></td></tr></table></figure>
+
+<p>AT命令以AT 开始，以 \r 或者 \r\n 结尾，参数之间使用 , 隔开，字符串参数使用双引号 “” 包裹，整形参数不适用双引号。</p>
+<p><CR>：回车符<br><LF>：换行符<br><xxx><br>尖括号中的名称 xxx 在 AT 里是一个语法元素，要求必须指定。尖括号本身不会出现在命令行里。<br>[xxx]<br>中括号中的名称 xxx 在 AT 里是一个语法元素，表示可选择指定。中括号本身不出现在命令行里。</p>
+<p>四类AT 命令</p>
+<p>Test 命令：AT+<x>&#x3D;?<br>测试指令类似于命令行里的 help 指令，用于提供该命令的使用信息，以及命令参数的取值范围。<br>Read 命令：AT+<x>?<br>用于查询该指令对应功能的当前值。<br>Set 命令：AT+<x>&#x3D;&lt;…&gt;<br>设置用户指定的参数到对应的功能里。<br>Execute 命令：AT+<x><br>执行相关操作。</p>
+<p>响应结果字符串</p>
+<p>AT 标准定义了标准的响应结果字符串：</p>
+<p>\r\nOK\r\n<br>如果 AT 指令被 AT Server 识别，并正确执行，则返回该结果。<br>“ 标准中的 V1 模式下响应结果代码的方式。V0 模式下返回 0\r。<br>”<br>\r\nERROR\r\n<br>“ 标准中的 V1 模式下响应结果代码的方式。V0 模式下返回 4\r。<br>”</p>
+<h2 id="数据模式与指令模式"><a href="#数据模式与指令模式" class="headerlink" title="数据模式与指令模式"></a>数据模式与指令模式</h2><p>在收到 +++，并且接下来 1s 内未收到其他数据的话，将从数据模式切换到指令模式。</p>
+<p>数据模式，可以透传数据，client 发什么，server 就原封不动发出去。指令模式时，AT Server 需要解析 AT 指令，并作出响应。</p>
+<!-- AT+name=”LiMou” --> 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-20221215-使用wttr-in在你的终端中显示天气预报"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/12/15/20221215-%E4%BD%BF%E7%94%A8wttr-in%E5%9C%A8%E4%BD%A0%E7%9A%84%E7%BB%88%E7%AB%AF%E4%B8%AD%E6%98%BE%E7%A4%BA%E5%A4%A9%E6%B0%94%E9%A2%84%E6%8A%A5/"
+    >20221215-使用wttr.in在你的终端中显示天气预报</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/12/15/20221215-%E4%BD%BF%E7%94%A8wttr-in%E5%9C%A8%E4%BD%A0%E7%9A%84%E7%BB%88%E7%AB%AF%E4%B8%AD%E6%98%BE%E7%A4%BA%E5%A4%A9%E6%B0%94%E9%A2%84%E6%8A%A5/" class="article-date">
+  <time datetime="2022-12-15T02:04:16.000Z" itemprop="datePublished">2022-12-15</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>wttr.in 是一个功能丰富的天气预报服务，它支持在命令行显示天气，它可以 根据你的ip 地址<br>自动检测你的位置，也支持指定位置或搜索地理位置，如城市，山区等，另外，你不需要安装它，你只需要使用curl 或wget </p>
+<p>wttr.in 功能包括</p>
+<p>显示当前天气以及3天内的天气预报，分为早晨，中午、傍晚和夜晚 包括温度范围、风速和风向 可见度，降水量 和概率</p>
+<p>可以显示月相</p>
+<p>基于你的ip地址自动检测位置</p>
+<p>允许指定城市名称，3字母的机场代码，区域代码，GPS坐标，IP 地址或域名，你还可以指定地理位置，如湖泊 山脉，地标等</p>
+<p>支持多语言位置名称  查询字符串必须以unicode 指定</p>
+<p>支持指定天气预报显示的语言  它支持超过50种语言</p>
+<p>来自美国的查询使用uscs 单位用于，世界其他地方使用公制系统，但你可以通过附加?u 使用uscs 附加?m 使用公制系统</p>
+<p>3种输出格式，终端的ansi 浏览器的html 和png </p>
+<p>或者你可以安装wego 这是一个使用wtter.in 的终端气候应用，虽然wego 要求注册一个api 密钥来安装</p>
+<p><a target="_blank" rel="noopener" href="http://wttr.in/">http://wttr.in</a> 命令行示例<br>获取你所在位置的天气（<a target="_blank" rel="noopener" href="http://wttr.in/">http://wttr.in</a> 会根据你的 IP 地址猜测你的位置）：</p>
+<p>curl wttr.in<br>通过在 curl 之后添加 -4，强制 cURL 将名称解析为 IPv4 地址（如果你用 IPv6 访问 wttr.in 有问题）：</p>
+<p>curl -4 wttr.in<br>如果你想检索天气预报保存为 png，还可以使用 Wget（而不是 cURL），或者你想这样使用它：</p>
+<p>wget -O- -q wttr.in<br>如果相对 cURL 你更喜欢 Wget ，可以在下面的所有命令中用 wget -O- -q 替换 curl。</p>
+<p>指定位置：</p>
+<p>curl wttr.in&#x2F;Dublin<br>显示地标的天气信息（本例中为艾菲尔铁塔）：</p>
+<p>curl wttr.in&#x2F;~Eiffel+Tower<br>获取 IP 地址位置的天气信息（以下 IP 属于 GitHub）：</p>
+<p>curl wttr.in&#x2F;@192.30.253.113<br>使用 USCS 单位检索天气：</p>
+<p>curl wttr.in&#x2F;Paris?u<br>如果你在美国，强制 <a target="_blank" rel="noopener" href="http://wttr.in/">http://wttr.in</a> 使用公制系统（SI）：</p>
+<p>curl wttr.in&#x2F;New+York?m<br>使用 Wget 将当前天气和 3 天预报下载为 PNG 图像：</p>
+<p>wget wttr.in&#x2F;Istanbul.png<br>你可以指定 PNG 的透明度，这在你要使用一个脚本自动添加天气信息到某些图片（比如墙纸）上有用。</p>
+<p>对于其他示例，请查看wttr.in 项目页面或在终端中输入 </p>
+<p>curl wttr.in&#x2F;:help</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-20221214-通过Content-Type和文件头判断文件类型"
   class="article article-type-post"
   itemscope
@@ -1283,280 +1470,6 @@
 <li>使能信号还有哪些用法</li>
 </ol>
 <p>使能信号的用途非常广泛，可以作为计算机系统中存储芯片选通信号，可以作为显式系统中的控制信号，但核心的一点就是使能信号控制了芯片的功能是否能被正常的启用，这在设计大型的数字系统中是非常重要的一环</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20221213-RS485通讯基础及通讯应用详解"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/12/13/20221213-RS485%E9%80%9A%E8%AE%AF%E5%9F%BA%E7%A1%80%E5%8F%8A%E9%80%9A%E8%AE%AF%E5%BA%94%E7%94%A8%E8%AF%A6%E8%A7%A3/"
-    >20221213-RS485通讯基础及通讯应用详解</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/12/13/20221213-RS485%E9%80%9A%E8%AE%AF%E5%9F%BA%E7%A1%80%E5%8F%8A%E9%80%9A%E8%AE%AF%E5%BA%94%E7%94%A8%E8%AF%A6%E8%A7%A3/" class="article-date">
-  <time datetime="2022-12-13T05:42:43.000Z" itemprop="datePublished">2022-12-13</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/341845459">https://zhuanlan.zhihu.com/p/341845459</a></p>
-<p>举例：plc向变频器从机1和变频器从机2传递数据，首先变频器从机1和变频器从机2设备之间必须通过电缆连接（硬件连接）。如果变频器从机1和变频器从机设备发送101010这样一串代码，那么变频器从机1就要在他的通讯端口产生如下图所示的高低电平的组合，通过电缆这个介质变频器从机2设备的通讯端口就会接收到A设备发出高低电平的组合，同时就会将接</p>
-<h2 id="RS-485概述"><a href="#RS-485概述" class="headerlink" title="RS-485概述"></a>RS-485概述</h2><p>RS-485和RS-232一样，都是串行通信标准，现在的标准名称是TIA485&#x2F;EIA-485-A，但是人们会习惯称为RS-485标准，RS-485常用在工业、自动化、汽车和建筑物管理等领域。</p>
-<p>RS-485总线弥补了RS-232通信距离短，速率低的缺点，RS-485的速率可高达10Mbit&#x2F;s，理论通讯距离可达1200米；RS-485和RS-232的单端传输不一样，是差分传输，使用一对双绞线，其中一根线定义为A，另一个定义为B。</p>
-<p>双绞线</p>
-<h2 id="RS-485物理层"><a href="#RS-485物理层" class="headerlink" title="RS-485物理层"></a>RS-485物理层</h2><p>RS-485的物理层负责在设备和物理传输介质之间传输原始数据。它处理电信号到数字数据的转换，同时定义电压、时序、数据速率等。</p>
-<p>① 差分信号</p>
-<p>长距离布线会有信号衰减，而且引入噪声和干扰的可能性更大，在线缆A和B上的表现就是电压幅度的变化，但是，采用差分线的好处就是，差值相减就会忽略掉干扰依旧能输出正常的信号，把这种差分接收器忽略两条信号线上相同电压的能力称为共模抑制。</p>
-<p>标准规定了，逻辑1：+2V to +6V；逻辑0：-6V to -2V。</p>
-<p>RS-485不需要使用特定的总线电压，只看最小差分电压，在较长的电缆长度上，接收器接收到的电压可能会降低到+&#x2F;- 200 mV，这对于RS-485仍然是完全可以接受的，这也是RS-485的优点之一。</p>
-<p>很多收发器的标准达到甚至超过TIA&#x2F;EIA-485A规范，在实际使用中，以器件的SPEC参数为主，如下某收发器的负输入阈值最小也是-200mV。</p>
-<p>② 信号定义</p>
-<p>现在很多的RS-485转换器都是兼容RS-422的，所以看到很多转换器上面的信号都是T&#x2F;R+、T&#x2F;R-，即对应RS-485的A+和B-。</p>
-<p>对于DB9针型的母头，RS-485有如下的接线定义示意，Pin6~Pin9为N&#x2F;A不接。</p>
-<p>DB9 输出信号  RS-422全双工接线 RS-485半双工接线<br>1 T&#x2F;R+  发（A+） RS-485（A+）<br>2 T&#x2F;R-  发（B-） RS-485（B-）<br>3 RXD+  收（A+） 空<br>4 RXD-  收（B-） 空<br>5 GND 地线  地线</p>
-<p>③ 拓扑结构</p>
-<p>RS485有两线制和四线制两种接线，四线制只能实现点对点的通信方式，现很少采用，多采用的是两线制接线方式，这种接线方式为总线拓扑结构，在同一总线上最多可以挂接32个节点。</p>
-<p>RS-485总线同I2C，也是主从模式，支持点对点单从机模式，也支持多从机模式，不支持多主机模式。</p>
-<h2 id="RS-485收发器"><a href="#RS-485收发器" class="headerlink" title="RS-485收发器"></a>RS-485收发器</h2><p>RS-485是差分传输，如果用单片机控制RS-485接口的设备，需要用到收发器，这一点和CAN总线是类似的，如下是一个MCU控制一个RS-485的图示。</p>
-<p>收发器内部是一个接收器（上半部分）加一个发送器（下半部分），下面简单说说收发器的原理，便于理解MCU是如何和485设备通信的。</p>
-<p>RS-485收发器内部结构</p>
-<p>其中：</p>
-<p>A和B为总线；<br>R为接收器输入；<br>RE为接收器使能信号；<br>DE为发送器使能信号；<br>D为发送器输出；<br>对于使能信号，字母上面加一横的为低电平有效（如上图RE），不加的为高电平有效（如DE）。</p>
-<p>对于发送器，有如下的真值表：</p>
-<p>1、当驱动器使能引脚DE为逻辑高时，差分输出A和B遵循数据输入D处的逻辑状态。D处的逻辑高导致A转为高，B转为低。在这种情况下，定义为VOD&#x3D;VA-VB的差分输出电压为正。当D为低时，输出状态反转，B变高，A变低，VOD为负。</p>
-<p>2、当DE低时，两个输出都变成高阻抗。在这种情况下，与D处的逻辑状态是不相关的。</p>
-<p>发送器真值表</p>
-<p>对于接收器，有如下的真值表：</p>
-<p>1、当接收器使能引脚RE逻辑低时，接收器被激活。当定义为VID&#x3D;VA–VB的差分输入电压为正且高于正输入阈值VIT+时，接收机输出R变高。当VID为负且低于负输入阈值VIT-，接收机输出R变低。如果VID在VIT+和VIT-之间，则输出不确定。</p>
-<p>2、当RE为逻辑高或悬空时，接收机输出为高阻抗，VID的大小和极性无关。</p>
-<p>接收器真值表</p>
-<h2 id="RS-485数据链路"><a href="#RS-485数据链路" class="headerlink" title="RS-485数据链路"></a>RS-485数据链路</h2><p>上面讲到的RS-485收发器的工作原理，下面简单描述RS-485的数据链路，可以先看一下通俗易懂的UART协议帧格式</p>
-<p>主机发送给从机或者从机发送给主机，都会占用到A和B线，所以RS-485多用在半双工模式。</p>
-<p>主机的GPIO会控制RS-485收发器的DE管脚，设置发送模式，从UART TXD线向RS-485收发器的数据（D或DI）线发送一个字节，收发器将在A和B线上将单端UART位流转换为差分位流，数据离开收发器后，主机立即将收发器的模式切换为接收模式。</p>
-<p>从机和主机是类似的，从机控制RS-485收发器的&#x2F;RE管脚，设置为接收模式，接收主机发送的比特流，将其转换为单端信号，通过从机的UART RXD线接收，当从机准备好响应时，它按主机原来的方式进行发送，而主机变为接收。</p>
-<h2 id="RS-232和RS-485转换"><a href="#RS-232和RS-485转换" class="headerlink" title="RS-232和RS-485转换"></a>RS-232和RS-485转换</h2><p>RS-232和RS-485之间可以转换，一个方法是RS-232转换成TTL，再由TTL转换为RS-485，当然也有芯片支持将RS-232直接转换成RS-485，网上有很多模块。</p>
-<p>RS-232和RS-485转换模块</p>
-<h2 id="RS-485和CAN的区别"><a href="#RS-485和CAN的区别" class="headerlink" title="RS-485和CAN的区别"></a>RS-485和CAN的区别</h2><p>虽说RS-485没有标准的数据协议格式，但和CAN总线在很多地方是有相似的，比如A&amp;B和CANH&amp;CANL都是差分信号，通信都需要收发器，都需要120欧姆的匹配电阻等等。</p>
-<p>总线特性  CAN总线 RS-485总线<br>硬件成本  稍高  低廉<br>总线利用率 优先级自动仲裁，利用率高  采用轮询，利用率低<br>数据传输率 高 低<br>错误检测机制  控制器带校验机制，保证底层数据传输正确 只有物理层规范，无数据链路层规定<br>单节点故障影响 总线无影响 总线瘫痪<br>开发成本  软件开发灵活，时间成本低  开发难度较大<br>系统成本  较低  高</p>
-<h2 id="RS-485常用电路"><a href="#RS-485常用电路" class="headerlink" title="RS-485常用电路"></a>RS-485常用电路</h2><p>网上找的一个常用的RS-485电路，其中需要注意两点：</p>
-<p>1、使能信号RE和DE可采用一个GPIO控制，节省资源，GPIO25输出高电平，RE&#x3D;DE&#x3D;0V，进入接收模式；GPIO25输出低电平，RE&#x3D;DE&#x3D;3.3V，进入发送模式。</p>
-<p>2、有一些电路中会在A上加上拉，B上加下拉电阻，主要原因是：RS-485总线在idle状态，电平是不固定的，即电平在-200mV~+200mV之间，收发器可能输出高也可能输出低，UART在空闲时需要保持高电平的，如果此时收发器输出一个低电平，对UART来说是一个start bit，会导致通信异常，关于Ru和Rd的阻值在这里不作过多赘述，后面有机会会详细写一篇文章。</p>
-<p>关于第二点，需要注意：</p>
-<p>① A上加上拉，B上加下拉，接反数据通信也可能出错。</p>
-<p>② 某些收发器内部集成上下拉电阻，则外部不需要再添加。</p>
-<p>今天的文章内容到这里就结束了，希望对你有帮助，我们下一期见。</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20221213-UART串口通信介绍"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/12/13/20221213-UART%E4%B8%B2%E5%8F%A3%E9%80%9A%E4%BF%A1%E4%BB%8B%E7%BB%8D/"
-    >20221213-UART串口通信介绍</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/12/13/20221213-UART%E4%B8%B2%E5%8F%A3%E9%80%9A%E4%BF%A1%E4%BB%8B%E7%BB%8D/" class="article-date">
-  <time datetime="2022-12-13T04:16:06.000Z" itemprop="datePublished">2022-12-13</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>串口通信 UART 介绍</p>
-<p>通用异步收发传输器 ，通常称作UART ，是一种异步收发传输器</p>
-<p>首先先来介绍一下同步和异步通信</p>
-<p>在常见通信总线协议中，I2C SPI 属于同步通信而UART 属于异步通信</p>
-<p>在UART 通信中，数据起始位和停止位是必不可少的</p>
-<p>硬件层</p>
-<p>常用RS-232标准，这里不详细解释，主要是对应设备的Tx 线和Rx 线要对应正确</p>
-<p>协议层 </p>
-<p>协议层中，规定了数据包的内容，它由起始位，主体数据，校验位以及停止位组成，通信双方的数据包格式要约定一致才能正常收发数据</p>
-<p>波特率  异步通信中由于没有时钟信号，所以2个通信设备需约定好波特率，常见的有4800 9600 15200 等</p>
-<p>通信的起始和停止信号，串口通信的一个数据包从起始信号开始，知道停止信号结束，数据包的起始信号由一个逻辑0 的数据位表示，而数据包的停止信号可由0.5 1 1.5 2 个逻辑1 的数据位表示，只要双方约定一致即可</p>
-<p>有效数据，在数据包的起始位置之后紧接着的就是要传输的主体数据内容，也称为有效数据，有效数据的长度常被约定为8位或9位长</p>
-<p>数据校验  可以在传输过程中加上校验位来解决这个问题，校验方法有奇校验 偶校验 0校验 1校验 以及无校验</p>
-<p>奇校验要求有效数据和校验位中“1”的个数为奇数，比如一个 8 位长的有效数据为：01101001，此时总共有 4 个“1”，为达到奇校验效果，校验位为“1”，最后传输的数据将是 8 位的有效数据加上 1 位的校验位总共 9 位。偶校验与奇校验要求刚好相反，要求帧数据和校验位中“1”的个数为偶数，比如数据帧：11001010，此时数据帧“1”的个数为 4 个，所以偶校验位为“0”。0 校验是不管有效数据中的内容是什么，校验位总为“0”，1 校验是校验位总为“1”。</p>
-<p>UART 功能框图剖析</p>
-<p>这张图是当年上学时使用system C 对uart 建模的模块图，对于接口部分，重要的即为Tx Rx 数据输出，接受接口，clk 提供波特率生成模块的初始时钟信号，</p>
-<p>有关控制器部分，在这里使用逻辑电路来实现，具体控制输出&#x2F;接收使能，设备使能等</p>
-<p>在目前的微控制器上，数字电路控制部分已被封装，现在只需要操作对应寄存器的对应位即可实现对UART  的控制<br>下图是uart 框图 </p>
-<p>波特率生成模块</p>
-<p>USART 的发送器和接收器使用相同的波特率，有以下的计算公式</p>
-<p>其中，fck为 USART 时钟， USARTDIV 是一个存放在波特率寄存器(USART_BRR)的一个无符号定点数。其中 DIV_Mantissa[11:0]位定义 USARTDIV 的整数部分，DIV_Fraction[3:0]位定义 USARTDIV 的小数部分。</p>
-<p>例如：DIV_Mantissa&#x3D;24(0x18)，DIV_Fraction&#x3D;10(0x0A)，此时 USART_BRR 值为0x18A；那么USARTDIV的小数位10&#x2F;16&#x3D;0.625；整数位24，最终USARTDIV的值为24.625。</p>
-<p>波特率的常用值有 2400、9600、19200、115200。下面以实例讲解如何设定寄存器值得到波特率的值。我们知道 USART1 使用APB2总线时钟，最高可达72MHz，其他USART的最高频率为36MHz。我们选取USART1作为实例讲解，即fck&#x3D;72MHz。为得到115200bps的波特率，此时：115200&#x3D;72000000&#x2F;(16∗USARTDIV)，解得USARTDIV&#x3D;39.0625，可算得DIV_Fraction&#x3D;0.0625*16&#x3D;1&#x3D;0x01，DIV_Mantissa&#x3D;39&#x3D;0x27，即应该设置USART_BRR的值为0x171。</p>
-<p>数据寄存器</p>
-<p>UART 数据寄存器 只有低9位有效，并且第9位 数据是否有效要取决于uart 控制寄存器1的M 位设置，当M 位为0 时表示8位数据字长，当M 位为1 表示9位数据字长，我们一般使用8位数据字长</p>
-<p>USART_DR包含了已发送的数据或者接收到的数据。USART_DR实际是包含了两个寄存器，一个专门用于发送的可写TDR，一个专门用于接收的可读RDR。当进行发送操作时，往USART_DR写入数据会自动存储在TDR内；当进行读取操作时，向USART_DR读取数据会自动提取RDR数据。</p>
-<p>TDR和RDR都是介于系统总线和移位寄存器之间。串行通信是一个位一个位传输的，发送时把TDR内容转移到发送移位寄存器，然后把移位寄存器数据每一位发送出去，接时把接收到的每一位顺序保存在接收移位寄存器内然后才转移到RDR。</p>
-<p>UART支持DMA传输，可以实现高速数据传输(不经过CPU),使能UART的DMA功能需要将USART_CR1寄存器DMAT位置1。</p>
-<p>控制器</p>
-<p>UART 有专门控制发送的发送器，控制接收的接收器，还有唤醒单元，中断控制等，使用uart 之前需要向 usart_CR1 寄存器的ue位置使能UART UE 位用于开启供给串口的时钟</p>
-<p>发送器</p>
-<p>当USART_CR1寄存器的发送使能位TE置1时，启动数据发送，发送移位寄存器的数据会在TX引脚输出，低位在前，高位在后。</p>
-<p>一个字符帧发送需要3部分，起始位 数据帧  停止位，起始位是一个位周期的低电平，位周期就是每一位占用的时间，数据帧就是我们要发送的8 或9 位数据，数据是最低位开始传输的，停止位是一定时间周期的高电平</p>
-<p>停止位的时间长短可以通过UART控制寄存器2（USART_CR2）的STOP[1:0]位控制，可选0.5个、1个、1.5个、2个停止位。默认使用1个停止位。2个停止位适用于正常USART模式、单线模式和调制解调器模式。0.5和1.5个停止位用于智能卡模式。</p>
-<p>当发使能位TE置1之后，发送器开始会发送一个空闲帧（一个数据帧长度的高电平），接下来就可以往USART_DR寄存器写入要发送的数据。在写入最后一个数据后，需等待UART状态寄存器（USART_SR）的TC位为1，表示数据传输完成。USART_CR1寄存器的TCIE位置1，则产生中断。</p>
-<p>发送数据时，几个重要的标志位如下</p>
-<p>TE 发送使能<br>TXE 发送寄存器为空，发送单个字节时使用<br>TC 发送完成，发送多个字节数据时候使用<br>TXIE 发送完成中断使能</p>
-<p>接收器</p>
-<p>将CR1寄存器的RE位置1，使能USART接收，使得接收器在RX线开始搜索起始位。在确定起始位后，就根据RX线电平状态把数据存放在接收移位寄存器内。接收完成后就把接收移位寄存器的数据移到PDR内，并把USART_SR寄存器的RXNE位置。如果USART_CR2寄存器的RXNEIE置1可以产生中断。</p>
-<p>接收数据时，几个重要的标志位如下</p>
-<p>RE 接收使能<br>RXNE:读数据寄存器非空。</p>
-<p>RXNEIE:发送完成中断使能。</p>
-<p>USART_CR1寄存器：<br>USART_CR2寄存器：<br>USART_CR3寄存器：</p>
-<p>之后会基于STM32继续介绍怎样配置并使用UART，包括串口轮询&#x2F;中断&#x2F;DMA方式发送&#x2F;接收数据。</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20221213-VGA显示图像详细总结"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/12/13/20221213-VGA%E6%98%BE%E7%A4%BA%E5%9B%BE%E5%83%8F%E8%AF%A6%E7%BB%86%E6%80%BB%E7%BB%93/"
-    >20221213-VGA显示图像详细总结</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/12/13/20221213-VGA%E6%98%BE%E7%A4%BA%E5%9B%BE%E5%83%8F%E8%AF%A6%E7%BB%86%E6%80%BB%E7%BB%93/" class="article-date">
-  <time datetime="2022-12-13T02:09:18.000Z" itemprop="datePublished">2022-12-13</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_44406200/article/details/103823607">https://blog.csdn.net/weixin_44406200/article/details/103823607</a></p>
-<h2 id="VGA-显示原理"><a href="#VGA-显示原理" class="headerlink" title="VGA 显示原理"></a>VGA 显示原理</h2><p>VGA 概念</p>
-<p>VGA 不是用来显示的那块屏幕，而是用来传输信号的接口，VGA 全称是video graphics array 及视频图形阵列，是模拟信号的一种视频传输标准，VGA 传输接口实物图如下</p>
-<p>自测试 地址码 蓝基色  绿基色  红基色</p>
-<p>数字地        蓝地  绿地   红地<br>地址码 场同步 行同步  地址码 地址码</p>
-<p>操作VGA 的过程就是给你一块有横纵坐标范围的区域，区域上的每一个坐标点就是一个像素点，你可以做的事情是给这个像素点特定的rgb 色彩，既可以通过自定义rgb 也可以去取图像某个像素点的rgb ，这也就提供了你在vga 上画图以及显示图片的能力</p>
-<p>VGA 分辨率及理解误区</p>
-<p>640 * 480 的规格就是显示屏幕上每行有640 个像素点，总共有480行，注意，一件很重要的事情是，虽然你看到的屏幕上的大小是640 * 480 的 但是它实际大小并不只有那么点，形象一点就是说，VGA 的扫描范围是包含了你能够看到的640 480 这一块区域的更大区域，他会在周围一圈你看不到的区域部分进行扫描，因此，我们在处理扫描信号的时候一定要注意只有扫描到有效区域的时候才能把像素点数据传给 VGa 显示 </p>
-<p>VGA 显示器扫描方式从屏幕左上角一点开始，从左向右逐点扫描，每扫描完一行，电子束回到屏幕的左边下一行的起始位置，在这期 间，CRT 对电子束进行消隐，每行结束时，用行同步信号进行同步，当扫描完所有的行，形成一帧，用场同步信号进行场同步，并使扫描回到屏幕左上方，同时进行场消隐，开始下一帧，完成一行扫描的时间称为水平扫描时间，其倒数称为行频率，完成一帧，扫描的时间称为垂直扫描时间，其倒数称为场频率，及屏幕的刷新频率，其扫描示意图如下图所示</p>
-<p>有效显示区域</p>
-<p>关于那一块非有效显示区域，实际上是因为每一行和每一列的扫描区间都是由以下几部分组成</p>
-<p>行扫描  Hor Sync 、Hor Back Porch 、Hor Active Video和Hor Front Porch</p>
-<p>Hor Scan Time 是一个扫描周期，它会先扫描到hor sync 再扫描 hor back porch 然后才进入有效显示区  hor active video 最后是一段 hor front porch 可以看出来，四段区间只有hor active video 这一段是能够正常显示图像信息的，也就是屏幕上显示的那一块区间</p>
-<p>列扫描也同理</p>
-<p>给定参数</p>
-<p>实际上，根据固定的分辨率大小，比如我们实验室的板子使用的640 480 的屏幕大小，这些非有效区间的长度值都是一个固定的常数，因此你只要在扫描的时候把这些常数稍加处理即可</p>
-<p>下图罗列了不同分辨率所对应的各个参数，其中的a、b、c、d、e、f、g、h、i、k的含义，与上面给出的两张图的标注一一对应；我们实验使用的是第一组数据，可以看到行时序参数中的c代表每一行的有效显示区间640，列时序参数中的h代表每一列的有效显示区间480</p>
-<p>需要扫描频率，很重要的一件事，无论是行扫描还是给像素点赋值，我们都需要用一个时钟，这个时钟不是系统时针，必须要先将50MHZ 的时钟分频为25MHZ 然后拿去作为扫描信号的时钟</p>
-<p>这一点是特别需要注意的，否则到时候会出现out of range 的现象</p>
-<p>前期准备 coe 文件的生成</p>
-<p>coe 和ip 核介绍</p>
-<p>我们调用VGA 的终极目标是想要能够显示一张图片，在这之前，我们要先对这张图片进行一些预处理，因为我们是通过verilog 语言去调用图片数据的，但是verilog 并不知道怎么从一张已有的图片上去取相应的数据</p>
-<p>因此我们要先将图片转换为coe 文件，coe 文件实际上就是按照某种规律将图像每一个像素点的rgb 数据都摆放成单独一行 16进制，然后借助ISE 的IP 核生成将coe 文件转化成ROM ，生成的ROM.xco 和ROM.v 文件就可以被verilog 语言所识别调用，最终就能够取到图像的数据了</p>
-<p>24位bmp 图像转换为coe 文件 复原代码</p>
-<p>为了统一规范，这里我们使用24位真彩色的bmp 格式图像进行转换，好处是，bmp 的三通道数据特征是非常明显的，易于处理</p>
-<p>如何获取24位bmp 图像 </p>
-<p>然后bmp 格式也有很多种，如单色 16色 24 256 ，这里我们统一选择24位位图选项，点击保存即可</p>
-<p>使用matlab 将24位真彩色bmp 位图转化为coe 文件 </p>
-<p>由于24位共rgb 三个通道，每个通道分到的是8位，占用资源太多，且老师给的ucf 引脚约束对rgb 每一个通道只给了4位，因此我们在转化为coe 文件的同时，要将每个通道压缩成4位，即整张图像同时转化为12位</p>
-<p>压缩图像是一件非常重要的事情，因为经过后续的实践我们发现，板子内存资源有限，无法同时加载多张大图</p>
-<p>为了能够对多张图像进行批量处理，我使用matlab 写了一个 img2coe.m 函数，只要对bmp 图像调用这个函数即可转换成coe 文件了，转换过程介绍如下</p>
-<p>先将rgb 提取为三个通道，用reshape 函数对转置后的矩阵进行重组，对rgb 三个分量的数据都右移，舍去细节，留下高四位作为最终的数据，然后写入到coe 文件中</p>
-<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">img2coe</span><span class="params">(path,name)</span></span></span><br><span class="line">    <span class="comment">% 利用imread函数把图片转化为一个三维矩阵</span></span><br><span class="line">    image_array = imread(path);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">% 利用size函数把图片矩阵的三个维度大小计算出来</span></span><br><span class="line">    <span class="comment">% 第一维为图片的高度，第二维为图片的宽度，第三维为图片的RGB分量</span></span><br><span class="line">    [height,width,z]=<span class="built_in">size</span>(image_array);   </span><br><span class="line"></span><br><span class="line">    red   = image_array(:,:,<span class="number">1</span>); <span class="comment">% 提取红色分量，数据类型为uint8</span></span><br><span class="line">    green = image_array(:,:,<span class="number">2</span>); <span class="comment">% 提取绿色分量，数据类型为uint8</span></span><br><span class="line">    blue  = image_array(:,:,<span class="number">3</span>); <span class="comment">% 提取蓝色分量，数据类型为uint8</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">% 把上面得到了各个分量重组成一个1维矩阵，由于reshape函数重组矩阵的</span></span><br><span class="line">    <span class="comment">% 时候是按照列进行重组的，所以重组前需要先把各个分量矩阵进行转置以后再重组</span></span><br><span class="line">    <span class="comment">% 利用reshape重组完毕以后，由于后面需要对数据拼接，所以为了避免溢出</span></span><br><span class="line">    <span class="comment">% 这里把uint8类型的数据扩大为uint32类型</span></span><br><span class="line">    r = uint32(<span class="built_in">reshape</span>(red&#x27;   , <span class="number">1</span> ,height*width));</span><br><span class="line">    g = uint32(<span class="built_in">reshape</span>(green&#x27; , <span class="number">1</span> ,height*width));</span><br><span class="line">    b = uint32(<span class="built_in">reshape</span>(blue&#x27;  , <span class="number">1</span> ,height*width));</span><br><span class="line"></span><br><span class="line">    <span class="comment">% 初始化要写入.coe文件中的RGB颜色矩阵</span></span><br><span class="line">    rgb=<span class="built_in">zeros</span>(<span class="number">1</span>,height*width);</span><br><span class="line"></span><br><span class="line">    <span class="comment">% 因为导入的图片是24-bit真彩色图片，每个像素占用24-bit，其中RGB分别占用8-bit</span></span><br><span class="line">    <span class="comment">% 而我这里需要的是12-bit，其中R为4-bit，G为4-bit，B为4-bit，所以需要在这里对24-bit的数据进行重组与拼接</span></span><br><span class="line">    <span class="comment">% bitshift()函数的作用是对数据进行移位操作，其中第一个参数是要进行移位的数据，第二个参数为负数表示向右移，为</span></span><br><span class="line">    <span class="comment">% 正数表示向左移，更详细的用法直接在Matlab命令窗口输入 doc bitshift 进行查看</span></span><br><span class="line">    <span class="comment">% 所以这里对红色分量先右移4位取出高4位，然后左移11位作为ROM中RGB数据的第11-bit到第8-bit</span></span><br><span class="line">    <span class="comment">% 对绿色分量先右移4位取出高4位，然后左移5位作为ROM中RGB数据的第7-bit到第4-bit</span></span><br><span class="line">    <span class="comment">% 对蓝色分量先右移4位取出高4位，然后左移0位作为ROM中RGB数据的第3-bit到第0-bit</span></span><br><span class="line">    <span class="keyword">for</span> <span class="built_in">i</span> = <span class="number">1</span>:height*width</span><br><span class="line">        rgb(<span class="built_in">i</span>) = bitshift(bitshift(r(<span class="built_in">i</span>),<span class="number">-3</span>),<span class="number">11</span>) + bitshift(bitshift(g(<span class="built_in">i</span>),<span class="number">-2</span>),<span class="number">5</span>) + bitshift(bitshift(b(<span class="built_in">i</span>),<span class="number">-3</span>),<span class="number">0</span>);</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">    fid = fopen( name , <span class="string">&#x27;w+&#x27;</span> );</span><br><span class="line"></span><br><span class="line">    <span class="comment">% .coe文件的最前面一行必须为这个字符串，其中16表示16进制</span></span><br><span class="line">    fprintf( fid, <span class="string">&#x27;memory_initialization_radix=16;\n&#x27;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">% .coe文件的第二行必须为这个字符串</span></span><br><span class="line">    fprintf( fid, <span class="string">&#x27;memory_initialization_vector =\n&#x27;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">% 把rgb数据的前 height*width-1  个数据写入.coe文件中，每个数据之间用逗号隔开</span></span><br><span class="line">    fprintf( fid, <span class="string">&#x27;%x,\n&#x27;</span>,rgb(<span class="number">1</span>:<span class="keyword">end</span><span class="number">-1</span>));</span><br><span class="line"></span><br><span class="line">    <span class="comment">% 把rgb数据的最后一个数据写入.coe文件中，并用分号结尾</span></span><br><span class="line">    fprintf( fid, <span class="string">&#x27;%x;&#x27;</span>,rgb(<span class="keyword">end</span>));</span><br><span class="line"></span><br><span class="line">    fclose( fid ); <span class="comment">% 关闭文件指针</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-
-
-<p>中期准备 coe 转换为rom </p>
-<p>经过上面的步骤我们已经得到了coe 文件</p>
-<p>接下来就是把它转化成verilog 能够调用的rom 文件了 </p>
-<p>在ISE 工程中，点击右键新建文件，选择ip 核生成 </p>
-<p>选择Memories选项中的RAMs&amp;ROMs里的Block Memory Generator</p>
-<p>然后进入到这个设置参数的界面</p>
-<p>其中width代表你设置的图片数据是几进制，由于之前写coe的时候是用16进制写的，因此这里写16；depth表示图像的大小，即长乘宽，由于我使用的是640<em>480的图片，因此这里填207200(&#x3D;640</em>480)</p>
-<p>当你的文件路径成功出现的时候，你就可以点击下方的generate生成了，当然这个generate也要很久很久，一般一张640 *480的图片要generate近一个小时左右才能生成</p>
-<p>生成完毕的标志是creating结束，并且在你的目录下出现类型太阳的这个标记</p>
-<p>后期调用与测试 </p>
-<p>VGA 显示的过程中会遇到很多小bug 有些小bug 的原因你根本找不出，比如 out of range ，你只能静下心来慢慢调试仿真</p>
  
       <!-- reward -->
       
