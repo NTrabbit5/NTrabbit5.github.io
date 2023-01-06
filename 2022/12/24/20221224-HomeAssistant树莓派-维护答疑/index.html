@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-CN">
+  
+
+    <head>
+      <meta charset="utf-8" />
+        
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1"
+      />
+      <title>20221224-HomeAssistant树莓派-维护答疑 |  TeX_baitu blog</title>
+  <meta name="generator" content="hexo-theme-ayer">
+      
+      <link rel="shortcut icon" href="/favicon.ico" />
+       
+<link rel="stylesheet" href="/dist/main.css">
+
+      
+<link rel="stylesheet" href="/css/fonts/remixicon.css">
+
+      
+<link rel="stylesheet" href="/css/custom.css">
+ 
+      <script src="https://cdn.staticfile.org/pace/1.2.4/pace.min.js"></script>
+       
+ 
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma@5.0.1/bulma.min.css"
+      />
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+
+      <!-- mermaid -->
+      
+      <style>
+        .swal2-styled.swal2-confirm {
+          font-size: 1.6rem;
+        }
+      </style>
+    </head>
+  </html>
+</html>
+
+
+<body>
+  <div id="app">
+    
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-20221224-HomeAssistant树莓派-维护答疑"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  20221224-HomeAssistant树莓派-维护答疑
+</h1>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/12/24/20221224-HomeAssistant%E6%A0%91%E8%8E%93%E6%B4%BE-%E7%BB%B4%E6%8A%A4%E7%AD%94%E7%96%91/" class="article-date">
+  <time datetime="2022-12-24T03:02:34.000Z" itemprop="datePublished">2022-12-24</time>
+</a>   
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">2k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">8 分钟</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+    <div class="tocbot"></div>
+
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>求人不如求己</p>
+<p>官网</p>
+<p>Home Assistant<br>Github</p>
+<p>Homebridge<br>Home Assistant<br>Homebridge-homeassistant<br>Homebridge-mi-aqara<br>Hassio 第三方源<br>HA-floorplan</p>
+<p>社群&amp;论坛</p>
+<p>个人主导的文档翻译 home assistant 中文文档 中文 </p>
+<p>个人相关 专题 slack 中文 </p>
+<p>ha 官方论坛 </p>
+<p>瀚思彼岸论坛 （中文）<br>HA 汉化参考文档（非官方，我参与部分翻译工作）</p>
+<h2 id="系统更新"><a href="#系统更新" class="headerlink" title="系统更新"></a>系统更新</h2><p>home assistant</p>
+<p>ha 的更新方法跟随安装方法各不相同，我在安装篇中均有涉及，这里特别提取出来，方便大家参考</p>
+<p>注意，为了保证国内用户的更新速度，我特别在更新指令中明确了pypi 源，海外的派友可以忽略，此外的以下命令均使用sudo 权限</p>
+<p>All-in-One<br>sudo systemctl stop home-assistant.service<br>sudo su -s &#x2F;bin&#x2F;bash homeassistant<br>source &#x2F;srv&#x2F;homeassistant&#x2F;homeassistant_venv&#x2F;bin&#x2F;activate<br>pip3 install –upgrade homeassistant -i <a target="_blank" rel="noopener" href="https://pypi.doubanio.com/simple/">https://pypi.doubanio.com/simple/</a><br>exit<br>sudo system start home-assistant.service<br>Hassbian<br>sudo systemctl stop <a href="mailto:&#x68;&#111;&#109;&#x65;&#x2d;&#97;&#115;&#x73;&#105;&#x73;&#x74;&#x61;&#110;&#116;&#64;&#x68;&#x6f;&#109;&#101;&#x61;&#115;&#x73;&#x69;&#x73;&#116;&#x61;&#x6e;&#x74;&#46;&#x73;&#x65;&#x72;&#118;&#105;&#x63;&#101;">&#x68;&#111;&#109;&#x65;&#x2d;&#97;&#115;&#x73;&#105;&#x73;&#x74;&#x61;&#110;&#116;&#64;&#x68;&#x6f;&#109;&#101;&#x61;&#115;&#x73;&#x69;&#x73;&#116;&#x61;&#x6e;&#x74;&#46;&#x73;&#x65;&#x72;&#118;&#105;&#x63;&#101;</a><br>sudo su -s &#x2F;bin&#x2F;bash homeassistant<br>source &#x2F;srv&#x2F;homeassistant&#x2F;bin&#x2F;activate<br>pip3 install –upgrade homeassistant -i <a target="_blank" rel="noopener" href="https://pypi.doubanio.com/simple/">https://pypi.doubanio.com/simple/</a><br>exit<br>sudo systemctl start <a href="mailto:&#x68;&#x6f;&#x6d;&#x65;&#45;&#97;&#115;&#115;&#105;&#115;&#x74;&#97;&#110;&#116;&#64;&#x68;&#111;&#x6d;&#x65;&#97;&#x73;&#115;&#x69;&#x73;&#116;&#x61;&#x6e;&#116;&#x2e;&#115;&#101;&#x72;&#x76;&#105;&#99;&#x65;">&#x68;&#x6f;&#x6d;&#x65;&#45;&#97;&#115;&#115;&#105;&#115;&#x74;&#97;&#110;&#116;&#64;&#x68;&#111;&#x6d;&#x65;&#97;&#x73;&#115;&#x69;&#x73;&#116;&#x61;&#x6e;&#116;&#x2e;&#115;&#101;&#x72;&#x76;&#105;&#99;&#x65;</a></p>
+<h3 id="homebridge"><a href="#homebridge" class="headerlink" title="homebridge"></a>homebridge</h3><p>hb 及其组件的更新是在node.js 框架内进行的，使用sudo npm upgrade -g 包名 相关命令即可完成，常用的包有</p>
+<p>homebridge<br>homebridge-yeelight<br>homebridge-mi-aqara<br>homebridge-homeassistant<br>homebridge-mi-acpartner<br>homebridge-mi-airpurifier<br>homebridge-mi-philips-light</p>
+<p>具体的配置方法可在github 里直接搜索插件名获取</p>
+<p>国内派友可以转用淘宝镜像源</p>
+<p>npm config set registry <a target="_blank" rel="noopener" href="https://registry.npm.taobao.org/">https://registry.npm.taobao.org</a></p>
+<p>日志监测</p>
+<p>系统日志是debug 的核心参考文件，希望大家遇到问题学会第一时间查看log ，定位问题，同时在向人提问时，附上相关的log ，也是良好的提问习惯</p>
+<p>当我们把 HB&amp;HA 添加进系统后台自启项目后，便可以直接通过systemctl 命令进行打开，关闭，重启、查询系统服务日志等一系列操作，常见的命令有</p>
+<p>启动 systemctl start 服务名<br>终止：systemctl stop 服务名<br>重启：systemctl restart 服务名<br>查询服务状态：systemctl status 服务名 -l<br>查询日志：journalctl -u 服务名<br>列出所有服务：systemctl list-unit-files –type&#x3D;service</p>
+<p>经常使用的服务有</p>
+<p>homebridge<br>home-assistant.service (Raspbian)<br><a href="mailto:&#x68;&#111;&#x6d;&#x65;&#45;&#x61;&#115;&#x73;&#105;&#x73;&#116;&#x61;&#110;&#x74;&#x40;&#104;&#x6f;&#109;&#101;&#x61;&#115;&#115;&#105;&#x73;&#116;&#x61;&#110;&#x74;&#x2e;&#x73;&#101;&#114;&#118;&#x69;&#x63;&#x65;">&#x68;&#111;&#x6d;&#x65;&#45;&#x61;&#115;&#x73;&#105;&#x73;&#116;&#x61;&#110;&#x74;&#x40;&#104;&#x6f;&#109;&#101;&#x61;&#115;&#115;&#105;&#x73;&#116;&#x61;&#110;&#x74;&#x2e;&#x73;&#101;&#114;&#118;&#x69;&#x63;&#x65;</a> (Hassbian)<br><a href="mailto:&#x61;&#x70;&#112;&#x64;&#x61;&#101;&#x6d;&#x6f;&#x6e;&#x40;&#97;&#x70;&#112;&#x64;&#x61;&#x65;&#109;&#x6f;&#x6e;&#46;&#115;&#101;&#x72;&#x76;&#x69;&#x63;&#x65;">&#x61;&#x70;&#112;&#x64;&#x61;&#101;&#x6d;&#x6f;&#x6e;&#x40;&#97;&#x70;&#112;&#x64;&#x61;&#x65;&#109;&#x6f;&#x6e;&#46;&#115;&#101;&#x72;&#x76;&#x69;&#x63;&#x65;</a> (HADashborad)<br>samba (SMB)</p>
+<p>另外还可以使用下述指令追踪所有服务日志，tail -F &#x2F;var&#x2F;log&#x2F;daemon.log</p>
+<p>除了通过systemctl 查询日志，ha 查看日志的方法比较锁阳，最直观的就是在系统前端的dev-info 面板查看，日志文件放在配置文件所在的文件夹中，home-assistant.log 文件便是，HB 如若手动开启，默认在终端中滚动显示实时日志</p>
+<p>Q&amp;A<br>HB 端口被占用</p>
+<p>events.js:160 throw er; &#x2F;&#x2F; Unhandled ‘error’ event ^ Error: listen EADDRINUSE :::51826 at Object.exports._errnoException</p>
+<p>出现上述错误的原因是用户在添加 HB 为自启任务的情况下，手动开启 HB。通俗来说就是你在同一端口试图开启 2 个 HB，因此显示端口被占用。</p>
+<p>解决办法就是无需重复开启 HB，直接使用上面提及的指令重启已开启的 HB 服务即可；或者关闭已开启的 HB，再使用 homebridge 手动开启新的 HB 服务。</p>
+<p>成功安装 HB + HA 并在家庭 app 添加“桥”后，显示无设备</p>
+<p>这是由于 HB-HA 插件更新导致的，最新的插件中，HB 的 config.json配置文件增加了一项设置 “default_visibility”:”visible”，在 2.3.1 版本前默认是隐藏的，因此就出现了所有设备被隐藏的情况。解决方法非常简单，将 HB-HA 插件更新到最新版本即可，默认会自动添加以上指令，大家也可以手动添加。</p>
+<p>HA 配置文件格式错误</p>
+<p>需要再次提醒的是，yaml文档非常强调代码的格式，因此请大家额外重视空格、换行、-号的使用。一般来说，在最新 HA 系统中，如果配置文件格式出现错误，首页中会出现如下提示：</p>
+<p>null<br>同时结合 Log，可以快速定位出错的位置。</p>
+<p>格式正确，无法添加小米网关</p>
+<p>很多情况下，这表明你的格式并不正确 ：（ ，常见的错误有：</p>
+<p>key 大小写问题<br>mac 的 : 号问题</p>
+<p>另，小米平台在 0.53 之后的更新中统一为 2 个 接入方式：Zigbee 设备统一使用 xiaomi_aqara；WiFi 设备统一使用 xiaomi_miio，请注意区别。</p>
+<p>设备在家庭 app 中重复出现</p>
+<p>出现此错误的原因是用户将同一设备同时接入了 HA 和 HB，那么 Homekit 就会通过 HB-HA 插件识别一次设备，后再通过 HB 的其他相关插件识别一次设备，最终导致重复识别添加。</p>
+<p>解决方法就是在 HA 配置文件 configuration.yaml的 customize模块中找到对应设备，添加 homebridge_hidden: true 设置，之后重启 HA、HB 服务即可。如果仍未生效，请清除 HB 缓存后重试。 更具体的设置方法，欢迎参考系列的”个性化配置篇”</p>
+<p>平面图在 iOS 及 macOS 中显示 script error</p>
+<p>由于之前代码未跟进 Polymer 2.0 框架，导致 Apple Webkit 载入错误。目前作者已经修复了这个问题，请大家前往 Github 下载最新的源码。</p>
+<p>HA 或者 HB 配置文件进行改动后，没有生效<br>如果你在 HA 进行了有关 HB 的配置变更，如设置 homebridge_hidden 等属性或者对 HB 的 config.json 文件进行了修改。修改后首先需要做的是重启 HB，清除 iOS 家庭 app 的后台。重新打开 app，如若发现配置尚未生效，就需要考虑清除 HB 的缓存：</p>
+<p>sudo rm -rf &#x2F;home&#x2F;pi&#x2F;.homebridge&#x2F;persist&#x2F;<br>需要注意的是清除缓存将导致先前所有在家庭 app 内的分组命名等操作失效。<br>之后重启 HB，配置应该就如期生效了。</p>
+<p>在 HB 中删除“桥”后无法再添加或嗅探到<br>发生此问题的原因是，系统已经对你的设备和配置有了记忆，因此需要删除有关缓存。<br>首先，使用和 『问题7』同样的操作，清理 HB 缓存，重开 APP，确认是否可以添加。<br>如果该方法依旧不能解决问题，则打开 HB 的配置文件 config.json，将开头的 username 项类似 mac 地址的字符串更改几个数字，之后同样清除缓存，重启 HB，重开 app。</p>
+<p>Apple Home 可以实现外网控制吗?<br>可以，实现外网控制需要一台处于内网环境下的 Apple TV （3代及以上）或者 iPad 当做『家庭中枢』。如果需要使用 家庭 App 自带的『自动化设置』功能，则只有 第 4 代 Apple TV 支持。</p>
+<p>安装不完整导致 dns 服务器错误<br>如果启动 HB 后遇到如下错误：</p>
+<p>module.js:328<br>    throw err;<br>    ^</p>
+<p>Error: Cannot find module ‘..&#x2F;build&#x2F;Release&#x2F;dns_sd_bindings’<br>    at Function.Module._resolveFilename (module.js:326:15)<br>    at Function.Module._load (module.js:277:25)<br>    at Module.require (module.js:354:17)<br>    at require (internal&#x2F;module.js:12:17)<br>    at Object.<anonymous> (&#x2F;usr&#x2F;local&#x2F;lib&#x2F;node_modules&#x2F;homebridge&#x2F;node_modules&#x2F;mdns&#x2F;lib&#x2F;dns_sd.js:32:22)<br>    at Module._compile (module.js:410:26)<br>    at Object.Module._extensions..js (module.js:417:10)<br>    at Module.load (module.js:344:32)<br>    at Function.Module._load (module.js:301:12)<br>    at Module.require (module.js:354:17)<br>请操作如下指令：</p>
+<p>cd &#x2F;usr&#x2F;local&#x2F;lib&#x2F;node_modules&#x2F;homebridge<br>sudo npm install –unsafe-perm mdns<br>sudo npm rebuild –unsafe-perm<br>以上是比较普遍出现在派友中的问题，我也将不断更新，大家亦可通过评论及其他渠道反映个人遇到的困难。</p>
+ 
+      <!-- reward -->
+      
+      <div id="reword-out">
+        <div id="reward-btn">
+          打赏
+        </div>
+      </div>
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>版权声明： </strong>
+          
+          本博客所有文章除特别声明外，著作权归作者所有。转载请注明出处！
+          
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://example.com/2022/12/24/20221224-HomeAssistant%E6%A0%91%E8%8E%93%E6%B4%BE-%E7%BB%B4%E6%8A%A4%E7%AD%94%E7%96%91/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>  
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2022/12/24/20221224-HomeAssistant%E6%A0%91%E8%8E%93%E6%B4%BE-%E5%8A%A8%E6%80%81%E5%B9%B3%E9%9D%A2%E5%9B%BE/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            20221224-HomeAssistant树莓派-动态平面图
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2022/12/22/20221222-python%EF%BC%9APIL%E5%BA%93%E4%B8%ADgetpixel%E6%96%B9%E6%B3%95%E7%9A%84%E4%BD%BF%E7%94%A8/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">20221222-python：PIL库中getpixel方法的使用</div>
+      </a>
+    
+  </nav>
+
+  
+   
+    
+    <script src="https://cdn.staticfile.org/twikoo/1.4.18/twikoo.all.min.js"></script>
+    <div id="twikoo" class="twikoo"></div>
+    <script>
+        twikoo.init({
+            envId: ""
+        })
+    </script>
+ 
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2015-2023
+        <i class="ri-heart-fill heart_icon"></i> TeX_baitu
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+        
+        <span>
+  <span><i class="ri-user-3-fill"></i>访问人数:<span id="busuanzi_value_site_uv"></span></span>
+  <span class="division">|</span>
+  <span><i class="ri-eye-fill"></i>浏览次数:<span id="busuanzi_value_page_pv"></span></span>
+</span>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+        <script type="text/javascript" src='https://s9.cnzz.com/z_stat.php?id=1278069914&amp;web_id=1278069914'></script>
+        
+      </li>
+    </ul>
+  </div>
+</footer>    
+    </main>
+    <div class="float_btns">
+      <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+    </div>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/ayer-side.svg" alt="TeX_baitu blog"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags/%E6%97%85%E8%A1%8C/">旅行</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" target="_blank" rel="noopener" href="http://shenyu-vip.lofter.com">摄影</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/friends">友链</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/2019/about">关于我</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="搜索">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-3.6.0.min.js"></script>
+ 
+<script src="/js/lazyload.min.js"></script>
+
+<!-- Tocbot -->
+ 
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  tocbot.init({
+    tocSelector: ".tocbot",
+    contentSelector: ".article-entry",
+    headingSelector: "h1, h2, h3, h4, h5, h6",
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: "main",
+    positionFixedSelector: ".tocbot",
+    positionFixedClass: "is-position-fixed",
+    fixedSidebarOffset: "auto",
+  });
+</script>
+
+<script src="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.js"></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.css"
+/>
+<script src="https://cdn.staticfile.org/justifiedGallery/3.8.1/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+ <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/default-skin/default-skin.min.css">
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script> 
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+ 
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+ 
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+<!-- CodeCopy -->
+ 
+<link rel="stylesheet" href="/css/clipboard.css">
+ <script src="https://cdn.staticfile.org/clipboard.js/2.0.10/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+ 
+<!-- CanvasBackground -->
+
+<script>
+  if (window.mermaid) {
+    mermaid.initialize({ theme: "forest" });
+  }
+</script>
+
+
+    
+    
+
+  </div>
+</body>
+
+</html>

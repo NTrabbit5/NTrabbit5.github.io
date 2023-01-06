@@ -126,7 +126,7 @@
     
     
     <article
-  id="post-20221217-低功耗蓝牙BLE学习笔记"
+  id="post-20221222-HomeAssistant树莓派-Haio篇"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -137,8 +137,8 @@
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2022/12/17/20221217-%E4%BD%8E%E5%8A%9F%E8%80%97%E8%93%9D%E7%89%99BLE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"
-    >20221217-低功耗蓝牙BLE学习笔记</a> 
+  <a class="article-title" href="/2022/12/22/20221222-HomeAssistant%E6%A0%91%E8%8E%93%E6%B4%BE-Haio%E7%AF%87/"
+    >20221222-HomeAssistant树莓派-Haio篇</a> 
 </h2>
  
 
@@ -146,263 +146,638 @@
     </header>
      
     <div class="article-meta">
-      <a href="/2022/12/17/20221217-%E4%BD%8E%E5%8A%9F%E8%80%97%E8%93%9D%E7%89%99BLE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="article-date">
-  <time datetime="2022-12-17T04:38:23.000Z" itemprop="datePublished">2022-12-17</time>
+      <a href="/2022/12/22/20221222-HomeAssistant%E6%A0%91%E8%8E%93%E6%B4%BE-Haio%E7%AF%87/" class="article-date">
+  <time datetime="2022-12-22T04:46:15.000Z" itemprop="datePublished">2022-12-22</time>
 </a>    
     </div>
       
     <div class="article-entry" itemprop="articleBody">
        
-  <p><a target="_blank" rel="noopener" href="http://doc.iotxx.com/BLE%E6%8A%80%E6%9C%AF%E6%8F%AD%E7%A7%98">http://doc.iotxx.com/BLE%E6%8A%80%E6%9C%AF%E6%8F%AD%E7%A7%98</a></p>
-<p>蓝牙4.0 版本分两种模式，单模蓝牙 和双模蓝牙</p>
-<p>常见的蓝牙音箱，是典型的双模蓝牙，它需要传输大量的音频数据，而小米手环，蓝牙温度计则属于单模蓝牙，行业里一般不讲单模蓝牙，而是统一称为低功耗蓝牙</p>
-<p>蓝牙5.0 已经发布和应用，4倍通信速度，2倍的通信距离以及Mesh 组网特性，将使蓝牙成为物联网领域的重要的技术之一</p>
-<ol>
-<li>蓝牙简介</li>
-</ol>
-<p>蓝牙是一种近距离无线通信技术，运行在2.4GHz免费频段，目前已大量应用于各种移动终端，物联网，健康医疗，智能家居等行业。蓝牙4.0以后的版本分为两种模式，单模蓝牙和双模蓝牙。</p>
-<p>单模蓝牙  即低功耗蓝牙模式，是蓝牙4.0 中的重点技术，低功耗，块连接，长距离</p>
-<p>双模蓝牙，支持低功耗蓝牙的同时还兼容经典蓝牙，经典蓝牙的特点是大数据高速率，例如音频、视频等数据传输。</p>
-<p>经典蓝牙支持音频（HFP&#x2F;HSP, A2DP）和数据（SPP, HID等）两大类协议，在音箱，耳机，汽车电子及传统数传行业，由于苹果对经典蓝牙数据传输接口有限制（需要过MFI认证），加上功耗偏大，因此在目前移动互联应用中慢慢地被边缘化。因此低功耗蓝牙顺势而出，由于可支持苹果4S以上及安卓4.3系统以上的数据传输，且功耗极低，目前正在被越来越多的移动互联设备所采用，但低功耗蓝牙不支持音频协议，并且受数据传输速度限制，其应用也被限制在小数据传输行业。</p>
-<p>蓝牙双模则是综合了两者的优缺点，既可以支持音频传输，同样可支持数据传输，并且兼容性也是两者之和，在对功耗要求不苛刻的情况下，是比较理想的选择</p>
-<p>2 BLE特点</p>
-<p>低功耗蓝牙瞄准多个市场，特别是移动智能终端，智能家居，互联设备等领域，主要特点包括</p>
-<p>低功耗<br>快连接<br>远距离</p>
-<p>为低功耗蓝牙定义了一些标准Profile ，Profile 理解为数据规范，只要遵守该规范，任意厂家的蓝牙设备，均可以相互连接与通信，例如无线蓝牙键盘鼠标，无论是安卓或是iOS还是Windows，均是即插即用，这便是“标准”的力量。低功耗蓝牙支持的标准Profile有：</p>
-<p>HID 用于无线鼠标，键盘或其他遥控设备</p>
-<p>BatteryServices 电池状态服务，用于告知电池电量状态</p>
-<p>HRP 心率计，Profile 用于心率 采集，等等</p>
-<p>另外，低功耗蓝牙还可以自定义Profile ，伴随着智能手机的发展和普及，低功耗蓝牙的这个特性得到了发扬光大，同时也拓宽了低功耗蓝牙的应用领域。例如，可以自定义一个开关量的Profile，数据01表示开灯，数据00表示关灯，然后手机发送数据01和00就可以控制灯的亮和灭。类似的应用案例有很多，下面总结应用特点</p>
-<p>支持自定义Profile ，可以收发任意格式的数据，如01 和 00<br>支持自定义设备，支持任意设备的连接和通信，例如 只能蓝牙插座等等</p>
-<p>提示：低功耗蓝牙的Profile均基于GATT（通用属性规范，后面会详解）之上，如HID over GATT。也就是说，经典蓝牙中的HID规范与低功耗蓝牙中的HID规范用的是两个不同的通道。</p>
-<p>BLE 工作流程<br>为后面的低功耗蓝牙协议的学习准备基础</p>
-<p>角色</p>
-<p>BLE 设备角色主要分为两种角色，主机和从机，，当主机和从机建立连接之后才能相互收发数据</p>
-<p>主机，主机可以发起对从机的扫描连接，例如手机，通常作为BLE 的主机设备</p>
-<p>从机，从机只能广播并等待主机的连接，例如智能手环，是作为BLE 的从机设备</p>
-<p>另外还有观察者和广播者，这两种角色不常使用，但也十分有用，例如iBeacon 就可以使用广播者 角色来做，只需要广播特定内容即可</p>
-<p>观察者，观察者角色监听空中的广播事件，和主机的区别是不能发起连接，只能持续扫描从机</p>
-<p>广播者 广播者可以持续广播信息，和从机的唯一区别是不能被主机连接，只能广播数据</p>
-<p>蓝牙协议栈没呀限制设备的角色范围，同一个BLE 设备，可以作为主机，也可以作为从机，我们称之为主从一体，主从一体的好处是，每个BLE 设备都是对等的，可以发起连接，也可以被别人连接，更加实用</p>
-<p>广播</p>
-<p>广播是指从机没经过一个时间间隔发送一次广播数据包，这个时间间隔称为广播间隔，这个广播动作叫做广播事件，只有当从机处于广播状态时，主机从能发现该从机</p>
-<p>在每个广播事件中，广播包会分别在37 38 和 39 三个信道上依次广播，如下所示</p>
-<p>广播时间间隔的范围是从20ms到10.24s，广播间隔影响建立连接的时间。广播间隔越大，连接的时间越长。</p>
-<p>另外BLE 链路层会在两个广播事件之间添加0-10 ms 的随机演示，保证多个设备广播时，不会一直碰撞广播，也就是说，设置100ms 的广播间隔，实际上两次广播事件的时间间隔可能是100-110 ms 之间的任意时间</p>
-<p>广播数据包最多能携带31个字节的数据，一般包含可读的设备名称，设备是否可连接等信息</p>
-<p>当主机收到从机广播的数据包后，它可以再发送获取更多数据包的请求，这个时候从机将广播 扫描回应 数据包，扫描回应数据包和广播包一样，可以携带31个字节的数据</p>
-<p>提示：蓝牙4.x，广播有效载荷最多是31个字节。而在蓝牙5.0中，通过添加额外的广播信道和新的广播PDU，将有效载荷增加到了255个字节</p>
+  <p>简单比较一下安装hass 的三种方法，hassbian 和all-in-one 所安装的hass 都是基于本身的系统框架化运行的，因此拥有原生系统的功能、参考文档等一切，你可以理解为买了一栋公寓里的一套房间，而hass.io 则是独立的系统，一切全部依靠图形界面操作，你所能接触的文档权限非常有限，就像你虽然拥有一幢楼，但是装修得按着别人的规划走。特别是出现问题时，只能从 Hass 官网和社群寻找支持。</p>
+<p>安装</p>
+<p>hass.io 是ha 官方与reinos 合作推出的系统</p>
+<p>使用 Etcher 等应用将系统烧录至内存卡，将卡插入树莓派中，保证树莓派处于联网状态。<br>由于安装资源需要全程连接 外网下载，</p>
+<p>如要设置 wifi 连接，请打开存储卡目录下system-connections&#x2F;resin-sample 文件，使用编译器编译</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[connection]</span></span><br><span class="line"><span class="attr">id</span>=resin-wifi</span><br><span class="line"><span class="attr">type</span>=wifi</span><br><span class="line"></span><br><span class="line"><span class="section">[wifi]</span></span><br><span class="line"><span class="attr">hidden</span>=<span class="literal">true</span></span><br><span class="line"><span class="attr">mode</span>=infrastructure</span><br><span class="line"><span class="attr">ssid</span>=你的WIFI SSID</span><br><span class="line"></span><br><span class="line"><span class="section">[ipv4]</span></span><br><span class="line"><span class="attr">method</span>=auto</span><br><span class="line"></span><br><span class="line"><span class="section">[ipv6]</span></span><br><span class="line"><span class="attr">addr-gen-mode</span>=stable-privacy</span><br><span class="line"><span class="attr">method</span>=auto</span><br><span class="line"></span><br><span class="line"><span class="section">[wifi-security]</span></span><br><span class="line"><span class="attr">auth-alg</span>=open</span><br><span class="line"><span class="attr">key-mgmt</span>=wpa-psk</span><br><span class="line"><span class="attr">psk</span>=你的 WIFI 密码</span><br></pre></td></tr></table></figure>
+
+<p>附加功能</p>
+<p>hass.io 的核心就在于高度简化配置过程，尽量使用全图形化操作，插件的安装也是如此</p>
+<p>点击左侧栏 hass.io  我们便进入了附加功能安装面板，HA 老用户发现对比其他版本HA 增加了自动化 和hass.io 面板，而后者就是hass.io 的插件管理界面，你可以在此安装官方提供的插件，也可以添加插件源安装其他用户分享或自己制作的插件，十分便捷方便</p>
+<p>下面我们使用操作面板安装 samba 功能，实现hass 和电脑的文件共享</p>
+<p>SMB 如此重要，自然 hass.io 原生内置了安装入口，在插件安装面板下拉找到 samba share ，点击进入安装界面，而后再点击 install ，等到小圈不转了，一切就大功告成了，</p>
+<p>安装完成后，便会出现info 和options 卡片</p>
+<p>首先，建议在info 中打开自动更新，接着我们来详细看看options 中的配置</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;workgroup&quot;</span><span class="punctuation">:</span> <span class="string">&quot;WORKGROUP&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;hassio&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;guest&quot;</span><span class="punctuation">:</span> <span class="keyword">true</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;map&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;config&quot;</span><span class="punctuation">:</span> <span class="keyword">true</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;addons&quot;</span><span class="punctuation">:</span> <span class="keyword">true</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;ssl&quot;</span><span class="punctuation">:</span> <span class="keyword">false</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;share&quot;</span><span class="punctuation">:</span> <span class="keyword">true</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;backup&quot;</span><span class="punctuation">:</span> <span class="keyword">true</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;username&quot;</span><span class="punctuation">:</span> <span class="string">&quot;&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;password&quot;</span><span class="punctuation">:</span> <span class="string">&quot;&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;interface&quot;</span><span class="punctuation">:</span> <span class="string">&quot;eth0&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>变量说明 汉化官方文档，原文地址</p>
+<p>name (可选): 用户名，默认值 hassio。<br>workgroup (可选): 用户组，默认值 WORKGROUP。<br>guest (可选): 是否允许客人用户（无用户名无密码）默认值 true。<br>map (可选): 开放文件夹，默认值 all，即全部开放。可选有 config，addons，share，backup，ssl。<br>username (可选): 登录用户名。<br>password (可选): 登录密码。<br>interface (可选): 开放接口，有线网连接使用 eth0，无线网连接使用 wlan0。</p>
+<p>按需更改配置后，点击save 保存，再点击start，你的SMB 服务就启动了，并且自动加入了自启服务</p>
+<p>通过SMB 的设置，相信你对在hass.io  中安装附加功能 add-on 有了一定了解，官方提供的插件列表见此，大家可以根据说明按需安装</p>
+<p>这里推荐安装SMB SSH 及Bluetooth BCM43xx 可以使你更安逸地使用hass.io </p>
+<p>使用apple 终端，对使用homekit 控制智能家居设备有需求的朋友不少，因此接下来特别介绍一下 homebridge 插件 的安装方法，希望大家可以借此掌握安装第三方源插件的方法</p>
+<p>homebridge</p>
+<p>最早提供hb 安装的源已经不再维护，我已替换为其他保持更新的第三方源，</p>
+<p>安装附加功能后，你的HA 环境就和其他方法安装的ha 基本一致了，有关设备的接入、个性化配置等，欢迎参考系列的其他文章，老用户可以直接复制粘贴原 configuration.yaml 配置文件，但需特别注意添加 Discovery: 服务。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-20221220-HomeAssistant树莓派-个性化配置"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/12/20/20221220-HomeAssistant%E6%A0%91%E8%8E%93%E6%B4%BE-%E4%B8%AA%E6%80%A7%E5%8C%96%E9%85%8D%E7%BD%AE/"
+    >20221220-HomeAssistant树莓派-个性化配置</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/12/20/20221220-HomeAssistant%E6%A0%91%E8%8E%93%E6%B4%BE-%E4%B8%AA%E6%80%A7%E5%8C%96%E9%85%8D%E7%BD%AE/" class="article-date">
+  <time datetime="2022-12-20T06:43:21.000Z" itemprop="datePublished">2022-12-20</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>yaml 特别重视语法格式，之前很多派友出错也是因为格式不正确，请大家在配置时务必额外注意缩进、冒号、横短线的使用</p>
+<h2 id="页面结构"><a href="#页面结构" class="headerlink" title="页面结构"></a>页面结构</h2><p>开始具体配置教程前，我们需要先了解一下ha 主页的页面构成，方便之后更快理解配置指向对象，</p>
+<p>这里使用HA 公开的参考配置图作说明</p>
+<p>由图可知，HA 主页的左侧栏集中了所有面板的入口，默认主页即state 面板<br>该面板中由上至下依次包括 工具栏，标签栏，徽章栏及由设备卡片及灰色空白区组成的主区域</p>
+<p>当我们新接入一个设备，如果是带有开关属性可控制的、监控摄像头、媒体播放器等设备，HA 会自动为其生成一张卡片，而其他仅有信息展示属性的设备，比如温度、适度、人体传感器、设备在线状态等）则会生成徽章集中在头部</p>
+<p>HA 提供了以上所有元素的个性化配置，本篇教程将重点讲述设备、组群、主题三项配置方法，能满足大部分的用户浅层的配置需求</p>
+<p>设备自定义</p>
+<p>本文开头提到的那些看起来乱码的名称，其实是HA 中的entity ID 该ID 具有唯一性，是HA 系统区别设备的代号，点击侧边栏 下&lt;&gt; 进入开发者states 面板，便可以获得所有接入设备的entity id</p>
+<p>当然，代号是给计算机读的，并不适合展示于人，接下来我们就来学习如何对设备进行基本配置，解决乱糟糟的界面</p>
+<p>对设备进行自定义设置，请在homeassistant 下新增 customize 块，请特别注意代码的层级</p>
+<p>以上设备所需最常见的属性设置，更多设置请参考官方文档</p>
+<p>初步设置后，相信你的界面已经有了不少改变</p>
+<h2 id="组群管理"><a href="#组群管理" class="headerlink" title="组群管理"></a>组群管理</h2><p>随着更多的设备接入，我们不难发现主页面开始渐失逻辑性和层次性，这时候就需要引入组群管理</p>
+<p>顾名思义，组群管理就是将一系列的设备，场景等组合在一起形成组群 group 比如，可将卧室内的所有设备集中为卧室群组，或者将所有灯集中为 灯 群组，通过配置组群，可以让我们的ha 界面清晰明了，方便操作</p>
+<p>同样我们在configuration.yaml 文件中添加如下配置，主义与homeassistant 平级</p>
+<p>homeassistant: #此项为展示平级用，勿照搬<br>  name: Home<br>  unit_system: metric<br>group:<br>  default_view: #群组名称，必须为英文，空格使用 _ 代替<br>    name: Climate #昵称，可中文<br>    view: yes #是否以标签页形式展示，默认为是<br>    icon: mdi:home #图标<br>    entities: #组内设备<br>      - group.kitchen<br>      - group.awesome_people<br>      - group.climate<br>    control: #当群组内有多个可控制设备时，是否显示总控制开关</p>
+<p>我们通过群组管理，可以将非控制类设备由徽章转化为卡片内项，避免了主页面一排徽章的窘境</p>
+<p>代码整洁</p>
+<p>我们在进行个性化配置中，满足了界面的简洁需求，但是同时也应该注意到随着设置的不断增多，configuration.yaml的内容也不断增加，整个文件显得十分臃肿。这时候我们需要内外兼修，将设备个性化等较长的配置独立出来，形成文件，再接入 configuration.yaml。</p>
+<p>比如，我们在 HA 配置文件夹内新建 customize.yaml 和 group.yaml 文件，把对应内容复制进去：</p>
+<p>customize.yaml：<br>thermostat.family_room: #entity_ID<br>    entity_picture: <a href="https://example.com/images/nest.jpg">https://example.com/images/nest.jpg</a> #图片<br>    icon: mdi:kettle #图标，来自 <a target="_blank" rel="noopener" href="https://materialdesignicons.com/">https://materialdesignicons.com/</a><br>    #图标和图片只能选择一个配置<br>    friendly_name: Nest #昵称，显示在主页面<br>    hidden: true #是否隐藏<br>    homebridge_hidden: true #是否在 Homebridge中隐藏，避免 HB 重复添加设备<br>group.yaml:<br>default_view: #群组名称，必须为英文，空格使用 _ 代替<br>  name: Climate #昵称，可中文<br>  view: yes #是否以标签页形式展示，默认为是<br>  icon: mdi:home #图标<br>  entities: #组内设备<br>    - group.kitchen<br>    - group.awesome_people<br>    - group.climate<br>  control: #当群组内有多个可控制设备时，是否显示总控制开关<br>注意直接复制内容，无须 group 或 customize 前缀，顶格写起。</p>
+<p>之后在configuration.yaml 使用!include xxxx.yaml 进行调用</p>
+<p>homeassistant:<br>  customize: !include customize.yaml<br>group: !include group.yaml</p>
+<p>这样我们就能保持配置文件的整洁和逻辑性</p>
+<p>主题</p>
+<p>主题是HA 在0.49.2 更新中加入的功能，支持配置大部分ui 中的字体，颜色等css 值，<br>。最新 0.51.2 版本中已经添加对背景色替换的支持，也意味着黑暗模式终于得以实现。</p>
+<p>配置主题需要两个步骤，一为添加配置文件，二为调用主题。</p>
+<p>首先是添加配置文件，主题应在 frontend块内进行配置：</p>
+<p>frontend:<br>  themes:<br>    night: #主题名称，英文<br>      # 主界面 #<br>      primary-color: “#1DE9B6” # 主 UI 字体颜色<br>      primary-background-color: “#303030” # 其他部件背景色 (dialogs, e.t.c)<br>      secondary-background-color: “#303030” # 主 UI 背景颜色<br>      paper-card-background-color: “#424242” # 卡片背景颜色<br>      paper-item-icon-color: “#1DE9B6” # Icon colour<br>      primary-text-color: “#FFFFFF” # 首选字体颜色<br>      secondary-text-color: “rgba(255, 255, 255, 0.7)” # 次字体颜色<br>      disabled-text-color: “rgba(255, 255, 255, 0.5)” # Disabled text colour<br>      divider-color: “rgba(255, 255, 255, 0.12)” # Divider colour<br>      paper-card-header-color: “#FFFFFF” # 卡片标题颜色</p>
+<pre><code>  # 侧边栏 #
+  paper-listbox-background-color: &quot;#424242&quot; # 背景色
+  paper-listbox-color: &quot;#FFFFFF&quot; # 字体色
+  paper-grey-200: &quot;#616161&quot; # 选中项背景色
+
+  # 开关 #
+  paper-toggle-button-checked-ink-color: &quot;#1DE9B6&quot;
+  paper-toggle-button-checked-button-color: &quot;#1DE9B6&quot;
+  paper-toggle-button-checked-bar-color: &quot;#1DE9B6&quot;
+
+  # Sliders #
+  paper-slider-knob-color: &quot;#1DE9B6&quot;
+  paper-slider-knob-start-color: &quot;#1DE9B6&quot;
+  paper-slider-pin-color: &quot;#1DE9B6&quot;
+  paper-slider-active-color: &quot;#1DE9B6&quot;
+  paper-slider-secondary-color: &quot;#33F2D8&quot;
+</code></pre>
+<p>具体可设置的对象有数十个，</p>
+<p>以上主题摘自 ha 官方论坛的网友分享</p>
+<p>主题配置后就是调用了，这里有3种方法</p>
+<p>手动调用，打开左下角service 面板，由上至下依次选择<br>frontend - set_theme，之后填入{“name”:”主题名称”}，最后点击 call_service。</p>
+<p>在这里，我们也可以进行 home assistant 的重启</p>
+<p>手动调用 ，打开左侧面板  选择configuration </p>
+<p>右侧点击configuration.yaml按钮 - 下方 Set A theme 选择你要的主题 - 即时生效</p>
+<p>自动调用，这里预习一下将学习的自动化知识吧</p>
+<p>在 configuration.yaml 文件中添加如下配置，注意与 homeassistant平级：</p>
+<p>automation:</p>
+<ul>
+<li><p>alias: ‘Set theme at startup’<br>initial_state: ‘on’<br>trigger:</p>
+<ul>
+<li>platform: homeassistant<br>event: start<br>action:<br>  service: frontend.set_theme</li>
+</ul>
+<p>  data:<br>    name: happy #主题名称</p>
+</li>
+</ul>
+<p>相信到这里，大家的ha 界面已经楚楚动人了，</p>
+<p>HA 除了预设的个性化配置甚至还提供了自定义卡片，自定义面板 等等接口，你可以在卡片中显示徽章，可以使用全文字面板控制设备甚至可以修改硬核代码实现各种动态效果，简直是促使程序员们脑洞大开</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-20221220-HomeAssistant树莓派-高级篇一"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/12/20/20221220-HomeAssistant%E6%A0%91%E8%8E%93%E6%B4%BE-%E9%AB%98%E7%BA%A7%E7%AF%87%E4%B8%80/"
+    >20221220-HomeAssistant树莓派-高级篇一</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/12/20/20221220-HomeAssistant%E6%A0%91%E8%8E%93%E6%B4%BE-%E9%AB%98%E7%BA%A7%E7%AF%87%E4%B8%80/" class="article-date">
+  <time datetime="2022-12-20T05:29:42.000Z" itemprop="datePublished">2022-12-20</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>本篇简短教程姑且一步登天，和各位程序员 讨论如何活用HA 中强大的command line 组件以快速实现期望的功能</p>
+<p>初学乍练</p>
+<p>HA 之中接入一个设备往往需要经由 平台 组件，这一流程，过程十分繁琐，有时我们只是想运行一些简单的python代码，或者只是想测试一下效果，因此完全没有必要特别去创建平台</p>
+<p>HA 为此特别提供了名为command line 的传感器组件，这个强无敌的组件能让你在ha 中运行任何支持该平台的命令，还可以显示输出结果</p>
+<p>同其他传感器一样，使用command line 只需在configuration.yaml 中添加如下配置</p>
+<p>sensor:</p>
+<ul>
+<li>platform: command_line<br>command: SENSOR_COMMAND<br>HA 官方给出了一些简单的应用例子，我们不妨来看一下：</li>
+</ul>
+<p>显示CPU温度</p>
+<p>我们知道在树莓派终端中输入 cat &#x2F;sys&#x2F;class&#x2F;thermal&#x2F;thermal_zone0&#x2F;temp 指令便可以获取 CPU 温度的千倍值，想让 HA 运行指令只需将其写入配置文件中。</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">sensor:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">platform:</span> <span class="string">command_line</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">CPU</span> <span class="string">Temperature</span></span><br><span class="line">    <span class="attr">command:</span> <span class="string">&quot;cat /sys/class/thermal/thermal_zone0/temp&quot;</span></span><br><span class="line">    <span class="attr">unit_of_measurement:</span> <span class="string">&quot;°C&quot;</span></span><br><span class="line">    <span class="attr">value_template:</span> <span class="string">&#x27;<span class="template-variable">&#123;&#123; value | multiply(0.001) &#125;&#125;</span>&#x27;</span></span><br></pre></td></tr></table></figure>
+<p>重启HA 后，ha 便会添加一个sensor.CPU_Temperature的传感器，之后就和其他组件一样，可以对其随意个性化配置</p>
+<p>抓取HA 最新版本信息</p>
+<p>HA 的包上传在 PyPI 上，自然版本信息也包括在内，通过抓取便可轻易获得。</p>
+<p>sensor:</p>
+<ul>
+<li>platform: command_line<br>command: python3 -c “import requests; print(requests.get(‘<a target="_blank" rel="noopener" href="https://pypi.python.org/pypi/homeassistant/json&#39;).json()[&#39;info&#39;][&#39;version&#39;])&quot;">https://pypi.python.org/pypi/homeassistant/json&#39;).json()[&#39;info&#39;][&#39;version&#39;])&quot;</a><br>name: HA release</li>
+</ul>
+<p>同理，HA 内会生成名为sensor.HA_release 的传感器组件，该例中，我们简单涉及了一些数据抓取的技巧，在ha 内其实提供了一个特别的用于数据抓取的组件，Scrape Sensor 这里也简单介绍一下</p>
+<p>渐入佳境</p>
+<p>Scrape Sensor 组件顾名思义是用来抓取（刮削）数据的，但是实测下来，效果有限。</p>
+<p>基本配置如下：</p>
+<p>sensor:</p>
+<ul>
+<li>platform: scrape<br>resource: <a target="_blank" rel="noopener" href="https://home-assistant.io/">https://home-assistant.io</a><br>select: “.current-version h1”</li>
+</ul>
+<p>稍有前端基础的朋友应该很快就可以明白其意思，最后的select 可以设定需要抓取的类或者是对象</p>
+<p>比如你是IFTTT 的重度患者，想要在ha 前端显示所用的applets 的情况，就可以这样配置</p>
+<p>sensor:</p>
+<ul>
+<li>platform: scrape<br>resource: <a target="_blank" rel="noopener" href="http://status.ifttt.com/">http://status.ifttt.com/</a><br>name: IFTTT status<br>select: ‘.component-status’</li>
+</ul>
+<p>摸清楚原理，我们很快就会意识到 scrape 只能用来刮削结构简单的静态网页，一旦网页稍微复杂一些，数据根本无法被 select 出。</p>
+<p>小试牛刀</p>
+<p>说了那么多官方示例，现在轮到我们自己动手实践了</p>
+<p>command line 的本质还是辅助性组件，想要指望其运行复杂的代码显然是不切实际的，个人认为该组件的重点在于信息展示上，因此也不难理解官方给出的例子都与数据抓取多多少少有一些关系</p>
+<p>HA 是建立在python之上的，配合各类库的使用，python的数据抓取能力十分强大</p>
+<p>Command line 既然是HA 里的小中断，那么自然支持运行外置代码文件</p>
+<p>作为长在海边的孩子，自己对潮汐情况比较关注。HA 的部分天气组件提供了潮汐数据，但涉及汉化、挑选和适配传感器，操作起来十分麻烦。于是我想到直接写一小段 Python 代码抓取潮汐数据。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"><span class="comment">#日期格式化</span></span><br><span class="line">d = time.strftime(<span class="string">&quot;%Y-%m-%d&quot;</span>, time.localtime())</span><br><span class="line"></span><br><span class="line"><span class="comment">#港口代码，前往 http://www.chinaports.com/chaoxi/ 取得</span></span><br><span class="line">port_code = <span class="number">122</span></span><br><span class="line">port_code = <span class="built_in">str</span>(port_code)</span><br><span class="line"></span><br><span class="line"><span class="comment">#获取数据</span></span><br><span class="line">html = requests.get(<span class="string">&quot;http://www.chinaports.com/chaoxi/&quot;</span> + d + <span class="string">&quot;/&quot;</span> + port_code).content</span><br><span class="line">soup = BeautifulSoup(html, <span class="string">&quot;html5lib&quot;</span>, from_encoding=<span class="string">&quot;utf-8&quot;</span>)</span><br><span class="line">result = soup.find(<span class="string">&quot;table&quot;</span>, class_=<span class="string">&quot;tidaltable&quot;</span>)</span><br><span class="line">detail = result(<span class="string">&quot;td&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#打印数据</span></span><br><span class="line">count = <span class="built_in">len</span>(detail)</span><br><span class="line"><span class="keyword">if</span> count == <span class="number">8</span>:</span><br><span class="line">    first_height = <span class="built_in">int</span>(detail[<span class="number">5</span>].string)</span><br><span class="line">    second_height = <span class="built_in">int</span>(detail[<span class="number">6</span>].string)</span><br><span class="line">    <span class="keyword">if</span> first_height &gt; second_height:</span><br><span class="line">        <span class="built_in">print</span> (<span class="string">&quot;涨潮：&quot;</span> + detail[<span class="number">1</span>].string + <span class="string">&quot; &quot;</span> + detail[<span class="number">3</span>].string + <span class="string">&quot;；退潮：&quot;</span> + detail[<span class="number">2</span>].string)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="built_in">print</span> (<span class="string">&quot;涨潮：&quot;</span> + detail[<span class="number">2</span>].string + <span class="string">&quot; &quot;</span> + <span class="string">&quot;；退潮： &quot;</span> + detail[<span class="number">1</span>].string + <span class="string">&quot; &quot;</span> + detail[<span class="number">3</span>].string)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    first_height = <span class="built_in">int</span>(detail[<span class="number">6</span>].string)</span><br><span class="line">    second_height = <span class="built_in">int</span>(detail[<span class="number">7</span>].string)</span><br><span class="line">    <span class="keyword">if</span> first_height &gt; second_height:</span><br><span class="line">        <span class="built_in">print</span> (<span class="string">&quot;涨潮：&quot;</span> + detail[<span class="number">2</span>].string + <span class="string">&quot; &quot;</span> + detail[<span class="number">4</span>].string + <span class="string">&quot;；退潮：&quot;</span> + detail[<span class="number">1</span>].string + <span class="string">&quot; &quot;</span> + detail[<span class="number">3</span>].string)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="built_in">print</span> (<span class="string">&quot;涨潮：&quot;</span> + detail[<span class="number">1</span>].string + <span class="string">&quot; &quot;</span> + detail[<span class="number">3</span>].string + <span class="string">&quot;；退潮：&quot;</span> + detail[<span class="number">2</span>].string + <span class="string">&quot; &quot;</span> + detail[<span class="number">4</span>].string)</span><br></pre></td></tr></table></figure>
+
+<p>这段代码使用了beautifulsoup4 库，比起scrape senso 抓取、整理数据的能力自然强了</p>
+<p>看过这个小例子，相信各位程序员已经摩拳擦掌了。除了 Sensor 以外，Command-Line 还支持 Switch，Cover 等等 platform，详见组件页。由于精力有限，我没有测试其他语言的代码在 Command Line Sensor 中的运行情况，其它 platform 也还未认真钻研。可以肯定的是，该组件大大提升了 HA 的广度和深度，令人不禁想好好玩弄一番呢~</p>
+<p>期待各位派友运用 Command Line 实现新颖的功能，欢迎留言分享与讨论。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-20221220-HomeAssistant树莓派-小米篇"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/12/20/20221220-HomeAssistant%E6%A0%91%E8%8E%93%E6%B4%BE-%E5%B0%8F%E7%B1%B3%E7%AF%87/"
+    >20221220-HomeAssistant树莓派-小米篇</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/12/20/20221220-HomeAssistant%E6%A0%91%E8%8E%93%E6%B4%BE-%E5%B0%8F%E7%B1%B3%E7%AF%87/" class="article-date">
+  <time datetime="2022-12-20T05:29:21.000Z" itemprop="datePublished">2022-12-20</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>想要一统江湖，我们只需关心设备的传输协议即可</p>
+<p>目前有一个简单粗暴的标准，即如果一个设备需要小米多功能网关才可以使用，一般来说它采用的是zigbee协议，那么只要网关接入了HA 就可以完美适配，而如果一个设备是独立接入网络的，比如米家的wifi 插座，扫地机器人，yeelight 灯具等等，我们则需要单独在hass 里接入它们</p>
+<p>本篇教程将介绍将小米接入HA 的方法，如果你打算通过HB直连，请参考渣渣米大大的教程</p>
+<p>表格使用 <a target="_blank" rel="noopener" href="https://docs.google.com/spreadsheets/d/1LI0n_aK-9TuKXrz-PPOAbVuaN8JUj70s5F0MyK8FtsM/edit?usp=sharing">Google SpreadSheet</a> 编辑，将会不断更新。国内朋友可访问『<a target="_blank" rel="noopener" href="https://www.jianguoyun.com/p/DYFO3Y8Qp5HMBhiQjzw">坚果云</a>』获取。<strong>在此欢迎各位派友向我提供支持信息或内容纠正，直接在表格内评论即可。</strong></p>
+<p>下面我们以传输协议为划分标准，分别介绍小米设备接入智能家居系统的方法，详细完整的全系接入方法<br> <a target="_blank" rel="noopener" href="https://home-assistant.cc/component/xiaomi/">Home Assistant 中文文档</a>。</p>
+<p><strong>需要提点的是，今后只要是Wifi的设备，都将通过 xiaomi_miio接入，Zigbee 设备则统一是 xiaomi_aqara。</strong></p>
+<p>ZigBee 设备 网关类设备</p>
+<p>以小米多功能网关第二代  为代表的网关类设备是大部分 米家 及 绿米 aqara zigbee 设备的联动基础，也是整个米家智能家居系统的核心，除多功能网关外，空调伴侣和Aqara 监控摄像头都具备网关功能</p>
+<p>打开米家 app，连接设置多功能网关，点击进入网关页面，点击右上角「…」，进入「设置」。点击第二行「关于」，狂点空白处，便会跳出「局域网通信协议」以及「网关信息」。进入「局域网通信协议」，打开开关，记录下密码，这就是之后待填的「key」。回到上级页面，进入「网关信息」，记录下 mac 地址，这就是之后待填的「sid 或 mac」。</p>
+<p>HA 0.50.0 及之后版本已经添加对米家平台的官方支持，我们只需要直接配置即可，如果之前有复制 custom_components 文件夹的同学，升级后请删除该文件夹</p>
+<p>此设置适用于 HA 0.54.0版及之后</p>
+<p>xiaomi_aqara:<br>  gateways:<br>      - mac: MAC 地址 （地址不带 “-“ 或 “:” ，行首的「-」必须保留）<br>        key: 通讯密码<br>如果你有多个网关，则按以下格式设定：</p>
+<p>xiaomi_aqara:<br>  gateways:<br>    - mac: xxxxxxxxxxxx<br>      key: xxxxxxxxxxxxxxxx<br>    - mac: xxxxxxxxxxxx<br>      key: xxxxxxxxxxxxxxxx<br>重启后，HA 主界面将会自动识别网关及捆绑的所有设备。</p>
+<p>Yeelight 灯具</p>
+<p>yeelight 目前已经从小米独立出来，运作良好，原生支持google assistant 等平台， yeelight 在ha 中支持色温，色彩、亮度等控制，基本实现全品支持</p>
+<p>配置前请先在yeelight app 中打开 局域网控制 LAN Control 服务器选择中国大陆，新加坡皆可，注意如果所选服务器与米家app 中不同，则设备无法接入米家app，但不影响在yeelight app 及ha 中的控制</p>
+<p>之后重启HA 重启前请打开灯具，稍等积分中，确认一下设备是否已经被HA 自动识别添加，如果是的话，皆大欢喜，什么都无需再做了；如果没有，请打开configuration.yaml文件，在合适位置添加如下字段：</p>
+<p>light:</p>
+<ul>
+<li>platform: yeelight<br>devices:<br>  192.168.1.25:              #Yeelight灯具ip<br>name: Living Room      #昵称<br>transition: 1000<br>use_music_mode: True #音乐随动模式，默认关闭<br>以上 2 个是最常见的具有统一平台的设备适配，下面是使用 WiFi 传输协议设备的具体配置方法：</li>
+</ul>
+<p>获取 token</p>
+<p>所有的小米wifi 设备都必须先取得设备的token 方可接入HA ，以下简要介绍获取token 的方法之一，</p>
+<p>首先在安装有node js 的电脑上安装miio 库</p>
+<p>sudo npm install miio</p>
+<p>之后，重置 待连小米设备的网络，使其产生wifi 热点，将电脑连接至该热点上，之后输入</p>
+<p>miio –discover</p>
+<p>即获取设备的token， 请集中保存，获取token 后，如需绑定米家 app 请直接在qpp 中添加设备，切勿继续重置设备，否则token 将重新生成，原有token 将失效</p>
+<p>米家扫地机器人</p>
+<p>HA 原生支持米家 和石头扫地机器人2nd 使用专门的类vacuum</p>
+<p>按照上方教程获取扫地机的 token，之后在 configuration.yaml 中填入以下配置：</p>
+<p>vacuum:</p>
+<ul>
+<li>platform: xiaomi_miio<br> name: ‘***’                    #昵称<br> host: 192.168.1.2            #ip<br> token: R@#RT$TFEW    #token</li>
+</ul>
+<p>空气净化器</p>
+<p>HA 目前原生支持2代空气净化器，暂不支持pro 版</p>
+<p>按照上方教程获取空气净化器的 token，之后在 configuration.yaml 中填入以下配置：</p>
+<p>fan:</p>
+<ul>
+<li>platform: xiaomi_miio<br>name: Xiaomi Air Purifier 2<br>host: 192.168.130.66<br>token: YOUR_TOKEN</li>
+</ul>
+<p>空调伴侣</p>
+<p>米家和aqarq 均发布了自己品牌的空调伴侣，除外观差异外，内核并无不同，，小米已于今日固件更新中开发空调伴侣的 局域网通信协议，空调控制和网关功能请分别使用各自插件接入，</p>
+<p>另，目前插件仅支持部分空调品牌的部分预设模式，详见插件说明页，未支持的型号请自行抓包空调码。</p>
+<p>Home Assistant 中空调伴侣以自定义组件的方式加入，此组件为爱好者 Mac_zhou 制作，欢迎大家前往 项目地址 点赞。</p>
+<p>插件使用前需获取设备的 token：进入『米家』应用，点击空调伴侣，选择右上角『•••』—— 『关于』—— 狂点空白区域 —— 网关信息 “token&#x3D;xxxxxxx”即是 。</p>
+<p>将 Github 中的对应文件放入文件夹，层级与 Github 中展示一致，之后在配置文件中增加以下配置：</p>
+<p>climate:<br>    - platform: mi_acpartner<br>      name: mi_acpartner<br>      host: 10.0.0.234 #ip地址<br>      token: ****** #token<br>      target_sensor: sensor.temperature_158d00015aefc4 #温度传感器 ID<br>      target_temp: 26 #目标温度</p>
+<p>组件由国人制作，readme 文件以中文书写，这里我就不再作变量说明了</p>
+<p>wifi 插座及智能插线板</p>
+<p>0.56.0的更新带来了插座的支持，接入前先获取设备的token<br>具体方法见前文。之后，在 configuraiton.yaml 添加如下设置：</p>
+<p>switch:</p>
+<ul>
+<li>platform: xiaomi_miio<br>name: Original Xiaomi Mi Smart WiFi Socket<br>host: 192.168.130.59<br>token: YOUR_TOKEN<br>这英文简单得不能再简单了，我就不做变量说明了。</li>
+</ul>
+<p>净水器</p>
+<p>小米净水器插件由 bit3725 制作，欢迎前往 项目 点赞~<br>使用方法：从 Github 下载 mi_water_purifier.py，放入 custom_components&#x2F;sensor&#x2F; 文件夹内（文件层级项目本身已经很清晰地给出了），在 configuration.yaml 添加如下设置：</p>
+<p>sensor:</p>
+<ul>
+<li>platform: mi_water_purifier<br>host: YOUR_SENSOR_IP<br>token: YOUR_SENSOR_TOKEN<br>name: YOUT_SENSOR_NAME<br>接入后自动会生成几项相关的传感器数值，如果需要集中查看，请使用群组：</li>
+</ul>
+<p>group:</p>
+<ul>
+<li>xiaomi_water_purifier:<br>name: Xiaomi Water Purifier<br>icon: mdi:water<br>entities:<ul>
+<li>sensor.tap_water</li>
+<li>sensor.filtered_water</li>
+<li>sensor.pp_cotton_filter</li>
+<li>sensor.front_active_carbon_filter</li>
+<li>sensor.ro_filter</li>
+<li>sensor.rear_active_carbon_filter<br>PM 2.5 监测仪<br>PM 2.5 监测仪插件由 bit3725 制作，欢迎前往 项目 点赞~</li>
+</ul>
+</li>
+</ul>
+<p>使用方法：从 Github 下载 mi_air_quality_monitor.py，放入 custom_components&#x2F;sensor&#x2F; 文件夹内（文件层级项目本身已经很清晰地给出了），在 configuration.yaml 添加如下设置：</p>
+<p>sensor:</p>
+<ul>
+<li>platform: mi_air_quality_monitor<br>host: YOUR_SENSOR_IP<br>token: YOUR_SENSOR_TOKEN<br>name: YOUT_SENSOR_NAME</li>
+</ul>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-20221220-HomeAssistant树莓派-设备接入篇"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/12/20/20221220-HomeAssistant%E6%A0%91%E8%8E%93%E6%B4%BE-%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%85%A5%E7%AF%87/"
+    >20221220-HomeAssistant树莓派-设备接入篇</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/12/20/20221220-HomeAssistant%E6%A0%91%E8%8E%93%E6%B4%BE-%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%85%A5%E7%AF%87/" class="article-date">
+  <time datetime="2022-12-20T03:43:23.000Z" itemprop="datePublished">2022-12-20</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>在开始配置教程前，我先帮助大家捋一捋HASS 的配置框架</p>
+<p>HASS配置框架</p>
+<p>HASS的核心配置围绕configuration.yaml 文件展开，在这里你可以进行时区、度量单位、开发者模式、主题选择等等基础配置，淡然，最为重要的，你将在该文件内完成所有设备的接入 这也是本篇教程的重点</p>
+<p>HASS 的运行以来一个个相对独立的功能组件，比如小米米家平台就可以视作一个组件，有些时候，部分设备或者功能仍未得到hass 的官方支持，你必须在主目录下新建自定义组件custom_components 文件夹，添加相关的设备支持文件</p>
+<p>完成上述的文件修改，加上HB 的配置，你就可以自如控制所有智能家居设备了</p>
+<p>然而，使用一段时间后，你可能觉得设备太多显示凌乱，想给界面换个风格，或者configuration.yaml 文件<br>看起来要炸了，此时，你会考虑把部分配置剥离出去形成独立的文件，<br>例如你开启了设备追踪功能，Device Tracker 那么HASS 将在主文件下自动生成known_devices.yaml 文件，你将在这里设置需要追踪的设备，</p>
+<p>主文件设置</p>
+<p>上一篇教程中我们已经打开了树莓派的 SMB 服务，现在我们通过 SMB 打开 HASS 主目录。<br>（macOS 在 FInder 左侧栏“共享的”接入，Windows 在 计算机-地址栏 里直接输入 &#x2F;&#x2F;树莓派地址 即可跳转)<br>打开configuration.yaml，文件默认包含如下内容，我们按需修改：</p>
+<p>homeassistant:<br>  #经纬度<br>  latitude: 32.87336<br>  longitude: 117.22743<br>  #海拔<br>  elevation: 430<br>  #度量单位，默认米<br>  unit_system: metric<br>  #时区<br>  time_zone:Asia&#x2F;Shanghai<br>  #系统昵称，显示在主界面顶部<br>  name: Home</p>
+<p>正常情况下，剩下的部分便无须变动了，现在添加雅虎天气服务</p>
+<p>weather:</p>
+<ul>
+<li>platform: yweather<br>woeid:2151849</li>
+</ul>
+<p>其中，woeid是城市代码，打开雅虎天气官网输入城市后搜索，url的最后几位数字便是</p>
+<p>保存 重启 hass</p>
+<p>homebridge 设置</p>
+<p>注意，如果添加了开机自启任务，勿重复运行homebridge 否则会出现端口占用错误</p>
+<p>homebridge-homeassistant 插件版本为2.3.0 以上的，特别注意添加最后一行配置，否则家庭app 内设备为空</p>
+<p>cd &#x2F;home&#x2F;pi&#x2F;.homebridge<br>sudo nano config.json<br>{<br>“bridge”: {<br>“name”: “Homebridge”,<br>“username”: “CC:22:3D:E3:CE:30”,     &#x2F;&#x2F;树莓派 mac 地址<br>“port”: 51826,     &#x2F;&#x2F;运行端口<br>“pin”: “123-45-678”    &#x2F;&#x2F;连接密码，自行设定<br>},<br>“platforms”: [<br>{<br>“platform”: “HomeAssistant”,<br>“name”: “HomeAssistant”,<br>“host”: “<a href="http://127.0.0.1:8123&quot;">http://127.0.0.1:8123&quot;</a>,     &#x2F;&#x2F;HA 运行的网址，可以是 ip 也可以是域名<br>“password”: “raspberry”,     &#x2F;&#x2F;HA 的 api_password，及密码，如有设置请添加<br>“supported_types”: [“automation”, “binary_sensor”, “climate”, “cover”, “device_tracker”, “fan”, “group”, “input_boolean”, “light”, “lock”, “media_player”, “remote”, “scene”, “sensor”, “switch”],<br>“default_visibility”: “visible”    &#x2F;&#x2F;特别注意此项<br>}<br>]<br>}</p>
+<p>ctrl+x，y，回车。之后清除 Homebridge 的缓存：</p>
+<p>sudo rm -rf &#x2F;home&#x2F;pi&#x2F;.homebridge&#x2F;persist&#x2F;<br>请大家记住此步指令，今后若出现重新配置 HA、HB 导致 iOS 设备无法识别新设备或树莓派的，大部分情况均可以使用此指令解决。</p>
+<p>这样我们就完成了 Homebridge 的设置，重启Homebridge：</p>
+<p>sudo systemctl restart homebridge</p>
+<p>经过上述设置，我相信你的智能家居设备已经在ha 和hb 里稳定运转了，</p>
+<p>首先，这个问题只存在 iOS 以及未来的 macOS 用户身上，因为只有你们可以使用 Siri，才可以痛并快乐着。 对于其他终端系统的用户而言，要么和设备厂家的 app 斗智斗勇，要么享受 HA 网页操控的快感，至于语音控制，就还需等待了。</p>
+<p>其次，以米家设备为例，同是网关，HA 可以控制夜灯功能，获取光感数据，Homekit 则不能；而针对扫地机器人，HASS 的接入方法十分复杂，且现阶段只能实现开关功能，HB 的插件安装配置更为容易，且可以控制吸力……可以说两个平台之间没有绝对的胜者，都需要具体情况具体分析。个人认为大多数情况下，HA 对设备的支持更好，并且基于社群支持，跟进速度也更快。</p>
+<p>设备追踪设置</p>
+<p>HA 可以追踪同一路由器内网设备联网状态，我们转换一下思路，便可以利用这个系统判断家人是否在家等，非常方便</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">device_tracker:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">platform:</span> <span class="string">asuswrt</span> <span class="string">（按需填写，小米为“xiaomi”，Netgear为“netgear”，TP-LINK为“tplink”）</span></span><br><span class="line">    <span class="attr">host:</span> <span class="number">192.168</span><span class="string">.xx.1</span> <span class="comment">#路由器Ip</span></span><br><span class="line">    <span class="attr">username:</span> <span class="string">*****</span> <span class="comment">#管理员账号</span></span><br><span class="line">    <span class="attr">password:</span> <span class="string">******</span> <span class="comment">#管理员密码</span></span><br><span class="line">    <span class="attr">track_new_devices:</span> <span class="literal">no</span> <span class="comment">#是否自动添加新设备</span></span><br></pre></td></tr></table></figure>
+
+<p>不出意外，重启 HASS 后，主文件夹下便会自动生成 known_devices.yaml 文件，打开之后你会发现，系统已经自动为嗅探到的连接到路由器的设备添加了默认配置：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">devicename:</span> </span><br><span class="line">  <span class="attr">name:</span> <span class="string">Friendly</span> <span class="string">Name</span> <span class="comment">#昵称</span></span><br><span class="line">  <span class="attr">mac:</span> <span class="string">EA:AA:55:E7:C6:94</span> <span class="comment">#mac地址</span></span><br><span class="line">  <span class="attr">picture:</span> <span class="string">https://home-assistant.io/images/favicon-192x192.png</span> <span class="comment">#图片icon: mdi:human-female #图标，和图片取一个设置</span></span><br><span class="line">  <span class="attr">track:</span> <span class="literal">yes</span> <span class="comment">#是否追踪</span></span><br><span class="line">  <span class="attr">hide_if_away:</span> <span class="literal">no</span> <span class="comment">#离开后是否自动隐藏</span></span><br></pre></td></tr></table></figure>
+
+<p>在接下来的教程中，我将指导大家如何进行自动化配置，真正实现人工智能，摆脱遥控的束缚，更换主题，展现个性，设置简洁大方的控制面板等等</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-20221220-树莓派魔镜"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/12/20/20221220-%E6%A0%91%E8%8E%93%E6%B4%BE%E9%AD%94%E9%95%9C/"
+    >20221220-树莓派魔镜</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/12/20/20221220-%E6%A0%91%E8%8E%93%E6%B4%BE%E9%AD%94%E9%95%9C/" class="article-date">
+  <time datetime="2022-12-20T02:58:50.000Z" itemprop="datePublished">2022-12-20</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h2 id="材料准备"><a href="#材料准备" class="headerlink" title="材料准备"></a>材料准备</h2><p>树莓派3 魔镜的神经中枢</p>
+<p>usb麦克风</p>
+<p>显示屏 不论通过什么渠道取得的显示屏，在这里都建议自带hdmi 接口并侧面出口，剩下转接头的钱和空间，也方便未来背面走线</p>
+<p>如果考虑入触摸屏建议一步到位，目前面向树莓派生产的触控屏最大能到10寸左右，价格在400至500元。加装触摸屏，务必要考虑好触摸类型，因为最上面还需要覆盖一块单透镜。建议优先使用红外触摸，有能力在外框安置感应条即可；其次压敏，但是要考虑镜子的导电性；压感在覆盖镜子的前提下，基本不可能实现。</p>
+<p>驱动板+喇叭， LCD 屏需要加配高压条，一般来说近几年的屏幕都是LED 了，但还是要具体问题具体分析</p>
+<p>单向透视镜</p>
+<p>俗称原子镜，就是大家看的美剧里审讯室用的镜子，魔镜的“大脸”。目前，适配屏幕尺寸的单透镜需定制，价格较昂贵。定制时建议优先选择厚度较薄、透光率较强的镜面，否则会影响日间魔镜的展示效果。</p>
+<p>囊中羞涩的派友也可使用镜面贴膜曲线救国，效果参考汽车车窗贴膜，但透视效果较差。</p>
+<p>镜框</p>
+<p>电源 </p>
+<p>整套魔镜系统需要电源驱动的部件有树莓派，驱动板和显示屏，后两者并一体讨论，驱动板在外接喇叭的前提下，usb 供电接口无法为树莓派供电，因此必须独立供电树莓派，显示屏所需电源为12V5A 大家在购入电源适配器是务必看准电压电流、并兼顾走线，<br>有能力者，可手动并线</p>
+<p>可选材料</p>
+<p>智能插座</p>
+<p>超短HDMI 线</p>
+<p>工具  螺丝刀  电工胶布，泡棉胶</p>
+<p>显然，大部分的工作都集中在底层，我们需要把树莓派、驱动板等等部件合理安置在显示屏背部</p>
+<p>喇叭布置于头部，直立后出声位置位于上方，更具现实感。树莓派布置在底端，保证USB麦克风的收音效果，且方便拿取。中部安放驱动板，方便走线。<br>这里省略了一步操作，建议先将驱动板随附的控制板连接至驱动板，选定输入源、调整好音量后拔下，以节约背板空间。</p>
+<p>上述工作完成后，依次将单透镜和显示屏置入镜框内，扣入夹片固定好，避免松动。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-20221219-HomeAssistant智能家居系统搭建指南"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/12/19/20221219-HomeAssistant%E6%99%BA%E8%83%BD%E5%AE%B6%E5%B1%85%E7%B3%BB%E7%BB%9F%E6%90%AD%E5%BB%BA%E6%8C%87%E5%8D%97/"
+    >20221219-HomeAssistant智能家居系统搭建指南</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/12/19/20221219-HomeAssistant%E6%99%BA%E8%83%BD%E5%AE%B6%E5%B1%85%E7%B3%BB%E7%BB%9F%E6%90%AD%E5%BB%BA%E6%8C%87%E5%8D%97/" class="article-date">
+  <time datetime="2022-12-19T09:16:41.000Z" itemprop="datePublished">2022-12-19</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>Home assistant 是一个成熟完整的基于python 的智能家居系统，设备支持度高，支持自动化 automation 群组化，ui 客制化等等高度定制化设置，背后又有庞大的社群基础，且不断更新，最重要的是我们可以通过homeassistant-homebridge 插件打通两个平台，同样实现设备的siri 控制，整套体系的框架如下</p>
+<p>本系列将围绕安装，配置、开发等内容，详细介绍HASS 平台的方方面面，同时针对HASS 与hb 兼容与选择，自动化配置方法等等问题给出自己的观点和探索</p>
+<p>HASS 支持大部分平台，简而言之，只要你的主机能跑python 基本就能安装hass 配合魔镜项目，以及便捷性的考虑，<br>本系列教程也将基于树莓派展开</p>
+<p>初始安装</p>
+<p>在树莓派安装HASS 有2种方法供选择</p>
+<p>以其他操作系统，（这里以树莓派 官方系统 raspbian 为例） 为根系统，再通过指令安装</p>
+<p>直接安装集成了HASS 的hassbian 操作系统</p>
+<p>以上2种方法从性能上来说并无二异，均能实现hass全部功能，hassbian 实际上亦基于raspbian 唯一需要纳入考虑的是图形化操作界面的需求。由于树莓派基金官方尚未公开单独安装图形化操作界面的方法，在当下，如果有该需求，只能通过官方图形化操作系统 raspbian with desktop 实现</p>
+<p>方法1<br>安装前，请参考 <a href="https://link.zhihu.com/?target=https://sspai.com/user/714086">梓姵君</a> 的 <a href="https://link.zhihu.com/?target=https://sspai.com/post/38542">文章</a> 对树莓派进行初始基础设置，重点关注地区、WiFi、源替换的内容，这里不再展开，特别注意，2016年11月 后的官方系统默认关闭ssh 功能，请务必打开</p>
+<p>使用任何方法连接到树莓派终端、输入以下安装代码</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ curl -O https://raw.GitHubusercontent.com/home-assistant/fabric-home-assistant/master/hass_rpi_installer.sh &amp;&amp; sudo <span class="built_in">chown</span> pi:pi hass_rpi_installer.sh &amp;&amp; bash hass_rpi_installer.sh</span><br></pre></td></tr></table></figure>
+<p>注意，不要以sudo 运行，然后泡杯茶，做点别的事情，等待程序跑完，安装时间根据网络情况不等，大约需要1-2 个小时，国内网络环境大家自行改善</p>
+<p>如果你是使用此方法安装hass 的话，未来更新指令如下</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo su -s /bin/bash homeassistant</span><br><span class="line"><span class="built_in">source</span> /srv/homeassistant/homeassistant_venv/bin/activate</span><br><span class="line">pip3 install --upgrade homeassistant</span><br><span class="line"><span class="built_in">exit</span></span><br></pre></td></tr></table></figure>
+
+<p>方法2 </p>
+<p>参考 copriwolf 的</p>
+<p><a href="https://link.zhihu.com/?target=https://sspai.com/post/39851">教程</a></p>
+<p>使用 Etcher 安装官方最新</p>
+<p><a href="https://link.zhihu.com/?target=https://github.com/home-assistant/pi-gen/releases/latest">固件</a></p>
+<p>镜像。</p>
+<p>感谢少数派友 <strong>DJ</strong> 千辛万苦的搬运至<a href="https://link.zhihu.com/?target=https://pan.baidu.com/s/1dFpaaAH">度娘盘</a>（password: 2e98）</p>
+<p>要注意的是，hassbian 初次启动时需要联网进行原始设置，由于无法在初次启动前设置无限网络，因此务必将树莓派与电脑或者路由器有线连接起来，以保证树莓派在有网环境下顺利设置</p>
+<p>官方教程告知初次启动需要等待5分钟左右，基于国内的网络环境，我这里测试多次，都需要等待近10分钟，所以大家不要焦躁，可以看部番剧或者往下研究一下此篇文章以便接下来顺利进展。</p>
+<p>如果等待时间过久却没有出现初始界面，可尝试使用以下命令强制初始安装</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl <span class="built_in">enable</span> install_homeassistant.service</span><br><span class="line">sudo systemctl start install_homeassistant.service</span><br></pre></td></tr></table></figure>
+
+<p>如果使用此方法，未来更新指令如下</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ sudo systemctl stop home-assistant@homeassistant.service</span><br><span class="line">$ sudo su -s /bin/bash homeassistant</span><br><span class="line">$ <span class="built_in">source</span> /srv/homeassistant/bin/activate</span><br><span class="line">$ pip3 install --upgrade homeassistant</span><br><span class="line">$ <span class="built_in">exit</span></span><br><span class="line">$ sudo systemctl start home-assistant@homeassistant.service</span><br></pre></td></tr></table></figure>
+
+
+<p>无论使用哪种方法，等待过后，在浏览器输入 http:&#x2F;&#x2F;树莓派的ip 地址:8123 查找树莓派ip 地址可以直接前往路由器界面</p>
+<p>如果出现类似下图，则表示初始安装完成，如若没有出现界面，或者无法连接，有很大可能是尚未安装完毕，不要着急再等等，注意地址冒号为英文字符，请勿输入中文冒号</p>
+<p>Hassbian 安装注意，初次启动请等待安装出现以下界面，再进行后续操作，否则你的一切工作都是前功尽弃，并且除此启动时，勿SSH ，勿输入任何代码，保持通电，联网，静置状态，非常重要</p>
+<p>macOS</p>
+<p>macos 自带python，如果你不小心误删，请先重新安装，macos 下安装hass 也相当简单</p>
+<p>pip3 install homeassistant</p>
+<p>附加功能</p>
+<p>SMB 必须</p>
+<p>SMB 可以帮助我们开启树莓派的网盘模式，方便未来文件传输，这里我们除安装外把该功能加入了系统自启项目</p>
+<p>通用安装指令</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install samba </span><br><span class="line">sudo smbpasswd -a homeassistant -n</span><br><span class="line">sudo nano /etc/samba/smb.conf</span><br><span class="line">[global]</span><br><span class="line">netbios name = raspberrypi</span><br><span class="line">server string = The Pi File Center</span><br><span class="line">workgroup = WORKGROUP</span><br><span class="line">hosts allow =</span><br><span class="line">remote announce =</span><br><span class="line">remote browse <span class="built_in">sync</span> =</span><br><span class="line">[HOME ASSISTANT]</span><br><span class="line">path = /home/homeassistant/.homeassistant</span><br><span class="line">comment = No comment</span><br><span class="line">browsable = <span class="built_in">yes</span></span><br><span class="line"><span class="built_in">read</span> only = no</span><br><span class="line">valid <span class="built_in">users</span> =</span><br><span class="line">writable = <span class="built_in">yes</span></span><br><span class="line">guest ok = <span class="built_in">yes</span></span><br><span class="line">public = <span class="built_in">yes</span></span><br><span class="line">create mask = 0777</span><br><span class="line">directory mask = 0777</span><br><span class="line">force user = homeassistant</span><br><span class="line">force create mode = 0777</span><br><span class="line">force directory mode = 0777</span><br><span class="line">hosts allow =</span><br></pre></td></tr></table></figure>
+
+<p>Ctrl+X，Y，回车</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl restart smbd.service</span><br></pre></td></tr></table></figure>
+
+<p>hassbian 提供了一个附加功能工具包hassbian-config 这使我们的安装更加简单，使用工具包安装原则上已经自动配置好一切，建议大家还是修改一下权限和密码</p>
+<p>安装指令</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo hassbian-config install samba</span><br><span class="line">sudo smbpasswd -a pi</span><br></pre></td></tr></table></figure>
+
+<p>重启服务</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl restart home-assistant@homeassistant.service</span><br></pre></td></tr></table></figure>
+
+<p>2.2 MQTT<br>MQTT 是基于二进制消息的发布，订阅编程模式的消息协议，广泛用于物联网部署中，部分智能家居设备需要MQTT 连接</p>
+<p>通用安装指令</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install mosquitto mosquitto-clients python-mosquitto</span><br><span class="line">sudo systemctl start mosquitto</span><br></pre></td></tr></table></figure>
+
+<p>hassbian 工具包安装</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo hassbian-config install mosquitto</span><br><span class="line">sudo systemctl start mosquitto</span><br></pre></td></tr></table></figure>
+
 <ol start="3">
-<li>扫描</li>
+<li>Homebridge 安装<br>HASS 本身可以通过网页控制，这也赋予了其全平台的控制能力，当然，想必不少人还是冲着语言控制功能考虑智能家居的，对于ios 用户来说，想要更自由地使用homekit HB依然是绕不开的环节</li>
 </ol>
-<p>扫描是主机监听从机广播数据包和发送扫描请求的过程，主机通过扫描，可以获取到从机的广播包以及扫描回应数据包，主机可以对已扫描到的从机设备发起连接请求，从而连接从机设备并通信</p>
-<p>扫描动作由两个比较重要的时间参数，扫描窗口 和扫描间隔，如果扫描窗口等于扫描间隔，那么主机将一直处于扫描状态中，持续监听从机广播包</p>
-<p>被动扫描，主机监听广播信道的数据，当接收到广播包时，协议栈将向上层 也就是应用层，用户可编程  传递广播包</p>
-<p>主动扫描，主动扫描除了完成被动扫描的动作外，还会向从机发送一个扫描请求，从机收到该请求时，会再次发送一个称作 扫描回应 的广播包</p>
-<p>主动扫描比被动扫描，可以多收到扫描回应数据包</p>
-<p>连接</p>
-<p>在BLE 连接中，使用调频方案，两个设备在特定时间、特定频道上彼此发送和接收数据，这些设备稍后在新的通道（协议栈的链路层处理通道切换）上通过这个约定的时间相遇，这次用于收发数据的相遇称为连接事件，如果没有有发送或接收的应用数据，则交换链路层数据来维护连接，两个连接事件之间的时间跨度称为连接间隔，是以1.25ms 为单位，范围从最小值 7.5 ms 到最大值 4.0s</p>
-<p>连接参数</p>
-<p>Connection Interval 连接间隔，两次连接事件之间的时间间隔称为连接间隔，1.25ms 为单位，范围从最小值 7.5 ms 到最大值 4.0s</p>
-<p>slave latency 从机延迟，如果从机没有要发送的数据，则可以跳过连接事件，继续保持睡眠节省电量</p>
-<p>supervision Time-out 监控超时，是两次成功连接事件之间的最长时间，如果在此时间内没有成功的连接事件，设备将终止连接并返回到未连接状态，该参数值以10ms 为单位，监控超时值可以从最小值10 到3200 超时必须大于有效的连接间隔</p>
-<p>连接参数更新请求</p>
-<p>连接参数由主机发起连接的时候提供，如果从机对连接参数有自己的要求，例如要求更低的功耗，或者更高的通信速率等，从机可以向主机发送连接参数更新请求</p>
-<p>从机可以在连接后的任何时候发起连接参数更新请求，但最好不要在主从建立连接后like发起，建议延迟5s 左右再发送请求</p>
-<p>连接参数更新请求可以修改：Connection Interval连接间隔，Slave Latency从机延迟，Supervision Time-out监控超时。</p>
-<p>有效连接间隔</p>
-<p>effective connection interval 有效连接间隔等于两个连接事件之间的时间跨度，假设从机跳过最大数量的连接事件，且允许从机延迟，</p>
-<p>从机延迟表示可以跳过的最大事件数。该数字的范围可以从最小值0（意味着不能跳过连接事件）到最大值499。最大值不能使有效连接间隔（见下列公式）大于16秒。间隔可以使用以下公式计算：</p>
-<p>Effective Connection Interval &#x3D; (Connection Interval) × (1 + [Slave Latency])</p>
-<p>Consider the following example:</p>
-<p>Connection Interval: 80 (100 ms)<br>Slave Latency: 4<br>Effective Connection Interval: (100 ms) × (1 + 4) &#x3D; 500 ms</p>
-<p>当没有数据从从机发送到主机时，从机每500ms 一个连接事件交互一次</p>
-<p>ios 对连接参数的要求<br>不同的平台对有连接间隔有着不同的要求，例如ios 系统对ble 的连接间隔有着如下的要求</p>
-<p>Interval Max * (Slave Latency + 1) &lt;&#x3D;2s<br>Interval Min &gt;&#x3D;20ms<br>Interval Min + 20 ms &lt;&#x3D; Interval Max<br>Slave Latency &lt;&#x3D; 4<br>SupervisionTimeout &lt;&#x3D; 6 s<br>Interval Max * ( Slave Latency + 1) * 3 &lt; SupervisionTimeout</p>
-<p>连接参数的优化考量</p>
-<p>在许多应用中，从机跳过最大连接事件数，选择正确的连接参数组在低功耗蓝牙设备的功率优化中起重要作用，以下列表给出了连接参数设置中权衡的总体概述</p>
-<p>减少连接间隔如下</p>
-<p>增加两个设备的功耗<br>增加双向吞吐量<br>减少任一方向发送数据的时间</p>
-<p>增加连接间隔如下<br>降低两个设备的功耗<br>降低双向吞吐量<br>增加任一方向发送数据的时间</p>
-<p>减少从机延迟 或将其设置为零 如下<br>增加外围设备的功耗<br>减少外围设备接收从中央设备发送的数据的时间</p>
-<p>增加从机延迟如下<br>在周边没有数据发送期间，可以降低外设的功耗到主机设备<br>增加外设设备接收从机设备发送的数据的时间</p>
-<p>通信</p>
-<p>通俗的说，我们将从机具有的数据或者属性特征，称之为profile 可以翻译为配置文件</p>
-<p>从机中添加profile 配置文件，作为GATT 的server 端，主机作为GATT 的client 端</p>
-<p>profile 包含一个或者多个service 每个service 又包含一个或者多个characteristic 主机可以发现和获取从机的service 和characteristic 然后与之通信，characteristic 是主从通信的最小单元</p>
-<p>主机可主动向从机write 写入或read 读取数据</p>
-<p>从机可主动向主机notify 通知数据</p>
-<p>注意，这里引用了服务 service 和特征值 characteristic 的概念，每个服务和特征值都有自己的唯一标识uuid 标准UUID 为128位，蓝牙协议栈中一般采用16位，也就是两个字节的UUID 格式</p>
-<p>一个从机设备包括一个或者多个服务，一个服务中又可以包括一条或者多条特征值，每个特征值都有自己的属性 property 属性的取值有 可读 read 可写 write 以及通知 notify</p>
-<p>可读可写的字面意思容易理解，表示该特征值可以被主机读取和写入数据</p>
-<p>而通知则表示从机可以主动向主机发送通知数据，这便是主从机之间两个典型的通信方式</p>
-<p>下图是一个典型的从机设备，该从机包含有一个profile 两个service 和五个characteristic 我们先来介绍这些特征值的作用，然后介绍如何通过特征值通信</p>
-<p>服务0x180A </p>
-<p>180A 是蓝牙协议里标准的服务uuid，用来描述设备信息device information，可以通过该服务，来提供从机设备的相关说明，例如硬件版本，软件版本，序列号等信息，这样，主机就可以获取从机的设备信息，上图中我们添加了三个提供具体设备信息的特征值，他们分别是</p>
-<p>特征值0x2A24，描述产品型号 Model Number String，例如某智能锁的产品型号为：“DSL-C07”。<br>特征值0x2A25，描述产品序列号 Serial Number String，例如某智能锁的产品序列号为：“lkjl0016190502500269”<br>特征值0x2A26，描述产品固件版本号 Firmaware Revision String，例如某智能锁的固件号为：“2.7.2.0”</p>
-<p>上述特征值仅有read 属性，因此主机只能读，不能执行写操作</p>
-<p>服务0xfff0</p>
-<p>FFF0 是我们自定义的服务uuid，它包含两个特征值，用来发送和接收数据</p>
-<p>特征值0xfff1 自定义的数据发送通道，具有read 和write 属性，主机可以通过该特征值，向从机发送数据，至于发送的数据的最大长度，可以在profile 中配置<br>特征值0xfff2 ，自定义的数据接收通道，具有notify 属性，从机可以通过该特征值，主动向主机发送数据</p>
-<p>假设主机写特征值的协议栈函数原型为 int GATT_WriteCharValue(uuid_t UUID, uint8 *pValue, uint8 len)</p>
-<p>假设从机发送通知的协议栈函数原型为 int GATT_Notification(uuid_t UUID, uint8 *pValue, uint8 len)</p>
-<p>那么主机向从机发送Hello，可以这样调用协议栈的函数：GATT_WriteCharValue(0xFFF1,”Hello”,5)</p>
-<p>那么从机向主机发送1234，可以这样调用协议栈的函数：GATT_Notification(0xFFF2,”1234”,4)</p>
-<p>断开</p>
-<p>主机或从机都可以发起断开连接请求，对方会收到该请求，然后断开连接恢复连接前的状态</p>
-<p>过程演示</p>
-<p>现在我们总结一下BLE 的工作流程，使用两个虚拟的ble 硬件来模拟主从机的交互过程</p>
-<p>假设有两个ble 设备，使用的是BLE261 低功耗蓝牙模块，假设已经下载了用于交互演示的功能固件，一个是主机，名称为blecentral ，另一个是从机，名称为bleperipheral，如下图所示</p>
-<p>步骤1 上电初始化</p>
-<p>主机，从机上电后 不分先后顺序，首先进行协议栈初始化和相关功能调用，如下图所示</p>
-<p>主机设备，主机初始化时，需要设置设备类型，设置用于扫描的相关参数，初始化 gatt 等协议相关的参数<br>从机设备，从机初始化时，需要设置设备名称，广播相关参数，从机profile，等，从机一般会立即开启广播，也可以等待一个事件来触发广播，例如按键触发</p>
-<p>步骤二 主机扫描从机</p>
-<p>按键按下，触发主机扫描从机，此时，主机显示屏打印scanning 正在扫描，此刻的从机仍然处于广播状态</p>
-<p>步骤三 发现从机设备</p>
-<p>当主机扫描到从机时，可以返回已扫描到的从机相关信息，例如可以提取到下图中的从机设备名称，从机mac 地址，从机的RSSI 信号值等数据，因此，有些应用在从机的广播包或者扫描回应包中添加自定义字段，这样就可以被主机通过扫描的方式拿到数据</p>
-<p>步骤四 发送连接请求<br>当主机扫描到从机后，通过mac 地址向从机发送连接请求，低功耗蓝牙的连接速度非常快，10ms 左右即可成功连接上，如果从机的广播比较大，则会影响连接的速度</p>
-<p>从机在未收到连接请求之前仍然处于自由的广播状态</p>
-<p>步骤五 成功连接从机</p>
-<p>当从机收到连接请求后，双方成功建立连接，此时双方的状态均变为已连接状态</p>
-<p>然后主机可以调用协议栈提供的接口函数来获取从机的服务</p>
-<p>步骤6 获取从机服务</p>
-<p>获取从机服务通常是在连接成功后就立即执行的，因为只有获取从机的服务后，从能与其通信，下图是主机想从机发送获取服务的请求</p>
-<p>此刻，从机处于已连接状态，响应服务获取请求是在底层自动完成的，上层无需理会</p>
-<p>步骤7 成功获取服务</p>
-<p>如下图所示，主机成功获取到从机的服务，例如获取到UUID 为0xfff0的services 该service 有两个特征值，分别是具有读写属性的0xfff1 ，以及具有通知属性的0xfff2</p>
-<p>读写属性是指主机可以读写该特征值的内容，而通知属性是指从机可以通过该特征值向主机发送数据</p>
-<p>步骤8 主机向从机发送数据</p>
-<p>主机通过特征值0xfff1 主动向从机发送自定义数据hello ，当数据成功发送后，主机状态变为：数据已发送，从机将收到主机发来的数据，从机状态变为收到数据</p>
-<p>步骤9 从机向主机发送数据</p>
-<p>从机可以通过norify 的方式主动向主机发送数据，例如下图，从机通过特征值0xfff2 发送了一条 notify 通知，数据内筒为1234</p>
-<p>步骤10 发送断开请求</p>
-<p>主机和从机任何一方均可以发起断开连接的请求，对方收到后，状态将变为已断开</p>
-<p>步骤11 成功断开连接</p>
-<p>从机收到主机发来的断开请求，此刻状态变为已断开</p>
-<h2 id="4-BLE-协议栈"><a href="#4-BLE-协议栈" class="headerlink" title="4 BLE 协议栈"></a>4 BLE 协议栈</h2><p>BLE 协议栈一般是指芯片厂家，以及Bluetooth SIG 发布的Bluetooth core specification 核心协议的实现的代码固件，并提供函数接口，有芯片内部程序调用，可实现上节BLE 工作流程等相关功能</p>
-<p>常见的协议栈有 德州仪器 TI 的ble-stack 和nordic 的softdevice</p>
-<p>功能框图</p>
-<p>在本节中，我们列举两家典型的蓝牙芯片厂家，TI 和noridc 来深入了解低功耗蓝牙协议栈</p>
-<p>下图是TI的CC26系列芯片协议栈结构图，</p>
-<p>下图是Nordic的nRF52系列芯片的协议栈结构图。</p>
-<p>协议栈结构</p>
-<p>从上节的两张协议栈功能框图中可以看出，无论是哪个芯片厂商实现的ble 协议栈，其结构都非常的相似，均三个部分</p>
-<p>底层 controller<br>中层 host<br>顶层 application</p>
-<p>然后每一层又分成若干个子模块，我们现在由下而上，逐层介绍</p>
-<p>我们将位于顶层的应用层application 也归到协议栈中描述，其实，应用层application 不属于协议栈，它是用来调用协议栈提供的接口，然后实现蓝牙的功能</p>
-<p>控制器 controller </p>
-<p>physical layer 简称 PHY，物理层，PHY层用来指定BLE 所用的无线频段，调制解调方式和方法等，phy 层做得好不好，直接决定整个ble 芯片的功耗，灵敏度以及selectivity 等频射指标</p>
-<p>link layer 简称 LL，链路层，ll层是整个ble 协议栈的核心，也是ble 协议栈的难点和重点，像nordic 的ble 协议栈能同时支持20个link 连接，就是ll 层的功劳，ll 层要做的事情非常多，比如具体选择哪个射频通道进行通信，怎么识别空中数据包，具体在哪个时间点把数据包发送出去，怎么保证数据的完整性，ACK 如何接收，如何进行重传，以及如何对链路进行管理和控制等等，LL层只负责把数据发出去或者收回来，对数据进行怎样的解析则交给上面的GAP 或者ATT</p>
-<p>host controller interface 简称 HCI，协议栈应用开发中，我们会经常看到HCI 的身影，它对上host 提供controller 的功能接口，所以称作 host controller interface</p>
-<p>主控Host </p>
-<p>Logical link control adaptation protocol 简称 L2CAP L2CAP 对LL 进行了一次简单封装，LL 只关心传输的数据本身，L2CAP 就要区分加密通道还是普通通道，同时还要对连接间隔进行管理</p>
-<p>Attribute Protocol 简称ATT ATT 层用来定义用户命令及命令操作的数据，比如读取某个数据或者写某个数据，BLE 协议栈中，开发者接触最多的就是ATT。BLE 引入了attribute 共年，用来描述一条一条的数据，attribute 除了定义数据，同时定义该数据可以使用的att 命令，因此这一层被称为ATT 层</p>
-<p>Security Manager 简称SM SMP 用来管理BLE 连接的加密和安全的，如何保证连接的安全性，同时不影响用户的体验，这些都是SMP要考虑的工作</p>
-<p>Generic Access Profile  简称GAP GAP 是对LL 层payload 有效数据包 如何进行解析的两种方式中的一种，而且是最简单的那一种，GAP 简单的对LL payload 进行一些规范和定义，因此gap 能实现的功能极其有限，GAP 目前主要用来进行广播，扫描和发起连接等</p>
-<p>Generic Attribute Profile 简称GATT<br>GATT 用来规范attribute 中的数据内容，并运用group 分组的概念对attribute 进行分类管理，没有GATT BLE 协议栈也能跑，但互联互通就会出现问题，也正是因为有了GATT 和各种各样的应用Profile，BLE 摆脱了zigbee等无线协议的兼容性困境，成了出货量最大的2.4G 无线通信产品</p>
-<p>应用application</p>
-<p>应用层是用户开发实际蓝牙应用的地方，包含必要的协议栈参数设置，以及各种功能函数的调用，我们分别从蓝牙从机和蓝牙主机两种设备来分析</p>
-<p>蓝牙从机</p>
-<p>相关硬件和基础服务初始化</p>
-<p>设置广播参数，广播数据，广播间隔，扫描回应等参数或者数据</p>
-<p>设置profile 添加从机服务，特征是，还有设置回调函数用于接收主机数据等<br>设置绑定管理参数 可选</p>
-<p>启动广播，开始运行</p>
-<p>等待相关事件，及事件处理，例如收到主机发来的数据，被链接等</p>
-<p>蓝牙主机</p>
-<p>相关硬件和基础服务初始化</p>
-<p>设置扫描参数</p>
-<p>设置连接参数</p>
-<p>设置绑定管理参数 可选</p>
-<p>启动协议栈，开始运行</p>
-<p>等待相关事件，及事件处理，例如扫描事件，从机的notify 事件等</p>
-<ol start="5">
-<li>GAP 和GATT</li>
+<p>HB 的安装我就更不多说了，欢迎大家参考另外几篇文章，这里我根据之前指导派友的经验简单概括一下。</p>
+<p>HB 提供一行安装指令：sudo npm install -g –unsafe-perm homebridge 但是安装成功率比较低，推荐大家使用下面的手动安装指令。</p>
+<p>sudo apt-get install git make<br>sudo apt-get install g++<br>curl -sL <a target="_blank" rel="noopener" href="https://deb.nodesource.com/setup_7.x">https://deb.nodesource.com/setup_7.x</a> | sudo -E bash -<br>sudo apt-get install -y nodejs<br>sudo apt-get install libavahi-compat-libdnssd-dev<br>sudo npm install -g –unsafe-perm homebridge hap-nodejs node-gyp<br>cd &#x2F;usr&#x2F;local&#x2F;lib&#x2F;node_modules&#x2F;homebridge&#x2F;<br>（注意这里如果显示不存在文件夹，替换成 cd &#x2F;usr&#x2F;lib&#x2F;node_modules&#x2F;homebridge&#x2F;)<br>sudo npm install –unsafe-perm bignum<br>cd &#x2F;usr&#x2F;local&#x2F;lib&#x2F;node_modules&#x2F;hap-nodejs&#x2F;node_modules&#x2F;mdns<br>（注意这里如果显示不存在文件夹，替换成 cd &#x2F;usr&#x2F;lib&#x2F;node_modules&#x2F;hap-nodejs&#x2F;node_modules&#x2F;mdns）<br>sudo node-gyp BUILDTYPE&#x3D;Release rebuild</p>
+<p>运行到这里，HB就已经安装完成了，这里建议大家直接输入homebridge 运行一次，以生成示例配置文件，然后ctrl+C退出</p>
+<p>接着，安装homeassistant-homebridge 插件，实现平台联动</p>
+<p>sudo npm install -g homebridge-homeassistant</p>
+<ol start="4">
+<li>添加自启任务</li>
 </ol>
-<p>蓝牙协议分为两类结构，控制器 和主机，每个类别都有子类别，这些子类别执行特定的角色，我们将要研究的两个子类别是，通用访问配置文件 GAP 和通用属性配置文件 GATT</p>
-<p>GAP是Generic Access Profile的缩写，中文含义是：通用访问配置文件。<br>GATT是Generic Attribute Profile的缩写，中文含义是：通用属性配置文件。</p>
-<p>5.1 GAP 和gatt 区别</p>
-<p>区分GAP 和gatt 很重要</p>
-<p>GAP 定义了BLE 网络堆栈的一般拓扑</p>
-<p>GATT 详细描述了一旦设备建立连接后如何传输属性数据</p>
-<p>GATT 特别关注如何根据其描述的规则格式化打包和发送数据，在BLE 网络堆栈中，属性协议，ATT 与GATT 紧密对齐，GATT 直接位于ATT  的顶部，GATT<br>实际上使用ATT 来描述如何从两个连接的设备交换数据</p>
-<p>通用访问配置文件 GAP</p>
-<p>BLE 设备可以使用两种机制与外界通信，广播或连接，这些机制受通用访问配置文件 GAP 准则的约束，GAP 定义了启用BLE 的设备如何使其自身可用，以及两个设备如何直接相互通信</p>
-<p>建立联系</p>
-<p>设备可以通过采用 GAP 中指定的以下角色来加入BLE 网络</p>
-<p>A、广播（Broadcasting）：这些角色不必显式地相互连接即可传输数据。</p>
-<p>广播者（Broadcaster）：广播公共数据包的设备，例如可以广播按下按钮的时间。<br>观察者（Observer）：侦听广播者发送的广告包中数据的设备。广播者和观察者之间没有任何连接。&#x2F;2、&#x2F;2<br>B、连接（Connecting）：这些角色必须显式连接和握手才能传输数据。这些角色比广播角色更常用。</p>
-<p>从机设备（Peripheral）：  通过广播，告知其他设备自己的存在，以便主机设备可以建立连接。连接后，从机设备不再向其他主机设备广播数据，而是保持与主机设备的连接。<br>从机设备功耗低，因为它们只需要定期发送信标即可。主机设备负责开始与从机设备的通信。<br>手环是BLE外设的一个示例。<br>主机设备（Central）：一种通过侦听广播包来启动与从机设备的连接的设备。主机设备可以连接到许多其他从机设备。<br>当主机设备要连接时，它将请求连接数据包发送到从机设备。如果从机设备接受来自主机设备的请求，则建立连接。<br>当您的手机连接到手环时，就是BLE Central设备的一个示例。</p>
-<p>连接后</p>
-<p>主机设备可以更新连接参数，主机设备通常在设备与其自身之间建立连接参数，只有主机设备能修改连接参数，但是，采集设备可以要求主机设备更改连接参数，及从机发送更新参数请求</p>
-<p>从机设备或主机设备可以终止连接，连接可能由于多种原因而终止，例如设备的电池可能耗尽或网络干扰可能导致连接失败，设备还可以主动与对等设备断开连接</p>
-<p>通用属性配置文件 GATT</p>
-<p>GATT 分为两种类型，注意与从机或主机无关</p>
-<p>客户端，客户端可以发送请求给GATT 服务端，客户端可以读写 服务端的属性，通过属性可以通信数据</p>
-<p>服务端，服务端是用来存储属性的，每当客户端发送请求时，服务端会响应这些请求</p>
-<p>客户端与服务端的关系</p>
-<p>一个示例如下，手环采集了心跳信息，希望计算机读取该信息，手环充当服务端并提供信息，手机充当客户端，读取该信息</p>
-<p>GAP 和GATT 模型角色基本上彼此独立从机设备或主机设备都可以充当服务端或客户端，这取决于数据的流动方式</p>
-<p>在一般的主从机通信时，主机可以通过读写从机的属性，实现接收和发送数据给从机，从机可以通过发送通知的方式实现与主机的通信，因此，一般从机是作为GATT 的服务端，主机作为GATT 的客户端</p>
-<p>协议栈分层协作<br>下面以如何发送一个无线数据包的例子来简单阐述协议栈中各分层的作用和必要性，实际上，协议栈的实现可能更加负责，它需要考虑方方面面的因素</p>
-<p>发送数据包</p>
-<p>假设有设备A 和设备B 设备A 要把自己的电量状态83 % 0x53 发给设备B，该怎么做呢？作为一个开发者，他希望越简单越好，对他而言，它希望调用一个简单的api 就能完成这件事，比如 send 0x53 实际上我们的BLE 协议栈就是这样设计的，开发者只需调用 send 0x53 就可以把数据发送出去了，其余的事情BLE 协议栈帮你搞定，很多人会想，BLE 协议栈是不是直接在物理层就把0x53 发出去，就如下图所示</p>
-<p>这种方式初看起来挺美的，但由于很多细节没有考虑到，实际是不可行的，首先，它没有考虑用哪一个射频信道来进行传输，在不更改API 的情况下，我们只能对协议栈进行分层，为此引入 LL 层，开发者还是调用 send 0x53 send 0x53 再调用 send_LL 0x53 2402M 注 2402M 为信道频率，这里还有一个问题，设备B 怎么知道这个数据包是发给自己的还是其他人的，为此BLE 引入 access address 概念，用来指明接受者身份，其中，0x8e89bed6 这个access address 比较特殊，它表示要发给周边所有设备，即广播，如果你要一对一的进行通信，BLE 协议将其称为连接，即设备A 的数据包只能设备B 接收，同样设备B 的数据包只能设备A 接收，那么就必须生成一个独特的随机access address 标识设备A 和设备B 两者之间的连接</p>
-<p>广播方式</p>
-<p>我们先来看一下简单的广播情况，这种情况下，我们把设备A 叫advertiser 设备B叫 scanner 或者observer 扫描者，广播状态下设备A 的LL 层api 将变成 send_LL 0x53 2402M 0x8e89bed6 由于设备B 可以同时接收到很多设备的广播，因此数据包还必须包含设备A 的device address 0xE1022AAB753B 以确认该广播包来自设备A 为此send LL 参数需要变成<br>send_LL(0x53,2402M, 0x8E89BED6, 0xE1022AAB753B)<br>LL 层还要检查数据的完整性，即数据在传输过程中有没有发生窜改，为此引入CRC24 对数据包进行检验，假设为0xb2c7be 同时为了调制解调电路工作更高效，每一个数据包的最前面会加上1个字节的preamble preamble 一般为0x55 或者0xAA 这样，整个空中包变成</p>
-<p>空中包用小端模式表示</p>
-<p>上面这个数据包还有如下问题</p>
-<p>没有对数据包进行分类组织，设备B 无法找到自己想要的数据0x53 为此，我们需要在access address 之后加入两个字段，LL header 和长度字节，LL header 用来表示数据包的LL 类型，长度字节用来指明payload 的长度</p>
-<p>设备B 什么时候开启射频窗口以接收空中数据包，如上图case1所示，当设备A 的数据包在空中传输的时候，设备B 包接收窗口关闭，此时通信将失败，同样对case2 来说，当设备A 没有空中发送数据包时，设备B 把接收窗口打开，此时通信也将失败，只有case3的情况，通信才能成功，即设备A的数据包在空中传输时，设备B 正好打开射频接收窗口，此时通信才能成功，换句话说，LL 层还必须定义通信时序</p>
-<p>当设备B 拿到数据0x53 后，该如何解析这个数据呢？ 它到底表示湿度还是电量，还是别的意思，这个就是GAP 层要做的工作，GAP 层引入了LTV length type value 结构来定义数据，比如020105<br>02 长度 01 类型，强制字段，表示广播flag ，广播包必须包含该字段，05 值，由于广播包最大只能为31 个字节，它能定义的数据类型极其有限，像这里说的电量，gap 就没有定义，因此要通过广播方式把电量数据发出去，只能使用供应商自定义数据类型 0xff 及04ff590053 其中04 表示长度，ff 表示数据类型，自定义数据，0x0059 是供应商 id 自定义数据中的强制字段，0x53 就是我们的数据，设备双方约定0x53 就是表示电量，而不是其他意思</p>
-<p>AAD6BE898E600E3B75AB2A02E102010504FF5900538EC7B2</p>
-<p>AA 前导帧<br>D6BE898E – 访问地址(access address)<br>60 – LL帧头字段(LL header)<br>0E – 有效数据包长度(payload length)<br>3B75AB2A02E1 – 广播者设备地址(advertiser address)<br>02010504FF590053 – 广播数据<br>8EC7B2 – CRC24值</p>
-<p>有了PHY LL 和gap，就可以发送广播包了，但广播包携带的信息极其有限，而且还有如下几大限制</p>
-<p>无法进行一对一双向通信，广播是一对多通信，而且是单方向的通信</p>
-<p>由于不支持组包和拆包，因此无法传输大数据</p>
-<p>通信不可靠及效率低下，广播信道不能太多，否则将导致扫描端效率低下，为止 ble 只使用37 2402MHZ 38 2426 39 2480 三个信道进行广播和扫描，因此广播不支持调频，由于广播是一对多的，所以广播也无法支持ack，这些都使广播通信变得不可靠</p>
-<p>扫描端口功耗高，由于扫描端不知道设备端何时广播，也不知道设备端选用哪个频道进行广播，扫描端只能拉长扫描窗口时间，并同时对37 38 39 三个通道进行扫描，这样功耗就会比较高</p>
-<p>而连接则可以很好解决上述问题，下面我们就来看看连接是如何将0x53 发送出去的</p>
-<p>6.3 连接方式</p>
-<p>到底什么叫连接，像有线uart ，很容易理解，就是用线 rx tx 等，把设备A 和设备B 相连，即为连接，用线把两个设备相连，实际是让两个设备有共同的通信媒介，并让两者时钟同步起来，蓝牙连接有何尝不是这个道理<br>所谓设备A 和设备B 建立蓝牙连接，就是指设备A 和设备B 两者一对一 同步成功，其具体包含以下几方面</p>
-<p>设备A 和设备B 对接下来要用的物理信道达成一致</p>
-<p>设备A 和设备B 双方建立一个共同的时间锚点，也就是说，把双方的时间原点变成同一个点</p>
-<p>设备A 和设备B 两者时钟同步成功，即双方都知道对方什么时候发送数据包什么时候接收数据包</p>
-<p>连接成功后，设备A 和设备B 通信流程如下所示</p>
-<p>如上图所示，一旦设备A 和设备B 连接成功（此种情况下，我们把设备A称为Master 或者central ，把设备B 称为slave 或者peripheral），设备A 将周期性以CI connection interval 为间隔向设备B 发送数据包，而设备B 也周期性地以ci 为间隔打开射频接收窗口以接收设备A 的数据包，同时按照蓝牙spec 要求，设备B 收到设备A 数据包150us 后，设备B 切换到发送状态，把自己的数据发给设备A，设备A则切换到接收状态，接收设备B 发过来的数据，由此可见，连接状态下，设备A 和设备B 的射频发送和接收窗口都是周期性地有计划地开和关，而且开的时间非常短，从而大大降低系统功耗并大大提高系统效率</p>
-<p>现在我们看看连接状态下是如何把数据0x53 发送出去的，从中大家可以体会到蓝牙协议分层的妙处</p>
-<p>对开发者来说，很简单，他只需要调用 send 0x53</p>
-<p>GATT层定义数据的类型和分组，方便起见，我们用0x0013表示电量这种数据类型，这样GATT层把数据打包成130053（小端模式！）<br>ATT层用来选择具体的通信命令，比如读&#x2F;写&#x2F;notify&#x2F;indicate等，这里选择notify命令0x1B，这样数据包变成了：1B130053<br>L2CAP用来指定connection interval（连接间隔），比如每10ms同步一次（CI不体现在数据包中），同时指定逻辑通道编号0004（表示ATT命令），最后把ATT数据长度0x0004加在包头，这样数据就变为：040004001B130053<br>LL层要做的工作很多，首先LL层需要指定用哪个物理信道进行传输（物理信道不体现在数据包中），然后再给此连接分配一个Access address（0x50655DAB）以标识此连接只为设备A和设备B直连服务，然后加上LL header和payload length字段，LL header标识此packet为数据packet，而不是control packet等，payload length为整个L2CAP字段的长度，最后加上CRC24字段，以保证整个packet的数据完整性，所以数据包最后变成：<br>AAAB5D65501E08040004001B130053D550F6<br>AA – 前导帧(preamble)<br>0x50655DAB – 访问地址(access address)<br>1E – LL帧头字段(LL header)<br>08 – 有效数据包长度(payload length)<br>04000400 – ATT数据长度，以及L2CAP通道编号<br>1B – notify command<br>0x0013 – 电量数据handle<br>0x53 – 真正要发送的电量数据<br>0xF650D5 – CRC24值</p>
-<p>虽然 开发者只调用了send 0x53 ，但由于低功耗蓝牙协议栈层层打包，最后空中实际传输的数据将变成下图所示的模样，这就既满足了低功耗蓝牙通信的需求，又让客户api 变得简单，可微一箭双雕</p>
-<p>蓝牙广播</p>
-<p>蓝牙状态切换</p>
-<p>蓝牙服务和特性</p>
-<p>SPP 协议， MID 协议</p>
-<p>HID 协议 等等</p>
-<p>MicroPython  BLE</p>
-<p>NodeMCU-32</p>
-<p>蓝牙广播 advertising</p>
-<p>常见的广播类型</p>
-<p>0x01 设备标识</p>
-<p>0x02 16bit uuid</p>
-<p>0x07 128 bit uuid</p>
-<p>0x19 设备外观</p>
-<p>0x08 缩略设备名称</p>
-<p>0x09 完整设备名称</p>
-<p>0x0A 发射功率</p>
-<p>0xff 厂商自定义数据</p>
-<p>app nrf connected</p>
-<p>蓝牙广播类型</p>
-<p>可连接非定向</p>
-<p>可连接定向</p>
-<p>不可连接非定向</p>
-<p>可扫描非定向</p>
-<p>扫描响应数据和广播数据格式是一样的</p>
-<p>扫描响应数据是非必需的</p>
-<p>总结</p>
-<p>低功耗蓝牙通信基于特性</p>
-<p>常用通信方式 read write notify<br>手机订阅才能收到 notify</p>
-<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/read/cv18236129">https://www.bilibili.com/read/cv18236129</a></p>
-<p>BF54D165-942B-D6A0-5425-E593CD317472</p>
+<p>忙活了那么久，即将大功告成了，最后临门一脚，我们把HASS和HB 添加至树莓派开机任务中，这样每次启动后就会自动运行上述2个进程</p>
+<p>注意：配置 HB 前程序会运行错误，提示缺少配置文件，可先不理会。</p>
+<p>cd &#x2F;<br>sudo useradd –system homebridge<br>sudo mkdir &#x2F;var&#x2F;homebridge<br>sudo cp ~&#x2F;.homebridge&#x2F;config.json &#x2F;var&#x2F;homebridge&#x2F;<br>sudo cp -r ~&#x2F;.homebridge&#x2F;persist &#x2F;var&#x2F;homebridge<br>sudo chmod -R 0777 &#x2F;var&#x2F;homebridge<br>cd &#x2F;etc&#x2F;default<br>sudo nano homebridge 复制粘贴</p>
+<h1 id="Defaults-x2F-Configuration-options-for-homebridge"><a href="#Defaults-x2F-Configuration-options-for-homebridge" class="headerlink" title="Defaults &#x2F; Configuration options for homebridge"></a>Defaults &#x2F; Configuration options for homebridge</h1><h1 id="The-following-settings-tells-homebridge-where-to-find-the-config-json-file-and-where-to-persist-the-data-i-e-pairing-and-others"><a href="#The-following-settings-tells-homebridge-where-to-find-the-config-json-file-and-where-to-persist-the-data-i-e-pairing-and-others" class="headerlink" title="The following settings tells homebridge where to find the config.json file and where to persist the data (i.e. pairing and others)"></a>The following settings tells homebridge where to find the config.json file and where to persist the data (i.e. pairing and others)</h1><p>HOMEBRIDGE_OPTS&#x3D;-U &#x2F;var&#x2F;homebridge</p>
+<h1 id="If-you-uncomment-the-following-line-homebridge-will-log-more"><a href="#If-you-uncomment-the-following-line-homebridge-will-log-more" class="headerlink" title="If you uncomment the following line, homebridge will log more"></a>If you uncomment the following line, homebridge will log more</h1><h1 id="You-can-display-this-via-systemd’s-journalctl-journalctl-f-u-homebridge"><a href="#You-can-display-this-via-systemd’s-journalctl-journalctl-f-u-homebridge" class="headerlink" title="You can display this via systemd’s journalctl: journalctl -f -u homebridge"></a>You can display this via systemd’s journalctl: journalctl -f -u homebridge</h1><h1 id="DEBUG-x3D"><a href="#DEBUG-x3D" class="headerlink" title="DEBUG&#x3D;*"></a>DEBUG&#x3D;*</h1><p>Ctrl+X，Y，回车</p>
+<p>cd &#x2F;etc&#x2F;systemd&#x2F;system<br>sudo nano homebridge.service<br>复制粘贴</p>
+<p>[Unit]<br>Description&#x3D;Node.js HomeKit Server<br>After&#x3D;syslog.target network-online.target<br>[Service]<br>Type&#x3D;simple<br>User&#x3D;homebridge<br>EnvironmentFile&#x3D;&#x2F;etc&#x2F;default&#x2F;homebridge<br>ExecStart&#x3D;&#x2F;usr&#x2F;lib&#x2F;node_modules&#x2F;homebridge&#x2F;bin&#x2F;homebridge $HOMEBRIDGE_OPTS<br>Restart&#x3D;on-failure<br>RestartSec&#x3D;10<br>KillMode&#x3D;process<br>[Install]<br>WantedBy&#x3D;multi-user.target<br>Ctrl+X，Y，回车</p>
+<p>cd &#x2F;<br>sudo systemctl daemon-reload<br>sudo systemctl enable homebridge<br>sudo systemctl start homebridge<br>sudo systemctl status homebridge<br>sudo systemctl enable mosquitto</p>
+<p>最后重启，sudo reboot</p>
  
       <!-- reward -->
       
@@ -422,7 +797,7 @@
 
     
     <article
-  id="post-20221216-Appinventor学习环境搭建"
+  id="post-20221219-microPython是什么"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -433,8 +808,8 @@
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2022/12/16/20221216-Appinventor%E5%AD%A6%E4%B9%A0%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/"
-    >20221216-Appinventor学习环境搭建</a> 
+  <a class="article-title" href="/2022/12/19/20221219-microPython%E6%98%AF%E4%BB%80%E4%B9%88/"
+    >20221219-microPython是什么</a> 
 </h2>
  
 
@@ -442,67 +817,30 @@
     </header>
      
     <div class="article-meta">
-      <a href="/2022/12/16/20221216-Appinventor%E5%AD%A6%E4%B9%A0%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" class="article-date">
-  <time datetime="2022-12-16T12:44:55.000Z" itemprop="datePublished">2022-12-16</time>
+      <a href="/2022/12/19/20221219-microPython%E6%98%AF%E4%BB%80%E4%B9%88/" class="article-date">
+  <time datetime="2022-12-19T08:11:09.000Z" itemprop="datePublished">2022-12-19</time>
 </a>    
     </div>
       
     <div class="article-entry" itemprop="articleBody">
        
-  <p>[TOC]</p>
-<h2 id="0x01"><a href="#0x01" class="headerlink" title="0x01"></a>0x01</h2><h2 id="0x02"><a href="#0x02" class="headerlink" title="0x02"></a>0x02</h2><h2 id="0x03"><a href="#0x03" class="headerlink" title="0x03"></a>0x03</h2><h2 id=""><a href="#" class="headerlink" title=""></a></h2> 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20221216-HC-06蓝牙模块"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/12/16/20221216-HC-06%E8%93%9D%E7%89%99%E6%A8%A1%E5%9D%97/"
-    >20221216-HC-06蓝牙模块</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/12/16/20221216-HC-06%E8%93%9D%E7%89%99%E6%A8%A1%E5%9D%97/" class="article-date">
-  <time datetime="2022-12-16T11:46:36.000Z" itemprop="datePublished">2022-12-16</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>主机：用于向从机下发指令，能够搜索并主动建立连接的一方</p>
-<p>从机：用于接收主机下发的命令，不能主动建立连接，只能等别人连接自己。（HC-06只能工作在从机模式下。）<br>主从一体：能够在主机和从机模式间切换，即可做主机也可作从机。如：HC-05既可以设置为主机也可以设置为从机。</p>
-<p>引脚说明</p>
-<p>HC-05 和HC-06的硬件相同，都采用CSR 公司的BC417143 芯片，支持蓝牙2.1+EDR 规范，只是芯片内部的控制程序不同</p>
-<p>通常可采用万用表「电阻」档，测量底板RxD引脚和蓝牙模块本身（就是焊接上去那块板）的第2脚，如果电阻值为接近于0，则代表沒有限流电阻。如下图：</p>
-<p>使用AT 指令前，最好由一块USB 转TTL 的模块，将蓝牙模块与usb 转ttl 模块连接完成，</p>
-<p>AT指令<br>终端返回信息<br>功能描述<br>AT<br>oK<br>确认连接状态<br>AT+VERSION<br>OK linvor V1.8<br>查看软件版本号<br>AT+NAMEOOo<br>oK setname<br>设置蓝牙名称<br>AT+PINOO0o<br>oK setPIN<br>设定密码<br>AT+BAUD1<br>OK 1200<br>将波特率设置为:1200<br>AT+BAUD2<br>OK 2400<br>将波特率设置为:2400<br>AT+BAUD3<br>OK 4800<br>将波特率设置为:4800<br>AT+BAUD4<br>oK 9600<br>将波特率设置为:9600<br>AT+BAUD5<br>OK 19200<br>将波特率设置为:19200<br>AT+BAUD6<br>OK 38400<br>将波特率设置为:38400<br>AT+BAUD7<br>OK 57600<br>将波特率设置为:57600<br>AT+BAUD8<br>OK 115200<br>将波特率设置为::115200 dn.net&#x2F;O17136(</p>
+  <p>microPython是什么</p>
+<p>先了解一下，什么是python</p>
+<p>python 是一种简单易用的，能够运行在多个平台下的计算机编程语言</p>
+<p>microPython 是跑在mcu 微控制器上的python，通过内置的解释器执行py 文件或者py 命令，就可以让微控制器运行您想要的功能了，microPython 和python 编程语言一样，在任何板子上都可以使用通用的api 控制硬件底层，比如点亮LED 灯，读取传感器信息，LCD 显示字符串，控制电机、连接网络、连接蓝牙等等</p>
+<p>如果说Arduino让创客摆脱了各种编程环境配置，那么micropython直接让创客摆脱了底层。命令行和解释执行，都是C语言所不具备的优势，运行micropython的soc，就类似一台完整的电脑，我们用python文件和命令行，轻松控制这台电脑中的一切。</p>
+<p>micropython 是人们连接各种任务的黏合剂，即便您不懂编程，不懂硬件，也可以通过它来控制mcu 要给microPython </p>
+<p>microPython诞生啦！</p>
+<p>Damien George是一名计算机工程师，他每天都要使用Python语言工作，同时也在做一些机器人项目。有一天，他突然冒出了一个想法：能否用Python语言来控制单片机，进行实现对机器人的操控呢？</p>
+<p>要知道，Python是一款比较容易上手的脚本语言，而且有强大的社区支持，一些非计算机专业领域的人都选它作为入门语言。遗憾的是，它不能实现一些非常底层的操控，所以在硬件领域并不起眼。</p>
+<p>Damien为了突破这种限制，他花费了六个月的时间来打造Micro Python。它基于ANSI C，语法跟Pyton 3基本一致，拥有自家的解析器、编译器、虚拟机和类库等。目前它支持基于32-bit的ARM处理器，比如说pyboard（STM32F405），支持NRF51822（micro:bit）、支持FireBeetle-ESP32、支持WiPy、支持ESP8266核心主控、支持CC3200等等。</p>
+<p>pyload 是microPython 官方出的一款支持microPython 的微控制器，采用stm32f405rg MCU主芯片，邮票孔设计，体积小巧<br>在性能方面，pyboard除了将stm32f405rg本身的外设延用出来，还拓展了微型SD卡插槽、三周加速度计（mma7660）。在小巧的pyboard上，设有29个GPIO，4个LED灯，板载3.3V LDO电源管理芯片，可以提供高达250mA的电流，3.6~16V的宽电压输入。</p>
+<p>micro:bit</p>
+<p>micro：bit是由英国广播公司BBC推出的可编程微型计算机，可以帮助用户学习基础编程知识。它最大的亮点在于支持图形化编程，支持microPython编程。micro：bit主控采用nrf51822芯片作为主控，IC包括256KB片上闪存，16KB RAM，32位ARM®Cortex™ M0 CPU，支持Bluetooth低功耗，在低功耗模式下，最低功耗可以达到0.6uA。</p>
+<p>FireBeetle-ESP32</p>
+<p>FireBeetle-ESP32全称是FireBeetle Board-ESP32微控制器，是由DFRobot基于Espressif ESP32主芯片开发的物联网、低功耗为控制器。FireBeetle-ESP32板载ESP-WROOM-32双核芯片，支持WiFi和蓝牙双模通信，外围兼容低功耗硬件设计，深度睡眠模式下功耗仅为10uA。FireBeetle-ESP32控制器还提供了3.7V锂电池接口，并可以通过USB口给锂电池充电。其次，在软件方面，已经支持WiFi和蓝牙功能的使用，支持I2S音频的解码，结合uPyCraft IDE，可以轻松完成物联网开发设计。值得说明的是，本书的microPython教程是基于FireBeetle-ESP32控制器硬件。</p>
+<p>WiPy</p>
+<p>WiPy是支持microPython编程、支持WiFi和蓝牙的开发板，定位于物联网应用的设计。WiPy控制器的核心采用Espressif ESP32芯片，其最大的特点在于体积小巧，支持蓝牙和WiFi，这点和DFRobot的FireBeetle萤火虫系列主板相似。</p>
  
       <!-- reward -->
       
@@ -522,7 +860,7 @@
 
     
     <article
-  id="post-20221216-AT指令介绍"
+  id="post-20221219-固件firmware固件与驱动的区别"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -533,8 +871,8 @@
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2022/12/16/20221216-AT%E6%8C%87%E4%BB%A4%E4%BB%8B%E7%BB%8D/"
-    >20221216-AT指令介绍</a> 
+  <a class="article-title" href="/2022/12/19/20221219-%E5%9B%BA%E4%BB%B6firmware%E5%9B%BA%E4%BB%B6%E4%B8%8E%E9%A9%B1%E5%8A%A8%E7%9A%84%E5%8C%BA%E5%88%AB/"
+    >20221219-固件firmware固件与驱动的区别</a> 
 </h2>
  
 
@@ -542,87 +880,31 @@
     </header>
      
     <div class="article-meta">
-      <a href="/2022/12/16/20221216-AT%E6%8C%87%E4%BB%A4%E4%BB%8B%E7%BB%8D/" class="article-date">
-  <time datetime="2022-12-16T08:37:08.000Z" itemprop="datePublished">2022-12-16</time>
+      <a href="/2022/12/19/20221219-%E5%9B%BA%E4%BB%B6firmware%E5%9B%BA%E4%BB%B6%E4%B8%8E%E9%A9%B1%E5%8A%A8%E7%9A%84%E5%8C%BA%E5%88%AB/" class="article-date">
+  <time datetime="2022-12-19T03:12:53.000Z" itemprop="datePublished">2022-12-19</time>
 </a>    
     </div>
       
     <div class="article-entry" itemprop="articleBody">
        
-  <p>AT 指令最初是用来指导modem 工作的，</p>
-<p>虽然在PC 端，手机上已经没有了AT 的使用，但其却在嵌入式行业里各类联网模块中发挥着重要的作用，而且不仅仅只应用在蜂窝模块，还应用到了wifi ble 等模块中</p>
-<p>相关标准</p>
-<p>随着技术的发展，目前 AT 指令发展过程中形成两个重要标准</p>
-<p>V.250：该标准于 1995 年建立，1998 年重命名为 V.250<br>ETSI GSM 07.07（3GPP TS 27.007）：用于控制 GSM modem 的 AT 指令集<br>GSM 07.07 是基于 V.250 标准的。是目前最新的 AT 标准。</p>
-<p>当下AT 指令的应用</p>
-<p>目前 的AT 指令着重应用在蜂窝模块 wifi 模块，ble 模块，目的是为了简化嵌入式设备联网的复杂度</p>
-<p>AT 标准定义了At 命令的格式本身，比如命令以 AT 为前缀，以 或者 结尾，这被现有的AT 模块所延用</p>
-<p>但是，由于每个厂家的模块不一样，实现的功能不一样，导致每个 AT 模块厂家有自己的一套私有的 AT 命令集，每一个 AT 模块厂家实现的 AT 指令集解析器也不一样（解析器实现的 AT 标准功能也参差不齐）。像上图所示的 AT 命令使用方式不被大多数模块厂家所实现。</p>
-<p>AT模块的应用框图</p>
-<p>既然是指令集，那么必然会有指令集的解析处理，通常，我们把AT 模块端的解析处理程序称为AT Server，而将控制AT 模块的处理器端的解析处理程序称为AT client 由AT client 发起命令请求，AT Server 通过URC 来主动给AT client 发送数据</p>
-<p>一些约定</p>
-<p>AT 命令的常用格式</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">AT+CMD=&lt;xxx&gt;[,&lt;xxx&gt;,&lt;xxx&gt;]</span><br></pre></td></tr></table></figure>
-
-<p>AT命令以AT 开始，以 \r 或者 \r\n 结尾，参数之间使用 , 隔开，字符串参数使用双引号 “” 包裹，整形参数不适用双引号。</p>
-<p><CR>：回车符<br><LF>：换行符<br><xxx><br>尖括号中的名称 xxx 在 AT 里是一个语法元素，要求必须指定。尖括号本身不会出现在命令行里。<br>[xxx]<br>中括号中的名称 xxx 在 AT 里是一个语法元素，表示可选择指定。中括号本身不出现在命令行里。</p>
-<p>四类AT 命令</p>
-<p>Test 命令：AT+<x>&#x3D;?<br>测试指令类似于命令行里的 help 指令，用于提供该命令的使用信息，以及命令参数的取值范围。<br>Read 命令：AT+<x>?<br>用于查询该指令对应功能的当前值。<br>Set 命令：AT+<x>&#x3D;&lt;…&gt;<br>设置用户指定的参数到对应的功能里。<br>Execute 命令：AT+<x><br>执行相关操作。</p>
-<p>响应结果字符串</p>
-<p>AT 标准定义了标准的响应结果字符串：</p>
-<p>\r\nOK\r\n<br>如果 AT 指令被 AT Server 识别，并正确执行，则返回该结果。<br>“ 标准中的 V1 模式下响应结果代码的方式。V0 模式下返回 0\r。<br>”<br>\r\nERROR\r\n<br>“ 标准中的 V1 模式下响应结果代码的方式。V0 模式下返回 4\r。<br>”</p>
-<h2 id="数据模式与指令模式"><a href="#数据模式与指令模式" class="headerlink" title="数据模式与指令模式"></a>数据模式与指令模式</h2><p>在收到 +++，并且接下来 1s 内未收到其他数据的话，将从数据模式切换到指令模式。</p>
-<p>数据模式，可以透传数据，client 发什么，server 就原封不动发出去。指令模式时，AT Server 需要解析 AT 指令，并作出响应。</p>
-<!-- AT+name=”LiMou” --> 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20221216-蓝牙模块与单片机如何连接"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/12/16/20221216-%E8%93%9D%E7%89%99%E6%A8%A1%E5%9D%97%E4%B8%8E%E5%8D%95%E7%89%87%E6%9C%BA%E5%A6%82%E4%BD%95%E8%BF%9E%E6%8E%A5/"
-    >20221216-蓝牙模块与单片机如何连接</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/12/16/20221216-%E8%93%9D%E7%89%99%E6%A8%A1%E5%9D%97%E4%B8%8E%E5%8D%95%E7%89%87%E6%9C%BA%E5%A6%82%E4%BD%95%E8%BF%9E%E6%8E%A5/" class="article-date">
-  <time datetime="2022-12-16T07:56:20.000Z" itemprop="datePublished">2022-12-16</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/63449607">https://zhuanlan.zhihu.com/p/63449607</a></p>
-<h2 id="USB转TTL"><a href="#USB转TTL" class="headerlink" title="USB转TTL"></a>USB转TTL</h2><p>TTL 是一种电平</p>
-<p>像我们常用的单片机，引出来的串口，如果不加其他的接口电路，出来的信号就是TTL 电平，如果需要查看串口的打印信息，一般是需要接一个上位机的，常规的就是电脑，而现在的电脑一般的通信接口只有USB 老式的电脑可能会有 232 接口</p>
-<p>对于usb口而言，是没法和TTL 串口直接通信的，因为接口不匹配，电平也不匹配，这时候就需要借助外围的小设备来实现接口与电平的转换，常规操作是使用CH340 这种芯片所制作的usb 转串口模块，这个芯片可以实现TTL 串口和USB 之前的转换</p>
+  <p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/0222686c0fb4">https://www.jianshu.com/p/0222686c0fb4</a></p>
+<p>固件 firmware 就是写入EROM 可擦写只读存储器，或者EEPROM 电可擦写可编程只读存储器中的程序</p>
+<p>固件是指设备内部保存的设备驱动程序，通过固件，操作系统才能按照标准的设备驱动实现特定机器的运行运作，比如 光驱、刻录机 等都有内部固件</p>
+<p>固件是担任着一个系统最基础最底层工作的软件，而在硬件设备中，固件就是硬件设备的灵魂，因为一些硬件设备除了固件以外没有其他软件组成，因此固件也就决定了这硬件设备的功能以及性能</p>
+<p>手机、数码相机、mp3、mp4、路由器、电子书、交换机、猫、PSP、PS3、NDS、XBOX、U盘、主板、打印机的BIOS（BIOS就是一种固件）、显卡的BIOS。</p>
+<p>固件既然是软件，就有大小之分，大的可有几百兆，小的也许只有几K 甚至不足1k</p>
+<p>而对于非独立的电子产品，比如硬盘、鼠标 bios 光驱、是、盘等设备，固件就是指其最底层的，让设备得以运行的程序代码</p>
+<p>固件与驱动的区别</p>
+<p>驱动和固件都是代码，前者为软件服务，后者为硬件服务</p>
+<p>随着计算机体系结构的发展，硬件的种类开始变多，操作系统的种类也变多了，这个时候，因为各种技术的、商业的原因，硬件厂商希望自己的硬件能被更多的软件厂商使用，所以就需要在硬件之上做一些封装，让自己的硬件操纵起来更容易，这个时候就要有 firmware 这种东西了，它简化了软件与硬件的交互</p>
+<p>但是为什么不把firmware 做的很完美，做的不需要驱动支持呢？因为有不同的操作系统</p>
+<p>不同的操作系统，对于操作硬件的方式完全不同，在windows 里应用态是无法直接写io 端口的，而在嵌入式系统里，一般都不限制直接操作io 端口，所以，硬件厂商一方面为了自己的硬件能被软件更简单的使用，就需要写firmware ，而另一方面为了兼容各种操作系统，又不能把firmware 写的太死，必须预留足够的余地让软件自由发挥，软件的自由发挥就是驱动</p>
+<p>不同操作系统的驱动是不能兼容的，原因就是驱动是为操作系统服务的，有的操作系统是单线程的，有些操作系统不允许动态申请内存，所以不同的操作系统要操作硬件，就要根据自身的特性编写对应的操作代码，这就是驱动存在的意义–适应系统需要</p>
+<p>假如世界上只有一种操作系统，并且版本永远不会改变，那么firmware 和驱动就可以融合在一起，但这只能是一个不现实的梦想，要知道民用操作系统和工业控制操作系统差别是十分巨大的</p>
+<p>从计算机领域来说，驱动和固件从来没有过明确的定义，就好像今天我们说内存，大部分人用来表示SDRAM 但也有人把android 里的固化的flash storage 称为内存，你不能说这样说就错了，因为这确实是一种内部存储</p>
+<p>但在linux kernel 中，driver 和firmware 是有明确含义的，其中 driver 是控制被操作系统管理的外部设备 device 的代码段，很多时候 driver 会被实现为LKM 但这不是必要条件，driver 通过 register_driver 注册到总线上，当某个device 被注册到同样的总线的时候，driver 和device 会通过一定的策略进行binding ，最终在probe 函数中由driver 实际控制对应的设备，并把对该设备的控制接口注册到linux 的其他子系统上</p>
+<p>而 firmware，是表示运行在非 控制处理器 （指不直接运行操作系统的处理器，例如外设中的处理器，或者被用于bare metal 的主处理器的其中一些核） 中的程序，这些程序很多时候使用和操作所运行的处理器完全不同的指令集，这些程序以二进制形式存在于linux内核的源代码树中，根据配置，可以直接集成到最终的映像中，或者被拷贝到指定的位置，当driver 对device 进行初始化的时候，通过load_firmware 等接口，可以把指定的firmware 加载到内存中，由驱动传输到指定的设备上</p>
+<p>所以，总的来说，其实 driver 和firmware 没有什么直接的关系</p>
  
       <!-- reward -->
       
@@ -642,7 +924,7 @@
 
     
     <article
-  id="post-20221216-C语言中typedef的使用方法"
+  id="post-20221218-MQTT入门介绍"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -653,8 +935,8 @@
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2022/12/16/20221216-C%E8%AF%AD%E8%A8%80%E4%B8%ADtypedef%E7%9A%84%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/"
-    >20221216-C语言中typedef的使用方法</a> 
+  <a class="article-title" href="/2022/12/18/20221218-MQTT%E5%85%A5%E9%97%A8%E4%BB%8B%E7%BB%8D/"
+    >20221218-MQTT入门介绍</a> 
 </h2>
  
 
@@ -662,322 +944,97 @@
     </header>
      
     <div class="article-meta">
-      <a href="/2022/12/16/20221216-C%E8%AF%AD%E8%A8%80%E4%B8%ADtypedef%E7%9A%84%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/" class="article-date">
-  <time datetime="2022-12-16T06:05:15.000Z" itemprop="datePublished">2022-12-16</time>
+      <a href="/2022/12/18/20221218-MQTT%E5%85%A5%E9%97%A8%E4%BB%8B%E7%BB%8D/" class="article-date">
+  <time datetime="2022-12-18T11:10:42.000Z" itemprop="datePublished">2022-12-18</time>
 </a>    
     </div>
       
     <div class="article-entry" itemprop="articleBody">
        
-  <p><a target="_blank" rel="noopener" href="http://c.biancheng.net/view/298.html">http://c.biancheng.net/view/298.html</a></p>
-<p>C语言用户使用typedef 关键字来定义自己习惯的数据类型名称，来替代系统默认的基本类型，数组类型名称，指针类型名称与用户自定义的结构型名称，共用型名称，枚举型名称等，一旦用户在程序中定义了自己的数据类型名称，就可以在该程序中用自己的数据类型名称来定义变量的类型，数组的类型，指针变量的类型与函数的类型等</p>
-<p>C99 之前并未提供布尔类型，但我们可以使用typedef 关键字来定义一个简单的布尔类型，如下面的代码所示</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="type">int</span> BOOL;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> TRUE 1</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> FALSE 0</span></span><br><span class="line"></span><br><span class="line">BOOL bflag=TRUE;</span><br></pre></td></tr></table></figure>
-
-<p>C99 标准中新增了布尔类型，自定义布尔变量的方式有两种，一种是使用<code> _BOOL</code>，另一种是使用<code>&lt;stdbool.h&gt;</code>头文件中定义好的 bool 类型，感兴趣的小伙伴请猛击这里了解详情。 </p>
-<h2 id="typedef-的四种用法"><a href="#typedef-的四种用法" class="headerlink" title="typedef 的四种用法"></a>typedef 的四种用法</h2><p>在实际使用中，typedef 的应用主要有如下4种</p>
-<p>为基本数据类型定义新的类型名</p>
-<p>也就是说，系统默认的所有基本类型都可以利用typedef 关键字来重新定义类型名，示例代码如下所示</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="type">unsigned</span> <span class="type">int</span> COUNT;</span><br></pre></td></tr></table></figure>
-
-<p>而且我们还可以使用这种方法来定义与平台无关的类型，比如，要定义一个REAL 的浮点类型，在目标平台上，让它表示最高精度的类型</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">double</span> REAL;</span><br></pre></td></tr></table></figure>
-<p>在不支持 long double 的平台二上，改为：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="type">double</span> REAL;</span><br></pre></td></tr></table></figure>
-<p>甚至还可以在连 double 都不支持的平台三上，改为：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="type">float</span> REAL;</span><br></pre></td></tr></table></figure>
-
-<p>这样，当跨平台移植程序时，我们只需要修改一个typedef 的定义即可，而不用对其他源代码做任何修改，其实，标准库中广泛地使用了这个技巧，比如 size_t 在 VC++2010 的 crtdefs.h 文件中的定义如下所示：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">ifndef</span> _SIZE_T_DEFINED</span></span><br><span class="line"><span class="meta">#<span class="keyword">ifdef</span>  _WIN64</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="type">unsigned</span> __int64    <span class="type">size_t</span>;</span><br><span class="line"><span class="meta">#<span class="keyword">else</span></span></span><br><span class="line"><span class="keyword">typedef</span> _W64 <span class="type">unsigned</span> <span class="type">int</span>   <span class="type">size_t</span>;</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> _SIZE_T_DEFINED</span></span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br></pre></td></tr></table></figure>
-
-<p>为自定义数据类型 定义简洁的类名名称</p>
-<p>以结构体为例，下面我们定义一个名为point的结构体</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Point</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="type">double</span> x;</span><br><span class="line">    <span class="type">double</span> y;</span><br><span class="line">    <span class="type">double</span> z;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<p>在调用这个结构体时，我们必须像下面的代码这样来调用这个结构体</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Point</span> <span class="title">oPoint1</span>=</span>&#123;<span class="number">100</span>，<span class="number">100</span>，<span class="number">0</span>&#125;;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Point</span> <span class="title">oPoint2</span>;</span></span><br></pre></td></tr></table></figure>
-<p>这里，结构体 struct Point 为新的数据类型，在定义变量的时候均要向上面的调用方法一样有保留字struct ，而不能像int 和double 那样直接使用Point 来定义变量，现在，我们利用typedef 定义这个结构体，如下面的代码所示</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">tagPoint</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="type">double</span> x;</span><br><span class="line">    <span class="type">double</span> y;</span><br><span class="line">    <span class="type">double</span> z;</span><br><span class="line">&#125; Point;</span><br></pre></td></tr></table></figure>
-
-<p>在上面的代码中，实际上完成了两个操作<br>定义了一个新的结构类型，代码如下所示</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">tagPoint</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="type">double</span> x;</span><br><span class="line">    <span class="type">double</span> y;</span><br><span class="line">    <span class="type">double</span> z;</span><br><span class="line">&#125; ;</span><br></pre></td></tr></table></figure>
-<p>其中，struct 关键字和tagPoint 一起构成了这个结构类型，无论是否存在typedef 关键字，这个结构都存在</p>
-<p>使用typedef 为这个新的结构起了一个别名，叫Point 即</p>
-<p>typedef struct tagPoint Point</p>
-<p>因此，现在你就可以像int 和double 那样直接使用Point 定义变量，如下面的代码所示</p>
-<p>Point oPoint1&#x3D;{100，100，0};<br>Point oPoint2;</p>
-<p>为了加深对typedef 的理解，我们再来看一个结构体例子，如下面的代码所示</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">tagNode</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="type">char</span> *pItem;</span><br><span class="line">    pNode pNext;</span><br><span class="line">&#125; *pNode;</span><br></pre></td></tr></table></figure>
-
-<p>从表面上看，上面的示例代码与前面的定义方法相同，所以应该没有什么问题，但是编译器却报了一个错误，</p>
-<p>其实问题并非在于struct 定义的本身，大家应该都知道，C 语言是允许在结构中包含指向它自己的指针的，我们可以在建立链表等数据结构的实现上看到很多这类例子，那问题在哪里呢  ？其实，根本问题还是在于typedef 的应用 </p>
-<p>在上面的代码中，新结构建立的过程中遇到了pNext 声明，其类型是pNode 这里要特别注意的是，pNode 表示的是该结构体的新别名。于是问题出现了，在结构体类型本身还没有建立完成的时候，编译器根本就不认识pNode 因为这个结构体类型的新别名还不存在，所以自然就会报错，因此，我们要做一些适当的调整，比如将结构体中的pNext 声明修改成如下方式</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">tagNode</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="type">char</span> *pItem;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">tagNode</span> *<span class="title">pNext</span>;</span></span><br><span class="line">&#125; *pNode;</span><br></pre></td></tr></table></figure>
-
-<p>或者将struct 与typedef 分开定义，如下面的代码所示</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">tagNode</span> *<span class="title">pNode</span>;</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">tagNode</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="type">char</span> *pItem;</span><br><span class="line">    pNode pNext;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<p>在上面的代码中，我们同样使用typedef 给一个还未完全声明的类型tagNode 起了一个新别名，</p>
-<p>不过，虽然C 语言编译器完全支持这种做法，但不推荐这样做，建议还是使用如下规范定义方法</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">tagNode</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="type">char</span> *pItem;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">tagNode</span> *<span class="title">pNext</span>;</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">tagNode</span> *<span class="title">pNode</span>;</span></span><br></pre></td></tr></table></figure>
-
-<p>为数组定义简洁的类型名称</p>
-<p>它的定义方法很简单，与为基本数据类型定义新的别名方法一样，示例代码如下所示，</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="type">int</span> INT_ARRAY_100[<span class="number">100</span>];</span><br><span class="line">INT_ARRAY_100 arr;</span><br></pre></td></tr></table></figure>
-
-<p>为指针定义简洁的名称</p>
-<p>对于 指针，我们同样可以使用下面的方式来定义一个新的别名</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="type">char</span>* PCHAR;</span><br><span class="line">PCHAR pa;</span><br></pre></td></tr></table></figure>
-
-<p>对于下面这种简单的变量声明，使用typedef 来定义一个新的别名或许会感觉意义不大，但在比较复杂的变量声明中，typedef 的优势马上就体现出来了，如下面的示例代码所示</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> *(*a[<span class="number">5</span>])(<span class="type">int</span>,<span class="type">char</span>*);</span><br></pre></td></tr></table></figure>
-
-<p>对于上面变量的声明，如果我们使用typedef 来给它定义一个别名，这会非常有意义，如下面的代码所示</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// PFun是我们创建的一个类型别名</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="type">int</span> *(*PFun)(<span class="type">int</span>,<span class="type">char</span>*);</span><br><span class="line"><span class="comment">// 使用定义的新类型来声明对象，等价于int*(*a[5])(int,char*);</span></span><br><span class="line">PFun a[<span class="number">5</span>];</span><br></pre></td></tr></table></figure>
-
-<h2 id="小心使用typedef-带来的陷阱"><a href="#小心使用typedef-带来的陷阱" class="headerlink" title="小心使用typedef 带来的陷阱"></a>小心使用typedef 带来的陷阱</h2><p>接下来看一个简单的typedef 使用示例，如下面的代码所示</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="type">char</span>* PCHAR;</span><br><span class="line"><span class="type">int</span> <span class="title function_">strcmp</span><span class="params">(<span class="type">const</span> PCHAR,<span class="type">const</span> PCHAR)</span>;</span><br></pre></td></tr></table></figure>
-
-<p>在上面的代码中，<code>const PCHAR</code> 使用相当于const char* 呢</p>
-<p>答案是否定的，原因很简单，typedef 是用来定义一种类型的新别名的，它不同于宏，不是简单的字符串替换，因此，const PCHAR 中的const 给予了整个指针本身常量性，也就是形成了常量指针，<code>char *const</code> 一个指向char 的常量指针。即它实际上相当于“char<em>const”，而不是“const char</em>（指向常量 char 的指针）”。当然，要想让 const PCHAR 相当于 const char* 也很容易，如下面的代码所示：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="type">const</span> <span class="type">char</span>* PCHAR;</span><br><span class="line"><span class="type">int</span> <span class="title function_">strcmp</span><span class="params">(PCHAR， PCHAR)</span>;</span><br></pre></td></tr></table></figure>
-
-<p>其实，无论什么时候，只要为指针声明 typedef ，那么就应该在最终的typedef 名称中加一个const 以使得指针本身是常量</p>
-<p>还需要特别注意的是，虽然typedef 并不真正影响对象的存储特性，但在语法上它还是一个存储类的关键字，就像auto extern static 和register 等关键字一样，因此，像下面这种声明是不可行的</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="type">static</span> <span class="type">int</span> INT_STATIC;</span><br></pre></td></tr></table></figure>
-
-<p>不可行的原因是不能声明多个存储类关键字，由于 typedef 已经占据了存储类关键字的位置，因此，在 typedef 声明中就不能够再使用 static 或任何其他存储类关键字了。当然，编译器也会报错，如在 VC++2010 中的报错信息为“无法指定多个存储类”。</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20221216-python3简单的串口通信实现"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/12/16/20221216-python3%E7%AE%80%E5%8D%95%E7%9A%84%E4%B8%B2%E5%8F%A3%E9%80%9A%E4%BF%A1%E5%AE%9E%E7%8E%B0/"
-    >20221216-python3简单的串口通信实现</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/12/16/20221216-python3%E7%AE%80%E5%8D%95%E7%9A%84%E4%B8%B2%E5%8F%A3%E9%80%9A%E4%BF%A1%E5%AE%9E%E7%8E%B0/" class="article-date">
-  <time datetime="2022-12-16T04:45:11.000Z" itemprop="datePublished">2022-12-16</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>串口通信就是计算机和外设之间，通过数据信号线，底线、控制线等，按位进行传输数据的一种通讯方式，这种通讯方式使用的数据线少</p>
-<p>串口是一种接口标准，它规定了接口的电气标准，没有规定接口插件电缆及使用的协议</p>
-<p>python</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20221216-导电斑马条"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/12/16/20221216-%E5%AF%BC%E7%94%B5%E6%96%91%E9%A9%AC%E6%9D%A1/"
-    >20221216-导电斑马条</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/12/16/20221216-%E5%AF%BC%E7%94%B5%E6%96%91%E9%A9%AC%E6%9D%A1/" class="article-date">
-  <time datetime="2022-12-16T04:43:22.000Z" itemprop="datePublished">2022-12-16</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>我们液晶连接中往往为节约空间会选择使用斑马条来进行连接，那么什么是斑马条的，下面给大家做个简单的介绍。导电橡胶连接器俗称为斑马条，由导电硅胶和绝缘硅胶交替分层叠加后硫化成型。导电橡胶连接器性能稳定可靠，生产装配简便且效率高。广泛用于游戏机、电话、电子表、计算器、仪表等产品的液晶显示器与电路板的连接。</p>
-<p>如何确定斑马条大小呢：</p>
-<p>1.长度设计：玻璃的长度-0.5mm ( 20 mm 以下依照原 LCD 玻璃长度 )</p>
-<p>2.高度设计：LCD至PCB之间高度x(1.08<del>1.12)  —-压缩比8%</del>12%</p>
-<p>3. 宽度设计: LCD边缘宽度×(0.9 ~ 0.95)</p>
-<p>4. 导电层宽度的选择: (Connector上的W’的尺寸)</p>
-<p>5. Pitch之选择：以LCD或PCB上的Pitch ( 宽度) 上有2 ~ 3条Connector在上面为原则,越多条导电性越佳</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20221216-单片机的烧写原理"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/12/16/20221216-%E5%8D%95%E7%89%87%E6%9C%BA%E7%9A%84%E7%83%A7%E5%86%99%E5%8E%9F%E7%90%86/"
-    >20221216-单片机的烧写原理</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/12/16/20221216-%E5%8D%95%E7%89%87%E6%9C%BA%E7%9A%84%E7%83%A7%E5%86%99%E5%8E%9F%E7%90%86/" class="article-date">
-  <time datetime="2022-12-16T04:29:08.000Z" itemprop="datePublished">2022-12-16</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>单片机烧写，又称为单片机程序下载，烧录等，本质上是单片机和pc 机按照芯片厂家规定的编程协议，通过芯片厂家规定的接口，把已编译好的程序传输到单片机上，单片机把数据存储到自身存储器中的过程，在嵌入式系统中，常需要将代码或数据烧写至MCU内flash 或片外的norFlash 等<br>下面介绍几种芯片烧写方法</p>
-<h2 id="编程器烧写"><a href="#编程器烧写" class="headerlink" title="编程器烧写"></a>编程器烧写</h2><p>使用专用编程器加上对应的适配座完成flash 烧写操作，要求芯片先烧写完成再焊接在目标板上，这种方式是最常用的，速度快，易上手是它的最大特点，</p>
-<p>由于各种芯片不同封装，需要不同的适配座，这是客户需要考虑的投入</p>
-<h2 id="ISP-烧写"><a href="#ISP-烧写" class="headerlink" title="ISP 烧写"></a>ISP 烧写</h2><p>在系统编程（In-System Programming），通过MCU片内BootROM完成在板Flash烧写操作。要求芯片出厂时带有ISP固件，一般通过串行方式烧写，这种方式烧写速度很慢，不适用烧写容量大的代码场合。比如：LPC1700系列芯片，通过串口接口，使用上位机软件FlashMagic即可烧写，由于串行烧写速度慢，不适用于量产烧写的场合。</p>
-<h2 id="IAP-烧写"><a href="#IAP-烧写" class="headerlink" title="IAP 烧写"></a>IAP 烧写</h2><p>在应用编程中，IAP 支持用户程序运行时烧写flash 但要求部分用户程序已经烧写至mcu 片内 flash</p>
-<h2 id="调试接口烧写"><a href="#调试接口烧写" class="headerlink" title="调试接口烧写"></a>调试接口烧写</h2><p>由于Arm®内核的芯片越来越普及，借助仿真器通过MCU的调试接口(如JTAG&#x2F;SWD等)控制MCU完成片内Flash甚至外扩的Flash烧写。这种方式芯片先焊接在板上再烧写，适用于产品维修升级，不需要多次焊接芯片，特别对于管脚数较大的芯片，多次焊接容易导致损坏；同样适用于封装怪异的MCU，如QFP144&#x2F;QFN&#x2F;HVQFN&#x2F;BGA等。</p>
-<p>通常我们把第一种称为离线烧写或者裸片烧写，另外的isp 烧写  iap 烧写，调试接口 烧写称为在线烧写，就是芯片已经安装至电路板的情况下，不需要将芯片从电路板取下即可完成flash 的烧写操作</p>
-<p>理解这个原理需要知道几个知识点</p>
-<p>单片机内部是由程序的，是出厂时固化在硬件中，用户无法修改的，这些程序可以调用各种通信接口，内部存储器等</p>
-<p>可以下载的通信接口 ：JTAG,SPI,UART，usb等；（还有很多可以扩展485、以太网等）</p>
-<p>编程协议  一般大厂都会公开，在芯片的专用技术手册中会有</p>
-<p>存储器：有很多种，掩膜，EPROM，EEROM，flash等寿命不一样，掩膜只能一次，而且要工厂做，flash擦写次数10000+；</p>
-<p>可以这样比喻性的理解：单片机就是电脑的主板，我们写的程序就是操作系统，主板里面装入引导操作系统的基本程序，下载程序就是给电脑装系统！</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20221215-使用wttr-in在你的终端中显示天气预报"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/12/15/20221215-%E4%BD%BF%E7%94%A8wttr-in%E5%9C%A8%E4%BD%A0%E7%9A%84%E7%BB%88%E7%AB%AF%E4%B8%AD%E6%98%BE%E7%A4%BA%E5%A4%A9%E6%B0%94%E9%A2%84%E6%8A%A5/"
-    >20221215-使用wttr.in在你的终端中显示天气预报</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/12/15/20221215-%E4%BD%BF%E7%94%A8wttr-in%E5%9C%A8%E4%BD%A0%E7%9A%84%E7%BB%88%E7%AB%AF%E4%B8%AD%E6%98%BE%E7%A4%BA%E5%A4%A9%E6%B0%94%E9%A2%84%E6%8A%A5/" class="article-date">
-  <time datetime="2022-12-15T02:04:16.000Z" itemprop="datePublished">2022-12-15</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>wttr.in 是一个功能丰富的天气预报服务，它支持在命令行显示天气，它可以 根据你的ip 地址<br>自动检测你的位置，也支持指定位置或搜索地理位置，如城市，山区等，另外，你不需要安装它，你只需要使用curl 或wget </p>
-<p>wttr.in 功能包括</p>
-<p>显示当前天气以及3天内的天气预报，分为早晨，中午、傍晚和夜晚 包括温度范围、风速和风向 可见度，降水量 和概率</p>
-<p>可以显示月相</p>
-<p>基于你的ip地址自动检测位置</p>
-<p>允许指定城市名称，3字母的机场代码，区域代码，GPS坐标，IP 地址或域名，你还可以指定地理位置，如湖泊 山脉，地标等</p>
-<p>支持多语言位置名称  查询字符串必须以unicode 指定</p>
-<p>支持指定天气预报显示的语言  它支持超过50种语言</p>
-<p>来自美国的查询使用uscs 单位用于，世界其他地方使用公制系统，但你可以通过附加?u 使用uscs 附加?m 使用公制系统</p>
-<p>3种输出格式，终端的ansi 浏览器的html 和png </p>
-<p>或者你可以安装wego 这是一个使用wtter.in 的终端气候应用，虽然wego 要求注册一个api 密钥来安装</p>
-<p><a target="_blank" rel="noopener" href="http://wttr.in/">http://wttr.in</a> 命令行示例<br>获取你所在位置的天气（<a target="_blank" rel="noopener" href="http://wttr.in/">http://wttr.in</a> 会根据你的 IP 地址猜测你的位置）：</p>
-<p>curl wttr.in<br>通过在 curl 之后添加 -4，强制 cURL 将名称解析为 IPv4 地址（如果你用 IPv6 访问 wttr.in 有问题）：</p>
-<p>curl -4 wttr.in<br>如果你想检索天气预报保存为 png，还可以使用 Wget（而不是 cURL），或者你想这样使用它：</p>
-<p>wget -O- -q wttr.in<br>如果相对 cURL 你更喜欢 Wget ，可以在下面的所有命令中用 wget -O- -q 替换 curl。</p>
-<p>指定位置：</p>
-<p>curl wttr.in&#x2F;Dublin<br>显示地标的天气信息（本例中为艾菲尔铁塔）：</p>
-<p>curl wttr.in&#x2F;~Eiffel+Tower<br>获取 IP 地址位置的天气信息（以下 IP 属于 GitHub）：</p>
-<p>curl wttr.in&#x2F;@192.30.253.113<br>使用 USCS 单位检索天气：</p>
-<p>curl wttr.in&#x2F;Paris?u<br>如果你在美国，强制 <a target="_blank" rel="noopener" href="http://wttr.in/">http://wttr.in</a> 使用公制系统（SI）：</p>
-<p>curl wttr.in&#x2F;New+York?m<br>使用 Wget 将当前天气和 3 天预报下载为 PNG 图像：</p>
-<p>wget wttr.in&#x2F;Istanbul.png<br>你可以指定 PNG 的透明度，这在你要使用一个脚本自动添加天气信息到某些图片（比如墙纸）上有用。</p>
-<p>对于其他示例，请查看wttr.in 项目页面或在终端中输入 </p>
-<p>curl wttr.in&#x2F;:help</p>
+  <p>MQTT 消息对流遥测传输协议，是一种基于发布&#x2F;订阅 模式的轻量级 通讯协议，该协议构建于TCP&#x2F;IP 协议上，由IBM在1999年发布，MQTT 最大优点在于，可以以极少的代码和有限的带宽，为连接远程设备提供实时可靠的消息服务，作为一种低开销、低带宽的即时通讯协议，使其在物联网、小型设备、移动应用等方面有较广泛的应用</p>
+<p>MQTT 是一个基于客户端-服务器的消息发布&#x2F;订阅传输协议，MQTT 协议是轻量、简单、开放和易于实现的，这些特点使它适用范围非常广泛，在很多情况下，如机器与机器 M2M 通信和物联网 IoT ，其在，通过卫星链路通信传感器、偶尔拨号的医疗设备、智能家居 、及一些小型化设备中已广泛使用</p>
+<p>二、设计规范</p>
+<p>由于物联网的环境是非常特别的，所以MQTT 遵循以下设计原则</p>
+<p>精简 不添加可有可无的功能</p>
+<p>发布&#x2F;订阅 模式 方便消息在传感器之间传递</p>
+<p>允许用户动态创建主题，零运维成本</p>
+<p>把传输量降到最低以提高传输效率</p>
+<p>把低带宽、高延迟、不稳定的网络等因素考虑在内</p>
+<p>支持连续的会话控制</p>
+<p>理解客户端计算能力可能很低</p>
+<p>提供服务质量管理</p>
+<p>假设数据不可知，不强求传输数据的类型与格式，保持灵活性</p>
+<p>三、主要特性</p>
+<p>MQTT 协议工作在低带宽、不可靠的网络的远程传感器和控制设备通讯而设计的，它具有以下主要的几项特性</p>
+<p>使用发布&#x2F;订阅消息模式，提供一对多的消息发布，解除应用程序耦合</p>
+<p>这一点很类似于XMPP ，但是MQTT 的信息冗余远小于XMPP ，因为XMPP 使用XML 格式文本来传递数据</p>
+<p>对负载内容屏蔽的消息传输</p>
+<p>使用TCP&#x2F;IP 提供网络连接</p>
+<p>主流的MQTT 是基于TCP 连接进行数据推送的，但是同样有基于UDP 的版本，叫做MQTT-SN。这两种版本由于基于不同的连接方式，优缺点自然也就各有不同了</p>
+<p>有三种消息发布服务质量</p>
+<p>“至多一次”，消息发布完全依赖底层TCP&#x2F;IP网络。会发生消息丢失或重复。这一级别可用于如下情况，环境传感器数据，丢失一次读记录无所谓，因为不久后还会有第二次发送。这一种方式主要普通APP的推送，倘若你的智能设备在消息推送时未联网，推送过去没收到，再次联网也就收不到了。</p>
+<p>至少一次，确保消息到达，但消息重复可能会发生</p>
+<p>只有一次，确保消息到达一次，在一些要求比较严格的计费系统中，可以使用此级别，在计费系统中，消息重复或丢失会导致不正确的结果，这种最高质量的消息发布服务还可以用于即时通讯类的app 的推送，确保用户收到且只会收到一次</p>
+<p>小型传输，开销很小，固定长度的头部是2字节  协议交换最小化，以降低网络流量</p>
+<p>这就是为什么在介绍里说它非常适合 在物联网领域，传感器与服务器的通信，信息的收集，要知道嵌入式设备的运算能力和带宽都相对薄弱，使用这种协议来传递消息再适合不过了</p>
+<p>使用last will 和testament 特性通知有关各方客户端异常中断的机制</p>
+<p>last will 即遗言机制，用于通知同一主题下的其他设备发送遗言的设备已经断开了连接</p>
+<p>testament 遗嘱机制，功能类似于last will</p>
+<p>四、MQTT 协议原理<br>MQTT 协议实现方式</p>
+<p>实现MQTT 协议需要客户端和服务端通讯完成，在通讯过程中，MQTT 协议中有三种身份，发布者，代理（服务器），订阅者。其中，消息的发布者和订阅者都是客户端，消息代理是服务器，消息发布者可以同时是订阅者<br>MQTT 传输的消息分为 主题topic 和负载 payload 两部分</p>
+<p>topic 可以理解为消息的类型，订阅者 subscribe 后，就会收到该主题的消息内容 payload<br>payload 可以理解为消息的内容，是指订阅者具体要使用的内容</p>
+<p>网络传输与应用消息</p>
+<p>MQTT 会构建底层网络传输，它将建立客户端到服务器的连接，提供两者之间的一个有序的、无损的、基于字节流的双向传输。当应用数据通过MQTT 网络发送时，MQTT 会把与之相关的服务质量 QoS 和主题名topic 相关联</p>
+<p>MQTT 客户端</p>
+<p>一个使用MQTT 协议的应用程序或者设备，它总是建立到服务器的网络连接，客户端可以</p>
+<p>发布其他客户端可能会订阅的信息</p>
+<p>订阅其他客户端发布的消息</p>
+<p>退订或删除应用程序的消息</p>
+<p>断开与服务器连接</p>
+<p>MQTT 服务器<br>MQTT 服务器以称为消息代理，可以是一个应用程序或一台设备，它是位于消息发布者和订阅者之间，它可以</p>
+<p>接受来自客户的网络连接</p>
+<p>接受客户发布的应用信息</p>
+<p>处理来自客户端的订阅和退订请求</p>
+<p>向订阅的客户转发应用程序消息</p>
+<h2 id="MQTT-协议中的订阅、主题、会话"><a href="#MQTT-协议中的订阅、主题、会话" class="headerlink" title="MQTT 协议中的订阅、主题、会话"></a>MQTT 协议中的订阅、主题、会话</h2><p>订阅<br>订阅包含主题筛选器和最大服务质量，订阅会与一个会话关联，一个会话可以包含多个订阅，每一个会话中的每个订阅都有一个不同的主题筛选器</p>
+<p>会话<br>每个客户端与服务器建立连接后就是一个会话，客户端和服务器之间有状态交互，会话存在于一个网络之间，也可能在客户端和服务器之间跨越多个连续的网络连接</p>
+<p>主题名</p>
+<p>连接到一个应用程序消息的标签，该标签与服务器的订阅相匹配，服务器会将消息发送给订阅所匹配标签的每个客户端</p>
+<p>主题筛选器</p>
+<p>一个对主题名通配符筛选器，在订阅表达式中使用，表示订阅所匹配到的多个主题</p>
+<p>负载</p>
+<p>消息订阅者所具体接收的内容</p>
+<h2 id="MQTT-协议中的方法"><a href="#MQTT-协议中的方法" class="headerlink" title="MQTT 协议中的方法"></a>MQTT 协议中的方法</h2><p>MQTT 协议中定义了一些方法，也被称为动作，来于表示对确定资源所进行操作，这个资源可以代表预先存在的数据或动态生成数据，这取决于服务器的实现，通常来说，资源指服务器上的文件或输出，主要方法有</p>
+<p>connect 等待与服务器建立连接</p>
+<p>Disconnect 等待MQTT 客户端完成所做的工作，并与服务器断开TCP&#x2F;IP 会话</p>
+<p>subscribe 等待完成订阅</p>
+<p>unsubscribe 等待服务器取消客户端的一个或多个topics 订阅 </p>
+<p>publish MQTT 客户端发送消息请求，发送完成后返回应用程序线程</p>
+<h2 id="五、MQTT-协议数据包结构"><a href="#五、MQTT-协议数据包结构" class="headerlink" title="五、MQTT 协议数据包结构"></a>五、MQTT 协议数据包结构</h2><p>在MQTT 协议中，一个MQTT 数据包由 固定头 可变头，消息体 三部分构成，MQTT 数据包结构如下</p>
+<p>固定头（fixed header） 存在于所有MQTT 数据包中，表示数据包类型及数据包的分组类标识</p>
+<p>可变头（variable header） 存在于部分MQTT数据包中，数据包类型决定了可变头是否存在及其具体内容</p>
+<p>消息体 （payload） 存在于部分MQTT数据包中，表示客户端收到的具体内容</p>
+<p>MQTT 固定头 </p>
+<p>固定头存在于所有MQTT 数据包中，其结构如下</p>
+<p>MQTT 数据包类型 </p>
+<p>位置 byte 1 中bits 7-4<br>相于一个4位的无符号值，类型，取值及描述如下</p>
+<p>标识位</p>
+<p>位置：Byte 1中bits 3-0。</p>
+<p>在不使用标识位的消息类型中，标识位被作为保留位。如果收到无效的标志时，接收端必须关闭网络连接：</p>
+<p>（1）DUP：发布消息的副本。用来在保证消息的可靠传输，如果设置为1，则在下面的变长中增加MessageId，并且需要回复确认，以保证消息传输完成，但不能用于检测消息重复发送。</p>
+<p>（2）QoS：发布消息的服务质量，即：保证消息传递的次数</p>
+<p>RETAIN 发布保留标识，表示服务器要保留这次推送的信息，如果有新的订阅者出现，就报这消息推送给它，如果没有那么推送至当前订阅者后释放</p>
+<p>剩余长度 </p>
+<p>地址Byte 2</p>
+<p>固定头的第二字节用来保存变长头部和消息体的总大小的，但不是直接保存的，这一字节是可以扩展，其保存机制，前7位用于保存长度，后一部用做标识，当最后一位为1时，表示长度不足，需要使用二个字节继续保存。例如：计算出后面的大小为0</p>
+<p>MQTT 可变头</p>
+<p>MQTT 数据包中包含一个可变头，它驻位于固定的头和负载之间，可变头的内容因数据包类型而不同，较常的应用是作为包的标识。<br>很多类型数据包中都包括一个2字节的数据包标识字段，这些类型的包有：PUBLISH (QoS &gt; 0)、PUBACK、PUBREC、PUBREL、PUBCOMP、SUBSCRIBE、SUBACK、UNSUBSCRIBE、UNSUBACK。</p>
+<p>Payload 消息体</p>
+<p>Payload 消息体位MQTT 数据包的第三部分，包含connect subscribe suback unsubscribe 四种类型的消息</p>
+<p>connect 消息体内容主要是 客户端的clientID 订阅的topic message 以及用户名和密码</p>
+<p>subscribe 消息体内容是一系列的要订阅的主题以及QoS</p>
+<p>suback 消息体内容是服务器对于subscribe 所申请的主题及QoS 进行确认和回复</p>
+<p>unsubscribe 消息体内容是要订阅的主题</p>
  
       <!-- reward -->
       
@@ -1002,7 +1059,7 @@
   
   <nav class="page-nav">
     
-    <a class="extend prev" rel="prev" href="/">上一页</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/3/">下一页</a>
+    <a class="extend prev" rel="prev" href="/">上一页</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><a class="extend next" rel="next" href="/page/3/">下一页</a>
   </nav>
   
 </section>

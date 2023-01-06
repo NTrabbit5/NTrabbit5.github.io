@@ -126,7 +126,7 @@
     
     
     <article
-  id="post-20220401-《纪录片》"
+  id="post-20220426-office文档结构解析"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -137,8 +137,8 @@
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2022/04/01/20220401-%E3%80%8A%E7%BA%AA%E5%BD%95%E7%89%87%E3%80%8B/"
-    >20220401-《纪录片》</a> 
+  <a class="article-title" href="/2022/04/26/20220426-office%E6%96%87%E6%A1%A3%E7%BB%93%E6%9E%84%E8%A7%A3%E6%9E%90/"
+    >office文档结构解析</a> 
 </h2>
  
 
@@ -146,14 +146,229 @@
     </header>
      
     <div class="article-meta">
-      <a href="/2022/04/01/20220401-%E3%80%8A%E7%BA%AA%E5%BD%95%E7%89%87%E3%80%8B/" class="article-date">
-  <time datetime="2022-04-01T05:51:33.000Z" itemprop="datePublished">2022-04-01</time>
+      <a href="/2022/04/26/20220426-office%E6%96%87%E6%A1%A3%E7%BB%93%E6%9E%84%E8%A7%A3%E6%9E%90/" class="article-date">
+  <time datetime="2022-04-26T14:24:04.000Z" itemprop="datePublished">2022-04-26</time>
 </a>    
     </div>
       
     <div class="article-entry" itemprop="articleBody">
        
-  <p>TOP10 <a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1vu41197qV">Tinder大骗徒&#x2F;Tinder诈骗王 1080P中英文双语字幕</a><br>TOP9 <a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1TS4y1L7Rc">【纪录片】但是还有书籍2 第1集 我们的图书馆</a><br>TOP8 宇宙 找不到<br>TOP7 <a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Zh41197c3">【纪录片】《富豪谷底求翻身》01 百万赌注</a><br>TOP6  <a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1gP4y1J7uM">【纪录片】急诊室故事 第一季 08 医院好忙</a><br>TOP5 <a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1dx411S724">【纪录片&#x2F;BBC】心智斗争 BATTLE IN YOUR MIND （2014）【地平线系列】</a><br>TOP4 <a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1xZ4y1T7sM">PBS高清纪录片《货币崛起：世界金融简史》,（双语字幕）</a><br>TOP3 <a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1fQ4y1y7V5">【中英双语，1080P】女人  Woman （2019）</a><br>TOP2 <a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Uy4y117bu">【Netflix豆瓣9.2分纪录片】走进比尔：解码比尔·盖茨.1080P.中文字幕【全三集】</a><br>TOP1 <a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1qZ4y1D7tX">【纪录片】绿色星球 01 雨林天地</a></p>
+  <p>转自：<a target="_blank" rel="noopener" href="https://www.anquanke.com/post/id/175548">https://www.anquanke.com/post/id/175548</a></p>
+<p><a target="_blank" rel="noopener" href="http://officeopenxml.com/anatomyofOOXML.php">http://officeopenxml.com/anatomyofOOXML.php</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/u012107143/article/details/111877587">https://blog.csdn.net/u012107143/article/details/111877587</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">本文系作者此前研究office文件格式解析及漏洞挖掘和分析时梳理的部分基础知识，文章部分内容可能会借鉴他人成果，由于时间久远所以无法一一考证。本文仅限于初学者作为参考，如有笔误，请见谅。</span><br></pre></td></tr></table></figure>
+
+<h2 id="Office文档格式简要介绍"><a href="#Office文档格式简要介绍" class="headerlink" title="Office文档格式简要介绍"></a>Office文档格式简要介绍</h2><p>OpenXML（OOXML）是微软在Office 2007中提出的一种新的文档格式，Office 2007中的Word、Excel、PowerPoint默认均采用OpenXML格式。OpenXML在2006年12月成为了ECMA规范的一部分，编号为ECMA376；并于2008年4月通过国际标准化组织的表决，并于两个月后公布为ISO／IEC 29500国际标准。</p>
+<p>另一种结构是office 97-03的存储规范：OLE。它是一种对象链接和嵌入的技术，该技术可以包含文本，图形，电子表格甚至其他二进制数据。</p>
+<h3 id="Docx（Open-XML）文档结构"><a href="#Docx（Open-XML）文档结构" class="headerlink" title="Docx（Open XML）文档结构"></a>Docx（Open XML）文档结构</h3><p>Docx这种新的word 格式有三个主要的组成部分：部件、内容类型和关系。</p>
+<p><strong>部件</strong></p>
+<p>部件就是对应于office文档解压后的一个个文件。这些文件都是包中的文档部件。</p>
+<p>Word2007的文档部件大致有以下几种：</p>
+<blockquote>
+<p>注释；</p>
+<p>格式定义；</p>
+<p>列表定义；</p>
+<p>页眉；</p>
+<p>图表；</p>
+<p>关系；</p>
+<p>文档内容；</p>
+<p>图片。</p>
+</blockquote>
+<p>在word中，使用单独的文件（xml）来表示文档中的每个部分以及附加的内容。他们需要依赖于各部件之间的正确关系保证文件的完整和有效性，如果可以准确保持部件之间的关系，那么文件结构可以任意更改。</p>
+<p>以docx文档为例，说明openxml文档内容的结构。随手建立一个docx文档，使用zip解压到文件夹中，他的目录结构如下：</p>
+<p><a target="_blank" rel="noopener" href="https://p1.ssl.qhimg.com/t011e27a7ab3a6a702d.png"><img src="https://p1.ssl.qhimg.com/t011e27a7ab3a6a702d.png" alt="img"></a></p>
+<p>事实上，在word2007及以上的版本当中，一个文档则是由一个文件夹（或者说容器），由内部的部件各自定义属性和数据，并相互依赖而产生的。一个文件可能会包含这些目录和组件：</p>
+<p><strong>[Content_Types].xml</strong></p>
+<p>这个文件描述的是整个文档内容的类型，把各个xml文件组合成一个整体。</p>
+<p><strong>docProps文件夹</strong></p>
+<p>这个文件夹中的xml记录了docx文档的主要属性信息</p>
+<p>Core.xml：描述文件的创建时间，标题，主题和作者等给予open xml约定文档格式的通用文件属性</p>
+<p>App.xml：描述文档的其他属性，文档类型，版本，只读信息，共享，安全属性等特定的文件属性</p>
+<p><strong>rels 文件夹</strong></p>
+<p>这个文件夹存放了所有指定的rels文件</p>
+<p><strong>rels文件</strong></p>
+<p>这些文件描述了文档结构中的起始关系，也可以叫做关系部件</p>
+<p><strong>item1.xml</strong></p>
+<p>包含了一些文档中出现的数据。例如自定义XML数据部件。</p>
+<p><strong>内容类型</strong></p>
+<p>每个文档部件都有一个特定的内容类型。一个部件的内容类型描述了这种文件类型的内容。例如，XML部件包含了Word XML格式定义的标记，而内容类型可以用来分析文档的组成。</p>
+<p>典型的内容类型是以word application开头，然后是厂商的名称。在内容类型中，word vender被简写为vnd。所有内容类型都被指定为以application&#x2F;vnd.ms-word开头。如果内容类型是一个XML文件，那么它的URI将以+xml结尾。其它的非XML内容的类型，例如图片，则没有这种结尾。下面是一些典型的内容类型：</p>
+<p>1.application&#x2F;vnd.openxmlformats-officedocument.wordprocessingml.endnotes+xml</p>
+<p>它是一个描述Word文档中的尾注文档部件的内容类型。其中，+xml表示它是一个XML文件。</p>
+<p>2.application&#x2F;vnd.openxmlformats-package.core-properties+xml</p>
+<p>它是一个描述核心文档属性部件的内容类型。其中，+xml表示它是一个XML文件。</p>
+<p>3.image&#x2F;png</p>
+<p>图片的内容类型。其中没有+xml部分 － 表示内容类型不是XML文件。</p>
+<p><strong>部件关系</strong></p>
+<p>部件关系记录了文档部件之间的逻辑连接，比如根文档部件拥有一个<code>http://schemas.openxmlformats.org/package/2006/relationships/header</code>类型到application&#x2F;vnd.openxmlformats-officedocument.wordprocessingml.header+xml<br>内容类型部件的关系。这表示部件之间的关系是，目标部件是源部件的页眉。而这个页眉部件可能也有自己的关系。在包中，可以通过_rels目录中的.rels文件进行关系定位。</p>
+<p>构建关系的方法是：每一个关系中都有一个源一个目的，源是关系命名的部件。例如，document.xml.rels中所有的关系都将document.xml作为它们的源。每个.rels文件都包含一个<relationships>元素，每个元素都对应一个ID，包括目标部件的内容类型。</p>
+<p><a target="_blank" rel="noopener" href="https://p1.ssl.qhimg.com/t0100c12dfbda0e0f77.png"><img src="https://p1.ssl.qhimg.com/t0100c12dfbda0e0f77.png" alt="img"></a></p>
+<h3 id="Doc文档结构"><a href="#Doc文档结构" class="headerlink" title="Doc文档结构"></a>Doc文档结构</h3><p>Word 97-03的后缀是doc，doc文件本身是一个ole类型文件。OLE (Object Linking and Embedding)文 件 主 要 由 storages 和 streams<br>组成，而ole本身其实是一种面向对象的技术，该技术允许程序之间链接和嵌入对象数据，建立复合文档。</p>
+<p><a target="_blank" rel="noopener" href="https://p3.ssl.qhimg.com/t01d6904e85bf964cda.png"><img src="https://p3.ssl.qhimg.com/t01d6904e85bf964cda.png" alt="img"></a></p>
+<p>WordDocument stream 中保存的最重要的数据结构是 FIB（File InformationBlock），FIB 中除了保存 doc文件的一些基本信息（如格式版本）之外，大部分字段是指向其它结构的指针和标识其结构大小（见图2）。例如 fcClx 字段表示 Clx 结构在 Table stream中的偏移，lcbClx 字段标识 Clx结构的大小。类似的，名称以“fc”开头的字段都表示对应结构在某个stream中的偏移，对应的以“lcb”开头的字段则表示其结构大小。</p>
+<p><a target="_blank" rel="noopener" href="https://p1.ssl.qhimg.com/t01def8024c3d4e7905.png"><img src="https://p1.ssl.qhimg.com/t01def8024c3d4e7905.png" alt="img"></a></p>
+<h3 id="rtf文档结构"><a href="#rtf文档结构" class="headerlink" title="rtf文档结构"></a>rtf文档结构</h3><p>富文本格式（Rtf, rich text format）是微软的文本和图像信息交换制定的格式。Rtf文件可以划分为文件头和文档区两个部分组成。文件头和文档区由文本、控制字和控制符组成，同时利用{…}来表明层级关系。</p>
+<table>
+<thead>
+<tr>
+<th>Rtf文件内容</th>
+<th>控制字</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>文件头</td>
+<td>rtfN</td>
+<td>版本号</td>
+</tr>
+<tr>
+<td></td>
+<td>fonttbl</td>
+<td>字体表</td>
+</tr>
+<tr>
+<td></td>
+<td>filetbl</td>
+<td>文件表</td>
+</tr>
+<tr>
+<td></td>
+<td>listtable</td>
+<td>编目表</td>
+</tr>
+<tr>
+<td>文档区</td>
+<td>info</td>
+<td>信息组</td>
+</tr>
+<tr>
+<td></td>
+<td>pict</td>
+<td>图片</td>
+</tr>
+<tr>
+<td></td>
+<td>object</td>
+<td>对象</td>
+</tr>
+<tr>
+<td></td>
+<td>sv</td>
+<td>绘图对象值</td>
+</tr>
+<tr>
+<td></td>
+<td>sn</td>
+<td>绘图对象名称</td>
+</tr>
+<tr>
+<td></td>
+<td>objupdate</td>
+<td>自动更新机制。</td>
+</tr>
+</tbody></table>
+<p>(<strong>objupdate很重要，攻击样本中经常使用，确保OLE对象自动加载、更新</strong>)</p>
+<h2 id="OLE简单说明"><a href="#OLE简单说明" class="headerlink" title="OLE简单说明"></a>OLE简单说明</h2><p>前面已经说到OLE的基本概念，现在我们先说说不同格式文档的OLE嵌入。OLE就其本质而言，是COM对象的子集，是一种基于组件对象模型（COM）的对象链接和嵌入技术。</p>
+<h3 id="不同嵌套控制字及对应的文件格式"><a href="#不同嵌套控制字及对应的文件格式" class="headerlink" title="不同嵌套控制字及对应的文件格式"></a>不同嵌套控制字及对应的文件格式</h3><p>OLE对象控制字和相应解释如下：</p>
+<table>
+<thead>
+<tr>
+<th>对象类型</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>objemb</td>
+<td>嵌入图片、文档、音频等</td>
+</tr>
+<tr>
+<td>objlink</td>
+<td>嵌入链接文件</td>
+</tr>
+<tr>
+<td>objautlink</td>
+<td>嵌入自动链接对象类型。</td>
+</tr>
+<tr>
+<td>objsub</td>
+<td>Macintosh版管理签署对象类型。</td>
+</tr>
+<tr>
+<td>objpub</td>
+<td>Macintosh版管理发布对象类型。</td>
+</tr>
+<tr>
+<td>objicemb</td>
+<td>MS Word for Macintosh可安装命令（IC）嵌入对象类型。</td>
+</tr>
+<tr>
+<td>objhtml</td>
+<td>超文本标记语言（HTML）控件对象类型。</td>
+</tr>
+<tr>
+<td>objocx</td>
+<td>嵌入ActiveX控件</td>
+</tr>
+</tbody></table>
+<p>OLE对象数据控制字和对应解释如下：</p>
+<table>
+<thead>
+<tr>
+<th>对象数据</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>objdata</td>
+<td>采用特定格式表示的对象数据；OLE对象采用OLESaveToStream结构。常见恶意文件样本关键字。</td>
+</tr>
+<tr>
+<td>objalias</td>
+<td>Macintosh编辑管理器发行对象的别名记录。</td>
+</tr>
+<tr>
+<td>objsect</td>
+<td>Macintosh编辑管理器发行对象的域记录。</td>
+</tr>
+</tbody></table>
+<h3 id="OLE对象数据结构解析"><a href="#OLE对象数据结构解析" class="headerlink" title="OLE对象数据结构解析"></a>OLE对象数据结构解析</h3><p>上面的表中，3个对象数据控制字都可以被对象类型引用。OLE对象数据包括头部（ObjectHeader）和数据流（ObjectStream），它们是通过D0CF11E0A1B11AE1<br>标志符进行区分。其中头部由OLE 版本（4 字节）、格式ID（4 字节）、程序名长度（4字节）、程序名和数据流大小（4字节）组成。用一个CVE-2017-0199溢出文档中嵌入的OLE对象，可以对它做一下解析。对象内容如下：</p>
+<p><a target="_blank" rel="noopener" href="https://p0.ssl.qhimg.com/t014a784fb57ba0f81d.png"><img src="https://p0.ssl.qhimg.com/t014a784fb57ba0f81d.png" alt="img"></a></p>
+<p>{*objdata<br>0105000002000000090000004f4c45324c696e6b000000000000000000000a0000<strong>d0cf11e0a1b11ae1</strong>000000000000000000000000000000003e000300feff0900060000000000000000000000010000000100000000000000001000000200000001000000feffffff0000000000000000fffffffffffffffffffffffffffffffffffffff</p>
+<p>上面数据流中加粗字符前面的是OLE对象的头部，各字段解析内容如下：</p>
+<table>
+<thead>
+<tr>
+<th>数据</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>01050000</td>
+<td>OLE Version</td>
+</tr>
+<tr>
+<td>02000000</td>
+<td>Format ID</td>
+</tr>
+<tr>
+<td>09000000</td>
+<td>ProgName Size（0x09）</td>
+</tr>
+<tr>
+<td>4f4c45324c696e6b00</td>
+<td>ProgName (OLE2Link)</td>
+</tr>
+<tr>
+<td>000a0000</td>
+<td>Data Size</td>
+</tr>
+</tbody></table>
+<p><strong>d0cf11e0a1b11ae1</strong>后面的数据就是ObjectStream的内容了，解析的时候需要将ascii<br>转换成hex才可以识别。</p>
+<p><a target="_blank" rel="noopener" href="https://p5.ssl.qhimg.com/t010c9498feba4bd05d.png"><img src="https://p5.ssl.qhimg.com/t010c9498feba4bd05d.png" alt="img"></a></p>
+<h3 id="部分office文档混淆免杀技术"><a href="#部分office文档混淆免杀技术" class="headerlink" title="部分office文档混淆免杀技术"></a>部分office文档混淆免杀技术</h3><p><strong>RTF文档格式混淆</strong></p>
+<p><strong>文件头混淆</strong></p>
+<p>Rtf文档正常的文件头是**{rtf1**，但解析器只识别前四个字节{rt}，所以可以通过修改文件头达到样本混淆的效果。</p>
+<p>{rt</p>
  
       <!-- reward -->
       
@@ -173,7 +388,7 @@
 
     
     <article
-  id="post-20220330-《铁齿铜牙纪晓岚》1"
+  id="post-20220426-秋瑾"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -184,8 +399,8 @@
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2022/03/30/20220330-%E3%80%8A%E9%93%81%E9%BD%BF%E9%93%9C%E7%89%99%E7%BA%AA%E6%99%93%E5%B2%9A%E3%80%8B1/"
-    >20220330-《铁齿铜牙纪晓岚》1</a> 
+  <a class="article-title" href="/2022/04/26/20220426-%E7%A7%8B%E7%91%BE/"
+    >秋瑾</a> 
 </h2>
  
 
@@ -193,126 +408,19 @@
     </header>
      
     <div class="article-meta">
-      <a href="/2022/03/30/20220330-%E3%80%8A%E9%93%81%E9%BD%BF%E9%93%9C%E7%89%99%E7%BA%AA%E6%99%93%E5%B2%9A%E3%80%8B1/" class="article-date">
-  <time datetime="2022-03-30T11:22:16.000Z" itemprop="datePublished">2022-03-30</time>
+      <a href="/2022/04/26/20220426-%E7%A7%8B%E7%91%BE/" class="article-date">
+  <time datetime="2022-04-26T10:38:53.000Z" itemprop="datePublished">2022-04-26</time>
 </a>    
     </div>
       
     <div class="article-entry" itemprop="articleBody">
        
-  <h2 id="对鱼"><a href="#对鱼" class="headerlink" title="对鱼"></a>对鱼</h2><p>鱼龙混珠</p>
-<p>鱼传尺素<br>尺素：古代用绢帛书写，通常长一尺，因此称书信。指传递书信。</p>
-<p>缘木求鱼<br>甑尘釜鱼，汉语成语，拼音是zèng chén fǔ yú，意思是指甑里积了灰尘，锅里有蠹鱼。形容家贫困顿断炊已久。也比喻官吏清廉自守。出自《后汉书·独行传·范冉》。</p>
-<p>龙阳泣鱼<br>龙阳泣鱼，汉语成语，拼音lóng yáng qì yú，意思是失宠之典。出自《战国策·魏策四》。</p>
-<p>漏网之鱼</p>
-<h3 id="唐代赵嘏的《长安晚秋-x2F-秋望-x2F-秋夕》"><a href="#唐代赵嘏的《长安晚秋-x2F-秋望-x2F-秋夕》" class="headerlink" title="唐代赵嘏的《长安晚秋 &#x2F; 秋望 &#x2F; 秋夕》"></a>唐代赵嘏的《长安晚秋 &#x2F; 秋望 &#x2F; 秋夕》</h3><p>云物凄清拂曙流，汉家宫阙动高秋。</p>
-<p>残星几点雁横塞，长笛一声人倚楼。</p>
-<p>紫艳半开篱菊静，红衣落尽渚莲愁。</p>
-<p><strong>鲈鱼正美不归去，空戴南冠学楚囚</strong>。</p>
-<h3 id="柳桥晚眺"><a href="#柳桥晚眺" class="headerlink" title="柳桥晚眺"></a>柳桥晚眺</h3><p>陆游 〔宋代〕</p>
-<p><strong>小浦闻鱼跃，横林待鹤归</strong>。<br>闲云不成雨，故傍碧山飞。</p>
-<h3 id="唐代储光羲的《钓鱼湾》"><a href="#唐代储光羲的《钓鱼湾》" class="headerlink" title="唐代储光羲的《钓鱼湾》"></a>唐代储光羲的《钓鱼湾》</h3><p>垂钓绿湾春，春深杏花乱。<br><strong>潭清疑水浅，荷动知鱼散</strong>。<br>日暮待情人，维舟绿杨岸。</p>
-<p>五色鱼 《水经注》<br>源见“鱼传尺素”。指书信。唐 李白《秋浦寄内》诗：“有客自梁苑，手携五色鱼。开鱼得锦字，归问我何如。”</p>
-<p>半面鱼<br>《会稽志》</p>
-<p>妾鱼  《尔雅》</p>
-<p>卧剑之鱼 《苏东坡诗》</p>
-<p>渼陂鱼<br>朝代：宋代|作者：苏轼<br><strong>霜筠细破为双掩，中有长鱼如卧剑。</strong><br>紫荇穿腮气惨凄，红鳞照座光磨闪。<br>携来虽远鬣尚动，烹不待熟指先染。<br>坐客相看为解颜，香粳饱送如填堑。<br>早岁尝为荆渚客，黄鱼屡食沙头店。<br>滨江易采不复珍，盈尺辄弃无乃僭。<br>自从西征复何有，欲致南烹嗟久欠。<br>游鲦琐细空自腥，乱骨纵横动遭砭。<br>故人远馈何以报，客俎久空惊忽赡。<br>东道无辞信使频，西邻幸有庖虀酽。</p>
-<p>同队之鱼 韩愈之诗</p>
-<p>符读书城南，作者韩愈。</p>
-<p>木之就规矩，在梓匠轮舆。人之能为人，由腹有诗书。<br>诗书勤乃有，不勤腹空虚。欲知学之力，贤愚同一初。<br>由其不能学，所入遂异闾。两家各生子，提孩巧相如。<br><strong>少长聚嬉戏，不殊同队鱼</strong>。年至十二三，头角稍相疏。<br>二十渐乖张，清沟映污渠。三十骨骼成，乃一龙一猪。<br>飞黄腾踏去，不能顾蟾蜍。一为马前卒，鞭背生虫蛆。<br>一为公与相，潭潭府中居。问之何因尔，学与不学欤。<br>金璧虽重宝，费用难贮储。学问藏之身，身在则有余。<br>君子与小人，不系父母且。不见公与相，起身自犁鉏。<br>不见三公后，寒饥出无驴。文章岂不贵，经训乃菑畲。<br>潢潦无根源，朝满夕已除。人不通古今，马牛而襟裾。<br>行身陷不义，况望多名誉。时秋积雨霁，新凉入郊墟。<br>灯火稍可亲，简编可卷舒。岂不旦夕念，为尔惜居诸。<br>恩义有相夺，作诗劝踌躇。</p>
-<p>上山能打虎 下水能擒龙</p>
-<p>云消月明</p>
-<p>水落石出</p>
-<p><strong>天下英雄唯使君与操耳</strong> 煮酒论英雄</p>
-<p>意思是：能够成为天下英雄的，只有刘备和曹操而已。这是曹操在煮酒论英雄时对刘备说的话。是对刘备的一个试探。</p>
-<p>“食君之禄，分君之忧”的意思是：</p>
-<p>吃（拿）着皇上的（朝廷的）俸禄（薪俸）,就要为皇帝分忧.现在知受了别人的好处,恩惠就要替他分担忧愁.</p>
-<p>食君之禄，必当分君之忧，谚语。指既作国家官员，就要忠于职守，国家有难就当舍身报国。</p>
-<p>能做事 做不了大事<br>会做官 做不了大官</p>
-<p>相见未识天涯人</p>
-<p>昨日天涯已成梦<br>寻梦难舍旧主情</p>
-<p>情到深处飘如絮<br>雁在归时伴偶行</p>
-<p>灯下把酒同一醉<br>明日又是天涯人</p>
-<p>人生何处不相逢</p>
-<p>宋·晏殊 《金柅园》：“一曲清歌满樽酒，人生何处不相逢。”<br>宋·欧阳修《归田录》卷一：“若见雷州寇司户，人生何处不相逢。”<br>金·刘迎《题十眉图》：“人生何处不相逢，还醉武陵溪上月。” [1]<br>元王子一《误入桃源》第二折：“人情今夜初相共，人生何处不相逢·”<br>《水浒传》第三十回：“广施恩惠，人生何处不相逢。多结冤仇，路逢狭处难回避。”<br>《二刻拍案惊奇》卷十五：“一叶浮萍归大海，人生何处不相逢？”</p>
-<p>酒不醉人人自醉 色不迷人人自迷</p>
-<p><strong>飞鸟尽良弓藏</strong></p>
-<p>飞鸟尽良弓藏，出自《史记·越王勾践世家》：范蠡遂去，自齐遗大夫种书曰：「飞鸟尽，良弓藏；狡兔死，走狗烹。越王为人长颈鸟喙，可与共患难，不可与共乐。子何不去？」种见书，称病不朝。人或谗种且作乱，越王乃赐种剑曰：「子教寡人伐吴七术，寡人用其三而败吴，其四在子，子为我从先王试之。」种遂自杀。又《淮阴侯列传》:“果若人言，‘狡兔死，走狗烹；飞鸟尽，良弓藏；敌国破，谋臣亡。’天下已定，我固当烹！”</p>
-<p>《芹溪兰草图》，出自曹雪芹之手。图为在电视剧《铁齿铜牙纪晓岚》中出现的一幅画，并非曹雪芹手迹。</p>
-<p>出自清代曹雪芹的《满纸荒唐言》</p>
-<p>满纸荒唐言，一把辛酸泪。<br>都云作者痴，谁解其中味？</p>
-<p>赏析<br>空空道人把《石头记》从头到尾抄诗录下来后，并将《石头记》改为了《情僧录》。东鲁孔梅溪题曰《风月宝鉴》。后因曹雪芹于悼红轩中，披阅十载，增删五次，纂成目录。分出章回，又题曰《金陵十二钗》。并题了该诗。</p>
-<p>镂檀锲梓一层层，<br>岂系良工堆砌成？<br>虽是半天风雨过，<br>何曾闻得梵铃声？</p>
-<p>小住为佳 小楼春暖 得小住 且小住<br>如何是好 如君爱怜 要如何 便如何</p>
-<p>灵药未应偷 看碧海青天 夜夜此心何所寄<br>明月几时有 怕琼楼玉宇 依依高处不胜寒</p>
-<p>年深日久 龙威之下岂有完卵</p>
-<p>桂花酒</p>
-<p>清代曹雪芹的《葬花吟》</p>
-<p>花谢花飞花满天，红消香断有谁怜？(又一说花谢花飞飞满天)</p>
-<p>游丝软系飘春榭，落絮轻沾扑绣帘。</p>
-<p>闺中女儿惜春暮，愁绪满怀无处诉；(又作愁绪满怀无释处或愁绪满怀无着(zhuó)处）</p>
-<p>手把花锄出绣帘，忍踏落花来复去。</p>
-<p>柳丝榆荚自芳菲，不管桃飘与李飞；</p>
-<p>桃李明年能再发，明年闺中知有谁？</p>
-<p>三月香巢已垒成，梁间燕子太无情！（又一说三月香巢初垒成）</p>
-<p>明年花发虽可啄，却不道人去梁空巢也倾。</p>
-<p>一年三百六十日，风刀霜剑严相逼；</p>
-<p>明媚鲜妍能几时，一朝漂泊难寻觅。</p>
-<p>花开易见落难寻，阶前愁杀葬花人（又作闷杀）；</p>
-<p>独把花锄偷洒泪，洒上空枝见血痕。（又作独倚花锄泪暗洒），</p>
-<p>杜鹃无语正黄昏，荷[读第四声hè]锄归去掩重门；</p>
-<p>青灯照壁人初睡，冷雨敲窗被未温。</p>
-<p>怪奴底事倍伤神？半为怜春半恼春。（又作怪侬（nóng)底事倍伤神?）</p>
-<p>怜春忽至恼忽去，至又无言去不闻。</p>
-<p>昨宵庭外悲歌发，知是花魂与鸟魂？</p>
-<p>花魂鸟魂总难留，鸟自无言花自羞；</p>
-<p>愿奴胁下生双翼，随花飞到天尽头。(又说愿侬此日生双翼），</p>
-<p>天尽头，何处有香丘？</p>
-<p>未若锦囊收艳骨，一抔净土掩风流；（又作一堆净土掩风流）</p>
-<p>质本洁来还洁去，强于污淖陷渠沟。 (又作不教污淖陷渠沟）</p>
-<p>尔今死去侬收葬，未卜侬身何日丧？</p>
-<p>侬今葬花人笑痴，他年葬侬知是谁？</p>
-<p>试看春残花渐落，便是红颜老死时；</p>
-<p><strong>一朝春尽红颜老，花落人亡两不知</strong>！</p>
-<p>朝吃千家饭 残汤 夜宿古庙亭 盖草<br>不犯皇家法 还好 任我天下行 狗咬</p>
-<p>当断不断反受其乱</p>
-<p>烟锁池塘柳 炮镇海城楼</p>
-<p>假作真时真亦假，无为有处有还无。《红楼梦·第一回》太虚幻境对联，假的当作真的时候真的就像是假的了，无变为有的地方有也就无了。</p>
-<p>有心为善 虽善不赏<br>无心作恶 虽恶不罚</p>
-<p>眠花宿柳<br>李代桃僵之计</p>
-<p>李代桃僵，语出《乐府诗集·鸡鸣篇》：“桃生露井上，李树生桃旁，虫来啮桃根，李树代桃僵，树木身相代，兄弟还相忘？”本意是指兄弟要象桃李共患难一样相互帮助，相互友爱。此计用在军事上，指在敌我双方势均力敌，或者敌优我劣的情况下，用小的代价，换取大的胜利的谋略。很象大家在象棋比赛中的“舍车保帅”的战术。</p>
-<p>君不密则失臣<br>臣不密则失身</p>
-<p>子曰:“乱之所生也，则言语以为阶。君不密则失臣，臣不密则失身，机事不密则害成。是以君子慎密而不出也。”</p>
-<p>什么意思呢？</p>
-<p>之所以总有“乱”发生，其乱之源往往是由言语引发的。君说话不慎密则失信于臣，臣说话不慎密则灾殃及身，重要的事情不慎密则造成祸害。所以，君子处事说话谨守慎密，不乱出去，也就不会乱说话。</p>
-<p>三十六计</p>
-<p>六六三十六，数中有术，术中有数。阴阳燮理，机在其中。机不可设，设则不中。</p>
-<p>○第一套〖胜战计〗<br>第01计 瞒天过海 备周则意怠，常见则不疑。阴在阳之内，不在阳之对。太阳，太阴。<br>第02计 围魏救赵 共敌不如分敌，敌阳不如敌阴。<br>第03计 借刀杀人 敌已明，友未定，引友杀敌。不自出力，以《损》推演。<br>第04计 以逸待劳 困敌之势，不以战。损刚益柔。<br>第05计 趁火打劫 敌之害大，就势取利，刚决柔也。<br>第06计 声东击西 敌志乱萃，不虞。坤下兑上之象，利其不自主而取之。</p>
-<p>○第二套〖敌战计〗<br>第07计 无中生有 诳也，非诳也，实其所诳也。少阴、太阴、太阳。<br>第08计 暗渡陈仓 示之以动，利其静而有主，“益动而巽”。<br>第09计 隔岸观火 阳乖序乱，阴以待逆。暴戾恣睢，其势自毙。顺以动豫，豫顺以动。<br>第10计 笑里藏刀 信而安之，阴以图之。备而后动，勿使有变。刚中柔外也。<br>第11计 李代桃僵 势必有损，损阴以益阳。<br>第12计 顺手牵羊 微隙在所必乘，微利在所必得。少阴，少阳。</p>
-<p>○第三套〖攻战计〗<br>第13计 打草惊蛇 疑以叩实，察而后动。复者，阴之媒也。<br>第14计 借尸还魂 有用者，不可借；不能用者，求借。借不能用者而用之。匪我求童蒙，童蒙求我。<br>第15计 调虎离山 待天以困之，用人以诱之，往蹇来返。<br>第16计 欲擒姑纵 逼则反兵，走则减势。紧随勿迫，累其气力，消其斗志，散而后擒，兵不血刃。需，有孚，光。<br>第17计 抛砖引玉 类以诱之，击蒙也。<br>第18计 擒贼擒王 摧其坚，夺其魁，以解其体。龙战于野，其道穷也。</p>
-<p>○第四套〖混战计〗<br>第19计 釜底抽薪 不敌其力，而消其势，兑下乾上之象。<br>第20计 混水摸鱼 乘其阴乱，利其弱而无主。随，以向晦入宴息。<br>第21计 金蝉脱壳 存其形，完其势；友不疑，敌不动。巽而止蛊。<br>第22计 关门捉贼 小敌困之。剥，不利有攸往。<br>第23计 远交近攻 形禁势格，利从近取，害以远隔。上火下泽。<br>第24计 假道伐虢 两大之间，敌胁以从，我假以势。困，有言不信。</p>
-<p>○第五套〖并战计〗<br>第25计 偷梁换柱 频更其阵，抽其劲旅，待其自败，而后乘之。曳其轮也。<br>第26计 指桑骂槐 大凌小者，警以诱之。刚中而应，行险而顺。<br>第27计 假痴不癫 宁伪作不知不为，不伪作假知妄为。静不露机，云雷屯也。<br>第28计 上屋抽梯 假之以便，唆之使前，断其援应，陷之死地。遇毒，位不当也。<br>第29计 树上开花 借局布势，力小势大。鸿渐于陆，其羽可以为仪也。<br>第30计 反客为主 乘隙插足，扼其主机，渐之进也。</p>
-<p>○第六套〖败战计〗<br>第31计 美人计 兵强者，攻其将；将智者，伐其情。将弱兵颓，其势自萎。利用御寇，顺相保也。<br>第32计 空城计 虚者虚之，疑中生疑。刚柔之际，奇而复奇。<br>第33计 反间计 疑中之疑。比之自内，不自失也。<br>第34计 苦肉计 人不自害，受害必真。假真真假，间以得行。童蒙之吉，顺以巽也。<br>第35计 连环计 将多兵众，不可以敌，使其自累，以杀其势。在师中吉，承天宠也。<br>第36计 走为上 全师避敌。左次无咎，未失常也。</p>
-<p><strong>不敢苟同</strong>，汉语成语，拼音是bù gǎn gǒu tóng，不敢随便地同意，指对人对事抱慎重态度。</p>
-<p>难得糊涂</p>
-<p>鸡犬过霜桥 一路梅花竹叶<br>燕莺穿秀幕 半窗玉剪金枝</p>
-<p>拒边<br>防守边境，拒敌来犯</p>
-<p>《千叶莲池夜闻雨滴之声》<br>田田荷盖雨声齐，楼蕊缤纷向晚迷。树叶不愁点翠幄，秧针岂忆灌青畦。<br>密林有意通宵响，茂草无知遍地萋。偶尔喜吟今岁好，漫将诗句入新题。</p>
-<p>茂草无知井水清</p>
-<p>佳人<br>【作者】杜甫 【朝代】唐<br><strong>绝代有佳人，幽居在空谷。<br>自云良家子，零落依草木</strong>。<br>关中昔丧乱，兄弟遭杀戮。<br>官高何足论，不得收骨肉。<br>世情恶衰歇，万事随转烛。<br>夫婿轻薄儿，新人美如玉。<br>合昏尚知时，鸳鸯不独宿。<br>但见新人笑，那闻旧人哭。<br>在山泉水清，出山泉水浊。<br>侍婢卖珠回，牵萝补茅屋。<br>摘花不插发，采柏动盈掬。<br>天寒翠袖薄，日暮倚修竹。</p>
-<p>虞美人·粉融红腻莲房绽<br>【作者】阎选 【朝代】唐<br>粉融红腻莲房绽，脸动双波慢。小鱼衔玉鬓钗横，<br>石榴裙染象纱轻，转娉婷。<br>偷期锦浪荷深处，一梦云兼雨。臂留檀印齿痕香，<br>深秋不寐漏初长，尽思量。<br>楚腰蛴领团香玉，鬓叠深深绿。月蛾星眼笑微频，<br>柳夭桃艳不胜春，晚妆匀。<br>水纹簟映青纱帐，雾罩秋波上。一枝娇卧醉芙蓉，<br><strong>良宵不得与君同</strong>，恨忡忡。</p>
-<p>万望海涵</p>
-<p>出自宋代蒋捷的《虞美人·听雨》</p>
-<p>少年听雨歌楼上，红烛昏罗帐。壮年听雨客舟中，江阔云低、断雁叫西风。<br>而今听雨僧庐下，鬓已星星也。<strong>悲欢离合总无情，一任阶前、点滴到天明</strong>。</p>
-<p>长恨歌<br>【作者】白居易 【朝代】唐译文对照<br>汉皇重色思倾国，御宇多年求不得。<br>杨家有女初长成，养在深闺人未识。<br>天生丽质难自弃，一朝选在君王侧。<br><strong>回眸一笑百媚生，六宫粉黛无颜色</strong>。<br>春寒赐浴华清池，温泉水滑洗凝脂。<br>侍儿扶起娇无力，始是新承恩泽时。<br>云鬓花颜金步摇，芙蓉帐暖度春宵。<br>春宵苦短日高起，从此君王不早朝。<br>承欢侍宴无闲暇，春从春游夜专夜。<br>后宫佳丽三千人，三千宠爱在一身。<br>金屋妆成娇侍夜，玉楼宴罢醉和春。<br>姊妹弟兄皆列土，可怜光彩生门户。<br>遂令天下父母心，不重生男重生女。<br>骊宫高处入青云，仙乐风飘处处闻。<br>缓歌慢舞凝丝竹，尽日君王看不足。<br>渔阳鼙鼓动地来，惊破霓裳羽衣曲。<br>九重城阙烟尘生，千乘万骑西南行。<br>翠华摇摇行复止，西出都门百余里。<br>六军不发无奈何，宛转蛾眉马前死。<br>花钿委地无人收，翠翘金雀玉搔头。<br>君王掩面救不得，回看血泪相和流。<br>黄埃散漫风萧索，云栈萦纡登剑阁。<br>峨嵋山下少人行，旌旗无光日色薄。<br>蜀江水碧蜀山青，圣主朝朝暮暮情。<br>行宫见月伤心色，夜雨闻铃肠断声。<br>天旋地转回龙驭，到此踌躇不能去。<br>马嵬坡下泥土中，不见玉颜空死处。<br>君臣相顾尽沾衣，东望都门信马归。<br>归来池苑皆依旧，太液芙蓉未央柳。<br>芙蓉如面柳如眉，对此如何不泪垂。<br>春风桃李花开夜，秋雨梧桐叶落时。<br>西宫南苑多秋草，落叶满阶红不扫。<br>梨园弟子白发新，椒房阿监青娥老。<br>夕殿萤飞思悄然，孤灯挑尽未成眠。<br>迟迟钟鼓初长夜，耿耿星河欲曙天。<br>鸳鸯瓦冷霜华重，翡翠衾寒谁与共。<br>悠悠生死别经年，魂魄不曾来入梦。<br>临邛道士鸿都客，能以精诚致魂魄。<br>为感君王辗转思，遂教方士殷勤觅。<br>排空驭气奔如电，升天入地求之遍。<br>上穷碧落下黄泉，两处茫茫皆不见。<br>忽闻海上有仙山，山在虚无缥渺间。<br>楼阁玲珑五云起，其中绰约多仙子。<br>中有一人字太真，雪肤花貌参差是。<br>金阙西厢叩玉扃，转教小玉报双成。<br>闻道汉家天子使，九华帐里梦魂惊。<br>揽衣推枕起徘徊，珠箔银屏迤逦开。<br>云鬓半偏新睡觉，花冠不整下堂来。<br>风吹仙袂飘飖举，犹似霓裳羽衣舞。<br>玉容寂寞泪阑干，梨花一枝春带雨。<br>含情凝睇谢君王，一别音容两渺茫。<br>昭阳殿里恩爱绝，蓬莱宫中日月长。<br>回头下望人寰处，不见长安见尘雾。<br>惟将旧物表深情，钿合金钗寄将去。<br>钗留一股合一扇，钗擘黄金合分钿。<br>但令心似金钿坚，天上人间会相见。<br>临别殷勤重寄词，词中有誓两心知。<br>七月七日长生殿，夜半无人私语时。<br>在天愿作比翼鸟，在地愿为连理枝。<br>天长地久有时尽，此恨绵绵无绝期。</p>
-<p>久旱逢甘霖 一滴<br>他乡遇故知 债主<br>洞房花烛夜 不举<br>金榜挂名时 倒数</p>
-<p>瘦田无人耕，耕开有人争</p>
-<p>为了儿女事，忙煞白头人</p>
-<p>纸花如雪满天飞，娇女秋千打四围。</p>
-<p>五色罗裙风摆动，好将蝴蝶斗春归。–清 郑板桥《怀潍县》</p>
-<p>112.90.74.149 </p>
-<p>虞美人·夜潮</p>
-<p>杜鹃千里啼春晚<br>故国春心断<br>海门空阔月皑皑<br>依旧素车白马夜潮来<br>山川城郭都非故<br>恩怨须臾误<br>人间孤愤最难平<br>消得几回潮落又潮生</p>
+  <p>陶澹人</p>
+<p>出自清代的《秋暮遣怀》</p>
+<p>人生天地一叶萍，利名役役三秋草。<br>秋草能为春草新，苍颜难换朱颜好。<br>篱前黄菊未开花，寂寞清樽冷怀抱。<br><strong>秋风秋雨愁煞人，寒宵独坐心如捣</strong>。<br>出门拔剑壮槃游，霜华拂处尘氛少。<br>朝凌五岳暮三洲，人世风波岂能保。<br>不如归去卧糟丘，老死蓬蒿事幽讨。</p>
+<p>事已至此，余位卑言轻，愧无力成全，然汝死非我意，幸亮之也</p>
+<p>《勉女权歌》<br>【年代】清<br>【作者】秋瑾</p>
+<p>吾辈爱自由，勉励自由一杯酒。<br>男女平权天赋就，岂甘居牛后？<br>愿奋然自拔，一洗从前羞耻垢。<br>愿安作同俦，恢复江山劳素手。<br>旧习最堪羞，女子竟同牛马偶。<br>曙光新放文明侯，独去占头筹。<br>愿奴隶根除，智识学问历练就。<br>责任上肩头，国民女杰期无负。</p>
  
       <!-- reward -->
       
@@ -332,7 +440,7 @@
 
     
     <article
-  id="post-20220329-金针菇"
+  id="post-20220425-乐高"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -343,8 +451,8 @@
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2022/03/29/20220329-%E9%87%91%E9%92%88%E8%8F%87/"
-    >金针菇</a> 
+  <a class="article-title" href="/2022/04/25/20220425-%E4%B9%90%E9%AB%98/"
+    >乐高</a> 
 </h2>
  
 
@@ -352,37 +460,315 @@
     </header>
      
     <div class="article-meta">
-      <a href="/2022/03/29/20220329-%E9%87%91%E9%92%88%E8%8F%87/" class="article-date">
-  <time datetime="2022-03-29T13:49:05.000Z" itemprop="datePublished">2022-03-29</time>
+      <a href="/2022/04/25/20220425-%E4%B9%90%E9%AB%98/" class="article-date">
+  <time datetime="2022-04-25T09:41:11.000Z" itemprop="datePublished">2022-04-25</time>
 </a>    
     </div>
       
     <div class="article-entry" itemprop="articleBody">
        
-  <h2 id="功能成分"><a href="#功能成分" class="headerlink" title="功能成分"></a>功能成分</h2><p>金针菇还含有独特功效的功能成分，如有多种药理作用的蛋白，有抗癌作用的多糖等，这些成分使得金针菇更加有价值。 </p>
-<h3 id="功能性蛋白"><a href="#功能性蛋白" class="headerlink" title="功能性蛋白"></a>功能性蛋白</h3><p>金针菇中含多种功能性蛋白，如核糖体失活蛋白（Robo-someinactitatingproteins，RIP）具有抗肿瘤、抗病毒、抗虫、抗真菌以及抗人体免疫缺陷病毒（HIV）等活性；金针菇毒素（Flammutoxin，FTX）是一种成孔溶细胞素（Pore-formingcytoly-sin），可引起哺乳动物红细胞裂解，使肿瘤细胞溶胀破裂，并能改变肠上皮细胞的渗透性，具有促进药物吸收等作用；真菌免疫调节蛋白（Fungalimmunomodulatoryproteins，FIP）其不仅具有与免疫球蛋白重链可变区相似的结构，而且具有抑制过敏反应、促进核酸和蛋白质合成、加速代谢的功能，能够增强机体的免疫力，具有抗癌、抗过敏、抗增殖、刺激免疫细胞产生多种细胞因子和免疫调节功能。 </p>
-<h3 id="多糖"><a href="#多糖" class="headerlink" title="多糖"></a>多糖</h3><p>金针菇的多糖也有很好的抗癌作用。1968年，日本Kamasuka等人最先报道了其多糖成分对小鼠肉瘤S-180有明显的抑制作用。1982年，日本癌中心研究所的池川先生研究证实，金针菇提取物具有很强的抗癌效果。金针菇菌丝体能产生具有很高抗肿瘤活性的多糖，其一就是胞内多糖，结构为β-1，3-葡聚糖，对小鼠肉瘤S-180的抑制率高达96%，抗肿瘤活性比香菇多糖和云芝多糖都高。日本的大重远等从金针菇的发酵液中提取出胞外抗癌杂多糖，称为KM-45。KM-45是一种灰白色的粉末，它的平均分子量介于104~105之间。它对毒瘤S-180和艾氏腹水癌的效果比子实体、菌丝体作为原料得到的多糖更具有速效性和高效性，对肉瘤S-180的抑制率为70%，对腹水瘤的抑制率为80%，且对细胞无任何毒副作用。KM-45主要由D-葡萄糖、D-半乳糖、D-甘露糖、D-木糖和D-阿拉伯糖组成。 </p>
-<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><p><strong>金针菇的铁含量是菠菜的20倍，又有许多纤维质，可促进新陈代谢，并有镇定的作用，适合孕妇产后多吃</strong>。其含有的酸性和中性植物纤维可吸附胆汁酸盐，调节体内胆固醇代谢，降低血浆中胆固醇的含量，还可促进肠胃蠕动，强化消化系统的功能，它能预防和治疗肝脏系统及肠胃道溃疡。同时，金针菇又是一种高钾低钠食品，并含有VB1，VB2，VE以及较高含量的微量元素锌。这些不仅对儿童的生长发育有很大好处，也特别适宜于高血压病人和中老年人食用</p>
-<h2 id="药理活性"><a href="#药理活性" class="headerlink" title="药理活性"></a>药理活性</h2><h2 id="抗肿瘤与免疫调节"><a href="#抗肿瘤与免疫调节" class="headerlink" title="抗肿瘤与免疫调节"></a>抗肿瘤与免疫调节</h2><p>从金针菇中分离到具有抗癌活性的化合物，包括金针菇多糖、真菌免疫调节蛋白、甾体化合物、单萜、倍半萜、酚酸、糖蛋白等。从金针菇中分离纯化的金针菇多糖具有明显的抗肿瘤活性，主要通过抗氧化和清除自由基的功能抑制肿瘤细胞生长，干扰肿瘤细胞生化代谢和有丝分裂，诱导肿瘤细胞凋亡等方式来抵抗肿瘤。 </p>
-<h2 id="降脂"><a href="#降脂" class="headerlink" title="降脂"></a>降脂</h2><p>金针菇中的膳食纤维不能被人体内的酶分解和消化道吸收，但是能够与胆固醇、胆酸结合，减少人体肝脏中胆酸的堆积，促进胆固醇代谢为胆酸，降低人体小肠中胆固醇含量，干扰小肠对脂质的吸收。Rahman等从金针菇中提取的多酚化合物也具有延缓LDL氧化的作用，具有治疗动脉粥样硬化的潜力。 </p>
-<h2 id="抑菌、消炎和抗病毒"><a href="#抑菌、消炎和抗病毒" class="headerlink" title="抑菌、消炎和抗病毒"></a>抑菌、消炎和抗病毒</h2><p>金针菇中的金针菇多糖（FVP）不仅有抗肿瘤、抗癌活性，还有抗细菌、抗真菌活性。 </p>
-<h2 id="改善记忆力"><a href="#改善记忆力" class="headerlink" title="改善记忆力"></a>改善记忆力</h2><p>金针菇多糖可有效改善东莨菪碱引起的大鼠记忆功能障碍。采用金针菇多糖治疗大鼠，能有效防止大鼠抗氧化防御酶活性的降低，阻止东莨菪碱引起的大鼠硫代巴比妥酸反应物含量升高，改善脑部氧化应激反应，为治疗前脑基底类胆碱神经元的缺失、脑部活性氧产生和氧化酶作用不平衡引起的阿尔茨海默病等脑部损伤疾病提供药物基础。此外，金针菇多糖还能维持多巴胺、去甲肾上腺素、羟色胺等神经传导物质的水平，这些神经传导物质与人脑学习和记忆密切相关。利用金针菇多糖治疗记忆障碍模型小鼠，发现能有效改善障碍小鼠的学习记忆能力。因此，金针菇又称“智力菇”、“增智菇”，在健脑益智上应用前景广阔。 [6] </p>
-<h2 id="抗黑色素沉着、抗褐变"><a href="#抗黑色素沉着、抗褐变" class="headerlink" title="抗黑色素沉着、抗褐变"></a>抗黑色素沉着、抗褐变</h2><p>金针菇中发现的麦角硫因能显著降低多酚氧化酶活性，阻止多酚氧化酶引起的虾、螃蟹等海鲜的黑色素沉着或褐变。金针菇提取物是一种很好的抗黑色素、抗褐变的天然制剂，在食品工业上有巨大的应用潜力。此外，金针菇提取物在美白类化妆品产业上也有应用前景。 [6] </p>
-<h2 id="保护肝脏"><a href="#保护肝脏" class="headerlink" title="保护肝脏"></a>保护肝脏</h2><p>近年来，金针菇多糖还被发现具有保护肝脏的作用。Pang等在金针菇中分离到α（1→4）-D-葡聚糖，是一种水溶性多糖FVP2，能够增强小鼠初级肝脏细胞的生长，抑制四氯化碳引起的急性肝损伤小鼠肝脏细胞内丙氨酸转氨酶（ALT）的释放。ALT主要存在于肝脏细胞中，肝脏细胞的损伤或坏死都会引起ALT浓度的升高，ALT是衡量肝细胞损伤程度的指标。此外，金针菇多糖还能提高肝脏细胞超氧化物歧化酶活性，增强细胞清除自由基的能力，减小自由基对细胞膜的损害，抑制脂质发生过氧化反应，具有保肝、护肝的效果。 [6] </p>
-<h2 id="抗骨骼肌疲劳"><a href="#抗骨骼肌疲劳" class="headerlink" title="抗骨骼肌疲劳"></a>抗骨骼肌疲劳</h2><p>金针菇多糖具有延缓骨骼肌疲劳的作用。孙洪兆等以电刺激蟾蜍腓肠肌为疲劳模型，金针菇多糖溶液能显著降低腓肠肌收缩幅度并且具有剂量依赖性。此外，金针菇多糖还能通过免疫调节作用显著降低运动疲劳大鼠的血清肌酸激酶和尿素氮含量，增加大鼠血液中乳酸脱氢酶活力，加速大鼠运动后恢复期血乳酸的清除，促进机能恢复。金针菇多糖对骨骼肌疲劳的延缓作用及血液相关因子的调节作用为消除运动疲劳、减小运动损伤的研究提供了理论基础。 </p>
+  <p>乐高LDD 软件</p>
+<p>Lego Digital Designer</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-20220416-《春日宴》"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/04/16/20220416-%E3%80%8A%E6%98%A5%E6%97%A5%E5%AE%B4%E3%80%8B/"
+    >《春日宴》</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/04/16/20220416-%E3%80%8A%E6%98%A5%E6%97%A5%E5%AE%B4%E3%80%8B/" class="article-date">
+  <time datetime="2022-04-16T10:26:23.000Z" itemprop="datePublished">2022-04-16</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h2 id="《春日宴》是顾如愿填词，夏喘喘演唱的一首歌曲。"><a href="#《春日宴》是顾如愿填词，夏喘喘演唱的一首歌曲。" class="headerlink" title="《春日宴》是顾如愿填词，夏喘喘演唱的一首歌曲。"></a>《春日宴》是顾如愿填词，夏喘喘演唱的一首歌曲。</h2><p>浊酒一盏青竹浮<br>垂目 三两芙蓉杯上镀<br>四方风入松木<br>指秉五经灯影独<br>书上字句 行行尽沾珠玑蛊<br>七痴六嗔烹入壶<br>身顾 道声来饮一杯无<br>九天八荒皆苦<br>仰却当年花月误<br>日浮春雾 只她合十将愿付<br>绿酒杯杯歌遍 再拜陈愿 一愿君岁千<br>二愿身健 三愿如燕 岁岁长相见<br>踏碎飞柳云片 踏碎弑己噬心之砭<br>还见照旧清艳一笑靥<br>长林欢宴梦不赴<br>不恕 教他捧心跌喧俗<br>眉峰小聚稍蹙<br>将她喃喃唇齿处<br>夜烛流途 银钩虿尾翻然书<br>绿酒杯杯歌遍 再拜陈愿 一愿君岁千<br>二愿身健 三愿如燕 岁岁长相见<br>踏碎飞柳云片 踏碎弑己噬心之砭<br>还见照旧清艳一笑靥<br>云篦发边偷敛 裙裾暗曳 便胜却人间<br>晓风化笺 宫阙难歇 微雨捎片叶<br>仍是喜君不倦 仍是万岁山河比肩<br>唇边欲烙一场春日宴</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-20220415-游戏开发unity"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/04/15/20220415-%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91unity/"
+    >游戏开发unity</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/04/15/20220415-%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91unity/" class="article-date">
+  <time datetime="2022-04-15T14:22:10.000Z" itemprop="datePublished">2022-04-15</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p><a target="_blank" rel="noopener" href="https://space.bilibili.com/8792721?spm_id_from=333.788.b_765f7570696e666f.2">https://space.bilibili.com/8792721?spm_id_from=333.788.b_765f7570696e666f.2</a></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-20220414-电子书zlibrary"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/04/14/20220414-%E7%94%B5%E5%AD%90%E4%B9%A6zlibrary/"
+    >电子书zlibrary</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/04/14/20220414-%E7%94%B5%E5%AD%90%E4%B9%A6zlibrary/" class="article-date">
+  <time datetime="2022-04-14T00:50:27.000Z" itemprop="datePublished">2022-04-14</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>自动寻找网址<br><a target="_blank" rel="noopener" href="https://1lib.domains/">https://1lib.domains/</a></p>
+<p><a target="_blank" rel="noopener" href="https://zh.libsolutions.net/">https://zh.libsolutions.net</a></p>
+<p>LaTeX Web Companion, The: Integrating TeX, HTML, and XML</p>
+<p>Now available as ebook: The LaTeX Companion 2ed</p>
+<p>XSL-FO</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-20220413-导弹设计导论"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/04/13/20220413-%E5%AF%BC%E5%BC%B9%E8%AE%BE%E8%AE%A1%E5%AF%BC%E8%AE%BA/"
+    >20220413-导弹设计导论</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/04/13/20220413-%E5%AF%BC%E5%BC%B9%E8%AE%BE%E8%AE%A1%E5%AF%BC%E8%AE%BA/" class="article-date">
+  <time datetime="2022-04-13T03:45:44.000Z" itemprop="datePublished">2022-04-13</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1EY4113734?spm_id_from=666.25.header_right.fav_list.click">https://www.bilibili.com/video/BV1EY4113734?spm_id_from=666.25.header_right.fav_list.click</a></p>
+<p>《导弹总体设计导论》</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-20220413-ESP32学习"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/04/13/20220413-ESP32%E5%AD%A6%E4%B9%A0/"
+    >ESP32学习</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/04/13/20220413-ESP32%E5%AD%A6%E4%B9%A0/" class="article-date">
+  <time datetime="2022-04-13T03:07:51.000Z" itemprop="datePublished">2022-04-13</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+   
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-20220411-祭十二郎文-韩愈"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/04/11/20220411-%E7%A5%AD%E5%8D%81%E4%BA%8C%E9%83%8E%E6%96%87-%E9%9F%A9%E6%84%88/"
+    >祭十二郎文-韩愈</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/04/11/20220411-%E7%A5%AD%E5%8D%81%E4%BA%8C%E9%83%8E%E6%96%87-%E9%9F%A9%E6%84%88/" class="article-date">
+  <time datetime="2022-04-11T13:31:48.000Z" itemprop="datePublished">2022-04-11</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>祭十二郎文<br>韩愈 〔唐代〕</p>
+<p>年、月、日，季父愈闻汝丧之七日，乃能衔哀致诚，使建中远具时羞之奠，告汝十二郎之灵：</p>
+<p>呜呼！吾少孤，及长，不省所怙，惟兄嫂是依。中年兄殁南方，吾与汝俱幼，从嫂归葬河阳。既又与汝就食江南，零丁孤苦，未尝一日相离也。吾上有三兄，皆不幸早世。承先人后者，在孙惟汝，在子惟吾。两世一身，形单影只。嫂尝抚汝指吾而言曰：“韩氏两世，惟此而已！”汝时尤小，当不复记忆；吾时虽能记忆，亦未知其言之悲也。</p>
+<p>吾年十九，始来京城。其后四年，而归视汝。又四年，吾往河阳省坟墓，遇汝从嫂丧来葬。又二年，吾佐董丞相于汴州，汝来省吾，止一岁，请归取其孥。明年，丞相薨，吾去汴州，汝不果来。是年，吾佐戎徐州，使取汝者始行，吾又罢去，汝又不果来。吾念汝从于东，东亦客也，不可以久；图久远者，莫如西归，将成家而致汝。呜呼！孰谓汝遽去吾而殁乎！吾与汝俱少年，以为虽暂相别，终当久相与处。故舍汝而旅食京师，以求斗斛之禄。诚知其如此，虽万乘之公相，吾不以一日辍汝而就也。</p>
+<p>去年，孟东野往，吾书与汝曰：“吾年未四十，而视茫茫，而发苍苍，而齿牙动摇。念诸父与诸兄，皆康强而早世，如吾之衰者，其能久存乎？吾不可去，汝不肯来，恐旦暮死，而汝抱无涯之戚也。”孰谓少者殁而长者存，强者夭而病者全乎？</p>
+<p>呜呼！其信然邪？其梦邪？其传之非其真邪？信也，吾兄之盛德而夭其嗣乎？汝之纯明而不克蒙其泽乎？少者强者而夭殁，长者衰者而存全乎？未可以为信也！梦也，传之非其真也，东野之书，耿兰之报，何为而在吾侧也？呜呼！其信然矣！吾兄之盛德而夭其嗣矣，汝之纯明宜业其家者，不克蒙其泽矣。所谓天者诚难测，而神者诚难明矣。所谓理者不可推，而寿者不可知矣。</p>
+<p>虽然，吾自今年来，苍苍者或化而为白矣；动摇者或脱而落矣，毛血日益衰，志气日益微，几何不从汝而死也？死而有知，其几何离？其无知，悲不几时，而不悲者无穷期矣。</p>
+<p>汝之子始十岁，吾之子始五岁，少而强者不可保，如此孩提者，又可冀其成立邪？呜呼哀哉！呜呼哀哉！</p>
+<p>汝去年书云：“比得软脚病，往往而剧。”吾曰：“是疾也，江南之人，常常有之。”未始以为忧也。呜呼， 其竟以此而殒其生乎？抑别有疾而至斯极乎？</p>
+<p>汝之书，六月十七日也；东野云，汝殁以六月二日；耿兰之报无月日。盖东野之使者不知问家人以月日，如耿兰之报，不知当言月日。东野与吾书，乃问使者，使者妄称以应之乎。其然乎？其不然乎？</p>
+<p>今吾使建中祭汝，吊汝之孤与汝之乳母。彼有食可守，以待终丧，则待终丧而取以来；如不能守以终丧，则遂取以来。其余奴婢，并令守汝丧。吾力能改葬，终葬汝于先人之兆，然后惟其所愿。</p>
+<p>呜呼！汝病吾不知时，汝殁吾不知日，生不能相养以共居，殁不能抚汝以尽哀，敛不凭其棺，窆不临其穴。吾行负神明，而使汝夭。不孝不慈，而不得与汝相养以生，相守以死。一在天之涯，一在地之角，生而影不与吾形相依，死而魂不与吾梦相接，吾实为之，其又何尤！彼苍者天，曷其有极！自今已往，吾其无意于人世矣！当求数顷之田于伊、颍之上，以待余年。教吾子与汝子，幸其成；长吾女与汝女，待其嫁，如此而已。</p>
+<p>呜呼，言有穷而情不可终，汝其知也邪？其不知也邪？呜呼哀哉！尚飨！</p>
 <hr>
-<h2 id="菜单"><a href="#菜单" class="headerlink" title="菜单"></a>菜单</h2><p>炝拌金针菇</p>
-<p>金针粉丝蒸虾</p>
-<p>凉拌金针菇</p>
-<p>酸汤金针肥牛</p>
-<p>培根金针菇卷</p>
-<p>酸汤肥牛</p>
-<p>五花肉金针菇卷</p>
-<p>剁椒粉丝蒸金针菇</p>
-<p>鱼香金针菇</p>
-<p>油泼金针菇</p>
-<p>金针菇炒鸡丝</p>
-<p>香烤金针菇</p>
+<p>苏轼：“读《出师表》不下泪者，其人必不忠；读《陈情表》不下泪者，其人必不孝；读《祭十二郎文》不下泪者，其人必不友.”</p>
  
       <!-- reward -->
       
@@ -402,7 +788,7 @@
 
     
     <article
-  id="post-20220328-菠菜"
+  id="post-20220409-菜名"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -413,8 +799,8 @@
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2022/03/28/20220328-%E8%8F%A0%E8%8F%9C/"
-    >菠菜</a> 
+  <a class="article-title" href="/2022/04/09/20220409-%E8%8F%9C%E5%90%8D/"
+    >20220409-菜名</a> 
 </h2>
  
 
@@ -422,47 +808,14 @@
     </header>
      
     <div class="article-meta">
-      <a href="/2022/03/28/20220328-%E8%8F%A0%E8%8F%9C/" class="article-date">
-  <time datetime="2022-03-28T14:19:23.000Z" itemprop="datePublished">2022-03-28</time>
+      <a href="/2022/04/09/20220409-%E8%8F%9C%E5%90%8D/" class="article-date">
+  <time datetime="2022-04-09T13:54:10.000Z" itemprop="datePublished">2022-04-09</time>
 </a>    
     </div>
       
     <div class="article-entry" itemprop="articleBody">
        
-  <h2 id="播种时间"><a href="#播种时间" class="headerlink" title="播种时间"></a>播种时间</h2><p>春菠菜在开春后气温回升到5°C以上时即可开始播种，<strong>3月</strong>为播种适期，夏菠菜于5—7月分期播种，秋菠菜于8—9月播种，越冬菠菜于10中旬—11月上旬播种。</p>
-<h2 id="食用"><a href="#食用" class="headerlink" title="食用"></a>食用</h2><h3 id="营养成分"><a href="#营养成分" class="headerlink" title="营养成分"></a>营养成分</h3><p>菠菜有“营养模范生”之称，它富含类胡萝卜素、维生素C、维生素K、矿物质（钙质、铁质等）、辅酶Q10等多种营养素。 </p>
-<h3 id="食用方法"><a href="#食用方法" class="headerlink" title="食用方法"></a>食用方法</h3><p>其可以经常用来<strong>烧汤，凉拌，单炒</strong>，和配荤菜合炒或垫盘。以色泽浓绿，根为红色，不着水，茎叶不老，无抽苔开花，不带黄烂叶者为佳。<br>常见做法有<strong>鸡翅金针菠菜汤、菠菜粥、鸡蛋菠菜饼、菠菜窝蛋</strong>等等。</p>
-<h3 id="适宜人群"><a href="#适宜人群" class="headerlink" title="适宜人群"></a>适宜人群</h3><p>1、宜食：痔疮、便血、习惯性便秘、坏血病、高血压病、贫血、糖尿病、夜盲症患者及皮肤粗糙、过敏、松弛者适宜食用。</p>
-<p>2、忌食：患有尿路结石、肠胃虚寒、大便溏薄、脾胃虚弱、肾功能虚弱、肾炎和肾结石等病症者不宜多食或忌食。</p>
-<h3 id="食用禁忌"><a href="#食用禁忌" class="headerlink" title="食用禁忌"></a>食用禁忌</h3><p>（1）不宜与黄瓜、豆腐同食，黄瓜中会有维生素C分解酶，会把菠莱里的维生素C破坏得一干二净。另外，草酸在人体与钙结合最易形成肾结石或膀胱结石，如果在食物中适当增加一些钙的含量，就可以防止结石的形成。</p>
-<p>（2）<strong>烹调时间不宜过长，因为维生素C遇热后容易氧化</strong>。  </p>
-<h2 id="医用"><a href="#医用" class="headerlink" title="医用"></a>医用</h2><h3 id="功能主治"><a href="#功能主治" class="headerlink" title="功能主治"></a>功能主治</h3><p>养血，止血，敛阴，润燥。治衄血，便血，坏血病，消渴引饮，大便涩滞。  </p>
-<p><strong>1、通肠导便，防治痔疮</strong><br>菠菜含有大量的植物粗纤维，具有促进肠道蠕动的作用，<strong>利于排便，且能促进胰腺分泌，帮助消化。对于痔疮、慢性胰腺炎、便秘、肛裂等病症有治疗作用</strong>。  </p>
-<p><strong>2、促进生长发育，增强抗病能力</strong><br>菠菜中所含的胡萝卜素，在人体内转变成维生素A，能维护正常视力和上皮细胞的健康，增加预防传染病的能力，促进儿童生长发育。  </p>
-<p><strong>3、保障营养，增进健康</strong><br>菠菜中含有丰富的胡萝卜素、维生素C、钙、磷，及一定量的铁、维生素E、芸香贰、辅酶Q10等有益成分，能供给人体多种营养物质；其所含铁质，对缺铁性贫血有较好的辅助治疗作用。  </p>
-<p><strong>4、促进人体新陈代谢，延缓衰老</strong><br>菠菜中的含氟-生齐酚、6-羟甲基蝶陡二酮及微量元素物质，能促进人体新陈代谢，增进身体健康。大量食用菠菜，可降低中风的危险。  </p>
-<p><strong>5、洁皮肤，抗衰老</strong><br>菠菜提取物具有促进培养细胞增殖作用，既抗衰老又增强青春活力。中国民间以菠菜捣烂取汁，每周洗脸数次，连续使用一段时间，可清洁皮肤毛孔，减少皱纹及色素斑，保持皮肤光洁。  </p>
-<p><strong>6、补血</strong><br>菠菜的蛋白质量高于其他蔬菜，且含有相当多的叶绿素，尤其含维生素K在叶菜类中最高（多含于根部），能用于鼻出血、肠出血的辅助治疗。菠菜补血之理与其所含丰富的类胡萝卜素、抗坏血酸有关，两者对身体健康和补血都有重要作用。  </p>
-<p><strong>7、护血压</strong><br>高钠饮食会使血压升高，与钠恰恰相反，钾可以促使肾脏排出更多的钠，从而缓冲钠盐升高血压的副作用。并且，研究也发现，适当多吃含钾的食物对脑血管有保护作用。在绿叶菜中，菠菜是含钾大户。不少人喜欢吃菠菜罐头，但其中含有大量的钠，不利于高血压患者的健康。在不能吃到新鲜菠菜的情况下，推荐吃速冻波菜，营养素不会流失并且容易储藏。大家可以将它与坚果、牛奶等制成混合果汁饮用。需要提醒的是，服用华法林抗凝的患者应少吃菠菜，以免影响药效。  </p>
-<hr>
-<p>菠菜鸡蛋拌粉丝</p>
-<p>木耳拌菠菜</p>
-<p>果仁菠菜</p>
-<p>麻酱菠菜</p>
-<p>菠菜蒸蛋羹</p>
-<p>菠菜炒腐竹</p>
-<p>彩色薄饼</p>
-<p>菠菜马拉糕</p>
-<p>翡翠菠菜面</p>
-<p>菠菜旋风蛋糕卷</p>
-<p>翡翠饺子</p>
-<p>排毒瘦身果蔬奶昔</p>
-<p>田园蔬菜浓汤</p>
-<p>菠菜鸡蛋煎饼</p>
-<p>菠菜烩鱼丸</p>
-<p>芝麻菠菜</p>
-<p>蒜泥菠菜鸡蛋</p>
-<p>瑶柱菠菜塔</p>
+  <p>广州 麻竹笋</p>
  
       <!-- reward -->
       
@@ -473,405 +826,6 @@
     
     <footer class="article-footer">
        
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%85%BB%E7%94%9F/" rel="tag">养生</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%A3%9F%E7%89%A9/" rel="tag">食物</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20220327-张爱玲语录"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/03/27/20220327-%E5%BC%A0%E7%88%B1%E7%8E%B2%E8%AF%AD%E5%BD%95/"
-    >张爱玲语录</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/03/27/20220327-%E5%BC%A0%E7%88%B1%E7%8E%B2%E8%AF%AD%E5%BD%95/" class="article-date">
-  <time datetime="2022-03-27T11:09:54.000Z" itemprop="datePublished">2022-03-27</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>01、范柳原在细雨迷蒙的码头上迎接她。他说她的绿色玻璃雨衣像一只瓶，又注了一句：“药瓶。”她以为他在那里讽嘲她的孱弱，然而他又附耳加了一句：“你是医我的药。”——《倾城之恋》</p>
-<p>02、有些人很多机会相见的，却总找借口推脱，想见的时候已经没机会了。有些话有很多机会说的，却想着以后再说，要说的时候，已经没机会了。有些事有很多机会做的，却一天一天推迟，想做的时候却发现没机会了。有些爱给了你很多机会，却不在意没在乎，想重视的时候已经没机会爱了。——张爱玲</p>
-<p>03、照片这种东西不过是生命的碎壳，纷纷的岁月已过去，瓜子仁一粒粒咽了下去，滋味各人知道，留给大家看的唯有那狼藉的黑白的瓜子壳。——张爱玲《花凋》</p>
-<p>04、爱上一个人，心会一直低，低到泥土里，在土里开出花来，如此卑微却又如此欣喜。——张爱玲</p>
-<p>05、对于三十岁以后的人来说，十年八年不过是指缝间的事而对于年轻人而言，三年五年就可以是一生一世。——张爱玲《十八春》</p>
-<p>06、你年轻么？不要紧，过两年就老了，这里，青春是不希罕的。——张爱玲《倾城之恋》</p>
-<p>07、你要我在旁人面前做一个好女人，在你面前做一个坏女人。你最高的理想是一个冰清玉洁而又富于挑逗性的女人。——张爱玲《倾城之恋》</p>
-<p>08、你到底是不肯。我想过，我倘使不得不离开你，亦不致寻短见，亦不能够再爱别人，我将只是萎谢了！”——张爱玲</p> 
-      <a class="article-more-link" href="/2022/03/27/20220327-%E5%BC%A0%E7%88%B1%E7%8E%B2%E8%AF%AD%E5%BD%95/"
-        >阅读更多...</a
-      >
-       
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20220326-地图资源哪里找"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/03/26/20220326-%E5%9C%B0%E5%9B%BE%E8%B5%84%E6%BA%90%E5%93%AA%E9%87%8C%E6%89%BE/"
-    >20220326-地图资源哪里找</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/03/26/20220326-%E5%9C%B0%E5%9B%BE%E8%B5%84%E6%BA%90%E5%93%AA%E9%87%8C%E6%89%BE/" class="article-date">
-  <time datetime="2022-03-26T06:35:08.000Z" itemprop="datePublished">2022-03-26</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>自然资源部标准地图 <a target="_blank" rel="noopener" href="http://211.159.153.75/">http://211.159.153.75/</a></p>
-<p>地图窝 <a target="_blank" rel="noopener" href="http://www.onegreen.net/maps/m/">http://www.onegreen.net/maps/m/</a></p>
-<p><a target="_blank" rel="noopener" href="http://timespace-china.fudan.edu.cn/FDCHGIS/homePage">http://timespace-china.fudan.edu.cn/FDCHGIS/homePage</a></p>
-<p>地图书</p>
-<p><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/285788855/answer/1309591074">https://www.zhihu.com/question/285788855/answer/1309591074</a></p>
-<p><a target="_blank" rel="noopener" href="https://www.ditushu.com/">https://www.ditushu.com/</a></p>
-<p>地图书是一个人文地理知识库在线协作可视化平台，目前已经上线了中国古旧地图，中国历史地图，中国古代军事地理等多个知识库。</p>
-<p>数位方舆</p>
-<p><a target="_blank" rel="noopener" href="https://digitalatlas.asdc.sinica.edu.tw/">https://digitalatlas.asdc.sinica.edu.tw/</a></p>
-<p>台湾中央研究院在线古地图专题网站，可以在线浏览和下载，不过里面好些地图其实是国会图书馆等国外单位的藏品，这个网站贵在每个地图都有比较详细的中文介绍。</p>
-<p>大卫·拉姆齐地图中心<a target="_blank" rel="noopener" href="https://www.davidrumsey.com/">https://www.davidrumsey.com/</a> 这是古地图领域中的大佬！位于斯坦福大学图书馆内的大卫·拉姆齐地图中心，是全世界最大的地图收藏单位，由大卫拉姆齐先生捐助自己毕生收藏而建，共藏有地图、地球仪等十多万件。中心网站可以在线下载超高分辨率地图，不过有一些小小的下载限制，连续下载几张就得等一会。</p>
-<p>老地图在线<a target="_blank" rel="noopener" href="https://www.oldmapsonline.org/">https://www.oldmapsonline.org</a><br>一个国外的古旧地图检索网站。这个网站本身不提供地图的浏览和下载，而是整合了其它一些古旧地图网站上的资源，供你统一搜索。除了按名称搜索外，该网站最便捷的地方就是可以通过选择一个区域，查询到该区域相关的古旧地图。</p>
-<p>国会图书馆</p>
-<p><a target="_blank" rel="noopener" href="https://www.loc.gov/">https://www.loc.gov</a></p>
-<p>世界最大的图书馆，共藏中国相关地图1.2万幅，可在线浏览800余幅。除了提供高清资源的直接下载外，国会图书馆相比其它网站，收藏有更多中国近代史以前的古地图，比如宋代的《禹迹图》、《华夷图》、《平江图》，明代的《坤舆万国全图》、《广舆图》、清代的《康熙全览图》等。这些都是独此一家，好些连国内都没有。</p>
-<p>康奈尔大学图书馆<a target="_blank" rel="noopener" href="https://digital.library.cornell.edu/">https://digital.library.cornell.edu</a></p>
-<p>收藏800多幅古旧地图，和中国相关的有二十多幅。这个网站和前面几个相比，有非常大的特色，就是它提供了一个Persuasive Maps: PJ Mode Collection的集合，提供了大量反映政治、军事、经济、文化、社会相关的地图作品</p>
-<p>RareMaps</p>
-<p><a target="_blank" rel="noopener" href="https://www.raremaps.com/">https://www.raremaps.com</a></p>
-<p>国外知名的古旧地图售卖网站，虽然上面的地图都要钱，但支持高清浏览，中国相关地图有500幅。</p>
-<p>威斯康星大学图书馆</p>
-<p><a target="_blank" rel="noopener" href="https://uwm.edu/lib-collections/agsl-digital-map-collection/">https://uwm.edu/lib-collections/agsl-digital-map-collection/</a></p>
-<p>美国地理学会图书馆收藏的14000张地图，中国相关的古旧地图有400张。这个网站收藏的中国相关地图，大多都是近代的，有一系列解放前中国某些县市的城市地图。</p>
-<p>日文研所藏地图</p>
-<p><a target="_blank" rel="noopener" href="http://lapis.nichibun.ac.jp/chizu/index_area.html">http://lapis.nichibun.ac.jp/chizu/index_area.html</a></p>
-<p>国际日本文化研究中心收藏的亚洲地图，日本国内的占多数，也有一些近代史时期日本绘制的中国相关地图。网站支持在线高清浏览，不过没法直接下载。</p>
-<p>横滨市立大学古地图</p>
-<p><a target="_blank" rel="noopener" href="http://www-user.yokohama-cu.ac.jp/~ycu-rare/index.html">http://www-user.yokohama-cu.ac.jp/~ycu-rare/index.html</a></p>
-<p>日本横滨市立大学收藏的各类日本历史上绘制的古旧地图。这个网站的优点，就是里面将佛教系地图、兰学系地图，利玛窦世界地图等分门别类，让你能够比较系统的了解日本地图学史的发展历程。网站支持在线高清浏览，不过没法直接下载。</p>
-<p>Geographicus</p>
-<p><a target="_blank" rel="noopener" href="https://www.geographicus.com/">https://www.geographicus.com/</a></p>
-<p>又一个国外的古旧地图售卖网站。它的规模要小一些，有上百中、日、韩相关地图，其中几张比较稀有，没有在其它网站上见到过。</p>
-<p>大英图书馆</p>
-<p><a target="_blank" rel="noopener" href="http://www.bl.uk/">http://www.bl.uk/</a></p>
-<p>世界著名图书馆，可在线浏览百余幅中国相关地图。不过上面的地图分辨率不是很好，听说前些日子改版了，不知道有什么样的变化。</p>
-<p>维基中国古旧地图</p>
-<p><a target="_blank" rel="noopener" href="https://commons.wikimedia.org/wiki/Category:Old_maps_of_China">https://commons.wikimedia.org/wiki/Category:Old_maps_of_China</a></p>
-<p>维基百科词条中涉及的上千幅中国古旧地图索引，一次就能看完。当然除了中国相关的，维基百科上也提供整个网站的古旧地图索引集合。通过这些地图，你又能顺藤摸瓜找到许多其它古地图收藏网站。</p>
-<p>澳大利亚国家图书馆<br><a target="_blank" rel="noopener" href="https://www.nla.gov.au/maps/using-the-maps-collection">https://www.nla.gov.au/maps/using-the-maps-collection</a><br>这里提供了2000+中国相关地图资源，半数提供电子版，部分为高清版。这个网站的特色就是有大量二战时期日本出版的地图，不知道澳大利亚怎么搞到的。</p>
-<p>发现中国</p>
-<p><a target="_blank" rel="noopener" href="https://www.ageeye.cn/">https://www.ageeye.cn/</a></p>
-<p>已经有一个答主介绍过了，网站上有一个中国古旧地图专栏，提供几十张比较著名的古旧地图。总体上而言网站上的地图偏少，不过可以给每个地图中的要素添加评论，很有意思。</p>
-<p>世界数字图书馆</p>
-<p><a target="_blank" rel="noopener" href="https://www.wdl.org/">https://www.wdl.org</a></p>
-<p>这个网站可以线浏览百余幅东亚地图，不过缺点就是下载文件的清晰度比较差。</p>
-<p>最后安利一下我们地图书，地图书上的“中国古旧地图”项目，将由志愿者整合翻译以上网站中的大多数中国古地图资源，这样你就不用在这些网站里找来找去啦。</p>
-<p><a href="https://link.zhihu.com/?target=https://www.ditushu.com/book/10/">https://link.zhihu.com/?target=https%3A//www.ditushu.com/book/10/</a></p>
-<p>大卫拉姆齐的线上地图图书馆</p>
-<p><a target="_blank" rel="noopener" href="https://www.davidrumsey.com/">https://www.davidrumsey.com</a></p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20220324-《铁齿铜牙纪晓岚》2"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/03/24/20220324-%E3%80%8A%E9%93%81%E9%BD%BF%E9%93%9C%E7%89%99%E7%BA%AA%E6%99%93%E5%B2%9A%E3%80%8B2/"
-    >《铁齿铜牙纪晓岚》2</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/03/24/20220324-%E3%80%8A%E9%93%81%E9%BD%BF%E9%93%9C%E7%89%99%E7%BA%AA%E6%99%93%E5%B2%9A%E3%80%8B2/" class="article-date">
-  <time datetime="2022-03-24T13:01:36.000Z" itemprop="datePublished">2022-03-24</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>甘之如饴</p>
-<p>[释义]  感到像吃糖那样甜。表示甘愿承受艰难、痛苦。<br>宋·真德秀《送周天骥序》：“非义之富贵；远之如垢污；不幸而贱贫；甘之如饴蜜。”</p>
-<p>花钱买官 买官捞钱<br>寒窗读书 却被书误</p>
-<p>一等人忠臣孝子<br>两件事读书耕田</p>
-<p>三年清知府<br>十万雪花银</p>
-<p>《三生缘》-清纪昀</p>
-<p>三生谁更问前因，一念缠绵泣鬼神。</p>
-<p>缘尽犹寻泉下路，魂归宛见梦中人。</p>
-<p>城乌啼夜传幽怨，怨冢树连认化身。</p>
-<p>万骨青山终沥尽，只应铁骨不成尘。</p>
-<p>琴瑟琵琶 八大王一般头角<br>魑魅魍魉 四小鬼各样心肠</p>
-<p>唐代 杜牧 《赠别·其二》</p>
-<p>多情却似总无情，唯觉樽前笑不成。</p>
-<p>蜡烛有心还惜别，替人垂泪到天明。</p>
-<p>惜多才，<br>怜薄命，<br>无计可留汝。<br>揉碎花笺，<br>忍写断肠句。<br>道旁杨柳依依，<br>千丝万缕，<br>抵不住、一分愁绪。<br>如何诉。<br>便教缘尽今生，<br>此身已轻许。<br>捉月盟言，<br>不是梦中语。<br>后回君若重来，<br>不相忘处，<br>把杯酒、浇奴坟土。</p>
-<p>——宋代·佚名《祝英台近·惜多才》</p>
-<p>迷则不觉 觉则不迷 好从大圆镜中照出本来面目<br>色即是空 空即是色 却自真如世界证明无上菩提</p> 
-      <a class="article-more-link" href="/2022/03/24/20220324-%E3%80%8A%E9%93%81%E9%BD%BF%E9%93%9C%E7%89%99%E7%BA%AA%E6%99%93%E5%B2%9A%E3%80%8B2/"
-        >阅读更多...</a
-      >
-       
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20220324-婚书"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/03/24/20220324-%E5%A9%9A%E4%B9%A6/"
-    >婚书</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/03/24/20220324-%E5%A9%9A%E4%B9%A6/" class="article-date">
-  <time datetime="2022-03-24T04:16:55.000Z" itemprop="datePublished">2022-03-24</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>两姓联姻，一堂缔约，良缘永结，匹配同称。看此日桃花灼灼，宜室宜家，卜他年瓜瓞绵绵，尔昌尔炽。谨以白头之约，书向鸿笺，好将红叶之盟，载明鸳谱。此证！</p>
-<p><a target="_blank" rel="noopener" href="https://baike.baidu.com/tashuo/browse/content?id=f5a54d49983f15bdb8ec5429">https://baike.baidu.com/tashuo/browse/content?id=f5a54d49983f15bdb8ec5429</a></p>
-<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1hp4y1v7GE/?spm_id_from=autoNext">https://www.bilibili.com/video/BV1hp4y1v7GE/?spm_id_from=autoNext</a></p>
-<p>喜今日赤绳系定，珠联璧合。卜他年白头永偕，桂馥兰馨。<br>此证!</p>
-<p>礼同掌判，合二姓以嘉姻,诗咏宜家，敦百年之静好。<br>此证!<br>。</p>
-<p>合卺逢春月，芳菲斗丽华。<br>鸾生锁竹叶，风管合娇花。<br>天上双星并，人间两玉夸。</p>
-<p>从兹缔结良缘，订成佳偶,<br>赤绳早系，白首永谐,<br>花好月圆，欣燕尔之。<br>将泳海括石烂，指鸳侣而先盟。<br>谨订此多</p>
-<p>泵祥既集，二族交欢。敬兹新姻，六礼不愆。羔鴈总备，玉帛戈戈。君子将事，威仪孔闲。猗兮<br>容兮，穆矣其言。</p>
-<p>喜今日嘉礼初成，良缘遂缔。<br>诗咏关雎，雅歌麟趾。<br>瑞叶五世其昌，祥开二南之化。<br>同心同德，宜室宜家。<br>相敬如宾，永谐鱼水之欢。<br>互助精诚，共盟鸳鸯之誓。<br>此证y</p>
-<p>嘉礼初成，良缘遂缔。情敦鹣蝶，愿相敬之如宾;<br>祥叶釜麟，定克昌于厥后。<br>同心同德，宜室宜家。永结鸾俦，共盟鸳蝶。<br>此证</p>
-<p>一阳初动，二姓和谐，庆三多，具四美，五世其<br>倡征凤卜。<br>六礼既成，七贤毕集，凑八音，歌九和，十全无<br>缺羡窗和。</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20220323-CAD工程图纸学习"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/03/23/20220323-CAD%E5%B7%A5%E7%A8%8B%E5%9B%BE%E7%BA%B8%E5%AD%A6%E4%B9%A0/"
-    >20220323-CAD工程图纸学习</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/03/23/20220323-CAD%E5%B7%A5%E7%A8%8B%E5%9B%BE%E7%BA%B8%E5%AD%A6%E4%B9%A0/" class="article-date">
-  <time datetime="2022-03-23T07:29:14.000Z" itemprop="datePublished">2022-03-23</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>[TOC]</p>
-<h2 id="0x01"><a href="#0x01" class="headerlink" title="0x01"></a>0x01</h2><h2 id="0x02"><a href="#0x02" class="headerlink" title="0x02"></a>0x02</h2><h2 id="0x03"><a href="#0x03" class="headerlink" title="0x03"></a>0x03</h2><h2 id="0x04"><a href="#0x04" class="headerlink" title="0x04"></a>0x04</h2> 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20220323-词牌名"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/03/23/20220323-%E8%AF%8D%E7%89%8C%E5%90%8D/"
-    >词牌名</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/03/23/20220323-%E8%AF%8D%E7%89%8C%E5%90%8D/" class="article-date">
-  <time datetime="2022-03-23T02:36:02.000Z" itemprop="datePublished">2022-03-23</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h2 id="词牌"><a href="#词牌" class="headerlink" title="词牌"></a>词牌</h2><p>所谓词牌，就是词的格式、曲调</p>
-<p>同一个曲调可以由不同人填上不同版本的词，这个曲调就是词调</p>
-<ol>
-<li>词牌基本都有自己的来历</li>
-</ol>
-<p>《雨霖铃》就是唐玄宗后来为纪念杨贵妃，命乐工写的曲。</p>
-<p>代表作柳永《雨霖铃·寒蝉凄切》</p>
-<p>寒蝉凄切，对长亭晚，骤雨初歇。都门帐饮无绪，留恋处，兰舟催发。执手相看泪眼，竟无语凝噎。念去去，千里烟波，暮霭沉沉楚天阔。</p>
-<p>多情自古伤离别，更那堪冷落清秋节。今宵酒醒何处？杨柳岸，晓风残月。此去经年，应是良辰好景虚设。便纵有千种风情，更与何人说！</p>
-<ol start="2">
-<li><p>词牌名跟词本身的内容可能没有任何关系</p>
-</li>
-<li><p>由于同一个词牌名会被不同的词人使用，为了区分，通常会在词牌名后面加上一个标题，有的标题是作者自己加的，有些作者在写作时并没有写标题则是后人根据词的大意或者选取词的第一句作为标题。</p>
-</li>
-</ol>
-<p>比如《沁园春·雪》、《雨霖铃·寒蝉凄切》</p>
-<p>声声慢 代表作 李清照 《声声慢·寻寻觅觅》</p>
-<p>西江月 辛弃疾 《西江月·夜行黄沙道中》</p>
-<p>念奴娇 辛弃疾 《念奴娇·赤壁怀古》</p>
-<h3 id="念奴娇"><a href="#念奴娇" class="headerlink" title="念奴娇"></a>念奴娇</h3><p>“念奴”是唐朝天宝年间的著名歌妓，传说唐玄宗曾亲自作曲填词，命念奴歌唱，歌声婉转如夜莺啼鸣，玄宗龙颜大悦，遂将此曲定名为“念奴娇”。</p>
-<h3 id="蝶恋花"><a href="#蝶恋花" class="headerlink" title="蝶恋花"></a>蝶恋花</h3><p>原唐教坊曲名，又名“黄金缕”“鹊踏枝”“凤栖梧”“卷珠帘”“一箩金”。</p>
-<h3 id="长相思"><a href="#长相思" class="headerlink" title="长相思"></a>长相思</h3><p>又名“长相思令”<br>“相思令”原唐教坊曲名，后用为词调。因南朝乐府中有<br>“上言长相思，下言夕别离”一句，故名”长相思”。</p>
-<h3 id="雨霖铃"><a href="#雨霖铃" class="headerlink" title="雨霖铃"></a>雨霖铃</h3><p>唐玄宗避安禄山乱出逃，<br>在马嵬坡迫于形势，将杨玉环赐死。<br>后在霖雨连绵之夜，玄宗车行于蜀中栈道之上，<br>马铃和着潇潇雨声，更添寥落与凄惨。<br>他想自己身为一国之君，<br>连心爱的妃子都保护不了，不觉悲从中来，<br>口出“雨霖铃”三字。<br>后来命教坊“采其声为《雨霖铃》曲，<br>以记恨焉”，并叫伶人张野狐吹奏，<br>从此流传于世。</p>
-<h3 id="水龙吟"><a href="#水龙吟" class="headerlink" title="水龙吟"></a>水龙吟</h3><p>又名《龙吟曲》。<br>出自李白《宫中行乐词八首》<br>传世仅八首。全诗言浅意深，意微词显。<br>“烟花宜落日，丝管醉春风。笛奏龙吟水，箫鸣凤下空”<br>落日烟花，丝管齐鸣，<br>羌笛如龙吟出水，箫管似凤鸣下空，道出另番景象。</p>
-<p>把吴钩看了，栏杆拍遍，无人会，登临意。</p>
-<h3 id="定风波"><a href="#定风波" class="headerlink" title="定风波"></a>定风波</h3><p>又名“定风流”“定风波令”等。<br>唐教坊曲名，敦煌曲子词中有,<br>“问儒士，谁人敢去定风流”一句,<br>此调取平定叛乱的意思。</p>
-<p>一剪梅<br>一痕沙<br>一落春<br>万年秋<br>上阳春<br>东风寒<br>临江仙<br>丹凤吟<br>乌夜啼<br>云松令<br>元和令<br>兰陵王<br>凤来朝<br>凤楼春<br>凤求凰<br>凤箫吟<br>千秋岁<br>升平乐<br>卜算子<br>双瑞莲<br>古倾杯<br>四和香<br>四字令<br>声声慢<br>天下乐<br>天净沙<br>天香引<br>太平令<br>如梦令<br>子夜歌<br>定风波<br>小重山<br>少年心<br>少年游<br>山外云<br>山鬼谣<br>广寒枝<br>开元乐<br>引驾行<br>归去来<br>归国谣<br>归塞北<br>忆少年<br>忆旧游<br>忆江南<br>忆秦娥<br>念奴娇<br>无梦令<br>月中行<br>月华清<br>水调歌头<br>水龙吟<br>永遇乐<br>江城子<br>江如练<br>沁园春<br>浣溪沙<br>浪淘沙<br>清平乐<br>渔家傲<br>点绛唇<br>玉京秋<br>玉人歌<br>玉堂春<br>甘州歌<br>白鹤子<br>相见欢<br>破阵子<br>苏幕遮<br>菩萨蛮<br>蝶恋花<br>西江月<br>见龙门<br>解语花<br>解连环<br>踏莎行<br>醉花阴<br>采桑子<br>长桥月<br>长生乐<br>长相思<br>雨霖铃<br>霜天晓<br>青玉案<br>鬓云松<br>鹊桥仙</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%AF%97%E8%AF%8D/" rel="tag">诗词</a></li></ul>
-
     </footer>
   </div>
 
@@ -886,7 +840,7 @@
   
   <nav class="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/11/">上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><a class="page-number" href="/page/11/">11</a><span class="page-number current">12</span><a class="page-number" href="/page/13/">13</a><a class="page-number" href="/page/14/">14</a><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/13/">下一页</a>
+    <a class="extend prev" rel="prev" href="/page/11/">上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><a class="page-number" href="/page/11/">11</a><span class="page-number current">12</span><a class="page-number" href="/page/13/">13</a><a class="page-number" href="/page/14/">14</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><a class="extend next" rel="next" href="/page/13/">下一页</a>
   </nav>
   
 </section>
