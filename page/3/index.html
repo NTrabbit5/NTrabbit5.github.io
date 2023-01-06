@@ -126,7 +126,7 @@
     
     
     <article
-  id="post-20221215-使用wttr-in在你的终端中显示天气预报"
+  id="post-20221120-色域马蹄图是怎么来的-CIE1931XYZ色彩空间详解"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -137,8 +137,8 @@
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2022/12/15/20221215-%E4%BD%BF%E7%94%A8wttr-in%E5%9C%A8%E4%BD%A0%E7%9A%84%E7%BB%88%E7%AB%AF%E4%B8%AD%E6%98%BE%E7%A4%BA%E5%A4%A9%E6%B0%94%E9%A2%84%E6%8A%A5/"
-    >20221215-使用wttr.in在你的终端中显示天气预报</a> 
+  <a class="article-title" href="/2022/11/20/20221120-%E8%89%B2%E5%9F%9F%E9%A9%AC%E8%B9%84%E5%9B%BE%E6%98%AF%E6%80%8E%E4%B9%88%E6%9D%A5%E7%9A%84-CIE1931XYZ%E8%89%B2%E5%BD%A9%E7%A9%BA%E9%97%B4%E8%AF%A6%E8%A7%A3/"
+    >20221120-色域马蹄图是怎么来的-CIE1931XYZ色彩空间详解</a> 
 </h2>
  
 
@@ -146,1395 +146,902 @@
     </header>
      
     <div class="article-meta">
-      <a href="/2022/12/15/20221215-%E4%BD%BF%E7%94%A8wttr-in%E5%9C%A8%E4%BD%A0%E7%9A%84%E7%BB%88%E7%AB%AF%E4%B8%AD%E6%98%BE%E7%A4%BA%E5%A4%A9%E6%B0%94%E9%A2%84%E6%8A%A5/" class="article-date">
-  <time datetime="2022-12-15T02:04:16.000Z" itemprop="datePublished">2022-12-15</time>
+      <a href="/2022/11/20/20221120-%E8%89%B2%E5%9F%9F%E9%A9%AC%E8%B9%84%E5%9B%BE%E6%98%AF%E6%80%8E%E4%B9%88%E6%9D%A5%E7%9A%84-CIE1931XYZ%E8%89%B2%E5%BD%A9%E7%A9%BA%E9%97%B4%E8%AF%A6%E8%A7%A3/" class="article-date">
+  <time datetime="2022-11-20T06:32:20.000Z" itemprop="datePublished">2022-11-20</time>
 </a>    
     </div>
       
     <div class="article-entry" itemprop="articleBody">
        
-  <p>wttr.in 是一个功能丰富的天气预报服务，它支持在命令行显示天气，它可以 根据你的ip 地址<br>自动检测你的位置，也支持指定位置或搜索地理位置，如城市，山区等，另外，你不需要安装它，你只需要使用curl 或wget </p>
-<p>wttr.in 功能包括</p>
-<p>显示当前天气以及3天内的天气预报，分为早晨，中午、傍晚和夜晚 包括温度范围、风速和风向 可见度，降水量 和概率</p>
-<p>可以显示月相</p>
-<p>基于你的ip地址自动检测位置</p>
-<p>允许指定城市名称，3字母的机场代码，区域代码，GPS坐标，IP 地址或域名，你还可以指定地理位置，如湖泊 山脉，地标等</p>
-<p>支持多语言位置名称  查询字符串必须以unicode 指定</p>
-<p>支持指定天气预报显示的语言  它支持超过50种语言</p>
-<p>来自美国的查询使用uscs 单位用于，世界其他地方使用公制系统，但你可以通过附加?u 使用uscs 附加?m 使用公制系统</p>
-<p>3种输出格式，终端的ansi 浏览器的html 和png </p>
-<p>或者你可以安装wego 这是一个使用wtter.in 的终端气候应用，虽然wego 要求注册一个api 密钥来安装</p>
-<p><a target="_blank" rel="noopener" href="http://wttr.in/">http://wttr.in</a> 命令行示例<br>获取你所在位置的天气（<a target="_blank" rel="noopener" href="http://wttr.in/">http://wttr.in</a> 会根据你的 IP 地址猜测你的位置）：</p>
-<p>curl wttr.in<br>通过在 curl 之后添加 -4，强制 cURL 将名称解析为 IPv4 地址（如果你用 IPv6 访问 wttr.in 有问题）：</p>
-<p>curl -4 wttr.in<br>如果你想检索天气预报保存为 png，还可以使用 Wget（而不是 cURL），或者你想这样使用它：</p>
-<p>wget -O- -q wttr.in<br>如果相对 cURL 你更喜欢 Wget ，可以在下面的所有命令中用 wget -O- -q 替换 curl。</p>
-<p>指定位置：</p>
-<p>curl wttr.in&#x2F;Dublin<br>显示地标的天气信息（本例中为艾菲尔铁塔）：</p>
-<p>curl wttr.in&#x2F;~Eiffel+Tower<br>获取 IP 地址位置的天气信息（以下 IP 属于 GitHub）：</p>
-<p>curl wttr.in&#x2F;@192.30.253.113<br>使用 USCS 单位检索天气：</p>
-<p>curl wttr.in&#x2F;Paris?u<br>如果你在美国，强制 <a target="_blank" rel="noopener" href="http://wttr.in/">http://wttr.in</a> 使用公制系统（SI）：</p>
-<p>curl wttr.in&#x2F;New+York?m<br>使用 Wget 将当前天气和 3 天预报下载为 PNG 图像：</p>
-<p>wget wttr.in&#x2F;Istanbul.png<br>你可以指定 PNG 的透明度，这在你要使用一个脚本自动添加天气信息到某些图片（比如墙纸）上有用。</p>
-<p>对于其他示例，请查看wttr.in 项目页面或在终端中输入 </p>
-<p>curl wttr.in&#x2F;:help</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20221214-通过Content-Type和文件头判断文件类型"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/12/14/20221214-%E9%80%9A%E8%BF%87Content-Type%E5%92%8C%E6%96%87%E4%BB%B6%E5%A4%B4%E5%88%A4%E6%96%AD%E6%96%87%E4%BB%B6%E7%B1%BB%E5%9E%8B/"
-    >20221214-通过Content-Type和文件头判断文件类型</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/12/14/20221214-%E9%80%9A%E8%BF%87Content-Type%E5%92%8C%E6%96%87%E4%BB%B6%E5%A4%B4%E5%88%A4%E6%96%AD%E6%96%87%E4%BB%B6%E7%B1%BB%E5%9E%8B/" class="article-date">
-  <time datetime="2022-12-14T12:43:46.000Z" itemprop="datePublished">2022-12-14</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h1 id="通过Content-Type和文件头判断文件类型"><a href="#通过Content-Type和文件头判断文件类型" class="headerlink" title="通过Content-Type和文件头判断文件类型"></a>通过Content-Type和文件头判断文件类型</h1><h2 id="关于MIME"><a href="#关于MIME" class="headerlink" title="关于MIME"></a>关于MIME</h2><p><strong>MIME</strong>的全称是Multipurpose Internet Mail Extensions，即多用途互联网邮件扩展，尽管读起来有些拗口，但大多数人可能都知道，<br>这是HTTP协议中用来定义文档性质及格式的标准。<a target="_blank" rel="noopener" href="https://tools.ietf.org/html/rfc6838">IETF RFC 6838</a>，对HTTP传输内容类型进行了全面定义。<br>而<strong>IANA</strong>(互联网号码分配机构)是负责管理所有标准MIME类型的官方机构。可以<a target="_blank" rel="noopener" href="https://www.iana.org/assignments/media-types/media-types.xhtml">在这里</a>)找到所有的标准MIME</p>
-<p><strong>服务器通过MIME告知响应内容类型，而浏览器则通过MIME类型来确定如何处理文档；</strong><br><strong>因此为传输内容(文档、图片等)设置正确的MIME非常重要</strong>。</p>
-<p>通常Server会在HTTP响应中设置<strong>Content-Type</strong>，如下面的响应：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CodeHTTP/1.1 200 OKServer: Golfe2    Content-Length: 233Content-Type: application/htmlDate: Sun, 28 Dec 2018 02:55:19 GMT12345</span><br></pre></td></tr></table></figure>
-
-<p>这表示服务端将返回html格式的文档，而同样客户端也可以在HTTP请求中设置<strong>Content-Type</strong>以告知服务器当前所发送内容的格式。<br>如下面的请求体：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CodePOST / HTTP/1.1Host: localhost:8000User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:50.0) Gecko/20100101 Firefox/50.0Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8Connection: keep-aliveContent-Type: application/jsonContent-Length: 4651234567</span><br></pre></td></tr></table></figure>
-
-<p>这表示客户端会发送application&#x2F;json格式的数据到服务端，同时应该注意到<strong>Accept</strong>请求头，这个选项用于告知服务器应该返回什么样的数据格式(由客户端接收并完成解析)。</p>
-<p><strong>MIME的格式</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Codetype/subtype1</span><br></pre></td></tr></table></figure>
-
-<p>这是一个两级的分类，比较容易理解，第一级分类通常包含：</p>
-<table>
-<thead>
-<tr>
-<th>类型</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>text</td>
-<td>普通文本</td>
-</tr>
-<tr>
-<td>image</td>
-<td>某种图像</td>
-</tr>
-<tr>
-<td>audio</td>
-<td>某种音频文件</td>
-</tr>
-<tr>
-<td>video</td>
-<td>某种视频文件</td>
-</tr>
-<tr>
-<td>application</td>
-<td>应用数据</td>
-</tr>
-<tr>
-<td>multi-part</td>
-<td>复合内容</td>
-</tr>
-</tbody></table>
-<p>而二级类型则非常多，以下是一些常用的MIME：</p>
-<table>
-<thead>
-<tr>
-<th>MIME</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>audio&#x2F;wav</td>
-<td>wave音频流媒体文件</td>
-</tr>
-<tr>
-<td>audio&#x2F;webm</td>
-<td>webm 音频文件格式</td>
-</tr>
-<tr>
-<td>audio&#x2F;ogg</td>
-<td>ogg多媒体文件格式的音频文件</td>
-</tr>
-<tr>
-<td>audio&#x2F;mpeg</td>
-<td>mpeg多媒体文件格式的音频文件</td>
-</tr>
-<tr>
-<td>image&#x2F;gif</td>
-<td>gif图片</td>
-</tr>
-<tr>
-<td>image&#x2F;jpeg</td>
-<td>jpeg图片</td>
-</tr>
-<tr>
-<td>image&#x2F;png</td>
-<td>png图片</td>
-</tr>
-<tr>
-<td>image&#x2F;svg+xml</td>
-<td>svg矢量图片</td>
-</tr>
-<tr>
-<td>application&#x2F;json</td>
-<td>json格式</td>
-</tr>
-<tr>
-<td>application&#x2F;xml</td>
-<td>xml格式</td>
-</tr>
-<tr>
-<td>application&#x2F;xhtml+xml</td>
-<td>扩展html格式</td>
-</tr>
-<tr>
-<td>application&#x2F;x-www-form-urlencoded</td>
-<td>表单url内容编码</td>
-</tr>
-<tr>
-<td>application&#x2F;octet-stream</td>
-<td>二进制格式</td>
-</tr>
-<tr>
-<td>application&#x2F;pdf</td>
-<td>pdf文档</td>
-</tr>
-<tr>
-<td>application&#x2F;atom+xml</td>
-<td>atom订阅feed流</td>
-</tr>
-<tr>
-<td>multipart&#x2F;form-data</td>
-<td>多文档格式</td>
-</tr>
-<tr>
-<td>text&#x2F;plain</td>
-<td>普通文本</td>
-</tr>
-<tr>
-<td>text&#x2F;html</td>
-<td>html文档</td>
-</tr>
-<tr>
-<td>text&#x2F;css</td>
-<td>css文件</td>
-</tr>
-<tr>
-<td>text&#x2F;javascript</td>
-<td>javascript文件</td>
-</tr>
-<tr>
-<td>text&#x2F;markdown</td>
-<td>markdown文档</td>
-</tr>
-<tr>
-<td>video&#x2F;mpeg</td>
-<td>mpeg多媒体视频文件</td>
-</tr>
-<tr>
-<td>video&#x2F;quicktime</td>
-<td>mov多媒体视频文件</td>
-</tr>
-</tbody></table>
-<h4 id="MIME-Type-与-Content-Type-的关系"><a href="#MIME-Type-与-Content-Type-的关系" class="headerlink" title="MIME Type 与 Content-Type 的关系"></a>MIME Type 与 Content-Type 的关系</h4><p>首先看看tomcat服务器中默认的web.xml中的描述：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Code&lt;!-- ===================== Default MIME Type Mappings =================== --&gt;&lt;!-- When serving static resources, Tomcat will automatically generate    --&gt;&lt;!-- a &quot;Content-Type&quot; header based on the resource&#x27;s filename extension, --&gt;&lt;!-- based on these mappings. Additional mappings can be added here (to --&gt;&lt;!-- apply to all web applications), or in your own application&#x27;s web.xml --&gt;&lt;!-- deployment descriptor.   --&gt;123456</span><br></pre></td></tr></table></figure>
-
-<p>再看看apache服务器中mime.types的描述：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CodeThis file controls what Internet media types are sent to the client forgiven file extension(s). Sending the correct media type to the clientis important so they know how to handle the content of the file.Extra types can either be added here or by using an AddType directivein your config files. For more information about Internet media types,please read RFC 2045, 2046, 2047, 2048, and 2077. The Internet media type registry is at http://www.iana.org/assignments/media-types/.123456</span><br></pre></td></tr></table></figure>
-
-<p><strong>当web服务器收到静态的资源文件请求时，依据请求文件的后缀名在服务器的MIME配置文件中找到对应的MIME Type，再根据MIME Type设置HTTP Response的Content-Type，然后浏览器根据Content-Type的值处理文件。</strong></p>
-<p>也就是说, <strong>文件扩展名&#x3D;&gt;MIME Type&#x3D;&gt;Content-Type</strong></p>
-<h2 id="通过文件头识别文件"><a href="#通过文件头识别文件" class="headerlink" title="通过文件头识别文件"></a>通过文件头识别文件</h2><p>不同的文件类型有不同的文件头, 而文件头部的几个字节被称为Magic Number, 通常用十六进制表示, 可用来判断文件类型.</p>
-<p>比如png文件的文件头Magic Number是0x89504E开始的, java class文件Magic Number为Oxcafebabe</p>
-<p>我们可以通过判断文件的文件头信息来判断文件的类型, 而且<strong>即使改变文件扩展名文件头信息也是不改变的</strong>.</p>
-<p>通过java代码判断文件类型:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Javapublic class FileType &#123;    //默认判断文件头前三个字节内容    public static int CHECK_BYTES_NUMBER = 3;    public final static Map&lt;String, String&gt; FILE_TYPE_MAP = new HashMap&lt;String, String&gt;();    private FileType()&#123;&#125;    static&#123;        getAllFileType(); //初始化文件类型信息    &#125;    /**     * Discription:[getAllFileType,常见文件头信息]     */    private static void getAllFileType()    &#123;        FILE_TYPE_MAP.put(&quot;ffd8ffe000104a464946&quot;, &quot;jpg&quot;); //JPEG (jpg)        FILE_TYPE_MAP.put(&quot;89504e470d0a1a0a0000&quot;, &quot;png&quot;); //PNG (png)        FILE_TYPE_MAP.put(&quot;47494638396126026f01&quot;, &quot;gif&quot;); //GIF (gif)        FILE_TYPE_MAP.put(&quot;49492a00227105008037&quot;, &quot;tif&quot;); //TIFF (tif)        FILE_TYPE_MAP.put(&quot;424d228c010000000000&quot;, &quot;bmp&quot;); //16色位图(bmp)        FILE_TYPE_MAP.put(&quot;424d8240090000000000&quot;, &quot;bmp&quot;); //24位位图(bmp)        FILE_TYPE_MAP.put(&quot;424d8e1b030000000000&quot;, &quot;bmp&quot;); //256色位图(bmp)        FILE_TYPE_MAP.put(&quot;41433130313500000000&quot;, &quot;dwg&quot;); //CAD (dwg)        FILE_TYPE_MAP.put(&quot;3c21444f435459504520&quot;, &quot;html&quot;); //HTML (html)        FILE_TYPE_MAP.put(&quot;3c21646f637479706520&quot;, &quot;htm&quot;); //HTM (htm)        FILE_TYPE_MAP.put(&quot;48544d4c207b0d0a0942&quot;, &quot;css&quot;); //css        FILE_TYPE_MAP.put(&quot;696b2e71623d696b2e71&quot;, &quot;js&quot;); //js        FILE_TYPE_MAP.put(&quot;7b5c727466315c616e73&quot;, &quot;rtf&quot;); //Rich Text Format (rtf)        FILE_TYPE_MAP.put(&quot;38425053000100000000&quot;, &quot;psd&quot;); //Photoshop (psd)        FILE_TYPE_MAP.put(&quot;46726f6d3a203d3f6762&quot;, &quot;eml&quot;); //Email [Outlook Express 6] (eml)        FILE_TYPE_MAP.put(&quot;d0cf11e0a1b11ae10000&quot;, &quot;doc&quot;); //MS Excel 注意：word、msi 和 excel的文件头一样        FILE_TYPE_MAP.put(&quot;d0cf11e0a1b11ae10000&quot;, &quot;vsd&quot;); //Visio 绘图        FILE_TYPE_MAP.put(&quot;5374616E64617264204A&quot;, &quot;mdb&quot;); //MS Access (mdb)        FILE_TYPE_MAP.put(&quot;252150532D41646F6265&quot;, &quot;ps&quot;);        FILE_TYPE_MAP.put(&quot;255044462d312e350d0a&quot;, &quot;pdf&quot;); //Adobe Acrobat (pdf)        FILE_TYPE_MAP.put(&quot;2e524d46000000120001&quot;, &quot;rmvb&quot;); //rmvb/rm相同        FILE_TYPE_MAP.put(&quot;464c5601050000000900&quot;, &quot;flv&quot;); //flv与f4v相同        FILE_TYPE_MAP.put(&quot;00000020667479706d70&quot;, &quot;mp4&quot;);        FILE_TYPE_MAP.put(&quot;49443303000000002176&quot;, &quot;mp3&quot;);        FILE_TYPE_MAP.put(&quot;000001ba210001000180&quot;, &quot;mpg&quot;); //        FILE_TYPE_MAP.put(&quot;3026b2758e66cf11a6d9&quot;, &quot;wmv&quot;); //wmv与asf相同        FILE_TYPE_MAP.put(&quot;52494646e27807005741&quot;, &quot;wav&quot;); //Wave (wav)        FILE_TYPE_MAP.put(&quot;52494646d07d60074156&quot;, &quot;avi&quot;);        FILE_TYPE_MAP.put(&quot;4d546864000000060001&quot;, &quot;mid&quot;); //MIDI (mid)        FILE_TYPE_MAP.put(&quot;504b0304140000000800&quot;, &quot;zip&quot;);        FILE_TYPE_MAP.put(&quot;526172211a0700cf9073&quot;, &quot;rar&quot;);        FILE_TYPE_MAP.put(&quot;235468697320636f6e66&quot;, &quot;ini&quot;);        FILE_TYPE_MAP.put(&quot;504b03040a0000000000&quot;, &quot;jar&quot;);        FILE_TYPE_MAP.put(&quot;4d5a9000030000000400&quot;, &quot;exe&quot;);//可执行文件        FILE_TYPE_MAP.put(&quot;3c25402070616765206c&quot;, &quot;jsp&quot;);//jsp文件        FILE_TYPE_MAP.put(&quot;4d616e69666573742d56&quot;, &quot;mf&quot;);//MF文件        FILE_TYPE_MAP.put(&quot;3c3f786d6c2076657273&quot;, &quot;xml&quot;);//xml文件        FILE_TYPE_MAP.put(&quot;494e5345525420494e54&quot;, &quot;sql&quot;);//xml文件        FILE_TYPE_MAP.put(&quot;7061636b616765207765&quot;, &quot;java&quot;);//java文件        FILE_TYPE_MAP.put(&quot;406563686f206f66660d&quot;, &quot;bat&quot;);//bat文件        FILE_TYPE_MAP.put(&quot;1f8b0800000000000000&quot;, &quot;gz&quot;);//gz文件        FILE_TYPE_MAP.put(&quot;6c6f67346a2e726f6f74&quot;, &quot;properties&quot;);//bat文件        FILE_TYPE_MAP.put(&quot;cafebabe0000002e0041&quot;, &quot;class&quot;);//bat文件        FILE_TYPE_MAP.put(&quot;49545346030000006000&quot;, &quot;chm&quot;);//bat文件        FILE_TYPE_MAP.put(&quot;04000000010000001300&quot;, &quot;mxp&quot;);//bat文件        FILE_TYPE_MAP.put(&quot;504b0304140006000800&quot;, &quot;docx&quot;);//docx文件        FILE_TYPE_MAP.put(&quot;d0cf11e0a1b11ae10000&quot;, &quot;wps&quot;);//WPS文字wps、表格et、演示dps都是一样的        FILE_TYPE_MAP.put(&quot;6431303a637265617465&quot;, &quot;torrent&quot;);        FILE_TYPE_MAP.put(&quot;6D6F6F76&quot;, &quot;mov&quot;); //Quicktime (mov)        FILE_TYPE_MAP.put(&quot;FF575043&quot;, &quot;wpd&quot;); //WordPerfect (wpd)        FILE_TYPE_MAP.put(&quot;CFAD12FEC5FD746F&quot;, &quot;dbx&quot;); //Outlook Express (dbx)        FILE_TYPE_MAP.put(&quot;2142444E&quot;, &quot;pst&quot;); //Outlook (pst)        FILE_TYPE_MAP.put(&quot;AC9EBD8F&quot;, &quot;qdf&quot;); //Quicken (qdf)        FILE_TYPE_MAP.put(&quot;E3828596&quot;, &quot;pwl&quot;); //Windows Password (pwl)        FILE_TYPE_MAP.put(&quot;2E7261FD&quot;, &quot;ram&quot;); //Real Audio (ram)    &#125;    /**     * 根据制定文件的文件头判断其文件类型     * @param filePaht     * @return     */    public static String getFileType(String filePaht)&#123;        String res = null;        try &#123;            FileInputStream is = new FileInputStream(filePaht);            getFileType(is);        &#125; catch (FileNotFoundException e) &#123;            e.printStackTrace();        &#125;        return res;    &#125;    public static String getFileType(InputStream in)&#123;        String res = null;        try &#123;            byte[] b = new byte[CHECK_BYTES_NUMBER];            in.read(b, 0, b.length);            String fileCode = bytesToHexString(b);//            System.out.println(fileCode);            //这种方法在字典的头代码不够位数的时候可以用但是速度相对慢一点            Iterator&lt;String&gt; keyIter = FILE_TYPE_MAP.keySet().iterator();            while(keyIter.hasNext())&#123;                String key = keyIter.next();                if(key.toLowerCase().startsWith(fileCode.toLowerCase()) || fileCode.toLowerCase().startsWith(key.toLowerCase()))&#123;                    res = FILE_TYPE_MAP.get(key);                    break;                &#125;            &#125;        &#125; catch (FileNotFoundException e) &#123;            e.printStackTrace();        &#125; catch (IOException e) &#123;            e.printStackTrace();        &#125;        return res;    &#125;    /**     * 得到上传文件的文件头     * @param src     * @return     */    public static String bytesToHexString(byte[] src) &#123;        StringBuilder stringBuilder = new StringBuilder();        if (src == null || src.length &lt;= 0) &#123;            return null;        &#125;        for (int i = 0; i &lt; src.length; i++) &#123;            int v = src[i] &amp; 0xFF;            String hv = Integer.toHexString(v);            if (hv.length() &lt; 2) &#123;                stringBuilder.append(0);            &#125;            stringBuilder.append(hv);        &#125;        return stringBuilder.toString();    &#125;    public static int getCheckBytesNumber() &#123;        return CHECK_BYTES_NUMBER;    &#125;    public static void setCheckBytesNumber(int checkBytesNumber) &#123;        CHECK_BYTES_NUMBER = checkBytesNumber;    &#125;&#125;123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103104105106107108109110111112113114115116117118119120121122123124125126127128129130131132133134135136137138139140141142143144145146147148149150</span><br></pre></td></tr></table></figure>
-
-<p>常见文件头表示如下:</p>
-<p>255044PDF<br>526563 EML<br>D0CF11 PPT<br>4D5AEE COM<br>E93B03 COM<br>4D5A90 EXE<br>424D3E BMP<br>49492A TIF<br>384250 PSD<br>C5D0D3 EPS<br>0A0501 PCS<br>89504E PNG<br>060500 RAW<br>000002 TGA<br>60EA27 ARJ<br>526172 RAR<br>504B03 ZIP<br>495363 CAB<br>1F9D8C Z<br>524946 WAV<br>435753 SWF<br>3026B2 WMV<br>3026B2 WMA<br>2E524D RM<br>00000F MOV<br>000077 MOV<br>000001 MPA<br>FFFB50 MP3<br>234558 m3u<br>3C2144 HTM<br>FFFE3C XSL<br>3C3F78 XML<br>3C3F78 MSC<br>4C0000 LNK<br>495453 CHM<br>805343 scm<br>D0CF11 XLS<br>31BE00 WRI<br>00FFFF MDF<br>4D4544 MDS<br>5B436C CCD<br>00FFFF IMG<br>FFFFFF SUB<br>17A150 PCB<br>2A5052 ECO<br>526563 PPC<br>000100 DDB<br>42494C LDB<br>2A7665 SCH<br>2A2420 LIB<br>434841 FNT<br>7B5C72 RTF<br>7B5072 GTD<br>234445 PRG<br>000007 PJT<br>202020 BAS<br>000002 TAG<br>4D5A90 dll<br>4D5A90 OCX<br>4D5A50 DPL<br>3F5F03 HLP<br>4D5A90 OLB<br>4D5A90 IMM<br>4D5A90 IME<br>3F5F03 LHP<br>C22020 NLS<br>5B5769 CPX<br>4D5A16 DRV<br>5B4144 PBK<br>24536F PLL<br>4E4553 NES<br>87F53E GBC<br>00FFFF SMD<br>584245 XBE<br>005001 XMV<br>000100 TTF<br>484802 PDG<br>000100 TST<br>414331 dwg<br>D0CF11 max</p>
-<p>另外还有一些重要的文件，<strong>没有固定的文件头</strong>，如下：</p>
-<p><strong>TXT 没固定文件头定义</strong><br>TMP 没固定文件头定义<br>INI 没固定文件头定义<br>BIN 没固定文件头定义<br>DBF 没固定文件头定义<br>C 没没固定文件头定义<br>CPP 没固定文件头定义<br>H 没固定文件头定义<br>BAT 没固定文件头定义</p>
-<p>还有一些不同的文件有相同的文件头，最典型的就是下面：</p>
-<p>4D5A90 EXE<br>4D5A90 dll<br>4D5A90 OCX<br>4D5A90 OLB<br>4D5A90 IMM<br>4D5A90 IME</p>
-<h2 id="文件上传"><a href="#文件上传" class="headerlink" title="文件上传"></a>文件上传</h2><p>当我们需要实现上传文件的时候, 为了安全起见, 我们需要判断上传文件的格式, 防止将病毒木马等有害的文件上传到服务器上.</p>
-<p>判断文件类型的三种方式</p>
-<ul>
-<li><p>通过文件后缀名</p>
-<p>这个方法只要修改后缀名就可以了</p>
-</li>
-<li><p>通过Content-Type判断</p>
-<p>但是Content-Type取决于文件类型, 文件类型取决于文件扩展名, 所以改变了文件扩展名就改变了Content-Type</p>
-</li>
-<li><p>通过文件头判断文件, 即使文件扩展名改变了文件头也不会改变</p>
-</li>
-</ul>
-<p>文件上传的思路: 先判断Content-Type, Content-Type符合条件的再判断文件头信息</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Java<span class="meta">@ResponseBody</span>    <span class="meta">@GetMapping(&quot;validate&quot;)</span>    <span class="keyword">public</span> Map&lt;String, String&gt; <span class="title function_">validate</span><span class="params">(<span class="meta">@Validated(&#123;AllFiled.class&#125;)</span> UserInfo userInfo, BindingResult result)</span>&#123;<span class="comment">//        SpringValidatorAdapter adapter = (SpringValidatorAdapter)result;        Map&lt;String, String&gt; map = new HashMap&lt;String, String&gt;();        if (result.hasErrors()) &#123;            List&lt;ObjectError&gt; list  = result.getAllErrors();            for (ObjectError error :                    list) &#123;                FieldError fieldError = (FieldError)error;                String defaultMessage = fieldError.getDefaultMessage();                String field = fieldError.getField();                map.put(field, defaultMessage);            &#125;        &#125;        return map;    &#125;//    consumes = &#123;//        MediaType.MULTIPART_FORM_DATA_VALUE &#125;, produces = MediaType.TEXT_PLAIN_VALUE    @PostMapping(value = &quot;file&quot;)    @ResponseBody    public String file(@RequestParam(&quot;username&quot;) String name, MultipartFile file) throws IOException &#123;        //获取文件名        String fileName = file.getOriginalFilename();        //获取表单提交文件使用的字段        String partName = file.getName();        //判断文件是否为空        boolean empty = file.isEmpty();        //获取ContentType        String contentType = file.getContentType();        //获取文件直接数        Long size = file.getSize();        //获取文件所有字节        byte[] bytes = file.getBytes();        //获取InputStream        InputStream in = file.getInputStream();        //根据文件头获取文件类型        String type = FileType.getFileType(in);                //业务.....        StringBuilder builder = new StringBuilder();        //存储文件        File root = new File(&quot;D:/temp&quot;);        if (!root.isDirectory()) &#123;            root.mkdirs();        &#125;        try &#123;            file.transferTo(new File(root, name));            return String.format(&quot;Upload to %s&quot;, fileName);        &#125; catch (IllegalStateException e) &#123;            e.printStackTrace();        &#125; catch (IOException e) &#123;            e.printStackTrace();        &#125;        return &quot;Upload Failed&quot;;    &#125;</span></span><br></pre></td></tr></table></figure>
-
-
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20221214-二维码版本与容量"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/12/14/20221214-%E4%BA%8C%E7%BB%B4%E7%A0%81%E7%89%88%E6%9C%AC%E4%B8%8E%E5%AE%B9%E9%87%8F/"
-    >20221214-二维码版本与容量</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/12/14/20221214-%E4%BA%8C%E7%BB%B4%E7%A0%81%E7%89%88%E6%9C%AC%E4%B8%8E%E5%AE%B9%E9%87%8F/" class="article-date">
-  <time datetime="2022-12-14T12:07:19.000Z" itemprop="datePublished">2022-12-14</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>二维码 QR - 版本与容量</p>
-<table>
-<thead>
-<tr>
-<th>版本</th>
-<th>矩阵大小</th>
-<th>纠错等级</th>
-<th>八位字节</th>
-<th>数字</th>
-<th>字母数字</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>1</td>
-<td>21</td>
-<td>L</td>
-<td>17</td>
-<td>41</td>
-<td>25</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td>M</td>
-<td>14</td>
-<td>34</td>
-<td>20</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td>Q</td>
-<td>11</td>
-<td>27</td>
-<td>16</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td>H</td>
-<td>7</td>
-<td>17</td>
-<td>10</td>
-</tr>
-<tr>
-<td>2</td>
-<td>25</td>
-<td>L</td>
-<td>32</td>
-<td>77</td>
-<td>47</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td>M</td>
-<td>26</td>
-<td>63</td>
-<td>38</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td>Q</td>
-<td>20</td>
-<td>48</td>
-<td>29</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td>H</td>
-<td>14</td>
-<td>34</td>
-<td>20</td>
-</tr>
-<tr>
-<td>3</td>
-<td>29</td>
-<td>L</td>
-<td>53</td>
-<td>127</td>
-<td>77</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td>M</td>
-<td>42</td>
-<td>101</td>
-<td>61</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td>Q</td>
-<td>32</td>
-<td>77</td>
-<td>47</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td>H</td>
-<td>24</td>
-<td>58</td>
-<td>35</td>
-</tr>
-<tr>
-<td>4</td>
-<td>33</td>
-<td>L</td>
-<td>78</td>
-<td>187</td>
-<td>114</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td>M</td>
-<td>62</td>
-<td>149</td>
-<td>90</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td>Q</td>
-<td>46</td>
-<td>111</td>
-<td>67</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td>H</td>
-<td>34</td>
-<td>82</td>
-<td>50</td>
-</tr>
-<tr>
-<td>5</td>
-<td>37</td>
-<td>L</td>
-<td>106</td>
-<td>255</td>
-<td>154</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td>M</td>
-<td>84</td>
-<td>202</td>
-<td>122</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td>Q</td>
-<td>60</td>
-<td>144</td>
-<td>87</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td>H</td>
-<td>44</td>
-<td>106</td>
-<td>64</td>
-</tr>
-<tr>
-<td>6</td>
-<td>41</td>
-<td>L</td>
-<td>134</td>
-<td>322</td>
-<td>195</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td>M</td>
-<td>106</td>
-<td>255</td>
-<td>154</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td>Q</td>
-<td>74</td>
-<td>178</td>
-<td>108</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td>H</td>
-<td>58</td>
-<td>139</td>
-<td>84</td>
-</tr>
-<tr>
-<td>7</td>
-<td>45</td>
-<td>L</td>
-<td>154</td>
-<td>370</td>
-<td>224</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td>M</td>
-<td>122</td>
-<td>293</td>
-<td>178</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td>Q</td>
-<td>86</td>
-<td>207</td>
-<td>125</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td>H</td>
-<td>64</td>
-<td>154</td>
-<td>93</td>
-</tr>
-<tr>
-<td>8</td>
-<td>49</td>
-<td>L</td>
-<td>192</td>
-<td>461</td>
-<td>279</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td>M</td>
-<td>152</td>
-<td>365</td>
-<td>221</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td>Q</td>
-<td>108</td>
-<td>259</td>
-<td>157</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td>H</td>
-<td>84</td>
-<td>202</td>
-<td>122</td>
-</tr>
-<tr>
-<td>9</td>
-<td>53</td>
-<td>L</td>
-<td>230</td>
-<td>552</td>
-<td>335</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td>M</td>
-<td>180</td>
-<td>432</td>
-<td>262</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td>Q</td>
-<td>130</td>
-<td>312</td>
-<td>189</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td>H</td>
-<td>98</td>
-<td>235</td>
-<td>143</td>
-</tr>
-<tr>
-<td>10</td>
-<td>57</td>
-<td>L</td>
-<td>271</td>
-<td>652</td>
-<td>395</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td>M</td>
-<td>213</td>
-<td>513</td>
-<td>311</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td>Q</td>
-<td>151</td>
-<td>364</td>
-<td>221</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td>H</td>
-<td>119</td>
-<td>288</td>
-<td>174</td>
-</tr>
-</tbody></table>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20221214-PDF文本的基本结构"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/12/14/20221214-PDF%E6%96%87%E6%9C%AC%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%BB%93%E6%9E%84/"
-    >20221214-PDF文本的基本结构</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/12/14/20221214-PDF%E6%96%87%E6%9C%AC%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%BB%93%E6%9E%84/" class="article-date">
-  <time datetime="2022-12-14T06:11:47.000Z" itemprop="datePublished">2022-12-14</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>PDF 文件是可以有效随机存取和增量更新的，根据基本规则，一个PDF 文件由四部分组成</p>
+  <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在这个一年就要发布十几台旗舰级手机的时代，手机屏幕的色彩的精准性与范围总是被强调，所以相信绝大多数关注数码领域的爱好者都见过与封面上的这张图类似的色域图。</p>
+<p>起先虽然我也见过这张图，但真正想要去搞清楚这张图的含义倒并不是因为看到手机屏幕参数的时候产生疑惑，而是源于一个关于色彩的问题而产生的好奇驱使我去了解这张图背后的故事。</p>
+<p>经过几天的文献查阅与思考，今天我就来详细解释一下这张色域图来源的细节。</p>
+<h2 id="开始之前你需要了解的几个概念"><a href="#开始之前你需要了解的几个概念" class="headerlink" title="开始之前你需要了解的几个概念"></a>开始之前你需要了解的几个概念</h2><p>色刺激：进入人眼能引起有彩色或无彩色感觉的可见光辐射。</p>
+<p>三刺激值：在三色系统中，与待测光达到色匹配所需的三种原刺激的量。</p>
+<p>光谱三刺激值：在三色系统中，等能单色辐射的三刺激值。</p>
+<p>色品坐标：三刺激之值与它们之和的比。</p>
+<h2 id="色彩匹配实验"><a href="#色彩匹配实验" class="headerlink" title="色彩匹配实验"></a>色彩匹配实验</h2><p>我们知道不同的色光混合起来会产生其他的颜色，这其实是人眼的一种生理反应。为了了解到底人眼是怎么融合不同颜色色光的，有人设计了一个实验来定量测量到底参入多少红、绿、蓝三原色会让人眼觉得待测色光和三色光混合色感觉完全一样。实验原理如下图所示：</p>
+<p><img src="https://pic1.zhimg.com/80/v2-36b3af8900fe502236344c6622be4f78_720w.webp" alt="img"></p>
+<p>图1：色彩匹配实验</p>
+<p>上图中红绿蓝三色光照在白屏的右侧，待测色照在白屏的左侧，左侧和右侧之间有一个黑色的档片。人眼透过一个小孔观察白屏，人眼的观测视角大概为 2∘ ，观测到的视场如上图右下角所示。当我们加载待测色之后，通过调节红绿蓝三色光的强度，最后使得人眼看到的颜色分界线感觉消失，待测色光即与三原色混合色光达到匹配，记录此时三色光的强度。</p>
+<p>这样不同颜色的色光都能通过这个实验得到其对应的三原色光强度值，我们把其称之为三刺激值。</p>
+<p>颜色匹配过程可以用公式表述如下：</p>
+<p>C(C)≡R(R)+G(G)+B(B) （1）</p>
+<p>式中“ ≡ ”号表示视觉上相等，即颜色匹配； 、、R、G、B 为代数量，可为负值。 C 为待测光的代数量。</p>
+<p>颜色匹配也可以用几何表示：</p>
+<p><img src="https://pic1.zhimg.com/80/v2-017e41c01bd912462c62c547659d1780_720w.webp" alt="img"></p>
+<p>图2: 颜色匹配矢量</p>
+<p>上图表示待测色光C可以分解为三原色R，G，B三个矢量相加。</p>
+<p><img src="https://pic1.zhimg.com/80/v2-6512461cbe920880345371e89e58d5e0_720w.webp" alt="img"></p>
+<p>图3: 常用的颜色几何匹配方式：设置坐标的单位向量的模长为1</p>
+<p>通常为了后续表示方便，R，G，B三色的单位矢量模长数量都取1。我们把单位矢量的顶端连接起来可以得到单位平面，每个颜色矢量 C 只会与单位平面有一个交点 Cp ，且此时交点的坐标满足单位平面的方程， |OCp¯|&#x3D;1 。</p>
+<p><strong>光谱三刺激值</strong></p>
+<p>如果待测色光是辐射能量都相同的单色光（光谱色，光波段为380-760nm），我们把得到的三原色光强度值称之为：光谱三刺激值，用 r¯,g¯,b¯ 表示。颜色匹配过程可用公式表示如下：</p>
+<p>Cλ&#x3D;r¯(R)+g¯(G)+b¯(B) （2）</p>
+<p>根据光谱色的颜色匹配实验结果可以得到以下曲线：</p>
+<p><img src="https://pic2.zhimg.com/80/v2-e30a0ff2b718e91639425f737e00afc9_720w.webp" alt="img"></p>
+<p>图4: 光谱三刺激值曲线图</p>
+<p>从上图我们看到，光谱三刺激值红光刺激值很大一部分出现负值。这是因为当投射到半视场的某些光谱色用无论怎么也无法用另一半视场的三原色来匹配时，只有在光谱色半视场加入红色原色才能达到匹配。也就是此时的红色光是加载到图1中 左侧白板上的，如果规定往右侧加入的色光量为正值，那么左侧就相应的为负值。</p>
+<h2 id="色品坐标"><a href="#色品坐标" class="headerlink" title="色品坐标"></a>色品坐标</h2><p>当 C&#x3D;1 时，也就是该待测色光在单位平面上，方程（1）可以写为：</p>
+<p>C&#x3D;RR+G+B(R)+GR+G+B(G)+BR+G+B(B) (3)</p>
+<p>上式说明对于一个单位颜色 C 的色品只决定于三原色的刺激值在R+G+B总量中的相对比例，我们把这个比例叫做色品坐标，用 ，，r，g，b 表示：</p>
+<p>，，r&#x3D;RR+G+B，g&#x3D;GR+G+B，b&#x3D;BR+G+B （4）</p>
+<p>色品坐标因为在单位平面上所以满足： r+g+b&#x3D;1 ，根据这个关系，我们其实只要知道两个量就能得到第三个量的值。</p>
+<p>公式（3）也可以写成以下形式：</p>
+<p>C&#x3D;r(R)+g(G)+b(B) (5)</p>
+<h2 id="CIE-1931-RGB-色度系统"><a href="#CIE-1931-RGB-色度系统" class="headerlink" title="CIE 1931-RGB 色度系统"></a>CIE 1931-RGB 色度系统</h2><p>CIE使用的三原色波长分别为700nm (R）、546.1nm (G）、435.8nm (B）(因为这三种波长能够精确的产生)，对应的光谱三刺激值如图4所示。</p>
+<p><img src="https://pic3.zhimg.com/80/v2-c168a38b726b38cf7e3ef851039ac406_720w.webp" alt="img"></p>
+<p>图4: 光谱三刺激值曲线图</p>
+<p>光谱三刺激值与色品坐标的对应关系如下：</p>
+<p>r&#x3D;r¯r¯+g¯+b¯,g&#x3D;g¯r¯+g¯+b¯,b&#x3D;b¯r¯+g¯+b¯ (6)</p>
+<p>通过上式我们可以从光谱三刺激值计算出其对应的色品坐标，最后连接各个波长的色品坐标形成光谱轨迹得到下图：</p>
+<p><img src="https://pic4.zhimg.com/80/v2-39313d9bcec625786ea318b64cbd8f77_720w.webp" alt="img"></p>
+<p>图5: CIE 1931 r，g色品图的光谱轨迹</p>
+<p>上图中380nm的波长那里其实包括了380-435.8nm的波长，700nm的波长其实包括了700-780nm的波长。</p>
+<p>上图中的 E 代表了等能白点，该点的r，g，b坐标为(0.33,0.33,0.33)，它的意思是等量R，G，B原色混合可以产生等能的白光。</p>
+<p>从上图我们看到，由于光谱的三刺激值中有负值，所以造成上图中光迹曲线坐标有很大一部分在 r 的负轴上，不便于我们对色彩进行理解。因此我们需要对其进行坐标变换以使得色品图内的曲线上的所有点在新坐标下对应的值为正值。</p>
+<h2 id="CIE-1931-XYX-色度系统"><a href="#CIE-1931-XYX-色度系统" class="headerlink" title="CIE 1931 XYX 色度系统"></a>CIE 1931 XYX 色度系统</h2><p>那么问题来了，我们怎样选取新的三原色才能使得图5中的光谱轨迹曲线全部都落在新坐标系内的第一象限？（也就是光谱轨迹曲线色品坐标全部为正）</p>
+<p>CIE主要考虑了以下三点内容：</p>
 <ol>
-<li>header部分：占一行，标识PDF规范的版本；</li>
-<li>body部分：包含PDF文件中的所有obj对象；</li>
-<li>cross-reference table 部分：交叉引用表，包含文件中间接对象的信息；</li>
-<li>trailer部分：包含交叉引用表和文件正文中某些特殊对象的位置；</li>
+<li>规定(X)，(Z)两原色只代表色度（颜色中红色和蓝色的比例），没有亮度。光度量只与三刺激值(Y) 成比例。XZ 线称为无亮度线。</li>
+<li>新的三原色(X)，(Y)，(Z)连成的三角形要包含光迹曲线。</li>
+<li>光谱轨迹从 540nm 附近至 700nm，在 RGB 色品图上基本是一段直线，用这段线上的两个颜色相混合可以得到两色之间的各种光谱色，新的 XYZ 三角形的 XY 边应与这段直线重合，因为在这段线上光谱轨迹只涉及(X)原色和(Y)原色的变化，不涉及(Z)原色。</li>
 </ol>
-<p>按照惯例，PDF 文件中的标记按行排列，每行的终止标记可以是回车、换行、或两者兼有，包含二进制数据的PDF 文件可以有任意长的行</p>
-<p>为了提高PDF 文件的兼容性，不属于流对象的数据行限制为不超过255个字符，但有一个例外，签名字典的内容字符串不受行长度限制</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20221214-PNG格式详解"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/12/14/20221214-PNG%E6%A0%BC%E5%BC%8F%E8%AF%A6%E8%A7%A3/"
-    >20221214-PNG格式详解</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/12/14/20221214-PNG%E6%A0%BC%E5%BC%8F%E8%AF%A6%E8%A7%A3/" class="article-date">
-  <time datetime="2022-12-14T03:35:43.000Z" itemprop="datePublished">2022-12-14</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>png 是20世纪90年代开始开发的图像文件存储格式，其目的是替代gif 和tiff 文件格式，同时增加一些gif 文件格式所不具备的特性，流式网络图形格式名称来源于非官方的  是一种位图文件存储格式，读成ping 。png 用来存储灰度图像时，灰度图像的深度可多到16位，存储彩色图像时，彩色图像的深度可多到48位，并且还可存储多到16位的alpha 通道，png 使用从LZ77 派生的无损数据压缩算法</p>
-<h3 id="特性"><a href="#特性" class="headerlink" title="特性"></a>特性</h3><p>使用调色板技术可支持256种颜色的彩色图像  必须的</p>
-<p>流式读 写性，图像文件格式允许连续读出和写入图像数据 因此适于网络传播</p>
-<p>逐次逼近显示，这种特性可使在通信链路上传输图像文件的同时就在终端上显示图像，把整个轮廓显示出来之后逐步显示图像的细节，也就是先用低分辨率显示图像，然后逐步提高它的分辨率  类似马赛克逐渐消除的过程</p>
-<p>透明性，这个性能可使图像中某些部分不显示出来，用来创建一些有特色的图像</p>
-<p>辅助信息，这个特性可用来在图像文件中存储一些文本注释信息  就是可以说一些废话</p>
-<p>独立于计算机硬件环境</p>
-<p>使用无损压缩</p>
-<p>可在一个文件中存储多幅图像</p>
-<h2 id="文件结构"><a href="#文件结构" class="headerlink" title="文件结构"></a>文件结构</h2><p>png 图像格式文件由文件署名和数据块 组成</p>
-<p>文件署名域</p>
-<p>8字节的png 文件署名域用来识别该文件是不是png 文件，该域的值是 </p>
-<p>十进制数  十六进制数<br>137 89<br>80  50<br>78  4e<br>71  47<br>13  0d<br>10  0a<br>26  1a<br>10  0a<br>这个文件署名就是在《利用文件头标志判断文件类型》中提到的文件头标志了，很简单。</p>
-<p>数据块</p>
-<p>这里有两种类型的数据块，一种是称为关键数据块，就是必须要有的块，另一种叫做辅助数据块</p>
-<p>每个数据块都由下表所示的4个域组成</p>
-<p>名称  字节数 说明<br>Length(长度)  4字节 指定数据块中数据域的长度，其长度不超过(231−1)(231−1)字节<br>Chunk Type Code(数据块类型码) 4字节 数据块类型码由ASCII字母(A-Z和a-z)组成<br>Chunk Data(数据块实际内容  可变长度  存储按照Chunk Type Code指定的数据<br>CRC(循环冗余检测  4字节 存储用来检测是否有错误的循环冗余码</p>
-<p>其中CRC 域中的值是对chunk type code 域和chunk data 域中的数据进行计算得到的，可以看作一种校验码</p>
-<p>关键数据块</p>
-<p>关键数据块中的4个标准数据块是</p>
-<p>文件头数据块 IHDR</p>
-<p>它包含有png 文件中存储的图像数据的基本信息，并要作为第一个数据块出现在png 数据流中，而且一个png 数据流中只能有一个文件头数据块</p>
-<p>文件头数据块由13字节，组成结构如下</p>
-<table>
-<thead>
-<tr>
-<th>域的名称</th>
-<th>字节数</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>Width</td>
-<td>4 bytes</td>
-<td>图像宽度，以像素为单位</td>
-</tr>
-<tr>
-<td>Height</td>
-<td>4 bytes</td>
-<td>图像高度，以像素为单位</td>
-</tr>
-<tr>
-<td>Bit depth</td>
-<td>1 byte</td>
-<td>图像深度：索引彩色图像：1，2，4或8 ;灰度图像：1，2，4，8或16 ;真彩色图像：8或16</td>
-</tr>
-<tr>
-<td>ColorType</td>
-<td>1 byte</td>
-<td>颜色类型：0：灰度图像, 1，2，4，8或16;2：真彩色图像，8或16;3：索引彩色图像，1，2，4或84：带α通道数据的灰度图像，8或16;6：带α通道数据的真彩色图像，8或16</td>
-</tr>
-<tr>
-<td>Compression method</td>
-<td>1 byte</td>
-<td>压缩方法(LZ77派生算法)</td>
-</tr>
-<tr>
-<td>Filter method</td>
-<td>1 byte</td>
-<td>滤波器方法</td>
-</tr>
-<tr>
-<td>Interlace method</td>
-<td>1 byte</td>
-<td>隔行扫描方法：0：非隔行扫描;1： Adam7(由Adam M. Costello开发的7遍隔行扫描方法)</td>
-</tr>
-</tbody></table>
-<p>调色板数据块PLTE</p>
-<p>它包含有与索引彩色图像相关的彩色变换数据，它仅与索引彩色图像有关，而且要放在图像数据块之前，真彩色的png 数据流也可以有调色板数据块，目的是便于非真彩色显示程序用它来量化图像数据，从而显示该图像，结构如下</p>
-<p>|颜色|字节|意义|<br>|Red|1 byte | 0 &#x3D; 黑色, 255 &#x3D; 红|<br>|Green|1 byte | 0 &#x3D; 黑色, 255 &#x3D; 绿色|<br>|Blue|1 byte | 0 &#x3D; 黑色, 255 &#x3D; 蓝色|</p>
-<p>PLTE 数据块是定义图像的调色板信息，PLTE 可以包含1-256 个调色板信息，每个调色板信息由3个字节组成，因此调色板数据块所包含的最大字节数为768 调色板的长度应该是3的倍数，否则，这将使一个非法的调色板</p>
-<p>对于索引图像，调色板信息是必须的，调色板的颜色索引从0开始编号，然后是 1 2 调色板的颜色数不能超过色深中规定的颜色数，否则，这将导致png 图像不合法</p>
-<p>图像数据块 IDAT </p>
-<p>它存储实际的数据，在数据流中可包含多个连续顺序的图像数据块<br>IDAT 存放着图像真正的数据信息，因此，如果能够了解IDAT 的结构，我们就可以很方便的生成PNG 图像</p>
-<p>图像结束数据IEND </p>
-<p>它用来标记png 文件或者数据流已经结束，并且必须要放在文件的尾部</p>
-<p>如果我们仔细观察PNG文件，我们会发现，文件的结尾12个字符看起来总应该是这样的：</p>
-<p>00 00 00 00 49 45 4E 44 AE 42 60 82</p>
-<p>不难明白，由于数据块结构的定义，IEND 数据块的长度总是0 0000000除非认为加入信息，数据标识总是iend 因此，CRC码也总是AE 42 60 82</p>
-<p>最后，除了表示数据块开始IHDR 必须放在最前面，表示png 文件结束的iend 数据块放在最后面，其他数据块的存放顺序没有限制</p>
-<p>辅助数据块</p>
-<p>比较杂 ，不需要全部了解透</p>
-<p>PNG 文件格式规范指定的10个辅助数据块是</p>
-<p>背景颜色数据块 bKGD</p>
-<p>基色和白色度数块cHRM 所谓白色度是指当 R G B 最大值时在显示器上产生的白色度</p>
-<p>图像gamma 数据块 gAMA</p>
-<p>图像直方图数据块hIST<br>物理像素尺寸数据块 pHYs</p>
-<p>样本有效位数据块 sBIT</p>
-<p>文本信息数据块 tEXt<br>图像最后修改时间数据块 tIME<br>图像透明数据块 tRNS </p>
-<p>压缩文本数据块 zTXt</p>
-<h2 id="数据块摘要"><a href="#数据块摘要" class="headerlink" title="数据块摘要"></a>数据块摘要</h2><p>关键数据块，辅助数据块和专用公共数据块 综合下表中</p>
-<table>
-<thead>
-<tr>
-<th>数据块符号</th>
-<th>数据块名称</th>
-<th>多数据块</th>
-<th>可选否</th>
-<th>位置限制</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>IHDR</td>
-<td>文件头数据块</td>
-<td>否</td>
-<td>否</td>
-<td>第一块</td>
-</tr>
-<tr>
-<td>cHRM</td>
-<td>基色和白色点数据块</td>
-<td>否</td>
-<td>是</td>
-<td>在PLTE和IDAT之前</td>
-</tr>
-<tr>
-<td>gAMA</td>
-<td>图像γ数据块</td>
-<td>否</td>
-<td>是</td>
-<td>在PLTE和IDAT之前</td>
-</tr>
-<tr>
-<td>sBIT</td>
-<td>样本有效位数据块</td>
-<td>否</td>
-<td>是</td>
-<td>在PLTE和IDAT之前</td>
-</tr>
-<tr>
-<td>PLTE</td>
-<td>调色板数据块</td>
-<td>否</td>
-<td>是</td>
-<td>在IDAT之前</td>
-</tr>
-<tr>
-<td>bKGD</td>
-<td>背景颜色数据块</td>
-<td>否</td>
-<td>是</td>
-<td>在PLTE之后IDAT之前</td>
-</tr>
-<tr>
-<td>hIST</td>
-<td>图像直方图数据块</td>
-<td>否</td>
-<td>是</td>
-<td>在PLTE之后IDAT之前</td>
-</tr>
-<tr>
-<td>tRNS</td>
-<td>图像透明数据块</td>
-<td>否</td>
-<td>是</td>
-<td>在PLTE之后IDAT之前</td>
-</tr>
-<tr>
-<td>oFFs</td>
-<td>(专用公共数据块)</td>
-<td>否</td>
-<td>是</td>
-<td>在IDAT之前</td>
-</tr>
-<tr>
-<td>pHYs</td>
-<td>物理像素尺寸数据块</td>
-<td>否</td>
-<td>是</td>
-<td>在IDAT之前</td>
-</tr>
-<tr>
-<td>sCAL</td>
-<td>(专用公共数据块)</td>
-<td>否</td>
-<td>是</td>
-<td>在IDAT之前</td>
-</tr>
-<tr>
-<td>IDAT</td>
-<td>图像数据块</td>
-<td>是</td>
-<td>否</td>
-<td>与其他IDAT连续</td>
-</tr>
-<tr>
-<td>tIME</td>
-<td>图像最后修改时间数据块</td>
-<td>否</td>
-<td>是</td>
-<td>无限制</td>
-</tr>
-<tr>
-<td>tEXt</td>
-<td>文本信息数据块</td>
-<td>是</td>
-<td>是</td>
-<td>无限制</td>
-</tr>
-<tr>
-<td>zTXt</td>
-<td>压缩文本数据块</td>
-<td>是</td>
-<td>是</td>
-<td>无限制</td>
-</tr>
-<tr>
-<td>fRAc</td>
-<td>(专用公共数据块)</td>
-<td>是</td>
-<td>是</td>
-<td>无限制</td>
-</tr>
-<tr>
-<td>gIFg</td>
-<td>(专用公共数据块)</td>
-<td>是</td>
-<td>是</td>
-<td>无限制</td>
-</tr>
-<tr>
-<td>gIFt</td>
-<td>(专用公共数据块)</td>
-<td>是</td>
-<td>是</td>
-<td>无限制</td>
-</tr>
-<tr>
-<td>gIFx</td>
-<td>(专用公共数据块)</td>
-<td>是</td>
-<td>是</td>
-<td>无限制</td>
-</tr>
-<tr>
-<td>IEND</td>
-<td>图像结束数据</td>
-<td>否</td>
-<td>否</td>
-<td>最后一个数据块</td>
-</tr>
-</tbody></table>
-<p>tEXt和zTXt数据块中的标准关键字：</p>
-<p>关键字 说明<br>Title 图像名称或者标题<br>Author  图像作者名<br>Description 图像说明<br>Copyright 版权声明<br>CreationTime  原图创作时间<br>Software  创作图像使用的软件<br>Disclaimer  弃权<br>Warning 图像内容警告<br>Source  创作图像使用的设备<br>Comment 各种注释<br>一个例子</p>
-<!-- http://qr61.cn/o8bjsz/qEp8BlI --> 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20221213-BMP格式结构"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/12/13/20221213-BMP%E6%A0%BC%E5%BC%8F%E7%BB%93%E6%9E%84/"
-    >20221213-BMP格式结构</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/12/13/20221213-BMP%E6%A0%BC%E5%BC%8F%E7%BB%93%E6%9E%84/" class="article-date">
-  <time datetime="2022-12-13T11:26:33.000Z" itemprop="datePublished">2022-12-13</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>docs.microsoft.com&#x2F;zh-cn&#x2F;windows&#x2F;win32&#x2F;gdibitmap-storage</p>
-<p>简介</p>
-<p>bmp 图形文件是windows 采用的图形文件格式，在windows 环境下运行的所有图像处理软件都支持BMP 图像文件格式，windows 系统内部各图像绘制操作都是以BMP 为基础的</p>
-<p>因此把这种BMP 图像文件格式称为设备相关位图 DDB 文件格式，<br>目的是为了人windows 能够在任何类型的显示设备上显示所存储的图像</p>
-<p>bmp 位图文件默认的文件扩展名是bmp</p>
-<p>BMP 格式结构</p>
-<p>BMP 文件的数据按照从文件头开始的先后顺序分为四个部分</p>
-<p>位图文件头，提供文件的格式 大小等信息</p>
-<p>位图信息头 提供图像数据的尺寸，位平面数，压缩方式，颜色索引等信息</p>
-<p>调色板 可选，如使用索引来表示图像，调色板就是索引与其对饮的颜色的映射表</p>
-<p>位图数据 图像数据区</p>
-<p>BMP图片文件数据表如下：</p>
-<p>数据段名称<br>大小（byte）<br>开始地址<br>结束地址<br>位图文件头(bitmap-file header)<br>14<br>0000h<br>000Dh<br>位图信息头(bitmap-information header)<br>40<br>000Eh<br>0035h<br>调色板(color table)<br>由biBitCount决定<br>0036h<br>未知<br>图片点阵数据(bitmap data)<br>由图片大小和颜色定<br>未知<br>未知</p>
-<p>三、BMP 文件头</p>
-<p>BMP文件头结构体定义如下：<br>typedef struct tagBITMAPFILEHEADER<br>{<br>UINT16 bfType;        &#x2F;&#x2F;2Bytes，必须为”BM”，即0x424D 才是Windows位图文件<br>DWORD bfSize;         &#x2F;&#x2F;4Bytes，整个BMP文件的大小<br>UINT16 bfReserved1;  &#x2F;&#x2F;2Bytes，保留，为0<br>UINT16 bfReserved2;  &#x2F;&#x2F;2Bytes，保留，为0<br>DWORD bfOffBits;     &#x2F;&#x2F;4Bytes，文件起始位置到图像像素数据的字节偏移量<br>} BITMAPFILEHEADER;</p>
-<p>BMP文件头数据表如下：</p>
-<p>变量名<br>地址偏移<br>大小<br>作用说明<br>bfType<br>0000h<br>2Bytes<br>文件标识符，必须为”BM”，即0x424D 才是Windows位图文件<br>‘BM’：Windows 3.1x, 95, NT,…　　‘BA’：OS&#x2F;2 Bitmap Array　　‘CI’：OS&#x2F;2 Color Icon 　　<br>‘CP’：OS&#x2F;2 Color Pointer 　　‘IC’：OS&#x2F;2 Icon 　　<br>‘PT’：OS&#x2F;2 Pointer<br>因为OS&#x2F;2系统并没有被普及开，所以在编程时，你只需判断第一个标识“BM”就行<br>bfSize<br>0002h<br>4Bytes<br>整个BMP文件的大小（以位B为单位）<br>bfReserved1<br>0006h<br>2Bytes<br>保留，必须设置为0<br>bfReserved2<br>0008h<br>2Bytes<br>保留，必须设置为0<br>bfOffBits<br>000Ah<br>4Bytes<br>说明从文件头0000h开始到图像像素数据的字节偏移量（以字节Bytes为单位），以为位图的调色板长度根据位图格式不同而变化，可以用这个偏移量快速从文件中读取图像数据</p>
-<p>四、BMP 信息头</p>
-<p>BMP信息头结构体定义如下：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> _<span class="title">tagBMP_INFOHEADER</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">DWORD  biSize;    <span class="comment">//4Bytes，INFOHEADER结构体大小，存在其他版本I NFOHEADER，用作区分</span></span><br><span class="line">LONG   biWidth;    <span class="comment">//4Bytes，图像宽度（以像素为单位）</span></span><br><span class="line">LONG   biHeight;    <span class="comment">//4Bytes，图像高度，+：图像存储顺序为Bottom2Top，-：Top2Bottom</span></span><br><span class="line">WORD   biPlanes;    <span class="comment">//2Bytes，图像数据平面，BMP存储RGB数据，因此总为1</span></span><br><span class="line">WORD   biBitCount;         <span class="comment">//2Bytes，图像像素位数</span></span><br><span class="line">DWORD  biCompression;     <span class="comment">//4Bytes，0：不压缩，1：RLE8，2：RLE4</span></span><br><span class="line">DWORD  biSizeImage;       <span class="comment">//4Bytes，4字节对齐的图像数据大小</span></span><br><span class="line">LONG   biXPelsPerMeter;   <span class="comment">//4 Bytes，用象素/米表示的水平分辨率</span></span><br><span class="line">LONG   biYPelsPerMeter;   <span class="comment">//4 Bytes，用象素/米表示的垂直分辨率</span></span><br><span class="line">DWORD  biClrUsed;          <span class="comment">//4 Bytes，实际使用的调色板索引数，0：使用所有的调色板索引</span></span><br><span class="line">DWORD biClrImportant;     <span class="comment">//4 Bytes，重要的调色板索引数，0：所有的调色板索引都重要</span></span><br><span class="line">&#125;BMP_INFOHEADER;</span><br></pre></td></tr></table></figure>
-
-<p>变量名<br>地址偏移<br>大小<br>作用说明<br>biSize<br>000Eh<br>4Bytes<br>BNP信息头即BMP_INFOHEADER结构体所需要的字节数（以字节为单位）<br>biWidth<br>0012h<br>4Bytes<br>说明图像的宽度（以像素为单位）<br>biHeight<br>0016h<br>4Bytes<br>说明图像的高度（以像素为单位）。这个值还有一个用处，指明图像是正向的位图还是倒向的位图，该值是正数说明图像是倒向的即图像存储是由下到上；该值是负数说明图像是倒向的即图像存储是由上到下。大多数BMP位图是倒向的位图，所以此值是正值。<br>biPlanes<br>001Ah<br>2Bytes<br>为目标设备说明位面数，其值总设置为1<br>biBitCount<br>001Ch<br>2Bytes<br>说明一个像素点占几位（以比特位&#x2F;像素位单位），其值可为1,4,8,16,24或32<br>biCompression<br>001Eh<br>4Bytes<br>说明图像数据的压缩类型，取值范围为：<br>0         BI_RGB 不压缩（最常用）<br>1         BI_RLE8 8比特游程编码（BLE），只用于8位位图<br>2         BI_RLE4 4比特游程编码（BLE），只用于4位位图<br>3         BI_BITFIELDS比特域（BLE），只用于16&#x2F;32位位图<br>4<br>biSizeImage<br>0022h<br>4Bytes<br>说明图像的大小，以字节为单位。当用BI_RGB格式时，总设置为0<br>biXPelsPerMeter<br>0026h<br>4Bytes<br>说明水平分辨率，用像素&#x2F;米表示，有符号整数<br>biYPelsPerMeter<br>002Ah<br>4Bytes<br>说明垂直分辨率，用像素&#x2F;米表示，有符号整数<br>biClrUsed<br>002Eh<br>4Bytes<br>说明位图实际使用的调色板索引数，0：使用所有的调色板索引<br>biClrImportant<br>0032h<br>4Bytes<br>说明对图像显示有重要影响的颜色索引的数目，如果是0，表示都重要。</p>
-<p>BMP 调色板</p>
-<p>BMP调色板结构体定义如下：<br>typedef struct _tagRGBQUAD<br>{<br>BYTE  rgbBlue;       &#x2F;&#x2F;指定蓝色强度<br>BYTE  rgbGreen;      &#x2F;&#x2F;指定绿色强度<br>BYTE  rgbRed;        &#x2F;&#x2F;指定红色强度<br> BYTE  rgbReserved;  &#x2F;&#x2F;保留，设置为0<br>} RGBQUAD;</p>
-<p>1，4，8位图像才会使用调色板数据，16,24,32位图像不需要调色板数据，即调色板最多只需要256项（索引0 - 255）。<br>颜色表的大小根据所使用的颜色模式而定：2色图像为8字节；16色图像位64字节；256色图像为1024字节。其中，每4字节表示一种颜色，并以B（蓝色）、G（绿色）、R（红色）、alpha（32位位图的透明度值，一般不需要）。即首先4字节表示颜色号1的颜色，接下来表示颜色号2的颜色，依此类推。<br>颜色表中RGBQUAD结构数据的个数有biBitCount来确定，当biBitCount&#x3D;1,4,8时，分别有2,16,256个表项。<br>当biBitCount&#x3D;1时，为2色图像，BMP位图中有2个数据结构RGBQUAD，一个调色板占用4字节数据，所以2色图像的调色板长度为2<em>4为8字节。<br>当biBitCount&#x3D;4时，为16色图像，BMP位图中有16个数据结构RGBQUAD，一个调色板占用4字节数据，所以16像的调色板长度为16</em>4为64字节。<br>当biBitCount&#x3D;8时，为256色图像，BMP位图中有256个数据结构RGBQUAD，一个调色板占用4字节数据，所以256色图像的调色板长度为256*4为1024字节。<br>当biBitCount&#x3D;16，24或32时，没有颜色表。</p>
-<p>BMP 图像数据区</p>
-<p>位图数据记录了位图的每一个像素值，记录顺序是在扫描行内是从左到右,扫描行之间是从下到上。位图的一个像素值所占的字节数:<br>当biBitCount&#x3D;1时，8个像素占1个字节;<br>当biBitCount&#x3D;4时，2个像素占1个字节;<br>当biBitCount&#x3D;8时，1个像素占1个字节;<br>当biBitCount&#x3D;24时,1个像素占3个字节;<br>Windows规定一个扫描行所占的字节数必须是4的倍数(即以long为单位),不足的以0填充，<br>一个扫描行所占的字节数计算方法:</p>
-<p>235.125<br>264 * 8  &#x3D; 2112  个像素<br>33 + 31<br>57 + 31</p>
-<p>DataSizePerLine&#x3D; (biWidth* biBitCount+31)&#x2F;8;<br>&#x2F;&#x2F; 一个扫描行所占的字节数<br>DataSizePerLine&#x3D; DataSizePerLine&#x2F;4<em>4; &#x2F;&#x2F; 字节数必须是4的倍数<br>位图数据的大小(不压缩情况下):<br>DataSize&#x3D; DataSizePerLine</em> biHeight;</p>
-<p>颜色表接下来位为位图文件的图像数据区，在此部分记录着每点像素对应的颜色号，其记录方式也随颜色模式而定，既2色图像每点占1位（8位为1字节）；16色图像每点占4位（半字节）；256色图像每点占8位（1字节）；真彩色图像每点占24位（3字节）。所以，整个数据区的大小也会随之变化。究其规律而言，可的出如下计算公式：图像数据信息大小&#x3D;（图像宽度<em>图像高度</em>记录像素的位数）&#x2F;8。</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20221213-USB协议简析"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/12/13/20221213-USB%E5%8D%8F%E8%AE%AE%E7%AE%80%E6%9E%90/"
-    >20221213-USB协议简析</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/12/13/20221213-USB%E5%8D%8F%E8%AE%AE%E7%AE%80%E6%9E%90/" class="article-date">
-  <time datetime="2022-12-13T07:41:21.000Z" itemprop="datePublished">2022-12-13</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/431163780">https://zhuanlan.zhihu.com/p/431163780</a></p>
-<p>USB 4将我的这种想法给部分实现，通过一种隧道技术的方式，将DP&#x2F;USB3&#x2F;PCIe信号集成到通信隧道里面去，接收端再通过数据包头来区分数据（这就有点像交换机里的数据分发，通过MAC地址或者报文帧头确定数据包目的地）。</p>
-<p>因为硬件的局限性和可能的分发芯片性能功能问题，每个分发数据的协议速率是由各自的上限的，不能够动态调整每个接口的最大速度，</p>
-<p>USB与I2C&#x2F;SPI&#x2F;UART类似，都是一种传输数据的协议规范，但USB主要设计是用于计算机与外接设备的数据交互和文件传输，这一点也正是它现在演变为相对高速的对外接口的原因，最高速的当然是PCIe。</p>
-<p>特点</p>
-<p>服务器交换机目前还是使用USB 2.0 居多</p>
-<p>USB 3 开始和typeC 结合，将曾经的文件传输接口增加为文件加视频传输接口，并且视频一上来就是最新的DP 接口 </p>
-<p>USB 4，这兄弟更猛，除了USB、DP，还额外增加了PCIe的功能，1 LANE支持到10Gbps，通过隧道技术来最大限度发挥物理带宽性能，这个还没有开始投向商用，应该还要一两年。</p>
-<p>技术细节</p>
-<p>USB 3.2 </p>
-<p>就只有 type-C</p>
-<p>pin location pin name function </p>
-<p>USB2.0 数据信号4个，其实是两个，为了满足正反插需求所以正反都有</p>
-<p>USB3.2 数据信号8个，包含两个通道的差分收发信号，VBUS 信号4个，GND 信号4个，一个8个信号处理电源<br>CC 信号两个，SBU 信号两个 </p>
-<p>全称Configuration　Channel，分为CC1和CC2，在type C接口被引用，主要是为了解决正反插的信号交错问题和侦测插入的接口类型。</p>
-<p>目前主要是在source端设计上拉电阻，sink端设计下拉电阻，通过不同电阻的配比来表示当前的设备类型和插入方式。具体方式比较复杂，参考type C spec里的两个截图，两个CC信号用来侦测正反插情况和设备信息。以后有机会调试CC信号再深入了解。</p>
-<p>SBU信号是为USB 4.0 预留的，3.2里没有用到这个信号，不过这两个信号又在Alternate Mode（主要是DP）和Audio Adapter Accessory Mode里有使用，后面讲到这两个模式再具体分析。</p>
-<p>信号完整性 </p>
-<p>此时开始引入redriver 来解决信号完整性的问题</p>
-<p>repeater 分为两种，redriver 和retimer</p>
-<p>retimer 指的是这种器件包含有CDR 电路，可以重新编码信号，好处是不会引入一些高频抖动</p>
-<p>Redriver 指的是器件使用模拟电路的方式来增强信号，不会对码流进行操作，中间会有均衡放大和发送的部分</p>
-<p>一个链路中能够使用的repeater个数是没有限制的，只要总体的时延和抖动能够满足要求，但一般是sink和source端各自处理自己接口上的信号质量，能满足协议规范就可以了，如果是cable厂商，可能也需要在cable中集成一到两个repeater。</p>
-<p>USB 4.0 </p>
-<p>对于USB 4 来说，规定了一种可以同时传输三种通信协议的方式，但这是在芯片内部或者协议端实现的，物理层和逻辑层与所谓的通道互相独立，传输层和配置层需要针对通道方式做出改变</p>
-<p>隧道技术采用了TMUS 来处理每一个交换功能，网上并不能看到太多有关这个技术的细节，但从上面的分析，有理由得出一下的猜测</p>
-<p>TMUs位于芯片内部或者就是纯软件，与USB 4 协议是配套使用，在物理层和传输层没有体现<br>由第一点，如果device端是USB 4，则也需要集成TMU，如果只是三种协议中的一种，就要看host端是否有向下兼容的能力（USB3和DP是必须的，PCIe目前是可选）。<br>再来看下图就会对USB 4的整个拓扑有更多的了解。</p>
-<p>简单来说，USB 4 host可以直接支持USB 3x，DP，PCIe的device；也可以通过USB Hub的方式去fan out直接输出USB 4隧道信号，让Hub来分发；更可以直接插入支持USB 4 的device来一根cable传输这三个协议的信号。</p>
-<p>第一张图里有看到，不同的协议影响的是红圈中的设计，也即Adapter的选择；在USB 4的整个通信过程中，这些具体的协议是已经在比较上层的地方，所以对于不同协议的支持，需要做的有两点：</p>
-<p>在USB 4 的block内有对应支持的协议种类的Adapter<br>在USB 4 与CPU更上层的连接中有对应的通信路径，例如PCIe需要有PCIe Switch或者链接到Root Port的Root Complex<br>当满足以上两点，从芯片对外提供的USB 4 interface上来看，它就可以支持所有的四种协议：USB 4，USB 3，DP，PCIe（目前只到Gen 1）,根据插入的设备类型做到向下兼容。</p>
-<p>SBU 信号 </p>
-<p>SBU 在usb4开始被引入，速度为1Mbps 有三个功能</p>
-<p>配置USB4通道，进行初始化</p>
-<p>和retimer进行交互，完成USB 4 Link TxFFE的握手<br>确保USB 4 通道的发送和retimer的上电或者wake up sequence的正确完成<br>与TMT3的兼容<br>Thunderbolt™ 3是Intel发布的Light Peak技术。Thunderbolt连接技术融合了PCI Express（PCI-E）数据传输技术和Display Port（DP）显示技术，可以同时对数据和视频信号进行传输。</p>
-<p>具体细节不展开了，有一个点需要注意，当以兼容TMT3模式运行时，adapter需要在TBT3兼容的速度下运行，也即Gen 2 是10.3125Gbps，Gen 3 是20.625Gbps。</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20221213-数字芯片中使能信号的作用"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/12/13/20221213-%E6%95%B0%E5%AD%97%E8%8A%AF%E7%89%87%E4%B8%AD%E4%BD%BF%E8%83%BD%E4%BF%A1%E5%8F%B7%E7%9A%84%E4%BD%9C%E7%94%A8/"
-    >20221213-数字芯片中使能信号的作用</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/12/13/20221213-%E6%95%B0%E5%AD%97%E8%8A%AF%E7%89%87%E4%B8%AD%E4%BD%BF%E8%83%BD%E4%BF%A1%E5%8F%B7%E7%9A%84%E4%BD%9C%E7%94%A8/" class="article-date">
-  <time datetime="2022-12-13T07:18:15.000Z" itemprop="datePublished">2022-12-13</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <ol>
-<li>什么是使能信号，</li>
+<p>这三点为什么这样设置，我自己的理解如下：</p>
+<p>对于<strong>第一点</strong>：为什么亮度只设置与(Y)原色有关？而(X)，(Z)原色不包含亮度？</p>
+<p>因为人眼对绿光波长最敏感，RGB系统三原色的相对亮度（不是数量的多少）比为： lR:lG:lB&#x3D;1.000:4.5907:0.0601 （这意味着蓝色给人的感觉非常暗,绿色给人感觉最亮）。因此这里设置原色Y代表亮度和绿色的在颜色中的比例也比较也合理（颜色Y值越大，人眼感觉越亮，也代表颜色中绿色的比例越高）。</p>
+<p>另外由于颜色匹配也包括其亮度的匹配，因此方程(1)可以将三原色相对亮度代入可得到亮度方程 l(C)&#x3D;r+4.5907g+0.0601b ，如果颜色在无亮度l(C)&#x3D;0 线上，则r+4.5907g+0.0601b&#x3D;0 , 代入b&#x3D;1−r−g ，整理后可得 XZ 线的方程。</p>
+<p>对于<strong>第二点</strong>：应该大家都能理解，新的坐标系肯定是在得让光谱轨迹曲线只落在第一象限，保证其值为正。</p>
+<p>对于<strong>第三点</strong>：这意味着这条直线的两端对应的肯定对应着两种原色，也就是(Y)和(X)。XY线的方程很容易获得。</p>
+<p>现在，我们已经确定了两条由新三原色组成的线即，无亮度线XZ，与XY线。而第三条线YZ，CIE选取的为波长503nm出的点相切的直线。其方程也很容易得到。</p>
+<p>所以根据上面，我们可以在图5中看到由这三条新由三原色连成的三角形。虽然这里看到的是二维的三角形，其实它是在三维空间中：</p>
+<p><img src="https://pic4.zhimg.com/80/v2-de12870d48a6d9a9a9f95a344545341b_720w.webp" alt="img"></p>
+<p>图6: CIE 1931 RGB向XYZ系统转换</p>
+<p>此外，通过这三条直线，我们可以确定新三原色在R，G，B色品系统下的坐标，进而得到新色品坐标系与旧色品坐标系之间的转换矩阵。然后根据转换矩阵我们就能将图5的光谱轨迹曲线转换到由新三原色构成的新坐标的第一象限中。转换后的光谱轨迹曲线，新三原色三刺激值曲线结果如下图所示：</p>
+<p><img src="https://pic4.zhimg.com/80/v2-be28903e6bd5ff7e817708f4f6f87b3f_720w.webp" alt="img"></p>
+<p>图7: CIE 1931 x，y色品图上的光谱轨迹</p>
+<p><img src="https://pic4.zhimg.com/80/v2-efc0644532ebba6b70f873d6aefe689b_720w.webp" alt="img"></p>
+<p>图8: CIE 1931 XYZ系统光谱三刺激值曲线图</p>
+<p>图7中的x，y为新系统的色品坐标，其值为：</p>
+<p>x&#x3D;XX+Y+Z,y&#x3D;YX+Y+Z (7)</p>
+<p>等能白点的坐标 E 为(0.33,0.33)。</p>
+<p>现在我们将RGB系统转换到了XYZ系统，且光谱轨迹全部落在了第一象限。</p>
+<h2 id="待测色的CIE-1931-XYZ色品坐标计算"><a href="#待测色的CIE-1931-XYZ色品坐标计算" class="headerlink" title="待测色的CIE 1931 XYZ色品坐标计算"></a>待测色的CIE 1931 XYZ色品坐标计算</h2><p>虽然我们得到了光谱在CIE x，y色品坐标系下的值，但是光谱轨迹曲线所包含的面积内的颜色的色品坐标值如何计算呢？</p>
+<p>我们可以使用以下积分公式计算待测色的CIE三刺激值：</p>
+<p>X&#x3D;k∫380780φ(λ)x¯dλ,Y&#x3D;k∫380780φ(λ)y¯dλ,Z&#x3D;k∫380780φ(λ)z¯dλ (8)</p>
+<p>上式 k 为常数(归化系数)， φ(λ)为光源发出或经过物体反射投射进入人眼产生颜色感觉的光谱能量。当待测色是光源直接发出的， φ(λ) 则为光源的辐射的相对光谱功率分布 P(λ) (可以通过测量获得，得到的图类似于下图）。由图8我们可以获得 x¯,y¯,z¯ 。</p>
+<p><img src="https://pic3.zhimg.com/80/v2-bc131d2894c6d3e73206bfb26ca2bdd2_720w.webp" alt="img"></p>
+<p>图9: 光源的辐射的相对光谱功率分布示意图</p>
+<p>因此待测色的三刺激值可以通过公式8来进行计算，然后通过三刺激值到色品坐标的转换，这样光谱曲线所包围的曲面内的所有颜色的色品坐标我们都可以通过公式（8）计算得到。</p>
+<p>而对于混合色我们还可以根据格拉斯曼颜色混合定律得到（具体的方法主要有直接计算法，画图法）。</p>
+<p>最终得到的色度图如下：</p>
+<p><img src="https://pic3.zhimg.com/80/v2-21b121ab49d3ffae0c09483f9cddaf5a_720w.webp" alt="img"></p>
+<p>图10: CIE 1931 xy色度图</p>
+<p>图10，CIE x，y色品图上的光谱轨迹具有以下颜色视觉特点:</p>
+<ol>
+<li>靠近波长末端 700-770nm 光谱波段具有一个恒定的色品值，故在色品图上只由一个点来代表。</li>
+<li>光谱轨迹 540-700nm 段是一条与 XY 边基本重合的直线。在这段光谱范围内的任何光谱色都可通过 540nm 和 700nm 两种波长的光以一定比例相加混合产生。</li>
+<li>光谱轨迹 380-540nm 段是曲线，在此范围内的一对光谱色的混合不能产生二者之间位于光谱轨迹上的颜色，而只能产生光谱轨迹所包围面积内的混合色。光谱轨迹上的颜色饱和度最高。图上越靠近等能白点E 点的颜色饱和度越低。</li>
+<li>连接色度点 400nm 和 700nm 的直线称为紫红轨迹，也称紫线。因为将 400nm 的蓝色刺激与 700nm 的红色刺激混合后会产生紫色（也就是说紫色和红色之间还有已知的颜色，而不是断裂的）。</li>
+<li>Y&#x3D;0 的直线（XZ）与亮度没有关系，即无亮度线。光谱轨迹的短波段紧靠这条线，意味着短波端的光虽然能够引起标准观察者的反应，但 380-420nm 波长在视觉上引起的亮度感觉很低。</li>
+<li>曲线内包含的色彩是我们人眼全部能感知的色彩。</li>
+<li>曲线是三维曲线，我们看到的是其在x，y平面上的投影。</li>
 </ol>
-<p>所谓使能信号，英文叫enable 翻译成中文还有启用等意思</p>
-<p>如图所示，当G1为低电平的时候，不管其它输入是什么。输出全为高电平。而当G2为高电平时（G2等于G2A与上G2B），不管其它输入是什么，输出也都一律为高电平。因此仅从功能上来判断，G1和G2就可以控制这颗芯片是不是被“启用”了。可以看出当G1为低或G2位高时，整个芯片的其它输入无论如何变化都不影响输出。简单的说就是整个芯片实际上没用发挥作用，功能没有“启用”。</p>
+<h2 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h2><p>本文只是对CIE 1931 XYZ色彩空间的来源进行了介绍，限于篇幅与我所了解的内容的多少，这里就没有对其应用与扩展内容进行介绍。</p>
+<p>但是如果你感兴趣深入可以去看参考中所列出的书籍，可以找到关于混合色的色品坐标如何计算，颜色空间均匀性的讨论，颜色主波长如何确定，色差的评价，同色异谱现象等等关于色彩的详尽内容。</p>
+<p>你还可以以看看参考中其他人对于色彩的回答，相信对你了解色域图的应用会有帮助。</p>
+<p>此外本文图片均来源与wiki百科和参考中所列出的两本书籍，本人只对其进行了标注。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-20221119-debug命令详细说明"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/11/19/20221119-debug%E5%91%BD%E4%BB%A4%E8%AF%A6%E7%BB%86%E8%AF%B4%E6%98%8E/"
+    >20221119-debug命令详细说明</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/11/19/20221119-debug%E5%91%BD%E4%BB%A4%E8%AF%A6%E7%BB%86%E8%AF%B4%E6%98%8E/" class="article-date">
+  <time datetime="2022-11-19T11:52:07.000Z" itemprop="datePublished">2022-11-19</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h2 id="启动DEBUG"><a href="#启动DEBUG" class="headerlink" title="启动DEBUG"></a>启动DEBUG</h2><h4 id="1-打开Windows命令窗口"><a href="#1-打开Windows命令窗口" class="headerlink" title="1.打开Windows命令窗口"></a>1.打开Windows命令窗口</h4><p>在Windows 95&#x2F;98的环境中，打开命令窗口的步骤为：点击“开始”→“运行”，输入“command”命令； 在WindowsXP及WIN7的环境中，打开命令窗口的步骤为：点击“开始”→“运行”，输入“cmd”命令；</p>
+<h4 id="2-启动DEBUG"><a href="#2-启动DEBUG" class="headerlink" title="2.启动DEBUG"></a>2.启动DEBUG</h4><p>在命令窗口中启动DEBUG，启动命令一般为：DEBUG  [文件名] [参数表]。其中：文件名指定被调试的文件，其包括名和后缀，参数表是被调试文件运行时所需要的参数。被调试的文件可以是系统中的任何文件，但通常它们的后缀为.EXE或.COM。 当DEBUG启动成功后，将显示连接符“-”，这时，可输入各种DEBUG命令。DEBUG中所有命令及其含义如<a target="_blank" rel="noopener" href="http://www.shelwee.com/html/archives/65556.html">DEBUG各命令功能说明</a>表所示。 关于使用命令的几点说明：在提示符“-”下才能输入命令，在按“回车”键后，该命令才开始执行命令是单个字母，命令和参数的大小写可混合输入可用F1、F2、F3、Ins、Del、左移键、右移键等编辑键来编辑本行命令当命令出现语法错误时，将在出错位置显示“^ Error”可用Ctrl+C或Ctrl+Break来终止当前命令的执行，还可用Ctrl+S或Ctrl+Num Lock来暂停屏幕显示(当连续不断地显示信息时)<br>以下通过实现十九个示例来熟悉DEBUG的命令集和基本的汇编指令。</p>
+<h3 id="R命令的使用"><a href="#R命令的使用" class="headerlink" title="R命令的使用"></a>R命令的使用</h3><p>R命令作用：观看和修改寄存器的值。</p>
+<p>在提示符“-”下输入以下命令：R。DEBUG将会显示出当前所有寄存器和标志位的状态。</p>
+<p>接下来再输入命令RCX。在提示符“：”后输入100。该命令的作用是将寄存器CX的值设置为100（注意：DEBUG使用的是十六进制，这里的100相当于十进制的256。）</p>
+<p>最后再执行R命令，观看修改后的寄存器值。</p>
+<h3 id="H命令的使用"><a href="#H命令的使用" class="headerlink" title="H命令的使用"></a>H命令的使用</h3><p>H命令作用：计算两个十六进制数的和与差。</p>
+<p>在提示符“–”下输入以下命令：H 10 1。观看命令执行结果。</p>
+<p><img src="http://shelwee.qiniudn.com/wp-content/uploads/2011/04/debug-h.png" alt="debug-h"></p>
+<p>运行结果的前一个数是计算出来的和，后一个数是计算出来的差。计算结果均用十六进制形式表示。</p>
+<h3 id="D命令的使用"><a href="#D命令的使用" class="headerlink" title="D命令的使用"></a>D命令的使用</h3><p>D命令作用：显示内存区域的内容。</p>
+<p>在提示符“–”下连续执行命令R、D、D。观看命令执行结果。</p>
+<p>前面已经介绍过了，命令R的作用是显示当前寄存器的值。而命令D的作用是显示内存区域的内容，最左边是内存的起始地址，中间以十六进制的形式显示内存值，最右边是以ASCII码的形式显示内存值。每行最多显示16个字节的内容。</p>
+<p>命令D可以带参数也可省略参数。设DEBUG启动时DS的值为X，当省略参数时，命令D显示内容以X：100为起始，每次显示128个字节的内容。以后再执行不带参数的命令D时，DEBUG将按上次的位置接着显示下去。</p>
+<p>带参数时DEBUG能够显示指定地址范围的内容。带参数的方式有三种：</p>
+<p>方式一：d [起始位置]。DEBUG从起始位置开始显示128个字节的内容。在提示符“-”下执行命令D 1AF5:100。观看命令执行结果。</p>
+<p>方式二：d [起始位置] [结束位置]。DEBUG从起始位置开始一直显示到结束位置。在提示符“-”下执行命令D DS:100 1FF。观看命令执行结果。</p>
+<p>方式三：d [起始位置] [L长度]，长度以L参数为标识。DEBUG从起始位置开始显示指定长度的内容。在提示符“-”下执行命令D DS:100 L10。观看命令执行结果。</p>
+<h3 id="E命令的使用"><a href="#E命令的使用" class="headerlink" title="E命令的使用"></a>E命令的使用</h3><p>E命令作用：改变内存单位的内容。</p>
+<p>E命令的使用方式为：E [起始位置]。</p>
+<p>在提示符“-”下输入以下命令：E 1AF5:100。</p>
+<p><img src="http://shelwee.qiniudn.com/wp-content/uploads/2011/04/debug-e.png" alt="debug-e"></p>
+<p>DEBUG首先显示[1AF5:0000]的内容00.，这时可以修改该字节的值。如果还要修改后续的内容，可以按空格键继续。当要跳过某个字节时，可以按连续的两个空格跳到后一个字节去。</p>
+<h3 id="F命令的使用"><a href="#F命令的使用" class="headerlink" title="F命令的使用"></a>F命令的使用</h3><p>F命令作用：使用指定的值填充指定内存区域中的地址。</p>
+<p>F命令的使用方式为：F [范围] [填充列表]。</p>
+<p>在提示符“-”下输入以下命令：F 1AF5:100 L20 1 2 3 4 5。执行命令D 1AF5:100观看命令执行结果。</p>
+<p>说明：该命令是用字节序列01、02、03、04、05轮流填充从1AF5:100开始长度为20H的内存区域。</p>
+<p>在提示符“-”下输入以下命令：F 1AF5:100 13F 41 42 43 44。</p>
+<p>说明：该命令是用字节序列41、42、43、44轮流填充从1AF5:100开始一直到1AF5:13F的内存区域。</p>
+<h3 id="M命令的使用"><a href="#M命令的使用" class="headerlink" title="M命令的使用"></a>M命令的使用</h3><p>M命令作用：将指定内存区域的数据复制到指定的地址去。</p>
+<p>M命令的使用方式为：M [范围] [指定地址]。</p>
+<p>在提示符“-”下输入以下命令：M 1AF5:100 13F 1AF5:140。执行命令D 1AF5:100观看命令执行结果。</p>
+<h3 id="C命令的使用"><a href="#C命令的使用" class="headerlink" title="C命令的使用"></a>C命令的使用</h3><p>C命令作用：将两块内存的内容进行比较。</p>
+<p>C命令的使用方式为：C [范围] [指定地址]，意思就是将指定范围的内存区域与从指定地址开始的相同长度的内存区域逐个字节进行比较，列出不同的内容。</p>
+<p>在提示符“-”下输入以下命令：C 1AF5:100 13F 1AF5:140。由于两块内容完全相同，所以命令执行后没有任何显示。</p>
+<p>在提示符“-”下输入以下命令：C 1AF5:100 107 1AF5:180，比较的区域长度为8个字节。命令执行后列出比较结果不同的各个字节。</p>
+<h3 id="S命令的使用"><a href="#S命令的使用" class="headerlink" title="S命令的使用"></a>S命令的使用</h3><p>S命令作用：在指定的内存区域中搜索指定的串。</p>
+<p>S命令的使用方式为：S [范围] [指定串]。</p>
+<p>在提示符“-”下输入以下命令：D 1AF5:100 11F。显示该区域的内存值。</p>
+<p>在提示符“-”下输入以下命令：S 1AF5:100 11F 41 42 43 44。搜索该区域是否存在字节串41 42 43 44，并将搜索结果一一列出。</p>
+<p>从执行结果可以看出，总共搜索到八处。</p>
+<h3 id="A命令的使用"><a href="#A命令的使用" class="headerlink" title="A命令的使用"></a>A命令的使用</h3><p>A命令作用：输入汇编指令。</p>
+<p>以下的程序要在屏幕上显示“ABCD”四个字符。</p>
+<p>首先用E命令将“ABCD$”四个字符预先放在内存CS:200处，然后执行A100命令输入汇编程序代码：</p>
+<p>MOV AX,CS</p>
+<p>MOV DS,AX</p>
+<p>MOV DX,200</p>
+<p>MOV AH,9</p>
+<p>INT 21</p>
+<p>INT 20</p>
+<p>（说明：前两行汇编指令用于将段寄存器CS的值赋给段寄存器DS。第三到第五行汇编代码的作用是显示以“$”为结尾的字符串。最后一行用于结束程序。</p>
+<h3 id="G命令的使用"><a href="#G命令的使用" class="headerlink" title="G命令的使用"></a>G命令的使用</h3><p>G命令作用：执行汇编指令。</p>
+<p>G命令的使用方法是：G [&#x3D;起始地址]  [断点地址]，意思是从起始地址开始执行到断点地址。如果不设置断点，则程序一直运行到中止指令才停止。</p>
+<p>在设置完示例九的的内存数据并且输入完示例九的程序后运行这些汇编代码。在DEBUG中执行命令G&#x3D;100，观看运行结果。</p>
+<p>汇编程序运行后在屏幕上显示出“ABCD”四个字符。</p>
+<p>接下来在DEBUG中执行G&#x3D;100 10B，意思是从地址CS：100开始，一直运行到CS：10B停止。观看运行结果。</p>
+<p>命令执行后，不但显示出字符串“ABCD”，而且列出当前寄存器和标志位的值。</p>
+<h3 id="U命令的使用"><a href="#U命令的使用" class="headerlink" title="U命令的使用"></a>U命令的使用</h3><p>U命令作用：对机器代码反汇编显示。</p>
+<p>U命令的使用方法是：U [范围]。如果范围参数只输入了起始地址，则只对20H个字节的机器代码反汇编。执行命令U100，观看反汇编结果。</p>
+<p>执行命令U100 10B，观看反汇编结果。该命令的作用是对从100到10B的机器代码进行反汇编。</p>
+<h3 id="N命令的使用"><a href="#N命令的使用" class="headerlink" title="N命令的使用"></a>N命令的使用</h3><p>N命令作用：设置文件名，为将刚才编写的汇编程序存盘做准备。</p>
+<p>以下的DEBUG命令序列作用将刚才的汇编程序存为磁盘的COM可执行程序。</p>
+<p>D200 20F</p>
+<p>U100 10C</p>
+<p>N  E:\FIRST.COM</p>
+<p>RCX</p>
+<p>:110</p>
+<p>W</p>
+<p>第一和第二条命令的作用是检查一下刚才编写的汇编指令。第三条命令的作用是设置存盘文件名为E:\FIRST.COM，第四条命令的作用是设置存盘文件大小为110H个字节。最后一条命令是将文件存盘。</p>
+<p>文件存盘后执行E:\FIRST.COM，观看存盘的可执行文件的运行效果。</p>
+<h3 id="W命令的使用"><a href="#W命令的使用" class="headerlink" title="W命令的使用"></a>W命令的使用</h3><p>W命令作用：将文件或者特定扇区写入磁盘。</p>
+<p>在示例“N命令的使用”中已经实验了如何使用W命令将文件存盘。</p>
+<p>在没有很好地掌握汇编语言和磁盘文件系统前，暂时不要使用W命令写磁盘扇区，否则很容易损坏磁盘文件，甚至破坏整个磁盘的文件系统。</p>
+<h3 id="L命令的使用"><a href="#L命令的使用" class="headerlink" title="L命令的使用"></a>L命令的使用</h3><p>L命令作用：从磁盘中将文件或扇区内容读入内存。</p>
+<p>将文件调入内存必须先用DEBUG的N命令设定文件名。以下例子是将E:\FIRST.COM读入内容。</p>
+<p>N FIRST.COM</p>
+<p>L</p>
+<p>观看调入程序的汇编代码可以使用DEBUG的U命令，用U100观看调入的COM文件。</p>
+<p>读取磁盘扇区的方式是：L [内存地址] [磁盘驱动器号] [起始扇区] [扇区数]。“内存地址”指定要在其中加载文件或扇区内容的内存位置，如果不指定“内存地址”的话，DEBUG将使用CS寄存器中的当前地址。“磁盘驱动器号”指定包含读取指定扇区的磁盘的驱动器，该值是数值型：0&#x3D;A，1&#x3D;B，2&#x3D;C等。“起始扇区”指定要加载其内容的第一个扇区的十六进制数。“扇区数”指定要加载其内容的连续扇区的十六进制数。</p>
+<p>只有要加载特定扇区的内容而不是加载文件时，才能使用[磁盘驱动器号] [起始扇区] [扇区数]参数。</p>
+<p>例如：要将C盘第一扇区读取到内存DS:300的位置，相应的DEBUG命令为L DS:300 2 1 1。但是由于Windows操作系统对文件系统的保护，这条命令可能会被操作系统禁止运行。</p>
+<h3 id="T命令的使用"><a href="#T命令的使用" class="headerlink" title="T命令的使用"></a>T命令的使用</h3><p>T命令作用：执行汇编程序，单步跟踪。</p>
+<p>T命令的使用方式是T [&#x3D;地址] [指令数]。如果忽略“地址”的话，T命令从CS:IP处开始运行。“指令数”是要单步执行的指令的数量。</p>
+<p>以下示例对E:\FIRST.COM进行单步跟踪。</p>
+<p>N E:\FIRST.COM</p>
+<p>L</p>
+<p>U100 10B</p>
+<p>R</p>
+<p>T&#x3D;100</p>
+<p>T</p>
+<p>第一、二条命令是装入文件，第三条命令是列出程序反汇编代码，第四条命令是显示当前寄存器值，第五条命令是从CS:100处开始单步跟踪，第六条命令是继续跟踪后续的指令。</p>
+<h3 id="P命令的使用"><a href="#P命令的使用" class="headerlink" title="P命令的使用"></a>P命令的使用</h3><p>P命令作用：执行汇编程序，单步跟踪。与T命令不同的是：P命令不会跟踪进入子程序或软中断。</p>
+<p>P命令的使用方式与T命令的使用方式完全相同。</p>
+<h3 id="I命令的使用"><a href="#I命令的使用" class="headerlink" title="I命令的使用"></a>I命令的使用</h3><p>I命令作用：从计算机输入端口读取数据并显示。</p>
+<p>I命令的用法是I [端口地址]。例如从3F8号端口读取数据并显示的命令为：I 3F8。这里不对该命令做解释。</p>
+<h3 id="O命令的使用"><a href="#O命令的使用" class="headerlink" title="O命令的使用"></a>O命令的使用</h3><p>O命令作用：向计算机输出端口送出数据。</p>
+<p>O命令的用法是O [端口地址] [字节值]。例如向278号端口发出数据20H的命令为：I 278 20。这里不对该命令做解释。</p>
+<h3 id="Q命令的使用"><a href="#Q命令的使用" class="headerlink" title="Q命令的使用"></a>Q命令的使用</h3><p>Q命令的作用是退出DEBUG，回到DOS状态。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-20221119-即时通讯IM记录的存储"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/11/19/20221119-%E5%8D%B3%E6%97%B6%E9%80%9A%E8%AE%AFIM%E8%AE%B0%E5%BD%95%E7%9A%84%E5%AD%98%E5%82%A8/"
+    >20221119-即时通讯IM记录的存储</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/11/19/20221119-%E5%8D%B3%E6%97%B6%E9%80%9A%E8%AE%AFIM%E8%AE%B0%E5%BD%95%E7%9A%84%E5%AD%98%E5%82%A8/" class="article-date">
+  <time datetime="2022-11-19T06:06:27.000Z" itemprop="datePublished">2022-11-19</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>原文链接 <a target="_blank" rel="noopener" href="https://juejin.cn/post/6983824498201985037">https://juejin.cn/post/6983824498201985037</a></p>
+<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>即时通讯(Instant Messaging)，也就是我们常说的 IM，其实在很多业务场景上都会有或多或少的应用，有的会是核心，有的会是辅助。</p>
+<p>既然是聊天，那么必然就会产生聊天记录，而且聊天记录随着人数的增加和时间的推移，很容易出现爆炸式的增长，这个对存储其实压力是很大的。</p>
+<p>举个大家都很熟悉的例子，一个群聊，几分钟不看，再打开就是 99+ 的未读消息。</p>
+<p>把即时通讯这个技术，放到医疗环境下，也是同样适用的。</p>
+<p>患者去线下医院看病，肯定离不开和医生的问答，这些问答，对系统来说，其实都是聊天记录。</p>
+<p>如果把这个场景放到线上进行，也就是正常的和我们在微信聊天那样了。</p>
+<p>说了那么多有的没的，也算是把大背景交代了一下，那么接下来就看看这个聊天记录存储的选型吧。</p>
+<h2 id="技术选型"><a href="#技术选型" class="headerlink" title="技术选型"></a>技术选型</h2><p>既然要存储，那么肯定就会有很多选择，关系型数据库，非关系型数据库等。</p>
+<p>当然这个很大程度上是和具体业务场景挂钩的，离开了业务场景，基本就是在空谈。</p>
+<p>在医患关系里面的聊天记录，是一个十分十分核心的内容，并且必需要长期保存，不能丢，可查询。</p>
+<p>并且这些聊天记录是和某次问诊强关联的，所以单独拿出几条聊天记录出来，是没有意义的，因为他们没有关联，串联不起来。</p>
+<p>按照以往的经验看，一次问诊，医生和患者之间的聊天记录在 50 条之内的占据了大部分，超过50条的，占少数。</p>
+<p>这个和其他的 IM 情景可能不太一样。</p>
+<h3 id="MySQL"><a href="#MySQL" class="headerlink" title="MySQL"></a>MySQL</h3><p>业务开始，大概率就是选用 MySQL 去存了这些数据了，单库单表，但是这种情况下很容易达到单表千万和上亿的级别。</p>
+<p>后面面临的基本就是分库分表的操作了。</p>
+<p>分库分表，基本就是根据问诊号去进行哈希，然后放到不同的库不同的表。</p>
+<p>这里会有一个不确定因素，分多少个库和分多少张表？</p>
+<p>分的多，囊中羞涩；分的少，再一次达到量级的时候又要重新分，大动干戈，这个时候最怕的就是动到了哈希的规则。</p>
+<p>所以选 MySQL 的话，到了中后期确实还是会有一点力不从心。线性扩展对这一块还是非常重要的。</p>
+<p>如果想改动小，避免分库分表，或许可以试试 TiDB，但是它要的配置，也不是中小企业所能接受的，80% 以上的概率会被 Pass 掉。</p>
+<p><a href="https://link.juejin.cn/?target=https://docs.pingcap.com/zh/tidb/stable/hardware-and-software-requirements">docs.pingcap.com&#x2F;zh&#x2F;tidb&#x2F;sta…</a></p>
+<h3 id="Cassandra"><a href="#Cassandra" class="headerlink" title="Cassandra"></a>Cassandra</h3><p>Cassandra 是一个分布式、无中心、弹性可扩展的 NoSQL 数据库，基于 Amazon Dynamo 的分布式设计和 Google Bigtable 的数据模型。</p>
+<p><a href="https://link.juejin.cn/?target=https://cassandra.apache.org/doc/latest/architecture/overview.html">cassandra.apache.org&#x2F;doc&#x2F;latest&#x2F;…</a></p>
+<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/c02b83328e38462d9f95b2dd06b3779e~tplv-k3u1fbpfcp-zoom-in-crop-mark:4536:0:0:0.awebp" alt="img"></p>
+<p>为什么考虑选型 Cassandra 呢？ 对上面说的医患场景，严格上是属于写多读少的，查询基本只会基于问诊号去查询，这个是相对比较明确的。</p>
+<p>Discord 在 2017 年的时候有一篇博客讲述了他们是怎么存储数十亿消息记录的 ，说的比较详细了。</p>
+<p><a href="https://link.juejin.cn/?target=https://blog.discord.com/how-discord-stores-billions-of-messages-7fa6ec7ee4c7">blog.discord.com&#x2F;how-discord…</a></p>
+<p>其实他们选数据库的诉求，也是符合大部分涉及 IM 这一块的。</p>
+<p>老黄也是从这里受到了启发，认识了这个数据库。</p>
+<p>经常拿来比较的话，应该是 HBase，一个在国内火，一个在国外受欢迎。</p>
+<p>可以看看这个对比，了解一下两者的异同： <a href="https://link.juejin.cn/?target=https://www.scnsoft.com/blog/cassandra-vs-hbase">www.scnsoft.com/blog/cassan…</a></p>
+<p>如果选择要用 Cassandra， 那么数据模型的设计，一定是所有环节中最为重要的一步，如果这一步没有做好的话，那后面基本上会是灾难级别，基本不能愉快的玩耍。</p>
+<p>那么对医患关系里面的这个聊天模型其实比较简单。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> IF <span class="keyword">NOT</span> <span class="keyword">EXISTS</span> messages(</span><br><span class="line">    inq_id text,</span><br><span class="line">    send_time <span class="type">bigint</span>,</span><br><span class="line">    sender_id text,</span><br><span class="line">    sender_role tinyint,</span><br><span class="line">    msg_type tinyint,</span><br><span class="line">    msg_body text,</span><br><span class="line">    <span class="keyword">PRIMARY</span> KEY (inq_id, send_time)</span><br><span class="line">) <span class="keyword">WITH</span> CLUSTERING <span class="keyword">ORDER</span> <span class="keyword">BY</span> (send_time <span class="keyword">ASC</span>)</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+
+<p>对照正常的 IM 群聊， 这个问诊号 (inq_id) 就可以认为是一个群聊，一个频道。</p>
+<p>为什么没有消息Id这样的字段呢？多来源，非自研，无实际意义。</p>
+<p>下面再来看看如何在 C# 里面进行操作， 这里用的是 DataStax 提供的 <strong>CassandraCSharpDriver</strong> 客户端。</p>
+<p>写入：</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> cluster = Cassandra.Cluster.Builder()</span><br><span class="line">                        .AddContactPoints(<span class="string">&quot;127.0.0.1&quot;</span>)</span><br><span class="line">                        .WithDefaultKeyspace(<span class="string">&quot;messaging&quot;</span>)</span><br><span class="line">                        .Build();</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> inqId = <span class="string">&quot;xxxxxx&quot;</span>;</span><br><span class="line"><span class="keyword">var</span> sendTime = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();</span><br><span class="line"><span class="keyword">var</span> senderId = <span class="string">&quot;xxxx&quot;</span>;</span><br><span class="line"><span class="keyword">var</span> senderRole = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">var</span> msgType = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">var</span> msgBody = <span class="string">&quot;zzzz&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">string</span> INSERT_SQL = <span class="string">@&quot; INSERT INTO messages(inq_id, send_time, sender_id, sender_role, msg_type, msg_body)</span></span><br><span class="line"><span class="string">VALUES (?, ?, ?, ?, ?, ?) &quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> session = cluster.Connect();</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> stmt = session.Prepare(INSERT_SQL).Bind(inqId, sendTime, senderId, senderRole, msgType, msgBody));</span><br><span class="line"></span><br><span class="line">session.Execute(stmt);</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+
+<p>读取：</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> cluster = Cassandra.Cluster.Builder()</span><br><span class="line">                .AddContactPoints(<span class="string">&quot;127.0.0.1&quot;</span>)</span><br><span class="line">                .WithDefaultKeyspace(<span class="string">&quot;messaging&quot;</span>)</span><br><span class="line">                .Build();</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> inqId = <span class="string">&quot;xxxxxx&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">string</span> GET_MSG_SQL = <span class="string">@&quot; SELECT * FROM messages WHERE inq_id = ? &quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> session = cluster.Connect();</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> stmt = session.Prepare(GET_MSG_SQL).Bind(inqId);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> rowset = session.Execute(stmt);</span><br><span class="line"></span><br><span class="line">Console.WriteLine(<span class="string">&quot;患者\t\t\t\t\t医生&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">foreach</span> (<span class="keyword">var</span> row <span class="keyword">in</span> rowset)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// 解析从 cassandra 中返回的行</span></span><br><span class="line">    <span class="keyword">var</span> msg_body = row.GetValue&lt;<span class="built_in">string</span>&gt;(<span class="string">&quot;msg_body&quot;</span>);</span><br><span class="line">    <span class="keyword">var</span> sender_role = row.GetValue&lt;<span class="built_in">sbyte</span>&gt;(<span class="string">&quot;sender_role&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (sender_role == <span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">$&quot;<span class="subst">&#123;msg_body&#125;</span>\t\t\t\t\t&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">$&quot;\t\t\t\t\t<span class="subst">&#123;msg_body&#125;</span>&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+
+<h2 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h2><p>存储的选择其实还是有点门道的，根据不同的应用场景，找出比较适合当前场景的几个方案，再选择一个成本没这么高的。</p>
+<p>Cassandra 对聊天记录这个场景的存储还是有一定优势的，可以应对高速的数据增长，而不用在业务代码层做过多的适配；部署相对简单，无特殊依赖，运维成本相对较低。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-20221119-海康威视网络摄像头购买指南（焦距-像素等参数）"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/11/19/20221119-%E6%B5%B7%E5%BA%B7%E5%A8%81%E8%A7%86%E7%BD%91%E7%BB%9C%E6%91%84%E5%83%8F%E5%A4%B4%E8%B4%AD%E4%B9%B0%E6%8C%87%E5%8D%97%EF%BC%88%E7%84%A6%E8%B7%9D-%E5%83%8F%E7%B4%A0%E7%AD%89%E5%8F%82%E6%95%B0%EF%BC%89/"
+    >20221119-海康威视网络摄像头购买指南（焦距-像素等参数）</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/11/19/20221119-%E6%B5%B7%E5%BA%B7%E5%A8%81%E8%A7%86%E7%BD%91%E7%BB%9C%E6%91%84%E5%83%8F%E5%A4%B4%E8%B4%AD%E4%B9%B0%E6%8C%87%E5%8D%97%EF%BC%88%E7%84%A6%E8%B7%9D-%E5%83%8F%E7%B4%A0%E7%AD%89%E5%8F%82%E6%95%B0%EF%BC%89/" class="article-date">
+  <time datetime="2022-11-19T06:03:49.000Z" itemprop="datePublished">2022-11-19</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>原文链接 <a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_15029743/article/details/88995210">https://blog.csdn.net/qq_15029743/article/details/88995210</a></p>
+<p>如果您需要使用网络摄像头进行二次开发或者监控使用，但是不知道如何选取，请您注意网络摄像头的几个参数（主要）：</p>
+<p>1、分辨率（像素）<br>从图像质量上来说，网络摄像头的分辨率越高，成像越清晰，具体我们可以看下面这张图片，但是也并不是最大的就是最好的，还有考虑价格（像素越高越贵），存储空间（像素越高对应占用存储空间也就越大），所以需要根据实际使用环境来进行选购，目前市面上100w像素（即720p）和200w像素（即1080p）价格差距不大，建议一次性选购200w像素的摄像头（做人脸识别的童鞋们，近距离100w像素的就够用了，远距离需要选择1080清晰度会好一些）：</p>
+<p>2、摄像头焦距<br>买摄像头时会让我们选择镜头焦距，这个值并不是越大越好，也是根据实际需要来选择，这里直接贴一张海康威视的镜头焦距选购指导，图示的已经非常清楚了：</p>
+<p>3、 是否支持POE供电<br>POE供电功能一般是高端一些的摄像头有提供，即网线直接供电。支持POE供电的网络摄像头使用时不需要额外的电源线了，直接插上网线就可以使用</p>
+<p>注：POE供电需要配合支持POE供电的交换机来使用</p>
+<p>4、视频编码格式：<br>这里海康威视家的摄像头一般提供两种编码格式即H264和H265（还有最新的smart265），同样H265只有较为高端的摄像头才具有， H265的好处就是更节省存储空间，这里也贴上一张官方图片来说明：</p>
+<p>5、安装方式<br>一般网络摄像头分为球形机（高端球形机可以选配云台功能，即摄像头可以旋转）和枪型机，这个需要根据您自身的情况来选择，价格也各有不同，枪型机也要注意安装方式，有底部螺丝开孔和后端螺丝开孔，这里放几张图片来说明：</p>
+<p>6、是否支持红外、防水、音频收录、WIFI等功能<br>这部分基本就根据各位的实际需要来进行选购了：</p>
+<p>7、帧率（做高速图像处理的童鞋们请注意！）<br>海康威视的低端网络摄像头通常来说能达到的帧率为，日常监控或者低速图像处理是绝对够用的，一般来说20以上的FPS我们就可以理解为实时了，但是需要更高速度的童鞋们需要谨慎购买网络摄像机（你可能需要购买工业级的摄像机或单反）：</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-20221118-CPU寄存器"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/11/18/20221118-CPU%E5%AF%84%E5%AD%98%E5%99%A8/"
+    >20221118-CPU寄存器</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/11/18/20221118-CPU%E5%AF%84%E5%AD%98%E5%99%A8/" class="article-date">
+  <time datetime="2022-11-18T12:32:23.000Z" itemprop="datePublished">2022-11-18</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>ax<br>bx<br>cx</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-20221118-python读取ini配置文件"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/11/18/20221118-python%E8%AF%BB%E5%8F%96ini%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/"
+    >20221118-python读取ini配置文件</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/11/18/20221118-python%E8%AF%BB%E5%8F%96ini%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/" class="article-date">
+  <time datetime="2022-11-18T05:30:14.000Z" itemprop="datePublished">2022-11-18</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>在详解python读取ini文件之前，我们先说明一个ini文件的组成；</p>
+<p>一个ini文件是由多个section组成，每个section中以key&#x3D;vlaue形式存储数据；</p>
+<p><img src="https://img2018.cnblogs.com/i-beta/1857864/201911/1857864-20191126141947240-1291136423.png" alt="img"></p>
+<p>然后我们来使用python读取ini文件中的数据；</p>
+<p>1导包</p>
+<p><a href="javascript:void(0);"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># 导包</span><br><span class="line">import configparser</span><br><span class="line">config = configparser.ConfigParser() # 类实例化</span><br><span class="line"></span><br><span class="line"># 定义文件路径</span><br><span class="line">path = r&#x27;D:\Python_Script\new_framework\source_file\broswer_config.ini&#x27;</span><br></pre></td></tr></table></figure>
+
+<p><a href="javascript:void(0);"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a></p>
+<p>2.读取文件内容</p>
+<p><a href="javascript:void(0);"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># 第一种读取ini文件方式,通过read方法</span><br><span class="line">config.read(path)</span><br><span class="line">value = config[&#x27;select&#x27;][&#x27;url&#x27;]</span><br><span class="line">print(&#x27;第一种方法读取到的值：&#x27;,value)</span><br><span class="line"></span><br><span class="line"># 第二种读取ini文件方式，通过get方法</span><br><span class="line">value = config.get(&#x27;select&#x27;,&#x27;url&#x27;)</span><br><span class="line">print(&#x27;第二种方法读取到的值：&#x27;,value)</span><br><span class="line"># 第三种读取ini文件方式，读取到一个section中的所有数据，返回一个列表</span><br><span class="line">value = config.items(&#x27;select&#x27;)</span><br><span class="line">print(&#x27;第三种方法读取到的值：&#x27;,value)</span><br></pre></td></tr></table></figure>
+
+<p><a href="javascript:void(0);"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a></p>
+<p><img src="https://img2018.cnblogs.com/i-beta/1857864/201911/1857864-20191126143140445-1027724830.png" alt="img"></p>
+<p><img src="https://img2018.cnblogs.com/i-beta/1857864/201911/1857864-20191126145850349-1682504070.png" alt="img"></p>
+<p>3.通过上面两种方式，我们发现读取到的数据全部是str类型。如果我们想要得到指定数据类型的数据可以使用以下方法：</p>
+<p>getint()     getfloat()     getboolean()  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">value = config.getint(&#x27;connect_mysql&#x27;,&#x27;port&#x27;)</span><br><span class="line">print(&#x27;这是第三种方法读取到的值：&#x27;,value)</span><br><span class="line">print(&#x27;这是第三种方法读取到的值的数据类型：&#x27;,type(value))</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://img2018.cnblogs.com/i-beta/1857864/201911/1857864-20191126143345735-444114163.png" alt="img"></p>
+<p>4.写入数据到ini文件中</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># 将数据写入到ini文件中</span><br><span class="line">config.add_section(&#x27;login&#x27;) # 首先添加一个新的section</span><br><span class="line">config.set(&#x27;login&#x27;,&#x27;username&#x27;,&#x27;admin&#x27;)  # 写入数据</span><br><span class="line">config.set(&#x27;login&#x27;,&#x27;password&#x27;,&#x27;123456&#x27;) # 写入数据</span><br><span class="line">config.write(open(path,&#x27;a&#x27;))            #保存数据</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://img2018.cnblogs.com/i-beta/1857864/201911/1857864-20191126144910298-816876494.png" alt="img"></p>
+<p> 5.获取到ini文件所有的section</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># 读取ini文件中所有的section</span><br><span class="line">section = config.sections()</span><br><span class="line">print(section)</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://img2018.cnblogs.com/i-beta/1857864/201911/1857864-20191126150049367-723414604.png" alt="img"></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-20221117-汇编学习笔记"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/11/17/20221117-%E6%B1%87%E7%BC%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"
+    >20221117-汇编学习笔记</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/11/17/20221117-%E6%B1%87%E7%BC%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="article-date">
+  <time datetime="2022-11-17T12:02:16.000Z" itemprop="datePublished">2022-11-17</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>CPU 对存储器的读写</p>
+<p>CPU想要进行数据的读写，必须和外部器件进行三类信息的交互</p>
+<p>存储单元的地址<br>器件的选择  读或写命令</p>
+<p>读或写的数据</p>
+<p>地址信息<br>控制信息<br>数据信息</p>
+<p>CPU 对存储器的读写</p>
+<p>总线在逻辑上划分的图示</p>
+<p>地址总线<br>数据总线<br>控制总线</p>
+<p>寻址<br>传输数据<br>控制 能力</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-20221117-x86指令集-带注释"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/11/17/20221117-x86%E6%8C%87%E4%BB%A4%E9%9B%86-%E5%B8%A6%E6%B3%A8%E9%87%8A/"
+    >20221117-x86指令集-带注释</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/11/17/20221117-x86%E6%8C%87%E4%BB%A4%E9%9B%86-%E5%B8%A6%E6%B3%A8%E9%87%8A/" class="article-date">
+  <time datetime="2022-11-17T11:48:12.000Z" itemprop="datePublished">2022-11-17</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h2 id="X86和X87汇编指令大全（有注释）"><a href="#X86和X87汇编指令大全（有注释）" class="headerlink" title="X86和X87汇编指令大全（有注释）"></a><strong>X86和X87汇编指令大全（有注释）</strong></h2><p>汇编指令集太多，如果不用就会忘记，所以将intel处理器官方的指令集整理一下，有需要的人可以参考一下！</p>
+<p><em>—————————————— 一、数据传输指令 ———————————————</em></p>
+<p>它们在存贮器和寄存器、寄存器和输入输出端口之间传送数据。</p>
+<p><strong>1. 通用数据传送指令：</strong></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">MOV     传送字或字节.  </span><br><span class="line">MOVSX   先符号扩展,再传送.  </span><br><span class="line">MOVZX   先零扩展,再传送.  </span><br><span class="line">PUSH    把字压入堆栈.  </span><br><span class="line">POP     把字弹出堆栈.  </span><br><span class="line">PUSHA   把AX,CX,DX,BX,SP,BP,SI,DI依次压入堆栈.  </span><br><span class="line">POPA    把DI,SI,BP,SP,BX,DX,CX,AX依次弹出堆栈.  </span><br><span class="line">PUSHAD  把EAX,ECX,EDX,EBX,ESP,EBP,ESI,EDI依次压入堆栈.  </span><br><span class="line">POPAD   把EDI,ESI,EBP,ESP,EBX,EDX,ECX,EAX依次弹出堆栈.  </span><br><span class="line">BSWAP   交换32位寄存器里字节的顺序  </span><br><span class="line">XCHG    交换字或字节.(至少有一个操作数为寄存器,段寄存器不可作为操作数)  </span><br><span class="line">CMPXCHG 比较并交换操作数.(第二个操作数必须为累加器AL/AX/EAX)  </span><br><span class="line">XADD    先交换再累加.(结果在第一个操作数里)  </span><br><span class="line">XLAT    字节查表转换.----BX指向一张256字节的表的起点,</span><br><span class="line">        AL为表的索引值(0-255,即0-FFH);</span><br><span class="line">        返回AL为查表结果.([BX+AL]-&gt;AL)  </span><br></pre></td></tr></table></figure>
+
+<p><strong>2. 输入输出端口传送指令:</strong></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">IN      I/O端口输入. ( 语法: IN   累加器,    &#123;端口号│DX&#125; )  </span><br><span class="line">OUT     I/O端口输出. ( 语法: OUT &#123;端口号│DX&#125;,累加器 )</span><br><span class="line">                    输入输出端口由立即方式指定时,其范围是 0-255; </span><br><span class="line">                    由寄存器 DX 指定时,其范围是 0-65535.  </span><br></pre></td></tr></table></figure>
+
+<p><strong>3. 目的地址传送指令:</strong></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">LEA     装入有效地址.例: LEA DX,string ;把偏移地址存到DX.  </span><br><span class="line">LDS     传送目标指针,把指针内容装入DS.例: LDS SI,string ;把段地址:偏移地址存到DS:SI.  </span><br><span class="line">LES     传送目标指针,把指针内容装入ES.例: LES DI,string ;把段地址:偏移地址存到ES:DI.  </span><br><span class="line">LFS     传送目标指针,把指针内容装入FS.例: LFS DI,string ;把段地址:偏移地址存到FS:DI.  </span><br><span class="line">LGS     传送目标指针,把指针内容装入GS.例: LGS DI,string ;把段地址:偏移地址存到GS:DI.  </span><br><span class="line">LSS     传送目标指针,把指针内容装入SS.例: LSS DI,string ;把段地址:偏移地址存到SS:DI.  </span><br></pre></td></tr></table></figure>
+
+<p><strong>4. 标志传送指令:</strong></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">LAHF    标志寄存器传送,把标志装入AH.  </span><br><span class="line">SAHF    标志寄存器传送,把AH内容装入标志寄存器.  </span><br><span class="line">PUSHF   标志入栈.  </span><br><span class="line">POPF    标志出栈.  </span><br><span class="line">PUSHD   32位标志入栈.  </span><br><span class="line">POPD    32位标志出栈.  </span><br></pre></td></tr></table></figure>
+
+<p><em>——————————————- 二、算术运算指令 ——————————————–</em></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">ADD     加法.  </span><br><span class="line">ADC     带进位加法.  </span><br><span class="line">INC     加 1.  </span><br><span class="line">AAA     加法的ASCII码调整.  </span><br><span class="line">DAA     加法的十进制调整.  </span><br><span class="line">SUB     减法.  </span><br><span class="line">SBB     带借位减法.  </span><br><span class="line">DEC     减 1.  </span><br><span class="line">NEG     求反(以    0 减之).  </span><br><span class="line">CMP     比较.(两操作数作减法,仅修改标志位,不回送结果).  </span><br><span class="line">AAS     减法的ASCII码调整.  </span><br><span class="line">DAS     减法的十进制调整.  </span><br><span class="line">MUL     无符号乘法.结果回送AH和AL(字节运算),或DX和AX(字运算),  </span><br><span class="line">IMUL    整数乘法.结果回送AH和AL(字节运算),或DX和AX(字运算),  </span><br><span class="line">AAM     乘法的ASCII码调整.  </span><br><span class="line">DIV     无符号除法.结果回送:商回送AL,余数回送AH, (字节运算);或 商回送AX,余数回送DX, (字运算).  </span><br><span class="line">IDIV    整数除法.结果回送:商回送AL,余数回送AH, (字节运算);或 商回送AX,余数回送DX, (字运算).  </span><br><span class="line">AAD     除法的ASCII码调整.  </span><br><span class="line">CBW     字节转换为字. (把AL中字节的符号扩展到AH中去)  </span><br><span class="line">CWD     字转换为双字. (把AX中的字的符号扩展到DX中去)  </span><br><span class="line">CWDE    字转换为双字. (把AX中的字符号扩展到EAX中去)  </span><br><span class="line">CDQ     双字扩展. (把EAX中的字的符号扩展到EDX中去)  </span><br><span class="line"></span><br><span class="line">DS:SI   源串段寄存器 :源串变址.  </span><br><span class="line">ES:DI   目标串段寄存器:目标串变址.  </span><br><span class="line">CX      重复次数计数器.  </span><br><span class="line">AL/AX   扫描值.  </span><br><span class="line">D标志    0表示重复操作中SI和DI应自动增量; 1表示应自动减量.  </span><br><span class="line">Z标志    用来控制扫描或比较操作的结束.  </span><br></pre></td></tr></table></figure>
+
+<p><em>—————————————— 三、逻辑运算指令 ———————————————</em></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">AND     与运算.  </span><br><span class="line">OR      或运算.  </span><br><span class="line">XOR     异或运算.  </span><br><span class="line">NOT     取反.  </span><br><span class="line">TEST    测试.(两操作数作与运算,仅修改标志位,不回送结果).  </span><br><span class="line">SHL     逻辑左移.  </span><br><span class="line">SAL     算术左移.(=SHL)  </span><br><span class="line">SHR     逻辑右移.  </span><br><span class="line">SAR     算术右移.(=SHR)  </span><br><span class="line">ROL     循环左移.  </span><br><span class="line">ROR     循环右移.  </span><br><span class="line">RCL     通过进位的循环左移.  </span><br><span class="line">RCR     通过进位的循环右移.  </span><br><span class="line">          以上八种移位指令,其移位次数可达255次.  </span><br><span class="line">          移位一次时, 可直接用操作码. 如 SHL AX,1.  </span><br><span class="line">          移位&gt;1次时, 则由寄存器CL给出移位次数.  </span><br><span class="line">          如 MOV CL,04   SHL AX,CL  </span><br></pre></td></tr></table></figure>
+
+<p><em>———————————————— 四、串指令 ———————————————–</em></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">MOVS    串传送.( MOVSB 传送字符. MOVSW 传送字. MOVSD 传送双字. )  </span><br><span class="line">CMPS    串比较.( CMPSB 比较字符. CMPSW 比较字. )  </span><br><span class="line">SCAS    串扫描.把AL或AX的内容与目标串作比较,比较结果反映在标志位.  </span><br><span class="line">LODS    装入串.把源串中的元素(字或字节)逐一装入AL或AX中.</span><br><span class="line">        ( LODSB 传送字符. LODSW 传送字.    LODSD 传送双字. )  </span><br><span class="line">STOS    保存串.是LODS的逆过程.  </span><br><span class="line">REP         当CX/ECX&lt;&gt;0时重复.  </span><br><span class="line">REPE/REPZ   当ZF=1或比较结果相等,且CX/ECX&lt;&gt;0时重复.  </span><br><span class="line">REPNE/REPNZ 当ZF=0或比较结果不相等,且CX/ECX&lt;&gt;0时重复.  </span><br><span class="line">REPC        当CF=1且CX/ECX&lt;&gt;0时重复.  </span><br><span class="line">REPNC       当CF=0且CX/ECX&lt;&gt;0时重复.  </span><br></pre></td></tr></table></figure>
+
+<p><em>—————————————– 五、程序转移指令 ———————————————-</em></p>
+<p><strong>1. 无条件转移指令 (长转移)</strong></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">JMP         无条件转移指令  </span><br><span class="line">CALL        过程调用  </span><br><span class="line">RET/RETF    过程返回</span><br></pre></td></tr></table></figure>
+
+<p><strong>2. 条件转移指令 (短转移,-128到+127的距离内)( 当且仅当(SF XOR OF)&#x3D;1时,OP1&lt;OP2 )</strong></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">JA/JNBE     不小于或不等于时转移.  </span><br><span class="line">JAE/JNB     大于或等于转移.  </span><br><span class="line">JB/JNAE     小于转移.  </span><br><span class="line">JBE/JNA     小于或等于转移.  </span><br><span class="line">    以上四条,测试无符号整数运算的结果(标志C和Z).  </span><br><span class="line">JG/JNLE     大于转移.  </span><br><span class="line">JGE/JNL     大于或等于转移.  </span><br><span class="line">JL/JNGE     小于转移.  </span><br><span class="line">JLE/JNG     小于或等于转移.  </span><br><span class="line">    以上四条,测试带符号整数运算的结果(标志S,O和Z).  </span><br><span class="line">JE/JZ       等于转移.  </span><br><span class="line">JNE/JNZ     不等于时转移.  </span><br><span class="line">JC          有进位时转移.  </span><br><span class="line">JNC         无进位时转移.  </span><br><span class="line">JNO         不溢出时转移.  </span><br><span class="line">JNP/JPO     奇偶性为奇数时转移.  </span><br><span class="line">JNS         符号位为 &quot;0&quot; 时转移.  </span><br><span class="line">JO          溢出转移.  </span><br><span class="line">JP/JPE      奇偶性为偶数时转移.  </span><br><span class="line">JS          符号位为 &quot;1&quot; 时转移.  </span><br></pre></td></tr></table></figure>
+
+<p><strong>3. 循环控制指令(短转移)</strong></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">LOOP            CX不为零时循环.  </span><br><span class="line">LOOPE/LOOPZ     CX不为零且标志Z=1时循环.  </span><br><span class="line">LOOPNE/LOOPNZ   CX不为零且标志Z=0时循环.  </span><br><span class="line">JCXZ            CX为零时转移.  </span><br><span class="line">JECXZ           ECX为零时转移.  </span><br></pre></td></tr></table></figure>
+
+<p><strong>4. 中断指令</strong></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">INT         中断指令  </span><br><span class="line">INTO        溢出中断  </span><br><span class="line">IRET        中断返回  </span><br></pre></td></tr></table></figure>
+
+<p><strong>5. 处理器控制指令</strong></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">HLT         处理器暂停,  直到出现中断或复位信号才继续.  </span><br><span class="line">WAIT        当芯片引线TEST为高电平时使CPU进入等待状态.  </span><br><span class="line">ESC         转换到外处理器.  </span><br><span class="line">LOCK        封锁总线.  </span><br><span class="line">NOP         空操作.  </span><br><span class="line">STC         置进位标志位.  </span><br><span class="line">CLC         清进位标志位.  </span><br><span class="line">CMC         进位标志取反.  </span><br><span class="line">STD         置方向标志位.  </span><br><span class="line">CLD         清方向标志位.  </span><br><span class="line">STI         置中断允许位.  </span><br><span class="line">CLI         清中断允许位.  </span><br></pre></td></tr></table></figure>
+
+<p><em>——————————————— 六、伪指令 ————————————————–</em></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">DW          定义字(2字节).  </span><br><span class="line">PROC        定义过程.  </span><br><span class="line">ENDP        过程结束.  </span><br><span class="line">SEGMENT     定义段.  </span><br><span class="line">ASSUME      建立段寄存器寻址.  </span><br><span class="line">ENDS        段结束.  </span><br><span class="line">END         程序结束.  </span><br></pre></td></tr></table></figure>
+
+<p><em>——————————— 七、处理机控制指令：标志处理指令 ———————————</em></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">CLC     进位位置0指令  </span><br><span class="line">CMC     进位位求反指令  </span><br><span class="line">STC     进位位置为1指令  </span><br><span class="line">CLD     方向标志置1指令  </span><br><span class="line">STD     方向标志位置1指令  </span><br><span class="line">CLI     中断标志置0指令  </span><br><span class="line">STI     中断标志置1指令  </span><br><span class="line">NOP     无操作  </span><br><span class="line">HLT     停机  </span><br><span class="line">WAIT    等待  </span><br><span class="line">ESC     换码  </span><br><span class="line">LOCK    封锁  </span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="x3D-x3D-x3D-x3D-x3D-x3D-x3D-x3D-x3D-x3D-x3D-x3D-x3D-x3D-x3D-x3D-x3D-x3D-x3D-x3D-x3D-x3D-浮点运算指令集-x3D-x3D-x3D-x3D-x3D-x3D-x3D-x3D-x3D-x3D-x3D-x3D-x3D-x3D-x3D-x3D-x3D-x3D-x3D-x3D-x3D-x3D-x3D-x3D"><a href="#x3D-x3D-x3D-x3D-x3D-x3D-x3D-x3D-x3D-x3D-x3D-x3D-x3D-x3D-x3D-x3D-x3D-x3D-x3D-x3D-x3D-x3D-浮点运算指令集-x3D-x3D-x3D-x3D-x3D-x3D-x3D-x3D-x3D-x3D-x3D-x3D-x3D-x3D-x3D-x3D-x3D-x3D-x3D-x3D-x3D-x3D-x3D-x3D" class="headerlink" title="&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; 浮点运算指令集&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;"></a><strong>&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; 浮点运算指令集&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</strong></h2><p><em>———– 一、控制指令(带9B的控制指令前缀F变为FN时浮点不检查，机器码去掉9B)———-</em></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">                                                 机器码</span><br><span class="line">FINIT                 初始化浮点部件              9B DB E3  </span><br><span class="line">FCLEX                 清除异常                   9B DB E2  </span><br><span class="line">FDISI                 浮点检查禁止中断             9B DB E1  </span><br><span class="line">FENI                  浮点检查禁止中断二           9B DB E0  </span><br><span class="line">WAIT                  同步CPU和FPU               9B  </span><br><span class="line">FWAIT                 同步CPU和FPU               D9 D0  </span><br><span class="line">FNOP                  无操作                     DA E9  </span><br><span class="line">FXCH                  交换ST(0)和ST(1)           D9 C9  </span><br><span class="line">FXCH ST(i)            交换ST(0)和ST(i)           D9 C1iii  </span><br><span class="line">FSTSW ax              状态字到ax                 9B DF E0  </span><br><span class="line">FSTSW   word ptr mem  状态字到mem                9B DD mm111mmm  </span><br><span class="line">FLDCW   word ptr mem  mem到状态字                D9 mm101mmm  </span><br><span class="line">FSTCW   word ptr mem  控制字到mem                9B D9 mm111mmm  </span><br><span class="line">  </span><br><span class="line">FLDENV  word ptr mem  mem到全环境                D9 mm100mmm  </span><br><span class="line">FSTENV  word ptr mem  全环境到mem                9B D9 mm110mmm  </span><br><span class="line">FRSTOR  word ptr mem  mem到FPU状态               DD mm100mmm  </span><br><span class="line">FSAVE   word ptr mem  FPU状态到mem               9B DD mm110mmm  </span><br><span class="line">  </span><br><span class="line">FFREE ST(i)           标志ST(i)未使用             DD C0iii  </span><br><span class="line">FDECSTP               减少栈指针1-&gt;0 2-&gt;1         D9 F6  </span><br><span class="line">FINCSTP               增加栈指针0-&gt;1 1-&gt;2         D9 F7  </span><br><span class="line">FSETPM                浮点设置保护                 DB E4  </span><br></pre></td></tr></table></figure>
+
+<p><em>—————————————– 二、数据传送指令 ——————————————–</em></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">FLDZ                  将0.0装入ST(0)                  机器码  D9 EE  </span><br><span class="line">FLD1                  将1.0装入ST(0)                  机器码  D9 E8  </span><br><span class="line">FLDPI                 将π装入ST(0)                    机器码  D9 EB  </span><br><span class="line">FLDL2T                将ln10/ln2装入ST(0)             机器码  D9 E9  </span><br><span class="line">FLDL2E                将1/ln2装入ST(0)                机器码  D9 EA  </span><br><span class="line">FLDLG2                将ln2/ln10装入ST(0)             机器码  D9 EC  </span><br><span class="line">FLDLN2                将ln2装入ST(0)                  机器码  D9 ED  </span><br><span class="line">  </span><br><span class="line">FLD    real4 ptr mem  装入mem的单精度浮点数             机器码  D9 mm000mmm  </span><br><span class="line">FLD    real8 ptr mem  装入mem的双精度浮点数             机器码  DD mm000mmm  </span><br><span class="line">FLD   real10 ptr mem  装入mem的十字节浮点数             机器码  DB mm101mmm  </span><br><span class="line">  </span><br><span class="line">FILD    word ptr mem  装入mem的二字节整数              机器码  DF mm000mmm  </span><br><span class="line">FILD   dword ptr mem  装入mem的四字节整数              机器码  DB mm000mmm  </span><br><span class="line">FILD   qword ptr mem  装入mem的八字节整数              机器码  DF mm101mmm  </span><br><span class="line">  </span><br><span class="line">FBLD   tbyte ptr mem  装入mem的十字节BCD数            机器码  DF mm100mmm  </span><br><span class="line">  </span><br><span class="line">FST    real4 ptr mem  保存单精度浮点数到mem             机器码  D9 mm010mmm  </span><br><span class="line">FST    real8 ptr mem  保存双精度浮点数到mem             机器码  DD mm010mmm  </span><br><span class="line">  </span><br><span class="line">FIST    word ptr mem  保存二字节整数到mem              机器码  DF mm010mmm  </span><br><span class="line">FIST   dword ptr mem  保存四字节整数到mem              机器码  DB mm010mmm  </span><br><span class="line">  </span><br><span class="line">FSTP   real4 ptr mem  保存单精度浮点数到mem并出栈      机器码  D9 mm011mmm  </span><br><span class="line">FSTP   real8 ptr mem  保存双精度浮点数到mem并出栈      机器码  DD mm011mmm  </span><br><span class="line">FSTP  real10 ptr mem  保存十字节浮点数到mem并出栈      机器码  DB mm111mmm  </span><br><span class="line">  </span><br><span class="line">FISTP   word ptr mem  保存二字节整数到mem并出栈           机器码  DF mm011mmm  </span><br><span class="line">FISTP  dword ptr mem  保存四字节整数到mem并出栈           机器码  DB mm011mmm  </span><br><span class="line">FISTP  qword ptr mem  保存八字节整数到mem并出栈           机器码  DF mm111mmm  </span><br><span class="line">  </span><br><span class="line">FBSTP  tbyte ptr mem  保存十字节BCD数到mem并出栈     机器码  DF mm110mmm  </span><br><span class="line">  </span><br><span class="line">FCMOVB                ST(0),ST(i) &lt;时传送              机器码  DA C0iii  </span><br><span class="line">FCMOVBE               ST(0),ST(i) &lt;=时传送             机器码  DA D0iii  </span><br><span class="line">FCMOVE                ST(0),ST(i) =时传送             机器码  DA C1iii  </span><br><span class="line">FCMOVNB               ST(0),ST(i) &gt;=时传送             机器码  DB C0iii  </span><br><span class="line">FCMOVNBE              ST(0),ST(i) &gt;时传送              机器码  DB D0iii  </span><br><span class="line">FCMOVNE               ST(0),ST(i) !=时传送            机器码  DB C1iii  </span><br><span class="line">FCMOVNU               ST(0),ST(i) 有序时传送        机器码  DB D1iii  </span><br><span class="line">FCMOVU                ST(0),ST(i) 无序时传送        机器码  DA D1iii  </span><br></pre></td></tr></table></figure>
+
+<p><em>———————————————– 三、比较指令 ———————————————</em></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">FCOM                  ST(0)-ST(1)                      机器码  D8 D1  </span><br><span class="line">FCOMI                 ST(0),ST(i)  ST(0)-ST(1)         机器码  DB F0iii  </span><br><span class="line">FCOMIP                ST(0),ST(i)  ST(0)-ST(1)并出栈   机器码  DF F0iii  </span><br><span class="line">FCOM   real4 ptr mem  ST(0)-实数mem                      机器码  D8 mm010mmm  </span><br><span class="line">FCOM   real8 ptr mem  ST(0)-实数mem                      机器码  DC mm010mmm  </span><br><span class="line">  </span><br><span class="line">FICOM   word ptr mem  ST(0)-整数mem                      机器码  DE mm010mmm  </span><br><span class="line">FICOM  dword ptr mem  ST(0)-整数mem                      机器码  DA mm010mmm  </span><br><span class="line">FICOMP  word ptr mem  ST(0)-整数mem并出栈               机器码  DE mm011mmm  </span><br><span class="line">FICOMP dword ptr mem  ST(0)-整数mem并出栈               机器码  DA mm011mmm  </span><br><span class="line">  </span><br><span class="line">FTST                  ST(0)-0                          机器码  D9 E4  </span><br><span class="line">FUCOM  ST(i)          ST(0)-ST(i)                      机器码  DD E0iii  </span><br><span class="line">FUCOMP ST(i)          ST(0)-ST(i)并出栈                   机器码  DD E1iii  </span><br><span class="line">FUCOMPP               ST(0)-ST(1)并二次出栈             机器码  DA E9  </span><br><span class="line">FXAM                  ST(0)规格类型                    机器码  D9 E5  </span><br></pre></td></tr></table></figure>
+
+<p><em>———————————————- 四、运算指令 ——————————————–</em></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">FADD                  把目的操作数 (直接接在指令后的变量或堆栈缓存器) 与来源操作数 </span><br><span class="line">                      (接在目的操作数后的变量或堆栈缓存器)  相加，并将结果存入目的操作数  </span><br><span class="line">FADDP  ST(i),ST       这个指令是使目的操作数加上 ST  缓存器，并弹出 ST 缓存器，</span><br><span class="line">                      而目的操作数必须是堆栈缓存器的其中之一，最后不管目的操作数为何，</span><br><span class="line">                      经弹出一次后，目的操作数会变成上一个堆栈缓存器了  </span><br><span class="line">FIADD                 FIADD 是把 ST   加上来源操作数，然后再存入 ST 缓存器，</span><br><span class="line">                      来源操作数必须是字组整数或短整数形态的变数  </span><br><span class="line">  </span><br><span class="line">FSUB                  减  </span><br><span class="line">FSUBP  </span><br><span class="line">FSUBR                 减数与被减数互换  </span><br><span class="line">FSUBRP  </span><br><span class="line">FISUB  </span><br><span class="line">FISUBR  </span><br><span class="line">  </span><br><span class="line">FMUL                  乘  </span><br><span class="line">FMULP  </span><br><span class="line">FIMUL  </span><br><span class="line">  </span><br><span class="line">FDIV                  除  </span><br><span class="line">FDIVP  </span><br><span class="line">FDIVR  </span><br><span class="line">FDIVRP  </span><br><span class="line">FIDIV  </span><br><span class="line">FIDIVR  </span><br><span class="line">  </span><br><span class="line">FCHS                  改变 ST 的正负值  </span><br><span class="line">  </span><br><span class="line">FABS                  把 ST  之值取出，取其绝对值后再存回去。  </span><br><span class="line">  </span><br><span class="line">FSQRT                 将 ST  之值取出，开根号后再存回去。  </span><br><span class="line">  </span><br><span class="line">FSCALE                这个指令是计算 ST*2^ST(1)之值，再把结果存入ST里，而 ST(1)之值不变</span><br><span class="line">                      ST(1)必须是在 -32768 到 32768(-215到215)之间的整数，</span><br><span class="line">                      如果超过这个范围计算结果无法确定，如果不是整数ST(1)会先向零舍入成整数</span><br><span class="line">                      再计算。所以为安全起见，最好是由字组整数载入到 ST(1) 里。  </span><br><span class="line">  </span><br><span class="line">FRNDINT               这个指令是把 ST 的数值舍入成整数，FPU提供四种舍入方式，</span><br><span class="line">                      由 FPU 的控制字组(control word)中的RC两个位决定  </span><br><span class="line">                          RC    舍入控制  </span><br><span class="line">                          00    四舍五入  </span><br><span class="line">                          01    向负无限大舍入  </span><br><span class="line">                          10    向正无限大舍入  </span><br><span class="line">                          11    向零舍去  </span><br></pre></td></tr></table></figure>
+
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-20221117-优设笔记"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/11/17/20221117-%E4%BC%98%E8%AE%BE%E7%AC%94%E8%AE%B0/"
+    >20221117-优设笔记</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/11/17/20221117-%E4%BC%98%E8%AE%BE%E7%AC%94%E8%AE%B0/" class="article-date">
+  <time datetime="2022-11-17T06:27:08.000Z" itemprop="datePublished">2022-11-17</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>AE 随机表达式</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">wiggle(<span class="number">2</span>,<span class="number">30</span>)  频率 抖动范围</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">seedRandom(index,<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">x = Random(<span class="number">30</span>,<span class="number">100</span>);</span><br><span class="line"></span><br><span class="line">[x,x]</span><br><span class="line"></span><br><span class="line">seedRandom(index,<span class="number">1</span>)</span><br><span class="line">random(<span class="number">0</span>,<span class="number">360</span>) + time*<span class="number">36</span> </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 位置属性</span></span><br><span class="line"></span><br><span class="line">seedRandom(index,<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">x=random(<span class="number">0</span>,<span class="number">1920</span>)</span><br><span class="line">y=random(<span class="number">0</span>,<span class="number">1080</span>)</span><br><span class="line">[x,y]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// ----  随机循环表达式</span></span><br><span class="line"></span><br><span class="line">freq = <span class="number">2</span>; 频率</span><br><span class="line"></span><br><span class="line">amp = <span class="number">500</span>;</span><br><span class="line">loopTime = <span class="number">3</span></span><br><span class="line">t= time%loopTime;</span><br><span class="line"></span><br><span class="line">wiggle1 = wiggle(freq,amp,<span class="number">1</span>,<span class="number">1.05</span>,t)</span><br><span class="line">wiggle2=wiggle(freq,amp,<span class="number">1</span>,<span class="number">1.05</span>,t-loopTime);</span><br><span class="line"></span><br><span class="line">linear(t,<span class="number">0</span>,loopTime,wiggle1,wiggle2)</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// cycle </span></span><br><span class="line"></span><br><span class="line">loopOut(type=<span class="string">&quot;cycle&quot;</span>,numKeyframes=<span class="number">0</span>);</span><br><span class="line">loopOut(type=<span class="string">&quot;pingpong&quot;</span>,numKeyframes=<span class="number">0</span>);</span><br><span class="line">loopOut(type=<span class="string">&quot;offset&quot;</span>,numKeyframes=<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 路径循环表达式</span></span><br><span class="line"></span><br><span class="line">valueAtTime(time%key(numKeys).time)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure> 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-20221116-EDA学习笔记"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/11/16/20221116-EDA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"
+    >20221116-EDA学习笔记</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/11/16/20221116-EDA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="article-date">
+  <time datetime="2022-11-16T02:36:08.000Z" itemprop="datePublished">2022-11-16</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>教材及参考资料</p>
+<p>《EDA技术及应用》</p>
+<p>参考资料</p>
+<p>《CPLD技术及其应用》</p>
+<p>《VHDL硬件描述语言与数字逻辑》</p>
+<p>《CPLD&#x2F;FPGA的开发和应用》</p>
+<p>EDA 技术的相关网址</p>
+<p><a target="_blank" rel="noopener" href="http://www.fpga.com.cn/">www.fpga.com.cn</a></p>
+<p><a target="_blank" rel="noopener" href="http://www.edaclub.net/">www.edaclub.net</a></p>
+<p><a target="_blank" rel="noopener" href="http://www.edachina.com/">www.edachina.com</a></p>
+<p>EDA 技术的发展的三个阶段</p>
+<ol>
+<li>早期电子CAD 阶段</li>
+</ol>
+<p>Tango 布线软件</p>
 <ol start="2">
-<li>为什么使能信号可以控制芯片的启用和停用</li>
+<li><p>计算机辅助工程设计CAE阶段</p>
+</li>
+<li><p>电子设计自动化EDA阶段</p>
+</li>
 </ol>
-<p>全部都连到了最后一级的所有与非门上。我们知道一个与非门，如果有1个输入为0，那么这个与非门的输出就会是1。因此，如果不满足G1为高电平，G2A和G2B都为低电平这个条件，就会让所有输出全为1。而这时无论别的输入是什么，都不会让输出有任何改变。从这一点上来说，要启用这颗芯片的功能就必须满足G1为高电平，G2A和G2B都为低电平这个条件。否则，其它输入影响不了输出，芯片“译码”的功能就没有被“启用”。</p>
-<ol start="3">
-<li>为什么需要使能信号</li>
+<p>概念驱动工程EDA  的梦想</p>
+<p>EDA的广义定义范围包括</p>
+<p>半导体工艺设计自动化</p>
+<p>可编程器件设计自动化</p>
+<p>电子系统设计自动化</p>
+<p>印刷电路板设计自动化</p>
+<p>仿真与测试，故障诊断自动化</p>
+<p>形式验证自动化</p>
+<p>统称为EDA工程</p>
+<p>自动完成用软件方式描述的电子系统到硬件系统的逻辑编译<br>逻辑化简  逻辑分割  逻辑综合及优化  布局布线，逻辑仿真</p>
+<p>直至完成对于特定目标芯片的适配编译，逻辑映射，编程下载等工作，最终形成集电子系统或专用集成芯片的一门多学科融合的新技术</p>
+<p>传统设计方法和EDA 方法的区别</p>
+<p>传统设计方法 </p>
+<p>自下而上</p>
+<p>系统测试与性能分析<br>完整系统构成</p>
+<p>电路板设计</p>
+<p>固定功能元件</p>
+<p>自上而下设计中可逐层描述，逐层仿真，保证满足系统指标</p>
+<p>EDA 方法</p>
+<p>系统规格设计</p>
+<p>功能级描述 仿真</p>
+<p>模块化分，仿真</p>
+<p>逻辑综合 优化 布局布线</p>
+<p>定时仿真，定时检查</p>
+<p>输出门级网表</p>
+<p>ASIC 芯片投片  PLD 器件编程，测试</p>
+<p>与传统的基于电路板的设计方法不同</p>
+<p>EDA 技术是基于芯片的设计方法</p>
+<p>可编程逻辑器件</p>
+<p>芯片设计</p>
+<p>电路板构成</p>
+<p>电子系统</p>
+<p>设计手段不同</p>
+<p>EDA 设计方法为自动实现，其方案验证与设计、系统逻辑综合、布局布线、性能仿真、器件编程等均由EDA 工具一体化完成</p>
+<h2 id="EDA技术的主要内容"><a href="#EDA技术的主要内容" class="headerlink" title="EDA技术的主要内容"></a>EDA技术的主要内容</h2><p>实现载体：大规模可编程逻辑器件  FPGA</p>
+<p>CPLD</p>
+<p>显著优点</p>
+<p>开发周期短、投资风险小、产品上市速度快、市场适应能力强、硬件修改升级方便</p>
+<p>描述方式：硬件描述语言</p>
+<p>VHDL IEEE 标准 系统级抽象描述能力较强<br>Verilog IEEE 标准 门级开关电路描述能力<br>ABEL 系统级抽象描述能力差，适合于门级电路描述</p>
+<p>设计工具：开发软件、开发系统</p>
+<p>集成化的开发系统</p>
+<p>特定功能的开发软件：综合软件<br>仿真软件</p>
+<p>硬件验证：实验开发系统</p>
+<p>1.5 EDA 技术及EDA 工具的发展趋势</p>
+<p>EDA 技术的发展趋势</p>
+<p>广度上 大型机-工作站-微机</p>
+<p>深度上 ESDA</p>
+<p>CE 并行设计工程</p>
+<p>单芯片集成  SOC SOPC </p>
+<ol start="2">
+<li>EDA 工具的发展趋势</li>
 </ol>
-<p>需要使能信号的主要原因是一个大型的数字系统中，通常都需要使用多个芯片&#x2F;电路单元来配合完成一个功能，而这些芯片并不是每时每刻都在工作，因此需要用使能信号来控制硬功启用那个芯片来工作</p>
-<p>假设4bit的二进制编码从高到低依次是A3A2A1A0</p>
-<p>将A2A1A0分别对应连接到两片74XX138上。而将A3连接到低位片的G2B上和高位片的G1上。</p>
-<p>这样我们实际上把4bit的二进制数据划分为了2段</p>
-<p>其中一段从0000到0111，另外一段从1000到1111。当现在A2A1A0为111时，低位片的Y7和高位片的Y7都有可能输出。而假设此时A3为0（此时输入为0111），那么低位片的所有使能信号均有效，而高位片的G1是无效的。那么此时低位片被启用而高位片未被启用。所以低位片的Y7输出为低而其它均为高，高位片的所有输出都是高。因此，0111被译码为了1111111101111111（输出低有效）。反之，A3为1（此时输入为1111）。则低位片的G2B无效而高位片所有的使能信号都有效。1111倍译码为0111111111111111</p>
-<ol start="4">
-<li>使能信号还有哪些用法</li>
+<p>输入工具</p>
+<p>多种描述方式的混合使用</p>
+<ol start="2">
+<li>混合信号处理能力</li>
 </ol>
-<p>使能信号的用途非常广泛，可以作为计算机系统中存储芯片选通信号，可以作为显式系统中的控制信号，但核心的一点就是使能信号控制了芯片的功能是否能被正常的启用，这在设计大型的数字系统中是非常重要的一环</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20221213-RS485通讯基础及通讯应用详解"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/12/13/20221213-RS485%E9%80%9A%E8%AE%AF%E5%9F%BA%E7%A1%80%E5%8F%8A%E9%80%9A%E8%AE%AF%E5%BA%94%E7%94%A8%E8%AF%A6%E8%A7%A3/"
-    >20221213-RS485通讯基础及通讯应用详解</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/12/13/20221213-RS485%E9%80%9A%E8%AE%AF%E5%9F%BA%E7%A1%80%E5%8F%8A%E9%80%9A%E8%AE%AF%E5%BA%94%E7%94%A8%E8%AF%A6%E8%A7%A3/" class="article-date">
-  <time datetime="2022-12-13T05:42:43.000Z" itemprop="datePublished">2022-12-13</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/341845459">https://zhuanlan.zhihu.com/p/341845459</a></p>
-<p>举例：plc向变频器从机1和变频器从机2传递数据，首先变频器从机1和变频器从机2设备之间必须通过电缆连接（硬件连接）。如果变频器从机1和变频器从机设备发送101010这样一串代码，那么变频器从机1就要在他的通讯端口产生如下图所示的高低电平的组合，通过电缆这个介质变频器从机2设备的通讯端口就会接收到A设备发出高低电平的组合，同时就会将接</p>
-<h2 id="RS-485概述"><a href="#RS-485概述" class="headerlink" title="RS-485概述"></a>RS-485概述</h2><p>RS-485和RS-232一样，都是串行通信标准，现在的标准名称是TIA485&#x2F;EIA-485-A，但是人们会习惯称为RS-485标准，RS-485常用在工业、自动化、汽车和建筑物管理等领域。</p>
-<p>RS-485总线弥补了RS-232通信距离短，速率低的缺点，RS-485的速率可高达10Mbit&#x2F;s，理论通讯距离可达1200米；RS-485和RS-232的单端传输不一样，是差分传输，使用一对双绞线，其中一根线定义为A，另一个定义为B。</p>
-<p>双绞线</p>
-<h2 id="RS-485物理层"><a href="#RS-485物理层" class="headerlink" title="RS-485物理层"></a>RS-485物理层</h2><p>RS-485的物理层负责在设备和物理传输介质之间传输原始数据。它处理电信号到数字数据的转换，同时定义电压、时序、数据速率等。</p>
-<p>① 差分信号</p>
-<p>长距离布线会有信号衰减，而且引入噪声和干扰的可能性更大，在线缆A和B上的表现就是电压幅度的变化，但是，采用差分线的好处就是，差值相减就会忽略掉干扰依旧能输出正常的信号，把这种差分接收器忽略两条信号线上相同电压的能力称为共模抑制。</p>
-<p>标准规定了，逻辑1：+2V to +6V；逻辑0：-6V to -2V。</p>
-<p>RS-485不需要使用特定的总线电压，只看最小差分电压，在较长的电缆长度上，接收器接收到的电压可能会降低到+&#x2F;- 200 mV，这对于RS-485仍然是完全可以接受的，这也是RS-485的优点之一。</p>
-<p>很多收发器的标准达到甚至超过TIA&#x2F;EIA-485A规范，在实际使用中，以器件的SPEC参数为主，如下某收发器的负输入阈值最小也是-200mV。</p>
-<p>② 信号定义</p>
-<p>现在很多的RS-485转换器都是兼容RS-422的，所以看到很多转换器上面的信号都是T&#x2F;R+、T&#x2F;R-，即对应RS-485的A+和B-。</p>
-<p>对于DB9针型的母头，RS-485有如下的接线定义示意，Pin6~Pin9为N&#x2F;A不接。</p>
-<p>DB9 输出信号  RS-422全双工接线 RS-485半双工接线<br>1 T&#x2F;R+  发（A+） RS-485（A+）<br>2 T&#x2F;R-  发（B-） RS-485（B-）<br>3 RXD+  收（A+） 空<br>4 RXD-  收（B-） 空<br>5 GND 地线  地线</p>
-<p>③ 拓扑结构</p>
-<p>RS485有两线制和四线制两种接线，四线制只能实现点对点的通信方式，现很少采用，多采用的是两线制接线方式，这种接线方式为总线拓扑结构，在同一总线上最多可以挂接32个节点。</p>
-<p>RS-485总线同I2C，也是主从模式，支持点对点单从机模式，也支持多从机模式，不支持多主机模式。</p>
-<h2 id="RS-485收发器"><a href="#RS-485收发器" class="headerlink" title="RS-485收发器"></a>RS-485收发器</h2><p>RS-485是差分传输，如果用单片机控制RS-485接口的设备，需要用到收发器，这一点和CAN总线是类似的，如下是一个MCU控制一个RS-485的图示。</p>
-<p>收发器内部是一个接收器（上半部分）加一个发送器（下半部分），下面简单说说收发器的原理，便于理解MCU是如何和485设备通信的。</p>
-<p>RS-485收发器内部结构</p>
-<p>其中：</p>
-<p>A和B为总线；<br>R为接收器输入；<br>RE为接收器使能信号；<br>DE为发送器使能信号；<br>D为发送器输出；<br>对于使能信号，字母上面加一横的为低电平有效（如上图RE），不加的为高电平有效（如DE）。</p>
-<p>对于发送器，有如下的真值表：</p>
-<p>1、当驱动器使能引脚DE为逻辑高时，差分输出A和B遵循数据输入D处的逻辑状态。D处的逻辑高导致A转为高，B转为低。在这种情况下，定义为VOD&#x3D;VA-VB的差分输出电压为正。当D为低时，输出状态反转，B变高，A变低，VOD为负。</p>
-<p>2、当DE低时，两个输出都变成高阻抗。在这种情况下，与D处的逻辑状态是不相关的。</p>
-<p>发送器真值表</p>
-<p>对于接收器，有如下的真值表：</p>
-<p>1、当接收器使能引脚RE逻辑低时，接收器被激活。当定义为VID&#x3D;VA–VB的差分输入电压为正且高于正输入阈值VIT+时，接收机输出R变高。当VID为负且低于负输入阈值VIT-，接收机输出R变低。如果VID在VIT+和VIT-之间，则输出不确定。</p>
-<p>2、当RE为逻辑高或悬空时，接收机输出为高阻抗，VID的大小和极性无关。</p>
-<p>接收器真值表</p>
-<h2 id="RS-485数据链路"><a href="#RS-485数据链路" class="headerlink" title="RS-485数据链路"></a>RS-485数据链路</h2><p>上面讲到的RS-485收发器的工作原理，下面简单描述RS-485的数据链路，可以先看一下通俗易懂的UART协议帧格式</p>
-<p>主机发送给从机或者从机发送给主机，都会占用到A和B线，所以RS-485多用在半双工模式。</p>
-<p>主机的GPIO会控制RS-485收发器的DE管脚，设置发送模式，从UART TXD线向RS-485收发器的数据（D或DI）线发送一个字节，收发器将在A和B线上将单端UART位流转换为差分位流，数据离开收发器后，主机立即将收发器的模式切换为接收模式。</p>
-<p>从机和主机是类似的，从机控制RS-485收发器的&#x2F;RE管脚，设置为接收模式，接收主机发送的比特流，将其转换为单端信号，通过从机的UART RXD线接收，当从机准备好响应时，它按主机原来的方式进行发送，而主机变为接收。</p>
-<h2 id="RS-232和RS-485转换"><a href="#RS-232和RS-485转换" class="headerlink" title="RS-232和RS-485转换"></a>RS-232和RS-485转换</h2><p>RS-232和RS-485之间可以转换，一个方法是RS-232转换成TTL，再由TTL转换为RS-485，当然也有芯片支持将RS-232直接转换成RS-485，网上有很多模块。</p>
-<p>RS-232和RS-485转换模块</p>
-<h2 id="RS-485和CAN的区别"><a href="#RS-485和CAN的区别" class="headerlink" title="RS-485和CAN的区别"></a>RS-485和CAN的区别</h2><p>虽说RS-485没有标准的数据协议格式，但和CAN总线在很多地方是有相似的，比如A&amp;B和CANH&amp;CANL都是差分信号，通信都需要收发器，都需要120欧姆的匹配电阻等等。</p>
-<p>总线特性  CAN总线 RS-485总线<br>硬件成本  稍高  低廉<br>总线利用率 优先级自动仲裁，利用率高  采用轮询，利用率低<br>数据传输率 高 低<br>错误检测机制  控制器带校验机制，保证底层数据传输正确 只有物理层规范，无数据链路层规定<br>单节点故障影响 总线无影响 总线瘫痪<br>开发成本  软件开发灵活，时间成本低  开发难度较大<br>系统成本  较低  高</p>
-<h2 id="RS-485常用电路"><a href="#RS-485常用电路" class="headerlink" title="RS-485常用电路"></a>RS-485常用电路</h2><p>网上找的一个常用的RS-485电路，其中需要注意两点：</p>
-<p>1、使能信号RE和DE可采用一个GPIO控制，节省资源，GPIO25输出高电平，RE&#x3D;DE&#x3D;0V，进入接收模式；GPIO25输出低电平，RE&#x3D;DE&#x3D;3.3V，进入发送模式。</p>
-<p>2、有一些电路中会在A上加上拉，B上加下拉电阻，主要原因是：RS-485总线在idle状态，电平是不固定的，即电平在-200mV~+200mV之间，收发器可能输出高也可能输出低，UART在空闲时需要保持高电平的，如果此时收发器输出一个低电平，对UART来说是一个start bit，会导致通信异常，关于Ru和Rd的阻值在这里不作过多赘述，后面有机会会详细写一篇文章。</p>
-<p>关于第二点，需要注意：</p>
-<p>① A上加上拉，B上加下拉，接反数据通信也可能出错。</p>
-<p>② 某些收发器内部集成上下拉电阻，则外部不需要再添加。</p>
-<p>今天的文章内容到这里就结束了，希望对你有帮助，我们下一期见。</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20221213-UART串口通信介绍"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/12/13/20221213-UART%E4%B8%B2%E5%8F%A3%E9%80%9A%E4%BF%A1%E4%BB%8B%E7%BB%8D/"
-    >20221213-UART串口通信介绍</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/12/13/20221213-UART%E4%B8%B2%E5%8F%A3%E9%80%9A%E4%BF%A1%E4%BB%8B%E7%BB%8D/" class="article-date">
-  <time datetime="2022-12-13T04:16:06.000Z" itemprop="datePublished">2022-12-13</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>串口通信 UART 介绍</p>
-<p>通用异步收发传输器 ，通常称作UART ，是一种异步收发传输器</p>
-<p>首先先来介绍一下同步和异步通信</p>
-<p>在常见通信总线协议中，I2C SPI 属于同步通信而UART 属于异步通信</p>
-<p>在UART 通信中，数据起始位和停止位是必不可少的</p>
-<p>硬件层</p>
-<p>常用RS-232标准，这里不详细解释，主要是对应设备的Tx 线和Rx 线要对应正确</p>
-<p>协议层 </p>
-<p>协议层中，规定了数据包的内容，它由起始位，主体数据，校验位以及停止位组成，通信双方的数据包格式要约定一致才能正常收发数据</p>
-<p>波特率  异步通信中由于没有时钟信号，所以2个通信设备需约定好波特率，常见的有4800 9600 15200 等</p>
-<p>通信的起始和停止信号，串口通信的一个数据包从起始信号开始，知道停止信号结束，数据包的起始信号由一个逻辑0 的数据位表示，而数据包的停止信号可由0.5 1 1.5 2 个逻辑1 的数据位表示，只要双方约定一致即可</p>
-<p>有效数据，在数据包的起始位置之后紧接着的就是要传输的主体数据内容，也称为有效数据，有效数据的长度常被约定为8位或9位长</p>
-<p>数据校验  可以在传输过程中加上校验位来解决这个问题，校验方法有奇校验 偶校验 0校验 1校验 以及无校验</p>
-<p>奇校验要求有效数据和校验位中“1”的个数为奇数，比如一个 8 位长的有效数据为：01101001，此时总共有 4 个“1”，为达到奇校验效果，校验位为“1”，最后传输的数据将是 8 位的有效数据加上 1 位的校验位总共 9 位。偶校验与奇校验要求刚好相反，要求帧数据和校验位中“1”的个数为偶数，比如数据帧：11001010，此时数据帧“1”的个数为 4 个，所以偶校验位为“0”。0 校验是不管有效数据中的内容是什么，校验位总为“0”，1 校验是校验位总为“1”。</p>
-<p>UART 功能框图剖析</p>
-<p>这张图是当年上学时使用system C 对uart 建模的模块图，对于接口部分，重要的即为Tx Rx 数据输出，接受接口，clk 提供波特率生成模块的初始时钟信号，</p>
-<p>有关控制器部分，在这里使用逻辑电路来实现，具体控制输出&#x2F;接收使能，设备使能等</p>
-<p>在目前的微控制器上，数字电路控制部分已被封装，现在只需要操作对应寄存器的对应位即可实现对UART  的控制<br>下图是uart 框图 </p>
-<p>波特率生成模块</p>
-<p>USART 的发送器和接收器使用相同的波特率，有以下的计算公式</p>
-<p>其中，fck为 USART 时钟， USARTDIV 是一个存放在波特率寄存器(USART_BRR)的一个无符号定点数。其中 DIV_Mantissa[11:0]位定义 USARTDIV 的整数部分，DIV_Fraction[3:0]位定义 USARTDIV 的小数部分。</p>
-<p>例如：DIV_Mantissa&#x3D;24(0x18)，DIV_Fraction&#x3D;10(0x0A)，此时 USART_BRR 值为0x18A；那么USARTDIV的小数位10&#x2F;16&#x3D;0.625；整数位24，最终USARTDIV的值为24.625。</p>
-<p>波特率的常用值有 2400、9600、19200、115200。下面以实例讲解如何设定寄存器值得到波特率的值。我们知道 USART1 使用APB2总线时钟，最高可达72MHz，其他USART的最高频率为36MHz。我们选取USART1作为实例讲解，即fck&#x3D;72MHz。为得到115200bps的波特率，此时：115200&#x3D;72000000&#x2F;(16∗USARTDIV)，解得USARTDIV&#x3D;39.0625，可算得DIV_Fraction&#x3D;0.0625*16&#x3D;1&#x3D;0x01，DIV_Mantissa&#x3D;39&#x3D;0x27，即应该设置USART_BRR的值为0x171。</p>
-<p>数据寄存器</p>
-<p>UART 数据寄存器 只有低9位有效，并且第9位 数据是否有效要取决于uart 控制寄存器1的M 位设置，当M 位为0 时表示8位数据字长，当M 位为1 表示9位数据字长，我们一般使用8位数据字长</p>
-<p>USART_DR包含了已发送的数据或者接收到的数据。USART_DR实际是包含了两个寄存器，一个专门用于发送的可写TDR，一个专门用于接收的可读RDR。当进行发送操作时，往USART_DR写入数据会自动存储在TDR内；当进行读取操作时，向USART_DR读取数据会自动提取RDR数据。</p>
-<p>TDR和RDR都是介于系统总线和移位寄存器之间。串行通信是一个位一个位传输的，发送时把TDR内容转移到发送移位寄存器，然后把移位寄存器数据每一位发送出去，接时把接收到的每一位顺序保存在接收移位寄存器内然后才转移到RDR。</p>
-<p>UART支持DMA传输，可以实现高速数据传输(不经过CPU),使能UART的DMA功能需要将USART_CR1寄存器DMAT位置1。</p>
-<p>控制器</p>
-<p>UART 有专门控制发送的发送器，控制接收的接收器，还有唤醒单元，中断控制等，使用uart 之前需要向 usart_CR1 寄存器的ue位置使能UART UE 位用于开启供给串口的时钟</p>
-<p>发送器</p>
-<p>当USART_CR1寄存器的发送使能位TE置1时，启动数据发送，发送移位寄存器的数据会在TX引脚输出，低位在前，高位在后。</p>
-<p>一个字符帧发送需要3部分，起始位 数据帧  停止位，起始位是一个位周期的低电平，位周期就是每一位占用的时间，数据帧就是我们要发送的8 或9 位数据，数据是最低位开始传输的，停止位是一定时间周期的高电平</p>
-<p>停止位的时间长短可以通过UART控制寄存器2（USART_CR2）的STOP[1:0]位控制，可选0.5个、1个、1.5个、2个停止位。默认使用1个停止位。2个停止位适用于正常USART模式、单线模式和调制解调器模式。0.5和1.5个停止位用于智能卡模式。</p>
-<p>当发使能位TE置1之后，发送器开始会发送一个空闲帧（一个数据帧长度的高电平），接下来就可以往USART_DR寄存器写入要发送的数据。在写入最后一个数据后，需等待UART状态寄存器（USART_SR）的TC位为1，表示数据传输完成。USART_CR1寄存器的TCIE位置1，则产生中断。</p>
-<p>发送数据时，几个重要的标志位如下</p>
-<p>TE 发送使能<br>TXE 发送寄存器为空，发送单个字节时使用<br>TC 发送完成，发送多个字节数据时候使用<br>TXIE 发送完成中断使能</p>
-<p>接收器</p>
-<p>将CR1寄存器的RE位置1，使能USART接收，使得接收器在RX线开始搜索起始位。在确定起始位后，就根据RX线电平状态把数据存放在接收移位寄存器内。接收完成后就把接收移位寄存器的数据移到PDR内，并把USART_SR寄存器的RXNE位置。如果USART_CR2寄存器的RXNEIE置1可以产生中断。</p>
-<p>接收数据时，几个重要的标志位如下</p>
-<p>RE 接收使能<br>RXNE:读数据寄存器非空。</p>
-<p>RXNEIE:发送完成中断使能。</p>
-<p>USART_CR1寄存器：<br>USART_CR2寄存器：<br>USART_CR3寄存器：</p>
-<p>之后会基于STM32继续介绍怎样配置并使用UART，包括串口轮询&#x2F;中断&#x2F;DMA方式发送&#x2F;接收数据。</p>
+<p>数模混合信号的处理</p>
+<p>数字信号的描述</p>
+<p>仿真工具</p>
+<p>仿真分为</p>
+<p>功能仿真</p>
+<p>时序仿真</p>
+<p>验证系统的时序特性、系统性能</p>
+<p>仿真是系统验证的主要手段、是整个电子设计过程中花费时间最多的环节</p>
+<p>综合工具</p>
+<p>由高层次描述自动转换为低层次描述的过程，是EDA 技术的核心</p>
+<p>EDA 设计的描述层次</p>
+<p>行为级描述</p>
+<p>寄存器传输级描述 RTL</p>
+<p>门级描述</p>
+<p>版图级描述</p>
+<p>综合分为</p>
+<p>行为综合 逻辑综合 前端综合 版图综合 测试综合</p>
+<p>EDA 的工程设计流程</p>
+<p>文本编辑器 图形编辑器</p>
+<p>VHDL 仿真器</p>
+<p>VHDL 综合器</p>
+<p>网表文件</p>
+<p>FPGA&#x2F;CPLD布线 适配器</p>
+<p>门级仿真器</p>
+<p>各种编程文件</p>
+<p>编程器下载 电缆</p>
+<p>数字系统的设计方法</p>
+<p>自顶向下</p>
+<p>顶层规范描述  系统级行为设计与仿真</p>
+<p>功能模块化分、模块级行为描述与仿真</p>
+<p>由EDA 工具完成综合、优化及工艺的映射 实现</p>
+<p>自底向上</p>
+<p>进行整个系统的测试与性能分析</p>
+<p>由各个功能模块连成一个完整系统</p>
+<p>由逻辑单元组成各个独立的功能模块</p>
+<p>由基本门组成各个组合与时序逻辑单元</p>
+<p>EDA 技术的优点 </p>
+<p>采用自顶向下的设计方法</p>
+<p>采用系统早期仿真</p>
+<p>多种设计描述方式</p>
  
       <!-- reward -->
       
@@ -1559,7 +1066,7 @@
   
   <nav class="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/2/">上一页</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/4/">下一页</a>
+    <a class="extend prev" rel="prev" href="/page/2/">上一页</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><a class="extend next" rel="next" href="/page/4/">下一页</a>
   </nav>
   
 </section>
@@ -1570,7 +1077,7 @@
     <ul>
       <li>
         Copyrights &copy;
-        2015-2022
+        2015-2023
         <i class="ri-heart-fill heart_icon"></i> TeX_baitu
       </li>
     </ul>
