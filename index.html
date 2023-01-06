@@ -173,6 +173,59 @@
 
     
     <article
+  id="post-20221216-HC-06蓝牙模块"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/12/16/20221216-HC-06%E8%93%9D%E7%89%99%E6%A8%A1%E5%9D%97/"
+    >20221216-HC-06蓝牙模块</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/12/16/20221216-HC-06%E8%93%9D%E7%89%99%E6%A8%A1%E5%9D%97/" class="article-date">
+  <time datetime="2022-12-16T11:46:36.000Z" itemprop="datePublished">2022-12-16</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>主机：用于向从机下发指令，能够搜索并主动建立连接的一方</p>
+<p>从机：用于接收主机下发的命令，不能主动建立连接，只能等别人连接自己。（HC-06只能工作在从机模式下。）<br>主从一体：能够在主机和从机模式间切换，即可做主机也可作从机。如：HC-05既可以设置为主机也可以设置为从机。</p>
+<p>引脚说明</p>
+<p>HC-05 和HC-06的硬件相同，都采用CSR 公司的BC417143 芯片，支持蓝牙2.1+EDR 规范，只是芯片内部的控制程序不同</p>
+<p>通常可采用万用表「电阻」档，测量底板RxD引脚和蓝牙模块本身（就是焊接上去那块板）的第2脚，如果电阻值为接近于0，则代表沒有限流电阻。如下图：</p>
+<p>使用AT 指令前，最好由一块USB 转TTL 的模块，将蓝牙模块与usb 转ttl 模块连接完成，</p>
+<p>AT指令<br>终端返回信息<br>功能描述<br>AT<br>oK<br>确认连接状态<br>AT+VERSION<br>OK linvor V1.8<br>查看软件版本号<br>AT+NAMEOOo<br>oK setname<br>设置蓝牙名称<br>AT+PINOO0o<br>oK setPIN<br>设定密码<br>AT+BAUD1<br>OK 1200<br>将波特率设置为:1200<br>AT+BAUD2<br>OK 2400<br>将波特率设置为:2400<br>AT+BAUD3<br>OK 4800<br>将波特率设置为:4800<br>AT+BAUD4<br>oK 9600<br>将波特率设置为:9600<br>AT+BAUD5<br>OK 19200<br>将波特率设置为:19200<br>AT+BAUD6<br>OK 38400<br>将波特率设置为:38400<br>AT+BAUD7<br>OK 57600<br>将波特率设置为:57600<br>AT+BAUD8<br>OK 115200<br>将波特率设置为::115200 dn.net&#x2F;O17136(</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-20221216-AT指令介绍"
   class="article article-type-post"
   itemscope
@@ -225,6 +278,238 @@
 <h2 id="数据模式与指令模式"><a href="#数据模式与指令模式" class="headerlink" title="数据模式与指令模式"></a>数据模式与指令模式</h2><p>在收到 +++，并且接下来 1s 内未收到其他数据的话，将从数据模式切换到指令模式。</p>
 <p>数据模式，可以透传数据，client 发什么，server 就原封不动发出去。指令模式时，AT Server 需要解析 AT 指令，并作出响应。</p>
 <!-- AT+name=”LiMou” --> 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-20221216-C语言中typedef的使用方法"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/12/16/20221216-C%E8%AF%AD%E8%A8%80%E4%B8%ADtypedef%E7%9A%84%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/"
+    >20221216-C语言中typedef的使用方法</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/12/16/20221216-C%E8%AF%AD%E8%A8%80%E4%B8%ADtypedef%E7%9A%84%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/" class="article-date">
+  <time datetime="2022-12-16T06:05:15.000Z" itemprop="datePublished">2022-12-16</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p><a target="_blank" rel="noopener" href="http://c.biancheng.net/view/298.html">http://c.biancheng.net/view/298.html</a></p>
+<p>C语言用户使用typedef 关键字来定义自己习惯的数据类型名称，来替代系统默认的基本类型，数组类型名称，指针类型名称与用户自定义的结构型名称，共用型名称，枚举型名称等，一旦用户在程序中定义了自己的数据类型名称，就可以在该程序中用自己的数据类型名称来定义变量的类型，数组的类型，指针变量的类型与函数的类型等</p>
+<p>C99 之前并未提供布尔类型，但我们可以使用typedef 关键字来定义一个简单的布尔类型，如下面的代码所示</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="type">int</span> BOOL;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> TRUE 1</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> FALSE 0</span></span><br><span class="line"></span><br><span class="line">BOOL bflag=TRUE;</span><br></pre></td></tr></table></figure>
+
+<p>C99 标准中新增了布尔类型，自定义布尔变量的方式有两种，一种是使用<code> _BOOL</code>，另一种是使用<code>&lt;stdbool.h&gt;</code>头文件中定义好的 bool 类型，感兴趣的小伙伴请猛击这里了解详情。 </p>
+<h2 id="typedef-的四种用法"><a href="#typedef-的四种用法" class="headerlink" title="typedef 的四种用法"></a>typedef 的四种用法</h2><p>在实际使用中，typedef 的应用主要有如下4种</p>
+<p>为基本数据类型定义新的类型名</p>
+<p>也就是说，系统默认的所有基本类型都可以利用typedef 关键字来重新定义类型名，示例代码如下所示</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="type">unsigned</span> <span class="type">int</span> COUNT;</span><br></pre></td></tr></table></figure>
+
+<p>而且我们还可以使用这种方法来定义与平台无关的类型，比如，要定义一个REAL 的浮点类型，在目标平台上，让它表示最高精度的类型</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">double</span> REAL;</span><br></pre></td></tr></table></figure>
+<p>在不支持 long double 的平台二上，改为：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="type">double</span> REAL;</span><br></pre></td></tr></table></figure>
+<p>甚至还可以在连 double 都不支持的平台三上，改为：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="type">float</span> REAL;</span><br></pre></td></tr></table></figure>
+
+<p>这样，当跨平台移植程序时，我们只需要修改一个typedef 的定义即可，而不用对其他源代码做任何修改，其实，标准库中广泛地使用了这个技巧，比如 size_t 在 VC++2010 的 crtdefs.h 文件中的定义如下所示：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">ifndef</span> _SIZE_T_DEFINED</span></span><br><span class="line"><span class="meta">#<span class="keyword">ifdef</span>  _WIN64</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="type">unsigned</span> __int64    <span class="type">size_t</span>;</span><br><span class="line"><span class="meta">#<span class="keyword">else</span></span></span><br><span class="line"><span class="keyword">typedef</span> _W64 <span class="type">unsigned</span> <span class="type">int</span>   <span class="type">size_t</span>;</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> _SIZE_T_DEFINED</span></span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+
+<p>为自定义数据类型 定义简洁的类名名称</p>
+<p>以结构体为例，下面我们定义一个名为point的结构体</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Point</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="type">double</span> x;</span><br><span class="line">    <span class="type">double</span> y;</span><br><span class="line">    <span class="type">double</span> z;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>在调用这个结构体时，我们必须像下面的代码这样来调用这个结构体</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Point</span> <span class="title">oPoint1</span>=</span>&#123;<span class="number">100</span>，<span class="number">100</span>，<span class="number">0</span>&#125;;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Point</span> <span class="title">oPoint2</span>;</span></span><br></pre></td></tr></table></figure>
+<p>这里，结构体 struct Point 为新的数据类型，在定义变量的时候均要向上面的调用方法一样有保留字struct ，而不能像int 和double 那样直接使用Point 来定义变量，现在，我们利用typedef 定义这个结构体，如下面的代码所示</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">tagPoint</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="type">double</span> x;</span><br><span class="line">    <span class="type">double</span> y;</span><br><span class="line">    <span class="type">double</span> z;</span><br><span class="line">&#125; Point;</span><br></pre></td></tr></table></figure>
+
+<p>在上面的代码中，实际上完成了两个操作<br>定义了一个新的结构类型，代码如下所示</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">tagPoint</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="type">double</span> x;</span><br><span class="line">    <span class="type">double</span> y;</span><br><span class="line">    <span class="type">double</span> z;</span><br><span class="line">&#125; ;</span><br></pre></td></tr></table></figure>
+<p>其中，struct 关键字和tagPoint 一起构成了这个结构类型，无论是否存在typedef 关键字，这个结构都存在</p>
+<p>使用typedef 为这个新的结构起了一个别名，叫Point 即</p>
+<p>typedef struct tagPoint Point</p>
+<p>因此，现在你就可以像int 和double 那样直接使用Point 定义变量，如下面的代码所示</p>
+<p>Point oPoint1&#x3D;{100，100，0};<br>Point oPoint2;</p>
+<p>为了加深对typedef 的理解，我们再来看一个结构体例子，如下面的代码所示</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">tagNode</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="type">char</span> *pItem;</span><br><span class="line">    pNode pNext;</span><br><span class="line">&#125; *pNode;</span><br></pre></td></tr></table></figure>
+
+<p>从表面上看，上面的示例代码与前面的定义方法相同，所以应该没有什么问题，但是编译器却报了一个错误，</p>
+<p>其实问题并非在于struct 定义的本身，大家应该都知道，C 语言是允许在结构中包含指向它自己的指针的，我们可以在建立链表等数据结构的实现上看到很多这类例子，那问题在哪里呢  ？其实，根本问题还是在于typedef 的应用 </p>
+<p>在上面的代码中，新结构建立的过程中遇到了pNext 声明，其类型是pNode 这里要特别注意的是，pNode 表示的是该结构体的新别名。于是问题出现了，在结构体类型本身还没有建立完成的时候，编译器根本就不认识pNode 因为这个结构体类型的新别名还不存在，所以自然就会报错，因此，我们要做一些适当的调整，比如将结构体中的pNext 声明修改成如下方式</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">tagNode</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="type">char</span> *pItem;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">tagNode</span> *<span class="title">pNext</span>;</span></span><br><span class="line">&#125; *pNode;</span><br></pre></td></tr></table></figure>
+
+<p>或者将struct 与typedef 分开定义，如下面的代码所示</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">tagNode</span> *<span class="title">pNode</span>;</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">tagNode</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="type">char</span> *pItem;</span><br><span class="line">    pNode pNext;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>在上面的代码中，我们同样使用typedef 给一个还未完全声明的类型tagNode 起了一个新别名，</p>
+<p>不过，虽然C 语言编译器完全支持这种做法，但不推荐这样做，建议还是使用如下规范定义方法</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">tagNode</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="type">char</span> *pItem;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">tagNode</span> *<span class="title">pNext</span>;</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">tagNode</span> *<span class="title">pNode</span>;</span></span><br></pre></td></tr></table></figure>
+
+<p>为数组定义简洁的类型名称</p>
+<p>它的定义方法很简单，与为基本数据类型定义新的别名方法一样，示例代码如下所示，</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="type">int</span> INT_ARRAY_100[<span class="number">100</span>];</span><br><span class="line">INT_ARRAY_100 arr;</span><br></pre></td></tr></table></figure>
+
+<p>为指针定义简洁的名称</p>
+<p>对于 指针，我们同样可以使用下面的方式来定义一个新的别名</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="type">char</span>* PCHAR;</span><br><span class="line">PCHAR pa;</span><br></pre></td></tr></table></figure>
+
+<p>对于下面这种简单的变量声明，使用typedef 来定义一个新的别名或许会感觉意义不大，但在比较复杂的变量声明中，typedef 的优势马上就体现出来了，如下面的示例代码所示</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> *(*a[<span class="number">5</span>])(<span class="type">int</span>,<span class="type">char</span>*);</span><br></pre></td></tr></table></figure>
+
+<p>对于上面变量的声明，如果我们使用typedef 来给它定义一个别名，这会非常有意义，如下面的代码所示</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// PFun是我们创建的一个类型别名</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="type">int</span> *(*PFun)(<span class="type">int</span>,<span class="type">char</span>*);</span><br><span class="line"><span class="comment">// 使用定义的新类型来声明对象，等价于int*(*a[5])(int,char*);</span></span><br><span class="line">PFun a[<span class="number">5</span>];</span><br></pre></td></tr></table></figure>
+
+<h2 id="小心使用typedef-带来的陷阱"><a href="#小心使用typedef-带来的陷阱" class="headerlink" title="小心使用typedef 带来的陷阱"></a>小心使用typedef 带来的陷阱</h2><p>接下来看一个简单的typedef 使用示例，如下面的代码所示</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="type">char</span>* PCHAR;</span><br><span class="line"><span class="type">int</span> <span class="title function_">strcmp</span><span class="params">(<span class="type">const</span> PCHAR,<span class="type">const</span> PCHAR)</span>;</span><br></pre></td></tr></table></figure>
+
+<p>在上面的代码中，<code>const PCHAR</code> 使用相当于const char* 呢</p>
+<p>答案是否定的，原因很简单，typedef 是用来定义一种类型的新别名的，它不同于宏，不是简单的字符串替换，因此，const PCHAR 中的const 给予了整个指针本身常量性，也就是形成了常量指针，<code>char *const</code> 一个指向char 的常量指针。即它实际上相当于“char<em>const”，而不是“const char</em>（指向常量 char 的指针）”。当然，要想让 const PCHAR 相当于 const char* 也很容易，如下面的代码所示：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="type">const</span> <span class="type">char</span>* PCHAR;</span><br><span class="line"><span class="type">int</span> <span class="title function_">strcmp</span><span class="params">(PCHAR， PCHAR)</span>;</span><br></pre></td></tr></table></figure>
+
+<p>其实，无论什么时候，只要为指针声明 typedef ，那么就应该在最终的typedef 名称中加一个const 以使得指针本身是常量</p>
+<p>还需要特别注意的是，虽然typedef 并不真正影响对象的存储特性，但在语法上它还是一个存储类的关键字，就像auto extern static 和register 等关键字一样，因此，像下面这种声明是不可行的</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="type">static</span> <span class="type">int</span> INT_STATIC;</span><br></pre></td></tr></table></figure>
+
+<p>不可行的原因是不能声明多个存储类关键字，由于 typedef 已经占据了存储类关键字的位置，因此，在 typedef 声明中就不能够再使用 static 或任何其他存储类关键字了。当然，编译器也会报错，如在 VC++2010 中的报错信息为“无法指定多个存储类”。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-20221216-python3简单的串口通信实现"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/12/16/20221216-python3%E7%AE%80%E5%8D%95%E7%9A%84%E4%B8%B2%E5%8F%A3%E9%80%9A%E4%BF%A1%E5%AE%9E%E7%8E%B0/"
+    >20221216-python3简单的串口通信实现</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/12/16/20221216-python3%E7%AE%80%E5%8D%95%E7%9A%84%E4%B8%B2%E5%8F%A3%E9%80%9A%E4%BF%A1%E5%AE%9E%E7%8E%B0/" class="article-date">
+  <time datetime="2022-12-16T04:45:11.000Z" itemprop="datePublished">2022-12-16</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>串口通信就是计算机和外设之间，通过数据信号线，底线、控制线等，按位进行传输数据的一种通讯方式，这种通讯方式使用的数据线少</p>
+<p>串口是一种接口标准，它规定了接口的电气标准，没有规定接口插件电缆及使用的协议</p>
+<p>python</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-20221216-单片机的烧写原理"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/12/16/20221216-%E5%8D%95%E7%89%87%E6%9C%BA%E7%9A%84%E7%83%A7%E5%86%99%E5%8E%9F%E7%90%86/"
+    >20221216-单片机的烧写原理</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/12/16/20221216-%E5%8D%95%E7%89%87%E6%9C%BA%E7%9A%84%E7%83%A7%E5%86%99%E5%8E%9F%E7%90%86/" class="article-date">
+  <time datetime="2022-12-16T04:29:08.000Z" itemprop="datePublished">2022-12-16</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>单片机烧写，又称为单片机程序下载，烧录等，本质上是单片机和pc 机按照芯片厂家规定的编程协议，通过芯片厂家规定的接口，把已编译好的程序传输到单片机上，单片机把数据存储到自身存储器中的过程，在嵌入式系统中，常需要将代码或数据烧写至MCU内flash 或片外的norFlash 等<br>下面介绍几种芯片烧写方法</p>
+<h2 id="编程器烧写"><a href="#编程器烧写" class="headerlink" title="编程器烧写"></a>编程器烧写</h2><p>使用专用编程器加上对应的适配座完成flash 烧写操作，要求芯片先烧写完成再焊接在目标板上，这种方式是最常用的，速度快，易上手是它的最大特点，</p>
+<p>由于各种芯片不同封装，需要不同的适配座，这是客户需要考虑的投入</p>
+<h2 id="ISP-烧写"><a href="#ISP-烧写" class="headerlink" title="ISP 烧写"></a>ISP 烧写</h2><p>在系统编程（In-System Programming），通过MCU片内BootROM完成在板Flash烧写操作。要求芯片出厂时带有ISP固件，一般通过串行方式烧写，这种方式烧写速度很慢，不适用烧写容量大的代码场合。比如：LPC1700系列芯片，通过串口接口，使用上位机软件FlashMagic即可烧写，由于串行烧写速度慢，不适用于量产烧写的场合。</p>
+<h2 id="IAP-烧写"><a href="#IAP-烧写" class="headerlink" title="IAP 烧写"></a>IAP 烧写</h2><p>在应用编程中，IAP 支持用户程序运行时烧写flash 但要求部分用户程序已经烧写至mcu 片内 flash</p>
+<h2 id="调试接口烧写"><a href="#调试接口烧写" class="headerlink" title="调试接口烧写"></a>调试接口烧写</h2><p>由于Arm®内核的芯片越来越普及，借助仿真器通过MCU的调试接口(如JTAG&#x2F;SWD等)控制MCU完成片内Flash甚至外扩的Flash烧写。这种方式芯片先焊接在板上再烧写，适用于产品维修升级，不需要多次焊接芯片，特别对于管脚数较大的芯片，多次焊接容易导致损坏；同样适用于封装怪异的MCU，如QFP144&#x2F;QFN&#x2F;HVQFN&#x2F;BGA等。</p>
+<p>通常我们把第一种称为离线烧写或者裸片烧写，另外的isp 烧写  iap 烧写，调试接口 烧写称为在线烧写，就是芯片已经安装至电路板的情况下，不需要将芯片从电路板取下即可完成flash 的烧写操作</p>
+<p>理解这个原理需要知道几个知识点</p>
+<p>单片机内部是由程序的，是出厂时固化在硬件中，用户无法修改的，这些程序可以调用各种通信接口，内部存储器等</p>
+<p>可以下载的通信接口 ：JTAG,SPI,UART，usb等；（还有很多可以扩展485、以太网等）</p>
+<p>编程协议  一般大厂都会公开，在芯片的专用技术手册中会有</p>
+<p>存储器：有很多种，掩膜，EPROM，EEROM，flash等寿命不一样，掩膜只能一次，而且要工厂做，flash擦写次数10000+；</p>
+<p>可以这样比喻性的理解：单片机就是电脑的主板，我们写的程序就是操作系统，主板里面装入引导操作系统的基本程序，下载程序就是给电脑装系统！</p>
+ 
       <!-- reward -->
       
     </div>
@@ -974,527 +1259,13 @@
 </article>
 
     
-    <article
-  id="post-20221214-PNG格式详解"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/12/14/20221214-PNG%E6%A0%BC%E5%BC%8F%E8%AF%A6%E8%A7%A3/"
-    >20221214-PNG格式详解</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/12/14/20221214-PNG%E6%A0%BC%E5%BC%8F%E8%AF%A6%E8%A7%A3/" class="article-date">
-  <time datetime="2022-12-14T03:35:43.000Z" itemprop="datePublished">2022-12-14</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>png 是20世纪90年代开始开发的图像文件存储格式，其目的是替代gif 和tiff 文件格式，同时增加一些gif 文件格式所不具备的特性，流式网络图形格式名称来源于非官方的  是一种位图文件存储格式，读成ping 。png 用来存储灰度图像时，灰度图像的深度可多到16位，存储彩色图像时，彩色图像的深度可多到48位，并且还可存储多到16位的alpha 通道，png 使用从LZ77 派生的无损数据压缩算法</p>
-<h3 id="特性"><a href="#特性" class="headerlink" title="特性"></a>特性</h3><p>使用调色板技术可支持256种颜色的彩色图像  必须的</p>
-<p>流式读 写性，图像文件格式允许连续读出和写入图像数据 因此适于网络传播</p>
-<p>逐次逼近显示，这种特性可使在通信链路上传输图像文件的同时就在终端上显示图像，把整个轮廓显示出来之后逐步显示图像的细节，也就是先用低分辨率显示图像，然后逐步提高它的分辨率  类似马赛克逐渐消除的过程</p>
-<p>透明性，这个性能可使图像中某些部分不显示出来，用来创建一些有特色的图像</p>
-<p>辅助信息，这个特性可用来在图像文件中存储一些文本注释信息  就是可以说一些废话</p>
-<p>独立于计算机硬件环境</p>
-<p>使用无损压缩</p>
-<p>可在一个文件中存储多幅图像</p>
-<h2 id="文件结构"><a href="#文件结构" class="headerlink" title="文件结构"></a>文件结构</h2><p>png 图像格式文件由文件署名和数据块 组成</p>
-<p>文件署名域</p>
-<p>8字节的png 文件署名域用来识别该文件是不是png 文件，该域的值是 </p>
-<p>十进制数  十六进制数<br>137 89<br>80  50<br>78  4e<br>71  47<br>13  0d<br>10  0a<br>26  1a<br>10  0a<br>这个文件署名就是在《利用文件头标志判断文件类型》中提到的文件头标志了，很简单。</p>
-<p>数据块</p>
-<p>这里有两种类型的数据块，一种是称为关键数据块，就是必须要有的块，另一种叫做辅助数据块</p>
-<p>每个数据块都由下表所示的4个域组成</p>
-<p>名称  字节数 说明<br>Length(长度)  4字节 指定数据块中数据域的长度，其长度不超过(231−1)(231−1)字节<br>Chunk Type Code(数据块类型码) 4字节 数据块类型码由ASCII字母(A-Z和a-z)组成<br>Chunk Data(数据块实际内容  可变长度  存储按照Chunk Type Code指定的数据<br>CRC(循环冗余检测  4字节 存储用来检测是否有错误的循环冗余码</p>
-<p>其中CRC 域中的值是对chunk type code 域和chunk data 域中的数据进行计算得到的，可以看作一种校验码</p>
-<p>关键数据块</p>
-<p>关键数据块中的4个标准数据块是</p>
-<p>文件头数据块 IHDR</p>
-<p>它包含有png 文件中存储的图像数据的基本信息，并要作为第一个数据块出现在png 数据流中，而且一个png 数据流中只能有一个文件头数据块</p>
-<p>文件头数据块由13字节，组成结构如下</p>
-<table>
-<thead>
-<tr>
-<th>域的名称</th>
-<th>字节数</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>Width</td>
-<td>4 bytes</td>
-<td>图像宽度，以像素为单位</td>
-</tr>
-<tr>
-<td>Height</td>
-<td>4 bytes</td>
-<td>图像高度，以像素为单位</td>
-</tr>
-<tr>
-<td>Bit depth</td>
-<td>1 byte</td>
-<td>图像深度：索引彩色图像：1，2，4或8 ;灰度图像：1，2，4，8或16 ;真彩色图像：8或16</td>
-</tr>
-<tr>
-<td>ColorType</td>
-<td>1 byte</td>
-<td>颜色类型：0：灰度图像, 1，2，4，8或16;2：真彩色图像，8或16;3：索引彩色图像，1，2，4或84：带α通道数据的灰度图像，8或16;6：带α通道数据的真彩色图像，8或16</td>
-</tr>
-<tr>
-<td>Compression method</td>
-<td>1 byte</td>
-<td>压缩方法(LZ77派生算法)</td>
-</tr>
-<tr>
-<td>Filter method</td>
-<td>1 byte</td>
-<td>滤波器方法</td>
-</tr>
-<tr>
-<td>Interlace method</td>
-<td>1 byte</td>
-<td>隔行扫描方法：0：非隔行扫描;1： Adam7(由Adam M. Costello开发的7遍隔行扫描方法)</td>
-</tr>
-</tbody></table>
-<p>调色板数据块PLTE</p>
-<p>它包含有与索引彩色图像相关的彩色变换数据，它仅与索引彩色图像有关，而且要放在图像数据块之前，真彩色的png 数据流也可以有调色板数据块，目的是便于非真彩色显示程序用它来量化图像数据，从而显示该图像，结构如下</p>
-<p>|颜色|字节|意义|<br>|Red|1 byte | 0 &#x3D; 黑色, 255 &#x3D; 红|<br>|Green|1 byte | 0 &#x3D; 黑色, 255 &#x3D; 绿色|<br>|Blue|1 byte | 0 &#x3D; 黑色, 255 &#x3D; 蓝色|</p>
-<p>PLTE 数据块是定义图像的调色板信息，PLTE 可以包含1-256 个调色板信息，每个调色板信息由3个字节组成，因此调色板数据块所包含的最大字节数为768 调色板的长度应该是3的倍数，否则，这将使一个非法的调色板</p>
-<p>对于索引图像，调色板信息是必须的，调色板的颜色索引从0开始编号，然后是 1 2 调色板的颜色数不能超过色深中规定的颜色数，否则，这将导致png 图像不合法</p>
-<p>图像数据块 IDAT </p>
-<p>它存储实际的数据，在数据流中可包含多个连续顺序的图像数据块<br>IDAT 存放着图像真正的数据信息，因此，如果能够了解IDAT 的结构，我们就可以很方便的生成PNG 图像</p>
-<p>图像结束数据IEND </p>
-<p>它用来标记png 文件或者数据流已经结束，并且必须要放在文件的尾部</p>
-<p>如果我们仔细观察PNG文件，我们会发现，文件的结尾12个字符看起来总应该是这样的：</p>
-<p>00 00 00 00 49 45 4E 44 AE 42 60 82</p>
-<p>不难明白，由于数据块结构的定义，IEND 数据块的长度总是0 0000000除非认为加入信息，数据标识总是iend 因此，CRC码也总是AE 42 60 82</p>
-<p>最后，除了表示数据块开始IHDR 必须放在最前面，表示png 文件结束的iend 数据块放在最后面，其他数据块的存放顺序没有限制</p>
-<p>辅助数据块</p>
-<p>比较杂 ，不需要全部了解透</p>
-<p>PNG 文件格式规范指定的10个辅助数据块是</p>
-<p>背景颜色数据块 bKGD</p>
-<p>基色和白色度数块cHRM 所谓白色度是指当 R G B 最大值时在显示器上产生的白色度</p>
-<p>图像gamma 数据块 gAMA</p>
-<p>图像直方图数据块hIST<br>物理像素尺寸数据块 pHYs</p>
-<p>样本有效位数据块 sBIT</p>
-<p>文本信息数据块 tEXt<br>图像最后修改时间数据块 tIME<br>图像透明数据块 tRNS </p>
-<p>压缩文本数据块 zTXt</p>
-<h2 id="数据块摘要"><a href="#数据块摘要" class="headerlink" title="数据块摘要"></a>数据块摘要</h2><p>关键数据块，辅助数据块和专用公共数据块 综合下表中</p>
-<table>
-<thead>
-<tr>
-<th>数据块符号</th>
-<th>数据块名称</th>
-<th>多数据块</th>
-<th>可选否</th>
-<th>位置限制</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>IHDR</td>
-<td>文件头数据块</td>
-<td>否</td>
-<td>否</td>
-<td>第一块</td>
-</tr>
-<tr>
-<td>cHRM</td>
-<td>基色和白色点数据块</td>
-<td>否</td>
-<td>是</td>
-<td>在PLTE和IDAT之前</td>
-</tr>
-<tr>
-<td>gAMA</td>
-<td>图像γ数据块</td>
-<td>否</td>
-<td>是</td>
-<td>在PLTE和IDAT之前</td>
-</tr>
-<tr>
-<td>sBIT</td>
-<td>样本有效位数据块</td>
-<td>否</td>
-<td>是</td>
-<td>在PLTE和IDAT之前</td>
-</tr>
-<tr>
-<td>PLTE</td>
-<td>调色板数据块</td>
-<td>否</td>
-<td>是</td>
-<td>在IDAT之前</td>
-</tr>
-<tr>
-<td>bKGD</td>
-<td>背景颜色数据块</td>
-<td>否</td>
-<td>是</td>
-<td>在PLTE之后IDAT之前</td>
-</tr>
-<tr>
-<td>hIST</td>
-<td>图像直方图数据块</td>
-<td>否</td>
-<td>是</td>
-<td>在PLTE之后IDAT之前</td>
-</tr>
-<tr>
-<td>tRNS</td>
-<td>图像透明数据块</td>
-<td>否</td>
-<td>是</td>
-<td>在PLTE之后IDAT之前</td>
-</tr>
-<tr>
-<td>oFFs</td>
-<td>(专用公共数据块)</td>
-<td>否</td>
-<td>是</td>
-<td>在IDAT之前</td>
-</tr>
-<tr>
-<td>pHYs</td>
-<td>物理像素尺寸数据块</td>
-<td>否</td>
-<td>是</td>
-<td>在IDAT之前</td>
-</tr>
-<tr>
-<td>sCAL</td>
-<td>(专用公共数据块)</td>
-<td>否</td>
-<td>是</td>
-<td>在IDAT之前</td>
-</tr>
-<tr>
-<td>IDAT</td>
-<td>图像数据块</td>
-<td>是</td>
-<td>否</td>
-<td>与其他IDAT连续</td>
-</tr>
-<tr>
-<td>tIME</td>
-<td>图像最后修改时间数据块</td>
-<td>否</td>
-<td>是</td>
-<td>无限制</td>
-</tr>
-<tr>
-<td>tEXt</td>
-<td>文本信息数据块</td>
-<td>是</td>
-<td>是</td>
-<td>无限制</td>
-</tr>
-<tr>
-<td>zTXt</td>
-<td>压缩文本数据块</td>
-<td>是</td>
-<td>是</td>
-<td>无限制</td>
-</tr>
-<tr>
-<td>fRAc</td>
-<td>(专用公共数据块)</td>
-<td>是</td>
-<td>是</td>
-<td>无限制</td>
-</tr>
-<tr>
-<td>gIFg</td>
-<td>(专用公共数据块)</td>
-<td>是</td>
-<td>是</td>
-<td>无限制</td>
-</tr>
-<tr>
-<td>gIFt</td>
-<td>(专用公共数据块)</td>
-<td>是</td>
-<td>是</td>
-<td>无限制</td>
-</tr>
-<tr>
-<td>gIFx</td>
-<td>(专用公共数据块)</td>
-<td>是</td>
-<td>是</td>
-<td>无限制</td>
-</tr>
-<tr>
-<td>IEND</td>
-<td>图像结束数据</td>
-<td>否</td>
-<td>否</td>
-<td>最后一个数据块</td>
-</tr>
-</tbody></table>
-<p>tEXt和zTXt数据块中的标准关键字：</p>
-<p>关键字 说明<br>Title 图像名称或者标题<br>Author  图像作者名<br>Description 图像说明<br>Copyright 版权声明<br>CreationTime  原图创作时间<br>Software  创作图像使用的软件<br>Disclaimer  弃权<br>Warning 图像内容警告<br>Source  创作图像使用的设备<br>Comment 各种注释<br>一个例子</p>
-<!-- http://qr61.cn/o8bjsz/qEp8BlI --> 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20221213-BMP格式结构"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/12/13/20221213-BMP%E6%A0%BC%E5%BC%8F%E7%BB%93%E6%9E%84/"
-    >20221213-BMP格式结构</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/12/13/20221213-BMP%E6%A0%BC%E5%BC%8F%E7%BB%93%E6%9E%84/" class="article-date">
-  <time datetime="2022-12-13T11:26:33.000Z" itemprop="datePublished">2022-12-13</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>docs.microsoft.com&#x2F;zh-cn&#x2F;windows&#x2F;win32&#x2F;gdibitmap-storage</p>
-<p>简介</p>
-<p>bmp 图形文件是windows 采用的图形文件格式，在windows 环境下运行的所有图像处理软件都支持BMP 图像文件格式，windows 系统内部各图像绘制操作都是以BMP 为基础的</p>
-<p>因此把这种BMP 图像文件格式称为设备相关位图 DDB 文件格式，<br>目的是为了人windows 能够在任何类型的显示设备上显示所存储的图像</p>
-<p>bmp 位图文件默认的文件扩展名是bmp</p>
-<p>BMP 格式结构</p>
-<p>BMP 文件的数据按照从文件头开始的先后顺序分为四个部分</p>
-<p>位图文件头，提供文件的格式 大小等信息</p>
-<p>位图信息头 提供图像数据的尺寸，位平面数，压缩方式，颜色索引等信息</p>
-<p>调色板 可选，如使用索引来表示图像，调色板就是索引与其对饮的颜色的映射表</p>
-<p>位图数据 图像数据区</p>
-<p>BMP图片文件数据表如下：</p>
-<p>数据段名称<br>大小（byte）<br>开始地址<br>结束地址<br>位图文件头(bitmap-file header)<br>14<br>0000h<br>000Dh<br>位图信息头(bitmap-information header)<br>40<br>000Eh<br>0035h<br>调色板(color table)<br>由biBitCount决定<br>0036h<br>未知<br>图片点阵数据(bitmap data)<br>由图片大小和颜色定<br>未知<br>未知</p>
-<p>三、BMP 文件头</p>
-<p>BMP文件头结构体定义如下：<br>typedef struct tagBITMAPFILEHEADER<br>{<br>UINT16 bfType;        &#x2F;&#x2F;2Bytes，必须为”BM”，即0x424D 才是Windows位图文件<br>DWORD bfSize;         &#x2F;&#x2F;4Bytes，整个BMP文件的大小<br>UINT16 bfReserved1;  &#x2F;&#x2F;2Bytes，保留，为0<br>UINT16 bfReserved2;  &#x2F;&#x2F;2Bytes，保留，为0<br>DWORD bfOffBits;     &#x2F;&#x2F;4Bytes，文件起始位置到图像像素数据的字节偏移量<br>} BITMAPFILEHEADER;</p>
-<p>BMP文件头数据表如下：</p>
-<p>变量名<br>地址偏移<br>大小<br>作用说明<br>bfType<br>0000h<br>2Bytes<br>文件标识符，必须为”BM”，即0x424D 才是Windows位图文件<br>‘BM’：Windows 3.1x, 95, NT,…　　‘BA’：OS&#x2F;2 Bitmap Array　　‘CI’：OS&#x2F;2 Color Icon 　　<br>‘CP’：OS&#x2F;2 Color Pointer 　　‘IC’：OS&#x2F;2 Icon 　　<br>‘PT’：OS&#x2F;2 Pointer<br>因为OS&#x2F;2系统并没有被普及开，所以在编程时，你只需判断第一个标识“BM”就行<br>bfSize<br>0002h<br>4Bytes<br>整个BMP文件的大小（以位B为单位）<br>bfReserved1<br>0006h<br>2Bytes<br>保留，必须设置为0<br>bfReserved2<br>0008h<br>2Bytes<br>保留，必须设置为0<br>bfOffBits<br>000Ah<br>4Bytes<br>说明从文件头0000h开始到图像像素数据的字节偏移量（以字节Bytes为单位），以为位图的调色板长度根据位图格式不同而变化，可以用这个偏移量快速从文件中读取图像数据</p>
-<p>四、BMP 信息头</p>
-<p>BMP信息头结构体定义如下：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> _<span class="title">tagBMP_INFOHEADER</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">DWORD  biSize;    <span class="comment">//4Bytes，INFOHEADER结构体大小，存在其他版本I NFOHEADER，用作区分</span></span><br><span class="line">LONG   biWidth;    <span class="comment">//4Bytes，图像宽度（以像素为单位）</span></span><br><span class="line">LONG   biHeight;    <span class="comment">//4Bytes，图像高度，+：图像存储顺序为Bottom2Top，-：Top2Bottom</span></span><br><span class="line">WORD   biPlanes;    <span class="comment">//2Bytes，图像数据平面，BMP存储RGB数据，因此总为1</span></span><br><span class="line">WORD   biBitCount;         <span class="comment">//2Bytes，图像像素位数</span></span><br><span class="line">DWORD  biCompression;     <span class="comment">//4Bytes，0：不压缩，1：RLE8，2：RLE4</span></span><br><span class="line">DWORD  biSizeImage;       <span class="comment">//4Bytes，4字节对齐的图像数据大小</span></span><br><span class="line">LONG   biXPelsPerMeter;   <span class="comment">//4 Bytes，用象素/米表示的水平分辨率</span></span><br><span class="line">LONG   biYPelsPerMeter;   <span class="comment">//4 Bytes，用象素/米表示的垂直分辨率</span></span><br><span class="line">DWORD  biClrUsed;          <span class="comment">//4 Bytes，实际使用的调色板索引数，0：使用所有的调色板索引</span></span><br><span class="line">DWORD biClrImportant;     <span class="comment">//4 Bytes，重要的调色板索引数，0：所有的调色板索引都重要</span></span><br><span class="line">&#125;BMP_INFOHEADER;</span><br></pre></td></tr></table></figure>
-
-<p>变量名<br>地址偏移<br>大小<br>作用说明<br>biSize<br>000Eh<br>4Bytes<br>BNP信息头即BMP_INFOHEADER结构体所需要的字节数（以字节为单位）<br>biWidth<br>0012h<br>4Bytes<br>说明图像的宽度（以像素为单位）<br>biHeight<br>0016h<br>4Bytes<br>说明图像的高度（以像素为单位）。这个值还有一个用处，指明图像是正向的位图还是倒向的位图，该值是正数说明图像是倒向的即图像存储是由下到上；该值是负数说明图像是倒向的即图像存储是由上到下。大多数BMP位图是倒向的位图，所以此值是正值。<br>biPlanes<br>001Ah<br>2Bytes<br>为目标设备说明位面数，其值总设置为1<br>biBitCount<br>001Ch<br>2Bytes<br>说明一个像素点占几位（以比特位&#x2F;像素位单位），其值可为1,4,8,16,24或32<br>biCompression<br>001Eh<br>4Bytes<br>说明图像数据的压缩类型，取值范围为：<br>0         BI_RGB 不压缩（最常用）<br>1         BI_RLE8 8比特游程编码（BLE），只用于8位位图<br>2         BI_RLE4 4比特游程编码（BLE），只用于4位位图<br>3         BI_BITFIELDS比特域（BLE），只用于16&#x2F;32位位图<br>4<br>biSizeImage<br>0022h<br>4Bytes<br>说明图像的大小，以字节为单位。当用BI_RGB格式时，总设置为0<br>biXPelsPerMeter<br>0026h<br>4Bytes<br>说明水平分辨率，用像素&#x2F;米表示，有符号整数<br>biYPelsPerMeter<br>002Ah<br>4Bytes<br>说明垂直分辨率，用像素&#x2F;米表示，有符号整数<br>biClrUsed<br>002Eh<br>4Bytes<br>说明位图实际使用的调色板索引数，0：使用所有的调色板索引<br>biClrImportant<br>0032h<br>4Bytes<br>说明对图像显示有重要影响的颜色索引的数目，如果是0，表示都重要。</p>
-<p>BMP 调色板</p>
-<p>BMP调色板结构体定义如下：<br>typedef struct _tagRGBQUAD<br>{<br>BYTE  rgbBlue;       &#x2F;&#x2F;指定蓝色强度<br>BYTE  rgbGreen;      &#x2F;&#x2F;指定绿色强度<br>BYTE  rgbRed;        &#x2F;&#x2F;指定红色强度<br> BYTE  rgbReserved;  &#x2F;&#x2F;保留，设置为0<br>} RGBQUAD;</p>
-<p>1，4，8位图像才会使用调色板数据，16,24,32位图像不需要调色板数据，即调色板最多只需要256项（索引0 - 255）。<br>颜色表的大小根据所使用的颜色模式而定：2色图像为8字节；16色图像位64字节；256色图像为1024字节。其中，每4字节表示一种颜色，并以B（蓝色）、G（绿色）、R（红色）、alpha（32位位图的透明度值，一般不需要）。即首先4字节表示颜色号1的颜色，接下来表示颜色号2的颜色，依此类推。<br>颜色表中RGBQUAD结构数据的个数有biBitCount来确定，当biBitCount&#x3D;1,4,8时，分别有2,16,256个表项。<br>当biBitCount&#x3D;1时，为2色图像，BMP位图中有2个数据结构RGBQUAD，一个调色板占用4字节数据，所以2色图像的调色板长度为2<em>4为8字节。<br>当biBitCount&#x3D;4时，为16色图像，BMP位图中有16个数据结构RGBQUAD，一个调色板占用4字节数据，所以16像的调色板长度为16</em>4为64字节。<br>当biBitCount&#x3D;8时，为256色图像，BMP位图中有256个数据结构RGBQUAD，一个调色板占用4字节数据，所以256色图像的调色板长度为256*4为1024字节。<br>当biBitCount&#x3D;16，24或32时，没有颜色表。</p>
-<p>BMP 图像数据区</p>
-<p>位图数据记录了位图的每一个像素值，记录顺序是在扫描行内是从左到右,扫描行之间是从下到上。位图的一个像素值所占的字节数:<br>当biBitCount&#x3D;1时，8个像素占1个字节;<br>当biBitCount&#x3D;4时，2个像素占1个字节;<br>当biBitCount&#x3D;8时，1个像素占1个字节;<br>当biBitCount&#x3D;24时,1个像素占3个字节;<br>Windows规定一个扫描行所占的字节数必须是4的倍数(即以long为单位),不足的以0填充，<br>一个扫描行所占的字节数计算方法:</p>
-<p>235.125<br>264 * 8  &#x3D; 2112  个像素<br>33 + 31<br>57 + 31</p>
-<p>DataSizePerLine&#x3D; (biWidth* biBitCount+31)&#x2F;8;<br>&#x2F;&#x2F; 一个扫描行所占的字节数<br>DataSizePerLine&#x3D; DataSizePerLine&#x2F;4<em>4; &#x2F;&#x2F; 字节数必须是4的倍数<br>位图数据的大小(不压缩情况下):<br>DataSize&#x3D; DataSizePerLine</em> biHeight;</p>
-<p>颜色表接下来位为位图文件的图像数据区，在此部分记录着每点像素对应的颜色号，其记录方式也随颜色模式而定，既2色图像每点占1位（8位为1字节）；16色图像每点占4位（半字节）；256色图像每点占8位（1字节）；真彩色图像每点占24位（3字节）。所以，整个数据区的大小也会随之变化。究其规律而言，可的出如下计算公式：图像数据信息大小&#x3D;（图像宽度<em>图像高度</em>记录像素的位数）&#x2F;8。</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20221213-USB协议简析"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/12/13/20221213-USB%E5%8D%8F%E8%AE%AE%E7%AE%80%E6%9E%90/"
-    >20221213-USB协议简析</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/12/13/20221213-USB%E5%8D%8F%E8%AE%AE%E7%AE%80%E6%9E%90/" class="article-date">
-  <time datetime="2022-12-13T07:41:21.000Z" itemprop="datePublished">2022-12-13</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/431163780">https://zhuanlan.zhihu.com/p/431163780</a></p>
-<p>USB 4将我的这种想法给部分实现，通过一种隧道技术的方式，将DP&#x2F;USB3&#x2F;PCIe信号集成到通信隧道里面去，接收端再通过数据包头来区分数据（这就有点像交换机里的数据分发，通过MAC地址或者报文帧头确定数据包目的地）。</p>
-<p>因为硬件的局限性和可能的分发芯片性能功能问题，每个分发数据的协议速率是由各自的上限的，不能够动态调整每个接口的最大速度，</p>
-<p>USB与I2C&#x2F;SPI&#x2F;UART类似，都是一种传输数据的协议规范，但USB主要设计是用于计算机与外接设备的数据交互和文件传输，这一点也正是它现在演变为相对高速的对外接口的原因，最高速的当然是PCIe。</p>
-<p>特点</p>
-<p>服务器交换机目前还是使用USB 2.0 居多</p>
-<p>USB 3 开始和typeC 结合，将曾经的文件传输接口增加为文件加视频传输接口，并且视频一上来就是最新的DP 接口 </p>
-<p>USB 4，这兄弟更猛，除了USB、DP，还额外增加了PCIe的功能，1 LANE支持到10Gbps，通过隧道技术来最大限度发挥物理带宽性能，这个还没有开始投向商用，应该还要一两年。</p>
-<p>技术细节</p>
-<p>USB 3.2 </p>
-<p>就只有 type-C</p>
-<p>pin location pin name function </p>
-<p>USB2.0 数据信号4个，其实是两个，为了满足正反插需求所以正反都有</p>
-<p>USB3.2 数据信号8个，包含两个通道的差分收发信号，VBUS 信号4个，GND 信号4个，一个8个信号处理电源<br>CC 信号两个，SBU 信号两个 </p>
-<p>全称Configuration　Channel，分为CC1和CC2，在type C接口被引用，主要是为了解决正反插的信号交错问题和侦测插入的接口类型。</p>
-<p>目前主要是在source端设计上拉电阻，sink端设计下拉电阻，通过不同电阻的配比来表示当前的设备类型和插入方式。具体方式比较复杂，参考type C spec里的两个截图，两个CC信号用来侦测正反插情况和设备信息。以后有机会调试CC信号再深入了解。</p>
-<p>SBU信号是为USB 4.0 预留的，3.2里没有用到这个信号，不过这两个信号又在Alternate Mode（主要是DP）和Audio Adapter Accessory Mode里有使用，后面讲到这两个模式再具体分析。</p>
-<p>信号完整性 </p>
-<p>此时开始引入redriver 来解决信号完整性的问题</p>
-<p>repeater 分为两种，redriver 和retimer</p>
-<p>retimer 指的是这种器件包含有CDR 电路，可以重新编码信号，好处是不会引入一些高频抖动</p>
-<p>Redriver 指的是器件使用模拟电路的方式来增强信号，不会对码流进行操作，中间会有均衡放大和发送的部分</p>
-<p>一个链路中能够使用的repeater个数是没有限制的，只要总体的时延和抖动能够满足要求，但一般是sink和source端各自处理自己接口上的信号质量，能满足协议规范就可以了，如果是cable厂商，可能也需要在cable中集成一到两个repeater。</p>
-<p>USB 4.0 </p>
-<p>对于USB 4 来说，规定了一种可以同时传输三种通信协议的方式，但这是在芯片内部或者协议端实现的，物理层和逻辑层与所谓的通道互相独立，传输层和配置层需要针对通道方式做出改变</p>
-<p>隧道技术采用了TMUS 来处理每一个交换功能，网上并不能看到太多有关这个技术的细节，但从上面的分析，有理由得出一下的猜测</p>
-<p>TMUs位于芯片内部或者就是纯软件，与USB 4 协议是配套使用，在物理层和传输层没有体现<br>由第一点，如果device端是USB 4，则也需要集成TMU，如果只是三种协议中的一种，就要看host端是否有向下兼容的能力（USB3和DP是必须的，PCIe目前是可选）。<br>再来看下图就会对USB 4的整个拓扑有更多的了解。</p>
-<p>简单来说，USB 4 host可以直接支持USB 3x，DP，PCIe的device；也可以通过USB Hub的方式去fan out直接输出USB 4隧道信号，让Hub来分发；更可以直接插入支持USB 4 的device来一根cable传输这三个协议的信号。</p>
-<p>第一张图里有看到，不同的协议影响的是红圈中的设计，也即Adapter的选择；在USB 4的整个通信过程中，这些具体的协议是已经在比较上层的地方，所以对于不同协议的支持，需要做的有两点：</p>
-<p>在USB 4 的block内有对应支持的协议种类的Adapter<br>在USB 4 与CPU更上层的连接中有对应的通信路径，例如PCIe需要有PCIe Switch或者链接到Root Port的Root Complex<br>当满足以上两点，从芯片对外提供的USB 4 interface上来看，它就可以支持所有的四种协议：USB 4，USB 3，DP，PCIe（目前只到Gen 1）,根据插入的设备类型做到向下兼容。</p>
-<p>SBU 信号 </p>
-<p>SBU 在usb4开始被引入，速度为1Mbps 有三个功能</p>
-<p>配置USB4通道，进行初始化</p>
-<p>和retimer进行交互，完成USB 4 Link TxFFE的握手<br>确保USB 4 通道的发送和retimer的上电或者wake up sequence的正确完成<br>与TMT3的兼容<br>Thunderbolt™ 3是Intel发布的Light Peak技术。Thunderbolt连接技术融合了PCI Express（PCI-E）数据传输技术和Display Port（DP）显示技术，可以同时对数据和视频信号进行传输。</p>
-<p>具体细节不展开了，有一个点需要注意，当以兼容TMT3模式运行时，adapter需要在TBT3兼容的速度下运行，也即Gen 2 是10.3125Gbps，Gen 3 是20.625Gbps。</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20221213-数字芯片中使能信号的作用"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/12/13/20221213-%E6%95%B0%E5%AD%97%E8%8A%AF%E7%89%87%E4%B8%AD%E4%BD%BF%E8%83%BD%E4%BF%A1%E5%8F%B7%E7%9A%84%E4%BD%9C%E7%94%A8/"
-    >20221213-数字芯片中使能信号的作用</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/12/13/20221213-%E6%95%B0%E5%AD%97%E8%8A%AF%E7%89%87%E4%B8%AD%E4%BD%BF%E8%83%BD%E4%BF%A1%E5%8F%B7%E7%9A%84%E4%BD%9C%E7%94%A8/" class="article-date">
-  <time datetime="2022-12-13T07:18:15.000Z" itemprop="datePublished">2022-12-13</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <ol>
-<li>什么是使能信号，</li>
-</ol>
-<p>所谓使能信号，英文叫enable 翻译成中文还有启用等意思</p>
-<p>如图所示，当G1为低电平的时候，不管其它输入是什么。输出全为高电平。而当G2为高电平时（G2等于G2A与上G2B），不管其它输入是什么，输出也都一律为高电平。因此仅从功能上来判断，G1和G2就可以控制这颗芯片是不是被“启用”了。可以看出当G1为低或G2位高时，整个芯片的其它输入无论如何变化都不影响输出。简单的说就是整个芯片实际上没用发挥作用，功能没有“启用”。</p>
-<ol start="2">
-<li>为什么使能信号可以控制芯片的启用和停用</li>
-</ol>
-<p>全部都连到了最后一级的所有与非门上。我们知道一个与非门，如果有1个输入为0，那么这个与非门的输出就会是1。因此，如果不满足G1为高电平，G2A和G2B都为低电平这个条件，就会让所有输出全为1。而这时无论别的输入是什么，都不会让输出有任何改变。从这一点上来说，要启用这颗芯片的功能就必须满足G1为高电平，G2A和G2B都为低电平这个条件。否则，其它输入影响不了输出，芯片“译码”的功能就没有被“启用”。</p>
-<ol start="3">
-<li>为什么需要使能信号</li>
-</ol>
-<p>需要使能信号的主要原因是一个大型的数字系统中，通常都需要使用多个芯片&#x2F;电路单元来配合完成一个功能，而这些芯片并不是每时每刻都在工作，因此需要用使能信号来控制硬功启用那个芯片来工作</p>
-<p>假设4bit的二进制编码从高到低依次是A3A2A1A0</p>
-<p>将A2A1A0分别对应连接到两片74XX138上。而将A3连接到低位片的G2B上和高位片的G1上。</p>
-<p>这样我们实际上把4bit的二进制数据划分为了2段</p>
-<p>其中一段从0000到0111，另外一段从1000到1111。当现在A2A1A0为111时，低位片的Y7和高位片的Y7都有可能输出。而假设此时A3为0（此时输入为0111），那么低位片的所有使能信号均有效，而高位片的G1是无效的。那么此时低位片被启用而高位片未被启用。所以低位片的Y7输出为低而其它均为高，高位片的所有输出都是高。因此，0111被译码为了1111111101111111（输出低有效）。反之，A3为1（此时输入为1111）。则低位片的G2B无效而高位片所有的使能信号都有效。1111倍译码为0111111111111111</p>
-<ol start="4">
-<li>使能信号还有哪些用法</li>
-</ol>
-<p>使能信号的用途非常广泛，可以作为计算机系统中存储芯片选通信号，可以作为显式系统中的控制信号，但核心的一点就是使能信号控制了芯片的功能是否能被正常的启用，这在设计大型的数字系统中是非常重要的一环</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
   </article>
   
 
   
   <nav class="page-nav">
     
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/">13</a><a class="extend next" rel="next" href="/page/2/">下一页</a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><a class="extend next" rel="next" href="/page/2/">下一页</a>
   </nav>
   
 </section>
