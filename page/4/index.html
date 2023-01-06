@@ -126,6 +126,232 @@
     
     
     <article
+  id="post-20221216-C语言中typedef的使用方法"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/12/16/20221216-C%E8%AF%AD%E8%A8%80%E4%B8%ADtypedef%E7%9A%84%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/"
+    >20221216-C语言中typedef的使用方法</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/12/16/20221216-C%E8%AF%AD%E8%A8%80%E4%B8%ADtypedef%E7%9A%84%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/" class="article-date">
+  <time datetime="2022-12-16T06:05:15.000Z" itemprop="datePublished">2022-12-16</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p><a target="_blank" rel="noopener" href="http://c.biancheng.net/view/298.html">http://c.biancheng.net/view/298.html</a></p>
+<p>C语言用户使用typedef 关键字来定义自己习惯的数据类型名称，来替代系统默认的基本类型，数组类型名称，指针类型名称与用户自定义的结构型名称，共用型名称，枚举型名称等，一旦用户在程序中定义了自己的数据类型名称，就可以在该程序中用自己的数据类型名称来定义变量的类型，数组的类型，指针变量的类型与函数的类型等</p>
+<p>C99 之前并未提供布尔类型，但我们可以使用typedef 关键字来定义一个简单的布尔类型，如下面的代码所示</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="type">int</span> BOOL;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> TRUE 1</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> FALSE 0</span></span><br><span class="line"></span><br><span class="line">BOOL bflag=TRUE;</span><br></pre></td></tr></table></figure>
+
+<p>C99 标准中新增了布尔类型，自定义布尔变量的方式有两种，一种是使用<code> _BOOL</code>，另一种是使用<code>&lt;stdbool.h&gt;</code>头文件中定义好的 bool 类型，感兴趣的小伙伴请猛击这里了解详情。 </p>
+<h2 id="typedef-的四种用法"><a href="#typedef-的四种用法" class="headerlink" title="typedef 的四种用法"></a>typedef 的四种用法</h2><p>在实际使用中，typedef 的应用主要有如下4种</p>
+<p>为基本数据类型定义新的类型名</p>
+<p>也就是说，系统默认的所有基本类型都可以利用typedef 关键字来重新定义类型名，示例代码如下所示</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="type">unsigned</span> <span class="type">int</span> COUNT;</span><br></pre></td></tr></table></figure>
+
+<p>而且我们还可以使用这种方法来定义与平台无关的类型，比如，要定义一个REAL 的浮点类型，在目标平台上，让它表示最高精度的类型</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">double</span> REAL;</span><br></pre></td></tr></table></figure>
+<p>在不支持 long double 的平台二上，改为：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="type">double</span> REAL;</span><br></pre></td></tr></table></figure>
+<p>甚至还可以在连 double 都不支持的平台三上，改为：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="type">float</span> REAL;</span><br></pre></td></tr></table></figure>
+
+<p>这样，当跨平台移植程序时，我们只需要修改一个typedef 的定义即可，而不用对其他源代码做任何修改，其实，标准库中广泛地使用了这个技巧，比如 size_t 在 VC++2010 的 crtdefs.h 文件中的定义如下所示：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">ifndef</span> _SIZE_T_DEFINED</span></span><br><span class="line"><span class="meta">#<span class="keyword">ifdef</span>  _WIN64</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="type">unsigned</span> __int64    <span class="type">size_t</span>;</span><br><span class="line"><span class="meta">#<span class="keyword">else</span></span></span><br><span class="line"><span class="keyword">typedef</span> _W64 <span class="type">unsigned</span> <span class="type">int</span>   <span class="type">size_t</span>;</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> _SIZE_T_DEFINED</span></span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+
+<p>为自定义数据类型 定义简洁的类名名称</p>
+<p>以结构体为例，下面我们定义一个名为point的结构体</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Point</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="type">double</span> x;</span><br><span class="line">    <span class="type">double</span> y;</span><br><span class="line">    <span class="type">double</span> z;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>在调用这个结构体时，我们必须像下面的代码这样来调用这个结构体</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Point</span> <span class="title">oPoint1</span>=</span>&#123;<span class="number">100</span>，<span class="number">100</span>，<span class="number">0</span>&#125;;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Point</span> <span class="title">oPoint2</span>;</span></span><br></pre></td></tr></table></figure>
+<p>这里，结构体 struct Point 为新的数据类型，在定义变量的时候均要向上面的调用方法一样有保留字struct ，而不能像int 和double 那样直接使用Point 来定义变量，现在，我们利用typedef 定义这个结构体，如下面的代码所示</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">tagPoint</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="type">double</span> x;</span><br><span class="line">    <span class="type">double</span> y;</span><br><span class="line">    <span class="type">double</span> z;</span><br><span class="line">&#125; Point;</span><br></pre></td></tr></table></figure>
+
+<p>在上面的代码中，实际上完成了两个操作<br>定义了一个新的结构类型，代码如下所示</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">tagPoint</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="type">double</span> x;</span><br><span class="line">    <span class="type">double</span> y;</span><br><span class="line">    <span class="type">double</span> z;</span><br><span class="line">&#125; ;</span><br></pre></td></tr></table></figure>
+<p>其中，struct 关键字和tagPoint 一起构成了这个结构类型，无论是否存在typedef 关键字，这个结构都存在</p>
+<p>使用typedef 为这个新的结构起了一个别名，叫Point 即</p>
+<p>typedef struct tagPoint Point</p>
+<p>因此，现在你就可以像int 和double 那样直接使用Point 定义变量，如下面的代码所示</p>
+<p>Point oPoint1&#x3D;{100，100，0};<br>Point oPoint2;</p>
+<p>为了加深对typedef 的理解，我们再来看一个结构体例子，如下面的代码所示</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">tagNode</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="type">char</span> *pItem;</span><br><span class="line">    pNode pNext;</span><br><span class="line">&#125; *pNode;</span><br></pre></td></tr></table></figure>
+
+<p>从表面上看，上面的示例代码与前面的定义方法相同，所以应该没有什么问题，但是编译器却报了一个错误，</p>
+<p>其实问题并非在于struct 定义的本身，大家应该都知道，C 语言是允许在结构中包含指向它自己的指针的，我们可以在建立链表等数据结构的实现上看到很多这类例子，那问题在哪里呢  ？其实，根本问题还是在于typedef 的应用 </p>
+<p>在上面的代码中，新结构建立的过程中遇到了pNext 声明，其类型是pNode 这里要特别注意的是，pNode 表示的是该结构体的新别名。于是问题出现了，在结构体类型本身还没有建立完成的时候，编译器根本就不认识pNode 因为这个结构体类型的新别名还不存在，所以自然就会报错，因此，我们要做一些适当的调整，比如将结构体中的pNext 声明修改成如下方式</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">tagNode</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="type">char</span> *pItem;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">tagNode</span> *<span class="title">pNext</span>;</span></span><br><span class="line">&#125; *pNode;</span><br></pre></td></tr></table></figure>
+
+<p>或者将struct 与typedef 分开定义，如下面的代码所示</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">tagNode</span> *<span class="title">pNode</span>;</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">tagNode</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="type">char</span> *pItem;</span><br><span class="line">    pNode pNext;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>在上面的代码中，我们同样使用typedef 给一个还未完全声明的类型tagNode 起了一个新别名，</p>
+<p>不过，虽然C 语言编译器完全支持这种做法，但不推荐这样做，建议还是使用如下规范定义方法</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">tagNode</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="type">char</span> *pItem;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">tagNode</span> *<span class="title">pNext</span>;</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">tagNode</span> *<span class="title">pNode</span>;</span></span><br></pre></td></tr></table></figure>
+
+<p>为数组定义简洁的类型名称</p>
+<p>它的定义方法很简单，与为基本数据类型定义新的别名方法一样，示例代码如下所示，</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="type">int</span> INT_ARRAY_100[<span class="number">100</span>];</span><br><span class="line">INT_ARRAY_100 arr;</span><br></pre></td></tr></table></figure>
+
+<p>为指针定义简洁的名称</p>
+<p>对于 指针，我们同样可以使用下面的方式来定义一个新的别名</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="type">char</span>* PCHAR;</span><br><span class="line">PCHAR pa;</span><br></pre></td></tr></table></figure>
+
+<p>对于下面这种简单的变量声明，使用typedef 来定义一个新的别名或许会感觉意义不大，但在比较复杂的变量声明中，typedef 的优势马上就体现出来了，如下面的示例代码所示</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> *(*a[<span class="number">5</span>])(<span class="type">int</span>,<span class="type">char</span>*);</span><br></pre></td></tr></table></figure>
+
+<p>对于上面变量的声明，如果我们使用typedef 来给它定义一个别名，这会非常有意义，如下面的代码所示</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// PFun是我们创建的一个类型别名</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="type">int</span> *(*PFun)(<span class="type">int</span>,<span class="type">char</span>*);</span><br><span class="line"><span class="comment">// 使用定义的新类型来声明对象，等价于int*(*a[5])(int,char*);</span></span><br><span class="line">PFun a[<span class="number">5</span>];</span><br></pre></td></tr></table></figure>
+
+<h2 id="小心使用typedef-带来的陷阱"><a href="#小心使用typedef-带来的陷阱" class="headerlink" title="小心使用typedef 带来的陷阱"></a>小心使用typedef 带来的陷阱</h2><p>接下来看一个简单的typedef 使用示例，如下面的代码所示</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="type">char</span>* PCHAR;</span><br><span class="line"><span class="type">int</span> <span class="title function_">strcmp</span><span class="params">(<span class="type">const</span> PCHAR,<span class="type">const</span> PCHAR)</span>;</span><br></pre></td></tr></table></figure>
+
+<p>在上面的代码中，<code>const PCHAR</code> 使用相当于const char* 呢</p>
+<p>答案是否定的，原因很简单，typedef 是用来定义一种类型的新别名的，它不同于宏，不是简单的字符串替换，因此，const PCHAR 中的const 给予了整个指针本身常量性，也就是形成了常量指针，<code>char *const</code> 一个指向char 的常量指针。即它实际上相当于“char<em>const”，而不是“const char</em>（指向常量 char 的指针）”。当然，要想让 const PCHAR 相当于 const char* 也很容易，如下面的代码所示：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="type">const</span> <span class="type">char</span>* PCHAR;</span><br><span class="line"><span class="type">int</span> <span class="title function_">strcmp</span><span class="params">(PCHAR， PCHAR)</span>;</span><br></pre></td></tr></table></figure>
+
+<p>其实，无论什么时候，只要为指针声明 typedef ，那么就应该在最终的typedef 名称中加一个const 以使得指针本身是常量</p>
+<p>还需要特别注意的是，虽然typedef 并不真正影响对象的存储特性，但在语法上它还是一个存储类的关键字，就像auto extern static 和register 等关键字一样，因此，像下面这种声明是不可行的</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="type">static</span> <span class="type">int</span> INT_STATIC;</span><br></pre></td></tr></table></figure>
+
+<p>不可行的原因是不能声明多个存储类关键字，由于 typedef 已经占据了存储类关键字的位置，因此，在 typedef 声明中就不能够再使用 static 或任何其他存储类关键字了。当然，编译器也会报错，如在 VC++2010 中的报错信息为“无法指定多个存储类”。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-20221216-python3简单的串口通信实现"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/12/16/20221216-python3%E7%AE%80%E5%8D%95%E7%9A%84%E4%B8%B2%E5%8F%A3%E9%80%9A%E4%BF%A1%E5%AE%9E%E7%8E%B0/"
+    >20221216-python3简单的串口通信实现</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/12/16/20221216-python3%E7%AE%80%E5%8D%95%E7%9A%84%E4%B8%B2%E5%8F%A3%E9%80%9A%E4%BF%A1%E5%AE%9E%E7%8E%B0/" class="article-date">
+  <time datetime="2022-12-16T04:45:11.000Z" itemprop="datePublished">2022-12-16</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>串口通信就是计算机和外设之间，通过数据信号线，底线、控制线等，按位进行传输数据的一种通讯方式，这种通讯方式使用的数据线少</p>
+<p>串口是一种接口标准，它规定了接口的电气标准，没有规定接口插件电缆及使用的协议</p>
+<p>python</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-20221216-导电斑马条"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/12/16/20221216-%E5%AF%BC%E7%94%B5%E6%96%91%E9%A9%AC%E6%9D%A1/"
+    >20221216-导电斑马条</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/12/16/20221216-%E5%AF%BC%E7%94%B5%E6%96%91%E9%A9%AC%E6%9D%A1/" class="article-date">
+  <time datetime="2022-12-16T04:43:22.000Z" itemprop="datePublished">2022-12-16</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>我们液晶连接中往往为节约空间会选择使用斑马条来进行连接，那么什么是斑马条的，下面给大家做个简单的介绍。导电橡胶连接器俗称为斑马条，由导电硅胶和绝缘硅胶交替分层叠加后硫化成型。导电橡胶连接器性能稳定可靠，生产装配简便且效率高。广泛用于游戏机、电话、电子表、计算器、仪表等产品的液晶显示器与电路板的连接。</p>
+<p>如何确定斑马条大小呢：</p>
+<p>1.长度设计：玻璃的长度-0.5mm ( 20 mm 以下依照原 LCD 玻璃长度 )</p>
+<p>2.高度设计：LCD至PCB之间高度x(1.08<del>1.12)  —-压缩比8%</del>12%</p>
+<p>3. 宽度设计: LCD边缘宽度×(0.9 ~ 0.95)</p>
+<p>4. 导电层宽度的选择: (Connector上的W’的尺寸)</p>
+<p>5. Pitch之选择：以LCD或PCB上的Pitch ( 宽度) 上有2 ~ 3条Connector在上面为原则,越多条导电性越佳</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-20221216-单片机的烧写原理"
   class="article article-type-post"
   itemscope
@@ -1264,246 +1490,6 @@
 <p>235.125<br>264 * 8  &#x3D; 2112  个像素<br>33 + 31<br>57 + 31</p>
 <p>DataSizePerLine&#x3D; (biWidth* biBitCount+31)&#x2F;8;<br>&#x2F;&#x2F; 一个扫描行所占的字节数<br>DataSizePerLine&#x3D; DataSizePerLine&#x2F;4<em>4; &#x2F;&#x2F; 字节数必须是4的倍数<br>位图数据的大小(不压缩情况下):<br>DataSize&#x3D; DataSizePerLine</em> biHeight;</p>
 <p>颜色表接下来位为位图文件的图像数据区，在此部分记录着每点像素对应的颜色号，其记录方式也随颜色模式而定，既2色图像每点占1位（8位为1字节）；16色图像每点占4位（半字节）；256色图像每点占8位（1字节）；真彩色图像每点占24位（3字节）。所以，整个数据区的大小也会随之变化。究其规律而言，可的出如下计算公式：图像数据信息大小&#x3D;（图像宽度<em>图像高度</em>记录像素的位数）&#x2F;8。</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20221213-USB协议简析"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/12/13/20221213-USB%E5%8D%8F%E8%AE%AE%E7%AE%80%E6%9E%90/"
-    >20221213-USB协议简析</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/12/13/20221213-USB%E5%8D%8F%E8%AE%AE%E7%AE%80%E6%9E%90/" class="article-date">
-  <time datetime="2022-12-13T07:41:21.000Z" itemprop="datePublished">2022-12-13</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/431163780">https://zhuanlan.zhihu.com/p/431163780</a></p>
-<p>USB 4将我的这种想法给部分实现，通过一种隧道技术的方式，将DP&#x2F;USB3&#x2F;PCIe信号集成到通信隧道里面去，接收端再通过数据包头来区分数据（这就有点像交换机里的数据分发，通过MAC地址或者报文帧头确定数据包目的地）。</p>
-<p>因为硬件的局限性和可能的分发芯片性能功能问题，每个分发数据的协议速率是由各自的上限的，不能够动态调整每个接口的最大速度，</p>
-<p>USB与I2C&#x2F;SPI&#x2F;UART类似，都是一种传输数据的协议规范，但USB主要设计是用于计算机与外接设备的数据交互和文件传输，这一点也正是它现在演变为相对高速的对外接口的原因，最高速的当然是PCIe。</p>
-<p>特点</p>
-<p>服务器交换机目前还是使用USB 2.0 居多</p>
-<p>USB 3 开始和typeC 结合，将曾经的文件传输接口增加为文件加视频传输接口，并且视频一上来就是最新的DP 接口 </p>
-<p>USB 4，这兄弟更猛，除了USB、DP，还额外增加了PCIe的功能，1 LANE支持到10Gbps，通过隧道技术来最大限度发挥物理带宽性能，这个还没有开始投向商用，应该还要一两年。</p>
-<p>技术细节</p>
-<p>USB 3.2 </p>
-<p>就只有 type-C</p>
-<p>pin location pin name function </p>
-<p>USB2.0 数据信号4个，其实是两个，为了满足正反插需求所以正反都有</p>
-<p>USB3.2 数据信号8个，包含两个通道的差分收发信号，VBUS 信号4个，GND 信号4个，一个8个信号处理电源<br>CC 信号两个，SBU 信号两个 </p>
-<p>全称Configuration　Channel，分为CC1和CC2，在type C接口被引用，主要是为了解决正反插的信号交错问题和侦测插入的接口类型。</p>
-<p>目前主要是在source端设计上拉电阻，sink端设计下拉电阻，通过不同电阻的配比来表示当前的设备类型和插入方式。具体方式比较复杂，参考type C spec里的两个截图，两个CC信号用来侦测正反插情况和设备信息。以后有机会调试CC信号再深入了解。</p>
-<p>SBU信号是为USB 4.0 预留的，3.2里没有用到这个信号，不过这两个信号又在Alternate Mode（主要是DP）和Audio Adapter Accessory Mode里有使用，后面讲到这两个模式再具体分析。</p>
-<p>信号完整性 </p>
-<p>此时开始引入redriver 来解决信号完整性的问题</p>
-<p>repeater 分为两种，redriver 和retimer</p>
-<p>retimer 指的是这种器件包含有CDR 电路，可以重新编码信号，好处是不会引入一些高频抖动</p>
-<p>Redriver 指的是器件使用模拟电路的方式来增强信号，不会对码流进行操作，中间会有均衡放大和发送的部分</p>
-<p>一个链路中能够使用的repeater个数是没有限制的，只要总体的时延和抖动能够满足要求，但一般是sink和source端各自处理自己接口上的信号质量，能满足协议规范就可以了，如果是cable厂商，可能也需要在cable中集成一到两个repeater。</p>
-<p>USB 4.0 </p>
-<p>对于USB 4 来说，规定了一种可以同时传输三种通信协议的方式，但这是在芯片内部或者协议端实现的，物理层和逻辑层与所谓的通道互相独立，传输层和配置层需要针对通道方式做出改变</p>
-<p>隧道技术采用了TMUS 来处理每一个交换功能，网上并不能看到太多有关这个技术的细节，但从上面的分析，有理由得出一下的猜测</p>
-<p>TMUs位于芯片内部或者就是纯软件，与USB 4 协议是配套使用，在物理层和传输层没有体现<br>由第一点，如果device端是USB 4，则也需要集成TMU，如果只是三种协议中的一种，就要看host端是否有向下兼容的能力（USB3和DP是必须的，PCIe目前是可选）。<br>再来看下图就会对USB 4的整个拓扑有更多的了解。</p>
-<p>简单来说，USB 4 host可以直接支持USB 3x，DP，PCIe的device；也可以通过USB Hub的方式去fan out直接输出USB 4隧道信号，让Hub来分发；更可以直接插入支持USB 4 的device来一根cable传输这三个协议的信号。</p>
-<p>第一张图里有看到，不同的协议影响的是红圈中的设计，也即Adapter的选择；在USB 4的整个通信过程中，这些具体的协议是已经在比较上层的地方，所以对于不同协议的支持，需要做的有两点：</p>
-<p>在USB 4 的block内有对应支持的协议种类的Adapter<br>在USB 4 与CPU更上层的连接中有对应的通信路径，例如PCIe需要有PCIe Switch或者链接到Root Port的Root Complex<br>当满足以上两点，从芯片对外提供的USB 4 interface上来看，它就可以支持所有的四种协议：USB 4，USB 3，DP，PCIe（目前只到Gen 1）,根据插入的设备类型做到向下兼容。</p>
-<p>SBU 信号 </p>
-<p>SBU 在usb4开始被引入，速度为1Mbps 有三个功能</p>
-<p>配置USB4通道，进行初始化</p>
-<p>和retimer进行交互，完成USB 4 Link TxFFE的握手<br>确保USB 4 通道的发送和retimer的上电或者wake up sequence的正确完成<br>与TMT3的兼容<br>Thunderbolt™ 3是Intel发布的Light Peak技术。Thunderbolt连接技术融合了PCI Express（PCI-E）数据传输技术和Display Port（DP）显示技术，可以同时对数据和视频信号进行传输。</p>
-<p>具体细节不展开了，有一个点需要注意，当以兼容TMT3模式运行时，adapter需要在TBT3兼容的速度下运行，也即Gen 2 是10.3125Gbps，Gen 3 是20.625Gbps。</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20221213-数字芯片中使能信号的作用"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/12/13/20221213-%E6%95%B0%E5%AD%97%E8%8A%AF%E7%89%87%E4%B8%AD%E4%BD%BF%E8%83%BD%E4%BF%A1%E5%8F%B7%E7%9A%84%E4%BD%9C%E7%94%A8/"
-    >20221213-数字芯片中使能信号的作用</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/12/13/20221213-%E6%95%B0%E5%AD%97%E8%8A%AF%E7%89%87%E4%B8%AD%E4%BD%BF%E8%83%BD%E4%BF%A1%E5%8F%B7%E7%9A%84%E4%BD%9C%E7%94%A8/" class="article-date">
-  <time datetime="2022-12-13T07:18:15.000Z" itemprop="datePublished">2022-12-13</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <ol>
-<li>什么是使能信号，</li>
-</ol>
-<p>所谓使能信号，英文叫enable 翻译成中文还有启用等意思</p>
-<p>如图所示，当G1为低电平的时候，不管其它输入是什么。输出全为高电平。而当G2为高电平时（G2等于G2A与上G2B），不管其它输入是什么，输出也都一律为高电平。因此仅从功能上来判断，G1和G2就可以控制这颗芯片是不是被“启用”了。可以看出当G1为低或G2位高时，整个芯片的其它输入无论如何变化都不影响输出。简单的说就是整个芯片实际上没用发挥作用，功能没有“启用”。</p>
-<ol start="2">
-<li>为什么使能信号可以控制芯片的启用和停用</li>
-</ol>
-<p>全部都连到了最后一级的所有与非门上。我们知道一个与非门，如果有1个输入为0，那么这个与非门的输出就会是1。因此，如果不满足G1为高电平，G2A和G2B都为低电平这个条件，就会让所有输出全为1。而这时无论别的输入是什么，都不会让输出有任何改变。从这一点上来说，要启用这颗芯片的功能就必须满足G1为高电平，G2A和G2B都为低电平这个条件。否则，其它输入影响不了输出，芯片“译码”的功能就没有被“启用”。</p>
-<ol start="3">
-<li>为什么需要使能信号</li>
-</ol>
-<p>需要使能信号的主要原因是一个大型的数字系统中，通常都需要使用多个芯片&#x2F;电路单元来配合完成一个功能，而这些芯片并不是每时每刻都在工作，因此需要用使能信号来控制硬功启用那个芯片来工作</p>
-<p>假设4bit的二进制编码从高到低依次是A3A2A1A0</p>
-<p>将A2A1A0分别对应连接到两片74XX138上。而将A3连接到低位片的G2B上和高位片的G1上。</p>
-<p>这样我们实际上把4bit的二进制数据划分为了2段</p>
-<p>其中一段从0000到0111，另外一段从1000到1111。当现在A2A1A0为111时，低位片的Y7和高位片的Y7都有可能输出。而假设此时A3为0（此时输入为0111），那么低位片的所有使能信号均有效，而高位片的G1是无效的。那么此时低位片被启用而高位片未被启用。所以低位片的Y7输出为低而其它均为高，高位片的所有输出都是高。因此，0111被译码为了1111111101111111（输出低有效）。反之，A3为1（此时输入为1111）。则低位片的G2B无效而高位片所有的使能信号都有效。1111倍译码为0111111111111111</p>
-<ol start="4">
-<li>使能信号还有哪些用法</li>
-</ol>
-<p>使能信号的用途非常广泛，可以作为计算机系统中存储芯片选通信号，可以作为显式系统中的控制信号，但核心的一点就是使能信号控制了芯片的功能是否能被正常的启用，这在设计大型的数字系统中是非常重要的一环</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20221213-RS485通讯基础及通讯应用详解"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/12/13/20221213-RS485%E9%80%9A%E8%AE%AF%E5%9F%BA%E7%A1%80%E5%8F%8A%E9%80%9A%E8%AE%AF%E5%BA%94%E7%94%A8%E8%AF%A6%E8%A7%A3/"
-    >20221213-RS485通讯基础及通讯应用详解</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/12/13/20221213-RS485%E9%80%9A%E8%AE%AF%E5%9F%BA%E7%A1%80%E5%8F%8A%E9%80%9A%E8%AE%AF%E5%BA%94%E7%94%A8%E8%AF%A6%E8%A7%A3/" class="article-date">
-  <time datetime="2022-12-13T05:42:43.000Z" itemprop="datePublished">2022-12-13</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/341845459">https://zhuanlan.zhihu.com/p/341845459</a></p>
-<p>举例：plc向变频器从机1和变频器从机2传递数据，首先变频器从机1和变频器从机2设备之间必须通过电缆连接（硬件连接）。如果变频器从机1和变频器从机设备发送101010这样一串代码，那么变频器从机1就要在他的通讯端口产生如下图所示的高低电平的组合，通过电缆这个介质变频器从机2设备的通讯端口就会接收到A设备发出高低电平的组合，同时就会将接</p>
-<h2 id="RS-485概述"><a href="#RS-485概述" class="headerlink" title="RS-485概述"></a>RS-485概述</h2><p>RS-485和RS-232一样，都是串行通信标准，现在的标准名称是TIA485&#x2F;EIA-485-A，但是人们会习惯称为RS-485标准，RS-485常用在工业、自动化、汽车和建筑物管理等领域。</p>
-<p>RS-485总线弥补了RS-232通信距离短，速率低的缺点，RS-485的速率可高达10Mbit&#x2F;s，理论通讯距离可达1200米；RS-485和RS-232的单端传输不一样，是差分传输，使用一对双绞线，其中一根线定义为A，另一个定义为B。</p>
-<p>双绞线</p>
-<h2 id="RS-485物理层"><a href="#RS-485物理层" class="headerlink" title="RS-485物理层"></a>RS-485物理层</h2><p>RS-485的物理层负责在设备和物理传输介质之间传输原始数据。它处理电信号到数字数据的转换，同时定义电压、时序、数据速率等。</p>
-<p>① 差分信号</p>
-<p>长距离布线会有信号衰减，而且引入噪声和干扰的可能性更大，在线缆A和B上的表现就是电压幅度的变化，但是，采用差分线的好处就是，差值相减就会忽略掉干扰依旧能输出正常的信号，把这种差分接收器忽略两条信号线上相同电压的能力称为共模抑制。</p>
-<p>标准规定了，逻辑1：+2V to +6V；逻辑0：-6V to -2V。</p>
-<p>RS-485不需要使用特定的总线电压，只看最小差分电压，在较长的电缆长度上，接收器接收到的电压可能会降低到+&#x2F;- 200 mV，这对于RS-485仍然是完全可以接受的，这也是RS-485的优点之一。</p>
-<p>很多收发器的标准达到甚至超过TIA&#x2F;EIA-485A规范，在实际使用中，以器件的SPEC参数为主，如下某收发器的负输入阈值最小也是-200mV。</p>
-<p>② 信号定义</p>
-<p>现在很多的RS-485转换器都是兼容RS-422的，所以看到很多转换器上面的信号都是T&#x2F;R+、T&#x2F;R-，即对应RS-485的A+和B-。</p>
-<p>对于DB9针型的母头，RS-485有如下的接线定义示意，Pin6~Pin9为N&#x2F;A不接。</p>
-<p>DB9 输出信号  RS-422全双工接线 RS-485半双工接线<br>1 T&#x2F;R+  发（A+） RS-485（A+）<br>2 T&#x2F;R-  发（B-） RS-485（B-）<br>3 RXD+  收（A+） 空<br>4 RXD-  收（B-） 空<br>5 GND 地线  地线</p>
-<p>③ 拓扑结构</p>
-<p>RS485有两线制和四线制两种接线，四线制只能实现点对点的通信方式，现很少采用，多采用的是两线制接线方式，这种接线方式为总线拓扑结构，在同一总线上最多可以挂接32个节点。</p>
-<p>RS-485总线同I2C，也是主从模式，支持点对点单从机模式，也支持多从机模式，不支持多主机模式。</p>
-<h2 id="RS-485收发器"><a href="#RS-485收发器" class="headerlink" title="RS-485收发器"></a>RS-485收发器</h2><p>RS-485是差分传输，如果用单片机控制RS-485接口的设备，需要用到收发器，这一点和CAN总线是类似的，如下是一个MCU控制一个RS-485的图示。</p>
-<p>收发器内部是一个接收器（上半部分）加一个发送器（下半部分），下面简单说说收发器的原理，便于理解MCU是如何和485设备通信的。</p>
-<p>RS-485收发器内部结构</p>
-<p>其中：</p>
-<p>A和B为总线；<br>R为接收器输入；<br>RE为接收器使能信号；<br>DE为发送器使能信号；<br>D为发送器输出；<br>对于使能信号，字母上面加一横的为低电平有效（如上图RE），不加的为高电平有效（如DE）。</p>
-<p>对于发送器，有如下的真值表：</p>
-<p>1、当驱动器使能引脚DE为逻辑高时，差分输出A和B遵循数据输入D处的逻辑状态。D处的逻辑高导致A转为高，B转为低。在这种情况下，定义为VOD&#x3D;VA-VB的差分输出电压为正。当D为低时，输出状态反转，B变高，A变低，VOD为负。</p>
-<p>2、当DE低时，两个输出都变成高阻抗。在这种情况下，与D处的逻辑状态是不相关的。</p>
-<p>发送器真值表</p>
-<p>对于接收器，有如下的真值表：</p>
-<p>1、当接收器使能引脚RE逻辑低时，接收器被激活。当定义为VID&#x3D;VA–VB的差分输入电压为正且高于正输入阈值VIT+时，接收机输出R变高。当VID为负且低于负输入阈值VIT-，接收机输出R变低。如果VID在VIT+和VIT-之间，则输出不确定。</p>
-<p>2、当RE为逻辑高或悬空时，接收机输出为高阻抗，VID的大小和极性无关。</p>
-<p>接收器真值表</p>
-<h2 id="RS-485数据链路"><a href="#RS-485数据链路" class="headerlink" title="RS-485数据链路"></a>RS-485数据链路</h2><p>上面讲到的RS-485收发器的工作原理，下面简单描述RS-485的数据链路，可以先看一下通俗易懂的UART协议帧格式</p>
-<p>主机发送给从机或者从机发送给主机，都会占用到A和B线，所以RS-485多用在半双工模式。</p>
-<p>主机的GPIO会控制RS-485收发器的DE管脚，设置发送模式，从UART TXD线向RS-485收发器的数据（D或DI）线发送一个字节，收发器将在A和B线上将单端UART位流转换为差分位流，数据离开收发器后，主机立即将收发器的模式切换为接收模式。</p>
-<p>从机和主机是类似的，从机控制RS-485收发器的&#x2F;RE管脚，设置为接收模式，接收主机发送的比特流，将其转换为单端信号，通过从机的UART RXD线接收，当从机准备好响应时，它按主机原来的方式进行发送，而主机变为接收。</p>
-<h2 id="RS-232和RS-485转换"><a href="#RS-232和RS-485转换" class="headerlink" title="RS-232和RS-485转换"></a>RS-232和RS-485转换</h2><p>RS-232和RS-485之间可以转换，一个方法是RS-232转换成TTL，再由TTL转换为RS-485，当然也有芯片支持将RS-232直接转换成RS-485，网上有很多模块。</p>
-<p>RS-232和RS-485转换模块</p>
-<h2 id="RS-485和CAN的区别"><a href="#RS-485和CAN的区别" class="headerlink" title="RS-485和CAN的区别"></a>RS-485和CAN的区别</h2><p>虽说RS-485没有标准的数据协议格式，但和CAN总线在很多地方是有相似的，比如A&amp;B和CANH&amp;CANL都是差分信号，通信都需要收发器，都需要120欧姆的匹配电阻等等。</p>
-<p>总线特性  CAN总线 RS-485总线<br>硬件成本  稍高  低廉<br>总线利用率 优先级自动仲裁，利用率高  采用轮询，利用率低<br>数据传输率 高 低<br>错误检测机制  控制器带校验机制，保证底层数据传输正确 只有物理层规范，无数据链路层规定<br>单节点故障影响 总线无影响 总线瘫痪<br>开发成本  软件开发灵活，时间成本低  开发难度较大<br>系统成本  较低  高</p>
-<h2 id="RS-485常用电路"><a href="#RS-485常用电路" class="headerlink" title="RS-485常用电路"></a>RS-485常用电路</h2><p>网上找的一个常用的RS-485电路，其中需要注意两点：</p>
-<p>1、使能信号RE和DE可采用一个GPIO控制，节省资源，GPIO25输出高电平，RE&#x3D;DE&#x3D;0V，进入接收模式；GPIO25输出低电平，RE&#x3D;DE&#x3D;3.3V，进入发送模式。</p>
-<p>2、有一些电路中会在A上加上拉，B上加下拉电阻，主要原因是：RS-485总线在idle状态，电平是不固定的，即电平在-200mV~+200mV之间，收发器可能输出高也可能输出低，UART在空闲时需要保持高电平的，如果此时收发器输出一个低电平，对UART来说是一个start bit，会导致通信异常，关于Ru和Rd的阻值在这里不作过多赘述，后面有机会会详细写一篇文章。</p>
-<p>关于第二点，需要注意：</p>
-<p>① A上加上拉，B上加下拉，接反数据通信也可能出错。</p>
-<p>② 某些收发器内部集成上下拉电阻，则外部不需要再添加。</p>
-<p>今天的文章内容到这里就结束了，希望对你有帮助，我们下一期见。</p>
  
       <!-- reward -->
       

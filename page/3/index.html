@@ -126,6 +126,263 @@
     
     
     <article
+  id="post-20221219-microPython是什么"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/12/19/20221219-microPython%E6%98%AF%E4%BB%80%E4%B9%88/"
+    >20221219-microPython是什么</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/12/19/20221219-microPython%E6%98%AF%E4%BB%80%E4%B9%88/" class="article-date">
+  <time datetime="2022-12-19T08:11:09.000Z" itemprop="datePublished">2022-12-19</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>microPython是什么</p>
+<p>先了解一下，什么是python</p>
+<p>python 是一种简单易用的，能够运行在多个平台下的计算机编程语言</p>
+<p>microPython 是跑在mcu 微控制器上的python，通过内置的解释器执行py 文件或者py 命令，就可以让微控制器运行您想要的功能了，microPython 和python 编程语言一样，在任何板子上都可以使用通用的api 控制硬件底层，比如点亮LED 灯，读取传感器信息，LCD 显示字符串，控制电机、连接网络、连接蓝牙等等</p>
+<p>如果说Arduino让创客摆脱了各种编程环境配置，那么micropython直接让创客摆脱了底层。命令行和解释执行，都是C语言所不具备的优势，运行micropython的soc，就类似一台完整的电脑，我们用python文件和命令行，轻松控制这台电脑中的一切。</p>
+<p>micropython 是人们连接各种任务的黏合剂，即便您不懂编程，不懂硬件，也可以通过它来控制mcu 要给microPython </p>
+<p>microPython诞生啦！</p>
+<p>Damien George是一名计算机工程师，他每天都要使用Python语言工作，同时也在做一些机器人项目。有一天，他突然冒出了一个想法：能否用Python语言来控制单片机，进行实现对机器人的操控呢？</p>
+<p>要知道，Python是一款比较容易上手的脚本语言，而且有强大的社区支持，一些非计算机专业领域的人都选它作为入门语言。遗憾的是，它不能实现一些非常底层的操控，所以在硬件领域并不起眼。</p>
+<p>Damien为了突破这种限制，他花费了六个月的时间来打造Micro Python。它基于ANSI C，语法跟Pyton 3基本一致，拥有自家的解析器、编译器、虚拟机和类库等。目前它支持基于32-bit的ARM处理器，比如说pyboard（STM32F405），支持NRF51822（micro:bit）、支持FireBeetle-ESP32、支持WiPy、支持ESP8266核心主控、支持CC3200等等。</p>
+<p>pyload 是microPython 官方出的一款支持microPython 的微控制器，采用stm32f405rg MCU主芯片，邮票孔设计，体积小巧<br>在性能方面，pyboard除了将stm32f405rg本身的外设延用出来，还拓展了微型SD卡插槽、三周加速度计（mma7660）。在小巧的pyboard上，设有29个GPIO，4个LED灯，板载3.3V LDO电源管理芯片，可以提供高达250mA的电流，3.6~16V的宽电压输入。</p>
+<p>micro:bit</p>
+<p>micro：bit是由英国广播公司BBC推出的可编程微型计算机，可以帮助用户学习基础编程知识。它最大的亮点在于支持图形化编程，支持microPython编程。micro：bit主控采用nrf51822芯片作为主控，IC包括256KB片上闪存，16KB RAM，32位ARM®Cortex™ M0 CPU，支持Bluetooth低功耗，在低功耗模式下，最低功耗可以达到0.6uA。</p>
+<p>FireBeetle-ESP32</p>
+<p>FireBeetle-ESP32全称是FireBeetle Board-ESP32微控制器，是由DFRobot基于Espressif ESP32主芯片开发的物联网、低功耗为控制器。FireBeetle-ESP32板载ESP-WROOM-32双核芯片，支持WiFi和蓝牙双模通信，外围兼容低功耗硬件设计，深度睡眠模式下功耗仅为10uA。FireBeetle-ESP32控制器还提供了3.7V锂电池接口，并可以通过USB口给锂电池充电。其次，在软件方面，已经支持WiFi和蓝牙功能的使用，支持I2S音频的解码，结合uPyCraft IDE，可以轻松完成物联网开发设计。值得说明的是，本书的microPython教程是基于FireBeetle-ESP32控制器硬件。</p>
+<p>WiPy</p>
+<p>WiPy是支持microPython编程、支持WiFi和蓝牙的开发板，定位于物联网应用的设计。WiPy控制器的核心采用Espressif ESP32芯片，其最大的特点在于体积小巧，支持蓝牙和WiFi，这点和DFRobot的FireBeetle萤火虫系列主板相似。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-20221219-固件firmware固件与驱动的区别"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/12/19/20221219-%E5%9B%BA%E4%BB%B6firmware%E5%9B%BA%E4%BB%B6%E4%B8%8E%E9%A9%B1%E5%8A%A8%E7%9A%84%E5%8C%BA%E5%88%AB/"
+    >20221219-固件firmware固件与驱动的区别</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/12/19/20221219-%E5%9B%BA%E4%BB%B6firmware%E5%9B%BA%E4%BB%B6%E4%B8%8E%E9%A9%B1%E5%8A%A8%E7%9A%84%E5%8C%BA%E5%88%AB/" class="article-date">
+  <time datetime="2022-12-19T03:12:53.000Z" itemprop="datePublished">2022-12-19</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/0222686c0fb4">https://www.jianshu.com/p/0222686c0fb4</a></p>
+<p>固件 firmware 就是写入EROM 可擦写只读存储器，或者EEPROM 电可擦写可编程只读存储器中的程序</p>
+<p>固件是指设备内部保存的设备驱动程序，通过固件，操作系统才能按照标准的设备驱动实现特定机器的运行运作，比如 光驱、刻录机 等都有内部固件</p>
+<p>固件是担任着一个系统最基础最底层工作的软件，而在硬件设备中，固件就是硬件设备的灵魂，因为一些硬件设备除了固件以外没有其他软件组成，因此固件也就决定了这硬件设备的功能以及性能</p>
+<p>手机、数码相机、mp3、mp4、路由器、电子书、交换机、猫、PSP、PS3、NDS、XBOX、U盘、主板、打印机的BIOS（BIOS就是一种固件）、显卡的BIOS。</p>
+<p>固件既然是软件，就有大小之分，大的可有几百兆，小的也许只有几K 甚至不足1k</p>
+<p>而对于非独立的电子产品，比如硬盘、鼠标 bios 光驱、是、盘等设备，固件就是指其最底层的，让设备得以运行的程序代码</p>
+<p>固件与驱动的区别</p>
+<p>驱动和固件都是代码，前者为软件服务，后者为硬件服务</p>
+<p>随着计算机体系结构的发展，硬件的种类开始变多，操作系统的种类也变多了，这个时候，因为各种技术的、商业的原因，硬件厂商希望自己的硬件能被更多的软件厂商使用，所以就需要在硬件之上做一些封装，让自己的硬件操纵起来更容易，这个时候就要有 firmware 这种东西了，它简化了软件与硬件的交互</p>
+<p>但是为什么不把firmware 做的很完美，做的不需要驱动支持呢？因为有不同的操作系统</p>
+<p>不同的操作系统，对于操作硬件的方式完全不同，在windows 里应用态是无法直接写io 端口的，而在嵌入式系统里，一般都不限制直接操作io 端口，所以，硬件厂商一方面为了自己的硬件能被软件更简单的使用，就需要写firmware ，而另一方面为了兼容各种操作系统，又不能把firmware 写的太死，必须预留足够的余地让软件自由发挥，软件的自由发挥就是驱动</p>
+<p>不同操作系统的驱动是不能兼容的，原因就是驱动是为操作系统服务的，有的操作系统是单线程的，有些操作系统不允许动态申请内存，所以不同的操作系统要操作硬件，就要根据自身的特性编写对应的操作代码，这就是驱动存在的意义–适应系统需要</p>
+<p>假如世界上只有一种操作系统，并且版本永远不会改变，那么firmware 和驱动就可以融合在一起，但这只能是一个不现实的梦想，要知道民用操作系统和工业控制操作系统差别是十分巨大的</p>
+<p>从计算机领域来说，驱动和固件从来没有过明确的定义，就好像今天我们说内存，大部分人用来表示SDRAM 但也有人把android 里的固化的flash storage 称为内存，你不能说这样说就错了，因为这确实是一种内部存储</p>
+<p>但在linux kernel 中，driver 和firmware 是有明确含义的，其中 driver 是控制被操作系统管理的外部设备 device 的代码段，很多时候 driver 会被实现为LKM 但这不是必要条件，driver 通过 register_driver 注册到总线上，当某个device 被注册到同样的总线的时候，driver 和device 会通过一定的策略进行binding ，最终在probe 函数中由driver 实际控制对应的设备，并把对该设备的控制接口注册到linux 的其他子系统上</p>
+<p>而 firmware，是表示运行在非 控制处理器 （指不直接运行操作系统的处理器，例如外设中的处理器，或者被用于bare metal 的主处理器的其中一些核） 中的程序，这些程序很多时候使用和操作所运行的处理器完全不同的指令集，这些程序以二进制形式存在于linux内核的源代码树中，根据配置，可以直接集成到最终的映像中，或者被拷贝到指定的位置，当driver 对device 进行初始化的时候，通过load_firmware 等接口，可以把指定的firmware 加载到内存中，由驱动传输到指定的设备上</p>
+<p>所以，总的来说，其实 driver 和firmware 没有什么直接的关系</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-20221218-MQTT入门介绍"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/12/18/20221218-MQTT%E5%85%A5%E9%97%A8%E4%BB%8B%E7%BB%8D/"
+    >20221218-MQTT入门介绍</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/12/18/20221218-MQTT%E5%85%A5%E9%97%A8%E4%BB%8B%E7%BB%8D/" class="article-date">
+  <time datetime="2022-12-18T11:10:42.000Z" itemprop="datePublished">2022-12-18</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>MQTT 消息对流遥测传输协议，是一种基于发布&#x2F;订阅 模式的轻量级 通讯协议，该协议构建于TCP&#x2F;IP 协议上，由IBM在1999年发布，MQTT 最大优点在于，可以以极少的代码和有限的带宽，为连接远程设备提供实时可靠的消息服务，作为一种低开销、低带宽的即时通讯协议，使其在物联网、小型设备、移动应用等方面有较广泛的应用</p>
+<p>MQTT 是一个基于客户端-服务器的消息发布&#x2F;订阅传输协议，MQTT 协议是轻量、简单、开放和易于实现的，这些特点使它适用范围非常广泛，在很多情况下，如机器与机器 M2M 通信和物联网 IoT ，其在，通过卫星链路通信传感器、偶尔拨号的医疗设备、智能家居 、及一些小型化设备中已广泛使用</p>
+<p>二、设计规范</p>
+<p>由于物联网的环境是非常特别的，所以MQTT 遵循以下设计原则</p>
+<p>精简 不添加可有可无的功能</p>
+<p>发布&#x2F;订阅 模式 方便消息在传感器之间传递</p>
+<p>允许用户动态创建主题，零运维成本</p>
+<p>把传输量降到最低以提高传输效率</p>
+<p>把低带宽、高延迟、不稳定的网络等因素考虑在内</p>
+<p>支持连续的会话控制</p>
+<p>理解客户端计算能力可能很低</p>
+<p>提供服务质量管理</p>
+<p>假设数据不可知，不强求传输数据的类型与格式，保持灵活性</p>
+<p>三、主要特性</p>
+<p>MQTT 协议工作在低带宽、不可靠的网络的远程传感器和控制设备通讯而设计的，它具有以下主要的几项特性</p>
+<p>使用发布&#x2F;订阅消息模式，提供一对多的消息发布，解除应用程序耦合</p>
+<p>这一点很类似于XMPP ，但是MQTT 的信息冗余远小于XMPP ，因为XMPP 使用XML 格式文本来传递数据</p>
+<p>对负载内容屏蔽的消息传输</p>
+<p>使用TCP&#x2F;IP 提供网络连接</p>
+<p>主流的MQTT 是基于TCP 连接进行数据推送的，但是同样有基于UDP 的版本，叫做MQTT-SN。这两种版本由于基于不同的连接方式，优缺点自然也就各有不同了</p>
+<p>有三种消息发布服务质量</p>
+<p>“至多一次”，消息发布完全依赖底层TCP&#x2F;IP网络。会发生消息丢失或重复。这一级别可用于如下情况，环境传感器数据，丢失一次读记录无所谓，因为不久后还会有第二次发送。这一种方式主要普通APP的推送，倘若你的智能设备在消息推送时未联网，推送过去没收到，再次联网也就收不到了。</p>
+<p>至少一次，确保消息到达，但消息重复可能会发生</p>
+<p>只有一次，确保消息到达一次，在一些要求比较严格的计费系统中，可以使用此级别，在计费系统中，消息重复或丢失会导致不正确的结果，这种最高质量的消息发布服务还可以用于即时通讯类的app 的推送，确保用户收到且只会收到一次</p>
+<p>小型传输，开销很小，固定长度的头部是2字节  协议交换最小化，以降低网络流量</p>
+<p>这就是为什么在介绍里说它非常适合 在物联网领域，传感器与服务器的通信，信息的收集，要知道嵌入式设备的运算能力和带宽都相对薄弱，使用这种协议来传递消息再适合不过了</p>
+<p>使用last will 和testament 特性通知有关各方客户端异常中断的机制</p>
+<p>last will 即遗言机制，用于通知同一主题下的其他设备发送遗言的设备已经断开了连接</p>
+<p>testament 遗嘱机制，功能类似于last will</p>
+<p>四、MQTT 协议原理<br>MQTT 协议实现方式</p>
+<p>实现MQTT 协议需要客户端和服务端通讯完成，在通讯过程中，MQTT 协议中有三种身份，发布者，代理（服务器），订阅者。其中，消息的发布者和订阅者都是客户端，消息代理是服务器，消息发布者可以同时是订阅者<br>MQTT 传输的消息分为 主题topic 和负载 payload 两部分</p>
+<p>topic 可以理解为消息的类型，订阅者 subscribe 后，就会收到该主题的消息内容 payload<br>payload 可以理解为消息的内容，是指订阅者具体要使用的内容</p>
+<p>网络传输与应用消息</p>
+<p>MQTT 会构建底层网络传输，它将建立客户端到服务器的连接，提供两者之间的一个有序的、无损的、基于字节流的双向传输。当应用数据通过MQTT 网络发送时，MQTT 会把与之相关的服务质量 QoS 和主题名topic 相关联</p>
+<p>MQTT 客户端</p>
+<p>一个使用MQTT 协议的应用程序或者设备，它总是建立到服务器的网络连接，客户端可以</p>
+<p>发布其他客户端可能会订阅的信息</p>
+<p>订阅其他客户端发布的消息</p>
+<p>退订或删除应用程序的消息</p>
+<p>断开与服务器连接</p>
+<p>MQTT 服务器<br>MQTT 服务器以称为消息代理，可以是一个应用程序或一台设备，它是位于消息发布者和订阅者之间，它可以</p>
+<p>接受来自客户的网络连接</p>
+<p>接受客户发布的应用信息</p>
+<p>处理来自客户端的订阅和退订请求</p>
+<p>向订阅的客户转发应用程序消息</p>
+<h2 id="MQTT-协议中的订阅、主题、会话"><a href="#MQTT-协议中的订阅、主题、会话" class="headerlink" title="MQTT 协议中的订阅、主题、会话"></a>MQTT 协议中的订阅、主题、会话</h2><p>订阅<br>订阅包含主题筛选器和最大服务质量，订阅会与一个会话关联，一个会话可以包含多个订阅，每一个会话中的每个订阅都有一个不同的主题筛选器</p>
+<p>会话<br>每个客户端与服务器建立连接后就是一个会话，客户端和服务器之间有状态交互，会话存在于一个网络之间，也可能在客户端和服务器之间跨越多个连续的网络连接</p>
+<p>主题名</p>
+<p>连接到一个应用程序消息的标签，该标签与服务器的订阅相匹配，服务器会将消息发送给订阅所匹配标签的每个客户端</p>
+<p>主题筛选器</p>
+<p>一个对主题名通配符筛选器，在订阅表达式中使用，表示订阅所匹配到的多个主题</p>
+<p>负载</p>
+<p>消息订阅者所具体接收的内容</p>
+<h2 id="MQTT-协议中的方法"><a href="#MQTT-协议中的方法" class="headerlink" title="MQTT 协议中的方法"></a>MQTT 协议中的方法</h2><p>MQTT 协议中定义了一些方法，也被称为动作，来于表示对确定资源所进行操作，这个资源可以代表预先存在的数据或动态生成数据，这取决于服务器的实现，通常来说，资源指服务器上的文件或输出，主要方法有</p>
+<p>connect 等待与服务器建立连接</p>
+<p>Disconnect 等待MQTT 客户端完成所做的工作，并与服务器断开TCP&#x2F;IP 会话</p>
+<p>subscribe 等待完成订阅</p>
+<p>unsubscribe 等待服务器取消客户端的一个或多个topics 订阅 </p>
+<p>publish MQTT 客户端发送消息请求，发送完成后返回应用程序线程</p>
+<h2 id="五、MQTT-协议数据包结构"><a href="#五、MQTT-协议数据包结构" class="headerlink" title="五、MQTT 协议数据包结构"></a>五、MQTT 协议数据包结构</h2><p>在MQTT 协议中，一个MQTT 数据包由 固定头 可变头，消息体 三部分构成，MQTT 数据包结构如下</p>
+<p>固定头（fixed header） 存在于所有MQTT 数据包中，表示数据包类型及数据包的分组类标识</p>
+<p>可变头（variable header） 存在于部分MQTT数据包中，数据包类型决定了可变头是否存在及其具体内容</p>
+<p>消息体 （payload） 存在于部分MQTT数据包中，表示客户端收到的具体内容</p>
+<p>MQTT 固定头 </p>
+<p>固定头存在于所有MQTT 数据包中，其结构如下</p>
+<p>MQTT 数据包类型 </p>
+<p>位置 byte 1 中bits 7-4<br>相于一个4位的无符号值，类型，取值及描述如下</p>
+<p>标识位</p>
+<p>位置：Byte 1中bits 3-0。</p>
+<p>在不使用标识位的消息类型中，标识位被作为保留位。如果收到无效的标志时，接收端必须关闭网络连接：</p>
+<p>（1）DUP：发布消息的副本。用来在保证消息的可靠传输，如果设置为1，则在下面的变长中增加MessageId，并且需要回复确认，以保证消息传输完成，但不能用于检测消息重复发送。</p>
+<p>（2）QoS：发布消息的服务质量，即：保证消息传递的次数</p>
+<p>RETAIN 发布保留标识，表示服务器要保留这次推送的信息，如果有新的订阅者出现，就报这消息推送给它，如果没有那么推送至当前订阅者后释放</p>
+<p>剩余长度 </p>
+<p>地址Byte 2</p>
+<p>固定头的第二字节用来保存变长头部和消息体的总大小的，但不是直接保存的，这一字节是可以扩展，其保存机制，前7位用于保存长度，后一部用做标识，当最后一位为1时，表示长度不足，需要使用二个字节继续保存。例如：计算出后面的大小为0</p>
+<p>MQTT 可变头</p>
+<p>MQTT 数据包中包含一个可变头，它驻位于固定的头和负载之间，可变头的内容因数据包类型而不同，较常的应用是作为包的标识。<br>很多类型数据包中都包括一个2字节的数据包标识字段，这些类型的包有：PUBLISH (QoS &gt; 0)、PUBACK、PUBREC、PUBREL、PUBCOMP、SUBSCRIBE、SUBACK、UNSUBSCRIBE、UNSUBACK。</p>
+<p>Payload 消息体</p>
+<p>Payload 消息体位MQTT 数据包的第三部分，包含connect subscribe suback unsubscribe 四种类型的消息</p>
+<p>connect 消息体内容主要是 客户端的clientID 订阅的topic message 以及用户名和密码</p>
+<p>subscribe 消息体内容是一系列的要订阅的主题以及QoS</p>
+<p>suback 消息体内容是服务器对于subscribe 所申请的主题及QoS 进行确认和回复</p>
+<p>unsubscribe 消息体内容是要订阅的主题</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-20221217-电子电路元器件列表"
   class="article article-type-post"
   itemscope
@@ -783,232 +1040,6 @@
 <h2 id="USB转TTL"><a href="#USB转TTL" class="headerlink" title="USB转TTL"></a>USB转TTL</h2><p>TTL 是一种电平</p>
 <p>像我们常用的单片机，引出来的串口，如果不加其他的接口电路，出来的信号就是TTL 电平，如果需要查看串口的打印信息，一般是需要接一个上位机的，常规的就是电脑，而现在的电脑一般的通信接口只有USB 老式的电脑可能会有 232 接口</p>
 <p>对于usb口而言，是没法和TTL 串口直接通信的，因为接口不匹配，电平也不匹配，这时候就需要借助外围的小设备来实现接口与电平的转换，常规操作是使用CH340 这种芯片所制作的usb 转串口模块，这个芯片可以实现TTL 串口和USB 之前的转换</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20221216-C语言中typedef的使用方法"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/12/16/20221216-C%E8%AF%AD%E8%A8%80%E4%B8%ADtypedef%E7%9A%84%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/"
-    >20221216-C语言中typedef的使用方法</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/12/16/20221216-C%E8%AF%AD%E8%A8%80%E4%B8%ADtypedef%E7%9A%84%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/" class="article-date">
-  <time datetime="2022-12-16T06:05:15.000Z" itemprop="datePublished">2022-12-16</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p><a target="_blank" rel="noopener" href="http://c.biancheng.net/view/298.html">http://c.biancheng.net/view/298.html</a></p>
-<p>C语言用户使用typedef 关键字来定义自己习惯的数据类型名称，来替代系统默认的基本类型，数组类型名称，指针类型名称与用户自定义的结构型名称，共用型名称，枚举型名称等，一旦用户在程序中定义了自己的数据类型名称，就可以在该程序中用自己的数据类型名称来定义变量的类型，数组的类型，指针变量的类型与函数的类型等</p>
-<p>C99 之前并未提供布尔类型，但我们可以使用typedef 关键字来定义一个简单的布尔类型，如下面的代码所示</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="type">int</span> BOOL;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> TRUE 1</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> FALSE 0</span></span><br><span class="line"></span><br><span class="line">BOOL bflag=TRUE;</span><br></pre></td></tr></table></figure>
-
-<p>C99 标准中新增了布尔类型，自定义布尔变量的方式有两种，一种是使用<code> _BOOL</code>，另一种是使用<code>&lt;stdbool.h&gt;</code>头文件中定义好的 bool 类型，感兴趣的小伙伴请猛击这里了解详情。 </p>
-<h2 id="typedef-的四种用法"><a href="#typedef-的四种用法" class="headerlink" title="typedef 的四种用法"></a>typedef 的四种用法</h2><p>在实际使用中，typedef 的应用主要有如下4种</p>
-<p>为基本数据类型定义新的类型名</p>
-<p>也就是说，系统默认的所有基本类型都可以利用typedef 关键字来重新定义类型名，示例代码如下所示</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="type">unsigned</span> <span class="type">int</span> COUNT;</span><br></pre></td></tr></table></figure>
-
-<p>而且我们还可以使用这种方法来定义与平台无关的类型，比如，要定义一个REAL 的浮点类型，在目标平台上，让它表示最高精度的类型</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">double</span> REAL;</span><br></pre></td></tr></table></figure>
-<p>在不支持 long double 的平台二上，改为：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="type">double</span> REAL;</span><br></pre></td></tr></table></figure>
-<p>甚至还可以在连 double 都不支持的平台三上，改为：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="type">float</span> REAL;</span><br></pre></td></tr></table></figure>
-
-<p>这样，当跨平台移植程序时，我们只需要修改一个typedef 的定义即可，而不用对其他源代码做任何修改，其实，标准库中广泛地使用了这个技巧，比如 size_t 在 VC++2010 的 crtdefs.h 文件中的定义如下所示：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">ifndef</span> _SIZE_T_DEFINED</span></span><br><span class="line"><span class="meta">#<span class="keyword">ifdef</span>  _WIN64</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="type">unsigned</span> __int64    <span class="type">size_t</span>;</span><br><span class="line"><span class="meta">#<span class="keyword">else</span></span></span><br><span class="line"><span class="keyword">typedef</span> _W64 <span class="type">unsigned</span> <span class="type">int</span>   <span class="type">size_t</span>;</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> _SIZE_T_DEFINED</span></span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br></pre></td></tr></table></figure>
-
-<p>为自定义数据类型 定义简洁的类名名称</p>
-<p>以结构体为例，下面我们定义一个名为point的结构体</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Point</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="type">double</span> x;</span><br><span class="line">    <span class="type">double</span> y;</span><br><span class="line">    <span class="type">double</span> z;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<p>在调用这个结构体时，我们必须像下面的代码这样来调用这个结构体</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Point</span> <span class="title">oPoint1</span>=</span>&#123;<span class="number">100</span>，<span class="number">100</span>，<span class="number">0</span>&#125;;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Point</span> <span class="title">oPoint2</span>;</span></span><br></pre></td></tr></table></figure>
-<p>这里，结构体 struct Point 为新的数据类型，在定义变量的时候均要向上面的调用方法一样有保留字struct ，而不能像int 和double 那样直接使用Point 来定义变量，现在，我们利用typedef 定义这个结构体，如下面的代码所示</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">tagPoint</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="type">double</span> x;</span><br><span class="line">    <span class="type">double</span> y;</span><br><span class="line">    <span class="type">double</span> z;</span><br><span class="line">&#125; Point;</span><br></pre></td></tr></table></figure>
-
-<p>在上面的代码中，实际上完成了两个操作<br>定义了一个新的结构类型，代码如下所示</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">tagPoint</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="type">double</span> x;</span><br><span class="line">    <span class="type">double</span> y;</span><br><span class="line">    <span class="type">double</span> z;</span><br><span class="line">&#125; ;</span><br></pre></td></tr></table></figure>
-<p>其中，struct 关键字和tagPoint 一起构成了这个结构类型，无论是否存在typedef 关键字，这个结构都存在</p>
-<p>使用typedef 为这个新的结构起了一个别名，叫Point 即</p>
-<p>typedef struct tagPoint Point</p>
-<p>因此，现在你就可以像int 和double 那样直接使用Point 定义变量，如下面的代码所示</p>
-<p>Point oPoint1&#x3D;{100，100，0};<br>Point oPoint2;</p>
-<p>为了加深对typedef 的理解，我们再来看一个结构体例子，如下面的代码所示</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">tagNode</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="type">char</span> *pItem;</span><br><span class="line">    pNode pNext;</span><br><span class="line">&#125; *pNode;</span><br></pre></td></tr></table></figure>
-
-<p>从表面上看，上面的示例代码与前面的定义方法相同，所以应该没有什么问题，但是编译器却报了一个错误，</p>
-<p>其实问题并非在于struct 定义的本身，大家应该都知道，C 语言是允许在结构中包含指向它自己的指针的，我们可以在建立链表等数据结构的实现上看到很多这类例子，那问题在哪里呢  ？其实，根本问题还是在于typedef 的应用 </p>
-<p>在上面的代码中，新结构建立的过程中遇到了pNext 声明，其类型是pNode 这里要特别注意的是，pNode 表示的是该结构体的新别名。于是问题出现了，在结构体类型本身还没有建立完成的时候，编译器根本就不认识pNode 因为这个结构体类型的新别名还不存在，所以自然就会报错，因此，我们要做一些适当的调整，比如将结构体中的pNext 声明修改成如下方式</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">tagNode</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="type">char</span> *pItem;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">tagNode</span> *<span class="title">pNext</span>;</span></span><br><span class="line">&#125; *pNode;</span><br></pre></td></tr></table></figure>
-
-<p>或者将struct 与typedef 分开定义，如下面的代码所示</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">tagNode</span> *<span class="title">pNode</span>;</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">tagNode</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="type">char</span> *pItem;</span><br><span class="line">    pNode pNext;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<p>在上面的代码中，我们同样使用typedef 给一个还未完全声明的类型tagNode 起了一个新别名，</p>
-<p>不过，虽然C 语言编译器完全支持这种做法，但不推荐这样做，建议还是使用如下规范定义方法</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">tagNode</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="type">char</span> *pItem;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">tagNode</span> *<span class="title">pNext</span>;</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">tagNode</span> *<span class="title">pNode</span>;</span></span><br></pre></td></tr></table></figure>
-
-<p>为数组定义简洁的类型名称</p>
-<p>它的定义方法很简单，与为基本数据类型定义新的别名方法一样，示例代码如下所示，</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="type">int</span> INT_ARRAY_100[<span class="number">100</span>];</span><br><span class="line">INT_ARRAY_100 arr;</span><br></pre></td></tr></table></figure>
-
-<p>为指针定义简洁的名称</p>
-<p>对于 指针，我们同样可以使用下面的方式来定义一个新的别名</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="type">char</span>* PCHAR;</span><br><span class="line">PCHAR pa;</span><br></pre></td></tr></table></figure>
-
-<p>对于下面这种简单的变量声明，使用typedef 来定义一个新的别名或许会感觉意义不大，但在比较复杂的变量声明中，typedef 的优势马上就体现出来了，如下面的示例代码所示</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> *(*a[<span class="number">5</span>])(<span class="type">int</span>,<span class="type">char</span>*);</span><br></pre></td></tr></table></figure>
-
-<p>对于上面变量的声明，如果我们使用typedef 来给它定义一个别名，这会非常有意义，如下面的代码所示</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// PFun是我们创建的一个类型别名</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="type">int</span> *(*PFun)(<span class="type">int</span>,<span class="type">char</span>*);</span><br><span class="line"><span class="comment">// 使用定义的新类型来声明对象，等价于int*(*a[5])(int,char*);</span></span><br><span class="line">PFun a[<span class="number">5</span>];</span><br></pre></td></tr></table></figure>
-
-<h2 id="小心使用typedef-带来的陷阱"><a href="#小心使用typedef-带来的陷阱" class="headerlink" title="小心使用typedef 带来的陷阱"></a>小心使用typedef 带来的陷阱</h2><p>接下来看一个简单的typedef 使用示例，如下面的代码所示</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="type">char</span>* PCHAR;</span><br><span class="line"><span class="type">int</span> <span class="title function_">strcmp</span><span class="params">(<span class="type">const</span> PCHAR,<span class="type">const</span> PCHAR)</span>;</span><br></pre></td></tr></table></figure>
-
-<p>在上面的代码中，<code>const PCHAR</code> 使用相当于const char* 呢</p>
-<p>答案是否定的，原因很简单，typedef 是用来定义一种类型的新别名的，它不同于宏，不是简单的字符串替换，因此，const PCHAR 中的const 给予了整个指针本身常量性，也就是形成了常量指针，<code>char *const</code> 一个指向char 的常量指针。即它实际上相当于“char<em>const”，而不是“const char</em>（指向常量 char 的指针）”。当然，要想让 const PCHAR 相当于 const char* 也很容易，如下面的代码所示：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="type">const</span> <span class="type">char</span>* PCHAR;</span><br><span class="line"><span class="type">int</span> <span class="title function_">strcmp</span><span class="params">(PCHAR， PCHAR)</span>;</span><br></pre></td></tr></table></figure>
-
-<p>其实，无论什么时候，只要为指针声明 typedef ，那么就应该在最终的typedef 名称中加一个const 以使得指针本身是常量</p>
-<p>还需要特别注意的是，虽然typedef 并不真正影响对象的存储特性，但在语法上它还是一个存储类的关键字，就像auto extern static 和register 等关键字一样，因此，像下面这种声明是不可行的</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="type">static</span> <span class="type">int</span> INT_STATIC;</span><br></pre></td></tr></table></figure>
-
-<p>不可行的原因是不能声明多个存储类关键字，由于 typedef 已经占据了存储类关键字的位置，因此，在 typedef 声明中就不能够再使用 static 或任何其他存储类关键字了。当然，编译器也会报错，如在 VC++2010 中的报错信息为“无法指定多个存储类”。</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20221216-python3简单的串口通信实现"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/12/16/20221216-python3%E7%AE%80%E5%8D%95%E7%9A%84%E4%B8%B2%E5%8F%A3%E9%80%9A%E4%BF%A1%E5%AE%9E%E7%8E%B0/"
-    >20221216-python3简单的串口通信实现</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/12/16/20221216-python3%E7%AE%80%E5%8D%95%E7%9A%84%E4%B8%B2%E5%8F%A3%E9%80%9A%E4%BF%A1%E5%AE%9E%E7%8E%B0/" class="article-date">
-  <time datetime="2022-12-16T04:45:11.000Z" itemprop="datePublished">2022-12-16</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>串口通信就是计算机和外设之间，通过数据信号线，底线、控制线等，按位进行传输数据的一种通讯方式，这种通讯方式使用的数据线少</p>
-<p>串口是一种接口标准，它规定了接口的电气标准，没有规定接口插件电缆及使用的协议</p>
-<p>python</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20221216-导电斑马条"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/12/16/20221216-%E5%AF%BC%E7%94%B5%E6%96%91%E9%A9%AC%E6%9D%A1/"
-    >20221216-导电斑马条</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/12/16/20221216-%E5%AF%BC%E7%94%B5%E6%96%91%E9%A9%AC%E6%9D%A1/" class="article-date">
-  <time datetime="2022-12-16T04:43:22.000Z" itemprop="datePublished">2022-12-16</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>我们液晶连接中往往为节约空间会选择使用斑马条来进行连接，那么什么是斑马条的，下面给大家做个简单的介绍。导电橡胶连接器俗称为斑马条，由导电硅胶和绝缘硅胶交替分层叠加后硫化成型。导电橡胶连接器性能稳定可靠，生产装配简便且效率高。广泛用于游戏机、电话、电子表、计算器、仪表等产品的液晶显示器与电路板的连接。</p>
-<p>如何确定斑马条大小呢：</p>
-<p>1.长度设计：玻璃的长度-0.5mm ( 20 mm 以下依照原 LCD 玻璃长度 )</p>
-<p>2.高度设计：LCD至PCB之间高度x(1.08<del>1.12)  —-压缩比8%</del>12%</p>
-<p>3. 宽度设计: LCD边缘宽度×(0.9 ~ 0.95)</p>
-<p>4. 导电层宽度的选择: (Connector上的W’的尺寸)</p>
-<p>5. Pitch之选择：以LCD或PCB上的Pitch ( 宽度) 上有2 ~ 3条Connector在上面为原则,越多条导电性越佳</p>
  
       <!-- reward -->
       

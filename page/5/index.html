@@ -126,6 +126,246 @@
     
     
     <article
+  id="post-20221213-USB协议简析"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/12/13/20221213-USB%E5%8D%8F%E8%AE%AE%E7%AE%80%E6%9E%90/"
+    >20221213-USB协议简析</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/12/13/20221213-USB%E5%8D%8F%E8%AE%AE%E7%AE%80%E6%9E%90/" class="article-date">
+  <time datetime="2022-12-13T07:41:21.000Z" itemprop="datePublished">2022-12-13</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/431163780">https://zhuanlan.zhihu.com/p/431163780</a></p>
+<p>USB 4将我的这种想法给部分实现，通过一种隧道技术的方式，将DP&#x2F;USB3&#x2F;PCIe信号集成到通信隧道里面去，接收端再通过数据包头来区分数据（这就有点像交换机里的数据分发，通过MAC地址或者报文帧头确定数据包目的地）。</p>
+<p>因为硬件的局限性和可能的分发芯片性能功能问题，每个分发数据的协议速率是由各自的上限的，不能够动态调整每个接口的最大速度，</p>
+<p>USB与I2C&#x2F;SPI&#x2F;UART类似，都是一种传输数据的协议规范，但USB主要设计是用于计算机与外接设备的数据交互和文件传输，这一点也正是它现在演变为相对高速的对外接口的原因，最高速的当然是PCIe。</p>
+<p>特点</p>
+<p>服务器交换机目前还是使用USB 2.0 居多</p>
+<p>USB 3 开始和typeC 结合，将曾经的文件传输接口增加为文件加视频传输接口，并且视频一上来就是最新的DP 接口 </p>
+<p>USB 4，这兄弟更猛，除了USB、DP，还额外增加了PCIe的功能，1 LANE支持到10Gbps，通过隧道技术来最大限度发挥物理带宽性能，这个还没有开始投向商用，应该还要一两年。</p>
+<p>技术细节</p>
+<p>USB 3.2 </p>
+<p>就只有 type-C</p>
+<p>pin location pin name function </p>
+<p>USB2.0 数据信号4个，其实是两个，为了满足正反插需求所以正反都有</p>
+<p>USB3.2 数据信号8个，包含两个通道的差分收发信号，VBUS 信号4个，GND 信号4个，一个8个信号处理电源<br>CC 信号两个，SBU 信号两个 </p>
+<p>全称Configuration　Channel，分为CC1和CC2，在type C接口被引用，主要是为了解决正反插的信号交错问题和侦测插入的接口类型。</p>
+<p>目前主要是在source端设计上拉电阻，sink端设计下拉电阻，通过不同电阻的配比来表示当前的设备类型和插入方式。具体方式比较复杂，参考type C spec里的两个截图，两个CC信号用来侦测正反插情况和设备信息。以后有机会调试CC信号再深入了解。</p>
+<p>SBU信号是为USB 4.0 预留的，3.2里没有用到这个信号，不过这两个信号又在Alternate Mode（主要是DP）和Audio Adapter Accessory Mode里有使用，后面讲到这两个模式再具体分析。</p>
+<p>信号完整性 </p>
+<p>此时开始引入redriver 来解决信号完整性的问题</p>
+<p>repeater 分为两种，redriver 和retimer</p>
+<p>retimer 指的是这种器件包含有CDR 电路，可以重新编码信号，好处是不会引入一些高频抖动</p>
+<p>Redriver 指的是器件使用模拟电路的方式来增强信号，不会对码流进行操作，中间会有均衡放大和发送的部分</p>
+<p>一个链路中能够使用的repeater个数是没有限制的，只要总体的时延和抖动能够满足要求，但一般是sink和source端各自处理自己接口上的信号质量，能满足协议规范就可以了，如果是cable厂商，可能也需要在cable中集成一到两个repeater。</p>
+<p>USB 4.0 </p>
+<p>对于USB 4 来说，规定了一种可以同时传输三种通信协议的方式，但这是在芯片内部或者协议端实现的，物理层和逻辑层与所谓的通道互相独立，传输层和配置层需要针对通道方式做出改变</p>
+<p>隧道技术采用了TMUS 来处理每一个交换功能，网上并不能看到太多有关这个技术的细节，但从上面的分析，有理由得出一下的猜测</p>
+<p>TMUs位于芯片内部或者就是纯软件，与USB 4 协议是配套使用，在物理层和传输层没有体现<br>由第一点，如果device端是USB 4，则也需要集成TMU，如果只是三种协议中的一种，就要看host端是否有向下兼容的能力（USB3和DP是必须的，PCIe目前是可选）。<br>再来看下图就会对USB 4的整个拓扑有更多的了解。</p>
+<p>简单来说，USB 4 host可以直接支持USB 3x，DP，PCIe的device；也可以通过USB Hub的方式去fan out直接输出USB 4隧道信号，让Hub来分发；更可以直接插入支持USB 4 的device来一根cable传输这三个协议的信号。</p>
+<p>第一张图里有看到，不同的协议影响的是红圈中的设计，也即Adapter的选择；在USB 4的整个通信过程中，这些具体的协议是已经在比较上层的地方，所以对于不同协议的支持，需要做的有两点：</p>
+<p>在USB 4 的block内有对应支持的协议种类的Adapter<br>在USB 4 与CPU更上层的连接中有对应的通信路径，例如PCIe需要有PCIe Switch或者链接到Root Port的Root Complex<br>当满足以上两点，从芯片对外提供的USB 4 interface上来看，它就可以支持所有的四种协议：USB 4，USB 3，DP，PCIe（目前只到Gen 1）,根据插入的设备类型做到向下兼容。</p>
+<p>SBU 信号 </p>
+<p>SBU 在usb4开始被引入，速度为1Mbps 有三个功能</p>
+<p>配置USB4通道，进行初始化</p>
+<p>和retimer进行交互，完成USB 4 Link TxFFE的握手<br>确保USB 4 通道的发送和retimer的上电或者wake up sequence的正确完成<br>与TMT3的兼容<br>Thunderbolt™ 3是Intel发布的Light Peak技术。Thunderbolt连接技术融合了PCI Express（PCI-E）数据传输技术和Display Port（DP）显示技术，可以同时对数据和视频信号进行传输。</p>
+<p>具体细节不展开了，有一个点需要注意，当以兼容TMT3模式运行时，adapter需要在TBT3兼容的速度下运行，也即Gen 2 是10.3125Gbps，Gen 3 是20.625Gbps。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-20221213-数字芯片中使能信号的作用"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/12/13/20221213-%E6%95%B0%E5%AD%97%E8%8A%AF%E7%89%87%E4%B8%AD%E4%BD%BF%E8%83%BD%E4%BF%A1%E5%8F%B7%E7%9A%84%E4%BD%9C%E7%94%A8/"
+    >20221213-数字芯片中使能信号的作用</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/12/13/20221213-%E6%95%B0%E5%AD%97%E8%8A%AF%E7%89%87%E4%B8%AD%E4%BD%BF%E8%83%BD%E4%BF%A1%E5%8F%B7%E7%9A%84%E4%BD%9C%E7%94%A8/" class="article-date">
+  <time datetime="2022-12-13T07:18:15.000Z" itemprop="datePublished">2022-12-13</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <ol>
+<li>什么是使能信号，</li>
+</ol>
+<p>所谓使能信号，英文叫enable 翻译成中文还有启用等意思</p>
+<p>如图所示，当G1为低电平的时候，不管其它输入是什么。输出全为高电平。而当G2为高电平时（G2等于G2A与上G2B），不管其它输入是什么，输出也都一律为高电平。因此仅从功能上来判断，G1和G2就可以控制这颗芯片是不是被“启用”了。可以看出当G1为低或G2位高时，整个芯片的其它输入无论如何变化都不影响输出。简单的说就是整个芯片实际上没用发挥作用，功能没有“启用”。</p>
+<ol start="2">
+<li>为什么使能信号可以控制芯片的启用和停用</li>
+</ol>
+<p>全部都连到了最后一级的所有与非门上。我们知道一个与非门，如果有1个输入为0，那么这个与非门的输出就会是1。因此，如果不满足G1为高电平，G2A和G2B都为低电平这个条件，就会让所有输出全为1。而这时无论别的输入是什么，都不会让输出有任何改变。从这一点上来说，要启用这颗芯片的功能就必须满足G1为高电平，G2A和G2B都为低电平这个条件。否则，其它输入影响不了输出，芯片“译码”的功能就没有被“启用”。</p>
+<ol start="3">
+<li>为什么需要使能信号</li>
+</ol>
+<p>需要使能信号的主要原因是一个大型的数字系统中，通常都需要使用多个芯片&#x2F;电路单元来配合完成一个功能，而这些芯片并不是每时每刻都在工作，因此需要用使能信号来控制硬功启用那个芯片来工作</p>
+<p>假设4bit的二进制编码从高到低依次是A3A2A1A0</p>
+<p>将A2A1A0分别对应连接到两片74XX138上。而将A3连接到低位片的G2B上和高位片的G1上。</p>
+<p>这样我们实际上把4bit的二进制数据划分为了2段</p>
+<p>其中一段从0000到0111，另外一段从1000到1111。当现在A2A1A0为111时，低位片的Y7和高位片的Y7都有可能输出。而假设此时A3为0（此时输入为0111），那么低位片的所有使能信号均有效，而高位片的G1是无效的。那么此时低位片被启用而高位片未被启用。所以低位片的Y7输出为低而其它均为高，高位片的所有输出都是高。因此，0111被译码为了1111111101111111（输出低有效）。反之，A3为1（此时输入为1111）。则低位片的G2B无效而高位片所有的使能信号都有效。1111倍译码为0111111111111111</p>
+<ol start="4">
+<li>使能信号还有哪些用法</li>
+</ol>
+<p>使能信号的用途非常广泛，可以作为计算机系统中存储芯片选通信号，可以作为显式系统中的控制信号，但核心的一点就是使能信号控制了芯片的功能是否能被正常的启用，这在设计大型的数字系统中是非常重要的一环</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-20221213-RS485通讯基础及通讯应用详解"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/12/13/20221213-RS485%E9%80%9A%E8%AE%AF%E5%9F%BA%E7%A1%80%E5%8F%8A%E9%80%9A%E8%AE%AF%E5%BA%94%E7%94%A8%E8%AF%A6%E8%A7%A3/"
+    >20221213-RS485通讯基础及通讯应用详解</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/12/13/20221213-RS485%E9%80%9A%E8%AE%AF%E5%9F%BA%E7%A1%80%E5%8F%8A%E9%80%9A%E8%AE%AF%E5%BA%94%E7%94%A8%E8%AF%A6%E8%A7%A3/" class="article-date">
+  <time datetime="2022-12-13T05:42:43.000Z" itemprop="datePublished">2022-12-13</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/341845459">https://zhuanlan.zhihu.com/p/341845459</a></p>
+<p>举例：plc向变频器从机1和变频器从机2传递数据，首先变频器从机1和变频器从机2设备之间必须通过电缆连接（硬件连接）。如果变频器从机1和变频器从机设备发送101010这样一串代码，那么变频器从机1就要在他的通讯端口产生如下图所示的高低电平的组合，通过电缆这个介质变频器从机2设备的通讯端口就会接收到A设备发出高低电平的组合，同时就会将接</p>
+<h2 id="RS-485概述"><a href="#RS-485概述" class="headerlink" title="RS-485概述"></a>RS-485概述</h2><p>RS-485和RS-232一样，都是串行通信标准，现在的标准名称是TIA485&#x2F;EIA-485-A，但是人们会习惯称为RS-485标准，RS-485常用在工业、自动化、汽车和建筑物管理等领域。</p>
+<p>RS-485总线弥补了RS-232通信距离短，速率低的缺点，RS-485的速率可高达10Mbit&#x2F;s，理论通讯距离可达1200米；RS-485和RS-232的单端传输不一样，是差分传输，使用一对双绞线，其中一根线定义为A，另一个定义为B。</p>
+<p>双绞线</p>
+<h2 id="RS-485物理层"><a href="#RS-485物理层" class="headerlink" title="RS-485物理层"></a>RS-485物理层</h2><p>RS-485的物理层负责在设备和物理传输介质之间传输原始数据。它处理电信号到数字数据的转换，同时定义电压、时序、数据速率等。</p>
+<p>① 差分信号</p>
+<p>长距离布线会有信号衰减，而且引入噪声和干扰的可能性更大，在线缆A和B上的表现就是电压幅度的变化，但是，采用差分线的好处就是，差值相减就会忽略掉干扰依旧能输出正常的信号，把这种差分接收器忽略两条信号线上相同电压的能力称为共模抑制。</p>
+<p>标准规定了，逻辑1：+2V to +6V；逻辑0：-6V to -2V。</p>
+<p>RS-485不需要使用特定的总线电压，只看最小差分电压，在较长的电缆长度上，接收器接收到的电压可能会降低到+&#x2F;- 200 mV，这对于RS-485仍然是完全可以接受的，这也是RS-485的优点之一。</p>
+<p>很多收发器的标准达到甚至超过TIA&#x2F;EIA-485A规范，在实际使用中，以器件的SPEC参数为主，如下某收发器的负输入阈值最小也是-200mV。</p>
+<p>② 信号定义</p>
+<p>现在很多的RS-485转换器都是兼容RS-422的，所以看到很多转换器上面的信号都是T&#x2F;R+、T&#x2F;R-，即对应RS-485的A+和B-。</p>
+<p>对于DB9针型的母头，RS-485有如下的接线定义示意，Pin6~Pin9为N&#x2F;A不接。</p>
+<p>DB9 输出信号  RS-422全双工接线 RS-485半双工接线<br>1 T&#x2F;R+  发（A+） RS-485（A+）<br>2 T&#x2F;R-  发（B-） RS-485（B-）<br>3 RXD+  收（A+） 空<br>4 RXD-  收（B-） 空<br>5 GND 地线  地线</p>
+<p>③ 拓扑结构</p>
+<p>RS485有两线制和四线制两种接线，四线制只能实现点对点的通信方式，现很少采用，多采用的是两线制接线方式，这种接线方式为总线拓扑结构，在同一总线上最多可以挂接32个节点。</p>
+<p>RS-485总线同I2C，也是主从模式，支持点对点单从机模式，也支持多从机模式，不支持多主机模式。</p>
+<h2 id="RS-485收发器"><a href="#RS-485收发器" class="headerlink" title="RS-485收发器"></a>RS-485收发器</h2><p>RS-485是差分传输，如果用单片机控制RS-485接口的设备，需要用到收发器，这一点和CAN总线是类似的，如下是一个MCU控制一个RS-485的图示。</p>
+<p>收发器内部是一个接收器（上半部分）加一个发送器（下半部分），下面简单说说收发器的原理，便于理解MCU是如何和485设备通信的。</p>
+<p>RS-485收发器内部结构</p>
+<p>其中：</p>
+<p>A和B为总线；<br>R为接收器输入；<br>RE为接收器使能信号；<br>DE为发送器使能信号；<br>D为发送器输出；<br>对于使能信号，字母上面加一横的为低电平有效（如上图RE），不加的为高电平有效（如DE）。</p>
+<p>对于发送器，有如下的真值表：</p>
+<p>1、当驱动器使能引脚DE为逻辑高时，差分输出A和B遵循数据输入D处的逻辑状态。D处的逻辑高导致A转为高，B转为低。在这种情况下，定义为VOD&#x3D;VA-VB的差分输出电压为正。当D为低时，输出状态反转，B变高，A变低，VOD为负。</p>
+<p>2、当DE低时，两个输出都变成高阻抗。在这种情况下，与D处的逻辑状态是不相关的。</p>
+<p>发送器真值表</p>
+<p>对于接收器，有如下的真值表：</p>
+<p>1、当接收器使能引脚RE逻辑低时，接收器被激活。当定义为VID&#x3D;VA–VB的差分输入电压为正且高于正输入阈值VIT+时，接收机输出R变高。当VID为负且低于负输入阈值VIT-，接收机输出R变低。如果VID在VIT+和VIT-之间，则输出不确定。</p>
+<p>2、当RE为逻辑高或悬空时，接收机输出为高阻抗，VID的大小和极性无关。</p>
+<p>接收器真值表</p>
+<h2 id="RS-485数据链路"><a href="#RS-485数据链路" class="headerlink" title="RS-485数据链路"></a>RS-485数据链路</h2><p>上面讲到的RS-485收发器的工作原理，下面简单描述RS-485的数据链路，可以先看一下通俗易懂的UART协议帧格式</p>
+<p>主机发送给从机或者从机发送给主机，都会占用到A和B线，所以RS-485多用在半双工模式。</p>
+<p>主机的GPIO会控制RS-485收发器的DE管脚，设置发送模式，从UART TXD线向RS-485收发器的数据（D或DI）线发送一个字节，收发器将在A和B线上将单端UART位流转换为差分位流，数据离开收发器后，主机立即将收发器的模式切换为接收模式。</p>
+<p>从机和主机是类似的，从机控制RS-485收发器的&#x2F;RE管脚，设置为接收模式，接收主机发送的比特流，将其转换为单端信号，通过从机的UART RXD线接收，当从机准备好响应时，它按主机原来的方式进行发送，而主机变为接收。</p>
+<h2 id="RS-232和RS-485转换"><a href="#RS-232和RS-485转换" class="headerlink" title="RS-232和RS-485转换"></a>RS-232和RS-485转换</h2><p>RS-232和RS-485之间可以转换，一个方法是RS-232转换成TTL，再由TTL转换为RS-485，当然也有芯片支持将RS-232直接转换成RS-485，网上有很多模块。</p>
+<p>RS-232和RS-485转换模块</p>
+<h2 id="RS-485和CAN的区别"><a href="#RS-485和CAN的区别" class="headerlink" title="RS-485和CAN的区别"></a>RS-485和CAN的区别</h2><p>虽说RS-485没有标准的数据协议格式，但和CAN总线在很多地方是有相似的，比如A&amp;B和CANH&amp;CANL都是差分信号，通信都需要收发器，都需要120欧姆的匹配电阻等等。</p>
+<p>总线特性  CAN总线 RS-485总线<br>硬件成本  稍高  低廉<br>总线利用率 优先级自动仲裁，利用率高  采用轮询，利用率低<br>数据传输率 高 低<br>错误检测机制  控制器带校验机制，保证底层数据传输正确 只有物理层规范，无数据链路层规定<br>单节点故障影响 总线无影响 总线瘫痪<br>开发成本  软件开发灵活，时间成本低  开发难度较大<br>系统成本  较低  高</p>
+<h2 id="RS-485常用电路"><a href="#RS-485常用电路" class="headerlink" title="RS-485常用电路"></a>RS-485常用电路</h2><p>网上找的一个常用的RS-485电路，其中需要注意两点：</p>
+<p>1、使能信号RE和DE可采用一个GPIO控制，节省资源，GPIO25输出高电平，RE&#x3D;DE&#x3D;0V，进入接收模式；GPIO25输出低电平，RE&#x3D;DE&#x3D;3.3V，进入发送模式。</p>
+<p>2、有一些电路中会在A上加上拉，B上加下拉电阻，主要原因是：RS-485总线在idle状态，电平是不固定的，即电平在-200mV~+200mV之间，收发器可能输出高也可能输出低，UART在空闲时需要保持高电平的，如果此时收发器输出一个低电平，对UART来说是一个start bit，会导致通信异常，关于Ru和Rd的阻值在这里不作过多赘述，后面有机会会详细写一篇文章。</p>
+<p>关于第二点，需要注意：</p>
+<p>① A上加上拉，B上加下拉，接反数据通信也可能出错。</p>
+<p>② 某些收发器内部集成上下拉电阻，则外部不需要再添加。</p>
+<p>今天的文章内容到这里就结束了，希望对你有帮助，我们下一期见。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-20221213-UART串口通信介绍"
   class="article article-type-post"
   itemscope
@@ -745,158 +985,6 @@
     <div class="article-entry" itemprop="articleBody">
        
   <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;conio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;time.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;windows.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdbool.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> H 23</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> W 75</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> WAIT_TIME 500</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//定义direction的每个值代表的方向</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> UP 0</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> DOWN 1</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> LEFT 2</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> RIGHT 3</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> a[H][W];        <span class="comment">//地图数组</span></span><br><span class="line"><span class="type">int</span> s[H*W][<span class="number">2</span>];      <span class="comment">//蛇身坐标数组</span></span><br><span class="line"><span class="type">int</span> sLength;        <span class="comment">//蛇的长度</span></span><br><span class="line"><span class="type">int</span> direction;      <span class="comment">//蛇的方向</span></span><br><span class="line"><span class="type">bool</span> eated=<span class="literal">false</span>;   <span class="comment">//标记是否吃到食物</span></span><br><span class="line"><span class="type">int</span> score=<span class="number">0</span>;        <span class="comment">//得分</span></span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">init</span><span class="params">()</span>         <span class="comment">//程序开始时的初始化操作</span></span><br><span class="line">&#123;</span><br><span class="line">    srand((<span class="type">unsigned</span>)time(<span class="literal">NULL</span>));            <span class="comment">//设置随机数种子为现在的时间</span></span><br><span class="line">    CONSOLE_CURSOR_INFO cursor_info = &#123;<span class="number">1</span>, <span class="number">0</span>&#125;;</span><br><span class="line">    SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &amp;cursor_info);    <span class="comment">//隐藏关标</span></span><br><span class="line">    <span class="type">int</span> i,j;</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>; i&lt;H; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        a[i][<span class="number">0</span>]=<span class="number">1</span>;          <span class="comment">//让第一列为1</span></span><br><span class="line">        a[i][W<span class="number">-1</span>]=<span class="number">1</span>;        <span class="comment">//让最后一列为1</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(j=<span class="number">0</span>; j&lt;W; j++)</span><br><span class="line">    &#123;</span><br><span class="line">        a[<span class="number">0</span>][j]=<span class="number">1</span>;      <span class="comment">//让第一行为1</span></span><br><span class="line">        a[H<span class="number">-1</span>][j]=<span class="number">1</span>;    <span class="comment">//让最后一行为1</span></span><br><span class="line">    &#125;</span><br><span class="line">    sLength=<span class="number">4</span>;          <span class="comment">//让蛇的最初长度为4</span></span><br><span class="line">    s[<span class="number">0</span>][<span class="number">0</span>]=H/<span class="number">2</span>;</span><br><span class="line">    s[<span class="number">0</span>][<span class="number">1</span>]=W/<span class="number">2</span>;        <span class="comment">//给蛇头坐标赋值</span></span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">1</span>; i&lt;<span class="number">4</span>; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        s[i][<span class="number">0</span>]=s[<span class="number">0</span>][<span class="number">0</span>]+i;</span><br><span class="line">        s[i][<span class="number">1</span>]=s[<span class="number">0</span>][<span class="number">1</span>];  <span class="comment">//给刚开始的蛇身几个初始坐标</span></span><br><span class="line">    &#125;</span><br><span class="line">    direction=UP;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">gotoxy</span><span class="params">(<span class="type">int</span> i,<span class="type">int</span> j)</span>        <span class="comment">//移动光标</span></span><br><span class="line">&#123;</span><br><span class="line">    COORD position= &#123;j,i&#125;;</span><br><span class="line">    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE),position);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">check</span><span class="params">(<span class="type">int</span> ii,<span class="type">int</span> jj)</span>        <span class="comment">//判断这个点能不能放食物，可以放返回1，不能放返回0</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span>(a[ii][jj]==<span class="number">1</span>)        <span class="comment">//如果有障碍物，返回0</span></span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    <span class="type">int</span> i;</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>; i&lt;sLength; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(ii==s[i][<span class="number">0</span>]&amp;&amp;jj==s[i][<span class="number">1</span>])      <span class="comment">//如果和其中一个蛇身重合，就返回0</span></span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(ii==<span class="number">0</span>||ii==H<span class="number">-1</span>||jj==<span class="number">0</span>||jj==W<span class="number">-1</span>)      <span class="comment">//如果在边界上面，返回0</span></span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>;                       <span class="comment">//最后筛选 过后的是符合条件的点</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">food</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> i,j;</span><br><span class="line">    <span class="keyword">do</span></span><br><span class="line">    &#123;</span><br><span class="line">        i=rand()%H;                 <span class="comment">//生成0~H-1之间的一个数</span></span><br><span class="line">        j=rand()%W;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span>(check(i,j)==<span class="number">0</span>);           <span class="comment">//生成点直到满足条件</span></span><br><span class="line">    a[i][j]=<span class="number">-1</span>;                     <span class="comment">//标记为食物</span></span><br><span class="line">    gotoxy(i,j);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;$&quot;</span>);                    <span class="comment">//画出食物</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">drawMap</span><span class="params">()</span>                  <span class="comment">//画地图</span></span><br><span class="line">&#123;</span><br><span class="line">    gotoxy(<span class="number">0</span>,<span class="number">0</span>);</span><br><span class="line">    <span class="type">int</span> i,j;</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>; i&lt;H; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span>(j=<span class="number">0</span>; j&lt;W; j++)          <span class="comment">//两重for循环遍历数组</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(a[i][j]==<span class="number">0</span>)          <span class="comment">//为0输出空格</span></span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">&quot; &quot;</span>);</span><br><span class="line">            <span class="keyword">else</span>                    <span class="comment">//为1输出#</span></span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">&quot;#&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;\n&quot;</span>);               <span class="comment">//别忘了换行</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">move</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> i;</span><br><span class="line">    gotoxy(s[sLength<span class="number">-1</span>][<span class="number">0</span>],s[sLength<span class="number">-1</span>][<span class="number">1</span>]);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot; &quot;</span>);                            <span class="comment">//在尾巴上面画空格以擦除尾巴</span></span><br><span class="line">    <span class="keyword">if</span>(eated)               <span class="comment">//如果吃到了食物</span></span><br><span class="line">    &#123;</span><br><span class="line">        sLength++;</span><br><span class="line">        eated=<span class="literal">false</span>;        <span class="comment">//设置为false，不然无限变长</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(i=sLength<span class="number">-1</span>; i&gt;<span class="number">0</span>; i--)  <span class="comment">//从尾巴开始，每一个点的位置等于它前面一个点的位置</span></span><br><span class="line">    &#123;</span><br><span class="line">        s[i][<span class="number">0</span>]=s[i<span class="number">-1</span>][<span class="number">0</span>];</span><br><span class="line">        s[i][<span class="number">1</span>]=s[i<span class="number">-1</span>][<span class="number">1</span>];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">switch</span>(direction)</span><br><span class="line">    &#123;</span><br><span class="line">    <span class="keyword">case</span> UP:</span><br><span class="line">        s[<span class="number">0</span>][<span class="number">0</span>]--;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> DOWN:</span><br><span class="line">        s[<span class="number">0</span>][<span class="number">0</span>]++;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> LEFT:</span><br><span class="line">        s[<span class="number">0</span>][<span class="number">1</span>]--;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> RIGHT:</span><br><span class="line">        s[<span class="number">0</span>][<span class="number">1</span>]++;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">drawSnake</span><span class="params">()</span>                <span class="comment">//画蛇</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> i;</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>; i&lt;sLength; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        gotoxy(s[i][<span class="number">0</span>],s[i][<span class="number">1</span>]);        <span class="comment">//移动关标到蛇的坐标</span></span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;@&quot;</span>);                    <span class="comment">//在这个位置画蛇</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">key</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span>(kbhit()!=<span class="number">0</span>)          <span class="comment">//如果有键盘输入</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="type">char</span> in;</span><br><span class="line">        <span class="keyword">while</span>(!kbhit()==<span class="number">0</span>)  <span class="comment">//如果玩家输入了多个按键，以最后一个按键为准</span></span><br><span class="line">            in=getch();</span><br><span class="line">        <span class="keyword">switch</span>(in)</span><br><span class="line">        &#123;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">&#x27;w&#x27;</span>:</span><br><span class="line">        <span class="keyword">case</span> <span class="string">&#x27;W&#x27;</span>:</span><br><span class="line">            <span class="keyword">if</span>(direction!=DOWN)         <span class="comment">//不能缩头吧。。。。</span></span><br><span class="line">                direction=UP;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">&#x27;s&#x27;</span>:</span><br><span class="line">        <span class="keyword">case</span> <span class="string">&#x27;S&#x27;</span>:</span><br><span class="line">            <span class="keyword">if</span>(direction!=UP)</span><br><span class="line">                direction=DOWN;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">&#x27;a&#x27;</span>:</span><br><span class="line">        <span class="keyword">case</span> <span class="string">&#x27;A&#x27;</span>:</span><br><span class="line">            <span class="keyword">if</span>(direction!=RIGHT)</span><br><span class="line">                direction=LEFT;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">&#x27;d&#x27;</span>:</span><br><span class="line">        <span class="keyword">case</span> <span class="string">&#x27;D&#x27;</span>:</span><br><span class="line">            <span class="keyword">if</span>(direction!=LEFT)</span><br><span class="line">                direction=RIGHT;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">&#x27;p&#x27;</span>:</span><br><span class="line">        <span class="keyword">case</span> <span class="string">&#x27;P&#x27;</span>:</span><br><span class="line">            gotoxy(H,<span class="number">0</span>);        <span class="comment">//将光标移动到下面</span></span><br><span class="line">            system(<span class="string">&quot;pause&quot;</span>);</span><br><span class="line">            gotoxy(H,<span class="number">0</span>);</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;                   &quot;</span>);  <span class="comment">//消去下面的按任意键继续</span></span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">bool</span> <span class="title function_">gameOver</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">bool</span> isGameOver=<span class="literal">false</span>;</span><br><span class="line">    <span class="type">int</span> sX=s[<span class="number">0</span>][<span class="number">0</span>],sY=s[<span class="number">0</span>][<span class="number">1</span>];      <span class="comment">//蛇头的x坐标和y坐标</span></span><br><span class="line">    <span class="keyword">if</span>(sX==<span class="number">0</span>||sX==H<span class="number">-1</span>||sY==<span class="number">0</span>||sY==W<span class="number">-1</span>)</span><br><span class="line">        isGameOver=<span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>; i&lt;sLength; i++)    <span class="comment">//判断有没有吃到自己</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(s[i][<span class="number">0</span>]==sX&amp;&amp;s[i][<span class="number">1</span>]==sY)</span><br><span class="line">            isGameOver=<span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> isGameOver;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">printScore</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    gotoxy(<span class="number">0</span>,W+<span class="number">2</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;  贪吃蛇小游戏&quot;</span>);</span><br><span class="line">    gotoxy(<span class="number">1</span>,W+<span class="number">2</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;  TeX白兔 制作&quot;</span>);</span><br><span class="line">    gotoxy(<span class="number">4</span>,W+<span class="number">2</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;  得分:%d&quot;</span>,score);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    init();                     <span class="comment">//程序开始时的初始化操作</span></span><br><span class="line">    drawMap();                  <span class="comment">//画地图</span></span><br><span class="line">    food();</span><br><span class="line">    <span class="keyword">while</span>(<span class="number">1</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        drawSnake();                <span class="comment">//画蛇</span></span><br><span class="line">        printScore();</span><br><span class="line">        Sleep(WAIT_TIME);           <span class="comment">//等待一段时间</span></span><br><span class="line">        key();</span><br><span class="line">        move();                     <span class="comment">//移动蛇（主要是修改蛇身数组的数据）</span></span><br><span class="line">        <span class="keyword">if</span>(gameOver())</span><br><span class="line">        &#123;</span><br><span class="line">            system(<span class="string">&quot;cls&quot;</span>);          <span class="comment">//清除屏幕内容</span></span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;Game Over\n&quot;</span>);</span><br><span class="line">            system(<span class="string">&quot;pause&quot;</span>);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(a[s[<span class="number">0</span>][<span class="number">0</span>]][s[<span class="number">0</span>][<span class="number">1</span>]]==<span class="number">-1</span>) <span class="comment">//如果蛇头碰到食物，就重新投放食物，并且把食物点重置为0</span></span><br><span class="line">        &#123;</span><br><span class="line">            eated=<span class="literal">true</span>;             <span class="comment">//标记已经吃到食物</span></span><br><span class="line">            score+=<span class="number">10</span>;</span><br><span class="line">            food();</span><br><span class="line">            a[s[<span class="number">0</span>][<span class="number">0</span>]][s[<span class="number">0</span>][<span class="number">1</span>]]=<span class="number">0</span>;  <span class="comment">//去掉食物</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure> 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20221203-《登泰山记》"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/12/03/20221203-%E3%80%8A%E7%99%BB%E6%B3%B0%E5%B1%B1%E8%AE%B0%E3%80%8B/"
-    >20221203-《登泰山记》</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/12/03/20221203-%E3%80%8A%E7%99%BB%E6%B3%B0%E5%B1%B1%E8%AE%B0%E3%80%8B/" class="article-date">
-  <time datetime="2022-12-03T12:09:59.000Z" itemprop="datePublished">2022-12-03</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>《登泰山记》</p>
-<p>姚鼐 〔清代〕</p>
-<p>泰山之阳，汶水西流；其阴，济水东流。阳谷皆入汶，阴谷皆入济。当其南北分者，古长城也。最高日观峰，在长城南十五里。</p>
-<p>余以乾隆三十九年十二月，自京师乘风雪，历齐河、长清，穿泰山西北谷，越长城之限，至于泰安。是月丁未，与知府朱孝纯子颍由南麓登。四十五里，道皆砌石为磴，其级七千有余。泰山正南面有三谷。中谷绕泰安城下，郦道元所谓环水也。余始循以入，道少半，越中岭，复循西谷，遂至其巅。古时登山，循东谷入，道有天门。东谷者，古谓之天门溪水，余所不至也。今所经中岭及山巅，崖限当道者，世皆谓之天门云。道中迷雾冰滑，磴几不可登。及既上，苍山负雪，明烛天南。望晚日照城郭，汶水、徂徕如画，而半山居雾若带然。</p>
-<p>戊申晦，五鼓，与子颍坐日观亭，待日出。大风扬积雪击面。亭东自足下皆云漫。稍见云中白若樗蒱数十立者，山也。极天云一线异色，须臾成五采。日上，正赤如丹，下有红光动摇承之。或曰，此东海也。回视日观以西峰，或得日或否，绛皓驳色，而皆若偻。</p>
-<p>亭西有岱祠，又有碧霞元君祠。皇帝行宫在碧霞元君祠东。是日观道中石刻，自唐显庆以来；其远古刻尽漫失。僻不当道者，皆不及往。</p>
-<p>山多石，少土。石苍黑色，多平方，少圜。少杂树，多松，生石罅，皆平顶。冰雪，无瀑水，无鸟兽音迹。至日观数里内无树，而雪与人膝齐。</p>
-<p>桐城姚鼐记。</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20221202-fontfamily-sansa-serif-notfound解决方法"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/12/02/20221202-fontfamily-sansa-serif-notfound%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/"
-    >20221202-fontfamily-sansa-serif-notfound解决方法</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/12/02/20221202-fontfamily-sansa-serif-notfound%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/" class="article-date">
-  <time datetime="2022-12-02T09:11:31.000Z" itemprop="datePublished">2022-12-02</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h2 id="windows"><a href="#windows" class="headerlink" title="windows"></a>windows</h2><p>删除 缓存路径 <code>C:\Users\ASUS\.matplotlib</code><br>刷新即可</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20221201-python字符串数组转浮点数组"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/12/01/20221201-python%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%95%B0%E7%BB%84%E8%BD%AC%E6%B5%AE%E7%82%B9%E6%95%B0%E7%BB%84/"
-    >20221201-python字符串数组转浮点数组</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/12/01/20221201-python%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%95%B0%E7%BB%84%E8%BD%AC%E6%B5%AE%E7%82%B9%E6%95%B0%E7%BB%84/" class="article-date">
-  <time datetime="2022-12-01T12:44:24.000Z" itemprop="datePublished">2022-12-01</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>12月11日 完成初稿 Chang Liu<a href="mailto:&#x43;&#x68;&#97;&#110;&#x67;&#x2e;&#76;&#x69;&#117;&#x40;&#x72;&#x65;&#115;&#111;&#x6e;&#97;&#x6e;&#x7a;&#x63;&#x61;&#112;&#105;&#x74;&#97;&#x6c;&#46;&#x63;&#x6f;&#x6d;">&#x43;&#x68;&#97;&#110;&#x67;&#x2e;&#76;&#x69;&#117;&#x40;&#x72;&#x65;&#115;&#111;&#x6e;&#97;&#x6e;&#x7a;&#x63;&#x61;&#112;&#105;&#x74;&#97;&#x6c;&#46;&#x63;&#x6f;&#x6d;</a> 费用: 3000 记录好 有个新的样式要做</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">arr = [<span class="string">&#x27;22&#x27;</span>,<span class="string">&#x27;44&#x27;</span>,<span class="string">&#x27;66&#x27;</span>,<span class="string">&#x27;88&#x27;</span>]</span><br><span class="line"></span><br><span class="line">arr = <span class="built_in">list</span>(<span class="built_in">map</span>(<span class="built_in">float</span>,arr))</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(arr)</span><br><span class="line"></span><br><span class="line">[<span class="number">22</span>, <span class="number">44</span>, <span class="number">66</span>, <span class="number">88</span>]</span><br></pre></td></tr></table></figure>
-
-<h2 id="python-matplotlib-画廊-gallery"><a href="#python-matplotlib-画廊-gallery" class="headerlink" title="python matplotlib 画廊 gallery"></a>python matplotlib 画廊 gallery</h2><p><a target="_blank" rel="noopener" href="https://www.matplotlib.org.cn/gallery/#lines-bars-and-markers">https://www.matplotlib.org.cn/gallery/#lines-bars-and-markers</a></p>
-<h2 id="matplotlib中文文档"><a href="#matplotlib中文文档" class="headerlink" title="matplotlib中文文档"></a>matplotlib中文文档</h2><p><a target="_blank" rel="noopener" href="http://www.matplotlib.org.cn/">www.matplotlib.org.cn/</a></p>
- 
       <!-- reward -->
       
     </div>

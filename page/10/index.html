@@ -126,6 +126,218 @@
     
     
     <article
+  id="post-20220808-Manim入门教程"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/08/08/20220808-Manim%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B/"
+    >20220808-Manim入门教程</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/08/08/20220808-Manim%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B/" class="article-date">
+  <time datetime="2022-08-08T07:21:07.000Z" itemprop="datePublished">2022-08-08</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>git clone <a target="_blank" rel="noopener" href="https://github.com/leekunhwee/manim.git">https://github.com/leekunhwee/manim.git</a></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#假设文件保存为text.py</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> manimlib.imports <span class="keyword">import</span> *  <span class="comment">#引用包，后续代码该行默认有</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#动画执行指令</span></span><br><span class="line"><span class="comment">#python3 -m manim text.py BasicWrite -pl</span></span><br><span class="line"><span class="comment">#最基本的写字</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">BasicWrite</span>(<span class="title class_ inherited__">Scene</span>): </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">construct</span>(<span class="params">self</span>): </span><br><span class="line">        <span class="comment">#text = TextMobject(&quot;Hello, I am dodo&quot;)</span></span><br><span class="line">        text = TextMobject(<span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">            text,</span></span><br><span class="line"><span class="string">            $\\frac&#123;a&#125;&#123;d&#125;$,  #行内公式</span></span><br><span class="line"><span class="string">            $$a^2+d^2=o^2$$  #自动换行的公式</span></span><br><span class="line"><span class="string">            &quot;&quot;&quot;</span>)</span><br><span class="line">        self.play(Write(text))  <span class="comment">#逐个字母写出text内容</span></span><br><span class="line">        <span class="comment">#self.add(text)  #一次性直接出现所有字母</span></span><br><span class="line">        <span class="comment">#self.remove(text)  #一次性删除字符串</span></span><br><span class="line">        self.wait(<span class="number">3</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#动画执行指令</span></span><br><span class="line"><span class="comment">#python3 -m manim text.py TextWithPosition -pl</span></span><br><span class="line"><span class="comment">#在不同位置写字</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">TextWithPosition</span>(<span class="title class_ inherited__">Scene</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">construct</span>(<span class="params">self</span>):</span><br><span class="line">        text = TextMobject(<span class="string">&quot;Andodo&quot;</span>)</span><br><span class="line">        text.to_edge(UP)</span><br><span class="line">        <span class="comment">#text.to_edge(DOWN)</span></span><br><span class="line">        <span class="comment">#text.to_edge(Right)</span></span><br><span class="line">        <span class="comment">#text.to_edge(LEFT)</span></span><br><span class="line">        <span class="comment">#text.to_edge(UP+RIGHT)</span></span><br><span class="line">        <span class="comment">#text.to_edge(UP+LEFT)</span></span><br><span class="line">        <span class="comment">#text.to_edge(RIGHT+DOWN)</span></span><br><span class="line">        <span class="comment">#text.to_edge(LEFT+DOWN)</span></span><br><span class="line">        self.play(Write(text))</span><br><span class="line">        self.wait(<span class="number">3</span>)</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure> 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-20220806-好用的本地视频播放器推荐"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/08/06/20220806-%E5%A5%BD%E7%94%A8%E7%9A%84%E6%9C%AC%E5%9C%B0%E8%A7%86%E9%A2%91%E6%92%AD%E6%94%BE%E5%99%A8%E6%8E%A8%E8%8D%90/"
+    >20220806-好用的本地视频播放器推荐</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/08/06/20220806-%E5%A5%BD%E7%94%A8%E7%9A%84%E6%9C%AC%E5%9C%B0%E8%A7%86%E9%A2%91%E6%92%AD%E6%94%BE%E5%99%A8%E6%8E%A8%E8%8D%90/" class="article-date">
+  <time datetime="2022-08-06T09:14:13.000Z" itemprop="datePublished">2022-08-06</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>windows potplayer 官网 <a target="_blank" rel="noopener" href="http://potplayer.tv/?lang=zh_CN">http://potplayer.tv/?lang=zh_CN</a></p>
+<p>mac OmniPlayer </p>
+<p>chorme 扩展 Darker Reader</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-20220806-windows-cmd中的函数使用"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/08/06/20220806-windows-cmd%E4%B8%AD%E7%9A%84%E5%87%BD%E6%95%B0%E4%BD%BF%E7%94%A8/"
+    >20220806-windows_cmd中的函数使用</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/08/06/20220806-windows-cmd%E4%B8%AD%E7%9A%84%E5%87%BD%E6%95%B0%E4%BD%BF%E7%94%A8/" class="article-date">
+  <time datetime="2022-08-06T06:56:36.000Z" itemprop="datePublished">2022-08-06</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>本文主要讲述如下几个问题：</p>
+<p>   1.什么是函数，怎么创建函数？</p>
+<p>   2.怎么调用一个函数？</p>
+<p>   3.函数是怎么工作的？</p>
+<p>   4.怎么向函数传递参数？</p>
+<p>   5.函数怎么返回值和返回一个局部变量的值。</p>
+<p>一、创建函数（什么是函数）</p>
+<pre><code>在batch script 中的函数以一个标签开始，并以goto:eof结束，如下：
+</code></pre>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"> script</span><br><span class="line"></span><br><span class="line">:myDosFunc    - 函数的开始，用一个标签标识</span><br><span class="line">echo. 函数体，可以执行很多命令</span><br><span class="line">echo. </span><br><span class="line">GOTO:EOF</span><br></pre></td></tr></table></figure>
+<p>二、调用函数</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Script: 01.</span><br><span class="line"> call:myDosFunc</span><br></pre></td></tr></table></figure>
+<p>三、函数怎么工作</p>
+<p>  调用函数的脚本将其分成两部分。</p>
+<pre><code>1.main script: 从第一行开始并且以 GOTO:EOF命令结束
+
+2.函数部分:由多个函数组成，由main script调用。
+</code></pre>
+<p>   SCRIPT：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">@echo off</span><br><span class="line">echo.开始调用函数</span><br><span class="line">call:myDosFunc</span><br><span class="line">echo.从函数返回myDosFunc</span><br><span class="line">echo.&amp;pause&amp;goto:eof</span><br><span class="line">::--------------------------------------------------------</span><br><span class="line">::-- 函数部分开始</span><br><span class="line">::--------------------------------------------------------</span><br><span class="line">:myDosFunc    - here starts my function identified by it`s label</span><br><span class="line">echo.  here the myDosFunc function is executing a group of commands</span><br><span class="line">echo.  it could do a lot of things</span><br><span class="line">goto:eof</span><br></pre></td></tr></table></figure>
+<p>三、怎么传递参数，并且在函数中获取参数的值</p>
+<p>   1.用空格或者逗号将参数分开</p>
+<p>   2.用双引号将带有空格的字符串参数括起来</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">call:myDosFunc 100 YeePEE</span><br><span class="line">call:myDosFunc 100 &quot;for me&quot;</span><br><span class="line">call:myDosFunc 100,&quot;for me&quot;</span><br></pre></td></tr></table></figure>
+
+<p>   获取参数，采用%1~%9来获取每个参数的值。%0,表示批处理文件本身</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"> :myDosFunc    - here starts myDosFunc identified by it`s label</span><br><span class="line">echo.</span><br><span class="line">echo. here the myDosFunc function is executing a group of commands</span><br><span class="line">echo. it could do %~1 of things %~2.</span><br><span class="line">goto:eof</span><br></pre></td></tr></table></figure>
+
+
+<p> 带参数的脚本</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"> @echo off</span><br><span class="line">echo.going to execute myDosFunc with different arguments</span><br><span class="line">call:myDosFunc 100 YeePEE</span><br><span class="line">call:myDosFunc 100 &quot;for me&quot;</span><br><span class="line">call:myDosFunc 100,&quot;for me&quot;</span><br><span class="line">call:myDosFunc 100,for me</span><br><span class="line">echo.&amp;pause&amp;goto:eof</span><br><span class="line">::--------------------------------------------------------</span><br><span class="line">::-- Function section starts below here</span><br><span class="line">::--------------------------------------------------------</span><br><span class="line">:myDosFunc    - here starts my function identified by it&#x27;s label</span><br><span class="line">echo.</span><br><span class="line">echo. here the myDosFunc function is executing a group of commands</span><br><span class="line">echo. it could do %~1 of things %~2.</span><br><span class="line">goto:eof</span><br></pre></td></tr></table></figure>
+<p>四、函数返回值</p>
+<p>   1、调用命令不像其他语言那样能有返回值，最常用的做法是在函数中将该值保存在全局变量中，调用结束后</p>
+<p>直接用该全局变量。如下：</p>
+<p>  Usage:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"> set &quot;var1=some hopefully not important string&quot;</span><br><span class="line">echo.var1 before: %var1%</span><br><span class="line">call:myGetFunc</span><br><span class="line">echo.var1 after : %var1%</span><br><span class="line">Script:</span><br><span class="line"></span><br><span class="line"> :myGetFunc    - get a value</span><br><span class="line">set &quot;var1=DosTips&quot;</span><br><span class="line">goto:eof</span><br></pre></td></tr></table></figure>
+
+<p>脚本输出如下：</p>
+<p>var1 before: some hopefully not important string<br>var1 after : DosTips<br>  2、通过引用返回值，调用者通过传递一个变量给函数来存储返回值</p>
+<p>Usage:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"> call:myGetFunc var1</span><br><span class="line">echo.var1 after : %var1%</span><br></pre></td></tr></table></figure>
+
+<p>Script:</p>
+<p> :myGetFunc    - passing a variable by reference<br>set “%~1&#x3D;DosTips”<br>goto:eof<br>脚本输出如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var1 after : DosTips</span><br></pre></td></tr></table></figure>
+<p>完整脚本：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"> @echo off</span><br><span class="line">set &quot;var1=CmdTips&quot;</span><br><span class="line">echo.var1 before: %var1%</span><br><span class="line">call:myGetFunc var1</span><br><span class="line">echo.var1 after : %var1%</span><br><span class="line">echo.&amp;pause&amp;goto:eof</span><br><span class="line"></span><br><span class="line">::--------------------------------------------------------</span><br><span class="line">::-- Function section starts below here</span><br><span class="line">::--------------------------------------------------------</span><br><span class="line">:myGetFunc    - passing a variable by reference</span><br><span class="line">set &quot;%~1=DosTips&quot;</span><br><span class="line">goto:eof</span><br></pre></td></tr></table></figure>
+<p>五、函数的局部变量</p>
+<p>怎么保证局部变量和全局变量不冲突，SETLOCAL命令能让处理器当做是局部变量，用ENDLOCAL解除局部变量。</p>
+<p>ENDLOCAL 会被自动调用，当批处理执行到文件末尾的时候，即GOTO:EOF。SETLOCAL可以很好的保护函数内与外面的变量不会冲突。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"> @echo off</span><br><span class="line">set &quot;aStr=Expect no changed, even if used in function&quot;</span><br><span class="line">set &quot;var1=No change for this one.  Now what?&quot;</span><br><span class="line">echo.aStr before: %aStr%</span><br><span class="line">echo.var1 before: %var1%</span><br><span class="line">call:myGetFunc var1</span><br><span class="line">echo.aStr after : %aStr%</span><br><span class="line">echo.var1 after : %var1%</span><br><span class="line">echo.&amp;pause&amp;goto:eof</span><br><span class="line">::--------------------------------------------------------</span><br><span class="line">::-- Function section starts below here</span><br><span class="line">::--------------------------------------------------------</span><br><span class="line">:myGetFunc    - passing a variable by reference</span><br><span class="line">SETLOCAL</span><br><span class="line">set &quot;aStr=DosTips&quot;</span><br><span class="line">set &quot;%~1=%aStr%&quot;</span><br><span class="line">ENDLOCAL</span><br><span class="line">goto:eof</span><br></pre></td></tr></table></figure>
+
+<p>脚本输出：</p>
+<p>aStr before: Expect no changed, even if used in function<br>var1 before: No change for this one.  Now what?<br>aStr after : Expect no changed, even if used in function<br>var1 after : No change for this one.  Now what?</p>
+<p>   返回局部变量</p>
+<pre><code>  ----怎么跳过ENDLOCAL的屏障，返回局部变量值？
+</code></pre>
+<p>   采用”变量扩充“，在SETLOCAL与ENDLOCAL之间的全局变量的值会备份，当退出ENDLOCAL，该值将恢复。让命令处理器来执行ENDLOCAL 和SET命令。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"> @echo off</span><br><span class="line">set &quot;aStr=Expect no changed, even if used in function&quot;</span><br><span class="line">set &quot;var1=Expect changed&quot;</span><br><span class="line">echo.aStr before: %aStr%</span><br><span class="line">echo.var1 before: %var1%</span><br><span class="line">call:myGetFunc var1</span><br><span class="line">echo.aStr after : %aStr%</span><br><span class="line">echo.var1 after : %var1%</span><br><span class="line">echo.&amp;pause&amp;goto:eof</span><br><span class="line">::--------------------------------------------------------</span><br><span class="line">::-- Function section starts below here</span><br><span class="line">::--------------------------------------------------------</span><br><span class="line">:myGetFunc    - passing a variable by reference</span><br><span class="line">SETLOCAL</span><br><span class="line">set &quot;aStr=DosTips&quot;</span><br><span class="line">( ENDLOCAL</span><br><span class="line">    set &quot;%~1=%aStr%&quot;</span><br><span class="line">)</span><br><span class="line">goto:eof</span><br><span class="line">:myGetFunc2    - passing a variable by reference</span><br><span class="line">SETLOCAL</span><br><span class="line">set &quot;aStr=DosTips&quot;</span><br><span class="line">ENDLOCAL&amp;set &quot;%~1=%aStr%&quot;       &amp;rem THIS ALSO WORKS FINE</span><br><span class="line">goto:eof</span><br></pre></td></tr></table></figure>
+
+
+<p>脚本输出：</p>
+<p>aStr before: Expect no changed, even if used in function<br>var1 before: Expect changed<br>aStr after : Expect no changed, even if used in function<br>var1 after : DosTips<br>六、编写递归函数</p>
+<pre><code> 让函数局部变量的变换对调用者是可见的，循环调用函数，让变量可重用。下面编写一个函数计算Fibonacci数列。
+</code></pre>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"> @echo off</span><br><span class="line">set &quot;fst=0&quot;</span><br><span class="line">set &quot;fib=1&quot;</span><br><span class="line">set &quot;limit=1000000000&quot;</span><br><span class="line">call:myFibo fib,%fst%,%limit%</span><br><span class="line">echo.The next Fibonacci number greater or equal %limit% is %fib%.</span><br><span class="line">echo.&amp;pause&amp;goto:eof</span><br><span class="line"></span><br><span class="line">::--------------------------------------------------------</span><br><span class="line">::-- Function section starts below here</span><br><span class="line">::--------------------------------------------------------</span><br><span class="line">:myFibo  -- calculate recursively the next Fibonacci number greater or equal to a limit</span><br><span class="line">::       -- %~1: return variable reference and current Fibonacci number</span><br><span class="line">::       -- %~2: previous value</span><br><span class="line">::       -- %~3: limit</span><br><span class="line">SETLOCAL</span><br><span class="line">set /a &quot;Number1=%~1&quot;</span><br><span class="line">set /a &quot;Number2=%~2&quot;</span><br><span class="line">set /a &quot;Limit=%~3&quot;</span><br><span class="line">set /a &quot;NumberN=Number1 + Number2&quot;</span><br><span class="line">if /i %NumberN% LSS %Limit% call:myFibo NumberN,%Number1%,%Limit%</span><br><span class="line">(ENDLOCAL</span><br><span class="line">    IF &quot;%~1&quot; NEQ &quot;&quot; SET &quot;%~1=%NumberN%&quot;</span><br><span class="line">)</span><br><span class="line">goto:eof</span><br></pre></td></tr></table></figure>
+
+<p>七、总结，定义一个标准的dos batch script function</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"> :myFunctionName    -- function description here</span><br><span class="line">::                 -- %~1: argument description here</span><br><span class="line">SETLOCAL</span><br><span class="line">REM.--function body here</span><br><span class="line">set LocalVar1=...</span><br><span class="line">set LocalVar2=...</span><br><span class="line">(ENDLOCAL &amp; REM -- RETURN VALUES</span><br><span class="line">    IF &quot;%~1&quot; NEQ &quot;&quot; SET %~1=%LocalVar1%</span><br><span class="line">    IF &quot;%~2&quot; NEQ &quot;&quot; SET %~2=%LocalVar2%</span><br><span class="line">)</span><br><span class="line">GOTO:EOF</span><br></pre></td></tr></table></figure>
+
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-20220805-powershell判断路径是否存在"
   class="article article-type-post"
   itemscope
@@ -686,513 +898,6 @@
 <p>若要使用此命令配置定期计划的备份，您必须是 Administrators 组的成员。 若要使用此命令执行所有其他任务，您必须是 Backup Operators 组或 Administrators 组的成员，或者您必须被委派了适当的权限。</p>
 <p>必须从提升的命令提示符运行 wbadmin ，方法是右键单击 “ 命令提示符”，然后选择 “以 管理员身份运行”。</p>
 <p>参数<br>参数  说明<br>wbadmin delete catalog  删除本地计算机上的备份目录。 仅当此计算机上的备份目录已损坏，并且你没有将备份存储在可用于还原目录的其他位置时，才使用此命令。<br>wbadmin delete systemstatebackup  删除一个或多个系统状态备份。<br>wbadmin disable backup  禁用日常备份。<br>wbadmin enable backup 配置并启用定期计划的备份。<br>wbadmin get disks 列出当前处于联机状态的磁盘。<br>wbadmin get items 列出备份中包含的项。<br>wbadmin get status  显示当前正在运行的备份或恢复操作的状态。<br>wbadmin get versions  列出从本地计算机恢复的备份的详细信息，或者，如果指定了其他位置，则从另一台计算机。<br>wbadmin restore catalog 在本地计算机上的备份目录已损坏的情况下，从指定的存储位置恢复备份目录。<br>wbadmin start backup  运行一次性备份。 如果与不带参数一起使用，则将使用每日备份计划的设置。<br>wbadmin start recovery  运行指定的卷、应用程序、文件或文件夹的恢复。<br>wbadmin start sysrecovery 运行完整系统的恢复 (至少包含操作系统状态) 的所有卷。 仅当使用 Windows 恢复环境时，此命令才可用。<br>wbadmin start systemstatebackup 运行系统状态备份。<br>wbadmin start systemstaterecovery 运行系统状态恢复。<br>wbadmin stop job  停止当前正在运行的备份或恢复操作。</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20220726-恋爱时的聊天话题"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/07/26/20220726-%E6%81%8B%E7%88%B1%E6%97%B6%E7%9A%84%E8%81%8A%E5%A4%A9%E8%AF%9D%E9%A2%98/"
-    >20220726-恋爱时的聊天话题</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/07/26/20220726-%E6%81%8B%E7%88%B1%E6%97%B6%E7%9A%84%E8%81%8A%E5%A4%A9%E8%AF%9D%E9%A2%98/" class="article-date">
-  <time datetime="2022-07-25T23:26:44.000Z" itemprop="datePublished">2022-07-26</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>聊对近期某个电影的看法<br>聊新开的某家餐厅<br>聊有喜欢喝的饮料<br>聊一点点的奶茶<br>聊对人生的看法<br>聊有没有近期的规划<br>聊想实现的心愿<br>聊最想得到的东西<br>聊小时候的故事<br>聊同桌的她<br>聊那个讨厌的班主任<br>聊那个难忘的考试<br>聊家庭的构成<br>聊父母的和睦<br>聊父母的爱好<br>聊可爱的弟弟<br>聊那些柜子里不穿的衣服<br>聊多久打扫的房间<br>聊地板的颜色<br>聊洗衣服的分类<br>聊今天发生的趣事<br>聊那个给你买棒冰的闺蜜<br>聊最好的朋友<br>聊送出祝福的初恋<br>聊没看出来的化妆<br>聊夏天出来防晒的霜<br>聊带出来的帽子<br>聊装饰的项链<br>聊初次见面时的尴尬<br>聊没有表现好的那个谈话<br>聊没来得及说的漂亮的鞋子<br>聊这个包与你衣服很配<br>聊习惯的猫猫狗狗<br>聊种死的那盆肉肉<br>聊习惯的花<br>聊习惯的香味<br>聊大学怎么过来的<br>聊难忘的实习<br>聊实习的那个师父<br>聊一起实习的那些人<br>聊眼镜的度数<br>聊眼镜的起源<br>聊隐形眼镜<br>聊你们工资<br>聊你们的福利<br>聊公司组织出去旅游<br>聊有意义的福利发放经历<br>聊看的书<br>聊看的电视剧<br>聊当前的比赛<br>聊此刻的电影频道<br>聊最喜欢的节目</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20220723-ADB命令大全"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/07/23/20220723-ADB%E5%91%BD%E4%BB%A4%E5%A4%A7%E5%85%A8/"
-    >20220723-ADB命令大全</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/07/23/20220723-ADB%E5%91%BD%E4%BB%A4%E5%A4%A7%E5%85%A8/" class="article-date">
-  <time datetime="2022-07-23T11:43:43.000Z" itemprop="datePublished">2022-07-23</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <ol>
-<li>常用命令</li>
-</ol>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">adb devices #查看连接设备</span><br><span class="line"></span><br><span class="line">adb -s cf27456f shell # 指定连接设备使用命令</span><br><span class="line"></span><br><span class="line">adb install test.apk # 安装应用</span><br><span class="line"></span><br><span class="line">adb install -r demo.apk #安装apk 到sd 卡：</span><br><span class="line"></span><br><span class="line">adb uninstall cn.com.test.mobile #卸载应用，需要指定包</span><br><span class="line"></span><br><span class="line">adb uninstall -k cn.com.test.mobile #卸载app 但保留数据和缓存文件</span><br><span class="line"></span><br><span class="line">adb shell pm list packages #列出手机装的所有app 的包名</span><br><span class="line"></span><br><span class="line">adb shell pm list packages -3 #列出除了系统应用的第三方应用包名</span><br><span class="line"></span><br><span class="line">adb shell pm clear cn.com.test.mobile #清除应用数据与缓存</span><br><span class="line"></span><br><span class="line">adb shell am start -ncn.com.test.mobile/.ui.SplashActivity #启动应用</span><br><span class="line"></span><br><span class="line">adb shell dumpsys package #包信息Package Information</span><br><span class="line"></span><br><span class="line">adb shell dumpsys meminfo #内存使用情况Memory Usage</span><br><span class="line"></span><br><span class="line">adb shell am force-stop cn.com.test.mobile #强制停止应用</span><br><span class="line"></span><br><span class="line">adb logcat #查看日志</span><br><span class="line"></span><br><span class="line">adb logcat -c #清除log 缓存</span><br><span class="line"></span><br><span class="line">adb reboot #重启</span><br><span class="line"></span><br><span class="line">adb get-serialno #获取序列号</span><br><span class="line"></span><br><span class="line">adb shell getprop ro.build.version.release #查看Android 系统版本</span><br><span class="line"></span><br><span class="line">adb shell top -s 10 #查看占用内存前10 的app</span><br><span class="line"></span><br><span class="line">adb push &lt;local&gt; &lt;remote&gt; #从本地复制文件到设备</span><br><span class="line"></span><br><span class="line">adb pull &lt;remote&gt; &lt;local&gt; #从设备复制文件到本地</span><br><span class="line"></span><br><span class="line">adb bugreport #查看bug 报告</span><br><span class="line"></span><br><span class="line">adb help #查看ADB 帮助</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-<p>2.1 连接设备</p>
-<p>adb [-d|-e|-s <serialNumber>] <command></p>
-<p>连接指定设备</p>
-<p>参数：</p>
-<p>-d 指定当前唯一通过usc 连接的android 设备为命令目标</p>
-<p>-e 指定当前唯一运行的模拟器为命令目标</p>
-<p>-s 指定相应serialNumber 号的设备 模拟器为命令目标</p>
-<p>command 为所需对设备执行的命令</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$adb devices</span><br><span class="line">List of devices attached</span><br><span class="line">cf263b7f device</span><br><span class="line">emulator-5554 offline</span><br><span class="line">192.168.1.6:5555 device</span><br><span class="line">$adb -s cf263b7f #连接cf264b8f 设备</span><br></pre></td></tr></table></figure>
-
-<p>adb devices 查看已连接的设备信息，上面已经连接3台设备</p>
-<p>2.2 查看信息</p>
-<p>查看版本设备</p>
-<p>adb version 版本信息</p>
-<p>注意：offline 表示设备未连接成功或无响应，device 设备已连接</p>
-<p>adb shell getprop ro.product.model 查看设备型号</p>
-<p>adb get-serialno 获取设备序列号</p>
-<p>adb bugreport 查看bug 报告</p>
-<p>adb logcat 查看日志</p>
-<p>adb shell wm size 查看屏幕分辨率</p>
-<p>adb shell wm density 查看屏幕密度</p>
-<p>查看应用信息</p>
-<p>adb shell pm list packages 列出手机装的所有app 的包名</p>
-<p>adb shell pm list packages -s 列出系统应用的所有包名</p>
-<p>adb shell pm list packages -3 列出除了系统应用的第三方应用包名</p>
-<p>adb shell pm list packages | find “test” win 列出手机装带有的test的包</p>
-<p>adb shell pm list packages | grep ‘test’ linux 列出手机装带有的test的包</p>
-<p>adb shell cat &#x2F;sys&#x2F;class&#x2F;net&#x2F;wlan0&#x2F;address 获取MAC 地址, 根据系统版本参数可能不同</p>
-<p>adb shell getprop ro.build.version.release 查看Android 系统版本</p>
-<p>adb shell dumpsys activity services [<packagename>] 查看正在运行的Services</p>
-<p><packagename> 参数不是必须的，指定<packagename> 表示查看与某个包名相关的Services，不指定表示查看所有Services。</p>
-<p><packagename> 不一定要给出完整的包名，比如运行adb shell dumpsys activity services org.zhihu，那么包名org.zhihu.demo1、org.zhihu.demo2 和org.zhihu 等相关的Services 都会列出来。</p>
-<p>app 安装和卸载</p>
-<p>adb install <apkfile> 参数apkfile 为.apk 文件名称</p>
-<p>adb install -r test.apk 保留数据和缓存文件，重新安装apk</p>
-<p>adb install -s test.apk 安装apk 到sd 卡</p>
-<p>app 卸载</p>
-<p>db uninstall <package> 参数package 为软件包名称</p>
-<p>示例：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$adb uninstall cn.com.test.mobile</span><br><span class="line"> </span><br><span class="line">#  卸载app 但保留数据和缓存文件</span><br><span class="line">$adb uninstall -k ccn.com.test.mobile </span><br></pre></td></tr></table></figure>
-
-<p>2.4 启动停止服务</p>
-<p>adb start-server</p>
-<p>启动adb 服务，基本不会用到，因为只要设备连接正确，会自动启动adb server</p>
-<p>adb kill-server</p>
-<p>停止adb server</p>
-<p>adb -P <port> start-server</p>
-<p>指定adb server 的网络端口port （默认为5037）启动服务</p>
-<p>与应用交互</p>
-<p>adb  shell pm clear <packagename></p>
-<p>清除应用数据与缓存</p>
-<p>示例：</p>
-<p>$adb shell pm clear cn.com.test.mobile<br>adb shell am force-stop <packagename></p>
-<p>强制停止应用</p>
-<p>示例：强制停止微信</p>
-<p>$adb shell am force-stop com.tencent.mm<br>adb shell am <command></p>
-<p>command 命令详解</p>
-<p>command 用途<br>start [options] <INTENT> 启动 <INTENT> 指定的 Activity<br>startservice [options] <INTENT> 启动 <INTENT> 指定的 Service<br>broadcast [options] <INTENT> 发送 <INTENT> 指定的广播<br>force-stop <packagename> 停止 <packagename> 相关的进程<br><INTENT> 参数很灵活，和写 Android 程序时代码里的 Intent 相对应,用于决定 intent 对象的选项如下：</p>
-<p>-a <ACTION> 指定 action，如android.intent.action.VIEW<br>-c <CATEGORY> 指定 category，如android.intent.category.APP_CONTACTS<br>-n <COMPONENT> 指定完整 component 名，用于明确指定启动哪个 Activity，如<br>com.example.app&#x2F;.ExampleActivity</p>
-<p>启动activity</p>
-<p>adb shell am start [options] <INTENT></p>
-<p>示例：</p>
-<p> #指定完整 component 名，用于明确指定启动哪个Activity<br>$adb shell am start -n <COMPONENT><br>如： #表示调起微信主界面<br>$adb shell am start -n com.tencent.mm&#x2F;.ui.LauncherUI<br>2.5.2 启动 Service</p>
-<p>adb shell am startservice [options] <INTENT></p>
-<p>示例： 表示调起微信的某 Service。</p>
-<p>$adb shell am startservice -n com.tencent.mm&#x2F;.plugin.accountsync.model.AccountAuthenticatorService<br>2.5.3 发送广播</p>
-<p>可以向所有组件广播，也可以只向指定组件广播。</p>
-<p>adb shell am broadcast [options] <INTENT></p>
-<p>示例：</p>
-<p>#向所有组件广播 BOOT_COMPLETED (开机广播)<br>$adb shell am broadcast -a android.intent.action.BOOT_COMPLETED<br>#如：只向 org.mazhuang.boottimemeasure&#x2F;.BootCompletedReceiver 广播 BOOT_COMPLETED：<br>$adb shell am broadcast -a android.intent.action.BOOT_COMPLETED -n org.mazhuang.boottimemeasure&#x2F;.BootCompletedReceiver<br>系统预定义的广播：</p>
-<p>强制停止应用</p>
-<p>adb shell am force-stop <packagename></p>
-<p>示例：</p>
-<h1 id="查询出包名"><a href="#查询出包名" class="headerlink" title="查询出包名"></a>查询出包名</h1><p>$adb shell pm list packages<br>…..</p>
-<h1 id="强制停止微信"><a href="#强制停止微信" class="headerlink" title="强制停止微信"></a>强制停止微信</h1><p>$adb shell am force-stop com.tencent.mm</p>
-<p>文件管理</p>
-<p>2.6.1 复制设备里的文件到电脑</p>
-<p>adb pull &lt;设备里的文件路径&gt; [电脑上的目录]</p>
-<p>示例：</p>
-<p>$adb pull &#x2F;sdcard&#x2F;abc.mp4  ~&#x2F;tmp&#x2F;<br>小技巧：设备上的文件路径可能需要 root 权限才能访问，如果你的设备已经 root 过，可以先使用 adb shell 和 su 命令在 adb shell 里获取 root 权限后，先 cp &#x2F;path&#x2F;on&#x2F;device &#x2F;sdcard&#x2F;filename 将文件复制到 sdcard，然后 adb pull &#x2F;sdcard&#x2F;filename &#x2F;path&#x2F;on&#x2F;pc。<br>2.6.2 复制电脑里的文件到设备</p>
-<p>adb push &lt;电脑上的文件路径&gt; &lt;设备里的目录&gt;</p>
-<p>示例：</p>
-<p>$adb push  e:&#x2F;ss.au3  &#x2F;data&#x2F;local&#x2F;tmp&#x2F;<br>小技巧：设备上的文件路径普通权限可能无法直接写入，如果你的设备已经 root 过，可以先 adb push &#x2F;path&#x2F;on&#x2F;pc &#x2F;sdcard&#x2F;filename，然后 adb shell 和 su 在 adb shell 里获取 root 权限后，cp &#x2F;sdcard&#x2F;filename &#x2F;path&#x2F;on&#x2F;device<br>2.7 使用ADB命令模拟按键&#x2F;输入<br>adb shell input keyevent <keycode></p>
-<p>keycode位操作参数，不同的 keycode 能实现不同的功能</p>
-<p>完整的功能见：<a target="_blank" rel="noopener" href="https://developer.android.com/reference/android/view/KeyEvent.html">https://developer.android.com/reference/android/view/KeyEvent.html</a></p>
-<p>keycode 能实现不同的功能，对应的编码如下：</p>
-<p>$adb shell input keyevent 26  #电源键<br>$adb shell input keyevent 82  #菜单键<br>$adb shell input keyevent 3  #HOME 键<br>$adb shell input keyevent 4 #返回键<br>$adb shell input keyevent 24 #增加音量<br>$adb shell input keyevent 25 #降低音量<br>$adb shell input keyevent 164 #静音<br>$adb shell input keyevent 85  #播放&#x2F;暂停<br>$adb shell input keyevent 86 #停止播放<br>$adb shell input keyevent 87 #播放下一首<br>$adb shell input keyevent 88 #播放上一首<br>$adb shell input keyevent 126 #恢复播放<br>$adb shell input keyevent 127 #暂停播放<br>$adb shell input keyevent 224 #点亮屏幕<br>$adb shell input keyevent 223 #熄灭屏幕<br>$adb shell input swipe 300 1000 300 500  #滑动解锁，向上滑动手势解锁<br>#参数 300 1000 300 500 分别表示起始点x坐标 起始点y坐标 结束点x坐标 结束点y坐标<br>$adb shell input text hello #焦点处于某文本框时输入文本</p>
-<p>2.8 查看日志</p>
-<p>2.8.1 Android 日志<br>[adb] logcat [<option>] … [<filter-spec>] …</p>
-<p>按级别过滤日志</p>
-<p>按某级别过滤日志则会将该级别及以上的日志输出，Android 日志的优先级如下：</p>
-<p>V —— Verbose（最低，输出得最多）<br>D —— Debug<br>I —— Info<br>W —— Warning<br>E —— Error<br>F —— Fatal<br>S —— Silent（最高，啥也不输出）<br>示例：输出W之上的日志，W,E,F,S</p>
-<p>$adb logcat *:W<br>按 tag 和级别过滤日志</p>
-<p><filter-spec> 可以由多个 <tag>[:priority] 组成</p>
-<p>示例：输出 tag ActivityManager 的 I 以上级别日志，输出tag MyApp的D 以上级别日志，及其它 tag 的 S 级别日志（即屏蔽其它 tag 日志）。</p>
-<p>$adb logcat ActivityManager:I MyApp:D *:S<br>日志格式</p>
-<p>adb logcat -v <format></p>
-<p>指定日志输出格式</p>
-<p>示例：</p>
-<p>$adb logcat -v <format>  指定日志输出格式<br>$adb logcat -v brief   #默认格式,<priority>&#x2F;<tag>(<pid>): <message><br>$adb logcat -v process #<priority>(<pid>) <message><br>$adb logcat -v tag  #<priority>&#x2F;<tag>: <message><br>$adb logcat -v raw  #<message><br>$adb logcat -v time  #<datetime> <priority>&#x2F;<tag>(<pid>): <message><br>$adb logcat -v threadtime #<datetime> <pid> <tid> <priority> <tag>: <message><br>$adb logcat -v long  #[ <datetime> <pid>:<tid> <priority>&#x2F;<tag>:] <message><br>$adb logcat -v long ActivityManager:I *:S  #指定格式可与上面的过滤同时使用<br>清空日志</p>
-<p>$adb logcat -c<br>2.8.2 内核日志</p>
-<p>$adb shell dmesg<br>查看内核日志</p>
-<p>2.9 查看设备信息<br>2.9.1 型号<br>$adb shell getprop ro.product.model<br>2.9.2 电池状况<br>$adb shell dumpsys battery<br>2.9.3 屏幕分辨率<br>$adb shell wm size<br>2.9.4 屏幕密度<br>$adb shell wm density<br>2.9.5 显示屏参数<br>$adb shell dumpsys window displays<br>2.9.6 android_id<br>$adb shell settings get secure android_id<br>2.9.7 IMEI<br>$adb shell dumpsys iphonesubinfo<br>#而在 Android 5.0 及以上版本里这个命令输出为空，得通过其它方式获取了（需要 root 权限）：<br>adb shell<br>su<br>$service call iphonesubinfo 1<br>2.9.8 Android 系统版本<br>$adb shell getprop ro.build.version.release<br>2.9.9 IP 地址<br>$adb shell ifconfig | find “Mask”<br>$adb shell ifconfig wlan0 #设备连着 WiFi，可以使用如下命令来查看局域网 IP<br>$adb shell netcfg # 上面两个无结果可以用这个，查看网络连接状态<br>2.9.10 Mac 地址<br>$adb shell cat &#x2F;sys&#x2F;class&#x2F;net&#x2F;wlan0&#x2F;address # 设备不同可能地址不同<br>2.9.11 CPU 信息<br>$adb shell cat &#x2F;proc&#x2F;cpuinfo<br>2.9.12 内存信息<br>$adb shell cat &#x2F;proc&#x2F;meminfo<br>2.9.13更多硬件与系统属性<br>$adb shell cat &#x2F;system&#x2F;build.prop<br>adb shell getprop &lt;属性名&gt;</p>
-<p>也可以</p>
-<p>$adb shell cat &#x2F;system&#x2F;build.prop | grep ro.product.cpu.abi<br>$adb shell cat &#x2F;system&#x2F;build.prop | find “ro.product.cpu.abi”</p>
-<p>2.10 修改设置<br>修改设置之后，运行恢复命令仍然不太正常，可以运行 adb reboot 重启设备或手动重启。</p>
-<p>修改设置的原理主要是通过 settings 命令修改 &#x2F;data&#x2F;data&#x2F;com.android.providers.settings&#x2F;databases&#x2F;settings.db 里存放的设置值。</p>
-<p>2.10.1分辨率<br>adb shell wm size 480x1024 #将分辨率修改为 480px * 1024px</p>
-<p>adb shell wm size reset #恢复原分辨率</p>
-<p>2.10.2屏幕密度<br>adb shell wm density 160 #屏幕密度修改为 160dpi</p>
-<p>adb shell wm density reset #恢复原屏幕密度</p>
-<p>2.10.3显示区域<br>adb shell wm overscan 0,0,0,100</p>
-<h1 id="四个数字分别表示距离左、上、右、下边缘的留白像素，以上命令表示将屏幕底部-100px留白"><a href="#四个数字分别表示距离左、上、右、下边缘的留白像素，以上命令表示将屏幕底部-100px留白" class="headerlink" title="四个数字分别表示距离左、上、右、下边缘的留白像素，以上命令表示将屏幕底部 100px留白"></a>四个数字分别表示距离左、上、右、下边缘的留白像素，以上命令表示将屏幕底部 100px留白</h1><p>adb shell wm overscan reset #恢复显示区域</p>
-<p>2.10.4 关闭 USB 调试模式<br>adb shell settings put global adb_enabled 0</p>
-<p>使用命令无法恢复调试模式，只能通过手动</p>
-<p>2.10.5 状态栏和导航栏的显示隐藏<br>adb shell settings put global policy_control <key-values></p>
-<p><key-values> 可由如下几种键及其对应的值组成，格式为 <key1>&#x3D;<value1>:<key2>&#x3D;<value2></p>
-<p>key 键对应的值</p>
-<p>这些键对应的值可则如下值用逗号组合</p>
-<p>示例：</p>
-<h1 id="设置在所有界面下都同时隐藏状态栏和导航栏"><a href="#设置在所有界面下都同时隐藏状态栏和导航栏" class="headerlink" title="设置在所有界面下都同时隐藏状态栏和导航栏"></a>设置在所有界面下都同时隐藏状态栏和导航栏</h1><p>$adb shell settings put global policy_control immersive.full&#x3D;*</p>
-<h1 id="设置在包名为-com-package1-和-com-package2-的应用里隐藏状态栏，在除了包名为-com-package3-的所有应用里隐藏导航栏。"><a href="#设置在包名为-com-package1-和-com-package2-的应用里隐藏状态栏，在除了包名为-com-package3-的所有应用里隐藏导航栏。" class="headerlink" title="设置在包名为 com.package1 和 com.package2 的应用里隐藏状态栏，在除了包名为 com.package3 的所有应用里隐藏导航栏。"></a>设置在包名为 com.package1 和 com.package2 的应用里隐藏状态栏，在除了包名为 com.package3 的所有应用里隐藏导航栏。</h1><p>$adb shell settings put global policy_control immersive.status&#x3D;com.package1,com.package2:immersive.navigation&#x3D;apps,-com.package3<br>2.11 实用功能<br>2.11.1屏幕截图<br>adb exec-out screencap -p &gt; img.png # 老版本无exec-out命令，只适合于新版的截图</p>
-<p>adb shell screencap -p &#x2F;sdcard&#x2F;img.png # 老版本截图先保存在设备端</p>
-<p>adb pull &#x2F;sdcard&#x2F;img.png # 通过pull拷贝到本地</p>
-<p>screencap 参数：</p>
-<p>参数 含义</p>
-<p>-p 指定保存文件为 png 格式</p>
-<p>-d display-id 指定截图的显示屏编号（有多显示屏的情况下）</p>
-<p>2.11.2录制屏幕</p>
-<h1 id="默认录制时间和最长录制时间都是180s"><a href="#默认录制时间和最长录制时间都是180s" class="headerlink" title="默认录制时间和最长录制时间都是180s"></a>默认录制时间和最长录制时间都是180s</h1><p>adb shell screenrecord &#x2F;sdcard&#x2F;filename.mp4</p>
-<p>screenrecord 参数：</p>
-<p>参数 含义</p>
-<p>–size WIDTHxHEIGHT 视频的尺寸，比如 1280x720，默认是屏幕分辨率。</p>
-<p>–bit-rate RATE 视频的比特率，默认是 4Mbps。</p>
-<p>–time-limit TIME 录制时长，单位秒。</p>
-<p>–verbose 输出更多信息。</p>
-<p>2.11.3 重新挂载 system 分区为可写</p>
-<p>注：需要 root 权限</p>
-<p>&#x2F;system 分区默认挂载为只读，但有些操作比如给 Android 系统添加命令、删除自带应用等需要对 &#x2F;system 进行写操作，所以需要重新挂载它为可读写。</p>
-<p>步骤：</p>
-<p>1.进入 shell 并切换到 root 用户权限。</p>
-<p>$adb shell<br>$su<br>2.查看当前分区挂载情况。</p>
-<p>$mount<br>输出如下<br>…..<br>debugfs &#x2F;sys&#x2F;kernel&#x2F;debug debugfs rw,relatime 0 0<br>none &#x2F;acct cgroup rw,relatime,cpuacct 0 0<br>none &#x2F;sys&#x2F;fs&#x2F;cgroup tmpfs rw,seclabel,relatime,mode&#x3D;750,gid&#x3D;1000 0 0<br>tmpfs &#x2F;mnt&#x2F;obb tmpfs rw,seclabel,relatime,mode&#x3D;755,gid&#x3D;1000 0 0<br>none &#x2F;dev&#x2F;cpuctl cgroup rw,relatime,cpu 0 0<br>&#x2F;dev&#x2F;block&#x2F;mtdblock0 &#x2F;system ext4 ro,seclabel,relatime,data&#x3D;ordered 0 0<br>…….<br>找到其中我们关注的带 &#x2F;system 的那一行：</p>
-<p>3.重新挂载。</p>
-<p>$mount -o remount,rw -t yaffs2 &#x2F;dev&#x2F;block&#x2F;mtdblock0 &#x2F;system<br>2.11.4 查看连接过的 WiFi 密码</p>
-<p>注：需要 root 权限</p>
-<p>$adb shell<br>$su<br>$cat &#x2F;data&#x2F;misc&#x2F;wifi&#x2F;*.conf<br>2.11.5设置系统日期和时间</p>
-<p>注：需要 root 权限</p>
-<p>$adb shell<br>$su<br>$date -s 20190531.131600  #将系统日期和时间更改为 2019 年 05 月 31 日 13 点 16 分 00 秒。<br>2.11.6 重启手机</p>
-<p>$adb reboot<br>2.11.7 检测设备是否已 root</p>
-<p>$adb shell<br>$su<br>此时命令行提示符是 $ 则表示没有 root 权限，是 # 则表示已 root。</p>
-<p>2.11.8 使用 Monkey 进行压力测试</p>
-<p>Monkey 可以生成伪随机用户事件来模拟单击、触摸、手势等操作，可以对正在开发中的程序进行随机压力测试。</p>
-<h1 id="向-指定的应用程序发送-500-个伪随机事件"><a href="#向-指定的应用程序发送-500-个伪随机事件" class="headerlink" title="向  指定的应用程序发送 500 个伪随机事件"></a>向 <packagename> 指定的应用程序发送 500 个伪随机事件</h1><p>$adb shell monkey -p <packagename> -v 500<br>monkey 官方文档 <a target="_blank" rel="noopener" href="https://developer.android.com/studio/test/monkey.html">https://developer.android.com/studio/test/monkey.html</a></p>
-<p>2.11.9 开启&#x2F;关闭 WiFi</p>
-<p>注：需要 root 权限</p>
-<p>开启 WiFi：</p>
-<p>$adb root<br>$adb shell svc wifi enable<br>关闭 WiFi：</p>
-<p>$adb root<br>$adb shell svc wifi disable</p>
-<p>刷机相关命令<br>注：不要随便操作，没实验过无法保证成功</p>
-<p>2.12.1重启到 Recovery 模式<br>$adb reboot recovery<br>2.12.2从 Recovery 重启到 Android<br>$adb reboot<br>2.12.3重启到 Fastboot 模式<br>$adb reboot bootloader<br>2.12.4通过 sideload 更新系统<br>如果我们下载了 Android 设备对应的系统更新包到电脑上，那么也可以通过 adb 来完成更新。</p>
-<p>以 Recovery 模式下更新为例：</p>
-<p>1.重启到 Recovery 模式。</p>
-<p>$adb reboot recovery<br>2.在设备的 Recovery 界面上操作进入 Apply update-Apply from ADB。</p>
-<p>注：不同的 Recovery 菜单可能与此有差异，有的是一级菜单就有 Apply update from ADB。</p>
-<p>3.通过 adb 上传和更新系统。</p>
-<p>$adb sideload &lt;path-to-update.zip&gt;<br>2.13 更多 adb shell 命令<br>2.13.1查看进程<br>adb shell ps</p>
-<p>2.13.2查看实时资源占用情况<br>adb shell top</p>
-<p>top命令参数如下：</p>
-<p>使用方法: top [ -m max_procs ] [ -n iterations ] [ -d delay ] [ -s sort_column ] [ -t ] [ -h ]</p>
-<p>-m num 最多显示多少个进程<br>-n num 刷新多少次后退出<br>-d num 刷新时间间隔（单位秒，默认值 5）<br>-s col 按某列排序（可用 col 值：cpu, vss, rss, thr）<br>-t 显示线程信息<br>-h 显示帮助文档<br>2.13.3其它</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20220722-PowerShell管道使用"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/07/22/20220722-PowerShell%E7%AE%A1%E9%81%93%E4%BD%BF%E7%94%A8/"
-    >20220722-PowerShell管道使用</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/07/22/20220722-PowerShell%E7%AE%A1%E9%81%93%E4%BD%BF%E7%94%A8/" class="article-date">
-  <time datetime="2022-07-22T03:42:57.000Z" itemprop="datePublished">2022-07-22</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p><a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-CN/powershell/module/microsoft.powershell.core/about/about_pipelines?view=powershell-7.2">https://docs.microsoft.com/zh-CN/powershell/module/microsoft.powershell.core/about/about_pipelines?view=powershell-7.2</a></p>
-<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/lavender000/p/6941393.html">https://www.cnblogs.com/lavender000/p/6941393.html</a></p>
-<p>简短说明</p>
-<p>在powershell 中将命令合并到管道中</p>
-<p>长说明</p>
-<p>管道是一系列由管道运算符连接的命令 |</p>
-<p>可以发送第一个命令的输出，作为第二个命令的输入进行处理。 还可以将输出发送到另一个命令。 结果是一个复杂的命令链或 管道 ，由一系列简单的命令组成。</p>
-<p>例如，</p>
-<p>PowerShell</p>
-<p>复制</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Command-1 | Command-2 | Command-3</span><br></pre></td></tr></table></figure>
-<p>在此示例中，发出的对象 Command-1 将发送到 Command-2 。 Command-2 处理对象并将其发送到 Command-3 。 Command-3 处理对象并将其沿管道向下发送。 由于管道中没有更多命令，因此结果将显示在控制台上。</p>
-<p>在管道中，按从左到右的顺序处理命令。 处理将作为单个操作进行处理，并在生成时显示输出。</p>
-<p>下面是一个简单的示例。 以下命令将获取记事本进程，然后将其停止。</p>
-<p>例如，</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Get-Process notepad | Stop-Process</span><br></pre></td></tr></table></figure>
-
-<p>此管道示例获取当前目录中的文本文件，只选择长度超过10000个字节的文件，按长度对它们进行排序，并在表中显示每个文件的名称和长度。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Get-ChildItem -Path *.txt |</span><br><span class="line">  Where-Object &#123;$_.length -gt 10000&#125; |</span><br><span class="line">    Sort-Object -Property length |</span><br><span class="line">      Format-Table -Property name, length</span><br></pre></td></tr></table></figure>
-
-<p>此管道按指定顺序包含四个命令。 下图显示了每个命令的输出，因为它将传递到管道中的下一个命令。</p>
-<p>使用管道</p>
-<p>大多数powershell cmdlet 都设计为支持管道，在大多数情况下，你可以通过管道将Get cmdlet 的结果传递给相同名词的另一个cmdlet</p>
-<p>例如，可以通过管道将 cmdlet 的输出 Get-Service 传递给 Start-Service 或 Stop-Service cmdlet。</p>
-<p>此示例管道在计算机上启动 WMI 服务：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Get-Service wmi | Start-Service</span><br></pre></td></tr></table></figure>
-
-<p>再例如，你可以通过管道将 PowerShell 注册表提供程序的输出 Get-Item Get-ChildItem 传递给 New-ItemProperty cmdlet。 此示例将值为 8124 的新注册表项 NoOfEmployees 添加到 MyCompany 注册表项。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Get-Item -Path HKLM:\Software\MyCompany |</span><br><span class="line">  New-ItemProperty -Name NoOfEmployees -Value 8124</span><br></pre></td></tr></table></figure>
-
-<p>许多实用工具 cmdlet Get-Member （如、 Group-Object Where-Object Sort-Object 、、和 Measure-Object ）几乎只是在管道中使用。 可以通过管道将任何对象类型传递给这些 cmdlet。 此示例显示了如何按每个进程中打开的句柄数对计算机上的所有进程进行排序。</p>
-<p>PowerShell</p>
-<p>复制</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Get-Process | Sort-Object -Property handles</span><br></pre></td></tr></table></figure>
-<p>可以通过管道将对象传递给格式设置、导出和输出 cmdlet，例如 Format-List 、 Format-Table Export-Clixml Export-CSV 、、和。 Out-File</p>
-<p>此示例演示如何使用 Format-List cmdlet 显示进程对象的属性列表。</p>
-<p>PowerShell</p>
-<p>复制</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Get-Process winlogon | Format-List -Property *</span><br></pre></td></tr></table></figure>
-<p>还可以通过管道将本机命令的输出传递给 PowerShell cmdlet。 例如：</p>
-<p>PowerShell</p>
-<p>复制</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">PS&gt; ipconfig.exe | Select-String -Pattern &#x27;IPv4&#x27;</span><br><span class="line"></span><br><span class="line">   IPv4 Address. . . . . . . . . . . : 172.24.80.1</span><br><span class="line">   IPv4 Address. . . . . . . . . . . : 192.168.1.45</span><br><span class="line">   IPv4 Address. . . . . . . . . . . : 100.64.108.37</span><br></pre></td></tr></table></figure>
-<p> 重要</p>
-<p>成功 和 错误 流类似于其他 shell 的 stdin 和 stderr 流。 但 stdin 未连接到 PowerShell 管道进行输入。 有关详细信息，请参阅 about_Redirection。</p>
-<p>使用几个实践，你会发现将简单命令合并到管道可节省时间和键入内容，并使你的脚本更有效。</p>
-<h2 id="管道的工作方式"><a href="#管道的工作方式" class="headerlink" title="管道的工作方式"></a>管道的工作方式</h2><p>本部分介绍如何将输入对象绑定到 cmdlet 参数并在管道执行期间进行处理。</p>
-<h3 id="接受管道输入"><a href="#接受管道输入" class="headerlink" title="接受管道输入"></a>接受管道输入</h3><p>若要支持流水线，接收 cmdlet 必须具有接受管道输入的参数。 <code>Get-Help</code>使用带有 <strong>Full</strong> 或 <strong>Parameter</strong> 选项的命令来确定 cmdlet 接受管道输入的参数。</p>
-<p>例如，若要确定 cmdlet 的哪些参数 <code>Start-Service</code> 接受管道输入，请键入：</p>
-<p>PowerShell复制</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Get-Help</span> <span class="built_in">Start-Service</span> <span class="literal">-Full</span></span><br></pre></td></tr></table></figure>
-
-<p>或</p>
-<p>PowerShell复制</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Get-Help</span> <span class="built_in">Start-Service</span> <span class="literal">-Parameter</span> *</span><br></pre></td></tr></table></figure>
-
-<p>Cmdlet 的帮助 <code>Start-Service</code> 显示：只有 <strong>InputObject</strong> 和 <strong>Name</strong> 参数接受管道输入。</p>
-<p>Output复制</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">-InputObject &lt;ServiceController[]&gt;</span><br><span class="line">Specifies ServiceController objects representing the services to be started.</span><br><span class="line">Enter a variable that contains the objects, or type a command or expression</span><br><span class="line">that gets the objects.</span><br><span class="line"></span><br><span class="line">Required?                    true</span><br><span class="line">Position?                    0</span><br><span class="line">Default value                None</span><br><span class="line">Accept pipeline input?       True (ByValue)</span><br><span class="line">Accept wildcard characters?  false</span><br><span class="line"></span><br><span class="line">-Name &lt;String[]&gt;</span><br><span class="line">Specifies the service names for the service to be started.</span><br><span class="line"></span><br><span class="line">The parameter name is optional. You can use Name or its alias, ServiceName,</span><br><span class="line">or you can omit the parameter name.</span><br><span class="line"></span><br><span class="line">Required?                    true</span><br><span class="line">Position?                    0</span><br><span class="line">Default value                None</span><br><span class="line">Accept pipeline input?       True (ByPropertyName, ByValue)</span><br><span class="line">Accept wildcard characters?  false</span><br></pre></td></tr></table></figure>
-
-<p>当你通过管道将对象发送到 <code>Start-Service</code> 时，PowerShell 会尝试将对象与 <strong>InputObject</strong> 和 <strong>Name</strong> 参数相关联。</p>
-<h3 id="接受管道输入的方法"><a href="#接受管道输入的方法" class="headerlink" title="接受管道输入的方法"></a>接受管道输入的方法</h3><p>Cmdlet 参数可采用以下两种不同方式之一接受管道输入：</p>
-<ul>
-<li><p><strong>ByValue</strong>：参数接受与所需的 .net 类型匹配或可转换为该类型的值。</p>
-<p>例如，的 <strong>Name</strong> 参数 <code>Start-Service</code> 接受按值的管道输入。 它可以接受可以转换为字符串的字符串对象或对象。</p>
-</li>
-<li><p><strong>ByPropertyName</strong>：仅当输入对象具有与参数名称相同的属性时，此参数才接受输入。</p>
-<p>例如，的 <code>Start-Service</code> name 参数可以接受具有 <strong>Name</strong> 属性的对象。 若要列出某个对象的属性，请将其传递到 <code>Get-Member</code> 。</p>
-</li>
-</ul>
-<p>一些参数可以通过值或属性名称接受对象，使从管道中获取输入变得更加容易。</p>
-<h3 id="参数绑定"><a href="#参数绑定" class="headerlink" title="参数绑定"></a>参数绑定</h3><p>当你通过管道将对象从一个命令传递给另一个命令时，PowerShell 会尝试将管道对象与接收 cmdlet 的参数相关联。</p>
-<p>PowerShell 的参数绑定组件根据以下条件将输入对象与 cmdlet 参数关联：</p>
-<ul>
-<li>参数必须接受来自管道的输入。</li>
-<li>参数必须接受要发送的对象的类型或可转换为预期类型的类型。</li>
-<li>命令中未使用参数。</li>
-</ul>
-<p>例如， <code>Start-Service</code> cmdlet 具有多个参数，但其中只有两个参数、 <strong>名称</strong> 和 <strong>InputObject</strong> 接受管道输入。 <strong>Name</strong> 参数使用字符串， <strong>InputObject</strong> 参数使用服务对象。 因此，可以通过管道字符串、服务对象和具有可转换为字符串或服务对象的属性的对象。</p>
-<p>PowerShell 会尽可能有效地管理参数绑定。 不能建议或强制 PowerShell 绑定到特定参数。 如果 PowerShell 无法绑定管道对象，则该命令将失败。</p>
-<p>有关排除绑定错误的详细信息，请参阅本文后面的 <a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-CN/powershell/module/microsoft.powershell.core/about/about_pipelines?view=powershell-7.2#investigating-pipeline-errors">调查管道错误</a> 。</p>
-<h3 id="一次一次性处理"><a href="#一次一次性处理" class="headerlink" title="一次一次性处理"></a>一次一次性处理</h3><p>通过管道将对象传递给命令与使用命令的参数来提交对象非常类似。 让我们看一看管道示例。 在此示例中，我们使用管道来显示服务对象表。</p>
-<p>PowerShell复制</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Get-Service</span> | <span class="built_in">Format-Table</span> <span class="literal">-Property</span> Name, DependentServices</span><br></pre></td></tr></table></figure>
-
-<p>在功能上，这与使用的 <strong>InputObject</strong> 参数 <code>Format-Table</code> 来提交对象集合类似。</p>
-<p>例如，我们可以将服务集合保存到使用 <strong>InputObject</strong> 参数传递的变量。</p>
-<p>PowerShell复制</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$services</span> = <span class="built_in">Get-Service</span></span><br><span class="line"><span class="built_in">Format-Table</span> <span class="literal">-InputObject</span> <span class="variable">$services</span> <span class="literal">-Property</span> Name, DependentServices</span><br></pre></td></tr></table></figure>
-
-<p>或者，可以将该命令嵌入到 <strong>InputObject</strong> 参数中。</p>
-<p>PowerShell复制</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Format-Table</span> <span class="literal">-InputObject</span> (<span class="built_in">Get-Service</span>) <span class="literal">-Property</span> Name, DependentServices</span><br></pre></td></tr></table></figure>
-
-<p>但有一个重要的差异。 通过管道将多个对象传递给命令时，PowerShell 会一次将对象发送到命令。 使用命令参数时，对象将作为单个数组对象发送。 这种次要差别会产生重大后果。</p>
-<p>执行管道时，PowerShell 会自动枚举任何实现 <code>IEnumerable</code> 接口的类型，并一次通过管道发送成员。 异常是 <code>[hashtable]</code> ，这需要调用 <code>GetEnumerator()</code> 方法。</p>
-<p>在下面的示例中，将向 <code>Measure-Object</code> cmdlet 传递一个数组和一个哈希表，以计算从管道接收的对象数。 该数组具有多个成员，并且哈希表具有多个键值对。 一次只枚举一个数组。</p>
-<p>PowerShell复制</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">@</span>(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>) | <span class="built_in">Measure-Object</span></span><br></pre></td></tr></table></figure>
-
-<p>Output复制</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Count    : 3</span><br><span class="line">Average  :</span><br><span class="line">Sum      :</span><br><span class="line">Maximum  :</span><br><span class="line">Minimum  :</span><br><span class="line">Property :</span><br></pre></td></tr></table></figure>
-
-<p>PowerShell复制</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">@</span>&#123;<span class="string">&quot;One&quot;</span>=<span class="number">1</span>;<span class="string">&quot;Two&quot;</span>=<span class="number">2</span>&#125; | <span class="built_in">Measure-Object</span></span><br></pre></td></tr></table></figure>
-
-<p>Output复制</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Count    : 1</span><br><span class="line">Average  :</span><br><span class="line">Sum      :</span><br><span class="line">Maximum  :</span><br><span class="line">Minimum  :</span><br><span class="line">Property :</span><br></pre></td></tr></table></figure>
-
-<p>同样，如果你通过 <code>Get-Process</code> 管道将多个进程对象传递给 <code>Get-Member</code> cmdlet，则 PowerShell 会将每个进程对象一次发送到 <code>Get-Member</code> 。 <code>Get-Member</code> 显示 (类型的 .NET 类) 进程对象及其属性和方法。</p>
-<p>PowerShell复制</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Get-Process</span> | <span class="built_in">Get-Member</span></span><br></pre></td></tr></table></figure>
-
-<p>Output复制</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">TypeName: System.Diagnostics.Process</span><br><span class="line"></span><br><span class="line">Name      MemberType     Definition</span><br><span class="line">----      ----------     ----------</span><br><span class="line">Handles   AliasProperty  Handles = Handlecount</span><br><span class="line">Name      AliasProperty  Name = ProcessName</span><br><span class="line">NPM       AliasProperty  NPM = NonpagedSystemMemorySize</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
-
-<p> 备注</p>
-<p><code>Get-Member</code> 消除重复项，因此，如果所有对象都属于同一类型，则它只显示一种对象类型。</p>
-<p>但是，如果使用的 <strong>InputObject</strong> 参数 <code>Get-Member</code> ，则 <code>Get-Member</code> 会将 <strong>system.object</strong> 对象的数组作为单个单元接收。 它显示对象数组的属性。 (记下 array 符号 (<code>[]</code> 在 <strong>system.object</strong> 类型名称后面) 。 )</p>
-<p>例如，</p>
-<p>PowerShell复制</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Get-Member</span> <span class="literal">-InputObject</span> (<span class="built_in">Get-Process</span>)</span><br></pre></td></tr></table></figure>
-
-<p>Output复制</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">TypeName: System.Object[]</span><br><span class="line"></span><br><span class="line">Name               MemberType    Definition</span><br><span class="line">----               ----------    ----------</span><br><span class="line">Count              AliasProperty Count = Length</span><br><span class="line">Address            Method        System.Object&amp; Address(Int32 )</span><br><span class="line">Clone              Method        System.Object Clone()</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
-
-<p>此结果可能不是你所期望的结果。 但在理解后，就可以使用它了。 例如，所有数组对象都具有 <strong>Count</strong> 属性。 可以使用它来计算计算机上运行的进程数。</p>
-<p>例如，</p>
-<p>PowerShell复制</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(<span class="built_in">Get-Process</span>).count</span><br></pre></td></tr></table></figure>
-
-<p>请务必记住，在管道中发送的对象每次传递一次。</p>
-<h2 id="在管道中使用本机命令"><a href="#在管道中使用本机命令" class="headerlink" title="在管道中使用本机命令"></a>在管道中使用本机命令</h2><p>PowerShell 允许在管道中包含本机外部命令。 但是，请务必注意，PowerShell 的管道是面向对象的，不支持原始字节数据。</p>
-<p>从输出原始字节数据的本机程序对输出进行管道或重定向会将输出转换为 .NET 字符串。 这种转换可能会导致原始数据输出损坏。</p>
-<p>作为一种解决方法，使用 <code>cmd.exe /c</code> 或 <code>sh -c</code> 调用本机命令，并使用 <code>|</code> 本机 shell 提供的和 <code>&gt;</code> 运算符。</p>
-<h2 id="调查管道错误"><a href="#调查管道错误" class="headerlink" title="调查管道错误"></a>调查管道错误</h2><p>当 PowerShell 无法将管道对象与接收 cmdlet 的参数关联时，该命令将失败。</p>
-<p>在下面的示例中，我们尝试将注册表项从一个注册表项移到另一个注册表项。 该 <code>Get-Item</code> cmdlet 将获取目标路径，然后将该路径传递给 <code>Move-ItemProperty</code> cmdlet。 <code>Move-ItemProperty</code>命令指定要移动的注册表项的当前路径和名称。</p>
-<p>PowerShell复制</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Get-Item</span> <span class="literal">-Path</span> HKLM:\Software\MyCompany\sales |</span><br><span class="line"><span class="built_in">Move-ItemProperty</span> <span class="literal">-Path</span> HKLM:\Software\MyCompany\design <span class="literal">-Name</span> product</span><br></pre></td></tr></table></figure>
-
-<p>命令失败，PowerShell 将显示以下错误消息：</p>
-<p>Output复制</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Move-ItemProperty : The input object can&#x27;t be bound to any parameters for</span><br><span class="line">the command either because the command doesn&#x27;t take pipeline input or the</span><br><span class="line">input and its properties do not match any of the parameters that take</span><br><span class="line">pipeline input.</span><br><span class="line">At line:1 char:23</span><br><span class="line">+ $a | Move-ItemProperty &lt;&lt;&lt;&lt;  -Path HKLM:\Software\MyCompany\design -Name p</span><br></pre></td></tr></table></figure>
-
-<p>若要进行调查，请使用 <code>Trace-Command</code> cmdlet 跟踪 PowerShell 的参数绑定组件。 下面的示例跟踪管道的执行过程中的参数绑定。 <strong>PSHost</strong> 参数将跟踪结果显示在控制台中， <strong>FilePath</strong> 参数会将跟踪结果发送到 <code>debug.txt</code> 文件，供以后参考。</p>
-<p>PowerShell复制</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Trace-Command</span> <span class="literal">-Name</span> ParameterBinding <span class="literal">-PSHost</span> <span class="literal">-FilePath</span> debug.txt <span class="literal">-Expression</span> &#123;</span><br><span class="line">  <span class="built_in">Get-Item</span> <span class="literal">-Path</span> HKLM:\Software\MyCompany\sales |</span><br><span class="line">    <span class="built_in">Move-ItemProperty</span> <span class="literal">-Path</span> HKLM:\Software\MyCompany\design <span class="literal">-Name</span> product</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>跟踪的结果很长，但会显示绑定到 <code>Get-Item</code> cmdlet 的值，然后显示绑定到 <code>Move-ItemProperty</code> cmdlet 的命名值。</p>
-<p>Output复制</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">BIND NAMED cmd line args [`Move-ItemProperty`]</span><br><span class="line">BIND arg [HKLM:\Software\MyCompany\design] to parameter [Path]</span><br><span class="line">...</span><br><span class="line">BIND arg [product] to parameter [Name]</span><br><span class="line">...</span><br><span class="line">BIND POSITIONAL cmd line args [`Move-ItemProperty`]</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
-
-<p>最后，它显示尝试将路径绑定到的 <code>Move-ItemProperty</code> <strong>目标</strong> 参数失败。</p>
-<p>Output复制</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">BIND PIPELINE object to parameters: [`Move-ItemProperty`]</span><br><span class="line">PIPELINE object TYPE = [Microsoft.Win32.RegistryKey]</span><br><span class="line">RESTORING pipeline parameter&#x27;s original values</span><br><span class="line">Parameter [Destination] PIPELINE INPUT ValueFromPipelineByPropertyName NO</span><br><span class="line">COERCION</span><br><span class="line">Parameter [Credential] PIPELINE INPUT ValueFromPipelineByPropertyName NO</span><br><span class="line">COERCION</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
-
-<p><code>Get-Help</code>使用 cmdlet 查看 <strong>目标</strong> 参数的属性。</p>
-<p>Output复制</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Get-Help Move-ItemProperty -Parameter Destination</span><br><span class="line"></span><br><span class="line">-Destination &lt;String&gt;</span><br><span class="line">    Specifies the path to the destination location.</span><br><span class="line"></span><br><span class="line">    Required?                    true</span><br><span class="line">    Position?                    1</span><br><span class="line">    Default value                None</span><br><span class="line">    Accept pipeline input?       True (ByPropertyName)</span><br><span class="line">    Accept wildcard characters?  false</span><br></pre></td></tr></table></figure>
-
-<p>结果显示 <strong>目标</strong> 仅按属性名称获取管道输入。 因此，管道对象必须具有一个名为 “ <strong>Destination</strong>“ 的属性。</p>
-<p>使用 <code>Get-Member</code> 可查看来自的对象 <code>Get-Item</code> 的属性。</p>
-<p>PowerShell复制</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Get-Item</span> <span class="literal">-Path</span> HKLM:\Software\MyCompany\sales | <span class="built_in">Get-Member</span></span><br></pre></td></tr></table></figure>
-
-<p>输出显示该项目是没有 <strong>目标</strong> 属性的 <strong>Microsoft. Win32</strong> 对象。 这说明了命令失败的原因。</p>
-<p><strong>Path</strong> 参数按名称或值接受管道输入。</p>
-<p>Output复制</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Get-Help Move-ItemProperty -Parameter Path</span><br><span class="line"></span><br><span class="line">-Path &lt;String[]&gt;</span><br><span class="line">    Specifies the path to the current location of the property. Wildcard</span><br><span class="line">    characters are permitted.</span><br><span class="line"></span><br><span class="line">    Required?                    true</span><br><span class="line">    Position?                    0</span><br><span class="line">    Default value                None</span><br><span class="line">    Accept pipeline input?       True (ByPropertyName, ByValue)</span><br><span class="line">    Accept wildcard characters?  true</span><br></pre></td></tr></table></figure>
-
-<p>若要修复此命令，必须在 cmdlet 中 <code>Move-ItemProperty</code> 指定目标，并使用 <code>Get-Item</code> 获取要移动的项的 <strong>路径</strong> 。</p>
-<p>例如，</p>
-<p>PowerShell复制</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Get-Item</span> <span class="literal">-Path</span> HKLM:\Software\MyCompany\design |</span><br><span class="line"><span class="built_in">Move-ItemProperty</span> <span class="literal">-Destination</span> HKLM:\Software\MyCompany\sales <span class="literal">-Name</span> product</span><br></pre></td></tr></table></figure>
-
-<h2 id="内部续行符"><a href="#内部续行符" class="headerlink" title="内部续行符"></a>内部续行符</h2><p>正如前面所讨论的，管道是一系列由管道运算符连接的命令 (<code>|</code>) ，通常在一行上写入。 但是，为了提高可读性，PowerShell 允许跨多个行拆分管道。 当管道运算符是行上的最后一个标记时，PowerShell 分析器会将下一行连接到当前命令以继续构造管道。</p>
-<p>例如，以下单行管道：</p>
-<p>PowerShell复制</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Command<span class="literal">-1</span> | Command<span class="literal">-2</span> | Command<span class="literal">-3</span></span><br></pre></td></tr></table></figure>
-
-<p>可以编写为：</p>
-<p>PowerShell复制</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Command<span class="literal">-1</span> |</span><br><span class="line">  Command<span class="literal">-2</span> |</span><br><span class="line">    Command<span class="literal">-3</span></span><br></pre></td></tr></table></figure>
-
-<p>后续行中的前导空格并不重要。 缩进增强了可读性。</p>
-<p>PowerShell 7 增加了对管道的延续的支持，并在行的开头提供管道字符。 下面的示例演示如何使用此新功能。</p>
-<p>PowerShell复制</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Wrapping with a pipe at the beginning of a line (no backtick required)</span></span><br><span class="line"><span class="built_in">Get-Process</span> | <span class="built_in">Where-Object</span> CPU | <span class="built_in">Where-Object</span> Path</span><br><span class="line">    | <span class="built_in">Get-Item</span> | <span class="built_in">Where-Object</span> FullName <span class="operator">-match</span> <span class="string">&quot;AppData&quot;</span></span><br><span class="line">    | <span class="built_in">Sort-Object</span> FullName <span class="literal">-Unique</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Wrapping with a pipe on a line by itself</span></span><br><span class="line"><span class="built_in">Get-Process</span> | <span class="built_in">Where-Object</span> CPU | <span class="built_in">Where-Object</span> Path</span><br><span class="line">    |</span><br><span class="line">    <span class="built_in">Get-Item</span> | <span class="built_in">Where-Object</span> FullName <span class="operator">-match</span> <span class="string">&quot;AppData&quot;</span></span><br><span class="line">    |</span><br><span class="line">    <span class="built_in">Sort-Object</span> FullName <span class="literal">-Unique</span></span><br></pre></td></tr></table></figure>
-
-<p> 重要</p>
-<p>在 shell 中以交互方式工作时，仅当使用Ctrl + V粘贴时，才将代码粘贴到行的开头。 右键单击 “粘贴操作”，一次插入一个行。 因为行不以管道字符结尾，所以 PowerShell 会将输入视为已完成，并按输入执行该行。</p>
  
       <!-- reward -->
       
