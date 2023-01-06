@@ -126,6 +126,613 @@
     
     
     <article
+  id="post-20221214-通过Content-Type和文件头判断文件类型"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/12/14/20221214-%E9%80%9A%E8%BF%87Content-Type%E5%92%8C%E6%96%87%E4%BB%B6%E5%A4%B4%E5%88%A4%E6%96%AD%E6%96%87%E4%BB%B6%E7%B1%BB%E5%9E%8B/"
+    >20221214-通过Content-Type和文件头判断文件类型</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/12/14/20221214-%E9%80%9A%E8%BF%87Content-Type%E5%92%8C%E6%96%87%E4%BB%B6%E5%A4%B4%E5%88%A4%E6%96%AD%E6%96%87%E4%BB%B6%E7%B1%BB%E5%9E%8B/" class="article-date">
+  <time datetime="2022-12-14T12:43:46.000Z" itemprop="datePublished">2022-12-14</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="通过Content-Type和文件头判断文件类型"><a href="#通过Content-Type和文件头判断文件类型" class="headerlink" title="通过Content-Type和文件头判断文件类型"></a>通过Content-Type和文件头判断文件类型</h1><h2 id="关于MIME"><a href="#关于MIME" class="headerlink" title="关于MIME"></a>关于MIME</h2><p><strong>MIME</strong>的全称是Multipurpose Internet Mail Extensions，即多用途互联网邮件扩展，尽管读起来有些拗口，但大多数人可能都知道，<br>这是HTTP协议中用来定义文档性质及格式的标准。<a target="_blank" rel="noopener" href="https://tools.ietf.org/html/rfc6838">IETF RFC 6838</a>，对HTTP传输内容类型进行了全面定义。<br>而<strong>IANA</strong>(互联网号码分配机构)是负责管理所有标准MIME类型的官方机构。可以<a target="_blank" rel="noopener" href="https://www.iana.org/assignments/media-types/media-types.xhtml">在这里</a>)找到所有的标准MIME</p>
+<p><strong>服务器通过MIME告知响应内容类型，而浏览器则通过MIME类型来确定如何处理文档；</strong><br><strong>因此为传输内容(文档、图片等)设置正确的MIME非常重要</strong>。</p>
+<p>通常Server会在HTTP响应中设置<strong>Content-Type</strong>，如下面的响应：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CodeHTTP/1.1 200 OKServer: Golfe2    Content-Length: 233Content-Type: application/htmlDate: Sun, 28 Dec 2018 02:55:19 GMT12345</span><br></pre></td></tr></table></figure>
+
+<p>这表示服务端将返回html格式的文档，而同样客户端也可以在HTTP请求中设置<strong>Content-Type</strong>以告知服务器当前所发送内容的格式。<br>如下面的请求体：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CodePOST / HTTP/1.1Host: localhost:8000User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:50.0) Gecko/20100101 Firefox/50.0Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8Connection: keep-aliveContent-Type: application/jsonContent-Length: 4651234567</span><br></pre></td></tr></table></figure>
+
+<p>这表示客户端会发送application&#x2F;json格式的数据到服务端，同时应该注意到<strong>Accept</strong>请求头，这个选项用于告知服务器应该返回什么样的数据格式(由客户端接收并完成解析)。</p>
+<p><strong>MIME的格式</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Codetype/subtype1</span><br></pre></td></tr></table></figure>
+
+<p>这是一个两级的分类，比较容易理解，第一级分类通常包含：</p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>text</td>
+<td>普通文本</td>
+</tr>
+<tr>
+<td>image</td>
+<td>某种图像</td>
+</tr>
+<tr>
+<td>audio</td>
+<td>某种音频文件</td>
+</tr>
+<tr>
+<td>video</td>
+<td>某种视频文件</td>
+</tr>
+<tr>
+<td>application</td>
+<td>应用数据</td>
+</tr>
+<tr>
+<td>multi-part</td>
+<td>复合内容</td>
+</tr>
+</tbody></table>
+<p>而二级类型则非常多，以下是一些常用的MIME：</p>
+<table>
+<thead>
+<tr>
+<th>MIME</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>audio&#x2F;wav</td>
+<td>wave音频流媒体文件</td>
+</tr>
+<tr>
+<td>audio&#x2F;webm</td>
+<td>webm 音频文件格式</td>
+</tr>
+<tr>
+<td>audio&#x2F;ogg</td>
+<td>ogg多媒体文件格式的音频文件</td>
+</tr>
+<tr>
+<td>audio&#x2F;mpeg</td>
+<td>mpeg多媒体文件格式的音频文件</td>
+</tr>
+<tr>
+<td>image&#x2F;gif</td>
+<td>gif图片</td>
+</tr>
+<tr>
+<td>image&#x2F;jpeg</td>
+<td>jpeg图片</td>
+</tr>
+<tr>
+<td>image&#x2F;png</td>
+<td>png图片</td>
+</tr>
+<tr>
+<td>image&#x2F;svg+xml</td>
+<td>svg矢量图片</td>
+</tr>
+<tr>
+<td>application&#x2F;json</td>
+<td>json格式</td>
+</tr>
+<tr>
+<td>application&#x2F;xml</td>
+<td>xml格式</td>
+</tr>
+<tr>
+<td>application&#x2F;xhtml+xml</td>
+<td>扩展html格式</td>
+</tr>
+<tr>
+<td>application&#x2F;x-www-form-urlencoded</td>
+<td>表单url内容编码</td>
+</tr>
+<tr>
+<td>application&#x2F;octet-stream</td>
+<td>二进制格式</td>
+</tr>
+<tr>
+<td>application&#x2F;pdf</td>
+<td>pdf文档</td>
+</tr>
+<tr>
+<td>application&#x2F;atom+xml</td>
+<td>atom订阅feed流</td>
+</tr>
+<tr>
+<td>multipart&#x2F;form-data</td>
+<td>多文档格式</td>
+</tr>
+<tr>
+<td>text&#x2F;plain</td>
+<td>普通文本</td>
+</tr>
+<tr>
+<td>text&#x2F;html</td>
+<td>html文档</td>
+</tr>
+<tr>
+<td>text&#x2F;css</td>
+<td>css文件</td>
+</tr>
+<tr>
+<td>text&#x2F;javascript</td>
+<td>javascript文件</td>
+</tr>
+<tr>
+<td>text&#x2F;markdown</td>
+<td>markdown文档</td>
+</tr>
+<tr>
+<td>video&#x2F;mpeg</td>
+<td>mpeg多媒体视频文件</td>
+</tr>
+<tr>
+<td>video&#x2F;quicktime</td>
+<td>mov多媒体视频文件</td>
+</tr>
+</tbody></table>
+<h4 id="MIME-Type-与-Content-Type-的关系"><a href="#MIME-Type-与-Content-Type-的关系" class="headerlink" title="MIME Type 与 Content-Type 的关系"></a>MIME Type 与 Content-Type 的关系</h4><p>首先看看tomcat服务器中默认的web.xml中的描述：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Code&lt;!-- ===================== Default MIME Type Mappings =================== --&gt;&lt;!-- When serving static resources, Tomcat will automatically generate    --&gt;&lt;!-- a &quot;Content-Type&quot; header based on the resource&#x27;s filename extension, --&gt;&lt;!-- based on these mappings. Additional mappings can be added here (to --&gt;&lt;!-- apply to all web applications), or in your own application&#x27;s web.xml --&gt;&lt;!-- deployment descriptor.   --&gt;123456</span><br></pre></td></tr></table></figure>
+
+<p>再看看apache服务器中mime.types的描述：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CodeThis file controls what Internet media types are sent to the client forgiven file extension(s). Sending the correct media type to the clientis important so they know how to handle the content of the file.Extra types can either be added here or by using an AddType directivein your config files. For more information about Internet media types,please read RFC 2045, 2046, 2047, 2048, and 2077. The Internet media type registry is at http://www.iana.org/assignments/media-types/.123456</span><br></pre></td></tr></table></figure>
+
+<p><strong>当web服务器收到静态的资源文件请求时，依据请求文件的后缀名在服务器的MIME配置文件中找到对应的MIME Type，再根据MIME Type设置HTTP Response的Content-Type，然后浏览器根据Content-Type的值处理文件。</strong></p>
+<p>也就是说, <strong>文件扩展名&#x3D;&gt;MIME Type&#x3D;&gt;Content-Type</strong></p>
+<h2 id="通过文件头识别文件"><a href="#通过文件头识别文件" class="headerlink" title="通过文件头识别文件"></a>通过文件头识别文件</h2><p>不同的文件类型有不同的文件头, 而文件头部的几个字节被称为Magic Number, 通常用十六进制表示, 可用来判断文件类型.</p>
+<p>比如png文件的文件头Magic Number是0x89504E开始的, java class文件Magic Number为Oxcafebabe</p>
+<p>我们可以通过判断文件的文件头信息来判断文件的类型, 而且<strong>即使改变文件扩展名文件头信息也是不改变的</strong>.</p>
+<p>通过java代码判断文件类型:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Javapublic class FileType &#123;    //默认判断文件头前三个字节内容    public static int CHECK_BYTES_NUMBER = 3;    public final static Map&lt;String, String&gt; FILE_TYPE_MAP = new HashMap&lt;String, String&gt;();    private FileType()&#123;&#125;    static&#123;        getAllFileType(); //初始化文件类型信息    &#125;    /**     * Discription:[getAllFileType,常见文件头信息]     */    private static void getAllFileType()    &#123;        FILE_TYPE_MAP.put(&quot;ffd8ffe000104a464946&quot;, &quot;jpg&quot;); //JPEG (jpg)        FILE_TYPE_MAP.put(&quot;89504e470d0a1a0a0000&quot;, &quot;png&quot;); //PNG (png)        FILE_TYPE_MAP.put(&quot;47494638396126026f01&quot;, &quot;gif&quot;); //GIF (gif)        FILE_TYPE_MAP.put(&quot;49492a00227105008037&quot;, &quot;tif&quot;); //TIFF (tif)        FILE_TYPE_MAP.put(&quot;424d228c010000000000&quot;, &quot;bmp&quot;); //16色位图(bmp)        FILE_TYPE_MAP.put(&quot;424d8240090000000000&quot;, &quot;bmp&quot;); //24位位图(bmp)        FILE_TYPE_MAP.put(&quot;424d8e1b030000000000&quot;, &quot;bmp&quot;); //256色位图(bmp)        FILE_TYPE_MAP.put(&quot;41433130313500000000&quot;, &quot;dwg&quot;); //CAD (dwg)        FILE_TYPE_MAP.put(&quot;3c21444f435459504520&quot;, &quot;html&quot;); //HTML (html)        FILE_TYPE_MAP.put(&quot;3c21646f637479706520&quot;, &quot;htm&quot;); //HTM (htm)        FILE_TYPE_MAP.put(&quot;48544d4c207b0d0a0942&quot;, &quot;css&quot;); //css        FILE_TYPE_MAP.put(&quot;696b2e71623d696b2e71&quot;, &quot;js&quot;); //js        FILE_TYPE_MAP.put(&quot;7b5c727466315c616e73&quot;, &quot;rtf&quot;); //Rich Text Format (rtf)        FILE_TYPE_MAP.put(&quot;38425053000100000000&quot;, &quot;psd&quot;); //Photoshop (psd)        FILE_TYPE_MAP.put(&quot;46726f6d3a203d3f6762&quot;, &quot;eml&quot;); //Email [Outlook Express 6] (eml)        FILE_TYPE_MAP.put(&quot;d0cf11e0a1b11ae10000&quot;, &quot;doc&quot;); //MS Excel 注意：word、msi 和 excel的文件头一样        FILE_TYPE_MAP.put(&quot;d0cf11e0a1b11ae10000&quot;, &quot;vsd&quot;); //Visio 绘图        FILE_TYPE_MAP.put(&quot;5374616E64617264204A&quot;, &quot;mdb&quot;); //MS Access (mdb)        FILE_TYPE_MAP.put(&quot;252150532D41646F6265&quot;, &quot;ps&quot;);        FILE_TYPE_MAP.put(&quot;255044462d312e350d0a&quot;, &quot;pdf&quot;); //Adobe Acrobat (pdf)        FILE_TYPE_MAP.put(&quot;2e524d46000000120001&quot;, &quot;rmvb&quot;); //rmvb/rm相同        FILE_TYPE_MAP.put(&quot;464c5601050000000900&quot;, &quot;flv&quot;); //flv与f4v相同        FILE_TYPE_MAP.put(&quot;00000020667479706d70&quot;, &quot;mp4&quot;);        FILE_TYPE_MAP.put(&quot;49443303000000002176&quot;, &quot;mp3&quot;);        FILE_TYPE_MAP.put(&quot;000001ba210001000180&quot;, &quot;mpg&quot;); //        FILE_TYPE_MAP.put(&quot;3026b2758e66cf11a6d9&quot;, &quot;wmv&quot;); //wmv与asf相同        FILE_TYPE_MAP.put(&quot;52494646e27807005741&quot;, &quot;wav&quot;); //Wave (wav)        FILE_TYPE_MAP.put(&quot;52494646d07d60074156&quot;, &quot;avi&quot;);        FILE_TYPE_MAP.put(&quot;4d546864000000060001&quot;, &quot;mid&quot;); //MIDI (mid)        FILE_TYPE_MAP.put(&quot;504b0304140000000800&quot;, &quot;zip&quot;);        FILE_TYPE_MAP.put(&quot;526172211a0700cf9073&quot;, &quot;rar&quot;);        FILE_TYPE_MAP.put(&quot;235468697320636f6e66&quot;, &quot;ini&quot;);        FILE_TYPE_MAP.put(&quot;504b03040a0000000000&quot;, &quot;jar&quot;);        FILE_TYPE_MAP.put(&quot;4d5a9000030000000400&quot;, &quot;exe&quot;);//可执行文件        FILE_TYPE_MAP.put(&quot;3c25402070616765206c&quot;, &quot;jsp&quot;);//jsp文件        FILE_TYPE_MAP.put(&quot;4d616e69666573742d56&quot;, &quot;mf&quot;);//MF文件        FILE_TYPE_MAP.put(&quot;3c3f786d6c2076657273&quot;, &quot;xml&quot;);//xml文件        FILE_TYPE_MAP.put(&quot;494e5345525420494e54&quot;, &quot;sql&quot;);//xml文件        FILE_TYPE_MAP.put(&quot;7061636b616765207765&quot;, &quot;java&quot;);//java文件        FILE_TYPE_MAP.put(&quot;406563686f206f66660d&quot;, &quot;bat&quot;);//bat文件        FILE_TYPE_MAP.put(&quot;1f8b0800000000000000&quot;, &quot;gz&quot;);//gz文件        FILE_TYPE_MAP.put(&quot;6c6f67346a2e726f6f74&quot;, &quot;properties&quot;);//bat文件        FILE_TYPE_MAP.put(&quot;cafebabe0000002e0041&quot;, &quot;class&quot;);//bat文件        FILE_TYPE_MAP.put(&quot;49545346030000006000&quot;, &quot;chm&quot;);//bat文件        FILE_TYPE_MAP.put(&quot;04000000010000001300&quot;, &quot;mxp&quot;);//bat文件        FILE_TYPE_MAP.put(&quot;504b0304140006000800&quot;, &quot;docx&quot;);//docx文件        FILE_TYPE_MAP.put(&quot;d0cf11e0a1b11ae10000&quot;, &quot;wps&quot;);//WPS文字wps、表格et、演示dps都是一样的        FILE_TYPE_MAP.put(&quot;6431303a637265617465&quot;, &quot;torrent&quot;);        FILE_TYPE_MAP.put(&quot;6D6F6F76&quot;, &quot;mov&quot;); //Quicktime (mov)        FILE_TYPE_MAP.put(&quot;FF575043&quot;, &quot;wpd&quot;); //WordPerfect (wpd)        FILE_TYPE_MAP.put(&quot;CFAD12FEC5FD746F&quot;, &quot;dbx&quot;); //Outlook Express (dbx)        FILE_TYPE_MAP.put(&quot;2142444E&quot;, &quot;pst&quot;); //Outlook (pst)        FILE_TYPE_MAP.put(&quot;AC9EBD8F&quot;, &quot;qdf&quot;); //Quicken (qdf)        FILE_TYPE_MAP.put(&quot;E3828596&quot;, &quot;pwl&quot;); //Windows Password (pwl)        FILE_TYPE_MAP.put(&quot;2E7261FD&quot;, &quot;ram&quot;); //Real Audio (ram)    &#125;    /**     * 根据制定文件的文件头判断其文件类型     * @param filePaht     * @return     */    public static String getFileType(String filePaht)&#123;        String res = null;        try &#123;            FileInputStream is = new FileInputStream(filePaht);            getFileType(is);        &#125; catch (FileNotFoundException e) &#123;            e.printStackTrace();        &#125;        return res;    &#125;    public static String getFileType(InputStream in)&#123;        String res = null;        try &#123;            byte[] b = new byte[CHECK_BYTES_NUMBER];            in.read(b, 0, b.length);            String fileCode = bytesToHexString(b);//            System.out.println(fileCode);            //这种方法在字典的头代码不够位数的时候可以用但是速度相对慢一点            Iterator&lt;String&gt; keyIter = FILE_TYPE_MAP.keySet().iterator();            while(keyIter.hasNext())&#123;                String key = keyIter.next();                if(key.toLowerCase().startsWith(fileCode.toLowerCase()) || fileCode.toLowerCase().startsWith(key.toLowerCase()))&#123;                    res = FILE_TYPE_MAP.get(key);                    break;                &#125;            &#125;        &#125; catch (FileNotFoundException e) &#123;            e.printStackTrace();        &#125; catch (IOException e) &#123;            e.printStackTrace();        &#125;        return res;    &#125;    /**     * 得到上传文件的文件头     * @param src     * @return     */    public static String bytesToHexString(byte[] src) &#123;        StringBuilder stringBuilder = new StringBuilder();        if (src == null || src.length &lt;= 0) &#123;            return null;        &#125;        for (int i = 0; i &lt; src.length; i++) &#123;            int v = src[i] &amp; 0xFF;            String hv = Integer.toHexString(v);            if (hv.length() &lt; 2) &#123;                stringBuilder.append(0);            &#125;            stringBuilder.append(hv);        &#125;        return stringBuilder.toString();    &#125;    public static int getCheckBytesNumber() &#123;        return CHECK_BYTES_NUMBER;    &#125;    public static void setCheckBytesNumber(int checkBytesNumber) &#123;        CHECK_BYTES_NUMBER = checkBytesNumber;    &#125;&#125;123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103104105106107108109110111112113114115116117118119120121122123124125126127128129130131132133134135136137138139140141142143144145146147148149150</span><br></pre></td></tr></table></figure>
+
+<p>常见文件头表示如下:</p>
+<p>255044PDF<br>526563 EML<br>D0CF11 PPT<br>4D5AEE COM<br>E93B03 COM<br>4D5A90 EXE<br>424D3E BMP<br>49492A TIF<br>384250 PSD<br>C5D0D3 EPS<br>0A0501 PCS<br>89504E PNG<br>060500 RAW<br>000002 TGA<br>60EA27 ARJ<br>526172 RAR<br>504B03 ZIP<br>495363 CAB<br>1F9D8C Z<br>524946 WAV<br>435753 SWF<br>3026B2 WMV<br>3026B2 WMA<br>2E524D RM<br>00000F MOV<br>000077 MOV<br>000001 MPA<br>FFFB50 MP3<br>234558 m3u<br>3C2144 HTM<br>FFFE3C XSL<br>3C3F78 XML<br>3C3F78 MSC<br>4C0000 LNK<br>495453 CHM<br>805343 scm<br>D0CF11 XLS<br>31BE00 WRI<br>00FFFF MDF<br>4D4544 MDS<br>5B436C CCD<br>00FFFF IMG<br>FFFFFF SUB<br>17A150 PCB<br>2A5052 ECO<br>526563 PPC<br>000100 DDB<br>42494C LDB<br>2A7665 SCH<br>2A2420 LIB<br>434841 FNT<br>7B5C72 RTF<br>7B5072 GTD<br>234445 PRG<br>000007 PJT<br>202020 BAS<br>000002 TAG<br>4D5A90 dll<br>4D5A90 OCX<br>4D5A50 DPL<br>3F5F03 HLP<br>4D5A90 OLB<br>4D5A90 IMM<br>4D5A90 IME<br>3F5F03 LHP<br>C22020 NLS<br>5B5769 CPX<br>4D5A16 DRV<br>5B4144 PBK<br>24536F PLL<br>4E4553 NES<br>87F53E GBC<br>00FFFF SMD<br>584245 XBE<br>005001 XMV<br>000100 TTF<br>484802 PDG<br>000100 TST<br>414331 dwg<br>D0CF11 max</p>
+<p>另外还有一些重要的文件，<strong>没有固定的文件头</strong>，如下：</p>
+<p><strong>TXT 没固定文件头定义</strong><br>TMP 没固定文件头定义<br>INI 没固定文件头定义<br>BIN 没固定文件头定义<br>DBF 没固定文件头定义<br>C 没没固定文件头定义<br>CPP 没固定文件头定义<br>H 没固定文件头定义<br>BAT 没固定文件头定义</p>
+<p>还有一些不同的文件有相同的文件头，最典型的就是下面：</p>
+<p>4D5A90 EXE<br>4D5A90 dll<br>4D5A90 OCX<br>4D5A90 OLB<br>4D5A90 IMM<br>4D5A90 IME</p>
+<h2 id="文件上传"><a href="#文件上传" class="headerlink" title="文件上传"></a>文件上传</h2><p>当我们需要实现上传文件的时候, 为了安全起见, 我们需要判断上传文件的格式, 防止将病毒木马等有害的文件上传到服务器上.</p>
+<p>判断文件类型的三种方式</p>
+<ul>
+<li><p>通过文件后缀名</p>
+<p>这个方法只要修改后缀名就可以了</p>
+</li>
+<li><p>通过Content-Type判断</p>
+<p>但是Content-Type取决于文件类型, 文件类型取决于文件扩展名, 所以改变了文件扩展名就改变了Content-Type</p>
+</li>
+<li><p>通过文件头判断文件, 即使文件扩展名改变了文件头也不会改变</p>
+</li>
+</ul>
+<p>文件上传的思路: 先判断Content-Type, Content-Type符合条件的再判断文件头信息</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Java<span class="meta">@ResponseBody</span>    <span class="meta">@GetMapping(&quot;validate&quot;)</span>    <span class="keyword">public</span> Map&lt;String, String&gt; <span class="title function_">validate</span><span class="params">(<span class="meta">@Validated(&#123;AllFiled.class&#125;)</span> UserInfo userInfo, BindingResult result)</span>&#123;<span class="comment">//        SpringValidatorAdapter adapter = (SpringValidatorAdapter)result;        Map&lt;String, String&gt; map = new HashMap&lt;String, String&gt;();        if (result.hasErrors()) &#123;            List&lt;ObjectError&gt; list  = result.getAllErrors();            for (ObjectError error :                    list) &#123;                FieldError fieldError = (FieldError)error;                String defaultMessage = fieldError.getDefaultMessage();                String field = fieldError.getField();                map.put(field, defaultMessage);            &#125;        &#125;        return map;    &#125;//    consumes = &#123;//        MediaType.MULTIPART_FORM_DATA_VALUE &#125;, produces = MediaType.TEXT_PLAIN_VALUE    @PostMapping(value = &quot;file&quot;)    @ResponseBody    public String file(@RequestParam(&quot;username&quot;) String name, MultipartFile file) throws IOException &#123;        //获取文件名        String fileName = file.getOriginalFilename();        //获取表单提交文件使用的字段        String partName = file.getName();        //判断文件是否为空        boolean empty = file.isEmpty();        //获取ContentType        String contentType = file.getContentType();        //获取文件直接数        Long size = file.getSize();        //获取文件所有字节        byte[] bytes = file.getBytes();        //获取InputStream        InputStream in = file.getInputStream();        //根据文件头获取文件类型        String type = FileType.getFileType(in);                //业务.....        StringBuilder builder = new StringBuilder();        //存储文件        File root = new File(&quot;D:/temp&quot;);        if (!root.isDirectory()) &#123;            root.mkdirs();        &#125;        try &#123;            file.transferTo(new File(root, name));            return String.format(&quot;Upload to %s&quot;, fileName);        &#125; catch (IllegalStateException e) &#123;            e.printStackTrace();        &#125; catch (IOException e) &#123;            e.printStackTrace();        &#125;        return &quot;Upload Failed&quot;;    &#125;</span></span><br></pre></td></tr></table></figure>
+
+
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-20221214-二维码版本与容量"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/12/14/20221214-%E4%BA%8C%E7%BB%B4%E7%A0%81%E7%89%88%E6%9C%AC%E4%B8%8E%E5%AE%B9%E9%87%8F/"
+    >20221214-二维码版本与容量</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/12/14/20221214-%E4%BA%8C%E7%BB%B4%E7%A0%81%E7%89%88%E6%9C%AC%E4%B8%8E%E5%AE%B9%E9%87%8F/" class="article-date">
+  <time datetime="2022-12-14T12:07:19.000Z" itemprop="datePublished">2022-12-14</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>二维码 QR - 版本与容量</p>
+<table>
+<thead>
+<tr>
+<th>版本</th>
+<th>矩阵大小</th>
+<th>纠错等级</th>
+<th>八位字节</th>
+<th>数字</th>
+<th>字母数字</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>21</td>
+<td>L</td>
+<td>17</td>
+<td>41</td>
+<td>25</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>M</td>
+<td>14</td>
+<td>34</td>
+<td>20</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Q</td>
+<td>11</td>
+<td>27</td>
+<td>16</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>H</td>
+<td>7</td>
+<td>17</td>
+<td>10</td>
+</tr>
+<tr>
+<td>2</td>
+<td>25</td>
+<td>L</td>
+<td>32</td>
+<td>77</td>
+<td>47</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>M</td>
+<td>26</td>
+<td>63</td>
+<td>38</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Q</td>
+<td>20</td>
+<td>48</td>
+<td>29</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>H</td>
+<td>14</td>
+<td>34</td>
+<td>20</td>
+</tr>
+<tr>
+<td>3</td>
+<td>29</td>
+<td>L</td>
+<td>53</td>
+<td>127</td>
+<td>77</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>M</td>
+<td>42</td>
+<td>101</td>
+<td>61</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Q</td>
+<td>32</td>
+<td>77</td>
+<td>47</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>H</td>
+<td>24</td>
+<td>58</td>
+<td>35</td>
+</tr>
+<tr>
+<td>4</td>
+<td>33</td>
+<td>L</td>
+<td>78</td>
+<td>187</td>
+<td>114</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>M</td>
+<td>62</td>
+<td>149</td>
+<td>90</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Q</td>
+<td>46</td>
+<td>111</td>
+<td>67</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>H</td>
+<td>34</td>
+<td>82</td>
+<td>50</td>
+</tr>
+<tr>
+<td>5</td>
+<td>37</td>
+<td>L</td>
+<td>106</td>
+<td>255</td>
+<td>154</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>M</td>
+<td>84</td>
+<td>202</td>
+<td>122</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Q</td>
+<td>60</td>
+<td>144</td>
+<td>87</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>H</td>
+<td>44</td>
+<td>106</td>
+<td>64</td>
+</tr>
+<tr>
+<td>6</td>
+<td>41</td>
+<td>L</td>
+<td>134</td>
+<td>322</td>
+<td>195</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>M</td>
+<td>106</td>
+<td>255</td>
+<td>154</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Q</td>
+<td>74</td>
+<td>178</td>
+<td>108</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>H</td>
+<td>58</td>
+<td>139</td>
+<td>84</td>
+</tr>
+<tr>
+<td>7</td>
+<td>45</td>
+<td>L</td>
+<td>154</td>
+<td>370</td>
+<td>224</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>M</td>
+<td>122</td>
+<td>293</td>
+<td>178</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Q</td>
+<td>86</td>
+<td>207</td>
+<td>125</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>H</td>
+<td>64</td>
+<td>154</td>
+<td>93</td>
+</tr>
+<tr>
+<td>8</td>
+<td>49</td>
+<td>L</td>
+<td>192</td>
+<td>461</td>
+<td>279</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>M</td>
+<td>152</td>
+<td>365</td>
+<td>221</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Q</td>
+<td>108</td>
+<td>259</td>
+<td>157</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>H</td>
+<td>84</td>
+<td>202</td>
+<td>122</td>
+</tr>
+<tr>
+<td>9</td>
+<td>53</td>
+<td>L</td>
+<td>230</td>
+<td>552</td>
+<td>335</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>M</td>
+<td>180</td>
+<td>432</td>
+<td>262</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Q</td>
+<td>130</td>
+<td>312</td>
+<td>189</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>H</td>
+<td>98</td>
+<td>235</td>
+<td>143</td>
+</tr>
+<tr>
+<td>10</td>
+<td>57</td>
+<td>L</td>
+<td>271</td>
+<td>652</td>
+<td>395</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>M</td>
+<td>213</td>
+<td>513</td>
+<td>311</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Q</td>
+<td>151</td>
+<td>364</td>
+<td>221</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>H</td>
+<td>119</td>
+<td>288</td>
+<td>174</td>
+</tr>
+</tbody></table>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-20221214-PDF文本的基本结构"
   class="article article-type-post"
   itemscope
@@ -163,6 +770,296 @@
 <p>按照惯例，PDF 文件中的标记按行排列，每行的终止标记可以是回车、换行、或两者兼有，包含二进制数据的PDF 文件可以有任意长的行</p>
 <p>为了提高PDF 文件的兼容性，不属于流对象的数据行限制为不超过255个字符，但有一个例外，签名字典的内容字符串不受行长度限制</p>
  
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-20221214-PNG格式详解"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/12/14/20221214-PNG%E6%A0%BC%E5%BC%8F%E8%AF%A6%E8%A7%A3/"
+    >20221214-PNG格式详解</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/12/14/20221214-PNG%E6%A0%BC%E5%BC%8F%E8%AF%A6%E8%A7%A3/" class="article-date">
+  <time datetime="2022-12-14T03:35:43.000Z" itemprop="datePublished">2022-12-14</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>png 是20世纪90年代开始开发的图像文件存储格式，其目的是替代gif 和tiff 文件格式，同时增加一些gif 文件格式所不具备的特性，流式网络图形格式名称来源于非官方的  是一种位图文件存储格式，读成ping 。png 用来存储灰度图像时，灰度图像的深度可多到16位，存储彩色图像时，彩色图像的深度可多到48位，并且还可存储多到16位的alpha 通道，png 使用从LZ77 派生的无损数据压缩算法</p>
+<h3 id="特性"><a href="#特性" class="headerlink" title="特性"></a>特性</h3><p>使用调色板技术可支持256种颜色的彩色图像  必须的</p>
+<p>流式读 写性，图像文件格式允许连续读出和写入图像数据 因此适于网络传播</p>
+<p>逐次逼近显示，这种特性可使在通信链路上传输图像文件的同时就在终端上显示图像，把整个轮廓显示出来之后逐步显示图像的细节，也就是先用低分辨率显示图像，然后逐步提高它的分辨率  类似马赛克逐渐消除的过程</p>
+<p>透明性，这个性能可使图像中某些部分不显示出来，用来创建一些有特色的图像</p>
+<p>辅助信息，这个特性可用来在图像文件中存储一些文本注释信息  就是可以说一些废话</p>
+<p>独立于计算机硬件环境</p>
+<p>使用无损压缩</p>
+<p>可在一个文件中存储多幅图像</p>
+<h2 id="文件结构"><a href="#文件结构" class="headerlink" title="文件结构"></a>文件结构</h2><p>png 图像格式文件由文件署名和数据块 组成</p>
+<p>文件署名域</p>
+<p>8字节的png 文件署名域用来识别该文件是不是png 文件，该域的值是 </p>
+<p>十进制数  十六进制数<br>137 89<br>80  50<br>78  4e<br>71  47<br>13  0d<br>10  0a<br>26  1a<br>10  0a<br>这个文件署名就是在《利用文件头标志判断文件类型》中提到的文件头标志了，很简单。</p>
+<p>数据块</p>
+<p>这里有两种类型的数据块，一种是称为关键数据块，就是必须要有的块，另一种叫做辅助数据块</p>
+<p>每个数据块都由下表所示的4个域组成</p>
+<p>名称  字节数 说明<br>Length(长度)  4字节 指定数据块中数据域的长度，其长度不超过(231−1)(231−1)字节<br>Chunk Type Code(数据块类型码) 4字节 数据块类型码由ASCII字母(A-Z和a-z)组成<br>Chunk Data(数据块实际内容  可变长度  存储按照Chunk Type Code指定的数据<br>CRC(循环冗余检测  4字节 存储用来检测是否有错误的循环冗余码</p>
+<p>其中CRC 域中的值是对chunk type code 域和chunk data 域中的数据进行计算得到的，可以看作一种校验码</p>
+<p>关键数据块</p>
+<p>关键数据块中的4个标准数据块是</p>
+<p>文件头数据块 IHDR</p>
+<p>它包含有png 文件中存储的图像数据的基本信息，并要作为第一个数据块出现在png 数据流中，而且一个png 数据流中只能有一个文件头数据块</p>
+<p>文件头数据块由13字节，组成结构如下</p>
+<table>
+<thead>
+<tr>
+<th>域的名称</th>
+<th>字节数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Width</td>
+<td>4 bytes</td>
+<td>图像宽度，以像素为单位</td>
+</tr>
+<tr>
+<td>Height</td>
+<td>4 bytes</td>
+<td>图像高度，以像素为单位</td>
+</tr>
+<tr>
+<td>Bit depth</td>
+<td>1 byte</td>
+<td>图像深度：索引彩色图像：1，2，4或8 ;灰度图像：1，2，4，8或16 ;真彩色图像：8或16</td>
+</tr>
+<tr>
+<td>ColorType</td>
+<td>1 byte</td>
+<td>颜色类型：0：灰度图像, 1，2，4，8或16;2：真彩色图像，8或16;3：索引彩色图像，1，2，4或84：带α通道数据的灰度图像，8或16;6：带α通道数据的真彩色图像，8或16</td>
+</tr>
+<tr>
+<td>Compression method</td>
+<td>1 byte</td>
+<td>压缩方法(LZ77派生算法)</td>
+</tr>
+<tr>
+<td>Filter method</td>
+<td>1 byte</td>
+<td>滤波器方法</td>
+</tr>
+<tr>
+<td>Interlace method</td>
+<td>1 byte</td>
+<td>隔行扫描方法：0：非隔行扫描;1： Adam7(由Adam M. Costello开发的7遍隔行扫描方法)</td>
+</tr>
+</tbody></table>
+<p>调色板数据块PLTE</p>
+<p>它包含有与索引彩色图像相关的彩色变换数据，它仅与索引彩色图像有关，而且要放在图像数据块之前，真彩色的png 数据流也可以有调色板数据块，目的是便于非真彩色显示程序用它来量化图像数据，从而显示该图像，结构如下</p>
+<p>|颜色|字节|意义|<br>|Red|1 byte | 0 &#x3D; 黑色, 255 &#x3D; 红|<br>|Green|1 byte | 0 &#x3D; 黑色, 255 &#x3D; 绿色|<br>|Blue|1 byte | 0 &#x3D; 黑色, 255 &#x3D; 蓝色|</p>
+<p>PLTE 数据块是定义图像的调色板信息，PLTE 可以包含1-256 个调色板信息，每个调色板信息由3个字节组成，因此调色板数据块所包含的最大字节数为768 调色板的长度应该是3的倍数，否则，这将使一个非法的调色板</p>
+<p>对于索引图像，调色板信息是必须的，调色板的颜色索引从0开始编号，然后是 1 2 调色板的颜色数不能超过色深中规定的颜色数，否则，这将导致png 图像不合法</p>
+<p>图像数据块 IDAT </p>
+<p>它存储实际的数据，在数据流中可包含多个连续顺序的图像数据块<br>IDAT 存放着图像真正的数据信息，因此，如果能够了解IDAT 的结构，我们就可以很方便的生成PNG 图像</p>
+<p>图像结束数据IEND </p>
+<p>它用来标记png 文件或者数据流已经结束，并且必须要放在文件的尾部</p>
+<p>如果我们仔细观察PNG文件，我们会发现，文件的结尾12个字符看起来总应该是这样的：</p>
+<p>00 00 00 00 49 45 4E 44 AE 42 60 82</p>
+<p>不难明白，由于数据块结构的定义，IEND 数据块的长度总是0 0000000除非认为加入信息，数据标识总是iend 因此，CRC码也总是AE 42 60 82</p>
+<p>最后，除了表示数据块开始IHDR 必须放在最前面，表示png 文件结束的iend 数据块放在最后面，其他数据块的存放顺序没有限制</p>
+<p>辅助数据块</p>
+<p>比较杂 ，不需要全部了解透</p>
+<p>PNG 文件格式规范指定的10个辅助数据块是</p>
+<p>背景颜色数据块 bKGD</p>
+<p>基色和白色度数块cHRM 所谓白色度是指当 R G B 最大值时在显示器上产生的白色度</p>
+<p>图像gamma 数据块 gAMA</p>
+<p>图像直方图数据块hIST<br>物理像素尺寸数据块 pHYs</p>
+<p>样本有效位数据块 sBIT</p>
+<p>文本信息数据块 tEXt<br>图像最后修改时间数据块 tIME<br>图像透明数据块 tRNS </p>
+<p>压缩文本数据块 zTXt</p>
+<h2 id="数据块摘要"><a href="#数据块摘要" class="headerlink" title="数据块摘要"></a>数据块摘要</h2><p>关键数据块，辅助数据块和专用公共数据块 综合下表中</p>
+<table>
+<thead>
+<tr>
+<th>数据块符号</th>
+<th>数据块名称</th>
+<th>多数据块</th>
+<th>可选否</th>
+<th>位置限制</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>IHDR</td>
+<td>文件头数据块</td>
+<td>否</td>
+<td>否</td>
+<td>第一块</td>
+</tr>
+<tr>
+<td>cHRM</td>
+<td>基色和白色点数据块</td>
+<td>否</td>
+<td>是</td>
+<td>在PLTE和IDAT之前</td>
+</tr>
+<tr>
+<td>gAMA</td>
+<td>图像γ数据块</td>
+<td>否</td>
+<td>是</td>
+<td>在PLTE和IDAT之前</td>
+</tr>
+<tr>
+<td>sBIT</td>
+<td>样本有效位数据块</td>
+<td>否</td>
+<td>是</td>
+<td>在PLTE和IDAT之前</td>
+</tr>
+<tr>
+<td>PLTE</td>
+<td>调色板数据块</td>
+<td>否</td>
+<td>是</td>
+<td>在IDAT之前</td>
+</tr>
+<tr>
+<td>bKGD</td>
+<td>背景颜色数据块</td>
+<td>否</td>
+<td>是</td>
+<td>在PLTE之后IDAT之前</td>
+</tr>
+<tr>
+<td>hIST</td>
+<td>图像直方图数据块</td>
+<td>否</td>
+<td>是</td>
+<td>在PLTE之后IDAT之前</td>
+</tr>
+<tr>
+<td>tRNS</td>
+<td>图像透明数据块</td>
+<td>否</td>
+<td>是</td>
+<td>在PLTE之后IDAT之前</td>
+</tr>
+<tr>
+<td>oFFs</td>
+<td>(专用公共数据块)</td>
+<td>否</td>
+<td>是</td>
+<td>在IDAT之前</td>
+</tr>
+<tr>
+<td>pHYs</td>
+<td>物理像素尺寸数据块</td>
+<td>否</td>
+<td>是</td>
+<td>在IDAT之前</td>
+</tr>
+<tr>
+<td>sCAL</td>
+<td>(专用公共数据块)</td>
+<td>否</td>
+<td>是</td>
+<td>在IDAT之前</td>
+</tr>
+<tr>
+<td>IDAT</td>
+<td>图像数据块</td>
+<td>是</td>
+<td>否</td>
+<td>与其他IDAT连续</td>
+</tr>
+<tr>
+<td>tIME</td>
+<td>图像最后修改时间数据块</td>
+<td>否</td>
+<td>是</td>
+<td>无限制</td>
+</tr>
+<tr>
+<td>tEXt</td>
+<td>文本信息数据块</td>
+<td>是</td>
+<td>是</td>
+<td>无限制</td>
+</tr>
+<tr>
+<td>zTXt</td>
+<td>压缩文本数据块</td>
+<td>是</td>
+<td>是</td>
+<td>无限制</td>
+</tr>
+<tr>
+<td>fRAc</td>
+<td>(专用公共数据块)</td>
+<td>是</td>
+<td>是</td>
+<td>无限制</td>
+</tr>
+<tr>
+<td>gIFg</td>
+<td>(专用公共数据块)</td>
+<td>是</td>
+<td>是</td>
+<td>无限制</td>
+</tr>
+<tr>
+<td>gIFt</td>
+<td>(专用公共数据块)</td>
+<td>是</td>
+<td>是</td>
+<td>无限制</td>
+</tr>
+<tr>
+<td>gIFx</td>
+<td>(专用公共数据块)</td>
+<td>是</td>
+<td>是</td>
+<td>无限制</td>
+</tr>
+<tr>
+<td>IEND</td>
+<td>图像结束数据</td>
+<td>否</td>
+<td>否</td>
+<td>最后一个数据块</td>
+</tr>
+</tbody></table>
+<p>tEXt和zTXt数据块中的标准关键字：</p>
+<p>关键字 说明<br>Title 图像名称或者标题<br>Author  图像作者名<br>Description 图像说明<br>Copyright 版权声明<br>CreationTime  原图创作时间<br>Software  创作图像使用的软件<br>Disclaimer  弃权<br>Warning 图像内容警告<br>Source  创作图像使用的设备<br>Comment 各种注释<br>一个例子</p>
+<!-- http://qr61.cn/o8bjsz/qEp8BlI --> 
       <!-- reward -->
       
     </div>
@@ -660,273 +1557,6 @@
 <p>生成完毕的标志是creating结束，并且在你的目录下出现类型太阳的这个标记</p>
 <p>后期调用与测试 </p>
 <p>VGA 显示的过程中会遇到很多小bug 有些小bug 的原因你根本找不出，比如 out of range ，你只能静下心来慢慢调试仿真</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20221212-SPI协议详解"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/12/12/20221212-SPI%E5%8D%8F%E8%AE%AE%E8%AF%A6%E8%A7%A3/"
-    >20221212-SPI协议详解</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/12/12/20221212-SPI%E5%8D%8F%E8%AE%AE%E8%AF%A6%E8%A7%A3/" class="article-date">
-  <time datetime="2022-12-12T11:58:24.000Z" itemprop="datePublished">2022-12-12</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/290620901">https://zhuanlan.zhihu.com/p/290620901</a></p>
-<p>UART 没有时钟信号，无法控制何时发送数据，也无法保证双方按照完全相同的速度接收数据，因此，双方以不同的速度进行数据接收和发送，就会出现问题</p>
-<p>如果要解决这个问题，uart 为每个字节添加额外的起始位和停止位，以帮助接收器在数据到达时进行同步</p>
-<p>双方还必须事先就传输速度达成共识，设置相同的波特率 例如每秒9600位</p>
-<p>传输速率如果有微小差异不是问题，因为接收器会在每个字节的开头重新同步</p>
-<p>如果您注意到上图中的11001010不等于0x53，这是一个细节。串口协议通常会首先发送最低有效位，因此最小位在最左边LSB。低四位字节实际上是0011 &#x3D; 0x3，高四位字节是0101 &#x3D; 0x5。</p>
-<p>异步串行工作得很好，但是在每个字节发送的时候都需要额外的起始位和停止位 以及在发送和接收数据所需的复杂硬件方面都有很多开销</p>
-<p>不难发现，如果接收端和发送端设置的速度都不一致，那么接收到的数据将是垃圾 乱码</p>
-<h2 id="SPI-通讯协议"><a href="#SPI-通讯协议" class="headerlink" title="SPI 通讯协议"></a>SPI 通讯协议</h2><p>spi 是一个同步的数据总线，也就是说它是用单独的数据线和一个单独的时钟信号来保证发送端和接收端的完美同步</p>
-<p>时钟是一个振荡信号，它告诉接收端在确切的时机对数据线上的信号进行采样</p>
-<p>产生时钟的一侧称为主机，另一侧为从机，总是只有一个主机 一般来说可以是微控制器 MCU 但是可以有多个从机</p>
-<p>数据的采集时机可能是时钟信号的上升沿 或下降沿</p>
-<p>具体要看对 spi 的配置</p>
-<p>整体的传输大概可以分为以下几个过程</p>
-<p>主机先将NSS 信号拉低，这样保证开始接收数据</p>
-<p>当接收端检测到时钟的边沿信号时，它将立即读取数据线上的信号，这样就得到了一位数据 1bit</p>
-<p>由于时钟是随数据一起发送的，因此指定数据的传输速度并不重要，尽管设备将具有可以运行的最高速度</p>
-<p>主机发送到从机时：主机产生相应的时钟信号，然后数据一位一位地将从MOSI信号线上进行发送到从机；<br>主机接收从机数据：如果从机需要将数据发送回主机，则主机将继续生成预定数量的时钟信号，并且从机会将数据通过MISO信号线发送；</p>
-<p>注意  spi 是全双工 具有单独的发送和接收线路，因此可以在同一时间发送和接收数据，另外 spi 的接收硬件可以是一个简单的移位寄存器，这笔异步串行通信所需的完整uart 要简单得多，并且更加便宜</p>
-<p>spi 特性</p>
-<p>spi 总线包括4条 逻辑线，定义如下</p>
-<p>MISO 主机输入，从机输出，数据来自从机</p>
-<p>MOSI 主机输出，从机输入</p>
-<p>SCLK 串行时钟信号，由主机产生发送给从机</p>
-<p>SS 片选信号，由主机发送，以控制与哪个从机通信，通常是低电平有效信号</p>
-<p>其他制造商可能会遵循其他命名规则，但是最终他们指的相同的含义。以下是一些常用术语；</p>
-<p>MISO也可以是SIMO，DOUT，DO，SDO或SO（在主机端）;<br>MOSI也可以是SOMI，DIN，DI，SDI或SI（在主机端）;<br>NSS也可以是CE，CS或SSEL;<br>SCLK也可以是SCK;<br>本文将按照以下命名进行讲解[MISO, MOSI, SCK，NSS]</p>
-<p>时钟频率</p>
-<p>SPI 总线上的主机必须在通信开始时候配置并生成相应的时钟信号，在每个SPI 时钟周期内，都会发生全双工数据传输</p>
-<p>主机在mosi 线上发送一位数据，从机读取它，而从机在miso 线上发送一位数据，主机读取它</p>
-<p>就算只进行单向的数据传输，也要保持这样的顺序，这就意味着无论接收任何数据，必须实际发送一些东西，在这种情况下，我们称其为虚拟数据</p>
-<p>从理论上讲，只要实际可行，时钟速率就可以是您想要的任何速率，当然这个速率受限于每个系统能提供多大的系统时钟频率，以及最大的SPI传输速率。</p>
-<p>时钟极性 CKP Clock Polarity</p>
-<p>除了配置串行时钟频率 外，SPI 主设备还需要配置时钟极性</p>
-<p>根据硬件制造商的命名规则不同，时钟极性通常写为CKP或CPOL。时钟极性和相位共同决定读取数据的方式，比如信号上升沿读取数据还是信号下降沿读取数据；</p>
-<p>CKP 可以配置为1或0 ，这意味着您可以根据需要将时钟的默认状态 IDLE 设置为高或低，极性反转可以通过简单的逻辑逆变器实现，您必须参考设备的数据手册才能正确设置CKP 和CKE</p>
-<p>CKP &#x3D; 0：时钟空闲IDLE为低电平0；<br>CKP &#x3D; 1：时钟空闲IDLE为高电平1；</p>
-<p>时钟相位 CKE Clock Phase Edge</p>
-<p>除配置串行时钟速率和极性外，SPI 主设备还应配置时钟相位，根据硬件制造商的不同，时钟相位通常写为CKE 或CPHA</p>
-<p>顾明思义，时钟相位&#x2F;边沿，也就是采集数据时是在时钟信号的具体相位或者边沿</p>
-<p>CKE &#x3D; 0 在时钟信号SCK 的第一个跳变沿采样</p>
-<p>CKE &#x3D; 1 在时钟信号SCK 的第二个跳变沿采样</p>
-<p>时钟配置总结</p>
-<p>综上几种情况，下图总结了所有时钟配置组合，并突出显示了实际采样数据的时刻</p>
-<p>其中黑色线为采样数据的时刻</p>
-<p>蓝色线为SCK 时钟信号</p>
-<p>具体如下图所示</p>
-<p>模式编号</p>
-<p>SPI 的时钟极性和相位的配置通常称为SPI 模式，所有可能的模式都遵循以下约定，具体如下表所示</p>
-<p>除此之外，我们还应该仔细检查微控制器数据手册中包含的模式表，以确保一切正常</p>
-<p>多从机模式</p>
-<p>前面说到的SPI 总线必须有一个主机，可以有多个从机，那么具体连接到SPI 总线的方法有以下两种</p>
-<p>第一种方法 多NSS</p>
-<p>通常，每个从机都需要一条单独的SS 线</p>
-<p>如果要和特定的从机进行通讯，可以将相应的NSS 信号线拉低，并保持其他NSS 信号线的状态为高电平，如果同时将两个NSS 信号线拉低，则可能会出现乱码，因为从机可能都试图在同一条MISO 线上传输数据，最终导致接收数据乱码</p>
-<p>具体连接方式如下图所示</p>
-<p>第二种方法 菊花链</p>
-<p>在数字通信世界中，在设备信号 （总线信号或中断信号） 以串行的方式从一个设备依次传到下一个设备，不断循环直到数据到达目标设备的方式被称为菊花链</p>
-<ol>
-<li>菊花链的最大缺点是因为信号串行传输，所以一旦数据链路中的某设备发生故障的时候，它下面优先级较低的设备就不可能得到服务了</li>
-</ol>
-<p>另一方面，距离主机越远的从机，获得服务的优先级越低，所以需要安排好从机的优先级，并且设置总线检测器，如果某个从机超时，则对该从机进行短路，防止单个从机损坏造成整个链路崩溃的情况</p>
-<p>具体的连接如下图所示</p>
-<p>其中红线加粗为数据的流向</p>
-<p>所以最终的数据流向图可以表示为</p>
-<p>SCK 为时钟信号，8clks 表示8个边沿信号</p>
-<p>其中D 为数据，X 为无效数据</p>
-<p>所以不难发现，菊花链模式充分使用了SPI 其移位寄存器的功能，整个链充当通信移位寄存器，每个从机在下一个时钟周期将输入数据复制到输出</p>
-<p>优缺点</p>
-<p>SPI 通讯的优势</p>
-<p>使SPI 作为串口通信接口脱颖而出的原因很多</p>
-<p>全双工串行通信；<br>高速数据传输速率。<br>简单的软件配置；<br>极其灵活的数据传输，不限于8位，它可以是任意大小的字；<br>非常简单的硬件结构。从站不需要唯一地址（与I2C不同）。从机使用主机时钟，不需要精密时钟振荡器&#x2F;晶振（与UART不同）。不需要收发器（与CAN不同）。</p>
-<p>SPI 的缺点 </p>
-<p>没有硬件从机应答信号  主机可能在不知情的情况下无处发送</p>
-<p>通常仅支持一个主设备</p>
-<p>需要更多的引脚 与I2C 不同</p>
-<p>没有定义硬件级别的错误检查协议</p>
-<p>与RS232 和CAN 总线相比，只能支持非常短的距离</p>
-<p>编程实现<br>下面是通过STM32的cubemx自动生成的HAL库代码，比较简单，截取了其中一部分，具体如下；</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">static</span> <span class="type">void</span> <span class="title function_">MX_SPI1_Init</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    hspi1.Instance = SPI1;</span><br><span class="line">    hspi1.Init.Mode = SPI_MODE_MASTER;    <span class="comment">//主机模式</span></span><br><span class="line">    hspi1.Init.Direction = SPI_DIRECTION_2LINES; <span class="comment">//全双工</span></span><br><span class="line">    hspi1.Init.DataSize = SPI_DATASIZE_8BIT;  <span class="comment">//数据位为8位</span></span><br><span class="line">    hspi1.Init.CLKPolarity = SPI_POLARITY_LOW;  <span class="comment">//CPOL=0</span></span><br><span class="line">    hspi1.Init.CLKPhase = SPI_PHASE_1EDGE;   <span class="comment">//CPHA为数据线的第一个变化沿</span></span><br><span class="line">    hspi1.Init.NSS = SPI_NSS_SOFT;     <span class="comment">//软件控制NSS</span></span><br><span class="line">    hspi1.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_2;<span class="comment">//2分频，32M/2=16MHz</span></span><br><span class="line">    hspi1.Init.FirstBit = SPI_FIRSTBIT_MSB;   <span class="comment">//最高位先发送</span></span><br><span class="line">    hspi1.Init.TIMode = SPI_TIMODE_DISABLE;   <span class="comment">//TIMODE模式关闭</span></span><br><span class="line">    hspi1.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;<span class="comment">//CRC关闭</span></span><br><span class="line">    hspi1.Init.CRCPolynomial = <span class="number">10</span>;     <span class="comment">//默认值，无效</span></span><br><span class="line">    <span class="keyword">if</span> (HAL_SPI_Init(&amp;hspi1) != HAL_OK)    <span class="comment">//初始化</span></span><br><span class="line">    &#123;</span><br><span class="line">        _Error_Handler(__FILE__, __LINE__);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">    </span><br><span class="line"><span class="comment">//发送数据</span></span><br><span class="line">HAL_StatusTypeDef  </span><br><span class="line"><span class="title function_">HAL_SPI_Transmit</span><span class="params">(SPI_HandleTypeDef *hspi, </span></span><br><span class="line"><span class="params">                 <span class="type">uint8_t</span> *pData, </span></span><br><span class="line"><span class="params">                 <span class="type">uint16_t</span> Size, </span></span><br><span class="line"><span class="params">                 <span class="type">uint32_t</span> Timeout)</span>;</span><br><span class="line"><span class="comment">//接收数据</span></span><br><span class="line">HAL_StatusTypeDef  </span><br><span class="line"><span class="title function_">HAL_SPI_Receive</span><span class="params">(SPI_HandleTypeDef *hspi, </span></span><br><span class="line"><span class="params">                <span class="type">uint8_t</span> *pData, </span></span><br><span class="line"><span class="params">                <span class="type">uint16_t</span> Size, </span></span><br><span class="line"><span class="params">                <span class="type">uint32_t</span> Timeout)</span>;</span><br></pre></td></tr></table></figure>
-
-<p>% SPI、UART、RS232、RS485、IIC 5</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20221212-RS2329针串口定义"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/12/12/20221212-RS2329%E9%92%88%E4%B8%B2%E5%8F%A3%E5%AE%9A%E4%B9%89/"
-    >20221212-RS2329针串口定义</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/12/12/20221212-RS2329%E9%92%88%E4%B8%B2%E5%8F%A3%E5%AE%9A%E4%B9%89/" class="article-date">
-  <time datetime="2022-12-12T11:43:43.000Z" itemprop="datePublished">2022-12-12</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>电脑 9 针串口<br>电脑串口引脚定义<br>这里写图片描述<br>按序号说明：<br>1 载波检测(DCD)<br>2 接受数据(RXD)<br>3 发出数据(TXD)<br>4 数据终端准备好(DTR)<br>5 信号地线(SG)<br>6 数据准备好(DSR)<br>7 请求发送(RTS)<br>8 清除发送(CTS)<br>9 振铃指示(RI)<br>串口母头连接器的管脚定义<br>这里写图片描述<br>此上为计算机串口管脚定义说明。<br>1、 RS-232C 母接头定义(9 芯)：<br>这里写图片描述<br>注意图和总引脚的标号。<br>针脚 定义 符号<br>1 载波检测 DCD<br>2 接收数据 RXD<br>3 发送数据 TXD<br>4 数据终端准备好 DTR<br>5 信号地 SG<br>6 数据准备好 DSR<br>7 请求发送 RTS<br>8 清除发送 CTS<br>9 振铃提示 RI<br>Pin 1 Received Line Signal Detector(Data Carrier Detect)<br>Pin 2 Received Data<br>Pin 3 Transmit Data<br>Pin 4 Data Terminal Ready<br>Pin 5 Signal Ground<br>Pin 6 Data Set Ready<br>Pin 7 Request To Send<br>Pin 8 Clear To Send<br>Pin 9 Ring Indicator</p>
-<p>2、 RS-232C 母接头定义(25 芯)<br>针脚 定义 符号<br>1 频蔽地线<br>2 发送数据 TXD<br>3 接收数据 RXD<br>4 请求发送 RTS<br>5 允许发送 CTS<br>6 数据准备好 DSR<br>7 信号地 SG<br>8 载波检测 DCD<br>9 发送返回(+)<br>10 未定义<br>11 数据发送(-)<br>12<del>17 未定义<br>18 数据接收(+)<br>19 未定义<br>20 数据终端准备好 DTR<br>21 未定义<br>22 振铃 RI<br>23</del>24 未定义<br>25 接收返回(-)<br>Pin 1 Protective Ground<br>Pin 2 Transmit Data<br>Pin 3 Received Data<br>Pin 4 Request To Send<br>Pin 5 Clear To Send<br>Pin 6 Data Set Ready<br>Pin 7 Signal Ground<br>Pin 8 Received Line Signal Detector<br>(Data Carrier Detect)<br>Pin 20 Data Terminal Ready<br>Pin 22 Ring Indicator<br>RS-232C,25 芯针转换为 9 芯针<br>这里写图片描述</p>
-<p><strong>二、 补充 （几个小时的查询和求助才弄明白的，呵呵，珍贵<br>啊）</strong><br>1.RX232 公接头的图片和引脚编号 ：<br>这里写图片描述<br>2.从两个图可以看出， 公接头和母接头相连时 rx-rx，<br>tx-tx，进而可知下载线的两端接口本应该 rx-rx、t<br>x-tx 的，但买串口线时需要买交叉串口线（实现 RX-<br>tx 的连接），进而实现一段发送一段接收。<br>三、更详细的引脚标号规则（超准）<br>DB9 Male (Pin Side) DB9 Female (Pin Side)<br>DB9 Female (Solder Side) DB9 Male (Solder Side)<br>这里写图片描述<br>1 ，RS232 的定义：<br>RS-232 串行接口标准详细介绍<br>目前 RS-232 是 PC 机与通信工业中应用最广泛的一种串行接口。RS-232 被定义为一种在低速率串<br>行通讯中增加通讯距离的单端标准。RS-232 采取不平衡传输方式，即所谓单端通讯。<br>这里写图片描述<br>图一<br>在 RS-232 的通讯标准中是以一个 25 针的接口来定义的，并在早期的计算机如 PC 或 XT 机型上广<br>泛使用，但在 AT 机以后的机型上，实际均采用了 9 针的简化版本应用，现在所说的 232 通讯均默认为 9<br>针的接口。图一显示了 9 针通讯的接口管脚名称，以下是各管脚的说明：<br>这里写图片描述<br>现在通常计算机均配有这种标准的 232 接口，通常这种接口用于联接鼠标、MODEM 或打印机等外<br>部设备。<br>实际应用中，电子工程师在设计计算机与外围设备的通信时，通常在 9 针的基础再进行简化，只用<br>其中的 2、3、5 三个管脚进行通信。这三个管脚分别是接收线、发送线和地线，在一般情况下即可满足通<br>讯的要求，计算机和外部通讯的接线方法如图二：<br>这里写图片描述<br>值得注意的是，图二中 2、3 两脚是交叉互联的，这很容易理解，因为一个设备的发送线必须联接到<br>另外一台设备的接收线上，反之亦然。<br>对于 232 信号的电器特性等知识，在这里无法详细解说，有兴趣的话可以去网站查阅这方面的文章，<br>232 是最常用的通信方式之一，大量应用于各种工业控制或电子家电等产品中，是电子工程师必须掌握的<br>知识之一。<br>另外说明一下，232 信号的有效通讯距离是 15M。<br>2.RS232 TO TTL 电路：</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20221212-蓝牙协议分析"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/12/12/20221212-%E8%93%9D%E7%89%99%E5%8D%8F%E8%AE%AE%E5%88%86%E6%9E%90/"
-    >20221212-蓝牙协议分析</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/12/12/20221212-%E8%93%9D%E7%89%99%E5%8D%8F%E8%AE%AE%E5%88%86%E6%9E%90/" class="article-date">
-  <time datetime="2022-12-12T09:26:15.000Z" itemprop="datePublished">2022-12-12</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/482020575">https://zhuanlan.zhihu.com/p/482020575</a></p>
-<p>本文介绍蓝牙协议的基本特点，版本演进，协议的构成，学习路线等基础知识分享</p>
-<p>​ 蓝牙（英语：Bluetooth），一种无线通讯技术标准，用来让固定与移动设备，在短距离间交换资料，以形成个人局域网（PAN）。其使用短波特高频（UHF）无线电波，经由2.4至2.485 GHz的ISM频段来进行通信。1994年由电信商爱立信（Ericsson）发展出这个技术。它最初的设计，是希望创建一个RS-232数据线的无线通信替代版本。它能够链接多个设备，克服同步的问题。</p>
-<p>技术类型 </p>
-<p>蓝牙技术分为 基础率 增强数据率，和低功耗 LE 两种技术类型，其中 、BR EDR 是以点对点网络拓扑结构创建一对一设备通信 LE 型则使用点对点 一对一 广播 一对多和网格 多对多 等多种网络拓扑结构</p>
-<p>蓝牙技术联盟（英语：Bluetooth Special Interest Group，缩写为SIG）拥有蓝牙的商标，负责制定蓝牙规范、认证制造厂商，授权他们使用蓝牙技术与蓝牙标志，但本身不负责蓝牙设备的设计、生产及贩售。</p>
-<p>蓝牙 2.x EDR<br>加入了非跳跃窄频通道，因为不需要与每个设备交换应答信号，这种通道可以用来将给中器件的蓝牙服务概要同时广播到巨量的蓝牙器件，应答信号交换过程当前需要大约一秒，实时公共交通的时刻表，基本的交通畅通性信息和高级交通指向指示灯未加密信息可以以高速度发送给设备，更高的连接速度，支持多个速度水平 </p>
-<p>​ 2007年7月26日，蓝牙技术联盟通过了蓝牙核心规范2.1+EDR，向下对1.2版本完全兼容，并增加了Sniff省电功能，使得适配器与设备的联系时间延长到0.5秒，能节约不小电量；增强功能有简单安全配对（SSP），这改善了蓝牙设备的配对经验，同时提升了使用和安全强度。</p>
-<p>蓝牙 3.0 HS</p>
-<p>是一种全新的交替射频技术，蓝牙3.0 + HS 提高了资料传输速率，集成802.11 PAL 最高速度可达24Mbps 此外引入了增强电源控制，实际空闲功耗明显降低</p>
-<p>蓝牙 4.x </p>
-<p>提出了低功耗蓝牙 传统蓝牙 和高速蓝牙  三种模式</p>
-<p>高速蓝牙 主攻数据交换与传输</p>
-<p>传统蓝牙 则以信息沟通，设备连接为重点</p>
-<p>低功耗蓝牙 以不需要占用太多带宽的设备连接为主，</p>
-<p>这三种协议规范还能够互相组合搭配，从而实现更广泛的应用模式，此外，Bluetooth 4.0 还包蓝牙的传输距离提升到100米以上  低功耗模式调条件下</p>
-<p>调频 使用所有蓝牙规范版本通用的自适应调频，最大程度地减少 和其他 2.4GHz ISM 频段无线技术的串扰</p>
-<p>蓝牙 5.x </p>
-<p>在有效传输距离上将是4.2 LE 版本的4倍 传输速度将是4.2LE 版本的2倍 </p>
-<p>蓝牙5.0 还支持室内定位导航功能，允许无需配对接受信标的数据 ，针对物联网进行了很多底层优化</p>
-<p>1.6 总结 </p>
-<p>我们常说的蓝牙4.0 不等同于BLE BLE 只是蓝牙4.0 的子集，蓝牙4.0 是一个综合性协议规范</p>
-<p>蓝牙4.0 版本以后技术模式上分为低功耗蓝牙 和经典蓝牙 两种，市场芯片多数为仅支持BLE 的，也有两者都支持的 双模蓝牙芯片</p>
-<p>蓝牙芯片的三种功能配置 </p>
-<ol start="2">
-<li>蓝牙协议栈</li>
-</ol>
-<p>蓝牙协议栈由主机 +HCI 可选 +控制器三大块组成，其中对于单芯片方案是没用HCI 的 </p>
-<p>主机 Host 主机部分由核心协议层 和核心规范构成</p>
-<p>控制器 此部分拆分为低功耗蓝牙和经典蓝牙两个章节说明</p>
-<p>HCI 此部分定义了主机和控制器之间通信的接口标准，可以是UART USB 等通信方式 </p>
-<p>上图中红色部分是 BR&#x2F;RED 经典蓝牙的必选项，绿色部分是LE 低功耗蓝牙必选项，蓝色部分是公共部分，当然经典蓝牙也可以具备绿色部分特性，HCI 接口根据芯片架构有关，是可选项，两者在物理层的差异性图中没有体现，不涉及芯片设计，这块可暂不关注 </p>
-<p>GPA 规范，通用接入规范，定义了所有蓝牙设备的基础功能，设备键发现，连接、配对，绑定的流程，蓝牙设备中四种角色，广播和扫描响应报文的格式，还有一些通用蓝牙参数定义，比如设备地址，名称、配对密钥和设备的外观特征值，用于区分是什么设备，手机还是电脑；明确了作为一个低功耗蓝牙设备的基本需求，包含哪些层级以及如何协同工作的，规范了一些通用的蓝牙参数，蓝牙设备地址、设备名称、配对密钥、外观特征值  用于区分是手机还是电脑</p>
-<p>ATT 属性协议，定义了访问对端设备上数据的一组规则，是GATT 规范的基础，也是低功耗蓝牙的基石，定义了host 端属性报文格式和报文类型</p>
-<p>GATT 通用属性规范，位于ATT 之上，定义了属性的类型及其使用方法，GATT 用来规范attribute 中的数据内容，并运用 group 的概念对attribute 进行分类管理，没有GATT BLE 协议栈也能跑，但互联互通就会出现问题</p>
-<p>L2CAP 层，屏蔽了控制器传输协议中的许多特性，方便高层协议的开发，报文分片和重组，SAR 流控，重传 报文完整性校验等</p>
-<p>SMP 安全管理协议，定义了蓝牙设备配对，认证，解密等行为的安全操作</p>
-<p>LLCP LL 链路层控制，</p>
-<p>PHY 物理层，低功耗蓝牙采用40个信道，分为数据信道和广播信道；广播信道占用3个，用于发现设备、建立连接、广播数据；数据信道占用37个，用于已建立连接设备间的数据通信。建立连接的两个设备，必须同一时间处于同一信道上才能通信。</p>
-<ol start="3">
-<li>学习路线</li>
-</ol>
-<p>此部分给出低功耗蓝牙的基本学习路线，不一定适合所有人</p>
-<p>初步理解协议栈基本组成、专业术语，对协议栈有整体的认识。<br>结合相关项目抓包分析，结合理论和实际表现分析每个子过程，比如ble广播功能、ble建立连接等。有条件的可以整个开发板，都有配套教程代码，可以直接运行的。<br>相关协议栈源码移植和学习，推荐Zephyr.<br>4. 协议文档<br>蓝牙联盟官方下载入口：<a target="_blank" rel="noopener" href="http://www.bluetooth.com/">http://www.bluetooth.com</a><br>个人网盘分享：<a target="_blank" rel="noopener" href="https://www.aliyundrive.com/s/dhKyo">https://www.aliyundrive.com/s/dhKyo</a></p>
  
       <!-- reward -->
       

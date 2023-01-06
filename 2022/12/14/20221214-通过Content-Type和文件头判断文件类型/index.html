@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-CN">
+  
+
+    <head>
+      <meta charset="utf-8" />
+        
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1"
+      />
+      <title>20221214-通过Content-Type和文件头判断文件类型 |  TeX_baitu blog</title>
+  <meta name="generator" content="hexo-theme-ayer">
+      
+      <link rel="shortcut icon" href="/favicon.ico" />
+       
+<link rel="stylesheet" href="/dist/main.css">
+
+      
+<link rel="stylesheet" href="/css/fonts/remixicon.css">
+
+      
+<link rel="stylesheet" href="/css/custom.css">
+ 
+      <script src="https://cdn.staticfile.org/pace/1.2.4/pace.min.js"></script>
+       
+ 
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma@5.0.1/bulma.min.css"
+      />
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+
+      <!-- mermaid -->
+      
+      <style>
+        .swal2-styled.swal2-confirm {
+          font-size: 1.6rem;
+        }
+      </style>
+    </head>
+  </html>
+</html>
+
+
+<body>
+  <div id="app">
+    
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-20221214-通过Content-Type和文件头判断文件类型"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  20221214-通过Content-Type和文件头判断文件类型
+</h1>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/12/14/20221214-%E9%80%9A%E8%BF%87Content-Type%E5%92%8C%E6%96%87%E4%BB%B6%E5%A4%B4%E5%88%A4%E6%96%AD%E6%96%87%E4%BB%B6%E7%B1%BB%E5%9E%8B/" class="article-date">
+  <time datetime="2022-12-14T12:43:46.000Z" itemprop="datePublished">2022-12-14</time>
+</a>   
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">2.7k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">13 分钟</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+    <div class="tocbot"></div>
+
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="通过Content-Type和文件头判断文件类型"><a href="#通过Content-Type和文件头判断文件类型" class="headerlink" title="通过Content-Type和文件头判断文件类型"></a>通过Content-Type和文件头判断文件类型</h1><h2 id="关于MIME"><a href="#关于MIME" class="headerlink" title="关于MIME"></a>关于MIME</h2><p><strong>MIME</strong>的全称是Multipurpose Internet Mail Extensions，即多用途互联网邮件扩展，尽管读起来有些拗口，但大多数人可能都知道，<br>这是HTTP协议中用来定义文档性质及格式的标准。<a target="_blank" rel="noopener" href="https://tools.ietf.org/html/rfc6838">IETF RFC 6838</a>，对HTTP传输内容类型进行了全面定义。<br>而<strong>IANA</strong>(互联网号码分配机构)是负责管理所有标准MIME类型的官方机构。可以<a target="_blank" rel="noopener" href="https://www.iana.org/assignments/media-types/media-types.xhtml">在这里</a>)找到所有的标准MIME</p>
+<p><strong>服务器通过MIME告知响应内容类型，而浏览器则通过MIME类型来确定如何处理文档；</strong><br><strong>因此为传输内容(文档、图片等)设置正确的MIME非常重要</strong>。</p>
+<p>通常Server会在HTTP响应中设置<strong>Content-Type</strong>，如下面的响应：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CodeHTTP/1.1 200 OKServer: Golfe2    Content-Length: 233Content-Type: application/htmlDate: Sun, 28 Dec 2018 02:55:19 GMT12345</span><br></pre></td></tr></table></figure>
+
+<p>这表示服务端将返回html格式的文档，而同样客户端也可以在HTTP请求中设置<strong>Content-Type</strong>以告知服务器当前所发送内容的格式。<br>如下面的请求体：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CodePOST / HTTP/1.1Host: localhost:8000User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:50.0) Gecko/20100101 Firefox/50.0Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8Connection: keep-aliveContent-Type: application/jsonContent-Length: 4651234567</span><br></pre></td></tr></table></figure>
+
+<p>这表示客户端会发送application&#x2F;json格式的数据到服务端，同时应该注意到<strong>Accept</strong>请求头，这个选项用于告知服务器应该返回什么样的数据格式(由客户端接收并完成解析)。</p>
+<p><strong>MIME的格式</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Codetype/subtype1</span><br></pre></td></tr></table></figure>
+
+<p>这是一个两级的分类，比较容易理解，第一级分类通常包含：</p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>text</td>
+<td>普通文本</td>
+</tr>
+<tr>
+<td>image</td>
+<td>某种图像</td>
+</tr>
+<tr>
+<td>audio</td>
+<td>某种音频文件</td>
+</tr>
+<tr>
+<td>video</td>
+<td>某种视频文件</td>
+</tr>
+<tr>
+<td>application</td>
+<td>应用数据</td>
+</tr>
+<tr>
+<td>multi-part</td>
+<td>复合内容</td>
+</tr>
+</tbody></table>
+<p>而二级类型则非常多，以下是一些常用的MIME：</p>
+<table>
+<thead>
+<tr>
+<th>MIME</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>audio&#x2F;wav</td>
+<td>wave音频流媒体文件</td>
+</tr>
+<tr>
+<td>audio&#x2F;webm</td>
+<td>webm 音频文件格式</td>
+</tr>
+<tr>
+<td>audio&#x2F;ogg</td>
+<td>ogg多媒体文件格式的音频文件</td>
+</tr>
+<tr>
+<td>audio&#x2F;mpeg</td>
+<td>mpeg多媒体文件格式的音频文件</td>
+</tr>
+<tr>
+<td>image&#x2F;gif</td>
+<td>gif图片</td>
+</tr>
+<tr>
+<td>image&#x2F;jpeg</td>
+<td>jpeg图片</td>
+</tr>
+<tr>
+<td>image&#x2F;png</td>
+<td>png图片</td>
+</tr>
+<tr>
+<td>image&#x2F;svg+xml</td>
+<td>svg矢量图片</td>
+</tr>
+<tr>
+<td>application&#x2F;json</td>
+<td>json格式</td>
+</tr>
+<tr>
+<td>application&#x2F;xml</td>
+<td>xml格式</td>
+</tr>
+<tr>
+<td>application&#x2F;xhtml+xml</td>
+<td>扩展html格式</td>
+</tr>
+<tr>
+<td>application&#x2F;x-www-form-urlencoded</td>
+<td>表单url内容编码</td>
+</tr>
+<tr>
+<td>application&#x2F;octet-stream</td>
+<td>二进制格式</td>
+</tr>
+<tr>
+<td>application&#x2F;pdf</td>
+<td>pdf文档</td>
+</tr>
+<tr>
+<td>application&#x2F;atom+xml</td>
+<td>atom订阅feed流</td>
+</tr>
+<tr>
+<td>multipart&#x2F;form-data</td>
+<td>多文档格式</td>
+</tr>
+<tr>
+<td>text&#x2F;plain</td>
+<td>普通文本</td>
+</tr>
+<tr>
+<td>text&#x2F;html</td>
+<td>html文档</td>
+</tr>
+<tr>
+<td>text&#x2F;css</td>
+<td>css文件</td>
+</tr>
+<tr>
+<td>text&#x2F;javascript</td>
+<td>javascript文件</td>
+</tr>
+<tr>
+<td>text&#x2F;markdown</td>
+<td>markdown文档</td>
+</tr>
+<tr>
+<td>video&#x2F;mpeg</td>
+<td>mpeg多媒体视频文件</td>
+</tr>
+<tr>
+<td>video&#x2F;quicktime</td>
+<td>mov多媒体视频文件</td>
+</tr>
+</tbody></table>
+<h4 id="MIME-Type-与-Content-Type-的关系"><a href="#MIME-Type-与-Content-Type-的关系" class="headerlink" title="MIME Type 与 Content-Type 的关系"></a>MIME Type 与 Content-Type 的关系</h4><p>首先看看tomcat服务器中默认的web.xml中的描述：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Code&lt;!-- ===================== Default MIME Type Mappings =================== --&gt;&lt;!-- When serving static resources, Tomcat will automatically generate    --&gt;&lt;!-- a &quot;Content-Type&quot; header based on the resource&#x27;s filename extension, --&gt;&lt;!-- based on these mappings. Additional mappings can be added here (to --&gt;&lt;!-- apply to all web applications), or in your own application&#x27;s web.xml --&gt;&lt;!-- deployment descriptor.   --&gt;123456</span><br></pre></td></tr></table></figure>
+
+<p>再看看apache服务器中mime.types的描述：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CodeThis file controls what Internet media types are sent to the client forgiven file extension(s). Sending the correct media type to the clientis important so they know how to handle the content of the file.Extra types can either be added here or by using an AddType directivein your config files. For more information about Internet media types,please read RFC 2045, 2046, 2047, 2048, and 2077. The Internet media type registry is at http://www.iana.org/assignments/media-types/.123456</span><br></pre></td></tr></table></figure>
+
+<p><strong>当web服务器收到静态的资源文件请求时，依据请求文件的后缀名在服务器的MIME配置文件中找到对应的MIME Type，再根据MIME Type设置HTTP Response的Content-Type，然后浏览器根据Content-Type的值处理文件。</strong></p>
+<p>也就是说, <strong>文件扩展名&#x3D;&gt;MIME Type&#x3D;&gt;Content-Type</strong></p>
+<h2 id="通过文件头识别文件"><a href="#通过文件头识别文件" class="headerlink" title="通过文件头识别文件"></a>通过文件头识别文件</h2><p>不同的文件类型有不同的文件头, 而文件头部的几个字节被称为Magic Number, 通常用十六进制表示, 可用来判断文件类型.</p>
+<p>比如png文件的文件头Magic Number是0x89504E开始的, java class文件Magic Number为Oxcafebabe</p>
+<p>我们可以通过判断文件的文件头信息来判断文件的类型, 而且<strong>即使改变文件扩展名文件头信息也是不改变的</strong>.</p>
+<p>通过java代码判断文件类型:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Javapublic class FileType &#123;    //默认判断文件头前三个字节内容    public static int CHECK_BYTES_NUMBER = 3;    public final static Map&lt;String, String&gt; FILE_TYPE_MAP = new HashMap&lt;String, String&gt;();    private FileType()&#123;&#125;    static&#123;        getAllFileType(); //初始化文件类型信息    &#125;    /**     * Discription:[getAllFileType,常见文件头信息]     */    private static void getAllFileType()    &#123;        FILE_TYPE_MAP.put(&quot;ffd8ffe000104a464946&quot;, &quot;jpg&quot;); //JPEG (jpg)        FILE_TYPE_MAP.put(&quot;89504e470d0a1a0a0000&quot;, &quot;png&quot;); //PNG (png)        FILE_TYPE_MAP.put(&quot;47494638396126026f01&quot;, &quot;gif&quot;); //GIF (gif)        FILE_TYPE_MAP.put(&quot;49492a00227105008037&quot;, &quot;tif&quot;); //TIFF (tif)        FILE_TYPE_MAP.put(&quot;424d228c010000000000&quot;, &quot;bmp&quot;); //16色位图(bmp)        FILE_TYPE_MAP.put(&quot;424d8240090000000000&quot;, &quot;bmp&quot;); //24位位图(bmp)        FILE_TYPE_MAP.put(&quot;424d8e1b030000000000&quot;, &quot;bmp&quot;); //256色位图(bmp)        FILE_TYPE_MAP.put(&quot;41433130313500000000&quot;, &quot;dwg&quot;); //CAD (dwg)        FILE_TYPE_MAP.put(&quot;3c21444f435459504520&quot;, &quot;html&quot;); //HTML (html)        FILE_TYPE_MAP.put(&quot;3c21646f637479706520&quot;, &quot;htm&quot;); //HTM (htm)        FILE_TYPE_MAP.put(&quot;48544d4c207b0d0a0942&quot;, &quot;css&quot;); //css        FILE_TYPE_MAP.put(&quot;696b2e71623d696b2e71&quot;, &quot;js&quot;); //js        FILE_TYPE_MAP.put(&quot;7b5c727466315c616e73&quot;, &quot;rtf&quot;); //Rich Text Format (rtf)        FILE_TYPE_MAP.put(&quot;38425053000100000000&quot;, &quot;psd&quot;); //Photoshop (psd)        FILE_TYPE_MAP.put(&quot;46726f6d3a203d3f6762&quot;, &quot;eml&quot;); //Email [Outlook Express 6] (eml)        FILE_TYPE_MAP.put(&quot;d0cf11e0a1b11ae10000&quot;, &quot;doc&quot;); //MS Excel 注意：word、msi 和 excel的文件头一样        FILE_TYPE_MAP.put(&quot;d0cf11e0a1b11ae10000&quot;, &quot;vsd&quot;); //Visio 绘图        FILE_TYPE_MAP.put(&quot;5374616E64617264204A&quot;, &quot;mdb&quot;); //MS Access (mdb)        FILE_TYPE_MAP.put(&quot;252150532D41646F6265&quot;, &quot;ps&quot;);        FILE_TYPE_MAP.put(&quot;255044462d312e350d0a&quot;, &quot;pdf&quot;); //Adobe Acrobat (pdf)        FILE_TYPE_MAP.put(&quot;2e524d46000000120001&quot;, &quot;rmvb&quot;); //rmvb/rm相同        FILE_TYPE_MAP.put(&quot;464c5601050000000900&quot;, &quot;flv&quot;); //flv与f4v相同        FILE_TYPE_MAP.put(&quot;00000020667479706d70&quot;, &quot;mp4&quot;);        FILE_TYPE_MAP.put(&quot;49443303000000002176&quot;, &quot;mp3&quot;);        FILE_TYPE_MAP.put(&quot;000001ba210001000180&quot;, &quot;mpg&quot;); //        FILE_TYPE_MAP.put(&quot;3026b2758e66cf11a6d9&quot;, &quot;wmv&quot;); //wmv与asf相同        FILE_TYPE_MAP.put(&quot;52494646e27807005741&quot;, &quot;wav&quot;); //Wave (wav)        FILE_TYPE_MAP.put(&quot;52494646d07d60074156&quot;, &quot;avi&quot;);        FILE_TYPE_MAP.put(&quot;4d546864000000060001&quot;, &quot;mid&quot;); //MIDI (mid)        FILE_TYPE_MAP.put(&quot;504b0304140000000800&quot;, &quot;zip&quot;);        FILE_TYPE_MAP.put(&quot;526172211a0700cf9073&quot;, &quot;rar&quot;);        FILE_TYPE_MAP.put(&quot;235468697320636f6e66&quot;, &quot;ini&quot;);        FILE_TYPE_MAP.put(&quot;504b03040a0000000000&quot;, &quot;jar&quot;);        FILE_TYPE_MAP.put(&quot;4d5a9000030000000400&quot;, &quot;exe&quot;);//可执行文件        FILE_TYPE_MAP.put(&quot;3c25402070616765206c&quot;, &quot;jsp&quot;);//jsp文件        FILE_TYPE_MAP.put(&quot;4d616e69666573742d56&quot;, &quot;mf&quot;);//MF文件        FILE_TYPE_MAP.put(&quot;3c3f786d6c2076657273&quot;, &quot;xml&quot;);//xml文件        FILE_TYPE_MAP.put(&quot;494e5345525420494e54&quot;, &quot;sql&quot;);//xml文件        FILE_TYPE_MAP.put(&quot;7061636b616765207765&quot;, &quot;java&quot;);//java文件        FILE_TYPE_MAP.put(&quot;406563686f206f66660d&quot;, &quot;bat&quot;);//bat文件        FILE_TYPE_MAP.put(&quot;1f8b0800000000000000&quot;, &quot;gz&quot;);//gz文件        FILE_TYPE_MAP.put(&quot;6c6f67346a2e726f6f74&quot;, &quot;properties&quot;);//bat文件        FILE_TYPE_MAP.put(&quot;cafebabe0000002e0041&quot;, &quot;class&quot;);//bat文件        FILE_TYPE_MAP.put(&quot;49545346030000006000&quot;, &quot;chm&quot;);//bat文件        FILE_TYPE_MAP.put(&quot;04000000010000001300&quot;, &quot;mxp&quot;);//bat文件        FILE_TYPE_MAP.put(&quot;504b0304140006000800&quot;, &quot;docx&quot;);//docx文件        FILE_TYPE_MAP.put(&quot;d0cf11e0a1b11ae10000&quot;, &quot;wps&quot;);//WPS文字wps、表格et、演示dps都是一样的        FILE_TYPE_MAP.put(&quot;6431303a637265617465&quot;, &quot;torrent&quot;);        FILE_TYPE_MAP.put(&quot;6D6F6F76&quot;, &quot;mov&quot;); //Quicktime (mov)        FILE_TYPE_MAP.put(&quot;FF575043&quot;, &quot;wpd&quot;); //WordPerfect (wpd)        FILE_TYPE_MAP.put(&quot;CFAD12FEC5FD746F&quot;, &quot;dbx&quot;); //Outlook Express (dbx)        FILE_TYPE_MAP.put(&quot;2142444E&quot;, &quot;pst&quot;); //Outlook (pst)        FILE_TYPE_MAP.put(&quot;AC9EBD8F&quot;, &quot;qdf&quot;); //Quicken (qdf)        FILE_TYPE_MAP.put(&quot;E3828596&quot;, &quot;pwl&quot;); //Windows Password (pwl)        FILE_TYPE_MAP.put(&quot;2E7261FD&quot;, &quot;ram&quot;); //Real Audio (ram)    &#125;    /**     * 根据制定文件的文件头判断其文件类型     * @param filePaht     * @return     */    public static String getFileType(String filePaht)&#123;        String res = null;        try &#123;            FileInputStream is = new FileInputStream(filePaht);            getFileType(is);        &#125; catch (FileNotFoundException e) &#123;            e.printStackTrace();        &#125;        return res;    &#125;    public static String getFileType(InputStream in)&#123;        String res = null;        try &#123;            byte[] b = new byte[CHECK_BYTES_NUMBER];            in.read(b, 0, b.length);            String fileCode = bytesToHexString(b);//            System.out.println(fileCode);            //这种方法在字典的头代码不够位数的时候可以用但是速度相对慢一点            Iterator&lt;String&gt; keyIter = FILE_TYPE_MAP.keySet().iterator();            while(keyIter.hasNext())&#123;                String key = keyIter.next();                if(key.toLowerCase().startsWith(fileCode.toLowerCase()) || fileCode.toLowerCase().startsWith(key.toLowerCase()))&#123;                    res = FILE_TYPE_MAP.get(key);                    break;                &#125;            &#125;        &#125; catch (FileNotFoundException e) &#123;            e.printStackTrace();        &#125; catch (IOException e) &#123;            e.printStackTrace();        &#125;        return res;    &#125;    /**     * 得到上传文件的文件头     * @param src     * @return     */    public static String bytesToHexString(byte[] src) &#123;        StringBuilder stringBuilder = new StringBuilder();        if (src == null || src.length &lt;= 0) &#123;            return null;        &#125;        for (int i = 0; i &lt; src.length; i++) &#123;            int v = src[i] &amp; 0xFF;            String hv = Integer.toHexString(v);            if (hv.length() &lt; 2) &#123;                stringBuilder.append(0);            &#125;            stringBuilder.append(hv);        &#125;        return stringBuilder.toString();    &#125;    public static int getCheckBytesNumber() &#123;        return CHECK_BYTES_NUMBER;    &#125;    public static void setCheckBytesNumber(int checkBytesNumber) &#123;        CHECK_BYTES_NUMBER = checkBytesNumber;    &#125;&#125;123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103104105106107108109110111112113114115116117118119120121122123124125126127128129130131132133134135136137138139140141142143144145146147148149150</span><br></pre></td></tr></table></figure>
+
+<p>常见文件头表示如下:</p>
+<p>255044PDF<br>526563 EML<br>D0CF11 PPT<br>4D5AEE COM<br>E93B03 COM<br>4D5A90 EXE<br>424D3E BMP<br>49492A TIF<br>384250 PSD<br>C5D0D3 EPS<br>0A0501 PCS<br>89504E PNG<br>060500 RAW<br>000002 TGA<br>60EA27 ARJ<br>526172 RAR<br>504B03 ZIP<br>495363 CAB<br>1F9D8C Z<br>524946 WAV<br>435753 SWF<br>3026B2 WMV<br>3026B2 WMA<br>2E524D RM<br>00000F MOV<br>000077 MOV<br>000001 MPA<br>FFFB50 MP3<br>234558 m3u<br>3C2144 HTM<br>FFFE3C XSL<br>3C3F78 XML<br>3C3F78 MSC<br>4C0000 LNK<br>495453 CHM<br>805343 scm<br>D0CF11 XLS<br>31BE00 WRI<br>00FFFF MDF<br>4D4544 MDS<br>5B436C CCD<br>00FFFF IMG<br>FFFFFF SUB<br>17A150 PCB<br>2A5052 ECO<br>526563 PPC<br>000100 DDB<br>42494C LDB<br>2A7665 SCH<br>2A2420 LIB<br>434841 FNT<br>7B5C72 RTF<br>7B5072 GTD<br>234445 PRG<br>000007 PJT<br>202020 BAS<br>000002 TAG<br>4D5A90 dll<br>4D5A90 OCX<br>4D5A50 DPL<br>3F5F03 HLP<br>4D5A90 OLB<br>4D5A90 IMM<br>4D5A90 IME<br>3F5F03 LHP<br>C22020 NLS<br>5B5769 CPX<br>4D5A16 DRV<br>5B4144 PBK<br>24536F PLL<br>4E4553 NES<br>87F53E GBC<br>00FFFF SMD<br>584245 XBE<br>005001 XMV<br>000100 TTF<br>484802 PDG<br>000100 TST<br>414331 dwg<br>D0CF11 max</p>
+<p>另外还有一些重要的文件，<strong>没有固定的文件头</strong>，如下：</p>
+<p><strong>TXT 没固定文件头定义</strong><br>TMP 没固定文件头定义<br>INI 没固定文件头定义<br>BIN 没固定文件头定义<br>DBF 没固定文件头定义<br>C 没没固定文件头定义<br>CPP 没固定文件头定义<br>H 没固定文件头定义<br>BAT 没固定文件头定义</p>
+<p>还有一些不同的文件有相同的文件头，最典型的就是下面：</p>
+<p>4D5A90 EXE<br>4D5A90 dll<br>4D5A90 OCX<br>4D5A90 OLB<br>4D5A90 IMM<br>4D5A90 IME</p>
+<h2 id="文件上传"><a href="#文件上传" class="headerlink" title="文件上传"></a>文件上传</h2><p>当我们需要实现上传文件的时候, 为了安全起见, 我们需要判断上传文件的格式, 防止将病毒木马等有害的文件上传到服务器上.</p>
+<p>判断文件类型的三种方式</p>
+<ul>
+<li><p>通过文件后缀名</p>
+<p>这个方法只要修改后缀名就可以了</p>
+</li>
+<li><p>通过Content-Type判断</p>
+<p>但是Content-Type取决于文件类型, 文件类型取决于文件扩展名, 所以改变了文件扩展名就改变了Content-Type</p>
+</li>
+<li><p>通过文件头判断文件, 即使文件扩展名改变了文件头也不会改变</p>
+</li>
+</ul>
+<p>文件上传的思路: 先判断Content-Type, Content-Type符合条件的再判断文件头信息</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Java<span class="meta">@ResponseBody</span>    <span class="meta">@GetMapping(&quot;validate&quot;)</span>    <span class="keyword">public</span> Map&lt;String, String&gt; <span class="title function_">validate</span><span class="params">(<span class="meta">@Validated(&#123;AllFiled.class&#125;)</span> UserInfo userInfo, BindingResult result)</span>&#123;<span class="comment">//        SpringValidatorAdapter adapter = (SpringValidatorAdapter)result;        Map&lt;String, String&gt; map = new HashMap&lt;String, String&gt;();        if (result.hasErrors()) &#123;            List&lt;ObjectError&gt; list  = result.getAllErrors();            for (ObjectError error :                    list) &#123;                FieldError fieldError = (FieldError)error;                String defaultMessage = fieldError.getDefaultMessage();                String field = fieldError.getField();                map.put(field, defaultMessage);            &#125;        &#125;        return map;    &#125;//    consumes = &#123;//        MediaType.MULTIPART_FORM_DATA_VALUE &#125;, produces = MediaType.TEXT_PLAIN_VALUE    @PostMapping(value = &quot;file&quot;)    @ResponseBody    public String file(@RequestParam(&quot;username&quot;) String name, MultipartFile file) throws IOException &#123;        //获取文件名        String fileName = file.getOriginalFilename();        //获取表单提交文件使用的字段        String partName = file.getName();        //判断文件是否为空        boolean empty = file.isEmpty();        //获取ContentType        String contentType = file.getContentType();        //获取文件直接数        Long size = file.getSize();        //获取文件所有字节        byte[] bytes = file.getBytes();        //获取InputStream        InputStream in = file.getInputStream();        //根据文件头获取文件类型        String type = FileType.getFileType(in);                //业务.....        StringBuilder builder = new StringBuilder();        //存储文件        File root = new File(&quot;D:/temp&quot;);        if (!root.isDirectory()) &#123;            root.mkdirs();        &#125;        try &#123;            file.transferTo(new File(root, name));            return String.format(&quot;Upload to %s&quot;, fileName);        &#125; catch (IllegalStateException e) &#123;            e.printStackTrace();        &#125; catch (IOException e) &#123;            e.printStackTrace();        &#125;        return &quot;Upload Failed&quot;;    &#125;</span></span><br></pre></td></tr></table></figure>
+
+
+ 
+      <!-- reward -->
+      
+      <div id="reword-out">
+        <div id="reward-btn">
+          打赏
+        </div>
+      </div>
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>版权声明： </strong>
+          
+          本博客所有文章除特别声明外，著作权归作者所有。转载请注明出处！
+          
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://example.com/2022/12/14/20221214-%E9%80%9A%E8%BF%87Content-Type%E5%92%8C%E6%96%87%E4%BB%B6%E5%A4%B4%E5%88%A4%E6%96%AD%E6%96%87%E4%BB%B6%E7%B1%BB%E5%9E%8B/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>  
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+    
+      <a href="/2022/12/14/20221214-%E4%BA%8C%E7%BB%B4%E7%A0%81%E7%89%88%E6%9C%AC%E4%B8%8E%E5%AE%B9%E9%87%8F/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">20221214-二维码版本与容量</div>
+      </a>
+    
+  </nav>
+
+  
+   
+    
+    <script src="https://cdn.staticfile.org/twikoo/1.4.18/twikoo.all.min.js"></script>
+    <div id="twikoo" class="twikoo"></div>
+    <script>
+        twikoo.init({
+            envId: ""
+        })
+    </script>
+ 
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2015-2023
+        <i class="ri-heart-fill heart_icon"></i> TeX_baitu
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+        
+        <span>
+  <span><i class="ri-user-3-fill"></i>访问人数:<span id="busuanzi_value_site_uv"></span></span>
+  <span class="division">|</span>
+  <span><i class="ri-eye-fill"></i>浏览次数:<span id="busuanzi_value_page_pv"></span></span>
+</span>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+        <script type="text/javascript" src='https://s9.cnzz.com/z_stat.php?id=1278069914&amp;web_id=1278069914'></script>
+        
+      </li>
+    </ul>
+  </div>
+</footer>    
+    </main>
+    <div class="float_btns">
+      <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+    </div>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/ayer-side.svg" alt="TeX_baitu blog"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags/%E6%97%85%E8%A1%8C/">旅行</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" target="_blank" rel="noopener" href="http://shenyu-vip.lofter.com">摄影</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/friends">友链</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/2019/about">关于我</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="搜索">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-3.6.0.min.js"></script>
+ 
+<script src="/js/lazyload.min.js"></script>
+
+<!-- Tocbot -->
+ 
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  tocbot.init({
+    tocSelector: ".tocbot",
+    contentSelector: ".article-entry",
+    headingSelector: "h1, h2, h3, h4, h5, h6",
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: "main",
+    positionFixedSelector: ".tocbot",
+    positionFixedClass: "is-position-fixed",
+    fixedSidebarOffset: "auto",
+  });
+</script>
+
+<script src="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.js"></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.css"
+/>
+<script src="https://cdn.staticfile.org/justifiedGallery/3.8.1/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+ <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/default-skin/default-skin.min.css">
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script> 
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+ 
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+ 
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+<!-- CodeCopy -->
+ 
+<link rel="stylesheet" href="/css/clipboard.css">
+ <script src="https://cdn.staticfile.org/clipboard.js/2.0.10/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+ 
+<!-- CanvasBackground -->
+
+<script>
+  if (window.mermaid) {
+    mermaid.initialize({ theme: "forest" });
+  }
+</script>
+
+
+    
+    
+
+  </div>
+</body>
+
+</html>
