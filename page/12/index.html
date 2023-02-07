@@ -126,6 +126,161 @@
     
     
     <article
+  id="post-20220609-python-yield-use"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/06/09/20220609-python-yield-use/"
+    >python中的yield用法</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/06/09/20220609-python-yield-use/" class="article-date">
+  <time datetime="2022-06-09T10:51:32.000Z" itemprop="datePublished">2022-06-09</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>yield 关键字做了什么</p>
+<p>可以先把yield 当作return 的同胞兄弟来看</p>
+<p>有return的函数直接返回所有结果，程序终止不再运行，并销毁局部变量</p>
+<p>而有yield 的函数则返回一个可迭代的generator 生成器对象，你可以使用for 循环或者调用next 方法遍历生成器对象来提取结果</p>
+<p>在python中，使用了yield 的函数被称为生成器，有点套娃的感觉</p>
+<p>调用一个yield ，就会返回一个生成器对象</p>
+<p>在调用生成器函数的过程中，每次遇到yield 时函数会暂停并保存当前所有的运行信息，保留局部变量，返回yield 的值，并在下一次执行next 方法时从当前位置继续运行，直到生成器全部遍历完</p>
+<p>可以看到，simple——generator 函数返回一个生成器，调用next 方法后，函数开始运行，遇到第一个yield 关键字，返回生成的值 1 ，程序暂停</p>
+<p>带yield 的函数是一个生成器，这个生成器有一个方法就是next next 就相当于 下一步 生成那个数，这一次的next 开始的地方是接着上一次的next 停止的地方执行的</p>
+<p>所以调用next 的时候，生成器并不会从函数的开始执行，只是接着上一步停止的地方开始，然后遇到yield 后，return 出要生成的数，此步就结束</p>
+<p>生成器有哪些作用，如果想具体化数据的形式，他唱会将数据存储在一个列表中，但这样做，列表的内容将占用有形内存，列表越大，占用的内存资源就越多</p>
+<p>但是，如果数据集有某种逻辑，就不必存储在一个列表中，只需编写一个生成器，它将在需要时生成这些值，基本不占用内存</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-20220519-sublime修改光标颜色"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/05/19/20220519-sublime%E4%BF%AE%E6%94%B9%E5%85%89%E6%A0%87%E9%A2%9C%E8%89%B2/"
+    >20220519-sublime修改光标颜色</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/05/19/20220519-sublime%E4%BF%AE%E6%94%B9%E5%85%89%E6%A0%87%E9%A2%9C%E8%89%B2/" class="article-date">
+  <time datetime="2022-05-19T07:52:40.000Z" itemprop="datePublished">2022-05-19</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>Boxy Ocean.tmTheme</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;string&gt;#F07178&lt;/string&gt;</span><br><span class="line">&lt;key&gt;foreground&lt;/key&gt;</span><br></pre></td></tr></table></figure> 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-20220512-工业软件"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/05/12/20220512-%E5%B7%A5%E4%B8%9A%E8%BD%AF%E4%BB%B6/"
+    >工业软件</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/05/12/20220512-%E5%B7%A5%E4%B8%9A%E8%BD%AF%E4%BB%B6/" class="article-date">
+  <time datetime="2022-05-12T13:49:03.000Z" itemprop="datePublished">2022-05-12</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p><a target="_blank" rel="noopener" href="https://www.bilibili.com/medialist/play/196986312?from=space&amp;business=space&amp;sort_field=play&amp;spm_id_from=333.999.0.0">https://www.bilibili.com/medialist/play/196986312?from=space&amp;business=space&amp;sort_field=play&amp;spm_id_from=333.999.0.0</a></p>
+<p>[TOC]</p>
+<h2 id="0x01"><a href="#0x01" class="headerlink" title="0x01"></a>0x01</h2><h2 id="0x02"><a href="#0x02" class="headerlink" title="0x02"></a>0x02</h2><h2 id="0x03"><a href="#0x03" class="headerlink" title="0x03"></a>0x03</h2><h2 id="0x04"><a href="#0x04" class="headerlink" title="0x04"></a>0x04</h2> 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-20220512-chorme插件安装"
   class="article article-type-post"
   itemscope
@@ -724,158 +879,13 @@
 </article>
 
     
-    <article
-  id="post-20220416-《春日宴》"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/04/16/20220416-%E3%80%8A%E6%98%A5%E6%97%A5%E5%AE%B4%E3%80%8B/"
-    >《春日宴》</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/04/16/20220416-%E3%80%8A%E6%98%A5%E6%97%A5%E5%AE%B4%E3%80%8B/" class="article-date">
-  <time datetime="2022-04-16T10:26:23.000Z" itemprop="datePublished">2022-04-16</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h2 id="《春日宴》是顾如愿填词，夏喘喘演唱的一首歌曲。"><a href="#《春日宴》是顾如愿填词，夏喘喘演唱的一首歌曲。" class="headerlink" title="《春日宴》是顾如愿填词，夏喘喘演唱的一首歌曲。"></a>《春日宴》是顾如愿填词，夏喘喘演唱的一首歌曲。</h2><p>浊酒一盏青竹浮<br>垂目 三两芙蓉杯上镀<br>四方风入松木<br>指秉五经灯影独<br>书上字句 行行尽沾珠玑蛊<br>七痴六嗔烹入壶<br>身顾 道声来饮一杯无<br>九天八荒皆苦<br>仰却当年花月误<br>日浮春雾 只她合十将愿付<br>绿酒杯杯歌遍 再拜陈愿 一愿君岁千<br>二愿身健 三愿如燕 岁岁长相见<br>踏碎飞柳云片 踏碎弑己噬心之砭<br>还见照旧清艳一笑靥<br>长林欢宴梦不赴<br>不恕 教他捧心跌喧俗<br>眉峰小聚稍蹙<br>将她喃喃唇齿处<br>夜烛流途 银钩虿尾翻然书<br>绿酒杯杯歌遍 再拜陈愿 一愿君岁千<br>二愿身健 三愿如燕 岁岁长相见<br>踏碎飞柳云片 踏碎弑己噬心之砭<br>还见照旧清艳一笑靥<br>云篦发边偷敛 裙裾暗曳 便胜却人间<br>晓风化笺 宫阙难歇 微雨捎片叶<br>仍是喜君不倦 仍是万岁山河比肩<br>唇边欲烙一场春日宴</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20220415-游戏开发unity"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/04/15/20220415-%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91unity/"
-    >游戏开发unity</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/04/15/20220415-%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91unity/" class="article-date">
-  <time datetime="2022-04-15T14:22:10.000Z" itemprop="datePublished">2022-04-15</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p><a target="_blank" rel="noopener" href="https://space.bilibili.com/8792721?spm_id_from=333.788.b_765f7570696e666f.2">https://space.bilibili.com/8792721?spm_id_from=333.788.b_765f7570696e666f.2</a></p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20220414-电子书zlibrary"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/04/14/20220414-%E7%94%B5%E5%AD%90%E4%B9%A6zlibrary/"
-    >电子书zlibrary</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/04/14/20220414-%E7%94%B5%E5%AD%90%E4%B9%A6zlibrary/" class="article-date">
-  <time datetime="2022-04-14T00:50:27.000Z" itemprop="datePublished">2022-04-14</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>自动寻找网址<br><a target="_blank" rel="noopener" href="https://1lib.domains/">https://1lib.domains/</a></p>
-<p><a target="_blank" rel="noopener" href="https://zh.libsolutions.net/">https://zh.libsolutions.net</a></p>
-<p>LaTeX Web Companion, The: Integrating TeX, HTML, and XML</p>
-<p>Now available as ebook: The LaTeX Companion 2ed</p>
-<p>XSL-FO</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
   </article>
   
 
   
   <nav class="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/11/">上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><a class="page-number" href="/page/11/">11</a><span class="page-number current">12</span><a class="page-number" href="/page/13/">13</a><a class="page-number" href="/page/14/">14</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><a class="extend next" rel="next" href="/page/13/">下一页</a>
+    <a class="extend prev" rel="prev" href="/page/11/">上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><a class="page-number" href="/page/11/">11</a><span class="page-number current">12</span><a class="page-number" href="/page/13/">13</a><a class="page-number" href="/page/14/">14</a><span class="space">&hellip;</span><a class="page-number" href="/page/17/">17</a><a class="extend next" rel="next" href="/page/13/">下一页</a>
   </nav>
   
 </section>
