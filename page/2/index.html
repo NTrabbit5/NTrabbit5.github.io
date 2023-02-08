@@ -126,6 +126,65 @@
     
     
     <article
+  id="post-20221225-什么是差分信号"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/12/25/20221225-%E4%BB%80%E4%B9%88%E6%98%AF%E5%B7%AE%E5%88%86%E4%BF%A1%E5%8F%B7/"
+    >20221225-什么是差分信号</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/12/25/20221225-%E4%BB%80%E4%B9%88%E6%98%AF%E5%B7%AE%E5%88%86%E4%BF%A1%E5%8F%B7/" class="article-date">
+  <time datetime="2022-12-25T10:51:33.000Z" itemprop="datePublished">2022-12-25</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <!-- 脉冲信号-422差分信号、PNP信号和NPN信号 -->
+
+<p>差分传输是一种信号传输的技术，区别于传统的一根信号线一根地线的做法，差分传输在这两根线上都传输信号，这两个信号的振幅相等，相位相差180度，极性相反，在这两根线上传输的信号就是差分信号</p>
+<p>差分信号与单端信号的区别</p>
+<p>单端信号指的是用一个线传输的信号，一根线没参考点怎么会有信号呢？参考点就是地线，也就是说，单端信号是在一根导线上传输的与地之间的电平差，那么当你把信号从A 点传递到B 点的时候，有一个前提就是A 点和B 点的地电势应该差不多是一样的，差分信号指的是用两根信号线传输的信号，传输的是两根信号之间的电平差，当你把信号从A 点传递到B点的时候，A 点和B 点的地电势可以一样也可以不一样，但是A 点和B 点的地电势差有一个范围，超过这个范围就会出问题了，一个差分信号是用一个数值来表示两个物理量之间的差异，从严格意义上来讲，所有电压信号都是差分的，因为一个电压只能是相对于另一个电压而言的，在某些系统里，系统地被用作电压基准点，当地当作电压测量基准时，这种信号规划被称之为单端的，我们使用该术语是因为信号是用单个导体上的电压来表示的</p>
+<p>另一方面，一个差分信号作用在两个导体上，信号值是两个导体间的电压差，尽管不是非常必要，这两个电压的平均值还是会经常保持一致，我们用一个方法对差分信号做一下比喻，差分信号就好比是跷跷板上的两个人，当一个人被跷上去的时候，另一个人被跷下来了 - 但是他们的平均位置是不变的。继续跷跷板的类推，正值可以表示左边的人比右边的人高，而负值表示右边的人比左边的人高。0 表示两个人都是同一水平。这两个跷跷板用一对标识为V+和V-的导线来表示。当V+&gt;V-时，信号定义成正极信号，当V+&lt;V-时，信号定义成负极信号。</p>
+<p>差分信号的优点</p>
+<p>优点一，相对于单端信号，差分信号减小了潜在的电磁干扰 EMI ，使用差分方式传输，信号的电压峰峰值会被放大了一倍，但是单根线上的电流却保持不变，如果采用传统的单线传输方式，在驱动相同的信号时，更容易造成EMI 问题</p>
+<p>优点二、差分信号的值很大程度上与地的精确值无关，能很好的抵抗电源的干扰，在一个地做基准，单端信号方案的系统里，测量信号的精确值依赖系统内地的一致性，信号源和信号接收器距离越远，他们局部地电压值之间有差异的可能性就越大，从差分信号恢复的信号值在很大程度上与地的精确值无关，而在某一范围内，假如两条信号都收到同样的 （同向、等幅度） 的干扰信号，由于接收端是对接收的两条线信号进行减法处理，因此干扰信号会被基本抵消，也就是说，一个差分放大器的输入有效信号幅度只需要几毫伏，但是它却能够对一个高达几伏特的共模信号无动于衷</p>
+<p>差分信号在做pcb 设计时的处理方法</p>
+<p>一般我们在做pcb 设计时，习惯的硬件命名上，会在差分信号的信号名尾部加 + 和 - 或者 P 和N 作为标识，大家可以通过命名来识别差分信号，常规的差分信号处理方法是</p>
+<p>差分信号走线要耦合处理，就是2根信号线在PCB 设计时是紧挨着的，不允许分开走线</p>
+<p>一对差分信号的2根信号线之间需要做等长处理，等长范围为5mil 等长不需要做到更小，有仿真验证，等长范围做到5mil 以下并不能对信号质量有很大提升，等长处理的位置选择在产生长度误差的地方，等长需要做小波浪处理 </p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-20221224-常用坐标系及投影：WGS84-GCJ02-CGCS2000-BD09-Pseudo-Mercator-UTM-BD09MC"
   class="article article-type-post"
   itemscope
@@ -883,97 +942,6 @@
 </ul>
 <p>相信到这里，大家的ha 界面已经楚楚动人了，</p>
 <p>HA 除了预设的个性化配置甚至还提供了自定义卡片，自定义面板 等等接口，你可以在卡片中显示徽章，可以使用全文字面板控制设备甚至可以修改硬核代码实现各种动态效果，简直是促使程序员们脑洞大开</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20221220-HomeAssistant树莓派-高级篇一"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/12/20/20221220-HomeAssistant%E6%A0%91%E8%8E%93%E6%B4%BE-%E9%AB%98%E7%BA%A7%E7%AF%87%E4%B8%80/"
-    >20221220-HomeAssistant树莓派-高级篇一</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/12/20/20221220-HomeAssistant%E6%A0%91%E8%8E%93%E6%B4%BE-%E9%AB%98%E7%BA%A7%E7%AF%87%E4%B8%80/" class="article-date">
-  <time datetime="2022-12-20T05:29:42.000Z" itemprop="datePublished">2022-12-20</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>本篇简短教程姑且一步登天，和各位程序员 讨论如何活用HA 中强大的command line 组件以快速实现期望的功能</p>
-<p>初学乍练</p>
-<p>HA 之中接入一个设备往往需要经由 平台 组件，这一流程，过程十分繁琐，有时我们只是想运行一些简单的python代码，或者只是想测试一下效果，因此完全没有必要特别去创建平台</p>
-<p>HA 为此特别提供了名为command line 的传感器组件，这个强无敌的组件能让你在ha 中运行任何支持该平台的命令，还可以显示输出结果</p>
-<p>同其他传感器一样，使用command line 只需在configuration.yaml 中添加如下配置</p>
-<p>sensor:</p>
-<ul>
-<li>platform: command_line<br>command: SENSOR_COMMAND<br>HA 官方给出了一些简单的应用例子，我们不妨来看一下：</li>
-</ul>
-<p>显示CPU温度</p>
-<p>我们知道在树莓派终端中输入 cat &#x2F;sys&#x2F;class&#x2F;thermal&#x2F;thermal_zone0&#x2F;temp 指令便可以获取 CPU 温度的千倍值，想让 HA 运行指令只需将其写入配置文件中。</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">sensor:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">platform:</span> <span class="string">command_line</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">CPU</span> <span class="string">Temperature</span></span><br><span class="line">    <span class="attr">command:</span> <span class="string">&quot;cat /sys/class/thermal/thermal_zone0/temp&quot;</span></span><br><span class="line">    <span class="attr">unit_of_measurement:</span> <span class="string">&quot;°C&quot;</span></span><br><span class="line">    <span class="attr">value_template:</span> <span class="string">&#x27;<span class="template-variable">&#123;&#123; value | multiply(0.001) &#125;&#125;</span>&#x27;</span></span><br></pre></td></tr></table></figure>
-<p>重启HA 后，ha 便会添加一个sensor.CPU_Temperature的传感器，之后就和其他组件一样，可以对其随意个性化配置</p>
-<p>抓取HA 最新版本信息</p>
-<p>HA 的包上传在 PyPI 上，自然版本信息也包括在内，通过抓取便可轻易获得。</p>
-<p>sensor:</p>
-<ul>
-<li>platform: command_line<br>command: python3 -c “import requests; print(requests.get(‘<a target="_blank" rel="noopener" href="https://pypi.python.org/pypi/homeassistant/json&#39;).json()[&#39;info&#39;][&#39;version&#39;])&quot;">https://pypi.python.org/pypi/homeassistant/json&#39;).json()[&#39;info&#39;][&#39;version&#39;])&quot;</a><br>name: HA release</li>
-</ul>
-<p>同理，HA 内会生成名为sensor.HA_release 的传感器组件，该例中，我们简单涉及了一些数据抓取的技巧，在ha 内其实提供了一个特别的用于数据抓取的组件，Scrape Sensor 这里也简单介绍一下</p>
-<p>渐入佳境</p>
-<p>Scrape Sensor 组件顾名思义是用来抓取（刮削）数据的，但是实测下来，效果有限。</p>
-<p>基本配置如下：</p>
-<p>sensor:</p>
-<ul>
-<li>platform: scrape<br>resource: <a target="_blank" rel="noopener" href="https://home-assistant.io/">https://home-assistant.io</a><br>select: “.current-version h1”</li>
-</ul>
-<p>稍有前端基础的朋友应该很快就可以明白其意思，最后的select 可以设定需要抓取的类或者是对象</p>
-<p>比如你是IFTTT 的重度患者，想要在ha 前端显示所用的applets 的情况，就可以这样配置</p>
-<p>sensor:</p>
-<ul>
-<li>platform: scrape<br>resource: <a target="_blank" rel="noopener" href="http://status.ifttt.com/">http://status.ifttt.com/</a><br>name: IFTTT status<br>select: ‘.component-status’</li>
-</ul>
-<p>摸清楚原理，我们很快就会意识到 scrape 只能用来刮削结构简单的静态网页，一旦网页稍微复杂一些，数据根本无法被 select 出。</p>
-<p>小试牛刀</p>
-<p>说了那么多官方示例，现在轮到我们自己动手实践了</p>
-<p>command line 的本质还是辅助性组件，想要指望其运行复杂的代码显然是不切实际的，个人认为该组件的重点在于信息展示上，因此也不难理解官方给出的例子都与数据抓取多多少少有一些关系</p>
-<p>HA 是建立在python之上的，配合各类库的使用，python的数据抓取能力十分强大</p>
-<p>Command line 既然是HA 里的小中断，那么自然支持运行外置代码文件</p>
-<p>作为长在海边的孩子，自己对潮汐情况比较关注。HA 的部分天气组件提供了潮汐数据，但涉及汉化、挑选和适配传感器，操作起来十分麻烦。于是我想到直接写一小段 Python 代码抓取潮汐数据。</p>
-<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"><span class="comment">#日期格式化</span></span><br><span class="line">d = time.strftime(<span class="string">&quot;%Y-%m-%d&quot;</span>, time.localtime())</span><br><span class="line"></span><br><span class="line"><span class="comment">#港口代码，前往 http://www.chinaports.com/chaoxi/ 取得</span></span><br><span class="line">port_code = <span class="number">122</span></span><br><span class="line">port_code = <span class="built_in">str</span>(port_code)</span><br><span class="line"></span><br><span class="line"><span class="comment">#获取数据</span></span><br><span class="line">html = requests.get(<span class="string">&quot;http://www.chinaports.com/chaoxi/&quot;</span> + d + <span class="string">&quot;/&quot;</span> + port_code).content</span><br><span class="line">soup = BeautifulSoup(html, <span class="string">&quot;html5lib&quot;</span>, from_encoding=<span class="string">&quot;utf-8&quot;</span>)</span><br><span class="line">result = soup.find(<span class="string">&quot;table&quot;</span>, class_=<span class="string">&quot;tidaltable&quot;</span>)</span><br><span class="line">detail = result(<span class="string">&quot;td&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#打印数据</span></span><br><span class="line">count = <span class="built_in">len</span>(detail)</span><br><span class="line"><span class="keyword">if</span> count == <span class="number">8</span>:</span><br><span class="line">    first_height = <span class="built_in">int</span>(detail[<span class="number">5</span>].string)</span><br><span class="line">    second_height = <span class="built_in">int</span>(detail[<span class="number">6</span>].string)</span><br><span class="line">    <span class="keyword">if</span> first_height &gt; second_height:</span><br><span class="line">        <span class="built_in">print</span> (<span class="string">&quot;涨潮：&quot;</span> + detail[<span class="number">1</span>].string + <span class="string">&quot; &quot;</span> + detail[<span class="number">3</span>].string + <span class="string">&quot;；退潮：&quot;</span> + detail[<span class="number">2</span>].string)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="built_in">print</span> (<span class="string">&quot;涨潮：&quot;</span> + detail[<span class="number">2</span>].string + <span class="string">&quot; &quot;</span> + <span class="string">&quot;；退潮： &quot;</span> + detail[<span class="number">1</span>].string + <span class="string">&quot; &quot;</span> + detail[<span class="number">3</span>].string)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    first_height = <span class="built_in">int</span>(detail[<span class="number">6</span>].string)</span><br><span class="line">    second_height = <span class="built_in">int</span>(detail[<span class="number">7</span>].string)</span><br><span class="line">    <span class="keyword">if</span> first_height &gt; second_height:</span><br><span class="line">        <span class="built_in">print</span> (<span class="string">&quot;涨潮：&quot;</span> + detail[<span class="number">2</span>].string + <span class="string">&quot; &quot;</span> + detail[<span class="number">4</span>].string + <span class="string">&quot;；退潮：&quot;</span> + detail[<span class="number">1</span>].string + <span class="string">&quot; &quot;</span> + detail[<span class="number">3</span>].string)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="built_in">print</span> (<span class="string">&quot;涨潮：&quot;</span> + detail[<span class="number">1</span>].string + <span class="string">&quot; &quot;</span> + detail[<span class="number">3</span>].string + <span class="string">&quot;；退潮：&quot;</span> + detail[<span class="number">2</span>].string + <span class="string">&quot; &quot;</span> + detail[<span class="number">4</span>].string)</span><br></pre></td></tr></table></figure>
-
-<p>这段代码使用了beautifulsoup4 库，比起scrape senso 抓取、整理数据的能力自然强了</p>
-<p>看过这个小例子，相信各位程序员已经摩拳擦掌了。除了 Sensor 以外，Command-Line 还支持 Switch，Cover 等等 platform，详见组件页。由于精力有限，我没有测试其他语言的代码在 Command Line Sensor 中的运行情况，其它 platform 也还未认真钻研。可以肯定的是，该组件大大提升了 HA 的广度和深度，令人不禁想好好玩弄一番呢~</p>
-<p>期待各位派友运用 Command Line 实现新颖的功能，欢迎留言分享与讨论。</p>
  
       <!-- reward -->
       
