@@ -126,6 +126,53 @@
     
     
     <article
+  id="post-20221217-TX-RX通信模块笔记"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/12/17/20221217-TX-RX%E9%80%9A%E4%BF%A1%E6%A8%A1%E5%9D%97%E7%AC%94%E8%AE%B0/"
+    >20221217-TX-RX通信模块笔记</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/12/17/20221217-TX-RX%E9%80%9A%E4%BF%A1%E6%A8%A1%E5%9D%97%E7%AC%94%E8%AE%B0/" class="article-date">
+  <time datetime="2022-12-17T04:51:07.000Z" itemprop="datePublished">2022-12-17</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>T 代表 Transmit<br>R 代表 Receive<br>X 代表交叉，也就是说A 方的TX 接B方的RX  B 放的TX 接A 放的RX</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-20221217-低功耗蓝牙BLE学习笔记"
   class="article article-type-post"
   itemscope
@@ -908,76 +955,6 @@
 <p>编程协议  一般大厂都会公开，在芯片的专用技术手册中会有</p>
 <p>存储器：有很多种，掩膜，EPROM，EEROM，flash等寿命不一样，掩膜只能一次，而且要工厂做，flash擦写次数10000+；</p>
 <p>可以这样比喻性的理解：单片机就是电脑的主板，我们写的程序就是操作系统，主板里面装入引导操作系统的基本程序，下载程序就是给电脑装系统！</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20221215-使用wttr-in在你的终端中显示天气预报"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/12/15/20221215-%E4%BD%BF%E7%94%A8wttr-in%E5%9C%A8%E4%BD%A0%E7%9A%84%E7%BB%88%E7%AB%AF%E4%B8%AD%E6%98%BE%E7%A4%BA%E5%A4%A9%E6%B0%94%E9%A2%84%E6%8A%A5/"
-    >20221215-使用wttr.in在你的终端中显示天气预报</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/12/15/20221215-%E4%BD%BF%E7%94%A8wttr-in%E5%9C%A8%E4%BD%A0%E7%9A%84%E7%BB%88%E7%AB%AF%E4%B8%AD%E6%98%BE%E7%A4%BA%E5%A4%A9%E6%B0%94%E9%A2%84%E6%8A%A5/" class="article-date">
-  <time datetime="2022-12-15T02:04:16.000Z" itemprop="datePublished">2022-12-15</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>wttr.in 是一个功能丰富的天气预报服务，它支持在命令行显示天气，它可以 根据你的ip 地址<br>自动检测你的位置，也支持指定位置或搜索地理位置，如城市，山区等，另外，你不需要安装它，你只需要使用curl 或wget </p>
-<p>wttr.in 功能包括</p>
-<p>显示当前天气以及3天内的天气预报，分为早晨，中午、傍晚和夜晚 包括温度范围、风速和风向 可见度，降水量 和概率</p>
-<p>可以显示月相</p>
-<p>基于你的ip地址自动检测位置</p>
-<p>允许指定城市名称，3字母的机场代码，区域代码，GPS坐标，IP 地址或域名，你还可以指定地理位置，如湖泊 山脉，地标等</p>
-<p>支持多语言位置名称  查询字符串必须以unicode 指定</p>
-<p>支持指定天气预报显示的语言  它支持超过50种语言</p>
-<p>来自美国的查询使用uscs 单位用于，世界其他地方使用公制系统，但你可以通过附加?u 使用uscs 附加?m 使用公制系统</p>
-<p>3种输出格式，终端的ansi 浏览器的html 和png </p>
-<p>或者你可以安装wego 这是一个使用wtter.in 的终端气候应用，虽然wego 要求注册一个api 密钥来安装</p>
-<p><a target="_blank" rel="noopener" href="http://wttr.in/">http://wttr.in</a> 命令行示例<br>获取你所在位置的天气（<a target="_blank" rel="noopener" href="http://wttr.in/">http://wttr.in</a> 会根据你的 IP 地址猜测你的位置）：</p>
-<p>curl wttr.in<br>通过在 curl 之后添加 -4，强制 cURL 将名称解析为 IPv4 地址（如果你用 IPv6 访问 wttr.in 有问题）：</p>
-<p>curl -4 wttr.in<br>如果你想检索天气预报保存为 png，还可以使用 Wget（而不是 cURL），或者你想这样使用它：</p>
-<p>wget -O- -q wttr.in<br>如果相对 cURL 你更喜欢 Wget ，可以在下面的所有命令中用 wget -O- -q 替换 curl。</p>
-<p>指定位置：</p>
-<p>curl wttr.in&#x2F;Dublin<br>显示地标的天气信息（本例中为艾菲尔铁塔）：</p>
-<p>curl wttr.in&#x2F;~Eiffel+Tower<br>获取 IP 地址位置的天气信息（以下 IP 属于 GitHub）：</p>
-<p>curl wttr.in&#x2F;@192.30.253.113<br>使用 USCS 单位检索天气：</p>
-<p>curl wttr.in&#x2F;Paris?u<br>如果你在美国，强制 <a target="_blank" rel="noopener" href="http://wttr.in/">http://wttr.in</a> 使用公制系统（SI）：</p>
-<p>curl wttr.in&#x2F;New+York?m<br>使用 Wget 将当前天气和 3 天预报下载为 PNG 图像：</p>
-<p>wget wttr.in&#x2F;Istanbul.png<br>你可以指定 PNG 的透明度，这在你要使用一个脚本自动添加天气信息到某些图片（比如墙纸）上有用。</p>
-<p>对于其他示例，请查看wttr.in 项目页面或在终端中输入 </p>
-<p>curl wttr.in&#x2F;:help</p>
  
       <!-- reward -->
       
