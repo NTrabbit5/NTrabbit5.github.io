@@ -11,7 +11,7 @@
         name="viewport"
         content="width=device-width, initial-scale=1, maximum-scale=1"
       />
-      <title>20230209-功能强大车载obd接口解析及使用体验 |  TeX_baitu blog</title>
+      <title>20230214-玫瑰扦插注意事项 |  TeX_baitu blog</title>
   <meta name="generator" content="hexo-theme-ayer">
       
       <link rel="shortcut icon" href="/favicon.ico" />
@@ -53,7 +53,7 @@
     <main class="content on">
       <section class="outer">
   <article
-  id="post-20230209-功能强大车载obd接口解析及使用体验"
+  id="post-20230214-玫瑰扦插注意事项"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -64,7 +64,7 @@
     <header class="article-header">
        
 <h1 class="article-title sea-center" style="border-left:0" itemprop="name">
-  20230209-功能强大车载obd接口解析及使用体验
+  20230214-玫瑰扦插注意事项
 </h1>
  
 
@@ -72,15 +72,15 @@
     </header>
      
     <div class="article-meta">
-      <a href="/2023/02/09/20230209-%E5%8A%9F%E8%83%BD%E5%BC%BA%E5%A4%A7%E8%BD%A6%E8%BD%BDobd%E6%8E%A5%E5%8F%A3%E8%A7%A3%E6%9E%90%E5%8F%8A%E4%BD%BF%E7%94%A8%E4%BD%93%E9%AA%8C/" class="article-date">
-  <time datetime="2023-02-09T03:53:28.000Z" itemprop="datePublished">2023-02-09</time>
+      <a href="/2023/02/14/20230214-%E7%8E%AB%E7%91%B0%E6%89%A6%E6%8F%92%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9/" class="article-date">
+  <time datetime="2023-02-14T07:12:52.000Z" itemprop="datePublished">2023-02-14</time>
 </a>   
 <div class="word_count">
     <span class="post-time">
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> 字数统计:</span>
-            <span class="post-count">2.6k</span>
+            <span class="post-count">171</span>
         </span>
     </span>
 
@@ -89,70 +89,28 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> 阅读时长≈</span>
-            <span class="post-count">8 分钟</span>
+            <span class="post-count">1 分钟</span>
         </span>
     </span>
 </div>
  
     </div>
       
-    <div class="tocbot"></div>
-
 
 
 
   
     <div class="article-entry" itemprop="articleBody">
        
-  <h2 id="OBD接口简介"><a href="#OBD接口简介" class="headerlink" title="OBD接口简介"></a>OBD接口简介</h2><p>去4S店保养的时候看到技工在进行检测时将一个专用的电脑检测仪，接入这个看不清位置的插口，然后车辆的故障码就被清除，清洗过后的节气门也不再报错了，其实这个接口并没有想象中那么神秘，而且对于车主来说，学会使用obd 接口能让你变成一个汽车高手</p>
-<h2 id="OBD是什么"><a href="#OBD是什么" class="headerlink" title="OBD是什么"></a>OBD是什么</h2><p>OBD 作为一个专有名词的缩写，其全称是 on board diagnostics 中文的意思是，车载自动诊断系统，这套系统能在汽车运行过程中实时监测发动机电控系统及车辆的其他功能模块的工作状况，如有发现工况异常，则根据特定的算法判断出具体的故障，并以诊断故障代码 DTC Diagnostic trouble codes 的形式存储在系统内的存储器上，系统自动诊断后得到的有用信息可以为车辆的维修和保养提供帮助，维修人员可以利用汽车原厂专用仪器读取故障代码，从而可以对故障进行快速定位，以便于对车辆的修理，减少人工诊断的时间</p>
-<p>由于初期不同厂商的obd 系统之间各行其是，互不兼容，所以为了统一标准，美国汽车工程师协会 1988 年指定了obd-ii 标准  obd-ii 实行标准的检测程序，并且具有严格的排放针对性，用于实时监测汽车尾气排放情况</p>
-<p>作为一个检测尾气排放的系统，obd 在后来的发展中开始逐渐扩大了自己的控制范围，随着车辆的各种传感器及电子化程度的提高，obd 将各项检测功能都纳入到了自己的管辖范围内，现在我们说到obd 一般都会用obd 接口这个词，因为我们车辆上只能看到这个系统的传输接口，但它背后其实是整个车辆控制系统的集合体</p>
-<p>早期的obd 接口使用基于iso 协议的k-line 通讯方式，通过计算机标准的串口通讯方式与外接设备相连接，由于其半双工的通信效率比较低，所以这种通讯方式基本被淘汰，近几年的技术进步使得新的总线系统也就 CAN-BUS 通讯方式称为了主流，can-bus 同样使用了基于iso 的协议，但它属于网络型分布，具有很强的可扩展性，国内市场也在2008年7月份开始强制规定所有市场上出售的车辆都必须配备这个协议，这个协议的普及让车辆检测工作得到了大大的简化，一台检测仪就可以对多个品牌的车辆进行检测</p>
-<h2 id="OBD-接口能实现的功能"><a href="#OBD-接口能实现的功能" class="headerlink" title="OBD 接口能实现的功能"></a>OBD 接口能实现的功能</h2><p>OBD 接口可以做什么</p>
-<ol>
-<li>行车电脑数据显示</li>
-</ol>
-<p>obd 接口作为车载监控系统的通讯接口，除了读取故障码以供修车外，首要的功能就是可以提供车辆的各种工况数据，除了车辆仪表显示的数据外，实际在行车电脑中所记录的数据要多得多，包括很多无行车电脑显示屏配置的车辆，其实各项油耗记录，电池电压，空燃比 节气门开度，爆震数量等数据在系统中都是有记录的，但厂家会因为价格配置等因素，在较低配置车型上去掉行车电脑显示这项配置，导致用户无法参考这些有用的数据，所以市场上出现了一些专门的行车电脑显示产品</p>
-<p>这类产品有两种形式，一种就是通过一条专用的数据线连接到车辆的obd 接口，将数据读取出来再显示到配套的显示屏上，基本等于自己加装了一个行车电脑显示屏，平时连接线可以一直插在obd 接口上不用摘下，而只需固定显示屏即可，车主可以自行选择需要显示的数据</p>
-<p>另一种产品形式就是无线obd 接口适配器+智能手机端软件，这种与手机端配合的obd 端口读取器类似于一个加入了无线通讯模块的单片机，通过蓝牙或wifi 将obd 接口读取的数据传输到智能手机端，再通过手机端的软件呈现给使用者</p>
-<ol start="2">
-<li>更改代码实现更多功能</li>
-</ol>
-<p>现代汽车的电控系统可以通过obd 接口接入车辆控制系统的canbus总线，对车辆的各个控制模块的功能进行调节，这里最出名的应用就是由ross tech 开发的数据线及VCDS系统诊断软件，许多大众系的车友都爱用这套设备调节大众车系的系统功能，由于大众车系的can-bus 功能强大，而通过obd 接口的数据线接入车辆的can 总线并调节各个模块的代码就可以实现许多不同的隐藏功能，这样免费的 增配 对许多大众车主来说都非常具有吸引力</p>
-<ol start="3">
-<li>读取刷写 ECU TCU 程序</li>
-</ol>
-<p>随着车载电脑系统的硬件升级，现代车辆的ecu （electronic control unit）发动机电子控制单元内的程序存储器都由之前的只读式变为了可刷写式，厂家这样设置是为了随时能对ecu 的控制程序进行更新，就像手机的固件升级一样，针对不同的行驶地区或工况通过对ecu 系统程序的升级使得发动机能适应各种不同工作环境</p>
-<p>针对制动变速箱有些厂家还加入了可刷写式的TCU（Transmission Control Unit） 传动系统控制单元，大众的7速DSG 变速箱在出问题的初期就曾经试图通过在4S店用电脑刷写TCU的方式来改变DSG 变速箱的一些相应参数，来避免出现问题</p>
-<p>改装厂商跟敏捷的发现了可刷写程序的ECU 和TCU 的便利性，所以现代汽车改装多了ECU 程序刷写这样的改装项目，原厂的ECU 程序由于稳定性和经济性的考虑，一般在动力输出上都有所保留，而改装厂商通过改写原车ECU 数据即可实现对动力的提升，而TCU  的程序改写可以让变速箱反应更灵敏或者让换挡时机变得更激进来提升车辆的性能，这一切在有了obd 接口之后变得轻而易举，只需电脑和数据线连接到obd 接口就可以完成刷写的工作</p>
-<p>小结：obd 接口出现之初只是为了监控汽车的尾气排放而设置，但近些年的发展已经跨越了好几代，功能和作用都得到了极大的提升，而作为最终用户的我们，obd 接口对我们用车都能起到哪些具体的作用，而我们又该如何操作呢，</p>
-<h2 id="OBD接口作用和针脚定义图解"><a href="#OBD接口作用和针脚定义图解" class="headerlink" title="OBD接口作用和针脚定义图解"></a>OBD接口作用和针脚定义图解</h2><p>OBD 接口作用和针脚定义图解</p>
-<p>车辆obd 接口，连接车辆ecu 行车电脑的接口，检修车辆时把设备解码仪器插在此接口，进行扫描车辆是否有故障及故障代码，以后的车联网都是基于此口加以研发的</p>
-<p>OBDII 的作用</p>
-<p>obdII 程序使得汽车故障诊断简单而统一，维修人员不需专门学习每一个厂家的新系统</p>
-<ol>
-<li><p>随时检测零部件和系统的故障，保证汽车在使用寿命中的排放不超过 obd 法规的要求</p>
-</li>
-<li><p>检测到相关排放故障时，obd 系统可以用仪表板上的mil 灯进行报警</p>
-</li>
-</ol>
-<p>故障车辆能够得到及时修理，减少车辆排放</p>
-<p>obd 系统有助于 技师迅速诊断，对症修理，降低维修成本</p>
-<p>汽车obdii 接口定义</p>
-<p>除却各种电源和地线之外，关键的有can 线，iso 0141-2 K线 J1850 总线，接口也有很多，下面我们来看看obdii 接口引脚定义</p>
-<p>1 3 8 11 12 13 厂家自定义</p>
-<p>2 SAE J1850 总线+ 10 SAE J1850 总线-</p>
-<p>4 车身线  5 信号线</p>
-<p>6 CAN-H 14 CAN-L</p>
-<p>7 K-Line 15 L-Line</p>
-<p>16 常电源</p>
-<p>故障码标准</p>
-<p>SAE J2010 规定了一个5位标准故障代码，第一位是字母，后面4位是数字</p>
-<p>1 首位字母表示设置故障码的系统，当前分配的字母有四个，P 代表动力系统，B代表车身，C 代表底盘，u 代表未定义的系统</p>
-<p>2 第2位字符是0123 意义如下<br>  0 SAE 美国汽车工程师协会定义的通用故障码<br>  1 汽车厂家定义的扩展故障码<br>  2 3 随系统字符 PBCU 的不同而不同，动力系统故障码 P 的2 或3 由SAE 留作将来使用，车身或底盘故障码的2位厂家保留，车身或底盘故障码的3由SAE 保留</p>
-<p>3 第3位字符表示出故障的系统<br>  1 燃油或空气计量故障<br>  2 燃油或空气计量故障<br>  3 点火故障或发动机缺火<br>  4 辅助排放控制系统故障<br>  5 汽车或怠速控制系统故障<br>  6 电脑或输出电路故障<br>  7 变速器控制系统<br>  8 变速器控制系统</p>
-<p>4 最后两位字符表示触发故障码的条件，不同的传感器，执行器和电路分配了不同区段的数字，区段中较小的数字表示通用故障，即通过故障码，较大的数字表示扩展码，提供了更具体的信息，如电压低或高，响应慢，或信号超出范围</p>
+  <p>玫瑰花种植笔记</p>
+<p>① 需要很多水，每天至少一次，浇水时间 早上10点和下午3点</p>
+<p>这样太阳落山时叶子就干了，玫瑰花不易得病</p>
+<p>② 需要阳光，但不能长时间暴晒，花朵会变色或提早枯黄</p>
+<p>③ 及时剪枯花苞，不剪的话营养严重受损，开花少</p>
+<p>④ 勤剪互相交叉枝条，玫瑰枝干和叶子之间要透气，交叉枝条或叶子很容易导致 白粉病、黑斑病、铁锈病、红蜘蛛等</p>
+<p>3IN1花园喷剂</p>
+<p>杀真菌剂 杀虫剂 杀螨剂</p>
+<p>控制白粉病 黑斑  铁锈 蚜虫 粉虱 红蜘蛛 及其他害虫</p>
  
       <!-- reward -->
       
@@ -223,7 +181,7 @@
     <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://example.com/2023/02/09/20230209-%E5%8A%9F%E8%83%BD%E5%BC%BA%E5%A4%A7%E8%BD%A6%E8%BD%BDobd%E6%8E%A5%E5%8F%A3%E8%A7%A3%E6%9E%90%E5%8F%8A%E4%BD%BF%E7%94%A8%E4%BD%93%E9%AA%8C/" alt="微信分享二维码">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://example.com/2023/02/14/20230214-%E7%8E%AB%E7%91%B0%E6%89%A6%E6%8F%92%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -234,19 +192,10 @@
    
   <nav class="article-nav">
     
-      <a href="/2023/02/14/20230214-%E7%8E%AB%E7%91%B0%E6%89%A6%E6%8F%92%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9/" class="article-nav-link">
-        <strong class="article-nav-caption">上一篇</strong>
-        <div class="article-nav-title">
-          
-            20230214-玫瑰扦插注意事项
-          
-        </div>
-      </a>
     
-    
-      <a href="/2023/02/08/20230208-svncleanup%E5%A4%B1%E8%B4%A5%E7%9A%84%E6%96%B9%E6%B3%95/" class="article-nav-link">
+      <a href="/2023/02/09/20230209-%E5%8A%9F%E8%83%BD%E5%BC%BA%E5%A4%A7%E8%BD%A6%E8%BD%BDobd%E6%8E%A5%E5%8F%A3%E8%A7%A3%E6%9E%90%E5%8F%8A%E4%BD%BF%E7%94%A8%E4%BD%93%E9%AA%8C/" class="article-nav-link">
         <strong class="article-nav-caption">下一篇</strong>
-        <div class="article-nav-title">20230208-svncleanup失败的方法</div>
+        <div class="article-nav-title">20230209-功能强大车载obd接口解析及使用体验</div>
       </a>
     
   </nav>

@@ -126,6 +126,77 @@
     
     
     <article
+  id="post-20221222-HomeAssistant树莓派-Haio篇"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/12/22/20221222-HomeAssistant%E6%A0%91%E8%8E%93%E6%B4%BE-Haio%E7%AF%87/"
+    >20221222-HomeAssistant树莓派-Haio篇</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/12/22/20221222-HomeAssistant%E6%A0%91%E8%8E%93%E6%B4%BE-Haio%E7%AF%87/" class="article-date">
+  <time datetime="2022-12-22T04:46:15.000Z" itemprop="datePublished">2022-12-22</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>简单比较一下安装hass 的三种方法，hassbian 和all-in-one 所安装的hass 都是基于本身的系统框架化运行的，因此拥有原生系统的功能、参考文档等一切，你可以理解为买了一栋公寓里的一套房间，而hass.io 则是独立的系统，一切全部依靠图形界面操作，你所能接触的文档权限非常有限，就像你虽然拥有一幢楼，但是装修得按着别人的规划走。特别是出现问题时，只能从 Hass 官网和社群寻找支持。</p>
+<p>安装</p>
+<p>hass.io 是ha 官方与reinos 合作推出的系统</p>
+<p>使用 Etcher 等应用将系统烧录至内存卡，将卡插入树莓派中，保证树莓派处于联网状态。<br>由于安装资源需要全程连接 外网下载，</p>
+<p>如要设置 wifi 连接，请打开存储卡目录下system-connections&#x2F;resin-sample 文件，使用编译器编译</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[connection]</span></span><br><span class="line"><span class="attr">id</span>=resin-wifi</span><br><span class="line"><span class="attr">type</span>=wifi</span><br><span class="line"></span><br><span class="line"><span class="section">[wifi]</span></span><br><span class="line"><span class="attr">hidden</span>=<span class="literal">true</span></span><br><span class="line"><span class="attr">mode</span>=infrastructure</span><br><span class="line"><span class="attr">ssid</span>=你的WIFI SSID</span><br><span class="line"></span><br><span class="line"><span class="section">[ipv4]</span></span><br><span class="line"><span class="attr">method</span>=auto</span><br><span class="line"></span><br><span class="line"><span class="section">[ipv6]</span></span><br><span class="line"><span class="attr">addr-gen-mode</span>=stable-privacy</span><br><span class="line"><span class="attr">method</span>=auto</span><br><span class="line"></span><br><span class="line"><span class="section">[wifi-security]</span></span><br><span class="line"><span class="attr">auth-alg</span>=open</span><br><span class="line"><span class="attr">key-mgmt</span>=wpa-psk</span><br><span class="line"><span class="attr">psk</span>=你的 WIFI 密码</span><br></pre></td></tr></table></figure>
+
+<p>附加功能</p>
+<p>hass.io 的核心就在于高度简化配置过程，尽量使用全图形化操作，插件的安装也是如此</p>
+<p>点击左侧栏 hass.io  我们便进入了附加功能安装面板，HA 老用户发现对比其他版本HA 增加了自动化 和hass.io 面板，而后者就是hass.io 的插件管理界面，你可以在此安装官方提供的插件，也可以添加插件源安装其他用户分享或自己制作的插件，十分便捷方便</p>
+<p>下面我们使用操作面板安装 samba 功能，实现hass 和电脑的文件共享</p>
+<p>SMB 如此重要，自然 hass.io 原生内置了安装入口，在插件安装面板下拉找到 samba share ，点击进入安装界面，而后再点击 install ，等到小圈不转了，一切就大功告成了，</p>
+<p>安装完成后，便会出现info 和options 卡片</p>
+<p>首先，建议在info 中打开自动更新，接着我们来详细看看options 中的配置</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;workgroup&quot;</span><span class="punctuation">:</span> <span class="string">&quot;WORKGROUP&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;hassio&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;guest&quot;</span><span class="punctuation">:</span> <span class="keyword">true</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;map&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;config&quot;</span><span class="punctuation">:</span> <span class="keyword">true</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;addons&quot;</span><span class="punctuation">:</span> <span class="keyword">true</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;ssl&quot;</span><span class="punctuation">:</span> <span class="keyword">false</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;share&quot;</span><span class="punctuation">:</span> <span class="keyword">true</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;backup&quot;</span><span class="punctuation">:</span> <span class="keyword">true</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;username&quot;</span><span class="punctuation">:</span> <span class="string">&quot;&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;password&quot;</span><span class="punctuation">:</span> <span class="string">&quot;&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;interface&quot;</span><span class="punctuation">:</span> <span class="string">&quot;eth0&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>变量说明 汉化官方文档，原文地址</p>
+<p>name (可选): 用户名，默认值 hassio。<br>workgroup (可选): 用户组，默认值 WORKGROUP。<br>guest (可选): 是否允许客人用户（无用户名无密码）默认值 true。<br>map (可选): 开放文件夹，默认值 all，即全部开放。可选有 config，addons，share，backup，ssl。<br>username (可选): 登录用户名。<br>password (可选): 登录密码。<br>interface (可选): 开放接口，有线网连接使用 eth0，无线网连接使用 wlan0。</p>
+<p>按需更改配置后，点击save 保存，再点击start，你的SMB 服务就启动了，并且自动加入了自启服务</p>
+<p>通过SMB 的设置，相信你对在hass.io  中安装附加功能 add-on 有了一定了解，官方提供的插件列表见此，大家可以根据说明按需安装</p>
+<p>这里推荐安装SMB SSH 及Bluetooth BCM43xx 可以使你更安逸地使用hass.io </p>
+<p>使用apple 终端，对使用homekit 控制智能家居设备有需求的朋友不少，因此接下来特别介绍一下 homebridge 插件 的安装方法，希望大家可以借此掌握安装第三方源插件的方法</p>
+<p>homebridge</p>
+<p>最早提供hb 安装的源已经不再维护，我已替换为其他保持更新的第三方源，</p>
+<p>安装附加功能后，你的HA 环境就和其他方法安装的ha 基本一致了，有关设备的接入、个性化配置等，欢迎参考系列的其他文章，老用户可以直接复制粘贴原 configuration.yaml 配置文件，但需特别注意添加 Discovery: 服务。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-20221220-HomeAssistant树莓派-个性化配置"
   class="article article-type-post"
   itemscope
@@ -964,119 +1035,6 @@
 <p>subscribe 消息体内容是一系列的要订阅的主题以及QoS</p>
 <p>suback 消息体内容是服务器对于subscribe 所申请的主题及QoS 进行确认和回复</p>
 <p>unsubscribe 消息体内容是要订阅的主题</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20221217-电子电路元器件列表"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/12/17/20221217-%E7%94%B5%E5%AD%90%E7%94%B5%E8%B7%AF%E5%85%83%E5%99%A8%E4%BB%B6%E5%88%97%E8%A1%A8/"
-    >20221217-电子电路元器件列表</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/12/17/20221217-%E7%94%B5%E5%AD%90%E7%94%B5%E8%B7%AF%E5%85%83%E5%99%A8%E4%BB%B6%E5%88%97%E8%A1%A8/" class="article-date">
-  <time datetime="2022-12-17T04:54:57.000Z" itemprop="datePublished">2022-12-17</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h2 id="1-科创大赛启发"><a href="#1-科创大赛启发" class="headerlink" title="1 科创大赛启发"></a>1 科创大赛启发</h2><p>（1）围棋棋子筛选</p>
-<blockquote>
-<p>TCS3200颜色传感器</p>
-</blockquote>
-<p>（2）语音识别模块</p>
-<blockquote>
-<p>WEGASUN-M6</p>
-</blockquote>
-<p>（3）图形化语言编程</p>
-<blockquote>
-<p>机械控制部分采用Micro-BIT单片机模块</p>
-</blockquote>
-<p>（4）无线六路开关量模块</p>
-<blockquote>
-<p>L24YK</p>
-</blockquote>
-<p>（5）RDWORKS平面设计软件</p>
-<p>（6）Arduino开发板</p>
-<p>（7）温度传感器</p>
-<blockquote>
-<p>DT11、DS18B20</p>
-</blockquote>
-<p>（8）红外对管传感器</p>
-<p>（9）实时时钟模块</p>
-<blockquote>
-<p>DS1320</p>
-</blockquote>
-<p>（10）加速度传感器</p>
-<p>（11）Android 手机APP编写</p>
-<blockquote>
-<p>Android Studio 3.5平台、Android SDK、Eclipse、Jave</p>
-</blockquote>
-<p>（12）物联网无线网络遥控</p>
-<blockquote>
-<p>ESP8266</p>
-</blockquote>
-<p>（13）气体传感器</p>
-<blockquote>
-<p>Q2</p>
-</blockquote>
-<p>（14）陀螺仪</p>
-<p>（15）光敏传感器</p>
-<p>（16）单片机</p>
-<blockquote>
-<p>STC51、STM32、MSP430F149</p>
-</blockquote>
-<p>（17）放大器放大电流</p>
-<blockquote>
-<p>LM324</p>
-</blockquote>
-<p>（18）图像处理</p>
-<blockquote>
-<p>Open CV软件</p>
-</blockquote>
-<p>（19）霍尔开关</p>
-<p>（20）图像处理</p>
-<p>（21）无线遥控装置</p>
-<blockquote>
-<p>433MHZ</p>
-</blockquote>
-<p>（22）人体红外线感应传感器</p>
-<blockquote>
-<p>PIR</p>
-</blockquote>
-<p>（23）Android小程序</p>
-<p>（24）Robot C编程</p>
-<h2 id="2-开发过程中用到的元器件"><a href="#2-开发过程中用到的元器件" class="headerlink" title="2 开发过程中用到的元器件"></a>2 开发过程中用到的元器件</h2><p>（1）USB转串口芯片CH340G</p>
  
       <!-- reward -->
       
