@@ -126,6 +126,83 @@
     
     
     <article
+  id="post-20230106-ConTeXt简介和中文排版效果"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/01/06/20230106-ConTeXt%E7%AE%80%E4%BB%8B%E5%92%8C%E4%B8%AD%E6%96%87%E6%8E%92%E7%89%88%E6%95%88%E6%9E%9C/"
+    >20230106-ConTeXt简介和中文排版效果</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/01/06/20230106-ConTeXt%E7%AE%80%E4%BB%8B%E5%92%8C%E4%B8%AD%E6%96%87%E6%8E%92%E7%89%88%E6%95%88%E6%9E%9C/" class="article-date">
+  <time datetime="2023-01-06T03:09:08.000Z" itemprop="datePublished">2023-01-06</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h2 id="ConTeXt是什么"><a href="#ConTeXt是什么" class="headerlink" title="ConTeXt是什么"></a>ConTeXt是什么</h2><p>ConTeXt 是一种TeX 排版格式和宏包，TeX 及其衍生的排版格式 宏包通常用于排制 可能包含数学公式的高质量出版物，很多人使用纯TeX，但最流行的是latex 格式宏包，latex 有相当完善的中文支持</p>
+<p>ConTeXt 继承了TeX的很多传统，兼容纯TeX 格式，但它的目标是排版高质量的通用文档</p>
+<p>ConTeXt 目前通常使用LuaTeX （目前的后继者叫LuaMetaTeX 简称LMTX ） 作为引擎，ConTeXt 和LuaTeX 是同一个团队开发的，有活跃的社区</p>
+<p>你可以在排版文档中使用ConTeXt TeX 和第三方宏包控提供的命令，以及自己定制的命令，来控制文档的排版效果，这样的排版文档也叫 排版脚本，你还可以在排版脚本中插入lua 代码，处理数据，干预引擎的行为</p>
+<p>需要重复使用、分享的自制命令和lua 代码，可以制成模板和模块</p>
+<p>下文会说到的，本人所做的ConTeXt 中文支持，即是模块的形式</p>
+<p>你也可以在lua 脚本中通过luatex 接口使用ConTeXt 和tex 命令，实际上是在后台生成包含ConTeXt 和tex 命令的排版脚本，完成排版，这叫ConTeXt lua 文档 CLD 。这就是说，你既可以使用熟悉的tex 系命令和资源，还可以使用灵活的lua 语言，实现自动排版</p>
+<p>最后，你几乎可以完全抛开 ConTeXt 和tex 命令，而在lua 端直接使用luatex ，比如生成引擎需要的结点列表数据等，完成排版。</p>
+<p>ConTeXt 适合用来做什么</p>
+<p>就排版内容来说，ConTeXt +LMTX 特别适合</p>
+<p>排制结构化文档，如产品目录，数据表  图表，辞书，试卷 练习题 ，格式规范的图书，卡片</p>
+<p>自动化排版，比如自动替换内容，随时根据内容变动更新排版，构建自动排版 网站后台排版流水线</p>
+<p>精细排版，比如根据实时数据控制特定字符的格式</p>
+<p>多语言排版</p>
+<p>所谓结构化文档，格式规范的图书，跟复杂程度无关，而重点在于文档结构对应的排版格式，是否都可以转述为数量有限，可重复使用的排版命令，就是说，重复利用率越高越有价值，即越接近自动化排版</p>
+<p>ConTeXt 难学吗</p>
+<p>ConTeXt 用户</p>
+<p>需要学习ConTeXt格式、命令，可以通过<a href="https://link.zhihu.com/?target=https://wiki.contextgarden.net/Main_Page">官网</a>学习，教程可以看<a href="https://link.zhihu.com/?target=https://raw.githubusercontent.com/contextgarden/not-so-short-introduction-to-context/main/en/introCTX_eng.pdf">not-so-short-introduction-to-context</a>（本人有汉译计划）。<strong>对技术有一些好爱的图书编辑可以做到</strong></p>
+<p>如果要精细排版，可能要学一些tex 知识</p>
+<p>如果要实现自动化排版，通过lua 控制排版引擎，则需要学习lua cld 以及luatex luametatex</p>
+<p>中文支持怎么样</p>
+<p>我做了三个支持ConTeXt+LMTX中文排版的模块（链接为GitHub库）：</p>
+<ul>
+<li>中文标点支持模块<a href="https://link.zhihu.com/?target=https://github.com/Fusyong/zhpunc">zhpunc</a>，支持全角、半角、开明等常见标点样式，行端标点凸排&#x2F;悬挂，以及竖排时可能用到的行间标点。此模块最初基于<a href="https://link.zhihu.com/?target=https://github.com/liyanrui/zhfonts">liyanrui&#x2F;zhfonts</a>，谨致谢忱！</li>
+<li>竖排模块<a href="https://link.zhihu.com/?target=https://github.com/Fusyong/vertical-typesetting">vertical-typesetting</a></li>
+<li>双行夹注模块<a href="https://link.zhihu.com/?target=https://github.com/Fusyong/jiazhu">jiazhu</a></li>
+</ul>
+<p>大体而言，目前已经实现中文排版的常见功能，包括竖排，可以尝试用于生产性的中文排版，如有问题和新需求，本人愿意支持，请注意，以上并非保证</p>
+<p>已知问题，</p>
+<p>较短的双行夹住有时过于稀疏</p>
+<p>官方支持字符间断行和拉伸的脚本 hanzi 有个别错误，可以提供修正后的版本</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-20221228-ORIPA开源折纸软件"
   class="article article-type-post"
   itemscope
@@ -917,60 +994,6 @@
 
 <p>重启 ha 后，你想要显示的地图区域就会以卡片的形式展现在前端中了</p>
 <p>到这里，相信大家可以自如地在 HA 中使用高德地图了，配合 device_tracker 组件，能更好地掌握接入设备的地理位置信息。</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20221224-HomeAssistant树莓派-动态平面图"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/12/24/20221224-HomeAssistant%E6%A0%91%E8%8E%93%E6%B4%BE-%E5%8A%A8%E6%80%81%E5%B9%B3%E9%9D%A2%E5%9B%BE/"
-    >20221224-HomeAssistant树莓派-动态平面图</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/12/24/20221224-HomeAssistant%E6%A0%91%E8%8E%93%E6%B4%BE-%E5%8A%A8%E6%80%81%E5%B9%B3%E9%9D%A2%E5%9B%BE/" class="article-date">
-  <time datetime="2022-12-24T03:27:36.000Z" itemprop="datePublished">2022-12-24</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>平面图设计</p>
-<p>Floorplan 是由底层 的平面设计图加上顶层 的矢量图交互元素部分组成，对于底图的格式并没有硬核的规定，但需要以方便导入为前提，底图可随意发挥，或2D或3D，甚至是简单的一个交互面板都可以，不必拘泥于 房屋平面图 这个概念，这也是floorp-lan 的魅力所在</p>
-<p>最终的成图必须为svg 的矢量图格式，视频中使用的是inkscape ，软件较为轻量，当然 illustrator 更是没有问题，其他的矢量图绘图工具也可以使用</p>
-<p>这里提供几个交互元素图标的下载地址：</p>
-<p>Find Icons with the…<br>Used by millions of designers…<br> fontawesome.io</p>
-<p>Millions of images …<br>Download Free Icons and Stick…<br> flaticon.com</p>
-<p>绘图工具</p>
-<p>绘制平面图，除了高大上的3dmax 其实有很多亲民的apps 可供选择，这里推荐几个</p>
  
       <!-- reward -->
       
