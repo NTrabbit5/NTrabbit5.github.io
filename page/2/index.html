@@ -126,6 +126,56 @@
     
     
     <article
+  id="post-20230208-svncleanup失败的方法"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/02/08/20230208-svncleanup%E5%A4%B1%E8%B4%A5%E7%9A%84%E6%96%B9%E6%B3%95/"
+    >20230208-svncleanup失败的方法</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/02/08/20230208-svncleanup%E5%A4%B1%E8%B4%A5%E7%9A%84%E6%96%B9%E6%B3%95/" class="article-date">
+  <time datetime="2023-02-08T02:46:54.000Z" itemprop="datePublished">2023-02-08</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>1、先下载sqlite3.exe<br>链接：<a target="_blank" rel="noopener" href="https://pan.baidu.com/s/19NoROpm9_1CuGwOG6j5x3Q">https://pan.baidu.com/s/19NoROpm9_1CuGwOG6j5x3Q</a></p>
+<p>提取码：tc8b</p>
+<p>2、找到你项目的.svn文件，查看是否存在wc.db（如果看不到.svn，说明你电脑设置了不显示隐藏文件，改成显示隐藏文件就可以了）<br>3、将sqlite3.exe放到.svn的文件夹目录下<br>4、启动cmd执行sqlite3 wc.db “select * from work_queue”<br>5、启动cmd执行sqlite3 wc.db “delete from work_queue”</p>
+<p>现在在到项目里面，执行cleanup，应该成功了，如果还不成功提示fail to process file的情况，提示xxx file has been locked，需要执行一个清除数据库中的wc_lock的表的操作。<br>6、启动cmd执行sqlite3 .svn&#x2F;wc.db “select * from wc_lock”<br>7、启动cmd执行sqlite3 .svn&#x2F;wc.db “delete from wc_lock”<br>现在在到项目里面，执行cleanup，应该成功了，如果还不成功，那就行勾选上下面的Break write locks，然后在执行Cleanup，这样应该成功了吧！</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-20230207-侃哥侃英语"
   class="article article-type-post"
   itemscope
@@ -909,65 +959,6 @@
 </div>
 
 
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20221225-什么是差分信号"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/12/25/20221225-%E4%BB%80%E4%B9%88%E6%98%AF%E5%B7%AE%E5%88%86%E4%BF%A1%E5%8F%B7/"
-    >20221225-什么是差分信号</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/12/25/20221225-%E4%BB%80%E4%B9%88%E6%98%AF%E5%B7%AE%E5%88%86%E4%BF%A1%E5%8F%B7/" class="article-date">
-  <time datetime="2022-12-25T10:51:33.000Z" itemprop="datePublished">2022-12-25</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <!-- 脉冲信号-422差分信号、PNP信号和NPN信号 -->
-
-<p>差分传输是一种信号传输的技术，区别于传统的一根信号线一根地线的做法，差分传输在这两根线上都传输信号，这两个信号的振幅相等，相位相差180度，极性相反，在这两根线上传输的信号就是差分信号</p>
-<p>差分信号与单端信号的区别</p>
-<p>单端信号指的是用一个线传输的信号，一根线没参考点怎么会有信号呢？参考点就是地线，也就是说，单端信号是在一根导线上传输的与地之间的电平差，那么当你把信号从A 点传递到B 点的时候，有一个前提就是A 点和B 点的地电势应该差不多是一样的，差分信号指的是用两根信号线传输的信号，传输的是两根信号之间的电平差，当你把信号从A 点传递到B点的时候，A 点和B 点的地电势可以一样也可以不一样，但是A 点和B 点的地电势差有一个范围，超过这个范围就会出问题了，一个差分信号是用一个数值来表示两个物理量之间的差异，从严格意义上来讲，所有电压信号都是差分的，因为一个电压只能是相对于另一个电压而言的，在某些系统里，系统地被用作电压基准点，当地当作电压测量基准时，这种信号规划被称之为单端的，我们使用该术语是因为信号是用单个导体上的电压来表示的</p>
-<p>另一方面，一个差分信号作用在两个导体上，信号值是两个导体间的电压差，尽管不是非常必要，这两个电压的平均值还是会经常保持一致，我们用一个方法对差分信号做一下比喻，差分信号就好比是跷跷板上的两个人，当一个人被跷上去的时候，另一个人被跷下来了 - 但是他们的平均位置是不变的。继续跷跷板的类推，正值可以表示左边的人比右边的人高，而负值表示右边的人比左边的人高。0 表示两个人都是同一水平。这两个跷跷板用一对标识为V+和V-的导线来表示。当V+&gt;V-时，信号定义成正极信号，当V+&lt;V-时，信号定义成负极信号。</p>
-<p>差分信号的优点</p>
-<p>优点一，相对于单端信号，差分信号减小了潜在的电磁干扰 EMI ，使用差分方式传输，信号的电压峰峰值会被放大了一倍，但是单根线上的电流却保持不变，如果采用传统的单线传输方式，在驱动相同的信号时，更容易造成EMI 问题</p>
-<p>优点二、差分信号的值很大程度上与地的精确值无关，能很好的抵抗电源的干扰，在一个地做基准，单端信号方案的系统里，测量信号的精确值依赖系统内地的一致性，信号源和信号接收器距离越远，他们局部地电压值之间有差异的可能性就越大，从差分信号恢复的信号值在很大程度上与地的精确值无关，而在某一范围内，假如两条信号都收到同样的 （同向、等幅度） 的干扰信号，由于接收端是对接收的两条线信号进行减法处理，因此干扰信号会被基本抵消，也就是说，一个差分放大器的输入有效信号幅度只需要几毫伏，但是它却能够对一个高达几伏特的共模信号无动于衷</p>
-<p>差分信号在做pcb 设计时的处理方法</p>
-<p>一般我们在做pcb 设计时，习惯的硬件命名上，会在差分信号的信号名尾部加 + 和 - 或者 P 和N 作为标识，大家可以通过命名来识别差分信号，常规的差分信号处理方法是</p>
-<p>差分信号走线要耦合处理，就是2根信号线在PCB 设计时是紧挨着的，不允许分开走线</p>
-<p>一对差分信号的2根信号线之间需要做等长处理，等长范围为5mil 等长不需要做到更小，有仿真验证，等长范围做到5mil 以下并不能对信号质量有很大提升，等长处理的位置选择在产生长度误差的地方，等长需要做小波浪处理 </p>
  
       <!-- reward -->
       
