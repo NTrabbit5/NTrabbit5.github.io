@@ -126,6 +126,91 @@
     
     
     <article
+  id="post-20230419-C-文档doxygen-breathe语法"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/04/19/20230419-C-%E6%96%87%E6%A1%A3doxygen-breathe%E8%AF%AD%E6%B3%95/"
+    >20230419-C++文档doxygen/breathe语法</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/04/19/20230419-C-%E6%96%87%E6%A1%A3doxygen-breathe%E8%AF%AD%E6%B3%95/" class="article-date">
+  <time datetime="2023-04-19T04:33:39.000Z" itemprop="datePublished">2023-04-19</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>本手册用来给megengine 开发者提供常见的c++接口文档的语法模板作为参考，帮助其高效地撰写和修改复合megengine 工程规范的面向用户的c++接口文档</p>
+<p>不是所有的doxygen 语法都能在megengine 文档中被使用，我们仅使用它来提取信息，而用breathe 来构建文档，</p>
+<p>一份参考模块</p>
+<p>下面这个例子改自Breathe 官方文档的nutshell 示例</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * @file nutshell.h</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * @brief This is a nutshell example.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/*!</span></span><br><span class="line"><span class="comment"> *  With a little bit of a elaboration, should you feel it necessary.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Nutshell</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">public:</span><br><span class="line"></span><br><span class="line">   <span class="comment">//! Our tool set</span></span><br><span class="line">   <span class="comment">/*! The various tools we can opt to use to crack this particular nut */</span></span><br><span class="line">   <span class="class"><span class="keyword">enum</span> <span class="title">Tool</span></span></span><br><span class="line"><span class="class">   &#123;</span></span><br><span class="line">      kHammer = <span class="number">0</span>,          <span class="comment">//!&lt; What? It does the job</span></span><br><span class="line">      kNutCrackers,         <span class="comment">//!&lt; Boring</span></span><br><span class="line">      kNinjaThrowingStars   <span class="comment">//!&lt; Stealthy</span></span><br><span class="line">   &#125;;</span><br><span class="line"></span><br><span class="line">   <span class="comment">//! Nutshell constructor</span></span><br><span class="line">   Nutshell();</span><br><span class="line"></span><br><span class="line">   <span class="comment">//! Nutshell destructor</span></span><br><span class="line">   ~Nutshell();</span><br><span class="line"></span><br><span class="line">   <span class="comment">/*! Crack that shell with specified tool</span></span><br><span class="line"><span class="comment">    *</span></span><br><span class="line"><span class="comment">    * @param tool - the tool with which to crack the nut</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">   <span class="type">void</span> <span class="title function_">crack</span><span class="params">( Tool tool )</span>;</span><br><span class="line"></span><br><span class="line">   <span class="comment">/*!</span></span><br><span class="line"><span class="comment">    * @return Whether or not the nut is cracked</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">   <span class="type">bool</span> <span class="title function_">isCracked</span><span class="params">()</span>;</span><br><span class="line"></span><br><span class="line">private:</span><br><span class="line"></span><br><span class="line">   <span class="comment">//! Our cracked state</span></span><br><span class="line">   <span class="type">bool</span> m_isCracked;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>注意事项</p>
+<p>多行注释中带有前导星号 leading-asterisk * 而非单纯的空行</p>
+<p>使用@param 代替\param 写法，避免遇到后者形式在其他解析工具中被转义的情况</p>
+<p>MegEngine 文档只要是公开接口、成员，不论是否有相应备注，都会生成对应的api 文档</p>
+<p>使用breathe 语法</p>
+<p>breathe 文档中提供了一些简单的语法模板，可以在c++接口文档中添加数学公式、列表、表格等样式，在简单情况下可以使用</p>
+<p>参考breathe features 页面中给出的各种样例</p>
+<p>对于比较复杂的文档内容编辑和排版需求，推荐使用下一小节提到的ReST 语法，即 MegEngine 文档中最常使用的语法</p>
+<p>使用ReST 语法和组件</p>
+<p>MegEngine文档中使用了比较多的sphinx 拓展样式，使用时通过resTructuretext 语法来解析，当默认的样式不满足需求时，可以使用sphinx restructuretext 语法入门中展示的各种语法作为拓展，但需要注意的是，由于使用了前导星号，为了能够被正常解析，需要使用 embed:rst:leading-asterisk 标记</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">/*!</span><br><span class="line">* Inserting additional reStructuredText information.</span><br><span class="line">*</span><br><span class="line">* \verbatim embed:rst:leading-asterisk</span><br><span class="line">*     .. note::</span><br><span class="line">*</span><br><span class="line">*        This is a example.</span><br><span class="line">* \endverbatim</span><br><span class="line">*/</span><br></pre></td></tr></table></figure>
+
+<p>它等同于在C++ 接口文档中插入了如下ReST语法</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">.. note::</span><br><span class="line"></span><br><span class="line">   This is a example.</span><br></pre></td></tr></table></figure>
+
+<p>会得到对应的note 样式块内容，同理，你还可以使用这种方法来插入 数学公式和图片等等内容</p>
+<p>从源码到文档的流程</p>
+<p>MegEngine 的C++源码经历了如下流程变成megengine 文档中的api 参考页面</p>
+<p>C++ head files doxygen  xml files  breathe directive  sphinx rst doc</p>
+<p>由于MegEngine 文档与MegEngine 源码不再同一处维护，因此开发人员通常会规律性地使用doxygen 从MegEngine 的c++ 源码中生成最新的xml 文件，位于doxyxml 目录中，平时撰写文档只需要使用breathe 将xml 中的信息转换成sphinx 的rst 文档，体验上与从 MegEngine 的python package 生成api 文档类似</p>
+<p>以tensor 为例子，添加python 接口和c++接口 生成文档的sphinx 语法对比如下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">.. autoclass:: megengine.Tensor</span><br><span class="line"></span><br><span class="line">.. doxygenclass:: lite::Tensor</span><br></pre></td></tr></table></figure>
+
+<p>使用自动生成的文档的好处之一是，方便在文档其他的任何地方进行引用</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">比如此处直接引用 :class:`megengine.Tensor` 与 :cpp:class:`lite::Tensor` 的 API 文档。</span><br></pre></td></tr></table></figure>
+
+<p>详细的sphinx 和breathe 文档语法对比</p>
+<hr>
+<p>Breathe 文档</p>
+<p>breathe 在sphinx 和doxygen 文档系统之间提供了一座桥梁</p>
+<p>这是一个简单的方法，将doxygen 信息包含在由sphinx 生成的一组文档中，目的是为那些喜欢使用sphinx 但用python 以外的语言工作的人制作一个类似autodoc的支持，该系统依赖于doxygen的xml输出</p>
+<p>警告</p>
+<p>这个文档的构建不是来自于breathe的一个特定的标记版本，它反映了breathe的工作进展状态，请参阅github 仓库 <a target="_blank" rel="noopener" href="https://github.com/michaeljones/breathe">https://github.com/michaeljones/breathe</a> ，以获得更多的官方信息</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-20230418-Doxygen快速入门"
   class="article article-type-post"
   itemscope
@@ -153,8 +238,133 @@
       
     <div class="article-entry" itemprop="articleBody">
        
-  <p>[TOC]</p>
-<h2 id="0x01"><a href="#0x01" class="headerlink" title="0x01"></a>0x01</h2><h2 id="0x02"><a href="#0x02" class="headerlink" title="0x02"></a>0x02</h2><h2 id="0x03"><a href="#0x03" class="headerlink" title="0x03"></a>0x03</h2><h2 id="0x04"><a href="#0x04" class="headerlink" title="0x04"></a>0x04</h2> 
+  <p>我们在编写代码的时候，最头疼的就属于说明书了，很多代码一边写具体代码，一边写说明书，doxygen 主要解决说明书问题，可以在我们写代码的时候讲注释转化为说明书，graphviz 主要是用于图形展示，html help workshop 主要使用生成 CHM 文档</p>
+<p>doxygen<br>doxygen 能将程序中的特定批注转换成为说明文件，它可以依据程序本身的结构，将程序中按规范注释的批注经过处理生成一个纯粹的参考手册，通过提取代码结构或借助自动生成的包含依赖图<br>继承图 以及协作图来可视化文档之间的关系，doxygen 生成的帮助文档的格式可以是 CHM RTF Postscript PDF HTML 等</p>
+<p>graphiviz</p>
+<p>graphiviz 是一个由AT&amp;T 实验室启动的开源工具包，用于绘制dot 语言脚本描述的图形，要使用doxygen 生成依赖图，继承图以及协作图，必须先安装 graphiviz 软件</p>
+<p>HTML help workshop</p>
+<p>微软出品的HTML help workshop 是制作chm 文件的最佳工具，它能将HTML文件编译生成chm 文档，doxygen 软件默认生成HTML文件或latex 文件，我们要通过HTML生成chm 文档，需要先安装 HTML help workshop 软件，并在doxygen 中进行关联</p>
+<p>见示例效果图</p>
+<p>配置</p>
+<p>我们的所有配置都在doxywizard 中进行，生成参考手册是通过运行doxywizard 得到</p>
+<p>wizard &gt; project</p>
+<p>最重要的是工作目录，源代码目录，生成参考文件目录三处的设定，其他项目名称，项目简介、版本和标识可以依照实际情况选填</p>
+<p>工作目录是新建一个目录，在配置完成之后可以把配置文件存在这个目录里，每次从这个目录中导入配置文件 cfg 然后进行说明文档生成</p>
+<p>源代码目录和最终的结果目录在每一次运行doxywizard 时都进行设定</p>
+<p>wizard &gt; mode</p>
+<p>选择编程语言对应的最优化结果，按照编程语言选择</p>
+<p>wizard &gt; output</p>
+<p>选择输出格式，选HTML下的chm 选项，为最后生成chm 做准备，由于不需要latex 结果，不选此项</p>
+<p>wizard &gt; diagrams<br>选择 dot tool 项  通过graphviz 来作图</p>
+<p>expert &gt; project</p>
+<p>选择输出目录，选择输出语言，如果代码中采用了中文注释，此处选择为中文</p>
+<p>向下拉滑条，看见有JAVADOC_AUTOBRIEF和QT_AUTOBRIEF两个框，如果勾选了，在这两种风格下默认第一行为简单说明，以第一个句号为分隔；如果不选，则需要按照Doxygen的指令@brief来进行标准注释。</p>
+<p>Expert &gt; input</p>
+<p>将输入编码方式改为gbk 确保输出中不会由于utf-8 导致乱码</p>
+<p>最后也是经常遇到的问题就是doxygen 生成的chm文件的左边树目录的中文变成了乱码，这个只需要经chm索引的编码 的编码类型修改为 gb2312 即可，在HTML 的chm_index_encoding中输入gb2312 即可</p>
+<p>Expert HTML</p>
+<p>勾选 生成 HTMLhelp项，输入生成chm 名称，在 HHC_LOCATION中填入HTMLHELP WORKSHOP 安装目录中 hhc.exe 的路径，将chm 编码方式改为gbk 方式，与第6步中的输入编码方式一致</p>
+<p>Expert-&gt;Dot</p>
+<p>在dot_PATH 中填写 graphiviz 的安装路径</p>
+<p>需要在build 中配置 extract_all 和local_methods 才能生成所有的变量和函数</p>
+<ol start="9">
+<li>存储配置信息</li>
+</ol>
+<p>存储配置信息，到上一步doxygen 已经完全配置好，可以在run 中点击运行了，但为了保存以上配置信息，可以将配置好的文件存一个 .cfg 文件，之后再运行 doxygen 时 只需要将该文件用 doxygen 打开，改变第一步中的输入，输出目录及工程的信息再运行， file save as 取一个名，默认为doxygen，加 .cfg 点击保存，如果需要改变配置文件，改动之后再save 替换之前的配置文件即可</p>
+<ol start="10">
+<li>Run Run Doxygen</li>
+</ol>
+<p>即可运行doxygen 运行完成后在输出目录中的HTML文件夹中找到index.chm 文件即为输入代码的说明文档</p>
+<p>规范</p>
+<p>规范综述</p>
+<p>简单的说，doxygen 注释块其实就是在C C++ 注释块的基础添加一些额外标识，使doxygen 把它识别出来，并将它组织到生成的文档中去</p>
+<p>在每个代码项 中都可以有两类描述，一种就是brief 描述，另一种就是detailed ，两种都是可选的</p>
+<p>但不能同时没有，简述 brief 就是在一行内简述地描述，而详细描述 detailed 则提供更长，更详细的文档</p>
+<p>在doxygen 中，主要通过以下方法将注释块标识成详细detailed 描述</p>
+<p>javadoc 风格，在C 风格注释块开始使用两个星号 *</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line">* ... 描述 ...</span><br><span class="line">*</span><br><span class="line">*/</span><br></pre></td></tr></table></figure>
+
+<p>Qt 风格代码注释，即在C风格注释块开始处添加一个叹号!</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line">* ... 描述 ...</span><br><span class="line">*</span><br><span class="line">*/</span><br></pre></td></tr></table></figure>
+
+<p>使用连续两个以上 C++ 注释行所组成的注释块，而每个注释行开始处要多写一个斜杠或写一个叹号</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">///</span><br><span class="line">/// ... 描述 ...</span><br><span class="line">///</span><br></pre></td></tr></table></figure>
+
+
+<p>同样的，简要说明 brief 有也有多种方式标识，这里推荐使用@brief 命令强制说明，例如</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">/** </span><br><span class="line">* @brief 简要注释Brief Description. </span><br><span class="line">*/</span><br></pre></td></tr></table></figure>
+
+<p>注意以下几点</p>
+<p>Doxygen 并不处理所有的注释，doxygen 重点关注与程序结构有关的注释，比如 文件、类、结构、函数、全局变量，宏等注释，而忽略函数内局部变量 代码等的注释</p>
+<p>注释应写在对应的函数或变量前面，javadoc 风格下，自动会把第一个句号 . 前的文本作为简要注释，后面的为详细注释，你也可以用开航把简要注释和详细注释分开，注意要设置<br>JAVADOC_AUTOBRIEF或者QT_AUTOBRIEF设为YES。</p>
+<p>先从文件开始注释，然后是所在文件的全局函数、结构体、枚举变量，命名空间 – 命名空间中的类 成员函数和成员变量</p>
+<p>doxygen 无法为dll 中定义的类导出文档</p>
+<h3 id="常用指令"><a href="#常用指令" class="headerlink" title="常用指令"></a>常用指令</h3><p>指令说明</p>
+<p>@file 档案的批注说明</p>
+<p>author 作者的信息<br>brief 用于class 或function 的简易说明  eg: @brief 本函数负责打印错误信息串</p>
+<p>param 主要用于函数说明中，后面接参数的名字，然后再接关于该参数的说明</p>
+<p>return 描述该函数的返回值情况 eg @return 本函数返回执行结果，若成功则返回true 否则返回false</p>
+<p>retval 描述返回值类型</p>
+<p>note 注解</p>
+<p>attention 注意</p>
+<p>warning 警告信息</p>
+<p>enum  引用了某个枚举  doxygen 会在该枚举处产生一个链接 @enum CTest::MyEnum<br>var 引用了某个变量 doxygen会在该枚举处产生一个链接</p>
+<p>class 引用某个类，格式 @class [][]eq:@class CTest “inc&#x2F;class.h”</p>
+<p>exception 可能产生的异常描述 eg: @exception 本函数执行可能会产生超出范围的异常</p>
+<p>模块</p>
+<p>modules 是一种归组things 在分离的page 上的方式，组的成员可以是file namespace classes functions variables enums typedefs 和defines 但也可以是其他groups</p>
+<p>要定义一个group 应该在一个特殊注释块放置 \defgroup 命令的第一个参数应该是唯一标志该group 的标签，要将一个entity 归为某个group 的一个member 在entity前放置 \ingroup 命令</p>
+<p>第二个参数是group 的title</p>
+<p>要避免在注释中每个member 前放置\ingroup 命令可以将member 用@{ 和@} 封装起来，@{@} 标记可以放置group的注释中，也可以在一个独立的注释块</p>
+<p>使用这些group的标记符号 groups 也可以嵌套</p>
+<p>如果多次使用一个group 标签，将会出错，如果不希望doxygen强性执行唯一标签，可以使用 addtogroup 而非 defgroup 运作方式和defgroup 很像，但是如果该group 已经定义，它默认向已存在的注释中添加一个新的项，group 的title 对此命令是可选的，也可以考虑使用它</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">* @defgroup 模块名 模块的说明文字</span></span><br><span class="line"><span class="comment">* @&#123;</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"> ... 定义的内容 ...</span><br><span class="line"><span class="comment">/** @&#125; */</span> </span><br><span class="line"><span class="comment">// 模块结尾这样可以在其他地方以更加详细的说明添加members到一个group。</span></span><br></pre></td></tr></table></figure>
+
+<p>如果一个compound 例如一个class 或file 有多个members ，通常我们希望将其group doxygen 已经可以自动按照类型和protection 级别将这些things 归组在一起，但可能你会认为仅仅这样是不够的或者这种缺省的方法是错误的，例如你认为有不同语法的类型需要归入同一个group  语意</p>
+<p>这样定义一个member group</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">//@&#123; </span><br><span class="line">  ...</span><br><span class="line">//@&#125;</span><br></pre></td></tr></table></figure>
+<p>块或者使用</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">/*@&#123;*/ </span><br><span class="line">  ... </span><br><span class="line">/*@&#125;*/ </span><br></pre></td></tr></table></figure>
+
+<p>注释实例</p>
+<ol>
+<li>文件注释</li>
+</ol>
+<p>举例说明如下，在代码文件头部写上这段注释，可以看到可以标注一些文本名称、作者、邮件、版本、日期、介绍以及版本详细记录</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">  * @file       sensor.c</span></span><br><span class="line"><span class="comment">  * @author     JonesLee</span></span><br><span class="line"><span class="comment">  * @email    Jones_Lee3@163.com</span></span><br><span class="line"><span class="comment">  * @version  V4.01</span></span><br><span class="line"><span class="comment">  * @date     07-DEC-2017</span></span><br><span class="line"><span class="comment">  * @license    GNU General Public License (GPL)  </span></span><br><span class="line"><span class="comment">  * @brief    Universal Synchronous/Asynchronous Receiver/Transmitter </span></span><br><span class="line"><span class="comment">  * @detail   detail</span></span><br><span class="line"><span class="comment">  * @attention</span></span><br><span class="line"><span class="comment">  *  This file is part of OST.                                                  \n                                                                  </span></span><br><span class="line"><span class="comment">  *  This program is free software; you can redistribute it and/or modify     \n     </span></span><br><span class="line"><span class="comment">  *  it under the terms of the GNU General Public License version 3 as        \n   </span></span><br><span class="line"><span class="comment">  *  published by the Free Software Foundation.                                 \n </span></span><br><span class="line"><span class="comment">  *  You should have received a copy of the GNU General Public License      \n      </span></span><br><span class="line"><span class="comment">  *  along with OST. If not, see &lt;http://www.gnu.org/licenses/&gt;.            \n  </span></span><br><span class="line"><span class="comment">  *  Unless required by applicable law or agreed to in writing, software        \n</span></span><br><span class="line"><span class="comment">  *  distributed under the License is distributed on an &quot;AS IS&quot; BASIS,          \n</span></span><br><span class="line"><span class="comment">  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.   \n</span></span><br><span class="line"><span class="comment">  *  See the License for the specific language governing permissions and      \n  </span></span><br><span class="line"><span class="comment">  *  limitations under the License.                         \n</span></span><br><span class="line"><span class="comment">  *                                         \n</span></span><br><span class="line"><span class="comment">  * @htmlonly </span></span><br><span class="line"><span class="comment">  * &lt;span style=&quot;font-weight: bold&quot;&gt;History&lt;/span&gt; </span></span><br><span class="line"><span class="comment">  * @endhtmlonly </span></span><br><span class="line"><span class="comment">  * Version|Auther|Date|Describe</span></span><br><span class="line"><span class="comment">  * ------|----|------|-------- </span></span><br><span class="line"><span class="comment">  * V3.3|Jones Lee|07-DEC-2017|Create File</span></span><br><span class="line"><span class="comment">  * &lt;h2&gt;&lt;center&gt;&amp;copy;COPYRIGHT 2017 WELLCASA All Rights Reserved.&lt;/center&gt;&lt;/h2&gt;</span></span><br><span class="line"><span class="comment">  */</span>  </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>类和成员注释</li>
+</ol>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* @class &lt;class‐name&gt; [header‐file] [&lt;header‐name]</span></span><br><span class="line"><span class="comment">* @brief brief description</span></span><br><span class="line"><span class="comment">* @author &lt;list of authors&gt;</span></span><br><span class="line"><span class="comment">* @note</span></span><br><span class="line"><span class="comment">* detailed description</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+
+<p>如果对文件、结构体、联合体、类或者枚举的成员进行文档注释的话，并且要在成员中间添加注释，而这些注释往往都是在每个成员后面，为此，可以使用在注释段中使用&lt; 标识</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int var; /**&lt; Detailed description after the member */</span><br></pre></td></tr></table></figure>
+
+<p>对一个类的注释例子如下</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Test</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">public:</span><br><span class="line">    <span class="comment">/** @brief A enum, with inline docs */</span></span><br><span class="line">    <span class="class"><span class="keyword">enum</span> <span class="title">TEnum</span> </span></span><br><span class="line"><span class="class">    &#123;</span></span><br><span class="line">        TVal1, <span class="comment">/**&lt; enum value TVal1. */</span> </span><br><span class="line">        TVal2, <span class="comment">/**&lt; enum value TVal2. */</span> </span><br><span class="line">        TVal3 <span class="comment">/**&lt; enum value TVal3. */</span> </span><br><span class="line">    &#125; </span><br><span class="line">   *enumPtr, <span class="comment">/**&lt; enum pointer. */</span></span><br><span class="line">    enumVar; <span class="comment">/**&lt; enum variable. */</span></span><br><span class="line">    <span class="comment">/** @brief A constructor. */</span> </span><br><span class="line">Test(); </span><br><span class="line"><span class="comment">/** @brief A destructor. */</span> </span><br><span class="line">~Test();</span><br><span class="line"> <span class="comment">/** @brief a normal member taking two arguments and returning an integer value. */</span> </span><br><span class="line">    <span class="type">int</span> <span class="title function_">testMe</span><span class="params">(<span class="type">int</span> a,<span class="type">const</span> <span class="type">char</span> *s)</span>; </span><br><span class="line"></span><br><span class="line">    <span class="comment">/** @brief A pure virtual member. </span></span><br><span class="line"><span class="comment">    * @param[in] c1 the first argument. </span></span><br><span class="line"><span class="comment">    * @param[in] c2 the second argument. </span></span><br><span class="line"><span class="comment">    * @see testMe() </span></span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>函数注释<br>直接看案例如下，见明知意 不再赘述</li>
+</ol>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">  * @brief    can send the message</span></span><br><span class="line"><span class="comment">  * @param[in]  canx : The Number of CAN</span></span><br><span class="line"><span class="comment">  * @param[in]  id : the can id </span></span><br><span class="line"><span class="comment">  * @param[in]  p : the data will be sent</span></span><br><span class="line"><span class="comment">  * @param[in]  size : the data size</span></span><br><span class="line"><span class="comment">  * @param[in]  is_check_send_time : is need check out the time out</span></span><br><span class="line"><span class="comment">  * @note Notice that the size of the size is smaller than the size of the buffer.    </span></span><br><span class="line"><span class="comment">  * @return   </span></span><br><span class="line"><span class="comment">  * +1 Send successfully \n</span></span><br><span class="line"><span class="comment">  * -1 input parameter error \n</span></span><br><span class="line"><span class="comment">  * -2 canx initialize error \n</span></span><br><span class="line"><span class="comment">  * -3 canx time out error \n</span></span><br><span class="line"><span class="comment">  * @par Sample</span></span><br><span class="line"><span class="comment">  * @code</span></span><br><span class="line"><span class="comment">  * u8 p[8] = &#123;0&#125;;</span></span><br><span class="line"><span class="comment">  * res_ res = 0; </span></span><br><span class="line"><span class="comment">  *   res = can_send_msg(CAN1,1,p,0x11,8,1);</span></span><br><span class="line"><span class="comment">  * @endcode</span></span><br><span class="line"><span class="comment">  */</span>              </span><br><span class="line"><span class="keyword">extern</span> s32 <span class="title function_">can_send_msg</span><span class="params">(<span class="type">const</span> CAN_TypeDef * canx,</span></span><br><span class="line"><span class="params">            <span class="type">const</span> u32 id,</span></span><br><span class="line"><span class="params">            <span class="type">const</span> u8 *p,</span></span><br><span class="line"><span class="params">            <span class="type">const</span> u8 size,</span></span><br><span class="line"><span class="params">            <span class="type">const</span> u8 is_check_send_time)</span>; </span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li><p>枚举注释<br>直接看案例如下，见明知意  不再赘述</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** bool */</span>  </span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">enum</span></span></span><br><span class="line"><span class="class">  &#123;</span></span><br><span class="line">      <span class="literal">false</span> = <span class="number">0</span>,  <span class="comment">/**&lt; FALSE 0  */</span></span><br><span class="line">      <span class="literal">true</span> = <span class="number">1</span>    <span class="comment">/**&lt; TRUE  1  */</span></span><br><span class="line">  &#125;<span class="type">bool</span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>全局变量和宏</p>
+</li>
+<li><p>模块注释</p>
+</li>
+</ol>
+<p>group 定义命令的优先级 从高到低 \ingroup \defgroup \addtogroup \weakgroup 而\weakgroup 很像一个有低优先级的\addtogroup 它被设计为实现一个lazy 的group 定义方法，可以在.h 文件中使用高优先级来定义结构，在.cpp 文件中使用\weakgroup 这样不会重复.h 文件中的层次结构</p>
+<p>在实际使用中，我们可以看到具体的网页展示如下</p>
+<p>在图中有个BSP 下的LED模块，这个模块就是承载驱动文件LED ，具体代码如下，为了显示效果，我把函数的注释删除了</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">  * @file       led.h</span></span><br><span class="line"><span class="comment">  * @author     JonesLee</span></span><br><span class="line"><span class="comment">  * @email    Jones_Lee3@163.com</span></span><br><span class="line"><span class="comment">  * @version  V4.01</span></span><br><span class="line"><span class="comment">  * @date     07-DEC-2017</span></span><br><span class="line"><span class="comment">  * @license    GNU General Public License (GPL)  </span></span><br><span class="line"><span class="comment">  * @brief    Controller Area Network</span></span><br><span class="line"><span class="comment">  * @detail   detail</span></span><br><span class="line"><span class="comment">  * @attention</span></span><br><span class="line"><span class="comment">  *  This file is part of OST.                                                  \n                                                                  </span></span><br><span class="line"><span class="comment">  *  This program is free software; you can redistribute it and/or modify     \n     </span></span><br><span class="line"><span class="comment">  *  it under the terms of the GNU General Public License version 3 as        \n   </span></span><br><span class="line"><span class="comment">  *  published by the Free Software Foundation.                                 \n </span></span><br><span class="line"><span class="comment">  *  You should have received a copy of the GNU General Public License      \n      </span></span><br><span class="line"><span class="comment">  *  along with OST. If not, see &lt;http://www.gnu.org/licenses/&gt;.            \n  </span></span><br><span class="line"><span class="comment">  *  Unless required by applicable law or agreed to in writing, software        \n</span></span><br><span class="line"><span class="comment">  *  distributed under the License is distributed on an &quot;AS IS&quot; BASIS,          \n</span></span><br><span class="line"><span class="comment">  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.   \n</span></span><br><span class="line"><span class="comment">  *  See the License for the specific language governing permissions and      \n  </span></span><br><span class="line"><span class="comment">  *  limitations under the License.                         \n</span></span><br><span class="line"><span class="comment">  *                                         \n</span></span><br><span class="line"><span class="comment">  * @htmlonly </span></span><br><span class="line"><span class="comment">  * &lt;span style=&quot;font-weight: bold&quot;&gt;History&lt;/span&gt; </span></span><br><span class="line"><span class="comment">  * @endhtmlonly </span></span><br><span class="line"><span class="comment">  * Version|Auther|Date|Describe</span></span><br><span class="line"><span class="comment">  * ------|----|------|-------- </span></span><br><span class="line"><span class="comment">  * V3.3|Jones Lee|07-DEC-2017|Create File</span></span><br><span class="line"><span class="comment">  * &lt;h2&gt;&lt;center&gt;&amp;copy;COPYRIGHT 2017 WELLCASA All Rights Reserved.&lt;/center&gt;&lt;/h2&gt;</span></span><br><span class="line"><span class="comment">  */</span>  </span><br><span class="line"><span class="comment">/** @addtogroup  BSP</span></span><br><span class="line"><span class="comment">  * @&#123;</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">  * @brief Light Emitting Diode</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line"><span class="comment">/** @addtogroup LED </span></span><br><span class="line"><span class="comment">  * @&#123;</span></span><br><span class="line"><span class="comment">  */</span> </span><br><span class="line"><span class="meta">#<span class="keyword">ifndef</span> __LED_H__</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> __LED_H__</span></span><br><span class="line"><span class="meta">#<span class="keyword">ifdef</span> __cplusplus</span></span><br><span class="line"><span class="keyword">extern</span> <span class="string">&quot;C&quot;</span> &#123;</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span> </span></span><br><span class="line">  <span class="meta">#<span class="keyword">include</span> <span class="string">&quot;bsp.h&quot;</span></span></span><br><span class="line">  <span class="function"><span class="keyword">extern</span> s32  <span class="title">led_init</span><span class="params">(Led_TypeDef led)</span></span>;</span><br><span class="line">  <span class="function"><span class="keyword">extern</span> s32  <span class="title">led_config</span><span class="params">(<span class="type">void</span>)</span></span>;</span><br><span class="line">  <span class="function"><span class="keyword">extern</span> s32  <span class="title">led_on</span><span class="params">(Led_TypeDef led)</span></span>;</span><br><span class="line">  <span class="function"><span class="keyword">extern</span> s32  <span class="title">led_off</span><span class="params">(Led_TypeDef led)</span></span>;</span><br><span class="line">  <span class="function"><span class="keyword">extern</span> s32  <span class="title">led_toggle</span><span class="params">(Led_TypeDef led)</span></span>;</span><br><span class="line"><span class="meta">#<span class="keyword">ifdef</span> __cplusplus</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">endif</span>  <span class="comment">/*__LED_H__ */</span></span></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">  * @&#125;</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">  * @&#125;</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line"><span class="comment">/******************* (C)COPYRIGHT 2017 WELLCASA All Rights Reserved. *****END OF FILE****/</span></span><br></pre></td></tr></table></figure>
+
+<p>前面说明了是C语言的，C语言没有继承一说，在C++中有时候需要展示继承，如图</p>
+ 
       <!-- reward -->
       
     </div>
@@ -757,67 +967,6 @@
        
   <p>[TOC]</p>
 <h2 id="0x01"><a href="#0x01" class="headerlink" title="0x01"></a>0x01</h2><h2 id="0x02"><a href="#0x02" class="headerlink" title="0x02"></a>0x02</h2><h2 id="0x03"><a href="#0x03" class="headerlink" title="0x03"></a>0x03</h2><h2 id="0x04"><a href="#0x04" class="headerlink" title="0x04"></a>0x04</h2> 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20230302-华为刷机"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/03/02/20230302-%E5%8D%8E%E4%B8%BA%E5%88%B7%E6%9C%BA/"
-    >20230302-华为刷机</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/03/02/20230302-%E5%8D%8E%E4%B8%BA%E5%88%B7%E6%9C%BA/" class="article-date">
-  <time datetime="2023-03-02T04:09:02.000Z" itemprop="datePublished">2023-03-02</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>华为的各个模式</p>
-<h2 id="Recovery-建成rec"><a href="#Recovery-建成rec" class="headerlink" title="Recovery 建成rec"></a>Recovery 建成rec</h2><p>不连接电脑，关机状态长按电源键和音量加，出logo松开电源键，继续按住音量加直到进入recovery</p>
-<h2 id="eRecovery-华为定制的恢复模式"><a href="#eRecovery-华为定制的恢复模式" class="headerlink" title="eRecovery 华为定制的恢复模式"></a>eRecovery 华为定制的恢复模式</h2><p>用数据线 连接电脑的情况下，关机状态长按电源键和音量加</p>
-<h2 id="Fastboot-Bootloader"><a href="#Fastboot-Bootloader" class="headerlink" title="Fastboot Bootloader"></a>Fastboot Bootloader</h2><p>用数据线 连接电脑的情况下，关机状态长按电源键和音量减</p>
-<h2 id="升级模式-所谓-三键强制"><a href="#升级模式-所谓-三键强制" class="headerlink" title="升级模式 所谓 三键强制"></a>升级模式 所谓 三键强制</h2><p>关机状态下，长按电源键 音量加减，插不插无所谓</p>
-<p>如何退出这些模式呢</p>
-<p>一般来说前两个模式下有重启的按钮，fastboot 可以长按电源键退出，升级模式在没有响应的时候一般会自动退出</p>
-<hr>
-<p>Bootloader 解锁<br>解锁码<br>已经解锁的朋友记得先保存好自己的解锁码，以防不时之需，解锁码一机一码，解锁码是读取或写入的，不是windows 那种激活码，所以一个机器的解锁码是固定的，只要你解锁过一次，你的解锁码在这台机器上是可以永久使用的</p>
-<p>Bootloader 锁</p>
-<p>UserBL 用户BL锁</p>
-<p>常说的bl 锁，解锁码是固定不变的，但是华为它比较奇怪，当你解锁了这个广义bl 之后，它还是不会开放所有分区，意思是说，有些分区你在fastboot 无法刷写，但是我们刷机最需要的system recovery boot 这些分区是支持刷写的</p>
-<p>FactoryBL 锁</p>
-<p>解锁后可以刷写全部分区，但是不能永久解锁，一般在救砖的时候去解锁，重启就会自动回所，不是广义上的BL锁</p>
-<p>免费的解锁工具 PotatoNV</p>
- 
       <!-- reward -->
       
     </div>
