@@ -80,7 +80,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> 字数统计:</span>
-            <span class="post-count">983</span>
+            <span class="post-count">4.3k</span>
         </span>
     </span>
 
@@ -89,13 +89,15 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> 阅读时长≈</span>
-            <span class="post-count">3 分钟</span>
+            <span class="post-count">17 分钟</span>
         </span>
     </span>
 </div>
  
     </div>
       
+    <div class="tocbot"></div>
+
 
 
 
@@ -141,6 +143,192 @@
 <p>这是一个简单的方法，将doxygen 信息包含在由sphinx 生成的一组文档中，目的是为那些喜欢使用sphinx 但用python 以外的语言工作的人制作一个类似autodoc的支持，该系统依赖于doxygen的xml输出</p>
 <p>警告</p>
 <p>这个文档的构建不是来自于breathe的一个特定的标记版本，它反映了breathe的工作进展状态，请参阅github 仓库 <a target="_blank" rel="noopener" href="https://github.com/michaeljones/breathe">https://github.com/michaeljones/breathe</a> ，以获得更多的官方信息</p>
+<p>概述</p>
+<p>简单的设置，一个doxygen 配置值，一个sphinx 配置值和一个指令，你就可以上路了</p>
+<p>高级和低级指令，引用整个项目，只是一个类或只是一个函数的不同指令</p>
+<p>支持多个doxygen 项目，将其设置为知道不同的项目，并在每个指令中通过名称或路径引用它们</p>
+<p>允许在doxygen 标记中嵌入reStructureText 一些额外的doxygen 别名允许你在评论中添加 rst endrst 块，并将内容解释为reStructureText</p>
+<p>对sphinx 域的基本支持，用标准的sphinx 域引用链接到breathe输出中的函数</p>
+<p>设置与使用</p>
+<p>快速入门</p>
+<p>Directives Config Variables<br>与doxygen 和autodoc的差异</p>
+<p>running on Read the docs</p>
+<p>特性</p>
+<p>Supported markups </p>
+<p>latex math<br>domains</p>
+<p>custom css<br>groups<br>lists<br>tables</p>
+<p>template</p>
+<p>贡献</p>
+<p>contribute to breathe</p>
+<p>how it works<br>credits</p>
+<p>示例  测试页面</p>
+<p>test pages</p>
+<p>下载</p>
+<p>breathe 可从以下网站获得</p>
+<p>pypi the python package index<br>github</p>
+<h2 id="简而言之"><a href="#简而言之" class="headerlink" title="简而言之"></a>简而言之</h2><p>你写的代码看起来有点像这样：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line">    \file nutshell.h</span><br><span class="line">    An overly extended example of how to use breathe</span><br><span class="line">*/</span><br><span class="line"></span><br><span class="line">/*!</span><br><span class="line">    With a little bit of a elaboration, should you feel it necessary.</span><br><span class="line">*/</span><br><span class="line">class Nutshell</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line"></span><br><span class="line">    //! Our tool set</span><br><span class="line">    /*! The various tools we can opt to use to crack this particular nut */</span><br><span class="line">    enum Tool</span><br><span class="line">    &#123;</span><br><span class="line">        kHammer = 0,          //!&lt; What? It does the job</span><br><span class="line">        kNutCrackers,         //!&lt; Boring</span><br><span class="line">        kNinjaThrowingStars   //!&lt; Stealthy</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    //! Nutshell constructor</span><br><span class="line">    Nutshell();</span><br><span class="line"></span><br><span class="line">    //! Nutshell destructor</span><br><span class="line">    ~Nutshell();</span><br><span class="line"></span><br><span class="line">    /*! Crack that shell with specified tool</span><br><span class="line"></span><br><span class="line">      \param tool - the tool with which to crack the nut</span><br><span class="line">    */</span><br><span class="line">    void crack( Tool tool );</span><br><span class="line"></span><br><span class="line">    /*!</span><br><span class="line">      \return Whether or not the nut is cracked</span><br><span class="line">    */</span><br><span class="line">    bool isCracked();</span><br><span class="line"></span><br><span class="line">private:</span><br><span class="line"></span><br><span class="line">    //! Our cracked state</span><br><span class="line">    bool m_isCracked;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>然后你运行这个</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">doxygen</span><br></pre></td></tr></table></figure>
+
+<p>有一个设置是这样说的</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GENERATE_XML = YES</span><br></pre></td></tr></table></figure>
+
+<p>然后在你的 Sphinx 文档中，你可以添加这样的内容</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">.. doxygenclass:: Nutshell</span><br><span class="line">   :project: nutshell</span><br><span class="line">   :members:</span><br></pre></td></tr></table></figure>
+
+<p>通过像这样的 <code>conf.py</code> 设定</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">breathe_projects = &#123;</span><br><span class="line">    &quot;nutshell&quot;:&quot;../../examples/specific/nutshell/xml/&quot;,</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>并在 <code>conf.py</code> 中把 Breathe 注册为一个插件，像这样</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">extensions = [ &quot;breathe&quot; ]</span><br></pre></td></tr></table></figure>
+
+<p>你会得到类似这样的东西：</p>
+<hr>
+<ul>
+<li><p>class <strong>Nutshell</strong> </p>
+<p>With a little bit of a elaboration, should you feel it necessary.Public Typesenum <strong>Tool</strong> Our tool set.The various tools we can opt to use to crack this particular nut<em>Values:<em>enumerator <strong>kHammer</strong> What? It does the job.enumerator <strong>kNutCrackers</strong> Boring.enumerator <strong>kNinjaThrowingStars</strong> Stealthy.Public Functions**Nutshell</em></em>() <a target="_blank" rel="noopener" href="https://daobook.github.io/breathe/index.html#nutshellclass_nutshell">Nutshell</a> constructor.<strong>~Nutshell</strong>() <a target="_blank" rel="noopener" href="https://daobook.github.io/breathe/index.html#nutshellclass_nutshell">Nutshell</a> destructor.void <strong>crack</strong>(<a target="_blank" rel="noopener" href="https://daobook.github.io/breathe/index.html#_CPPv4NUt8_ex_index8Nutshell4ToolE">Tool</a> <em>tool</em>) Crack that shell with specified tool参数<strong>tool</strong> – the tool with which to crack the nutbool <strong>isCracked</strong>() 返回Whether or not the nut is cracked</p>
+</li>
+</ul>
+<hr>
+<p>&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</p>
+<p>快速入门</p>
+<p>对于这个快速入门，我们假设有以下先决条件</p>
+<p>在某处下载并提取了breathe<br>已经安装了doxygen 并且为要记录的项目生成了doxygen xml 格式 将 GENERATE_XML 标签设为 YES</p>
+<p>我们假设有以下的路径</p>
+<p>文档根路径<br>breathe 路径</p>
+<p>doxygen xml 输出路径</p>
+<p>文档路径应该包含一个文件夹source 其中包含conf.py 文件，doxygen xml 输出文件夹应该包含index.xml 由doxygen 生成的输出文件</p>
+<p>要整合breathe 功能，需要采取以下步骤</p>
+<p>在你的 conf.py 中添加breathe 路径，方法是添加以下一行</p>
+<p>sys.path.append( “&#x2F;home&#x2F;me&#x2F;docproj&#x2F;ext&#x2F;breathe&#x2F;“ )</p>
+<p>添加 breathe 作为插件，这一行可以这样写</p>
+<p>extensions &#x3D; [‘sphinx.ext.pngmath’, ‘sphinx.ext.todo’, ‘breathe’ ]</p>
+<p>告诉 breathe 关于项目的信息</p>
+<p>breathe_projects &#x3D; { “myproject”: “&#x2F;home&#x2F;me&#x2F;docproj&#x2F;doxyxml&#x2F;“ }</p>
+<p>指定默认的项目</p>
+<p>breathe_default_project &#x3D; “myproject”</p>
+<p>一旦完成这些工作，你可以使用以下命令</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">.. doxygenindex::</span><br><span class="line">.. doxygenfunction::</span><br><span class="line">.. doxygenstruct::</span><br><span class="line">.. doxygenenum::</span><br><span class="line">.. doxygentypedef::</span><br><span class="line">.. doxygenclass::</span><br></pre></td></tr></table></figure>
+
+<p>以包括不同结构的文档，对于这些命令中的每一条，都可以指定以下指令</p>
+<p>project 指定哪个项目，如breathe_projects 配置值中定义的，应该用于该指令，这取代了默认值</p>
+<p>path<br>直接指定到有doxygen 输出的文件夹的路径，这覆盖了project 和default project</p>
+<hr>
+<p>指令和配置变量</p>
+<p>指令和配置变量</p>
+<p>directives 指令</p>
+<p>doxygenclass<br>doxygendefine<br>doxygennum<br>doxygennumvalue<br>doxygenfile<br>autodoxygenfile<br>doxygenfunction<br>doxygengroup<br>doxygenindex<br>autodoxygenindex<br>doxygennamespace<br>doxygenstruct<br>doxygeninterface<br>doxygentypedef<br>doxygenunion<br>doxygenvariable<br>doxygenpage</p>
+<p>config values 配置值</p>
+<p>指令</p>
+<p>可用的指令如下所示，在每种情况下，project path no-link 和outline 选项具有以下含义</p>
+<p>project 指定配置值中定义的项目，应该用于此指令，这将覆盖默认项目 如果有，已指定 breathe_projects</p>
+<p>指令不使用此功能，改为用于指定配置值中的条目来使用 autodoxygenindexsourcebreathe_projects_source</p>
+<p>path 直接指定具有doxygen 输出的文件夹的路径，这覆盖项目和默认项目 如果已指定</p>
+<p>指令不使用此功能，改为用于指定要成为的源文件的根路径  autodoxygenindexsource-path</p>
+<p>no-link 指示 breathe 不要尝试为此特定指令生成的内容</p>
+<p>这使您可以将主要参考列表放在具有以下位置的某个位置目标，但随后能够将重复指令潜入其他指令， </p>
+<p>部分文档来说明将特定要点，但没有sphinx 对其他参考资料应该链接到什么感到困惑</p>
+<p>outline 导致breathe 仅输出原始代码定义，而无需任何其他描述信息</p>
+<p>如果指令上既没有提供项目也没有提供路径，那么breathe 将 breathe_default_project 配置值为设置</p>
+<p>此指令为单个类生成适当的输出，它采用标准项目、路径、大纲和无链接选项，此外还有 members protected-members private-members undoc-members membergroups 和members-only 选项</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">.. doxygenclass:: &lt;class name&gt;</span><br><span class="line">   :project: ...</span><br><span class="line">   :path: ...</span><br><span class="line">   :members: [...]</span><br><span class="line">   :protected-members:</span><br><span class="line">   :private-members:</span><br><span class="line">   :undoc-members:</span><br><span class="line">   :membergroups: ...</span><br><span class="line">   :members-only:</span><br><span class="line">   :outline:</span><br><span class="line">   :no-link:</span><br></pre></td></tr></table></figure>
+<p>重看 doxygenclass 文档以获取更多详细信息 并看到它的实际效果</p>
+<p>doxygendefine</p>
+<p>此指令为单个预处理器生成适当的输出定义，它的行为与doxygenstruct 指令相同</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">.. doxygendefine:: &lt;define name&gt;</span><br><span class="line">   :project: ...</span><br><span class="line">   :path: ...</span><br><span class="line">   :outline:</span><br><span class="line">   :no-link:</span><br></pre></td></tr></table></figure>
+<p>重看示例以查看其实际效果</p>
+<p>doxygenenum</p>
+<p>此指令为单个枚举生成适当的输出，它的行为与doxygenstruct 指令相同</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">.. doxygenenum:: &lt;enum name&gt;</span><br><span class="line">   :project: ...</span><br><span class="line">   :path: ...</span><br><span class="line">   :outline:</span><br><span class="line">   :no-link:</span><br></pre></td></tr></table></figure>
+
+<p>doxygenenumvalue<br>此指令为单个枚举值生成适当的输出</p>
+<p>doxygenfile<br>此指令为源的内容生成适当的输出文件</p>
+<p>autodoxygenfile<br>此指令是上述doxygenfile 指令的此版本，它像其他自动指令一样为您处理doxygen xml 生成auto</p>
+<p>查看示例以查看其实际效果</p>
+<p>doxygenfunction</p>
+<p>此指令为单个函数生成适当的输出，这个函数名称在项目中是唯一的</p>
+<p>doxygengroup<br>此指令为doxygen 的内容生成适当的输出群，可以使用特定的doxygen 标记声明doxygen 组来源注释如 doxygen 分组文档中所述</p>
+<p>它采用标准的project path outline 和no-link 选项和content-only members protected-member private-members undoc-members 选项</p>
+<p>查看 doxygengroup 文档以获取更多详细信息，并看到它的实际效果</p>
+<p>doxygenindex</p>
+<p>该指令处理并生成由 doxygen xml 输出，它读取文件并处理所有内容 由它引用 index.xml</p>
+<p>autodoxygenindex </p>
+<p>此指令执行与指令类似的角色，除了它为您处理doxygen xml 生成，它使用配置字典来判断哪个代码源文件应具有为其生成doxygen xml 该指令选项将指令与字典中的特定项目相关联，中条目引用的所有文件将包含在输出中，此外，任何中指定的选项将添加到生成的doxygen 配置文件和中指定的任何自定义别名都将添加到 doxygen 别名中</p>
+<p>doxygennamespace</p>
+<p>此指令为命名空间的内容生成相应的输出</p>
+<p>It takes the standard project, path, outline and no-link options and additionally the content-only, members, protected-members, private-members and undoc-members options.</p>
+<p>要引用嵌套命名空间，必须提供完整的命名空间路径，例如，对于命名空间内的命名空间， foo::bar  bar</p>
+<p>查看doxygennamespace 文档了解更多信息，细节并查看它的实际效果</p>
+<p>doxygenstruct<br>此指令为单个结构生成适当的输出，结构体名称在项目中必须是唯一的</p>
+<p>It takes the standard project, path, outline and no-link options and additionally the members, protected-members, private-members, membergroups, members-only and undoc-members options.</p>
+<p>查看示例以查看其实际效果</p>
+<p>doxygeninterface</p>
+<p>此指令为单个接口 专门使用 类，它的行为与doxygenclass 指令相同</p>
+<p>doxygentypedef</p>
+<p>此指令为单个typedef 生成适当的输出，它的行为与doxygenstruct 指令相同</p>
+<p>doxygenunion</p>
+<p>此指令为单个联合生成适当的输出，它的行为与doxygenstruct 指令相同</p>
+<p>doxygenvariable</p>
+<p>此指令为doxygen 的内容生成适当的输出页，为每个使用xrefitem 命令的每个键创建一个doxygen页面用于源注释中的标记，有关详细信息，请查看doxygen外部参照文档</p>
+<p>它采用标准 project 和 path 选项，以及 content-only选项，</p>
+<p>查看doxygenpage 文档以获取更多详细信息，并看到它的实际效果</p>
+<p>config values<br>breathe_projects</p>
+<p>这应该是一个字典，其中键是项目名称，值是包含该项目的doxygen 输出的文件夹的路径</p>
+<p>breathe_default_project</p>
+<p>这应该与字典中的一个键匹配，并且指示在未指定项目时应该使用哪个项目指令</p>
+<p>breathe_domain_by_extension</p>
+<p>允许您根据特定文件的域指定域外框</p>
+<p>breathe_domain_by_file_pattern<br>允许您通过通配符语法为特定文件指定域，这之后被检查，因此将覆盖必要时</p>
+<p>如果您希望将所有头文件都视为在cpp 域中，您可以使用以下示例 以上，但是，如果您有一个文件应被视为在c 域中，那么您可以如上所述进行覆盖，</p>
+<p>breathe_projects_source</p>
+<p>其中键是项目名称，值是元组的字典的目录和这些目录的源代码文件名列表，您希望使用doxygen 自动处理的项目，如果您在以下位置有一些文件</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/some/<span class="type">long</span>/path/to/myproject/file.c</span><br><span class="line">/some/<span class="type">long</span>/path/to/myproject/subfolder/otherfile.c</span><br></pre></td></tr></table></figure>
+
+<p>然后，您可以设置</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">breathe_projects_source = &#123;</span><br><span class="line">   <span class="string">&quot;myprojectsource&quot;</span> :</span><br><span class="line">       ( <span class="string">&quot;/some/long/path/to/myproject&quot;</span>, [ <span class="string">&quot;file.c&quot;</span>, <span class="string">&quot;subfolder/otherfile.c&quot;</span> ] )</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后，您的 autodoxygenfile 使用情况可能如下所示 </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">.. autodoxygenfile:: file.c</span><br><span class="line">   :project: myprojectsource</span><br></pre></td></tr></table></figure>
+
+<p>元组中的目录条目可以是空字符串，如果，列表是完整路径</p>
+<p>breathe_build_directory</p>
+<p>为了处理breathe，必须运行以创建要处理xml 文件，此配置值指定根应在其中创建这些文件的目录，默认情况下，这设置为输出文件夹的父目录，即正常构建目录，如果您有自定义，则可以使用此设置进行更改， </p>
+<p>breathe 将采用最终值并附加到路径以最大程度地减少冲突</p>
+<p>breathe_default_members</p>
+<p>提供应用于所有指令的指令标志  采取 和选项，默认情况下，此选项设置为空列表，这意味着没有成员显示，如果您想始终显示公众和公众，无文档成员，那么您可以像这样设置它 </p>
+<p>breathe_default_members &#x3D; (‘members’, ‘undoc-members’)</p>
+<p>breathe_implementation_filename_extensions<br>提供被视为实现文件，当指令查找未命名的函数名称时，将忽略这些文件，这是为了避免问题标头的doxygenxml 输出中出现相同的函数名称 文件和实现文件，因为声明在一个和定义在另一个，doxygen 将文档从定义到声明的xml 因此我们不会错过任何文档 来自实现文件的信息，此值的默认值 变量为 doxygenfunction</p>
+<p>breathe_implementation_filename_extensions &#x3D; [‘.c’, ‘.cc’, ‘.cpp’]</p>
+<p>breathe_doxygen_config_options</p>
+<p>一个字典，其中键和值是配置的名称和值，要放置在由 autodoxygenindex 生成的doxygen 配置文件中的选项</p>
+<p>breathe_doxygen_config_options &#x3D; {‘EXCLUDE_SYMBOLS’: ‘abc123’}</p>
+<p>将放置在配置文件中，默认值为空字典，exclude_symbols&#x3D;abc123</p>
+<p>breathe_doxygen_aliases</p>
+<p>其中键和值是别名的名称和值的字典，放置在由 autodoxygenindex 生成的doxygen 配置文件中</p>
+<p>breathe_doxygen_aliases &#x3D; {‘rstref{1}’: r’\verbatim embed:rst:inline :ref:<code>\1</code> \endverbatim’}</p>
+<p>将放置该行</p>
+<p>ALIASES +&#x3D; rstref{1}&#x3D;”\verbatim embed:rst:inline :ref:<code>\1</code> \endverbatim”</p>
+<p>在配置文件中，默认值为空字典，请注意使用原始字符串以确保反斜杠解释为文字字符，此示例别名允许使用 rstref</p>
+<p>breathe_show_define_initializer</p>
+<p>一个布尔标志，可以设置为在输出中显示定义的初始值设定项 true</p>
+<p>例如，如果将定义 MAX_LENGTH 100 设置为值为100 True 不带则为false</p>
+<p>breathe_show_enumvalue_initializer</p>
+<p>一个布尔标志，可以设置为在输出中显示枚举值的初始值设定项，True</p>
+<p>例如，如果将枚举值设置为 TWO&#x3D;2 为true 否则为false</p>
+<p>breathe_show_include</p>
+<p>一个布尔标志，可以设置为隐藏每个标头定义实体 结构 函数，宏 等 false</p>
+<p>例如，当设置为  True struct foo 将呈现</p>
+<p>但当设置为false 时，将呈现</p>
+<p>breathe_use_project_refids</p>
+<p>真或假设置，用于控制呼吸氧气是否产生的反射元素是否包含项目名称，旧版 行为是所有refid 都以项目名称为前缀，这导致尝试在多个项目之间链接文档时出现问题，因为项目无法看到彼此的文档元素，新的默认行为是不在refid 前面加上项目名称</p>
+<p>breathe_use_project_refids &#x3D; True</p>
+<p>如果需要，将恢复旧行为</p>
+<p>breathe_order_parameters_first</p>
+<p>True或false 设置，用于控制是否从doxygen 生成的参数部分 文档应紧跟在 简短和详细的描述之后，或在最后，在返回，备注和警告部分之后，默认值和旧行为也是false</p>
+<p>breathe_separate_member_pages</p>
+<p>True 或false 设置，用于控制doxygen 生成的输入xml 是否具有 doxygen separate_member_pages 选项设置为是或否，doxygen 选项末尾到no 生成允许breathe 解析所有引用的xml 设置时是的，元素 refid 得到一个额外的元素，呼吸试图摆脱它，当此设置为True 时</p>
  
       <!-- reward -->
       
@@ -221,6 +409,15 @@
 
    
   <nav class="article-nav">
+    
+      <a href="/2023/04/20/20230420-%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            20230420-NTFS，FAT32和exFAT文件系统有什么区别
+          
+        </div>
+      </a>
     
     
       <a href="/2023/04/18/20230418-Doxygen%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/" class="article-nav-link">

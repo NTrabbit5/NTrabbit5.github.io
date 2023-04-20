@@ -11,7 +11,7 @@
         name="viewport"
         content="width=device-width, initial-scale=1, maximum-scale=1"
       />
-      <title>简介 |  TeX_baitu blog</title>
+      <title>20230420-NTFS，FAT32和exFAT文件系统有什么区别 |  TeX_baitu blog</title>
   <meta name="generator" content="hexo-theme-ayer">
       
       <link rel="shortcut icon" href="/favicon.ico" />
@@ -53,8 +53,8 @@
     <main class="content on">
       <section class="outer">
   <article
-  id="20230418-restructuredtext-简介"
-  class="article article-type-20230418-restructuredtext"
+  id="post-20230420-计算机文件系统"
+  class="article article-type-post"
   itemscope
   itemprop="blogPost"
   data-scroll-reveal
@@ -64,7 +64,7 @@
     <header class="article-header">
        
 <h1 class="article-title sea-center" style="border-left:0" itemprop="name">
-  简介
+  20230420-NTFS，FAT32和exFAT文件系统有什么区别
 </h1>
  
 
@@ -72,15 +72,15 @@
     </header>
      
     <div class="article-meta">
-      <a href="/2023/04/18/%E7%AE%80%E4%BB%8B/" class="article-date">
-  <time datetime="2023-04-18T04:07:08.000Z" itemprop="datePublished">2023-04-18</time>
+      <a href="/2023/04/20/20230420-%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/" class="article-date">
+  <time datetime="2023-04-20T08:25:58.000Z" itemprop="datePublished">2023-04-20</time>
 </a>   
 <div class="word_count">
     <span class="post-time">
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> 字数统计:</span>
-            <span class="post-count">0</span>
+            <span class="post-count">401</span>
         </span>
     </span>
 
@@ -96,13 +96,21 @@
  
     </div>
       
+    <div class="tocbot"></div>
+
 
 
 
   
     <div class="article-entry" itemprop="articleBody">
        
-   
+  <p>当用户在windows 平台上插入新的u盘 或移动硬盘时，系统会自动弹出需要格式化的窗口，提供了3种不同文件格式 NTFS FAT32 exFAT</p>
+<p>很多用户对这3种格式知之甚少，只是根据弹窗的指示进行操作，windows 也没有对3种格式提供详细的解释，本文会对这些问题进行详细解释</p>
+<p>首先需要明白什么是文件系统</p>
+<p>文件系统是系统对文件的存放排列方式，不同格式的文件系统关系到数据是如何在磁盘进行存储，文件名、文件权限和其他属性也存在不同，windows 操作系统支持ntfs fat32 和exFAT 三种不同文件系统，ntfs是目前windows 系统中一种现代文件系统，目前使用最广泛，内置的硬盘大多数都是ntfs 格式，fat32 是一种相对老旧的文件系统，不能像ntfs 格式支持很多现代文件格式的属性，但对于不同系统平台具有良好的兼容性，可以在linux mac 或android 系统平台上通用</p>
+<p>exFAT 是FAT32 文件格式的替代品，很多设备和操作系统都支持该文件系统，但是目前用的不多</p>
+<h2 id="3种文件格式的不同"><a href="#3种文件格式的不同" class="headerlink" title="3种文件格式的不同"></a>3种文件格式的不同</h2><p>Fat32 文件格式是一种通用格式，任何usb存储设备都会预装该文件系统，可以在任何操作系统平台上使用，最主要的缺陷是只支持最大单文件大小容量为4</p>
+ 
       <!-- reward -->
       
       <div id="reword-out">
@@ -172,7 +180,7 @@
     <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://example.com/2023/04/18/%E7%AE%80%E4%BB%8B/" alt="微信分享二维码">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://example.com/2023/04/20/20230420-%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -183,19 +191,10 @@
    
   <nav class="article-nav">
     
-      <a href="/2023/04/18/20230418-Doxygen%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/" class="article-nav-link">
-        <strong class="article-nav-caption">上一篇</strong>
-        <div class="article-nav-title">
-          
-            20230418-Doxygen快速入门
-          
-        </div>
-      </a>
     
-    
-      <a href="/2023/04/18/20230418-%E7%94%A8sphinx%E5%BF%AB%E9%80%9F%E5%88%B6%E4%BD%9C%E6%96%87%E6%A1%A3/" class="article-nav-link">
+      <a href="/2023/04/19/20230419-C-%E6%96%87%E6%A1%A3doxygen-breathe%E8%AF%AD%E6%B3%95/" class="article-nav-link">
         <strong class="article-nav-caption">下一篇</strong>
-        <div class="article-nav-title">20230418-用sphinx快速制作文档</div>
+        <div class="article-nav-title">20230419-C++文档doxygen/breathe语法</div>
       </a>
     
   </nav>
