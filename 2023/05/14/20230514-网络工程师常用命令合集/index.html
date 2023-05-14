@@ -80,7 +80,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> 字数统计:</span>
-            <span class="post-count">2</span>
+            <span class="post-count">814</span>
         </span>
     </span>
 
@@ -89,23 +89,51 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> 阅读时长≈</span>
-            <span class="post-count">1 分钟</span>
+            <span class="post-count">2 分钟</span>
         </span>
     </span>
 </div>
  
     </div>
       
-    <div class="tocbot"></div>
-
 
 
 
   
     <div class="article-entry" itemprop="articleBody">
        
-  <p>[TOC]</p>
-<h2 id="0x01"><a href="#0x01" class="headerlink" title="0x01"></a>0x01</h2><h2 id="0x02"><a href="#0x02" class="headerlink" title="0x02"></a>0x02</h2><h2 id="0x03"><a href="#0x03" class="headerlink" title="0x03"></a>0x03</h2><h2 id="0x04"><a href="#0x04" class="headerlink" title="0x04"></a>0x04</h2> 
+  <p>ping 命令</p>
+<p>ping 是一个使用频率极高的实用程序，主要用于确定网络的连通性，这对确定网络是否正确连接，以及网络连接的状况十分有用，简单的说，ping 就是一个测试程序，如果ping 运行正确，大体上就可以排除网络访问层、网卡、modem 的输入输出线路，电缆和路由器等存在的故障，从而缩小问题的范围</p>
+<p>ping 能够以毫秒为单位显示发送请求到返回应答之间的时间量，如果应答时间短，表述数据报 不必通过太多的路由器或网络，连接速度比较快，ping 还能显示TTL Time to Live 生存时间</p>
+<p>通过ttl 值可以推算数据包通过了多少个路由器</p>
+<ol>
+<li>命令格式</li>
+</ol>
+<p>ping 主机名</p>
+<p>ping 域名</p>
+<p>ping IP地址</p>
+<ol start="2">
+<li>ping 命令的基本应用</li>
+</ol>
+<p>一般情况下，用户可以通过使用一系列ping 命令来查找问题出在什么地方，或检测网络运行的情况，下面就给出一个典型的检测次序及对应的可能故障</p>
+<p>ping 127.0.0.1</p>
+<p>如果测试成功，表明网卡，tcp ip 协议的安装 ip 地址，子网掩码的设置正常，如果测试不成功，就表示 TCP&#x2F;IP 的安装或设置存在有问题</p>
+<p>ping 本机ip 地址</p>
+<p>如果测试不成功，则表示本地配置或安装存在问题，应当对网络设备和通讯介质进行测试，检查并排除</p>
+<p>ping 局域网内其他ip</p>
+<p>如果测试成功，表明本地网络中的网卡和载体运行正确，但如果收到0个回送应答，那么表示子网掩码不正确或网卡配置错误或电缆系统有问题</p>
+<p>ping 网关ip</p>
+<p>这个命令如果应答正确，表示局域网中的网关路由器正在运行并能够做出应答</p>
+<p>ping 远程ip</p>
+<p>如果收到正确应答，表示成功的使用了缺省网关，对于拨号上网用户则表示能够成功的访问internet </p>
+<p>ping localhost</p>
+<p>local host 是系统的网络保留名，它是127.0.0.1 的别名，每台计算机都应该能够将该名字转换成该地址，否则，表示主机文件 windows host 中存在问题</p>
+<p>ping yahoo.com 一个著名网站地址</p>
+<p>对此域名执行ping 命令，计算机必须先将域名转换成ip 地址，通常是通过dns 服务器，如果这里出现故障，则表示本机dns 服务器的ip 地址配置不正确，或它所访问的dns 服务器有故障</p>
+<p>如果上面所列出的所有ping 命令都能正常运行，那么计算机进行本地和远程通信基本上就没有问题了，但是，这些命令的成功并不表示你所有的网络配置都没有问题，例如，某些子网掩码错误就可能无法用这些方法检测到</p>
+<p>ping 命令的常用参数选项</p>
+<p>ping ip -t 连续对ip 地址执行ping 命令，直到被用户以ctrl C中断</p>
+ 
       <!-- reward -->
       
       <div id="reword-out">
@@ -185,6 +213,15 @@
 
    
   <nav class="article-nav">
+    
+      <a href="/2023/05/14/20230514-%E6%A5%BC%E5%AE%87%E5%8D%8F%E8%AE%AE%EF%BC%8C%E4%BB%80%E4%B9%88%E6%98%AFBACnet/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            20230514-楼宇协议，什么是BACnet
+          
+        </div>
+      </a>
     
     
       <a href="/2023/05/12/20230512-%E8%A7%86%E9%A2%91%E7%9B%91%E6%8E%A7%E4%B8%89%E7%A7%8D%E5%AD%98%E5%82%A8%E6%96%B9%E5%BC%8FNVR%E3%80%81IP-SAN%E5%92%8CCVR%E5%93%AA%E7%A7%8D%E5%A5%BD/" class="article-nav-link">
