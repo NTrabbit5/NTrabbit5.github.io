@@ -126,6 +126,545 @@
     
     
     <article
+  id="post-20221113-用python发邮件"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/11/13/20221113-%E7%94%A8python%E5%8F%91%E9%82%AE%E4%BB%B6/"
+    >20221113-用python发邮件</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/11/13/20221113-%E7%94%A8python%E5%8F%91%E9%82%AE%E4%BB%B6/" class="article-date">
+  <time datetime="2022-11-13T09:33:43.000Z" itemprop="datePublished">2022-11-13</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h2 id="0-前言"><a href="#0-前言" class="headerlink" title="0. 前言"></a><strong>0. 前言</strong></h2><p>发送电子邮件是个很常见的开发需求。比如你写了个监控天气的脚本，发现第二天要下雨，或者网站上关注的某个商品降价了，就可以发个邮件到邮箱来提醒自己。</p>
+<p>使用 Python 脚本发送邮件并不复杂。不过由于各家邮件的发送机制和安全策略不同，常常会因为一些配置问题造成发送失败。今天我们来举例讲讲如何使用 Python 发送邮件。</p>
+<p>本文主要内容包括，了解发邮件的思路，发送邮件需要的一些设置，发送一封简单的邮件，发送一封包含附件的邮件，在写代码过程中我们需要注意哪些问题等等。（完整参考代码地址见文末）</p>
+<h2 id="1-思路"><a href="#1-思路" class="headerlink" title="1. 思路"></a><strong>1. 思路</strong></h2><p>使用脚本发送邮件的思路其实和客户端发送邮件一样，过程都是：</p>
+<p><strong>登录 —&gt; 写邮件 —&gt; 发送</strong></p>
+<p>只不过通过脚本发送时我们需要考虑到整个过程的方方面面。以下为思路导图：</p>
+<p><img src="https://pic3.zhimg.com/80/v2-e98001644a72c8d492c6893be41d347e_720w.webp" alt="img"></p>
+<h2 id="2-Python-email-模块"><a href="#2-Python-email-模块" class="headerlink" title="2. Python-email 模块"></a><strong>2. Python-email 模块</strong></h2><p>与发送邮件相关的 Python 模块：</p>
+<p><strong>smtplib</strong></p>
+<p>是关于 SMTP（简单邮件传输协议）的操作模块，在发送邮件的过程中起到服务器之间互相通信的作用。</p>
+<p><strong>email</strong></p>
+<p>简单来说，即服务器之间通信的信息，包括信息头、信息主体等等。</p>
+<p>举个简单的例子，当你登录邮箱，写好邮件后点击发送，这部分是由 SMTP 接管；而写邮件、添加附件是由 email 模块控制。</p>
+<h2 id="3-开通电子邮箱的SMTP功能"><a href="#3-开通电子邮箱的SMTP功能" class="headerlink" title="3. 开通电子邮箱的SMTP功能"></a><strong>3. 开通电子邮箱的SMTP功能</strong></h2><p>在使用脚本发邮件之前，我们需要打开自己邮箱的 SMTP 功能，各家邮箱的设置方法就不一一讲述了，具体使用时可以百度一下，下面以 163 邮箱设置为例做一个简单的演示：</p>
+<p><img src="https://pic2.zhimg.com/80/v2-c5d999eca64f00177d2e3d97da7656b1_720w.webp" alt="img"></p>
+<h2 id="4-简单代码"><a href="#4-简单代码" class="headerlink" title="4. 简单代码"></a><strong>4. 简单代码</strong></h2><p>实践出真知，我们结合一个简单的代码来理解这一过程：登录 163 邮箱，向 qq 邮箱发送邮件。</p>
+<p>脚本分为三个步骤：</p>
+<ol>
+<li>设置好服务器端信息</li>
+<li>邮件主体信息</li>
+<li>登录发送</li>
+</ol>
+<p>另外在处理文本时，我们需要使用 MIMEText 类。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> smtplib</span><br><span class="line"><span class="keyword">from</span> email.mime.text <span class="keyword">import</span> MIMEText</span><br><span class="line"><span class="comment">#设置服务器所需信息</span></span><br><span class="line"><span class="comment">#163邮箱服务器地址</span></span><br><span class="line">mail_host = <span class="string">&#x27;smtp.163.com&#x27;</span>  </span><br><span class="line"><span class="comment">#163用户名</span></span><br><span class="line">mail_user = <span class="string">&#x27;159*****02&#x27;</span>  </span><br><span class="line"><span class="comment">#密码(部分邮箱为授权码) </span></span><br><span class="line">mail_pass = <span class="string">&#x27;7******x&#x27;</span>   </span><br><span class="line"><span class="comment">#邮件发送方邮箱地址</span></span><br><span class="line">sender = <span class="string">&#x27;159*****02@163.com&#x27;</span>  </span><br><span class="line"><span class="comment">#邮件接受方邮箱地址，注意需要[]包裹，这意味着你可以写多个邮件地址群发</span></span><br><span class="line">receivers = [<span class="string">&#x27;59*****02@qq.com&#x27;</span>]  </span><br><span class="line"></span><br><span class="line"><span class="comment">#设置email信息</span></span><br><span class="line"><span class="comment">#邮件内容设置</span></span><br><span class="line">message = MIMEText(<span class="string">&#x27;content&#x27;</span>,<span class="string">&#x27;plain&#x27;</span>,<span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line"><span class="comment">#邮件主题       </span></span><br><span class="line">message[<span class="string">&#x27;Subject&#x27;</span>] = <span class="string">&#x27;title&#x27;</span> </span><br><span class="line"><span class="comment">#发送方信息</span></span><br><span class="line">message[<span class="string">&#x27;From&#x27;</span>] = sender </span><br><span class="line"><span class="comment">#接受方信息     </span></span><br><span class="line">message[<span class="string">&#x27;To&#x27;</span>] = receivers[<span class="number">0</span>]  </span><br><span class="line"></span><br><span class="line"><span class="comment">#登录并发送邮件</span></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    smtpObj = smtplib.SMTP() </span><br><span class="line">    <span class="comment">#连接到服务器</span></span><br><span class="line">    smtpObj.connect(mail_host,<span class="number">25</span>)</span><br><span class="line">    <span class="comment">#登录到服务器</span></span><br><span class="line">    smtpObj.login(mail_user,mail_pass) </span><br><span class="line">    <span class="comment">#发送</span></span><br><span class="line">    smtpObj.sendmail(</span><br><span class="line">        sender,receivers,message.as_string()) </span><br><span class="line">    <span class="comment">#退出</span></span><br><span class="line">    smtpObj.quit() </span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;success&#x27;</span>)</span><br><span class="line"><span class="keyword">except</span> smtplib.SMTPException <span class="keyword">as</span> e:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;error&#x27;</span>,e) <span class="comment">#打印错误</span></span><br></pre></td></tr></table></figure>
+
+<p>结果：</p>
+<p><img src="https://pic4.zhimg.com/80/v2-633829da1a6cd9aff757287dc2468747_720w.webp" alt="img"></p>
+<p>注意事项：</p>
+<p>一些邮箱登录比如 QQ 邮箱需要 SSL 认证，所以 SMTP 已经不能满足要求，而需要SMTP_SSL，解决办法为：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#启动</span></span><br><span class="line">smtpObj = smtplib.SMTP()</span><br><span class="line"><span class="comment">#连接到服务器</span></span><br><span class="line">smtpObj.connect(mail_host,<span class="number">25</span>)</span><br><span class="line"><span class="comment">#######替换为########</span></span><br><span class="line">smtpObj = smtplib.SMTP_SSL(mail_host)</span><br></pre></td></tr></table></figure>
+
+<h2 id="5-带有附件的email"><a href="#5-带有附件的email" class="headerlink" title="5. 带有附件的email"></a><strong>5. 带有附件的email</strong></h2><p>上面我们介绍了发送字符串的邮件，但这明显不满足现代邮件的需求，下面我们介绍如何发送内容以 HTML 格式，并且带有图片和文本文件的邮件。</p>
+<p>处理多种形态的邮件主体我们需要 MIMEMultipart 类，而处理图片需要 MIMEImage 类。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> smtplib</span><br><span class="line"><span class="keyword">from</span> email.mime.text <span class="keyword">import</span> MIMEText</span><br><span class="line"><span class="keyword">from</span> email.mime.multipart <span class="keyword">import</span> MIMEMultipart</span><br><span class="line"><span class="keyword">from</span> email.mime.image <span class="keyword">import</span> MIMEImage</span><br><span class="line"></span><br><span class="line"><span class="comment">#设置登录及服务器信息</span></span><br><span class="line">mail_host = <span class="string">&#x27;smtp.163.com&#x27;</span></span><br><span class="line">mail_user = <span class="string">&#x27;159*****02&#x27;</span></span><br><span class="line">mail_pass = <span class="string">&#x27;7******x&#x27;</span></span><br><span class="line">sender = <span class="string">&#x27;159*****02@163.com&#x27;</span></span><br><span class="line">receivers = [<span class="string">&#x27;7******0@qq.com&#x27;</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment">#设置eamil信息</span></span><br><span class="line"><span class="comment">#添加一个MIMEmultipart类，处理正文及附件</span></span><br><span class="line">message = MIMEMultipart()</span><br><span class="line">message[<span class="string">&#x27;From&#x27;</span>] = sender</span><br><span class="line">message[<span class="string">&#x27;To&#x27;</span>] = receivers[<span class="number">0</span>]</span><br><span class="line">message[<span class="string">&#x27;Subject&#x27;</span>] = <span class="string">&#x27;title&#x27;</span></span><br><span class="line"><span class="comment">#推荐使用html格式的正文内容，这样比较灵活，可以附加图片地址，调整格式等</span></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&#x27;abc.html&#x27;</span>,<span class="string">&#x27;r&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">    content = f.read()</span><br><span class="line"><span class="comment">#设置html格式参数</span></span><br><span class="line">part1 = MIMEText(content,<span class="string">&#x27;html&#x27;</span>,<span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line"><span class="comment">#添加一个txt文本附件</span></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&#x27;abc.txt&#x27;</span>,<span class="string">&#x27;r&#x27;</span>)<span class="keyword">as</span> h:</span><br><span class="line">    content2 = h.read()</span><br><span class="line"><span class="comment">#设置txt参数</span></span><br><span class="line">part2 = MIMEText(content2,<span class="string">&#x27;plain&#x27;</span>,<span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line"><span class="comment">#附件设置内容类型，方便起见，设置为二进制流</span></span><br><span class="line">part2[<span class="string">&#x27;Content-Type&#x27;</span>] = <span class="string">&#x27;application/octet-stream&#x27;</span></span><br><span class="line"><span class="comment">#设置附件头，添加文件名</span></span><br><span class="line">part2[<span class="string">&#x27;Content-Disposition&#x27;</span>] = <span class="string">&#x27;attachment;filename=&quot;abc.txt&quot;&#x27;</span></span><br><span class="line"><span class="comment">#添加照片附件</span></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&#x27;1.png&#x27;</span>,<span class="string">&#x27;rb&#x27;</span>)<span class="keyword">as</span> fp:</span><br><span class="line">    picture = MIMEImage(fp.read())</span><br><span class="line">    <span class="comment">#与txt文件设置相似</span></span><br><span class="line">    picture[<span class="string">&#x27;Content-Type&#x27;</span>] = <span class="string">&#x27;application/octet-stream&#x27;</span></span><br><span class="line">    picture[<span class="string">&#x27;Content-Disposition&#x27;</span>] = <span class="string">&#x27;attachment;filename=&quot;1.png&quot;&#x27;</span></span><br><span class="line"><span class="comment">#将内容附加到邮件主体中</span></span><br><span class="line">message.attach(part1)</span><br><span class="line">message.attach(part2)</span><br><span class="line">message.attach(picture)</span><br><span class="line"></span><br><span class="line"><span class="comment">#登录并发送</span></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    smtpObj = smtplib.SMTP()</span><br><span class="line">    smtpObj.connect(mail_host,<span class="number">25</span>)</span><br><span class="line">    smtpObj.login(mail_user,mail_pass)</span><br><span class="line">    smtpObj.sendmail(</span><br><span class="line">        sender,receivers,message.as_string())</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;success&#x27;</span>)</span><br><span class="line">    smtpObj.quit()</span><br><span class="line"><span class="keyword">except</span> smtplib.SMTPException <span class="keyword">as</span> e:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;error&#x27;</span>,e)</span><br></pre></td></tr></table></figure>
+
+<h2 id="6-小结"><a href="#6-小结" class="headerlink" title="6.小结"></a><strong>6.小结</strong></h2><p>通过上面的代码，想必大家已经对发邮件有了基本的认识。</p>
+<p>从整体上我们要把握整个过程的思路：</p>
+<ol>
+<li>登录</li>
+<li>写邮件</li>
+<li>发送</li>
+</ol>
+<p>微观上我们需要了解：</p>
+<ul>
+<li>smtplib&#x2F;email 模块的代码规则；</li>
+<li>什么时候使用 SMTP，什么时候使用 SMTP_SSL？</li>
+<li>针对不同的邮件内容需要使用到不同的类，MIMEmultipart、MIMEText、MIMEIamge 等等；</li>
+<li>怎么去设置附件信息</li>
+</ul>
+<p>当然，看再多教程，不如亲自动手写一段代码。大家不妨都自己发一封邮件试一试。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-20221112-80种农村路边野草"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/11/12/20221112-80%E7%A7%8D%E5%86%9C%E6%9D%91%E8%B7%AF%E8%BE%B9%E9%87%8E%E8%8D%89/"
+    >20221112-80种农村路边野草</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/11/12/20221112-80%E7%A7%8D%E5%86%9C%E6%9D%91%E8%B7%AF%E8%BE%B9%E9%87%8E%E8%8D%89/" class="article-date">
+  <time datetime="2022-11-12T07:22:54.000Z" itemprop="datePublished">2022-11-12</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>小时候，不论在山上、在田里、还是在路边，总能看到各种各样的小花小草，或外表相似，或独具特色，而它们的名字似乎总是一个谜。今天我们就盘点一下这些叫不出名字的植物吧，或许，还能唤起你儿时的回忆。</p>
+<p><img src="https://pic4.zhimg.com/80/v2-2e087f60465808f12cabf4d45414150b_720w.webp" alt="img"></p>
+<p>【鼠曲草】</p>
+<p>亦名清明菜，全株有白色绵毛，民间草药名叫“追骨风”，属菊科草本植物。江浙地区民间常于清明前后采摘嫩苗煮熟，揉入米粉中做糕团，香糯可口。</p>
+<p><img src="https://pic1.zhimg.com/80/v2-9bbc0abd7ceb51be4d437423b62c9140_720w.webp" alt="img"></p>
+<p>【棒头草】</p>
+<p>农田常见杂草，一年生草本，成株秆丛生，光滑无毛。</p>
+<p><img src="https://pic2.zhimg.com/80/v2-4ecabf3d606b6227578d7047deb5af2d_720w.webp" alt="img"></p>
+<p>【看麦娘】</p>
+<p>别名山高梁，一年生草本植物，每年的4-8月开花、结果。全草入药，味淡，凉。</p>
+<p><img src="https://pic1.zhimg.com/80/v2-8abd3faa3121de4b3a7e986750bf0374_720w.webp" alt="img"></p>
+<p>【阿拉伯婆婆纳】</p>
+<p>为玄参科一年至二年生草本植物，有柔毛。花单生于苞腋，花冠淡蓝色，生于田间、路旁，是华东地区早春常见杂草；也为常见入侵植物。植物的全草可供药用。生花期3~5月，种子繁殖。</p>
+<p><img src="https://pic1.zhimg.com/80/v2-9c09e8e8521d9db5a87261402d103db8_720w.webp" alt="img"></p>
+<p>【球序卷耳】</p>
+<p>石竹科，卷耳属。又名婆婆指甲菜、粘毛卷耳。二年生或有时一年生草本。苗期11月份至翌年2月份。花果期4～5月份。种子繁殖。喜生于干燥疏松的土壤。</p>
+<p><img src="https://pic4.zhimg.com/80/v2-0a6ed41d2e4c761bd074d417ac953cb7_720w.webp" alt="img"></p>
+<p>【车前草】</p>
+<p>又名车轮菜，多年生草本，连花茎高达50厘米，具须根。具有祛痰、镇咳、平喘等作用。生长在山野、路旁、花圃、河边等地。</p>
+<p><img src="https://pic2.zhimg.com/80/v2-b006a19078f9cae25a9d4cb2e3884435_720w.webp" alt="img"></p>
+<p>【猪殃殃】</p>
+<p>又名锯锯草，活血草，是茜草科小草本，属于双子叶植物。其嫩苗可作菜，据说猪食之则病，故名猪殃殃。</p>
+<p><img src="https://pic3.zhimg.com/80/v2-10f831397a9e0d37fc909c021b3179a6_720w.webp" alt="img"></p>
+<p>【酢浆草】</p>
+<p>又名三叶草。多年生草本。黄色的叫黄花酢浆草，红色的叫红花酢浆草。喜向阳、温暖、湿润的环境，夏季炎热地区宜遮半荫，抗旱能力较强，不耐寒，一般园土均可生长，夏季有短期的休眠。</p>
+<p><img src="https://pic2.zhimg.com/80/v2-60afbc87180993ccedad5c07b3a7c701_720w.webp" alt="img"></p>
+<p>【蛇莓】</p>
+<p>蔷薇科植物，在我国分布广泛，具有药用价值，也可同时观花、果、叶，园林效果突出。</p>
+<p><img src="https://pic2.zhimg.com/80/v2-279a165e7e3f426ef9a3ad0d7dd75c41_720w.webp" alt="img"></p>
+<p>【积雪草】</p>
+<p>伞形科，积雪草属。匍匐草本，生于阴湿荒地、村旁、路边、水沟边。茎伏地，节上生根。叶互生，叶柄长；叶片圆形或肾形。</p>
+<p><img src="https://pic4.zhimg.com/80/v2-988f92ff328032889cdebe3afe0537f7_720w.webp" alt="img"></p>
+<p>【杠板归】</p>
+<p>蓼科，蓼属。杠板归是在中国旱地比较常见的一种杂草类型，一年生攀援性草本，通过种子繁殖。每次爆发都会带来巨大危害。</p>
+<p><img src="https://pic4.zhimg.com/80/v2-398612c80a4f8b892107cc4538cf7c9b_720w.webp" alt="img"></p>
+<p>【田野水苏】</p>
+<p>唇形科，水苏属。一年生植物，高30—50厘米，有在节上生须根的根茎。</p>
+<p><img src="https://pic2.zhimg.com/80/v2-a81e10ab516312b87b16411d7688e1ed_720w.webp" alt="img"></p>
+<p>【细叶芹】</p>
+<p>伞形科，芹属。一年生草本，是常见的农田杂草之一。</p>
+<p><img src="https://pic3.zhimg.com/80/v2-d3554b6b2895d3abbe97e579c70210d2_720w.webp" alt="img"></p>
+<p>【白花鬼针草】</p>
+<p>菊科。一年生直立草本。茎钝四棱形，无毛或上部被极稀的柔毛。</p>
+<p><img src="https://pic3.zhimg.com/80/v2-16869fb5d6638b5d488c51ae8264800e_720w.webp" alt="img"></p>
+<p>【通泉草】</p>
+<p>为通泉草属的一年生草本植物，高3~30厘米，遍布全国，仅内蒙古、宁夏、青海及新疆未见标本。通泉草的全草可用于止痛，健胃，解毒消肿。</p>
+<p><img src="https://pic4.zhimg.com/80/v2-01d16968acd4b99b4cfc6f6b5e2557bf_720w.webp" alt="img"></p>
+<p>【蓝花琉璃繁缕】</p>
+<p>报春花科，琉璃繁缕属。一年生或多年生草本。全草有毒，内服多量以后使消化系统特别是肠受刺激，并麻痹神经系统。</p>
+<p><img src="https://pic1.zhimg.com/80/v2-fb98e1fd07fa31f745e5a22bafe4ebe8_720w.webp" alt="img"></p>
+<p>【蓬虆】</p>
+<p>蔷薇科， 悬钩子属 。亦名牛叠肚、覆盆子。红色果实可食。</p>
+<p><img src="https://pic4.zhimg.com/80/v2-3ef238c6e473fd9edd6fce258e32a177_720w.webp" alt="img"></p>
+<p>【葎草】</p>
+<p>大麻科，葎草属。又称拉拉秧、拉拉藤、五爪龙，多年生茎蔓草本植物。嫩茎和叶可做食草动物饲料。可入药。</p>
+<p><img src="https://pic1.zhimg.com/80/v2-1ed452ddb94453ef32abc1224b0256f8_720w.webp" alt="img"></p>
+<p>【黄鹌菜】</p>
+<p>菊科，黄鹌菜属。一年生草本，茎直立。植物体折断有白色乳汁流出，开黄色花。收载于汪颖《食物本草》形若苦荬，中国江南各地普遍野生，作野菜食用。</p>
+<p><img src="https://pic3.zhimg.com/80/v2-d8d948692d1eeb6efc4cffe9804fb33a_720w.webp" alt="img"></p>
+<p>【多裂翅果菊】</p>
+<p>菊科，翅果菊属。折断枝叶有白色乳汁，为兔子喜爱植物。</p>
+<p><img src="https://pic1.zhimg.com/80/v2-144b49233db712d1a1c4f6ea89f77b48_720w.webp" alt="img"></p>
+<p>【石龙芮】</p>
+<p>毛茛科，毛茛属。亦名水芹菜。以全草入药。夏季采收，洗净晒干或鲜用。</p>
+<p><img src="https://pic2.zhimg.com/80/v2-6fb5fdab188e8955730793c726504f05_720w.webp" alt="img"></p>
+<p>【裸柱菊】</p>
+<p>菊科，裸柱菊属。又名座地菊。一年生矮小草本，茎通常短于叶，丛生。</p>
+<p><img src="https://pic4.zhimg.com/80/v2-582b6d228afdb8955a3d3673f1b42ed7_720w.webp" alt="img"></p>
+<p>【马兰】</p>
+<p>菊科，马兰属。又名马兰头。能清热解毒，散瘀止血，利湿，消食，消积。</p>
+<p><img src="https://pic4.zhimg.com/80/v2-68c5f770905fc62c1587b9efa7b33577_720w.webp" alt="img"></p>
+<p>【泥胡菜】</p>
+<p>菊科，泥胡菜属。又名剪刀草。泥胡菜我国各地均有分布。中药用全草。</p>
+<p><img src="https://pic2.zhimg.com/80/v2-b498e8d2b66d94c7dea76a54da72e001_720w.webp" alt="img"></p>
+<p>【扬子毛茛】</p>
+<p>毛茛科，毛莨属。多年生草本，须根伸长簇生。</p>
+<p><img src="https://pic4.zhimg.com/80/v2-8c4d3564c8a2c992b9699c0b2a1a8637_720w.webp" alt="img"></p>
+<p>【刺果毛茛】</p>
+<p>毛茛科，毛莨属。幼苗全株光滑无毛。下胚轴较发达，上胚轴不发育。</p>
+<p><img src="https://pic1.zhimg.com/80/v2-54fbddd0dc9949b44d80180116c529f4_720w.webp" alt="img"></p>
+<p>【荠菜】</p>
+<p>十字花科，荠菜属。荠菜是一种人们喜爱的可食用野菜，遍布全世界。其营养价值很高，食用方法多种多样，具有很高的药用价值。</p>
+<p><img src="https://pic3.zhimg.com/80/v2-7e1146164e95606d75266c177eb1cbb6_720w.webp" alt="img"></p>
+<p>【荔枝草】</p>
+<p>唇形科，鼠尾草属。直立草本，主根肥厚，向下直伸，有多数须根。</p>
+<p><img src="https://pic2.zhimg.com/80/v2-03928eed6d3bdda549641837b8a4a4dd_720w.webp" alt="img"></p>
+<p>【艾草】</p>
+<p>菊科，蒿属。又名艾蒿。是一种多年生草本植物，分布于亚洲及欧洲地区。一般用于针灸术的“灸”。</p>
+<p><img src="https://pic4.zhimg.com/80/v2-195159a71895817b1373dc562873c8d7_720w.webp" alt="img"></p>
+<p>【苦苣菜】</p>
+<p>菊科，苦苣菜属。茎呈黄白色；叶片为圆状披针形，表面绿色，背面灰绿色；花鲜黄色。多用作饲料，为饲养幼鹅的好青饲料，也有栽培作蔬菜，叶有苦味，人多不喜食，有降血压作用。</p>
+<p><img src="https://pic2.zhimg.com/80/v2-0269a86781a9954705a1b7e0056cd421_720w.webp" alt="img"></p>
+<p>【风车草】</p>
+<p>莎草科，莎草属。</p>
+<p><img src="https://pic4.zhimg.com/80/v2-a3b8cfcd25d3ef2c569b4b7182d0f357_720w.webp" alt="img"></p>
+<p>【泽珍珠菜】</p>
+<p>报春花科，珍珠菜属；生性喜湿，药用消肿。</p>
+<p><img src="https://pic2.zhimg.com/80/v2-e3c0403bbe37b741dcad97d887a9606d_720w.webp" alt="img"></p>
+<p>【北水苦荬】</p>
+<p>玄参科，婆婆纳属。亦名仙桃草。多年生草本。花期6～8月份，果期7～9月份。适生于水边湿地及浅水沟中，为水稻田中及蔬菜地常见杂草，危害不重。</p>
+<p><img src="https://pic2.zhimg.com/80/v2-a4cd7451e6b43f679b9665316dc9e58d_720w.webp" alt="img"></p>
+<p>【北美独行菜】</p>
+<p>十字花科，独行菜属。原产地是美洲；现于欧洲和亚洲广泛分布。</p>
+<p><img src="https://pic1.zhimg.com/80/v2-4f14eef3fb93578f2fa1d551b0f83534_720w.webp" alt="img"></p>
+<p>【蔊菜】</p>
+<p>十字花科，蔊菜属。一年生草本植物，不仅仅有药用价值，还可作为蔬菜食用。花期4～5月，生于路旁、田野。产于华东地区。</p>
+<p><img src="https://pic3.zhimg.com/80/v2-46fc82b37068a04c1228fcc8d72b4e96_720w.webp" alt="img"></p>
+<p>【牛繁缕】</p>
+<p>石竹科，鹅肠菜属。亦名鹅儿肠、鹅肠菜。全草可做野菜和饲料；也可药用。</p>
+<p><img src="https://pic3.zhimg.com/80/v2-7a1c336abddce79f233be833831b1c7e_720w.webp" alt="img"></p>
+<p>【匙叶鼠麴草】</p>
+<p>菊科，鼠麴草属。常见于篱园或耕地上，耐旱性强。</p>
+<p><img src="https://pic2.zhimg.com/80/v2-97c3cb3e2049ec796bd9735e3c68e541_720w.webp" alt="img"></p>
+<p>【薤白】</p>
+<p>百合科，葱属。别名小根蒜、山蒜、野蒜。李时珍说：”其根煮食、糟藏、醋浸皆宜”。根色白，作药用，名薤白。</p>
+<p><img src="https://pic3.zhimg.com/80/v2-5b5ccef42066413728a7612e6b9b3d6e_720w.webp" alt="img"></p>
+<p>【附地菜】</p>
+<p>紫草科，附地菜属。有青草气，味微苦涩。</p>
+<p><img src="https://pic2.zhimg.com/80/v2-d7070ac3c02a1a2bd169d639be71d869_720w.webp" alt="img"></p>
+<p>【一点红】</p>
+<p>菊科，一点红属。一点红性平，味苦微辛，凉血解毒，活血散瘀，利水消肿。其食用部位为嫩茎叶，食法多样，可炒食，也可作汤或火锅用菜，口感清爽，具有类似茼蒿的香味。一点红采摘嫩梢，沸水焯后，加蒜蓉炒食，作汤。食味柔滑，清香可口。</p>
+<p><img src="https://pic2.zhimg.com/80/v2-7fb92e11702f135d487ac346dfbfccc5_720w.webp" alt="img"></p>
+<p>【一年蓬】</p>
+<p>菊科，飞蓬属。原产于北美洲，因为其强大的繁殖能力和适应性，被列入外来入侵物种名单。</p>
+<p><img src="https://pic1.zhimg.com/80/v2-28f9f7a705a416aa99d13e9253b30128_720w.webp" alt="img"></p>
+<p>【小蓬草】</p>
+<p>菊科，白酒草属。亦名小飞蓬。原产于北美洲，现在各地广泛分布。我国各地均有分布，是我国分布最广的入侵物种之一。</p>
+<p><img src="https://pic1.zhimg.com/80/v2-07348142e2f0c83dafdc5eceeaac32d0_720w.webp" alt="img"></p>
+<p>【细风轮菜】</p>
+<p>唇形科，风轮菜属。全草入药，6～8月采收全草，晒干或鲜用。</p>
+<p><img src="https://pic2.zhimg.com/80/v2-a02d5ed688f6e72dab77bb1b9312e7ed_720w.webp" alt="img"></p>
+<p>【空心莲子草】</p>
+<p>苋科，莲子草属。原产于巴西，又名革命草、水花生。1930年传入中国，是危害性极大的入侵物种。有药用价值，被列为中国首批外来入侵物种。</p>
+<p><img src="https://pic2.zhimg.com/80/v2-81386e13f7bb0529bba9b3839127fe19_720w.webp" alt="img"></p>
+<p>【野老鹳草】</p>
+<p>牻牛儿苗科，老鹳草属。一年生或越年生草本，常见于荒地、田园、路边和沟边。花果期4~8月。全草入药，有祛风收敛和止泻之效。</p>
+<p><img src="https://pic3.zhimg.com/80/v2-db0cf888695b9cd2b7d139010b39bc3a_720w.webp" alt="img"></p>
+<p>【假酸浆】</p>
+<p>茄科，假酸浆属。亦名水晶凉粉、冰粉。全草入药。</p>
+<p><img src="https://pic1.zhimg.com/80/v2-e93847a884bc4350bfb87a25e0f09418_720w.webp" alt="img"></p>
+<p>【柔弱斑种草】</p>
+<p>紫草科，斑种草属。多生长于田间草丛、山坡草地、山坡路边或溪边阴湿处。</p>
+<p><img src="https://pic2.zhimg.com/80/v2-e64753d03d932e6efa579823d70f2815_720w.webp" alt="img"></p>
+<p>【半边莲】</p>
+<p>桔梗科，半边莲属。因花瓣均偏向一侧而得名。果实倒锥状。花期在5月至8月、果期在8月至10月。全草入药。</p>
+<p><img src="https://pic3.zhimg.com/80/v2-64bcf4c2e079d239d71b8f56b7a7df2e_720w.webp" alt="img"></p>
+<p>【龙葵】</p>
+<p>茄科，茄属。温州方言——乌龙茄。这是一种生命力非常强的植物，在全国大量分布，它既是水果又是药材。</p>
+<p><img src="https://pic1.zhimg.com/80/v2-c4d4fd348dfd06eb8501677577cfb760_720w.webp" alt="img"></p>
+<p>【大车前】</p>
+<p>车前科，车前属。入药，与“车前草”同，据说药效较车前草稍弱。</p>
+<p><img src="https://pic1.zhimg.com/80/v2-04c1ef0b82a98bf1347216c23e2d9918_720w.webp" alt="img"></p>
+<p>【垂序商陆】</p>
+<p>商陆科，商陆属。是一种入侵植物，原产北美洲。全株有毒，根及果实毒性最强，需要引起警惕。</p>
+<p><img src="https://pic3.zhimg.com/80/v2-16f6f0dadc070ca29cb8f54901839856_720w.webp" alt="img"></p>
+<p>【大吴风草】</p>
+<p>菊科，大吴风草属。可入药。《浙江民间常用草药》：“性凉，味苦。”</p>
+<p><img src="https://pic4.zhimg.com/80/v2-9cc7a9baf4d02ff2edbe5084bc3f4f77_720w.webp" alt="img"></p>
+<p>【水蓼】</p>
+<p>蓼科，蓼属。生湿地，水边或水中。中国大部分地区有分布。本植物的根（水蓼根）、果实（寥实）亦供药用。</p>
+<p><img src="https://pic4.zhimg.com/80/v2-d288de80f200e165096286a93fb21e3b_720w.webp" alt="img"></p>
+<p>【皱叶狗尾草】</p>
+<p>禾本科，狗尾草属。为阴湿地上或林下一种野草，果实可食，旧时用以救荒。</p>
+<p><img src="https://pic2.zhimg.com/80/v2-bf06626e232fb04de444548bcc2af7ed_720w.webp" alt="img"></p>
+<p>【野茼蒿】</p>
+<p>菊科，野茼蒿属。常生荒地、路旁、林下和水沟边。花果期7~11月，种子繁殖，瘦果藉冠毛随风飘散。</p>
+<p><img src="https://pic1.zhimg.com/80/v2-1cabc9b524ee154bd15ddcaeae8bc490_720w.webp" alt="img"></p>
+<p>【小叶女贞】</p>
+<p>木樨科，女贞属。为园林绿化的重要绿篱材料；叶入药，具清热解毒等功效，治烫伤、外伤；树皮入药治烫伤。抗多种有毒气体，是优良的抗污染树种；它叶小、常绿，且耐修剪，生长迅速，也是制作盆景的优良树种。</p>
+<p><img src="https://pic1.zhimg.com/80/v2-628fec583adc9faecdadef6a15ff7918_720w.webp" alt="img"></p>
+<p>【抱茎小苦荬】</p>
+<p>菊科，小苦荬属。一般出现于荒野、路边、田间地头，嫩茎叶可做鸡鸭饲料；全株可为猪饲料。另据记载，全草可入药，能清热、解毒，消肿，有凉血、活血之功效。</p>
+<p><img src="https://pic1.zhimg.com/80/v2-8ff7b412f45c946649dc2a665a2008d4_720w.webp" alt="img"></p>
+<p>【中华小苦荬】</p>
+<p>菊科，小苦荬属。亦名小苦苣，黄鼠草，山苦荬。见于田野、山坡路旁、河边灌丛及岩石缝隙中，目前尚未由人工引种栽培。有黄白两种花色。</p>
+<p><img src="https://pic3.zhimg.com/80/v2-45f77ad6086ea911f94bb29a0347b22e_720w.webp" alt="img"></p>
+<p>【香附子】</p>
+<p>莎草科，莎草属。其干燥的根茎为常用中药。始载于南北朝时期陶弘景的《名医别录》，迄今已有1500多年。</p>
+<p><img src="https://pic3.zhimg.com/80/v2-f4e5843ad583ac9a48b3d00754e93d12_720w.webp" alt="img"></p>
+<p>【鳢肠】</p>
+<p>菊科，鳢肠属。因为搓揉它的茎叶时，可见黑色的汁液流出，所以又叫“墨旱莲”。</p>
+<p><img src="https://pic1.zhimg.com/80/v2-4092f30fdd4ea8ab9453e2c01b9d1fe8_720w.webp" alt="img"></p>
+<p>【钻叶紫菀】</p>
+<p>菊科，紫菀属。亦名燕尾菜,剪刀菜,土柴胡。可入药。</p>
+<p><img src="https://pic1.zhimg.com/80/v2-c1389307c30e6cee9c3bce52c4b95dbc_720w.webp" alt="img"></p>
+<p>【珊瑚豆】</p>
+<p>茄科，茄属。珊瑚豆生长旺盛，适应性强，繁殖栽培都较容易，常用播种繁殖。性温，味咸微苦，果及全株有毒。</p>
+<p><img src="https://pic2.zhimg.com/80/v2-9db75d48268de6ebae1f19068018e8dd_720w.webp" alt="img"></p>
+<p>【卵叶异檐花】</p>
+<p>桔梗科，异檐花属。跟婆婆纳一样，是外来入侵物种。原产美洲。</p>
+<p><img src="https://pic2.zhimg.com/80/v2-aacaca453e89026fc1ef4107f91d206d_720w.webp" alt="img"></p>
+<p>【宝盖草】</p>
+<p>唇形科，野芝麻属。亦名莲台接骨草、佛座草、灯笼草。可入药。《植物名实图考》：养筋，活血，止遍身疼痛。</p>
+<p><img src="https://pic4.zhimg.com/80/v2-dece4d37955c66548554366959f933e7_720w.webp" alt="img"></p>
+<p>【草木樨】</p>
+<p>豆科，草木樨属。俗名叫野苜蓿，有白花和黄花两品种。草木樨的耐旱能力很强，耐寒、耐瘠性也强，也有一定的耐盐能力，对土壤要求不严格。</p>
+<p><img src="https://pic2.zhimg.com/80/v2-cb6989f52f6b663e210990f662516dbd_720w.webp" alt="img"></p>
+<p>【酸模叶蓼】</p>
+<p>蓼科，蓼属。别名：大马蓼、旱苗蓼、斑蓼、柳叶蓼。生于路旁湿地和沟边；全草入中药，味辛，性温。</p>
+<p><img src="https://pic2.zhimg.com/80/v2-9f9aa7c52e4f2445924aba1c7a6a9cd1_720w.webp" alt="img"></p>
+<p>【绵毛酸模叶蓼】</p>
+<p>蓼科，蓼属。分布全国各地，是为害水稻、小麦、棉花、豆类常见杂草。</p>
+<p><img src="https://pic4.zhimg.com/80/v2-a640f2a5119cdab4f20bffe9bf3caf0b_720w.webp" alt="img"></p>
+<p>【藿香蓟】</p>
+<p>菊科，藿香蓟属。又名胜红蓟，原产于墨西哥。有栽培，也有归化野生分布的。</p>
+<p><img src="https://pic3.zhimg.com/80/v2-9f7fad70550c785c0764546af7b72eaa_720w.webp" alt="img"></p>
+<p>【星宿菜】</p>
+<p>报春花科，珍珠菜属。又名假辣蓼、泥鳅菜。生于山坡、溪边、低草丛潮湿地。夏、秋季采收。分布我国华、中南各省区。全草可入药。</p>
+<p><img src="https://pic2.zhimg.com/80/v2-e28f38b71107b3cad31cc7c66aa0f3c1_720w.webp" alt="img"></p>
+<p>【火炭母】</p>
+<p>蓼科，蓼属。火炭母为园林垂直绿化材料，适合庭院、花径或建筑物周围栽植，颇有野趣。根和茎可入药。叶味酸，可食。</p>
+<p><img src="https://pic1.zhimg.com/80/v2-ef44bac4e73cd838ed8f078797600214_720w.webp" alt="img"></p>
+<p>【天胡荽】</p>
+<p>伞形科，天胡荽属。又名破铜钱。天胡荽是乡土地被植物，适应性广，覆盖能力强，可在短时间形成致密草坪，只是叶片嫩、水份多，不耐践踏。</p>
+<p><img src="https://pic1.zhimg.com/80/v2-5ddb08c16c523d76db177934414f0f64_720w.webp" alt="img"></p>
+<p>【鸭跖草】</p>
+<p>鸭跖草科，鸭跖草属。鸭跖草为一年生草本，喜欢在潮湿的草地生长，可入药。</p>
+<p><img src="https://pic2.zhimg.com/80/v2-20e9dbc077a5f18d647a28abf58a814d_720w.webp" alt="img"></p>
+<p>【蓝花参】</p>
+<p>桔梗科，蓝花参属。别名雀舌草、罐罐草。以根或全草入药。</p>
+<p><img src="https://pic3.zhimg.com/80/v2-03ca0d0cb1b96e915fdb8f8f3c3bff72_720w.webp" alt="img"></p>
+<p>【窃衣】</p>
+<p>伞形科，窃衣属。一年生或多年生草本植物。药材窃衣为伞形科植物窃衣和小窃衣的果实或全草。夏末秋初采收，晒干或鲜用。</p>
+<p><img src="https://pic3.zhimg.com/80/v2-8f82e0871409ff73a91bd68f3031d082_720w.webp" alt="img"></p>
+<p>【水烛】</p>
+<p>香蒲科，香蒲属。别名蒲草、水蜡烛、狭叶香蒲。是广泛生长在中国的一种野生蔬菜，其假茎白嫩部分（即蒲菜）和地下匍匐茎尖端的幼嫩部分（即草芽）可以食用，味道清爽可口。</p>
+<p><img src="https://pic1.zhimg.com/80/v2-22fb387935e45b200bab722dbbed2540_720w.webp" alt="img"></p>
+<p>【元宝草】</p>
+<p>藤黄科，金丝桃属。生于坡地、路边杂草丛中。我国南北各省都有分布；本省庭园有栽培。果和根供药用；果能治肺病、百日咳；根能祛风湿，止咳，治腰痛。</p>
+<p><img src="https://pic2.zhimg.com/80/v2-ec64c66614b7c9762c46d34a1f750b89_720w.webp" alt="img"></p>
+<p>【乌蔹莓】</p>
+<p>葡萄科，乌蔹莓属。又名乌蔹草、五叶藤、五爪龙、母猪藤。生于旷野、山谷、林下、路旁。它具有清热解毒，活血散瘀，利尿的功能，可以治疗咽喉肿痛、疖肿、痈疽、疔疮、痢疾、尿血、白浊、跌打损伤、毒蛇咬伤等症。</p>
+<p><img src="https://pic4.zhimg.com/80/v2-96cff9cc209377b5ec1456dd7a2d0587_720w.webp" alt="img"></p>
+<p>【狗尾草】</p>
+<p>禾本科，狗尾草属。狗尾巴草适应性强，在中国分布广泛，具有一定的药用价值。</p>
+<p><img src="https://pic1.zhimg.com/80/v2-11db81f243868066346580e316654574_720w.webp" alt="img"></p>
+<p>【巴天酸模】</p>
+<p>蓼科，酸模属。又名洋铁叶、洋铁酸模、牛舌头棵。药用部位：根，药用功能：止血，清热，利水，通便。</p>
+<p><img src="https://pic3.zhimg.com/80/v2-0904bdf5997d3d56d892d04dfe7c0092_720w.webp" alt="img"></p>
+<p>【大蓟】</p>
+<p>菊科，蓟属。有抗菌、降血压、止血作用。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-20221112-酒曲的做法"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/11/12/20221112-%E9%85%92%E6%9B%B2%E7%9A%84%E5%81%9A%E6%B3%95/"
+    >20221112-酒曲的做法</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/11/12/20221112-%E9%85%92%E6%9B%B2%E7%9A%84%E5%81%9A%E6%B3%95/" class="article-date">
+  <time datetime="2022-11-12T06:48:40.000Z" itemprop="datePublished">2022-11-12</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>曲为酒之骨，酒曲中含有丰富的微生物和培养基成分</p>
+<p>酒曲的定义就是酿酒过程当中所使用的一种物质，能够维持微生物生存，让微生物群体提供养料和生存空间</p>
+<p>原料主要是大麦，小麦，豌豆 </p>
+<p>原料必须没有霉变，没有虫蛀，没有杂味，也没有农药污染</p>
+<p>酒曲的种类</p>
+<p>酒曲大概可以分为以下五种</p>
+<p>大曲<br>  中温大曲<br>  高温大曲<br>  超高温大曲<br>小曲<br>  传统小曲<br>  纯种小曲<br>麦曲<br>  传统麦曲<br>  纯种麦曲<br>麸曲<br>  地面曲<br>  盒子曲<br>  帘子曲<br>  通风曲<br>红曲<br>  乌衣红曲<br>  红曲</p>
+<p>在我的家乡这边，制作酒曲的原料的种类还是比较少见的，一般少则三四种，多则是六七种，比较常见的就是<br>辣蓼草<br>马鞭草<br>兰香草<br>淡竹叶<br>桃树叶<br>柑橘树叶等。</p>
+<p>有一些比较讲究的老人，则还会加入艾草、土茯苓、桑叶、竹叶、扁豆叶、桂叶和甘草等等。因为各地的植物分布不同，所以制作酒曲的原料也是不一样的。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-20221111-芮城百亿产业"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/11/11/20221111-%E8%8A%AE%E5%9F%8E%E7%99%BE%E4%BA%BF%E4%BA%A7%E4%B8%9A/"
+    >20221111-芮城百亿产业</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/11/11/20221111-%E8%8A%AE%E5%9F%8E%E7%99%BE%E4%BA%BF%E4%BA%A7%E4%B8%9A/" class="article-date">
+  <time datetime="2022-11-11T02:35:16.000Z" itemprop="datePublished">2022-11-11</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>生命健康产业集群</p>
+<p>新材料产业集群</p>
+<p>清洁能源产业集群</p>
+<p>临空经济产业集群</p>
+<p>绿色建材产业集群</p>
+<p>农产品加工产业集群</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-20221107-临江仙-苏轼"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/11/07/20221107-%E4%B8%B4%E6%B1%9F%E4%BB%99-%E8%8B%8F%E8%BD%BC/"
+    >20221107-临江仙-苏轼</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/11/07/20221107-%E4%B8%B4%E6%B1%9F%E4%BB%99-%E8%8B%8F%E8%BD%BC/" class="article-date">
+  <time datetime="2022-11-07T02:42:58.000Z" itemprop="datePublished">2022-11-07</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>宋代苏轼的《临江仙》</p>
+<p>夜饮东坡醒复醉，归来仿佛三更。家童鼻息已雷鸣。敲门都不应，倚杖听江声。</p>
+<p>长恨此身非我有，何时忘却营营？夜阑风静縠纹平。小舟从此逝，江海寄余生。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-20221105-golang-run数据类型"
   class="article article-type-post"
   itemscope
@@ -2081,402 +2620,6 @@
 </ol>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo shutdown -s 20:00</span><br></pre></td></tr></table></figure>
  
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20220825-永久激活win10"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/08/25/20220825-%E6%B0%B8%E4%B9%85%E6%BF%80%E6%B4%BBwin10/"
-    >20220825-永久激活win10</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/08/25/20220825-%E6%B0%B8%E4%B9%85%E6%BF%80%E6%B4%BBwin10/" class="article-date">
-  <time datetime="2022-08-25T09:49:11.000Z" itemprop="datePublished">2022-08-25</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>越来越多人选择升级安装Windows10系统，为了让更好的使用win10系统，一般会选择激活系统之后才能正常使用，不然很多功能就会被限制。那么如何永久激活Windows10系统？就此疑问，小编来说说永久激活Windows10系统的三种方法。</p>
-<p>方法一：</p>
-<p>1、现在我们可以看下当前系统的激活状态，查看方法”WIN+R”打开运行对话框，输入命令slmgr.vbs -xpr，点击确定，这样可以查看到当前系统的激活信息。大家可以发现，虽然小编系统激活了，但是只有180天时间到期。</p>
-<p>2、其它版本win10系统，小编没有测试，在Windows10专业版测试成功，我们可以在此电脑图标上点击右键，打开属性，查看自己win10系统版本。</p>
-<p>3、现在我们在开始菜单上点击右键，然后选择命令提示符【管理员】点击打开。</p>
-<p>4、大家现在复制这里的命令，然后直接粘贴到命令提示符界面中，如图所示</p>
-<p>slmgr &#x2F;ipk VK7JG-NPHTM-C97JM-9MPGT-3V66T</p>
-<p>slmgr &#x2F;skms kms.xspace.in</p>
-<p>slmgr &#x2F;ato</p>
-<p>复制以后，粘贴到命令提示符中的时候，大家可以按下键盘CTRL+V粘贴。</p>
-<p>5、激活以后，为了查看激活的状态，这里我们可以按下键盘的”win+r”打开运行，然后这里我们输入命令slmgr.vbs -xpr，点击确定运行命令！</p>
-<p>6、这时候出现的窗口中，提示永久激活，说明已经成功，大家可以自己试试操作。</p>
-<p>方法二：</p>
-<p>1，下载并安装KMSpico win10激活工具，打开文件夹，准备安装激活工具。</p>
-<p>2，在文件夹中找到win10激活工具KMSpico并且右键使用管理员模式打开。</p>
-<p>3，虽然激活工具没有汉化版，但是一路next是我们一贯追求的傻瓜软件安装方式。（这里记住安装路径不要变更使用默认的安装路径即可）</p>
-<p>4，安装完之后，我们按下红色按钮开始激活win10，待win10激活完成后会自动关闭，我们只需等待就行。</p>
-<p>5，点击查看激活状态。</p>
-<p>方法三：</p>
-<p>1、首先我们先介绍下密钥激活的方法， 在桌面找到“计算机”图标，点右键，选择“属性”。</p>
-<p>2、在计算机属性页的最下方有激活信息，如果没有激活，请点击这个激活链接”必须今天激活，立即激活windows“。</p>
-<p>3、然后在接下来的页面中输入win10系统密钥，输入完成，点击”下一步“即可完成激活。</p>
-<p>Win10专业版激活密钥：</p>
-<p>W269N-WFGWX-YVC9B-4J6C9-T83GX</p>
-<p>MH37W-N47XK-V7XM9-C7227-GCQG9</p>
-<p>2X7P3-NGJTH-Q9TJF-8XDP9-T83GT</p>
-<p>J2WWN-Q4338-3GFW9-BWQVK-MG9TT</p>
-<p>NBQWQ-W9PTV-B4YWP-4K773-T6PKG</p>
-<p>236TW-X778T-8MV9F-937GT-QVKBB</p>
-<p>87VT2-FY2XW-F7K39-W3T8R-XMFGF</p>
-<p>KH2J9-PC326-T44D4-39H6V-TVPBY</p>
-<p>TFP9Y-VCY3P-VVH3T-8XXCC-MF4YK</p>
-<p>J783Y-JKQWR-677Q8-KCXTF-BHWGC</p>
-<p>C4M9W-WPRDG-QBB3F-VM9K8-KDQ9Y</p>
-<p>2VCGQ-BRVJ4-2HGJ2-K36X9-J66JG</p>
-<p>MGX79-TPQB9-KQ248-KXR2V-DHRTD</p>
-<p>FJHWT-KDGHY-K2384-93CT7-323RC</p>
-<p>MDBV4-GPBR9-378J6-CHVVY-8PJWD</p>
-<p>TNM78-FJKXR-P26YV-GP8MB-JK8XG</p>
-<p>2BXNW-6CGWX-9BXPV-YJ996-GMT6T</p>
-<p>XC88X-9N9QX-CDRVP-4XV22-RVV26</p>
-<p>4W2NQ-MWBQ3-VDXTM-PYMXQ-B98XM</p>
-<p>NRTT2-86GJM-T969G-8BCBH-BDWXG</p>
-<p>TPYNC-4J6KF-4B4GP-2HD89-7XMP6</p>
-<p>Win10企业版激活密钥：</p>
-<p>VK7JG-NPHTM-C97JM-9MPGT-3V66T</p>
-<p>NPPR9-FWDCX-D2C8J-H872K-2YT43</p>
-<p>W269N-WFGWX-YVC9B-4J6C9-T83GX</p>
-<p>NYW94-47Q7H-7X9TT-W7TXD-JTYPM</p>
-<p>NJ4MX-VQQ7Q-FP3DB-VDGHX-7XM87</p>
-<p>MH37W-N47XK-V7XM9-C7227-GCQG9</p>
-<p>VK7JG-NPHTM-C97JM-9MPGT-3V66T</p>
-<p>DPH2V-TTNVB-4X9Q3-TJR4H-KHJW4</p>
-<p>WNMTR-4C88C-JK8YV-HQ7T2-76DF9</p>
-<p>NPPR9-FWDCX-D2C8J-H872K-2YT43</p>
-<p>2F77B-TNFGY-69QQF-B8YKP-D6</p>
-<p>Win10家庭版激活密钥：</p>
-<p>3KHY7-WNT83-DGQKR-F7HPR-844BM</p>
-<p>7HNRX-D7KGG-3K4RQ-4WPJ4-YTDFH</p>
-<p>TX9XD-98N7V-6WMQ6-BX7FG-H8Q99</p>
-<p>PVMJN-6DFY6-9CCP6-7BKTT-D3WVR</p>
-<p>Core 家庭版：YTMG3-N6DKC-DKB77-7M9GH-8HVX7CoreSingleLanguage</p>
-<p>单语言win1064家庭版激活密钥：BT79Q-G7N6G-PGBYW-4YWX6-6F4BTCoreCountrySpecific</p>
-<p>激活64位win10特定国家家庭版：N2434-X9D7W-8PF6X-8DV9T-8TYMDProfessional</p>
-<p>64位系统win10激活码(家庭版)：TX9XD-98N7V-6WMQ6-BX7FG-H8Q99</p>
-<p>Win10家庭版N：3KHY7-WNT83-DGQKR-F7HPR-844BM</p>
-<p>Win10单语音家庭版：7HNRX-D7KGG-3K4RQ-4WPJ4-YTDFH</p>
-<p>Win10特殊国家家庭版：PVMJN-6DFY6-9CCP6-7BKTT-D3WVR</p>
-<p>win10激活密钥(专业版)：</p>
-<p>W269N-WFGWX-YVC9B-4J6C9-T83GX</p>
-<p>win10激活密钥(企业版)：</p>
-<p>NPPR9-FWDCX-D2C8J-H872K-2YT43</p>
-<p>win10激活密钥(家庭版)：</p>
-<p>TX9XD-98N7V-6WMQ6-BX7FG-H8Q99</p>
-<p>激活windows10密钥(教育版)：</p>
-<p>NW6C2-QMPVW-D7KKK-3GKT6-VCFB2</p>
-<p>windows10激活密钥(专业版N)：</p>
-<p>MH37W-N47XK-V7XM9-C7227-GCQG9</p>
-<p>激活win10密钥(企业版N)：</p>
-<p>DPH2V-TTNVB-4X9Q3-TJR4H-KHJW4</p>
-<p>(教育版N)：</p>
-<p>2WH4N-8QGBV-H22JP-CT43Q-MDWWJ</p>
-<p>(企业版LSTB)：</p>
-<p>WNMTR-4C88C-JK8YV-HQ7T2-76DF9</p>
-<p>(企业版LSTB N)：</p>
-<p>2F77B-TNFGY-69QQF-B8YKP-D69TJ</p>
-<p>Win10系统神Key(适用各版本)：</p>
-<p>KH2J9-PC326-T44D4-39H6V-TVPBY</p>
-<p>TFP9Y-VCY3P-VVH3T-8XXCC-MF4YK</p>
-<p>236TW-X778T-8MV9F-937GT-QVKBB</p>
-<p>87VT2-FY2XW-F7K39-W3T8R-XMFGF</p>
-<p>6K2KY-BFH24-PJW6W-9GK29-TMPWP</p>
-<p>RHTBY-VWY6D-QJRJ9-JGQ3X-Q228</p>
-<p>以上和大家详解永久激活Windows10系统的三种方法，小编亲测有效，有一样需求的小伙伴一起参考设置一下。</p>
-<p>原创文章请随便转载。愿和大家分享，并且一起进步。– 江 coder</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20220823-word清除域代码"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/08/23/20220823-word%E6%B8%85%E9%99%A4%E5%9F%9F%E4%BB%A3%E7%A0%81/"
-    >20220823-word清除域代码</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/08/23/20220823-word%E6%B8%85%E9%99%A4%E5%9F%9F%E4%BB%A3%E7%A0%81/" class="article-date">
-  <time datetime="2022-08-23T06:19:57.000Z" itemprop="datePublished">2022-08-23</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>Word 的自动编号、题注、交叉引用，Mathtype 的公式编号，以及Endnote&#x2F;Noteexpress 的文献管理功能，大大提高了写作的效率，减少了文章后期修改的难度。但是由于各种原因（如 Word 版本差异、有无安装特定软件以及软件设置差异），在材料交流的时候，需要将文档转化为纯文本格式，以避免可能的格式不一致的问题。 </p>
-<h2 id="Word-域"><a href="#Word-域" class="headerlink" title="Word 域"></a>Word 域</h2><p>Word 文档中将域转化纯文本的操作十分简单。只要将文档全选，然后同时按下“Ctrl + Shift + F9”，即可以将超链接（包括自动生成的目录）、题注、交叉引用以及 Endnote&#x2F;Noteexpress 插入的参考文献等域转化为纯文本，但是这种转化对自动编号的项目不管用。 </p>
-<h2 id="特例：Word-项目编号"><a href="#特例：Word-项目编号" class="headerlink" title="特例：Word 项目编号"></a>特例：Word 项目编号</h2><p>自动编号的项目的转化，可以使用 Word 的宏功能。打开 Word 的宏功能，新建一个宏，进入宏编辑器后，复制以下代码到编辑器，运行即可将自动编号转化为纯文本。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Sub 编号转文本()</span><br><span class="line">Dim kgslist As List</span><br><span class="line">For Each kgslist In ActiveDocument.Lists</span><br><span class="line">kgslist.ConvertNumbersToText</span><br><span class="line">Next </span><br><span class="line">End Sub</span><br></pre></td></tr></table></figure>
-
-<p>需要注意的是，运行代码前，光标不要放在文档中的自动编号项目上，否则转化后会有灰色底纹。 </p>
-<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><p>如果仅需要将参考文献格式化为文本，Endnote有“Convert to Plain Text”，Noteexpress有“清除域代码”。 </p>
-<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><p>如果交流不涉及文档修改，建议将文档直接转为 PDF 格式，可以有效避免各类显示不一致问题。</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20220818-mutoolpdf简介"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/08/18/20220818-mutoolpdf%E7%AE%80%E4%BB%8B/"
-    >20220818-mutoolpdf简介</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/08/18/20220818-mutoolpdf%E7%AE%80%E4%BB%8B/" class="article-date">
-  <time datetime="2022-08-18T04:18:36.000Z" itemprop="datePublished">2022-08-18</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>MuPDF Command Line Tools<br>MuPDF 官网</p>
-<p>MuPDF 的命令行工具都放在了一个命令文件中：mutool.exe</p>
-<p>mutool draw 将页面转为图像等文件<br>draw 命令将文档渲染成图片，转换其他格式的矢量图或提取文本内容。</p>
-<pre><code>mutool draw [options] file [pages]
-</code></pre>
-<p>支持的输入格式：pdf, xps, cbz, and epub<br>支持的输出格式：</p>
-<ul>
-<li>图像：pbm, pgm, ppm, pam, png, tga, pwg, pcl</li>
-<li>矢量：svg, pdf, and debug trace (as xml)</li>
-<li>文本：plain text, html, and structured text (as xml)</li>
-</ul>
-<p>Options:<br>-p password<br>文件是加密的话，用以输入密码。</p>
-<p>-o output<br>指定输出的文件名，文件名可以嵌入指示页码（例如：“页面%d.PNG”），<br>并支持Prtf修改器，例如“%03d”。如果没有指定输出，输出将转到 stdout。从文件名可推断出输出格式。</p>
-<p>-F format<br>指定输出格式，一般在输出到 stdout 时使用。</p>
-<p>-R angle<br>指定顺时针旋转角度。</p>
-<p>-r resolution<br>指定的分辨率。默认为 72 dpi。</p>
-<p>-w width<br>指定页面宽度</p>
-<p>-h height<br>指定页面高度</p>
-<p>-f<br>精确匹配；在匹配指定的宽度&#x2F;高度时忽略纵横比。</p>
-<p>-B bandheight<br>本设置这在渲染过程中使用较少的内存。仅兼容PAM、PGM、PPM、PNM和PNG输出格式。和 md5 checksumming may 不能同时使用。</p>
-<p>-W width<br>EPUB布局中的页面宽度。</p>
-<p>-H height<br>EPUB布局中的页面高度。</p>
-<p>-S size<br>EPUB布局中的字体大小</p>
-<p>-U filename<br>指定用于EPUB布局的用户自定义的CSS样式表</p>
-<p>-c colorspace<br>指定渲染的色彩空间。支持的色彩空间：单色、灰度、Grayα、RGB、RGBALPHA、CMYK、CMYKALPHA。允许的缩写：M，G，GA，RGBA，CMYKA。默认值是基于输出格式选择的。</p>
-<p>-G gamma<br>伽马校正，0.7 或 1.4 常用于亮色或暗色文本的渲染。</p>
-<p>-I<br>反转颜色</p>
-<p>-s [mft5]<br>显示各种信息：</p>
-<ul>
-<li>m 用于字形缓存和总内存使用，</li>
-<li>f 用于页面特性，例如页面是灰度级还是颜色，</li>
-<li>t 用于每页渲染时间以及统计信息，</li>
-<li>5 用于 md5 渲染图像的校验和，这些校验和可用于检查渲染是否已经改变。</li>
-</ul>
-<p>-A bits<br>指定反锯齿位数。默认值为 8。</p>
-<p>-D<br>禁止显示列表的使用。会导致速度减慢，但可减少内存的使用量。</p>
-<p>-i<br>忽略错误。</p>
-<p>-L<br>低内存模式（避免缓存对象在每个页面后清除缓存）。</p>
-<p>-P<br>同时进行解释和渲染。</p>
-<p>pages<br>逗号分隔的页码和范围列表（例如：1,5，10-15）。如果没有指定页面，则将呈现所有页面。</p>
-<p>mutool convert 用于将文档转换成其他格式<br>mutool trace 这是一个调试工具，用于退踪打印图形的调用情况。<br>这些工具专门用于处理 PDF 文件:</p>
-<p>mutool show 显示 PDF 文件中内部对象的工具。<br>mutool extract 提取图像和嵌入字体资源。<br>mutool clean 重写PDF文件。用于修复损坏的文件，或使PDF文件可编辑。<br>mutool merge 将多个输入文件合并为一个新的 PDF 文件<br>mutool create 从文本文件创建一个新的PDF文件。<br>mutool portfolio Manipulate PDF portfolios.<br>最后，有一个工具可以做任何你能想象到的事情:</p>
-<p>mutool run 一种运行JavaScript程序的工具，可以访问MUPDF库函数。</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20220817-PDF文件处理提示"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/08/17/20220817-PDF%E6%96%87%E4%BB%B6%E5%A4%84%E7%90%86%E6%8F%90%E7%A4%BA/"
-    >20220817-PDF文件处理提示</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/08/17/20220817-PDF%E6%96%87%E4%BB%B6%E5%A4%84%E7%90%86%E6%8F%90%E7%A4%BA/" class="article-date">
-  <time datetime="2022-08-17T13:57:24.000Z" itemprop="datePublished">2022-08-17</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>PDF文件处理小提示</p>
-<ol>
-<li>获取PDF元数据，需要使用poppler库下面的pdfinfo命令：</li>
-</ol>
-<p>D:&gt;pdfinfo test.pdf<br>Producer:       Feisty Duck Digital Delivery Service<br>CreationDate:   08&#x2F;19&#x2F;13 17:40:44<br>ModDate:        08&#x2F;19&#x2F;13 17:40:44<br>Tagged:         no<br>Pages:          367<br>Encrypted:      no<br>Page size:      535.68 x 697.44 pts<br>File size:      2101334 bytes<br>Optimized:      no<br>PDF version:    1.4<br>2. 查看PDF中所使用到的字体，需要使用poppler库下面的pdffonts命令：</p>
-<p>D:&gt;pdffonts test.pdf<br>name                                 type              emb sub uni object ID</p>
-<hr>
-<p>FZPJCT+FreeSans                      CID TrueType      yes yes yes      1  0<br>BKUKSQ+NimbusSanL-Regu               Type 1            yes yes no     755  0<br>QRYPKX+CMSY10                        Type 1            yes yes no     762  0<br>ZLHPUU+CenturySchL-Roma              Type 1            yes yes no     763  0<br>ZCSUFP+CenturySchL-Bold              Type 1            yes yes no     764  0<br>[none]                               Type 3            yes no  no     765  0<br>KSECLT+TradeGothic-CondEighteen      Type 1C           yes yes no       8  0<br>WLDBEZ+CenturySchL-Ital              Type 1            yes yes no     768  0<br>JGPJSJ+NimbusSanL-Bold               Type 1            yes yes no     773  0<br>KINSVY+CenturySchL-BoldItal          Type 1            yes yes no     819  0<br>UMGSAF+CMR10                         Type 1            yes yes no     820  0<br>GNTWCJ+CMR7                          Type 1            yes yes no     821  0<br>MASRIW+CMMI10                        Type 1            yes yes no     824  0<br>JEHZIM+CMMI7                         Type 1            yes yes no     861  0<br>GBDQPA+CMSY7                         Type 1            yes yes no     862  0<br>[none]                               Type 3            yes no  no     935  0<br>[none]                               Type 3            yes no  no    1086  0<br>[none]                               Type 3            yes no  no    1110  0<br>YJJVSC+Helvetica                     Type 1C           yes yes no    2043  0<br>[none]                               Type 3            yes no  no    1522  0</p>
-<ol start="3">
-<li>抽取PDF中的文本，使用poppler中的pdftotext：</li>
-</ol>
-<p>pdftotext test.pdf<br>4. 将PDF转换为PS&#x2F;EPS，使用poppler中的pdftops：</p>
-<p>pdftops test.pdf      # to PS<br>pdftops -eps test.pdf # to EPS<br>5. 将PDF转换为JPEG&#x2F;PNG，使用poppler中的pdfimages或MuPDF中的mudraw（强烈推荐）：</p>
-<p>pdfimages -f 1 -j test.pdf test       # 转换为jpg，但在Windows下有bug<br>mudraw -r 600 -o test-%d.png test.pdf # 转换为PNG，分辨率为600<br>6. 将PDF中嵌入的字体和图片提取出来，使用MuPDF中的mutool（旧版本为mubusy）：</p>
-<p>mutool extract test.pdf<br>7. 解压PDF，需要使用上面的工具，这对开发者优化PDF输出很有帮助：</p>
-<p>mutool clean -d test.pdf<br>8. 抽取PDF中的某一页，使用pdftk操作：</p>
-<p>pdftk test.pdf cat 1-2 output z.pdf # 抽取1-2页，保存为z.pdf<br>9. 翻转PDF中的某一页，使用pdftk操作：</p>
-<p>pdftk test.pdf cat 4-4east output z.pdf<br>工具下载地址：</p>
-<p><a href="ftp://ftp.foolabs.com/pub/xpdf/xpdfbin-win-3.04.zip">ftp://ftp.foolabs.com/pub/xpdf/xpdfbin-win-3.04.zip</a> （TeX Live中自带）<br><a target="_blank" rel="noopener" href="http://www.mupdf.com/downloads/mupdf-1.4-windows.zip">http://www.mupdf.com/downloads/mupdf-1.4-windows.zip</a><br>PDFtk - The PDF Toolkit （注意，现在的PDFtk提供了一个GUI界面，但是需要注册，可以选用第三方的，比如Homepage, PDF Tools from Dirk Paehl）</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20220812-pdftocairo"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/08/12/20220812-pdftocairo/"
-    >20220812-pdftocairo</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/08/12/20220812-pdftocairo/" class="article-date">
-  <time datetime="2022-08-12T06:55:37.000Z" itemprop="datePublished">2022-08-12</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>[TOC]</p>
-<h2 id="0x01"><a href="#0x01" class="headerlink" title="0x01"></a>0x01</h2><h2 id="0x02"><a href="#0x02" class="headerlink" title="0x02"></a>0x02</h2><h2 id="0x03"><a href="#0x03" class="headerlink" title="0x03"></a>0x03</h2><h2 id="0x04"><a href="#0x04" class="headerlink" title="0x04"></a>0x04</h2> 
       <!-- reward -->
       
     </div>

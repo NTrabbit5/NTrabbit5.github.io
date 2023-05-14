@@ -11,7 +11,7 @@
         name="viewport"
         content="width=device-width, initial-scale=1, maximum-scale=1"
       />
-      <title>20230506-markdown绘图技巧 |  TeX_baitu blog</title>
+      <title>20230512-mathematica入门教程 |  TeX_baitu blog</title>
   <meta name="generator" content="hexo-theme-ayer">
       
       <link rel="shortcut icon" href="/favicon.ico" />
@@ -53,7 +53,7 @@
     <main class="content on">
       <section class="outer">
   <article
-  id="post-20230506-markdown绘图技巧"
+  id="post-20230512-mathematica入门教程"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -64,7 +64,7 @@
     <header class="article-header">
        
 <h1 class="article-title sea-center" style="border-left:0" itemprop="name">
-  20230506-markdown绘图技巧
+  20230512-mathematica入门教程
 </h1>
  
 
@@ -72,15 +72,15 @@
     </header>
      
     <div class="article-meta">
-      <a href="/2023/05/06/20230506-markdown%E7%BB%98%E5%9B%BE%E6%8A%80%E5%B7%A7/" class="article-date">
-  <time datetime="2023-05-06T02:04:32.000Z" itemprop="datePublished">2023-05-06</time>
+      <a href="/2023/05/12/20230512-mathematica%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B/" class="article-date">
+  <time datetime="2023-05-12T01:56:42.000Z" itemprop="datePublished">2023-05-12</time>
 </a>   
 <div class="word_count">
     <span class="post-time">
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> 字数统计:</span>
-            <span class="post-count">383</span>
+            <span class="post-count">1.2k</span>
         </span>
     </span>
 
@@ -89,55 +89,75 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> 阅读时长≈</span>
-            <span class="post-count">1 分钟</span>
+            <span class="post-count">5 分钟</span>
         </span>
     </span>
 </div>
  
     </div>
       
+    <div class="tocbot"></div>
+
 
 
 
   
     <div class="article-entry" itemprop="articleBody">
        
-  <ol>
-<li>流程图</li>
-</ol>
-<p>先在typora 中输入<br><code>```mermaid</code><br>然后敲击回车，即可初始化一张空白图</p>
-<p>语法解释 graph 关键字就是声明一张流程图，TD 向下，LR 向右边，这里的含义是 top-down 由上至下</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">graph TD</span><br><span class="line">  A[Hard edge] --&gt;B(Round edge)</span><br><span class="line">    B --&gt; C&#123;Decision&#125;</span><br><span class="line">    C --&gt;|One| D[Result one]</span><br><span class="line">    C --&gt;|Two| E[Result two]</span><br></pre></td></tr></table></figure>
+  <p>学会mma 基本用法</p>
+<p>内置函数首字母大写</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[] 是所需要计算的内容</span><br><span class="line"></span><br><span class="line">&#123;&#125; 列表或者范围</span><br><span class="line"></span><br><span class="line">shift+enter 执行计算</span><br></pre></td></tr></table></figure>
+<p>默认情况下未赋值变量运行后是蓝色，已赋值变量是黑色</p>
+<p>等号是 &#x3D;&#x3D;  而&#x3D; 是赋值符号</p>
+<p>设置工作路径 SetDirectory[NotebookDirectory[]]; SetDirectory[“.&#x2F;DataFiles”];</p>
+<h2 id="第一次使用mathematical"><a href="#第一次使用mathematical" class="headerlink" title="第一次使用mathematical"></a>第一次使用mathematical</h2><p>mma 尽可能给出准确的结果，例如</p>
+<p>In[1]:&#x3D; 8&#x2F;3<br>Out[1]&#x3D; 8&#x2F;3  </p>
+<p>函数N[]计算近似结果<br>In[5]:&#x3D; N[8&#x2F;3]<br>Out[5]&#x3D; 2.66667</p>
+<p>计算 3a+1 两个数或表达式之间空一格就代表两者相乘</p>
+<p>3 a+1<br># 等价于3*a+1</p>
+<p>多项式展开(a+1)(a-2)</p>
+<p>Expand[(a+1)(a-2)]</p>
+<p>简单方程求解 $x^2+2x+1&#x3D;0$</p>
+<p>Solve[x^2+2 x+1,x]</p>
+<p>自由格式输入，先输入等号提示符，后面内容不需要标准mathematica 语法，用英文表达自己的意思即可，例如，做sin(x)的图像</p>
+<p>化sin x 在区间0到10的函数图像</p>
+<p>Plot[Sin[x],{x,0,10}]</p>
+<p>列表表达式Table</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">In[3]:= Table[i, &#123;i, 1, 10&#125;]</span><br><span class="line"></span><br><span class="line">Out[3]= &#123;1, 2, 3, 4, 5, 6, 7, 8, 9, 10&#125;</span><br><span class="line"></span><br><span class="line">In[4]:= Table[i + j, &#123;i, 1, 5&#125;, &#123;j, 2, 5&#125;]</span><br><span class="line"></span><br><span class="line">Out[4]= &#123;&#123;3, 4, 5, 6&#125;, &#123;4, 5, 6, 7&#125;, &#123;5, 6, 7, 8&#125;, &#123;6, 7, 8, 9&#125;, &#123;7, </span><br><span class="line">  8, 9, 10&#125;&#125;</span><br></pre></td></tr></table></figure>
+<p>Clear 用法，清除全局变量</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Clear[&quot;Global `*&quot;]</span><br></pre></td></tr></table></figure>
 
-<ol start="2">
-<li>时序图</li>
-</ol>
-<p>语法解释 -&gt;&gt; 代表实线箭头 –&gt;&gt; 则代表虚线</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">sequenceDiagram</span><br><span class="line">    Alice--&gt;&gt;Bob: Hello Bob, how are you?</span><br><span class="line">    alt is sick</span><br><span class="line">    Bob-&gt;Alice: Not so good :(</span><br><span class="line">    else is well</span><br><span class="line">    Bob-&gt;&gt;Alice: Feeling fresh like a daisy</span><br><span class="line">    end</span><br><span class="line">    opt Extra response</span><br><span class="line">    Bob-&gt;&gt;Alice: Thanks for asking</span><br><span class="line">    end</span><br><span class="line">    Bob-&gt;&gt;Alice: Thanks </span><br></pre></td></tr></table></figure>
-
-<ol start="3">
-<li>状态图</li>
-</ol>
-<p>语法解释 <code>[*]</code> 表示开始或者结束，如果在箭头右边则表示结束</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">stateDiagram</span><br><span class="line">    [*] --&gt; Still</span><br><span class="line">    Still --&gt; [*]</span><br><span class="line"></span><br><span class="line">    Still --&gt; Moving</span><br><span class="line">    Moving --&gt; Still</span><br><span class="line">    Moving --&gt; Crash</span><br><span class="line">    Crash --&gt; [*]</span><br></pre></td></tr></table></figure>
-<ol start="4">
-<li>类图</li>
-</ol>
-<p>语法解释， <code>&lt;|--</code> 表示继承 + 表示 public - 表示private</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">classDiagram</span><br><span class="line">      Animal &lt;|--Duck</span><br><span class="line">      Animal &lt;|-- Fish</span><br><span class="line">      Animal &lt;|-- Zebra</span><br><span class="line">      Animal : +int age</span><br><span class="line">      Animal : +String gender</span><br><span class="line">      Animal: +isMammal()</span><br><span class="line">      Animal: +mate()</span><br><span class="line">      class Duck&#123;</span><br><span class="line">          +String beakColor</span><br><span class="line">          +swim()</span><br><span class="line">          +quack()</span><br><span class="line">      &#125;</span><br><span class="line">      class Fish&#123;</span><br><span class="line">          -int sizeInFeet</span><br><span class="line">          -canEat()</span><br><span class="line">      &#125;</span><br><span class="line">      class Zebra&#123;</span><br><span class="line">          +bool is_wild</span><br><span class="line">          +run()</span><br><span class="line">      &#125;</span><br></pre></td></tr></table></figure>
-
-
-<ol start="5">
-<li>甘特图</li>
-</ol>
-<p>甘特图 一般用来表示项目的计划排期，目前在工作中经常会用到</p>
-<p>语法也非常简单，从上到下依次是 图片标题、日期格式、项目、项目细分的任务</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">gantt</span><br><span class="line">    title 工作计划</span><br><span class="line">    dateFormat  YYYY-MM-DD</span><br><span class="line">    section Section</span><br><span class="line">    A task           :a1, 2020-01-01, 30d</span><br><span class="line">    Another task     :after a1  , 20d</span><br><span class="line">    section Another</span><br><span class="line">    Task in sec      :2020-01-12  , 12d</span><br><span class="line">    another task      : 24d</span><br></pre></td></tr></table></figure>
-
-<ol start="6">
-<li>饼图</li>
-</ol>
-<p>饼图使用pie 表示，标题下面分别是区域名称及其百分比</p>
+<p>好了到此为止，大家已经学会了mathematical 基本操作，不错，mma 就回去吃这么人性化，想做什么就做什么</p>
+<h2 id="输入输出"><a href="#输入输出" class="headerlink" title="输入输出"></a>输入输出</h2><p>自动补签，当我们输入某个命令前几个字母时就会有智能提示，根据提示可以选择我们需要的函数，这种情况适用于对函数具体写法不太清楚的时候，根据智能提示就可以选择正确的写法，例如plo，下面就会有非常多这几个字母开头的函数供选择</p>
+<p>普通格式+-*&#x2F;</p>
+<p>数学2D格式，善用esc 键，比如输入pi esc+pi+esc 当然有时候我们并不需要将完整的字母写出来</p>
+<p>百分号+数字，表示引用第几次结果，不加数字就是上一个结果，例如</p>
+<p>%% %8</p>
+<p>双斜线&#x2F;&#x2F; 函数后缀，里面simplify[] 和&#x2F;&#x2F;Simplify 是等价的</p>
+<p>mma 格式排版，Alt+数字1到7 可以得到不同的文档结构</p>
+<h2 id="wolf-mathematica-正式开始"><a href="#wolf-mathematica-正式开始" class="headerlink" title="wolf-mathematica 正式开始"></a>wolf-mathematica 正式开始</h2><h3 id="定义变量"><a href="#定义变量" class="headerlink" title="定义变量"></a>定义变量</h3><p>定义x&#x3D;10 计算2的x次方<br>In[26]:&#x3D;   x &#x3D; 10;2^x<br>Out[27]&#x3D; 1024</p>
+<p>判断两个值是否一致</p>
+<p>In[28]:&#x3D; x &#x3D;&#x3D; 1023<br>Out[28]&#x3D; False</p>
+<p>加减乘除幂指数括号运算</p>
+<p>In[31]:&#x3D; (Sqrt[2] + 1)^2 (3 - a)&#x2F;[Pi]<br>Out[31]&#x3D; ((1 + Sqrt[2])^2 (3 - a))&#x2F;[Pi]</p>
+<p>创建列表</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">In[32]:= Table[i^2, &#123;i, 1, 10&#125;]</span><br><span class="line">Out[32]= &#123;1, 4, 9, 16, 25, 36, 49, 64, 81, 100&#125;</span><br><span class="line">In[33]:= Table[i^2, &#123;i, 1, 10, 2&#125;]</span><br><span class="line">Out[33]= &#123;1, 9, 25, 49, 81&#125;</span><br><span class="line">In[34]:= Table[&#123;i, i^2&#125;, &#123;i, 1, 10, 2&#125;]</span><br><span class="line">Out[34]= &#123;&#123;1, 1&#125;, &#123;3, 9&#125;, &#123;5, 25&#125;, &#123;7, 49&#125;, &#123;9, 81&#125;&#125;</span><br></pre></td></tr></table></figure>
+<p>自定义函数</p>
+<p>简单函数，注意下划线与冒号，当然还有更高级用法，两个下划线与三个下划线，以及默认参数等</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">In[35]:= f[x_, y_] := x^2 y    </span><br><span class="line">        f[a, y]  </span><br><span class="line">        f[1, 2]   </span><br><span class="line">Out[36]= a^2 y  </span><br><span class="line">Out[37]= 2</span><br></pre></td></tr></table></figure>
+<p>交互式操作</p>
+<p>首先画一个sin x 函数图像，并改变其振幅与周期</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Manipulate[Plot[A Sin[a x], &#123;x, -5, 5&#125;, PlotRange -&gt; &#123;&#123;-5, 5&#125;, &#123;-5, 5&#125;&#125;], &#123;a, 2, 5, 0.5&#125;, &#123;A, -2, 2, 0.2&#125;]</span><br></pre></td></tr></table></figure>
+<p>改进一下模型，可以自定义函数头 {sin, cos, tan} 以及滑块名称定义，默认值定义</p>
+<p>使用帮助很重要</p>
+<p>选中需要帮助的函数，按F1 快捷键打开帮助文档</p>
+<p>?+ 函数，执行后给出函数帮助信息</p>
+<h2 id="2D-3D-绘图"><a href="#2D-3D-绘图" class="headerlink" title="2D 3D 绘图"></a>2D 3D 绘图</h2><p>2D 绘图</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Plot[&#123;Sin[x], Cos[x]&#125;, &#123;x, 0, 2 \[Pi]&#125;]</span><br></pre></td></tr></table></figure>
+<p>Plot 函数属性分叉之多，例如常用的如下</p>
+<p>AspectRatio 1 GoldenRatio 宽高比</p>
+<p>Axes True 是否绘制轴</p>
+<p>ClippingStyle None 如何绘制曲线被剪切的区域<br>ColorFunction Automatic 确定曲线颜色的方法<br>ColorFunctionScaling True 是否缩放 ColorFunction 的变量<br>PlotLabel None 整个绘图的标签<br>PlotLabels None 曲线的标签<br>EvaluationMonitor None<br>在每次函数计算时，需要计算的表达式 Exclusions Automatic<br>x 中排除的点 ExclusionsStyle None<br>排除点的绘制样式 Filling None<br>每条曲线下填充 FillingStyle Automatic<br>填充的样式 LabelingSize Automatic maximum size of callouts and labels MaxRecursion Automatic<br>递归子划分的最大数量 Mesh None<br>在每条曲线上绘制多少个网格点 MeshFunctions </p>
  
       <!-- reward -->
       
@@ -208,7 +228,7 @@
     <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://example.com/2023/05/06/20230506-markdown%E7%BB%98%E5%9B%BE%E6%8A%80%E5%B7%A7/" alt="微信分享二维码">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://example.com/2023/05/12/20230512-mathematica%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -219,19 +239,19 @@
    
   <nav class="article-nav">
     
-      <a href="/2023/05/12/20230512-%E5%A6%82%E4%BD%95%E5%9C%A8markdown%E9%87%8C%E4%BC%98%E9%9B%85%E5%9C%B0%E7%94%BB%E5%9F%BA%E6%9C%AC%E5%87%BD%E6%95%B0%E5%9B%BE%E5%83%8F/" class="article-nav-link">
+      <a href="/2023/05/12/20230512-%E7%AB%AF%E5%8F%A3%E6%98%A0%E5%B0%84%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF/" class="article-nav-link">
         <strong class="article-nav-caption">上一篇</strong>
         <div class="article-nav-title">
           
-            20230512-如何在markdown里优雅地画基本函数图像
+            20230512-端口映射应用场景
           
         </div>
       </a>
     
     
-      <a href="/2023/05/04/20230504-onvif%E5%8D%8F%E8%AE%AE%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/" class="article-nav-link">
+      <a href="/2023/05/12/20230512-%E5%A6%82%E4%BD%95%E5%9C%A8markdown%E9%87%8C%E4%BC%98%E9%9B%85%E5%9C%B0%E7%94%BB%E5%9F%BA%E6%9C%AC%E5%87%BD%E6%95%B0%E5%9B%BE%E5%83%8F/" class="article-nav-link">
         <strong class="article-nav-caption">下一篇</strong>
-        <div class="article-nav-title">20230504-onvif协议快速入门</div>
+        <div class="article-nav-title">20230512-如何在markdown里优雅地画基本函数图像</div>
       </a>
     
   </nav>
