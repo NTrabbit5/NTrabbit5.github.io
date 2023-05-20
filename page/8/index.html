@@ -126,6 +126,73 @@
     
     
     <article
+  id="post-20221213-数字芯片中使能信号的作用"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/12/13/20221213-%E6%95%B0%E5%AD%97%E8%8A%AF%E7%89%87%E4%B8%AD%E4%BD%BF%E8%83%BD%E4%BF%A1%E5%8F%B7%E7%9A%84%E4%BD%9C%E7%94%A8/"
+    >20221213-数字芯片中使能信号的作用</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/12/13/20221213-%E6%95%B0%E5%AD%97%E8%8A%AF%E7%89%87%E4%B8%AD%E4%BD%BF%E8%83%BD%E4%BF%A1%E5%8F%B7%E7%9A%84%E4%BD%9C%E7%94%A8/" class="article-date">
+  <time datetime="2022-12-13T07:18:15.000Z" itemprop="datePublished">2022-12-13</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <ol>
+<li>什么是使能信号，</li>
+</ol>
+<p>所谓使能信号，英文叫enable 翻译成中文还有启用等意思</p>
+<p>如图所示，当G1为低电平的时候，不管其它输入是什么。输出全为高电平。而当G2为高电平时（G2等于G2A与上G2B），不管其它输入是什么，输出也都一律为高电平。因此仅从功能上来判断，G1和G2就可以控制这颗芯片是不是被“启用”了。可以看出当G1为低或G2位高时，整个芯片的其它输入无论如何变化都不影响输出。简单的说就是整个芯片实际上没用发挥作用，功能没有“启用”。</p>
+<ol start="2">
+<li>为什么使能信号可以控制芯片的启用和停用</li>
+</ol>
+<p>全部都连到了最后一级的所有与非门上。我们知道一个与非门，如果有1个输入为0，那么这个与非门的输出就会是1。因此，如果不满足G1为高电平，G2A和G2B都为低电平这个条件，就会让所有输出全为1。而这时无论别的输入是什么，都不会让输出有任何改变。从这一点上来说，要启用这颗芯片的功能就必须满足G1为高电平，G2A和G2B都为低电平这个条件。否则，其它输入影响不了输出，芯片“译码”的功能就没有被“启用”。</p>
+<ol start="3">
+<li>为什么需要使能信号</li>
+</ol>
+<p>需要使能信号的主要原因是一个大型的数字系统中，通常都需要使用多个芯片&#x2F;电路单元来配合完成一个功能，而这些芯片并不是每时每刻都在工作，因此需要用使能信号来控制硬功启用那个芯片来工作</p>
+<p>假设4bit的二进制编码从高到低依次是A3A2A1A0</p>
+<p>将A2A1A0分别对应连接到两片74XX138上。而将A3连接到低位片的G2B上和高位片的G1上。</p>
+<p>这样我们实际上把4bit的二进制数据划分为了2段</p>
+<p>其中一段从0000到0111，另外一段从1000到1111。当现在A2A1A0为111时，低位片的Y7和高位片的Y7都有可能输出。而假设此时A3为0（此时输入为0111），那么低位片的所有使能信号均有效，而高位片的G1是无效的。那么此时低位片被启用而高位片未被启用。所以低位片的Y7输出为低而其它均为高，高位片的所有输出都是高。因此，0111被译码为了1111111101111111（输出低有效）。反之，A3为1（此时输入为1111）。则低位片的G2B无效而高位片所有的使能信号都有效。1111倍译码为0111111111111111</p>
+<ol start="4">
+<li>使能信号还有哪些用法</li>
+</ol>
+<p>使能信号的用途非常广泛，可以作为计算机系统中存储芯片选通信号，可以作为显式系统中的控制信号，但核心的一点就是使能信号控制了芯片的功能是否能被正常的启用，这在设计大型的数字系统中是非常重要的一环</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-20221213-RS485通讯基础及通讯应用详解"
   class="article article-type-post"
   itemscope
@@ -890,53 +957,6 @@
 <p>亭西有岱祠，又有碧霞元君祠。皇帝行宫在碧霞元君祠东。是日观道中石刻，自唐显庆以来；其远古刻尽漫失。僻不当道者，皆不及往。</p>
 <p>山多石，少土。石苍黑色，多平方，少圜。少杂树，多松，生石罅，皆平顶。冰雪，无瀑水，无鸟兽音迹。至日观数里内无树，而雪与人膝齐。</p>
 <p>桐城姚鼐记。</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20221202-fontfamily-sansa-serif-notfound解决方法"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/12/02/20221202-fontfamily-sansa-serif-notfound%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/"
-    >20221202-fontfamily-sansa-serif-notfound解决方法</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/12/02/20221202-fontfamily-sansa-serif-notfound%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/" class="article-date">
-  <time datetime="2022-12-02T09:11:31.000Z" itemprop="datePublished">2022-12-02</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h2 id="windows"><a href="#windows" class="headerlink" title="windows"></a>windows</h2><p>删除 缓存路径 <code>C:\Users\ASUS\.matplotlib</code><br>刷新即可</p>
  
       <!-- reward -->
       
