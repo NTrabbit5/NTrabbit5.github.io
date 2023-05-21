@@ -126,6 +126,109 @@
     
     
     <article
+  id="post-20221126-随笔"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/11/26/20221126-%E9%9A%8F%E7%AC%94/"
+    >20221126-随笔</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/11/26/20221126-%E9%9A%8F%E7%AC%94/" class="article-date">
+  <time datetime="2022-11-26T08:38:56.000Z" itemprop="datePublished">2022-11-26</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>工作日记</p>
+<p>对问题，认真研究，开研思想，能发表意见，题出看法。解决问题有自己办法。发浑出创造性。</p>
+<p>——一个人的才能</p>
+<p>每个人活在这个世界上都非常不容易的<br>每个人用自己有限的资源条件和能力<br>去创造属于自己独一无二的生活</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-20221125-python给视频添加字幕"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/11/25/20221125-python%E7%BB%99%E8%A7%86%E9%A2%91%E6%B7%BB%E5%8A%A0%E5%AD%97%E5%B9%95/"
+    >20221125-python给视频添加字幕</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/11/25/20221125-python%E7%BB%99%E8%A7%86%E9%A2%91%E6%B7%BB%E5%8A%A0%E5%AD%97%E5%B9%95/" class="article-date">
+  <time datetime="2022-11-25T04:17:00.000Z" itemprop="datePublished">2022-11-25</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>前言<br>最近尝试用python实现给一个视频添加字幕和语音，查了很多博客后有了一个拼拼凑凑的方法：</p>
+<p>使用”pyttsx3”来实现“文字到音频”的转换；<br>使用”pydub”来对得到的音频进行加工和处理；<br>使用”moviepy”来合成字幕和语音文件。<br>（注：本篇仅作为个人小白的学习记录）</p>
+<p>一、”pyttsx3”实现“文字到音频”的转换<br>pyttsx3是一个很方便的实现从“文字”到“语音”的库，安装和使用都很简单，windows下安装只需要：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install pyttsx3</span><br></pre></td></tr></table></figure>
+
+<p>参考链接</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_48047296/article/details/124221568">https://blog.csdn.net/qq_48047296/article/details/124221568</a></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-20221120-色域马蹄图是怎么来的-CIE1931XYZ色彩空间详解"
   class="article article-type-post"
   itemscope
@@ -827,221 +930,6 @@
 <p><em>———————————————- 四、运算指令 ——————————————–</em></p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">FADD                  把目的操作数 (直接接在指令后的变量或堆栈缓存器) 与来源操作数 </span><br><span class="line">                      (接在目的操作数后的变量或堆栈缓存器)  相加，并将结果存入目的操作数  </span><br><span class="line">FADDP  ST(i),ST       这个指令是使目的操作数加上 ST  缓存器，并弹出 ST 缓存器，</span><br><span class="line">                      而目的操作数必须是堆栈缓存器的其中之一，最后不管目的操作数为何，</span><br><span class="line">                      经弹出一次后，目的操作数会变成上一个堆栈缓存器了  </span><br><span class="line">FIADD                 FIADD 是把 ST   加上来源操作数，然后再存入 ST 缓存器，</span><br><span class="line">                      来源操作数必须是字组整数或短整数形态的变数  </span><br><span class="line">  </span><br><span class="line">FSUB                  减  </span><br><span class="line">FSUBP  </span><br><span class="line">FSUBR                 减数与被减数互换  </span><br><span class="line">FSUBRP  </span><br><span class="line">FISUB  </span><br><span class="line">FISUBR  </span><br><span class="line">  </span><br><span class="line">FMUL                  乘  </span><br><span class="line">FMULP  </span><br><span class="line">FIMUL  </span><br><span class="line">  </span><br><span class="line">FDIV                  除  </span><br><span class="line">FDIVP  </span><br><span class="line">FDIVR  </span><br><span class="line">FDIVRP  </span><br><span class="line">FIDIV  </span><br><span class="line">FIDIVR  </span><br><span class="line">  </span><br><span class="line">FCHS                  改变 ST 的正负值  </span><br><span class="line">  </span><br><span class="line">FABS                  把 ST  之值取出，取其绝对值后再存回去。  </span><br><span class="line">  </span><br><span class="line">FSQRT                 将 ST  之值取出，开根号后再存回去。  </span><br><span class="line">  </span><br><span class="line">FSCALE                这个指令是计算 ST*2^ST(1)之值，再把结果存入ST里，而 ST(1)之值不变</span><br><span class="line">                      ST(1)必须是在 -32768 到 32768(-215到215)之间的整数，</span><br><span class="line">                      如果超过这个范围计算结果无法确定，如果不是整数ST(1)会先向零舍入成整数</span><br><span class="line">                      再计算。所以为安全起见，最好是由字组整数载入到 ST(1) 里。  </span><br><span class="line">  </span><br><span class="line">FRNDINT               这个指令是把 ST 的数值舍入成整数，FPU提供四种舍入方式，</span><br><span class="line">                      由 FPU 的控制字组(control word)中的RC两个位决定  </span><br><span class="line">                          RC    舍入控制  </span><br><span class="line">                          00    四舍五入  </span><br><span class="line">                          01    向负无限大舍入  </span><br><span class="line">                          10    向正无限大舍入  </span><br><span class="line">                          11    向零舍去  </span><br></pre></td></tr></table></figure>
 
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20221117-优设笔记"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/11/17/20221117-%E4%BC%98%E8%AE%BE%E7%AC%94%E8%AE%B0/"
-    >20221117-优设笔记</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/11/17/20221117-%E4%BC%98%E8%AE%BE%E7%AC%94%E8%AE%B0/" class="article-date">
-  <time datetime="2022-11-17T06:27:08.000Z" itemprop="datePublished">2022-11-17</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>AE 随机表达式</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">wiggle(<span class="number">2</span>,<span class="number">30</span>)  频率 抖动范围</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">seedRandom(index,<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">x = Random(<span class="number">30</span>,<span class="number">100</span>);</span><br><span class="line"></span><br><span class="line">[x,x]</span><br><span class="line"></span><br><span class="line">seedRandom(index,<span class="number">1</span>)</span><br><span class="line">random(<span class="number">0</span>,<span class="number">360</span>) + time*<span class="number">36</span> </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 位置属性</span></span><br><span class="line"></span><br><span class="line">seedRandom(index,<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">x=random(<span class="number">0</span>,<span class="number">1920</span>)</span><br><span class="line">y=random(<span class="number">0</span>,<span class="number">1080</span>)</span><br><span class="line">[x,y]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// ----  随机循环表达式</span></span><br><span class="line"></span><br><span class="line">freq = <span class="number">2</span>; 频率</span><br><span class="line"></span><br><span class="line">amp = <span class="number">500</span>;</span><br><span class="line">loopTime = <span class="number">3</span></span><br><span class="line">t= time%loopTime;</span><br><span class="line"></span><br><span class="line">wiggle1 = wiggle(freq,amp,<span class="number">1</span>,<span class="number">1.05</span>,t)</span><br><span class="line">wiggle2=wiggle(freq,amp,<span class="number">1</span>,<span class="number">1.05</span>,t-loopTime);</span><br><span class="line"></span><br><span class="line">linear(t,<span class="number">0</span>,loopTime,wiggle1,wiggle2)</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// cycle </span></span><br><span class="line"></span><br><span class="line">loopOut(type=<span class="string">&quot;cycle&quot;</span>,numKeyframes=<span class="number">0</span>);</span><br><span class="line">loopOut(type=<span class="string">&quot;pingpong&quot;</span>,numKeyframes=<span class="number">0</span>);</span><br><span class="line">loopOut(type=<span class="string">&quot;offset&quot;</span>,numKeyframes=<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 路径循环表达式</span></span><br><span class="line"></span><br><span class="line">valueAtTime(time%key(numKeys).time)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure> 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20221116-EDA学习笔记"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/11/16/20221116-EDA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"
-    >20221116-EDA学习笔记</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/11/16/20221116-EDA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="article-date">
-  <time datetime="2022-11-16T02:36:08.000Z" itemprop="datePublished">2022-11-16</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>教材及参考资料</p>
-<p>《EDA技术及应用》</p>
-<p>参考资料</p>
-<p>《CPLD技术及其应用》</p>
-<p>《VHDL硬件描述语言与数字逻辑》</p>
-<p>《CPLD&#x2F;FPGA的开发和应用》</p>
-<p>EDA 技术的相关网址</p>
-<p><a target="_blank" rel="noopener" href="http://www.fpga.com.cn/">www.fpga.com.cn</a></p>
-<p><a target="_blank" rel="noopener" href="http://www.edaclub.net/">www.edaclub.net</a></p>
-<p><a target="_blank" rel="noopener" href="http://www.edachina.com/">www.edachina.com</a></p>
-<p>EDA 技术的发展的三个阶段</p>
-<ol>
-<li>早期电子CAD 阶段</li>
-</ol>
-<p>Tango 布线软件</p>
-<ol start="2">
-<li><p>计算机辅助工程设计CAE阶段</p>
-</li>
-<li><p>电子设计自动化EDA阶段</p>
-</li>
-</ol>
-<p>概念驱动工程EDA  的梦想</p>
-<p>EDA的广义定义范围包括</p>
-<p>半导体工艺设计自动化</p>
-<p>可编程器件设计自动化</p>
-<p>电子系统设计自动化</p>
-<p>印刷电路板设计自动化</p>
-<p>仿真与测试，故障诊断自动化</p>
-<p>形式验证自动化</p>
-<p>统称为EDA工程</p>
-<p>自动完成用软件方式描述的电子系统到硬件系统的逻辑编译<br>逻辑化简  逻辑分割  逻辑综合及优化  布局布线，逻辑仿真</p>
-<p>直至完成对于特定目标芯片的适配编译，逻辑映射，编程下载等工作，最终形成集电子系统或专用集成芯片的一门多学科融合的新技术</p>
-<p>传统设计方法和EDA 方法的区别</p>
-<p>传统设计方法 </p>
-<p>自下而上</p>
-<p>系统测试与性能分析<br>完整系统构成</p>
-<p>电路板设计</p>
-<p>固定功能元件</p>
-<p>自上而下设计中可逐层描述，逐层仿真，保证满足系统指标</p>
-<p>EDA 方法</p>
-<p>系统规格设计</p>
-<p>功能级描述 仿真</p>
-<p>模块化分，仿真</p>
-<p>逻辑综合 优化 布局布线</p>
-<p>定时仿真，定时检查</p>
-<p>输出门级网表</p>
-<p>ASIC 芯片投片  PLD 器件编程，测试</p>
-<p>与传统的基于电路板的设计方法不同</p>
-<p>EDA 技术是基于芯片的设计方法</p>
-<p>可编程逻辑器件</p>
-<p>芯片设计</p>
-<p>电路板构成</p>
-<p>电子系统</p>
-<p>设计手段不同</p>
-<p>EDA 设计方法为自动实现，其方案验证与设计、系统逻辑综合、布局布线、性能仿真、器件编程等均由EDA 工具一体化完成</p>
-<h2 id="EDA技术的主要内容"><a href="#EDA技术的主要内容" class="headerlink" title="EDA技术的主要内容"></a>EDA技术的主要内容</h2><p>实现载体：大规模可编程逻辑器件  FPGA</p>
-<p>CPLD</p>
-<p>显著优点</p>
-<p>开发周期短、投资风险小、产品上市速度快、市场适应能力强、硬件修改升级方便</p>
-<p>描述方式：硬件描述语言</p>
-<p>VHDL IEEE 标准 系统级抽象描述能力较强<br>Verilog IEEE 标准 门级开关电路描述能力<br>ABEL 系统级抽象描述能力差，适合于门级电路描述</p>
-<p>设计工具：开发软件、开发系统</p>
-<p>集成化的开发系统</p>
-<p>特定功能的开发软件：综合软件<br>仿真软件</p>
-<p>硬件验证：实验开发系统</p>
-<p>1.5 EDA 技术及EDA 工具的发展趋势</p>
-<p>EDA 技术的发展趋势</p>
-<p>广度上 大型机-工作站-微机</p>
-<p>深度上 ESDA</p>
-<p>CE 并行设计工程</p>
-<p>单芯片集成  SOC SOPC </p>
-<ol start="2">
-<li>EDA 工具的发展趋势</li>
-</ol>
-<p>输入工具</p>
-<p>多种描述方式的混合使用</p>
-<ol start="2">
-<li>混合信号处理能力</li>
-</ol>
-<p>数模混合信号的处理</p>
-<p>数字信号的描述</p>
-<p>仿真工具</p>
-<p>仿真分为</p>
-<p>功能仿真</p>
-<p>时序仿真</p>
-<p>验证系统的时序特性、系统性能</p>
-<p>仿真是系统验证的主要手段、是整个电子设计过程中花费时间最多的环节</p>
-<p>综合工具</p>
-<p>由高层次描述自动转换为低层次描述的过程，是EDA 技术的核心</p>
-<p>EDA 设计的描述层次</p>
-<p>行为级描述</p>
-<p>寄存器传输级描述 RTL</p>
-<p>门级描述</p>
-<p>版图级描述</p>
-<p>综合分为</p>
-<p>行为综合 逻辑综合 前端综合 版图综合 测试综合</p>
-<p>EDA 的工程设计流程</p>
-<p>文本编辑器 图形编辑器</p>
-<p>VHDL 仿真器</p>
-<p>VHDL 综合器</p>
-<p>网表文件</p>
-<p>FPGA&#x2F;CPLD布线 适配器</p>
-<p>门级仿真器</p>
-<p>各种编程文件</p>
-<p>编程器下载 电缆</p>
-<p>数字系统的设计方法</p>
-<p>自顶向下</p>
-<p>顶层规范描述  系统级行为设计与仿真</p>
-<p>功能模块化分、模块级行为描述与仿真</p>
-<p>由EDA 工具完成综合、优化及工艺的映射 实现</p>
-<p>自底向上</p>
-<p>进行整个系统的测试与性能分析</p>
-<p>由各个功能模块连成一个完整系统</p>
-<p>由逻辑单元组成各个独立的功能模块</p>
-<p>由基本门组成各个组合与时序逻辑单元</p>
-<p>EDA 技术的优点 </p>
-<p>采用自顶向下的设计方法</p>
-<p>采用系统早期仿真</p>
-<p>多种设计描述方式</p>
  
       <!-- reward -->
       

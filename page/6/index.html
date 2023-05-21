@@ -126,6 +126,196 @@
     
     
     <article
+  id="post-20221219-HomeAssistant智能家居系统搭建指南"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/12/19/20221219-HomeAssistant%E6%99%BA%E8%83%BD%E5%AE%B6%E5%B1%85%E7%B3%BB%E7%BB%9F%E6%90%AD%E5%BB%BA%E6%8C%87%E5%8D%97/"
+    >20221219-HomeAssistant智能家居系统搭建指南</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/12/19/20221219-HomeAssistant%E6%99%BA%E8%83%BD%E5%AE%B6%E5%B1%85%E7%B3%BB%E7%BB%9F%E6%90%AD%E5%BB%BA%E6%8C%87%E5%8D%97/" class="article-date">
+  <time datetime="2022-12-19T09:16:41.000Z" itemprop="datePublished">2022-12-19</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>Home assistant 是一个成熟完整的基于python 的智能家居系统，设备支持度高，支持自动化 automation 群组化，ui 客制化等等高度定制化设置，背后又有庞大的社群基础，且不断更新，最重要的是我们可以通过homeassistant-homebridge 插件打通两个平台，同样实现设备的siri 控制，整套体系的框架如下</p>
+<p>本系列将围绕安装，配置、开发等内容，详细介绍HASS 平台的方方面面，同时针对HASS 与hb 兼容与选择，自动化配置方法等等问题给出自己的观点和探索</p>
+<p>HASS 支持大部分平台，简而言之，只要你的主机能跑python 基本就能安装hass 配合魔镜项目，以及便捷性的考虑，<br>本系列教程也将基于树莓派展开</p>
+<p>初始安装</p>
+<p>在树莓派安装HASS 有2种方法供选择</p>
+<p>以其他操作系统，（这里以树莓派 官方系统 raspbian 为例） 为根系统，再通过指令安装</p>
+<p>直接安装集成了HASS 的hassbian 操作系统</p>
+<p>以上2种方法从性能上来说并无二异，均能实现hass全部功能，hassbian 实际上亦基于raspbian 唯一需要纳入考虑的是图形化操作界面的需求。由于树莓派基金官方尚未公开单独安装图形化操作界面的方法，在当下，如果有该需求，只能通过官方图形化操作系统 raspbian with desktop 实现</p>
+<p>方法1<br>安装前，请参考 <a href="https://link.zhihu.com/?target=https://sspai.com/user/714086">梓姵君</a> 的 <a href="https://link.zhihu.com/?target=https://sspai.com/post/38542">文章</a> 对树莓派进行初始基础设置，重点关注地区、WiFi、源替换的内容，这里不再展开，特别注意，2016年11月 后的官方系统默认关闭ssh 功能，请务必打开</p>
+<p>使用任何方法连接到树莓派终端、输入以下安装代码</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ curl -O https://raw.GitHubusercontent.com/home-assistant/fabric-home-assistant/master/hass_rpi_installer.sh &amp;&amp; sudo <span class="built_in">chown</span> pi:pi hass_rpi_installer.sh &amp;&amp; bash hass_rpi_installer.sh</span><br></pre></td></tr></table></figure>
+<p>注意，不要以sudo 运行，然后泡杯茶，做点别的事情，等待程序跑完，安装时间根据网络情况不等，大约需要1-2 个小时，国内网络环境大家自行改善</p>
+<p>如果你是使用此方法安装hass 的话，未来更新指令如下</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo su -s /bin/bash homeassistant</span><br><span class="line"><span class="built_in">source</span> /srv/homeassistant/homeassistant_venv/bin/activate</span><br><span class="line">pip3 install --upgrade homeassistant</span><br><span class="line"><span class="built_in">exit</span></span><br></pre></td></tr></table></figure>
+
+<p>方法2 </p>
+<p>参考 copriwolf 的</p>
+<p><a href="https://link.zhihu.com/?target=https://sspai.com/post/39851">教程</a></p>
+<p>使用 Etcher 安装官方最新</p>
+<p><a href="https://link.zhihu.com/?target=https://github.com/home-assistant/pi-gen/releases/latest">固件</a></p>
+<p>镜像。</p>
+<p>感谢少数派友 <strong>DJ</strong> 千辛万苦的搬运至<a href="https://link.zhihu.com/?target=https://pan.baidu.com/s/1dFpaaAH">度娘盘</a>（password: 2e98）</p>
+<p>要注意的是，hassbian 初次启动时需要联网进行原始设置，由于无法在初次启动前设置无限网络，因此务必将树莓派与电脑或者路由器有线连接起来，以保证树莓派在有网环境下顺利设置</p>
+<p>官方教程告知初次启动需要等待5分钟左右，基于国内的网络环境，我这里测试多次，都需要等待近10分钟，所以大家不要焦躁，可以看部番剧或者往下研究一下此篇文章以便接下来顺利进展。</p>
+<p>如果等待时间过久却没有出现初始界面，可尝试使用以下命令强制初始安装</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl <span class="built_in">enable</span> install_homeassistant.service</span><br><span class="line">sudo systemctl start install_homeassistant.service</span><br></pre></td></tr></table></figure>
+
+<p>如果使用此方法，未来更新指令如下</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ sudo systemctl stop home-assistant@homeassistant.service</span><br><span class="line">$ sudo su -s /bin/bash homeassistant</span><br><span class="line">$ <span class="built_in">source</span> /srv/homeassistant/bin/activate</span><br><span class="line">$ pip3 install --upgrade homeassistant</span><br><span class="line">$ <span class="built_in">exit</span></span><br><span class="line">$ sudo systemctl start home-assistant@homeassistant.service</span><br></pre></td></tr></table></figure>
+
+
+<p>无论使用哪种方法，等待过后，在浏览器输入 http:&#x2F;&#x2F;树莓派的ip 地址:8123 查找树莓派ip 地址可以直接前往路由器界面</p>
+<p>如果出现类似下图，则表示初始安装完成，如若没有出现界面，或者无法连接，有很大可能是尚未安装完毕，不要着急再等等，注意地址冒号为英文字符，请勿输入中文冒号</p>
+<p>Hassbian 安装注意，初次启动请等待安装出现以下界面，再进行后续操作，否则你的一切工作都是前功尽弃，并且除此启动时，勿SSH ，勿输入任何代码，保持通电，联网，静置状态，非常重要</p>
+<p>macOS</p>
+<p>macos 自带python，如果你不小心误删，请先重新安装，macos 下安装hass 也相当简单</p>
+<p>pip3 install homeassistant</p>
+<p>附加功能</p>
+<p>SMB 必须</p>
+<p>SMB 可以帮助我们开启树莓派的网盘模式，方便未来文件传输，这里我们除安装外把该功能加入了系统自启项目</p>
+<p>通用安装指令</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install samba </span><br><span class="line">sudo smbpasswd -a homeassistant -n</span><br><span class="line">sudo nano /etc/samba/smb.conf</span><br><span class="line">[global]</span><br><span class="line">netbios name = raspberrypi</span><br><span class="line">server string = The Pi File Center</span><br><span class="line">workgroup = WORKGROUP</span><br><span class="line">hosts allow =</span><br><span class="line">remote announce =</span><br><span class="line">remote browse <span class="built_in">sync</span> =</span><br><span class="line">[HOME ASSISTANT]</span><br><span class="line">path = /home/homeassistant/.homeassistant</span><br><span class="line">comment = No comment</span><br><span class="line">browsable = <span class="built_in">yes</span></span><br><span class="line"><span class="built_in">read</span> only = no</span><br><span class="line">valid <span class="built_in">users</span> =</span><br><span class="line">writable = <span class="built_in">yes</span></span><br><span class="line">guest ok = <span class="built_in">yes</span></span><br><span class="line">public = <span class="built_in">yes</span></span><br><span class="line">create mask = 0777</span><br><span class="line">directory mask = 0777</span><br><span class="line">force user = homeassistant</span><br><span class="line">force create mode = 0777</span><br><span class="line">force directory mode = 0777</span><br><span class="line">hosts allow =</span><br></pre></td></tr></table></figure>
+
+<p>Ctrl+X，Y，回车</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl restart smbd.service</span><br></pre></td></tr></table></figure>
+
+<p>hassbian 提供了一个附加功能工具包hassbian-config 这使我们的安装更加简单，使用工具包安装原则上已经自动配置好一切，建议大家还是修改一下权限和密码</p>
+<p>安装指令</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo hassbian-config install samba</span><br><span class="line">sudo smbpasswd -a pi</span><br></pre></td></tr></table></figure>
+
+<p>重启服务</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl restart home-assistant@homeassistant.service</span><br></pre></td></tr></table></figure>
+
+<p>2.2 MQTT<br>MQTT 是基于二进制消息的发布，订阅编程模式的消息协议，广泛用于物联网部署中，部分智能家居设备需要MQTT 连接</p>
+<p>通用安装指令</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install mosquitto mosquitto-clients python-mosquitto</span><br><span class="line">sudo systemctl start mosquitto</span><br></pre></td></tr></table></figure>
+
+<p>hassbian 工具包安装</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo hassbian-config install mosquitto</span><br><span class="line">sudo systemctl start mosquitto</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>Homebridge 安装<br>HASS 本身可以通过网页控制，这也赋予了其全平台的控制能力，当然，想必不少人还是冲着语言控制功能考虑智能家居的，对于ios 用户来说，想要更自由地使用homekit HB依然是绕不开的环节</li>
+</ol>
+<p>HB 的安装我就更不多说了，欢迎大家参考另外几篇文章，这里我根据之前指导派友的经验简单概括一下。</p>
+<p>HB 提供一行安装指令：sudo npm install -g –unsafe-perm homebridge 但是安装成功率比较低，推荐大家使用下面的手动安装指令。</p>
+<p>sudo apt-get install git make<br>sudo apt-get install g++<br>curl -sL <a target="_blank" rel="noopener" href="https://deb.nodesource.com/setup_7.x">https://deb.nodesource.com/setup_7.x</a> | sudo -E bash -<br>sudo apt-get install -y nodejs<br>sudo apt-get install libavahi-compat-libdnssd-dev<br>sudo npm install -g –unsafe-perm homebridge hap-nodejs node-gyp<br>cd &#x2F;usr&#x2F;local&#x2F;lib&#x2F;node_modules&#x2F;homebridge&#x2F;<br>（注意这里如果显示不存在文件夹，替换成 cd &#x2F;usr&#x2F;lib&#x2F;node_modules&#x2F;homebridge&#x2F;)<br>sudo npm install –unsafe-perm bignum<br>cd &#x2F;usr&#x2F;local&#x2F;lib&#x2F;node_modules&#x2F;hap-nodejs&#x2F;node_modules&#x2F;mdns<br>（注意这里如果显示不存在文件夹，替换成 cd &#x2F;usr&#x2F;lib&#x2F;node_modules&#x2F;hap-nodejs&#x2F;node_modules&#x2F;mdns）<br>sudo node-gyp BUILDTYPE&#x3D;Release rebuild</p>
+<p>运行到这里，HB就已经安装完成了，这里建议大家直接输入homebridge 运行一次，以生成示例配置文件，然后ctrl+C退出</p>
+<p>接着，安装homeassistant-homebridge 插件，实现平台联动</p>
+<p>sudo npm install -g homebridge-homeassistant</p>
+<ol start="4">
+<li>添加自启任务</li>
+</ol>
+<p>忙活了那么久，即将大功告成了，最后临门一脚，我们把HASS和HB 添加至树莓派开机任务中，这样每次启动后就会自动运行上述2个进程</p>
+<p>注意：配置 HB 前程序会运行错误，提示缺少配置文件，可先不理会。</p>
+<p>cd &#x2F;<br>sudo useradd –system homebridge<br>sudo mkdir &#x2F;var&#x2F;homebridge<br>sudo cp ~&#x2F;.homebridge&#x2F;config.json &#x2F;var&#x2F;homebridge&#x2F;<br>sudo cp -r ~&#x2F;.homebridge&#x2F;persist &#x2F;var&#x2F;homebridge<br>sudo chmod -R 0777 &#x2F;var&#x2F;homebridge<br>cd &#x2F;etc&#x2F;default<br>sudo nano homebridge 复制粘贴</p>
+<h1 id="Defaults-x2F-Configuration-options-for-homebridge"><a href="#Defaults-x2F-Configuration-options-for-homebridge" class="headerlink" title="Defaults &#x2F; Configuration options for homebridge"></a>Defaults &#x2F; Configuration options for homebridge</h1><h1 id="The-following-settings-tells-homebridge-where-to-find-the-config-json-file-and-where-to-persist-the-data-i-e-pairing-and-others"><a href="#The-following-settings-tells-homebridge-where-to-find-the-config-json-file-and-where-to-persist-the-data-i-e-pairing-and-others" class="headerlink" title="The following settings tells homebridge where to find the config.json file and where to persist the data (i.e. pairing and others)"></a>The following settings tells homebridge where to find the config.json file and where to persist the data (i.e. pairing and others)</h1><p>HOMEBRIDGE_OPTS&#x3D;-U &#x2F;var&#x2F;homebridge</p>
+<h1 id="If-you-uncomment-the-following-line-homebridge-will-log-more"><a href="#If-you-uncomment-the-following-line-homebridge-will-log-more" class="headerlink" title="If you uncomment the following line, homebridge will log more"></a>If you uncomment the following line, homebridge will log more</h1><h1 id="You-can-display-this-via-systemd’s-journalctl-journalctl-f-u-homebridge"><a href="#You-can-display-this-via-systemd’s-journalctl-journalctl-f-u-homebridge" class="headerlink" title="You can display this via systemd’s journalctl: journalctl -f -u homebridge"></a>You can display this via systemd’s journalctl: journalctl -f -u homebridge</h1><h1 id="DEBUG-x3D"><a href="#DEBUG-x3D" class="headerlink" title="DEBUG&#x3D;*"></a>DEBUG&#x3D;*</h1><p>Ctrl+X，Y，回车</p>
+<p>cd &#x2F;etc&#x2F;systemd&#x2F;system<br>sudo nano homebridge.service<br>复制粘贴</p>
+<p>[Unit]<br>Description&#x3D;Node.js HomeKit Server<br>After&#x3D;syslog.target network-online.target<br>[Service]<br>Type&#x3D;simple<br>User&#x3D;homebridge<br>EnvironmentFile&#x3D;&#x2F;etc&#x2F;default&#x2F;homebridge<br>ExecStart&#x3D;&#x2F;usr&#x2F;lib&#x2F;node_modules&#x2F;homebridge&#x2F;bin&#x2F;homebridge $HOMEBRIDGE_OPTS<br>Restart&#x3D;on-failure<br>RestartSec&#x3D;10<br>KillMode&#x3D;process<br>[Install]<br>WantedBy&#x3D;multi-user.target<br>Ctrl+X，Y，回车</p>
+<p>cd &#x2F;<br>sudo systemctl daemon-reload<br>sudo systemctl enable homebridge<br>sudo systemctl start homebridge<br>sudo systemctl status homebridge<br>sudo systemctl enable mosquitto</p>
+<p>最后重启，sudo reboot</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-20221219-microPython是什么"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/12/19/20221219-microPython%E6%98%AF%E4%BB%80%E4%B9%88/"
+    >20221219-microPython是什么</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/12/19/20221219-microPython%E6%98%AF%E4%BB%80%E4%B9%88/" class="article-date">
+  <time datetime="2022-12-19T08:11:09.000Z" itemprop="datePublished">2022-12-19</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>microPython是什么</p>
+<p>先了解一下，什么是python</p>
+<p>python 是一种简单易用的，能够运行在多个平台下的计算机编程语言</p>
+<p>microPython 是跑在mcu 微控制器上的python，通过内置的解释器执行py 文件或者py 命令，就可以让微控制器运行您想要的功能了，microPython 和python 编程语言一样，在任何板子上都可以使用通用的api 控制硬件底层，比如点亮LED 灯，读取传感器信息，LCD 显示字符串，控制电机、连接网络、连接蓝牙等等</p>
+<p>如果说Arduino让创客摆脱了各种编程环境配置，那么micropython直接让创客摆脱了底层。命令行和解释执行，都是C语言所不具备的优势，运行micropython的soc，就类似一台完整的电脑，我们用python文件和命令行，轻松控制这台电脑中的一切。</p>
+<p>micropython 是人们连接各种任务的黏合剂，即便您不懂编程，不懂硬件，也可以通过它来控制mcu 要给microPython </p>
+<p>microPython诞生啦！</p>
+<p>Damien George是一名计算机工程师，他每天都要使用Python语言工作，同时也在做一些机器人项目。有一天，他突然冒出了一个想法：能否用Python语言来控制单片机，进行实现对机器人的操控呢？</p>
+<p>要知道，Python是一款比较容易上手的脚本语言，而且有强大的社区支持，一些非计算机专业领域的人都选它作为入门语言。遗憾的是，它不能实现一些非常底层的操控，所以在硬件领域并不起眼。</p>
+<p>Damien为了突破这种限制，他花费了六个月的时间来打造Micro Python。它基于ANSI C，语法跟Pyton 3基本一致，拥有自家的解析器、编译器、虚拟机和类库等。目前它支持基于32-bit的ARM处理器，比如说pyboard（STM32F405），支持NRF51822（micro:bit）、支持FireBeetle-ESP32、支持WiPy、支持ESP8266核心主控、支持CC3200等等。</p>
+<p>pyload 是microPython 官方出的一款支持microPython 的微控制器，采用stm32f405rg MCU主芯片，邮票孔设计，体积小巧<br>在性能方面，pyboard除了将stm32f405rg本身的外设延用出来，还拓展了微型SD卡插槽、三周加速度计（mma7660）。在小巧的pyboard上，设有29个GPIO，4个LED灯，板载3.3V LDO电源管理芯片，可以提供高达250mA的电流，3.6~16V的宽电压输入。</p>
+<p>micro:bit</p>
+<p>micro：bit是由英国广播公司BBC推出的可编程微型计算机，可以帮助用户学习基础编程知识。它最大的亮点在于支持图形化编程，支持microPython编程。micro：bit主控采用nrf51822芯片作为主控，IC包括256KB片上闪存，16KB RAM，32位ARM®Cortex™ M0 CPU，支持Bluetooth低功耗，在低功耗模式下，最低功耗可以达到0.6uA。</p>
+<p>FireBeetle-ESP32</p>
+<p>FireBeetle-ESP32全称是FireBeetle Board-ESP32微控制器，是由DFRobot基于Espressif ESP32主芯片开发的物联网、低功耗为控制器。FireBeetle-ESP32板载ESP-WROOM-32双核芯片，支持WiFi和蓝牙双模通信，外围兼容低功耗硬件设计，深度睡眠模式下功耗仅为10uA。FireBeetle-ESP32控制器还提供了3.7V锂电池接口，并可以通过USB口给锂电池充电。其次，在软件方面，已经支持WiFi和蓝牙功能的使用，支持I2S音频的解码，结合uPyCraft IDE，可以轻松完成物联网开发设计。值得说明的是，本书的microPython教程是基于FireBeetle-ESP32控制器硬件。</p>
+<p>WiPy</p>
+<p>WiPy是支持microPython编程、支持WiFi和蓝牙的开发板，定位于物联网应用的设计。WiPy控制器的核心采用Espressif ESP32芯片，其最大的特点在于体积小巧，支持蓝牙和WiFi，这点和DFRobot的FireBeetle萤火虫系列主板相似。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-20221219-固件firmware固件与驱动的区别"
   class="article article-type-post"
   itemscope
@@ -928,180 +1118,6 @@
 <h2 id="数据模式与指令模式"><a href="#数据模式与指令模式" class="headerlink" title="数据模式与指令模式"></a>数据模式与指令模式</h2><p>在收到 +++，并且接下来 1s 内未收到其他数据的话，将从数据模式切换到指令模式。</p>
 <p>数据模式，可以透传数据，client 发什么，server 就原封不动发出去。指令模式时，AT Server 需要解析 AT 指令，并作出响应。</p>
 <!-- AT+name=”LiMou” --> 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20221216-蓝牙模块与单片机如何连接"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/12/16/20221216-%E8%93%9D%E7%89%99%E6%A8%A1%E5%9D%97%E4%B8%8E%E5%8D%95%E7%89%87%E6%9C%BA%E5%A6%82%E4%BD%95%E8%BF%9E%E6%8E%A5/"
-    >20221216-蓝牙模块与单片机如何连接</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/12/16/20221216-%E8%93%9D%E7%89%99%E6%A8%A1%E5%9D%97%E4%B8%8E%E5%8D%95%E7%89%87%E6%9C%BA%E5%A6%82%E4%BD%95%E8%BF%9E%E6%8E%A5/" class="article-date">
-  <time datetime="2022-12-16T07:56:20.000Z" itemprop="datePublished">2022-12-16</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/63449607">https://zhuanlan.zhihu.com/p/63449607</a></p>
-<h2 id="USB转TTL"><a href="#USB转TTL" class="headerlink" title="USB转TTL"></a>USB转TTL</h2><p>TTL 是一种电平</p>
-<p>像我们常用的单片机，引出来的串口，如果不加其他的接口电路，出来的信号就是TTL 电平，如果需要查看串口的打印信息，一般是需要接一个上位机的，常规的就是电脑，而现在的电脑一般的通信接口只有USB 老式的电脑可能会有 232 接口</p>
-<p>对于usb口而言，是没法和TTL 串口直接通信的，因为接口不匹配，电平也不匹配，这时候就需要借助外围的小设备来实现接口与电平的转换，常规操作是使用CH340 这种芯片所制作的usb 转串口模块，这个芯片可以实现TTL 串口和USB 之前的转换</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20221216-C语言中typedef的使用方法"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/12/16/20221216-C%E8%AF%AD%E8%A8%80%E4%B8%ADtypedef%E7%9A%84%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/"
-    >20221216-C语言中typedef的使用方法</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/12/16/20221216-C%E8%AF%AD%E8%A8%80%E4%B8%ADtypedef%E7%9A%84%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/" class="article-date">
-  <time datetime="2022-12-16T06:05:15.000Z" itemprop="datePublished">2022-12-16</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p><a target="_blank" rel="noopener" href="http://c.biancheng.net/view/298.html">http://c.biancheng.net/view/298.html</a></p>
-<p>C语言用户使用typedef 关键字来定义自己习惯的数据类型名称，来替代系统默认的基本类型，数组类型名称，指针类型名称与用户自定义的结构型名称，共用型名称，枚举型名称等，一旦用户在程序中定义了自己的数据类型名称，就可以在该程序中用自己的数据类型名称来定义变量的类型，数组的类型，指针变量的类型与函数的类型等</p>
-<p>C99 之前并未提供布尔类型，但我们可以使用typedef 关键字来定义一个简单的布尔类型，如下面的代码所示</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="type">int</span> BOOL;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> TRUE 1</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> FALSE 0</span></span><br><span class="line"></span><br><span class="line">BOOL bflag=TRUE;</span><br></pre></td></tr></table></figure>
-
-<p>C99 标准中新增了布尔类型，自定义布尔变量的方式有两种，一种是使用<code> _BOOL</code>，另一种是使用<code>&lt;stdbool.h&gt;</code>头文件中定义好的 bool 类型，感兴趣的小伙伴请猛击这里了解详情。 </p>
-<h2 id="typedef-的四种用法"><a href="#typedef-的四种用法" class="headerlink" title="typedef 的四种用法"></a>typedef 的四种用法</h2><p>在实际使用中，typedef 的应用主要有如下4种</p>
-<p>为基本数据类型定义新的类型名</p>
-<p>也就是说，系统默认的所有基本类型都可以利用typedef 关键字来重新定义类型名，示例代码如下所示</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="type">unsigned</span> <span class="type">int</span> COUNT;</span><br></pre></td></tr></table></figure>
-
-<p>而且我们还可以使用这种方法来定义与平台无关的类型，比如，要定义一个REAL 的浮点类型，在目标平台上，让它表示最高精度的类型</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">double</span> REAL;</span><br></pre></td></tr></table></figure>
-<p>在不支持 long double 的平台二上，改为：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="type">double</span> REAL;</span><br></pre></td></tr></table></figure>
-<p>甚至还可以在连 double 都不支持的平台三上，改为：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="type">float</span> REAL;</span><br></pre></td></tr></table></figure>
-
-<p>这样，当跨平台移植程序时，我们只需要修改一个typedef 的定义即可，而不用对其他源代码做任何修改，其实，标准库中广泛地使用了这个技巧，比如 size_t 在 VC++2010 的 crtdefs.h 文件中的定义如下所示：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">ifndef</span> _SIZE_T_DEFINED</span></span><br><span class="line"><span class="meta">#<span class="keyword">ifdef</span>  _WIN64</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="type">unsigned</span> __int64    <span class="type">size_t</span>;</span><br><span class="line"><span class="meta">#<span class="keyword">else</span></span></span><br><span class="line"><span class="keyword">typedef</span> _W64 <span class="type">unsigned</span> <span class="type">int</span>   <span class="type">size_t</span>;</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> _SIZE_T_DEFINED</span></span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br></pre></td></tr></table></figure>
-
-<p>为自定义数据类型 定义简洁的类名名称</p>
-<p>以结构体为例，下面我们定义一个名为point的结构体</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Point</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="type">double</span> x;</span><br><span class="line">    <span class="type">double</span> y;</span><br><span class="line">    <span class="type">double</span> z;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<p>在调用这个结构体时，我们必须像下面的代码这样来调用这个结构体</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Point</span> <span class="title">oPoint1</span>=</span>&#123;<span class="number">100</span>，<span class="number">100</span>，<span class="number">0</span>&#125;;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Point</span> <span class="title">oPoint2</span>;</span></span><br></pre></td></tr></table></figure>
-<p>这里，结构体 struct Point 为新的数据类型，在定义变量的时候均要向上面的调用方法一样有保留字struct ，而不能像int 和double 那样直接使用Point 来定义变量，现在，我们利用typedef 定义这个结构体，如下面的代码所示</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">tagPoint</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="type">double</span> x;</span><br><span class="line">    <span class="type">double</span> y;</span><br><span class="line">    <span class="type">double</span> z;</span><br><span class="line">&#125; Point;</span><br></pre></td></tr></table></figure>
-
-<p>在上面的代码中，实际上完成了两个操作<br>定义了一个新的结构类型，代码如下所示</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">tagPoint</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="type">double</span> x;</span><br><span class="line">    <span class="type">double</span> y;</span><br><span class="line">    <span class="type">double</span> z;</span><br><span class="line">&#125; ;</span><br></pre></td></tr></table></figure>
-<p>其中，struct 关键字和tagPoint 一起构成了这个结构类型，无论是否存在typedef 关键字，这个结构都存在</p>
-<p>使用typedef 为这个新的结构起了一个别名，叫Point 即</p>
-<p>typedef struct tagPoint Point</p>
-<p>因此，现在你就可以像int 和double 那样直接使用Point 定义变量，如下面的代码所示</p>
-<p>Point oPoint1&#x3D;{100，100，0};<br>Point oPoint2;</p>
-<p>为了加深对typedef 的理解，我们再来看一个结构体例子，如下面的代码所示</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">tagNode</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="type">char</span> *pItem;</span><br><span class="line">    pNode pNext;</span><br><span class="line">&#125; *pNode;</span><br></pre></td></tr></table></figure>
-
-<p>从表面上看，上面的示例代码与前面的定义方法相同，所以应该没有什么问题，但是编译器却报了一个错误，</p>
-<p>其实问题并非在于struct 定义的本身，大家应该都知道，C 语言是允许在结构中包含指向它自己的指针的，我们可以在建立链表等数据结构的实现上看到很多这类例子，那问题在哪里呢  ？其实，根本问题还是在于typedef 的应用 </p>
-<p>在上面的代码中，新结构建立的过程中遇到了pNext 声明，其类型是pNode 这里要特别注意的是，pNode 表示的是该结构体的新别名。于是问题出现了，在结构体类型本身还没有建立完成的时候，编译器根本就不认识pNode 因为这个结构体类型的新别名还不存在，所以自然就会报错，因此，我们要做一些适当的调整，比如将结构体中的pNext 声明修改成如下方式</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">tagNode</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="type">char</span> *pItem;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">tagNode</span> *<span class="title">pNext</span>;</span></span><br><span class="line">&#125; *pNode;</span><br></pre></td></tr></table></figure>
-
-<p>或者将struct 与typedef 分开定义，如下面的代码所示</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">tagNode</span> *<span class="title">pNode</span>;</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">tagNode</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="type">char</span> *pItem;</span><br><span class="line">    pNode pNext;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<p>在上面的代码中，我们同样使用typedef 给一个还未完全声明的类型tagNode 起了一个新别名，</p>
-<p>不过，虽然C 语言编译器完全支持这种做法，但不推荐这样做，建议还是使用如下规范定义方法</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">tagNode</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="type">char</span> *pItem;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">tagNode</span> *<span class="title">pNext</span>;</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">tagNode</span> *<span class="title">pNode</span>;</span></span><br></pre></td></tr></table></figure>
-
-<p>为数组定义简洁的类型名称</p>
-<p>它的定义方法很简单，与为基本数据类型定义新的别名方法一样，示例代码如下所示，</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="type">int</span> INT_ARRAY_100[<span class="number">100</span>];</span><br><span class="line">INT_ARRAY_100 arr;</span><br></pre></td></tr></table></figure>
-
-<p>为指针定义简洁的名称</p>
-<p>对于 指针，我们同样可以使用下面的方式来定义一个新的别名</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="type">char</span>* PCHAR;</span><br><span class="line">PCHAR pa;</span><br></pre></td></tr></table></figure>
-
-<p>对于下面这种简单的变量声明，使用typedef 来定义一个新的别名或许会感觉意义不大，但在比较复杂的变量声明中，typedef 的优势马上就体现出来了，如下面的示例代码所示</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> *(*a[<span class="number">5</span>])(<span class="type">int</span>,<span class="type">char</span>*);</span><br></pre></td></tr></table></figure>
-
-<p>对于上面变量的声明，如果我们使用typedef 来给它定义一个别名，这会非常有意义，如下面的代码所示</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// PFun是我们创建的一个类型别名</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="type">int</span> *(*PFun)(<span class="type">int</span>,<span class="type">char</span>*);</span><br><span class="line"><span class="comment">// 使用定义的新类型来声明对象，等价于int*(*a[5])(int,char*);</span></span><br><span class="line">PFun a[<span class="number">5</span>];</span><br></pre></td></tr></table></figure>
-
-<h2 id="小心使用typedef-带来的陷阱"><a href="#小心使用typedef-带来的陷阱" class="headerlink" title="小心使用typedef 带来的陷阱"></a>小心使用typedef 带来的陷阱</h2><p>接下来看一个简单的typedef 使用示例，如下面的代码所示</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="type">char</span>* PCHAR;</span><br><span class="line"><span class="type">int</span> <span class="title function_">strcmp</span><span class="params">(<span class="type">const</span> PCHAR,<span class="type">const</span> PCHAR)</span>;</span><br></pre></td></tr></table></figure>
-
-<p>在上面的代码中，<code>const PCHAR</code> 使用相当于const char* 呢</p>
-<p>答案是否定的，原因很简单，typedef 是用来定义一种类型的新别名的，它不同于宏，不是简单的字符串替换，因此，const PCHAR 中的const 给予了整个指针本身常量性，也就是形成了常量指针，<code>char *const</code> 一个指向char 的常量指针。即它实际上相当于“char<em>const”，而不是“const char</em>（指向常量 char 的指针）”。当然，要想让 const PCHAR 相当于 const char* 也很容易，如下面的代码所示：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="type">const</span> <span class="type">char</span>* PCHAR;</span><br><span class="line"><span class="type">int</span> <span class="title function_">strcmp</span><span class="params">(PCHAR， PCHAR)</span>;</span><br></pre></td></tr></table></figure>
-
-<p>其实，无论什么时候，只要为指针声明 typedef ，那么就应该在最终的typedef 名称中加一个const 以使得指针本身是常量</p>
-<p>还需要特别注意的是，虽然typedef 并不真正影响对象的存储特性，但在语法上它还是一个存储类的关键字，就像auto extern static 和register 等关键字一样，因此，像下面这种声明是不可行的</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="type">static</span> <span class="type">int</span> INT_STATIC;</span><br></pre></td></tr></table></figure>
-
-<p>不可行的原因是不能声明多个存储类关键字，由于 typedef 已经占据了存储类关键字的位置，因此，在 typedef 声明中就不能够再使用 static 或任何其他存储类关键字了。当然，编译器也会报错，如在 VC++2010 中的报错信息为“无法指定多个存储类”。</p>
- 
       <!-- reward -->
       
     </div>
