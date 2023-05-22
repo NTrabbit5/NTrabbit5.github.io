@@ -80,7 +80,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> 字数统计:</span>
-            <span class="post-count">141</span>
+            <span class="post-count">703</span>
         </span>
     </span>
 
@@ -89,13 +89,15 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> 阅读时长≈</span>
-            <span class="post-count">1 分钟</span>
+            <span class="post-count">2 分钟</span>
         </span>
     </span>
 </div>
  
     </div>
       
+    <div class="tocbot"></div>
+
 
 
 
@@ -107,6 +109,38 @@
 <p>autohotkey 是一款windows 平台下的热键脚本语言程序，可以实现诸如窗口置顶，快速输入、快捷操作等丰富多彩的功能</p>
 <p>能够通过自定义脚本实现很多快捷、自动化操作，乃至创建图形界面程序，而且占用资源极小，是一个能够高度自定义，可用性极高的工具</p>
 <p>这里就介绍下如何通过autohotkey 来提高我的操作效率</p>
+<p>autohotkey 使用方法</p>
+<p>下载并解压 autohotkey 绿色版，绿色版，将脚本文本拖动到上面即可启用脚本</p>
+<p>使用示例，新建文本文件，编写脚本如下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">;这里的 “分号” 表示注释</span><br><span class="line">;快捷键 alt + n 打开记事本</span><br><span class="line">!n::Run notepad</span><br><span class="line"></span><br><span class="line">;快捷键 alt + y 打开百度云管家</span><br><span class="line">!y::Run H:\GanJingYunV2\BaiduYunGuanjia.exe</span><br></pre></td></tr></table></figure>
+
+<p>保存为test.ank 脚本后缀名都为 .ank</p>
+<p>右键选择 打开方式，浏览计算机中的程序，定位到autohotkey 软件所在目录中，选择autohotkeyU64.exe 确定</p>
+<p>以后双击脚本，即可运行，这时就可以通过快捷键 alt+n 启动记事本，通过 alt+y 启动百度云管家了</p>
+<h2 id="自制快捷启动器"><a href="#自制快捷启动器" class="headerlink" title="自制快捷启动器"></a>自制快捷启动器</h2><p>下面带大家开始写一个快捷启动脚本，很简单，这里分成3部分来说</p>
+<p>热键标记</p>
+<p>! 是热键标记，这里的感叹号代表键盘上的alt 键<br>!n 即对应键盘热键alt+n</p>
+<p>常用热键标记对应关系</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># win 键</span><br><span class="line">! alt</span><br><span class="line">^ ctrl</span><br><span class="line">+ shift</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-连接"><a href="#2-连接" class="headerlink" title="2. 连接"></a>2. 连接</h2><p>符号:: 意味着每次按下前面的热键时，随后的命令将会被执行，这里用来连接热键标记和run 命令</p>
+<h2 id="3-Run-命令"><a href="#3-Run-命令" class="headerlink" title="3. Run 命令"></a>3. Run 命令</h2><p>run 命令：用来启动一个程序，文档、url 网址或者快捷方式，如</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Run Notepad</span><br><span class="line">Run C:\My Documents\Address List.doc</span><br><span class="line">Run www.yahoo.com</span><br><span class="line">Run mailto:someone@somedomain.com</span><br></pre></td></tr></table></figure>
+
+<p>把上面3部分组合起来即可实现自定义快捷键</p>
+<p>比如我想通过按Ctrl+q启动位于 <code>D:\software\QQ.exe</code> 的QQ程序，按alt+b打开百度，可以这样写</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">^q::Run D:\software\QQ.exe</span><br><span class="line">!b::Run www.baidu.com</span><br></pre></td></tr></table></figure>
+
+<p>这样，大家就可以自定义自己的程序启动热键了</p>
+<p>脚本推荐</p>
+<ol>
+<li>快捷启动</li>
+</ol>
+<p>即上面介绍的例子，自定义快捷键，快速打开程序、文件、网址等，这里给出一个模板，大家可以根据需要编辑修改</p>
+<p>鼠标债见音量控制</p>
+<p>把鼠标浮动在任务栏时，可以通过滚轮来调节音量，点击中键开启或关闭声音</p>
+<p>屏幕键盘</p>
+<p>在屏幕下方显示一个透明的模拟键盘，来实时显示我们按下的按键，也都来学习盲打时</p>
  
       <!-- reward -->
       
