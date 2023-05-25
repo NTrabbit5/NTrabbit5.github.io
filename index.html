@@ -237,6 +237,27 @@
 <p>把鼠标浮动在任务栏时，可以通过滚轮来调节音量，点击中键开启或关闭声音</p>
 <p>屏幕键盘</p>
 <p>在屏幕下方显示一个透明的模拟键盘，来实时显示我们按下的按键，也都来学习盲打时</p>
+<hr>
+<h2 id="创建脚本"><a href="#创建脚本" class="headerlink" title="创建脚本"></a>创建脚本</h2><p>每个脚本都是需由程序 autohotkey.exe 执行的包含命令的纯文本，脚本中还可以包含热键和热字串，或者甚至完全由它们组成，不过，在不包含热键和热字串时，脚本会在启动后从上往下顺序执行器中的命令</p>
+<p>创建新脚本</p>
+<p>输入文件名，确保以 .ahk 结尾，例如 test.ahk<br>右键点击此文件并选择edit script</p>
+<p>在新的空行中，输入下列内容， <code>#space::Run www.bing.com</code></p>
+<p>在上面的语句行中，首个字符 # 表示windows 键，所以 #space 表示按住 windows 键然后按下空格键来激活热键，双冒号 :: 表示每次按下此热键时会执行其后续命令，这里是转到google 网站，要试用此脚本，请继续下列操作</p>
+<p>保存并关闭此文件</p>
+<p>双击此文件来运行，在任务栏通知区域会出现新的图标</p>
+<p>按住windows 键并按下空格键，在默认浏览器中会打开网页</p>
+<p>要退出或编辑此脚本，则在任务栏通知区域的绿色H 图标点击右键</p>
+<p>注意</p>
+<p>多个脚本可以同时运行，其中的每个脚本在任务栏通知区域使用自己的图标</p>
+<p>每个脚本可以包含多个热键 和热字串</p>
+<p>要让您的脚本在启动计算机时自动运行，请在开始菜单的启动文件夹中给您的脚本创建快捷方式</p>
+<h2 id="启动程序或文档"><a href="#启动程序或文档" class="headerlink" title="启动程序或文档"></a>启动程序或文档</h2><p>可以使用run 命令来打开其中程序，文档，url 或快捷方式，这里有一些常见示例</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Run Notepad</span><br><span class="line">Run C:\My Documents\Address List.doc</span><br><span class="line">Run C:\My Documents\My Shortcut.lnk</span><br><span class="line">Run www.yahoo.com</span><br><span class="line">Run mailto:someone@somedomain.com</span><br></pre></td></tr></table></figure>
+
+<p>通过加上热键标签，可以把上面例子的任何一个设置为热键，在下面的首个例子中，设置的热键为win+n  而在第二个中为control+alt+c</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#n::Run Notepad</span><br><span class="line">^!c::Run calc.exe</span><br></pre></td></tr></table></figure>
+
+<p>上面的例子被称为单行热键，因为它们只包含</p>
  
       <!-- reward -->
       
