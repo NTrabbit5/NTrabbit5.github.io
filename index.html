@@ -257,7 +257,50 @@
 <p>通过加上热键标签，可以把上面例子的任何一个设置为热键，在下面的首个例子中，设置的热键为win+n  而在第二个中为control+alt+c</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#n::Run Notepad</span><br><span class="line">^!c::Run calc.exe</span><br></pre></td></tr></table></figure>
 
-<p>上面的例子被称为单行热键，因为它们只包含</p>
+
+
+<p>上面的例子被称为单行热键，因为它们只包含单个命令，要在热键中执行多个命令，请把首行放在热键定义的下面，且在最后行命令的下一行添加return 例如</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#n::</span><br><span class="line">Run http://www.google.com</span><br><span class="line">Run Notepad.exe</span><br><span class="line">return</span><br></pre></td></tr></table></figure>
+
+<p>如要要运行的程序或文档没有在环境变量中，那么需要指定它的完整路径才能运行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Run %A_ProgramFiles%\Winamp\Winamp.exe</span><br></pre></td></tr></table></figure>
+
+<p>在上面的例子中，%A_ProgramFiles%是内置变量，使用它而不使用像 <code>C:\Program Files </code> 这样的脚本可以有更好的移植性，这表示它在其他电脑上能执行的可能性更大，注意命令和变量的名称是不区分大小写的，例如，Run 等同于 run<br>而 “A_ProgramFiles” 等同于 “a_programfiles”.</p>
+<p>要让脚本等到程序或文档关闭后才继续执行，请使用RunWait 代替Run 在下面的例子中，一直到用户关闭记事本MsgBox 命令才会继续执行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">RunWait Notepad</span><br><span class="line">MsgBox The user has finished (Notepad has been closed).</span><br></pre></td></tr></table></figure>
+
+<p>要学习关于启动程序的更多能容，例如传递参数，指定工作目录和找到程序的退出代码，请点击此处</p>
+<p>发送键击和鼠标点击</p>
+<p>使用send 命令可以发送剪辑到活动的最前面的窗口，在下面的例子中，control+alt+s 被设置为输入签名的热键 在按下此热键前必须确保编辑器或电子邮件这样的窗口是活动的</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">^!s::</span><br><span class="line">Send Sincerely,&#123;Enter&#125;John Smith</span><br><span class="line">return</span><br></pre></td></tr></table></figure>
+
+<p>在上面的例子中，除enter 外的所有字符都按原义发送，而它则模拟按下了enter 键，下一个例子演示了其他一些常用的特殊字符</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Send ^c!&#123;tab&#125;pasted:^v</span><br></pre></td></tr></table></figure>
+
+<p>上面这行发送 Control+C 跟着 Alt+Tab 跟着字符串 “pasted:” 和 Control+V. 要了解特殊字符和按键的完整列表, 请参阅 Send.</p>
+<p>最后，可以用您输入的缩写来出发发送键击的动作，这被称为热字串，例如每当您输入btw 跟着空格或逗号时，下面折行会把它替换为by the way</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">::btw::by the way</span><br></pre></td></tr></table></figure>
+
+
+<p>鼠标点击</p>
+<p>要发送鼠标点击到窗口，首先必须确定要点击的x 和y 坐标，这个可以用window spy 来完成，它包含在autohotkey 中，下列步骤说明了使用window spy 的方法</p>
+<p>在脚本托盘图标菜单或开始菜单中运行 Window Spy.<br>通过点击感兴趣的标题栏, alt-tab 切换或其他方法激活窗口 (Window Spy 被设计为保持 “置顶”).<br>移动鼠标光标到目标窗口中想要的位置并记下 Window Spy 中显示的鼠标坐标 (或在 Windows XP 和早期版本中, 按下 Shift-Alt-Tab 来激活 Window Spy, 这样可以复制和粘贴 “冻结的” 坐标).<br>在 Click 命令中使用上面找到的坐标. 下面的例子点击鼠标左键：Click 112, 223。</p>
+<p>要移动鼠标而不进行点击，请使用mousemove 要拖拉鼠标，请使用mouseclickdrag</p>
+<h3 id="激活和操作窗口"><a href="#激活和操作窗口" class="headerlink" title="激活和操作窗口"></a>激活和操作窗口</h3><p>要激活窗口 使它最前面，请使用winactivate 要判断窗口是否存在，请使用ifwinexist 或winwait 下面的例子演示了这些命令</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">IfWinExist Untitled - Notepad</span><br><span class="line">&#123;</span><br><span class="line">    WinActivate</span><br><span class="line">&#125;</span><br><span class="line">else</span><br><span class="line">&#123;</span><br><span class="line">    Run Notepad</span><br><span class="line">    WinWait Untitled - Notepad</span><br><span class="line">    WinActivate</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上面的例子会首先搜索标题以 “无标题 - 记事本” (区分大小写) 开始的任何现有的窗口. 如果找到这样的窗口, 则激活它. 否则, 启动记事本并等待无标题窗口的出现, 出现后激活它. 上面的例子还利用了 最近找到的窗口, 这样可以不需要在每个 WinActivate 中指定窗口标题.</p>
+<p>其他一些常用的窗口命令是</p>
+<p>IfWinActive: 检查指定的窗口当前是否活动.<br>WinWaitActive: 等待指定窗口变为活动窗口 (通常用在激活窗口的键击后面, 例如按下 Control-F 来打开 “查找” 窗口).<br>WinClose: 关闭指定的窗口.<br>WinMove: 改变指定窗口的位置和&#x2F;或大小.<br>WinMinimize, WinMaximize, WinRestore: 分别最小化, 最大化或还原指定窗口.</p>
+<p>利用MsgBox InputBox 等从用户中获取输入</p>
+<p>下面的例子显示带两个按钮的对话框</p>
+<p>使用InputBox 命令来提示用户输入字符串，使用fileselectfile 或fileselectfolder 来让用户选择文件或文件夹，对于更高级的任务，请使用gui 命令来创建自定义数据输入窗体和用户界面</p>
+<p>提示：您也许已经从其他例子中注意到任何命令中的首个逗号可以，除非首个参数为空或以 :&#x3D; 或 &#x3D; 开始，或命令单独处于延续片段的顶部，例如</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">MsgBox This is ok.</span><br><span class="line">MsgBox, This is ok too (it has an explicit comma).</span><br></pre></td></tr></table></figure>
+
+<h2 id="使用变量和剪贴板"><a href="#使用变量和剪贴板" class="headerlink" title="使用变量和剪贴板"></a>使用变量和剪贴板</h2><p>变量是脚本用来存储文本或数字的内存块，只包含数字的变量 （可以包含小数点在数学运算或比较时会被自动转换为数字）</p>
+<p>除了函数中的局部变量外，所有的变量都是全局的，即可以在脚本的任意位置读取或改变它们的内容</p>
+<p>此外，变量不需要声明，简单地使用它们就可以让它们存在</p>
  
       <!-- reward -->
       
