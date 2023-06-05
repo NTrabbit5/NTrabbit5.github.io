@@ -126,6 +126,151 @@
     
     
     <article
+  id="post-20221220-HomeAssistant树莓派-设备接入篇"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/12/20/20221220-HomeAssistant%E6%A0%91%E8%8E%93%E6%B4%BE-%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%85%A5%E7%AF%87/"
+    >20221220-HomeAssistant树莓派-设备接入篇</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/12/20/20221220-HomeAssistant%E6%A0%91%E8%8E%93%E6%B4%BE-%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%85%A5%E7%AF%87/" class="article-date">
+  <time datetime="2022-12-20T03:43:23.000Z" itemprop="datePublished">2022-12-20</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>在开始配置教程前，我先帮助大家捋一捋HASS 的配置框架</p>
+<p>HASS配置框架</p>
+<p>HASS的核心配置围绕configuration.yaml 文件展开，在这里你可以进行时区、度量单位、开发者模式、主题选择等等基础配置，淡然，最为重要的，你将在该文件内完成所有设备的接入 这也是本篇教程的重点</p>
+<p>HASS 的运行以来一个个相对独立的功能组件，比如小米米家平台就可以视作一个组件，有些时候，部分设备或者功能仍未得到hass 的官方支持，你必须在主目录下新建自定义组件custom_components 文件夹，添加相关的设备支持文件</p>
+<p>完成上述的文件修改，加上HB 的配置，你就可以自如控制所有智能家居设备了</p>
+<p>然而，使用一段时间后，你可能觉得设备太多显示凌乱，想给界面换个风格，或者configuration.yaml 文件<br>看起来要炸了，此时，你会考虑把部分配置剥离出去形成独立的文件，<br>例如你开启了设备追踪功能，Device Tracker 那么HASS 将在主文件下自动生成known_devices.yaml 文件，你将在这里设置需要追踪的设备，</p>
+<p>主文件设置</p>
+<p>上一篇教程中我们已经打开了树莓派的 SMB 服务，现在我们通过 SMB 打开 HASS 主目录。<br>（macOS 在 FInder 左侧栏“共享的”接入，Windows 在 计算机-地址栏 里直接输入 &#x2F;&#x2F;树莓派地址 即可跳转)<br>打开configuration.yaml，文件默认包含如下内容，我们按需修改：</p>
+<p>homeassistant:<br>  #经纬度<br>  latitude: 32.87336<br>  longitude: 117.22743<br>  #海拔<br>  elevation: 430<br>  #度量单位，默认米<br>  unit_system: metric<br>  #时区<br>  time_zone:Asia&#x2F;Shanghai<br>  #系统昵称，显示在主界面顶部<br>  name: Home</p>
+<p>正常情况下，剩下的部分便无须变动了，现在添加雅虎天气服务</p>
+<p>weather:</p>
+<ul>
+<li>platform: yweather<br>woeid:2151849</li>
+</ul>
+<p>其中，woeid是城市代码，打开雅虎天气官网输入城市后搜索，url的最后几位数字便是</p>
+<p>保存 重启 hass</p>
+<p>homebridge 设置</p>
+<p>注意，如果添加了开机自启任务，勿重复运行homebridge 否则会出现端口占用错误</p>
+<p>homebridge-homeassistant 插件版本为2.3.0 以上的，特别注意添加最后一行配置，否则家庭app 内设备为空</p>
+<p>cd &#x2F;home&#x2F;pi&#x2F;.homebridge<br>sudo nano config.json<br>{<br>“bridge”: {<br>“name”: “Homebridge”,<br>“username”: “CC:22:3D:E3:CE:30”,     &#x2F;&#x2F;树莓派 mac 地址<br>“port”: 51826,     &#x2F;&#x2F;运行端口<br>“pin”: “123-45-678”    &#x2F;&#x2F;连接密码，自行设定<br>},<br>“platforms”: [<br>{<br>“platform”: “HomeAssistant”,<br>“name”: “HomeAssistant”,<br>“host”: “<a href="http://127.0.0.1:8123&quot;">http://127.0.0.1:8123&quot;</a>,     &#x2F;&#x2F;HA 运行的网址，可以是 ip 也可以是域名<br>“password”: “raspberry”,     &#x2F;&#x2F;HA 的 api_password，及密码，如有设置请添加<br>“supported_types”: [“automation”, “binary_sensor”, “climate”, “cover”, “device_tracker”, “fan”, “group”, “input_boolean”, “light”, “lock”, “media_player”, “remote”, “scene”, “sensor”, “switch”],<br>“default_visibility”: “visible”    &#x2F;&#x2F;特别注意此项<br>}<br>]<br>}</p>
+<p>ctrl+x，y，回车。之后清除 Homebridge 的缓存：</p>
+<p>sudo rm -rf &#x2F;home&#x2F;pi&#x2F;.homebridge&#x2F;persist&#x2F;<br>请大家记住此步指令，今后若出现重新配置 HA、HB 导致 iOS 设备无法识别新设备或树莓派的，大部分情况均可以使用此指令解决。</p>
+<p>这样我们就完成了 Homebridge 的设置，重启Homebridge：</p>
+<p>sudo systemctl restart homebridge</p>
+<p>经过上述设置，我相信你的智能家居设备已经在ha 和hb 里稳定运转了，</p>
+<p>首先，这个问题只存在 iOS 以及未来的 macOS 用户身上，因为只有你们可以使用 Siri，才可以痛并快乐着。 对于其他终端系统的用户而言，要么和设备厂家的 app 斗智斗勇，要么享受 HA 网页操控的快感，至于语音控制，就还需等待了。</p>
+<p>其次，以米家设备为例，同是网关，HA 可以控制夜灯功能，获取光感数据，Homekit 则不能；而针对扫地机器人，HASS 的接入方法十分复杂，且现阶段只能实现开关功能，HB 的插件安装配置更为容易，且可以控制吸力……可以说两个平台之间没有绝对的胜者，都需要具体情况具体分析。个人认为大多数情况下，HA 对设备的支持更好，并且基于社群支持，跟进速度也更快。</p>
+<p>设备追踪设置</p>
+<p>HA 可以追踪同一路由器内网设备联网状态，我们转换一下思路，便可以利用这个系统判断家人是否在家等，非常方便</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">device_tracker:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">platform:</span> <span class="string">asuswrt</span> <span class="string">（按需填写，小米为“xiaomi”，Netgear为“netgear”，TP-LINK为“tplink”）</span></span><br><span class="line">    <span class="attr">host:</span> <span class="number">192.168</span><span class="string">.xx.1</span> <span class="comment">#路由器Ip</span></span><br><span class="line">    <span class="attr">username:</span> <span class="string">*****</span> <span class="comment">#管理员账号</span></span><br><span class="line">    <span class="attr">password:</span> <span class="string">******</span> <span class="comment">#管理员密码</span></span><br><span class="line">    <span class="attr">track_new_devices:</span> <span class="literal">no</span> <span class="comment">#是否自动添加新设备</span></span><br></pre></td></tr></table></figure>
+
+<p>不出意外，重启 HASS 后，主文件夹下便会自动生成 known_devices.yaml 文件，打开之后你会发现，系统已经自动为嗅探到的连接到路由器的设备添加了默认配置：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">devicename:</span> </span><br><span class="line">  <span class="attr">name:</span> <span class="string">Friendly</span> <span class="string">Name</span> <span class="comment">#昵称</span></span><br><span class="line">  <span class="attr">mac:</span> <span class="string">EA:AA:55:E7:C6:94</span> <span class="comment">#mac地址</span></span><br><span class="line">  <span class="attr">picture:</span> <span class="string">https://home-assistant.io/images/favicon-192x192.png</span> <span class="comment">#图片icon: mdi:human-female #图标，和图片取一个设置</span></span><br><span class="line">  <span class="attr">track:</span> <span class="literal">yes</span> <span class="comment">#是否追踪</span></span><br><span class="line">  <span class="attr">hide_if_away:</span> <span class="literal">no</span> <span class="comment">#离开后是否自动隐藏</span></span><br></pre></td></tr></table></figure>
+
+<p>在接下来的教程中，我将指导大家如何进行自动化配置，真正实现人工智能，摆脱遥控的束缚，更换主题，展现个性，设置简洁大方的控制面板等等</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-20221220-树莓派魔镜"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/12/20/20221220-%E6%A0%91%E8%8E%93%E6%B4%BE%E9%AD%94%E9%95%9C/"
+    >20221220-树莓派魔镜</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/12/20/20221220-%E6%A0%91%E8%8E%93%E6%B4%BE%E9%AD%94%E9%95%9C/" class="article-date">
+  <time datetime="2022-12-20T02:58:50.000Z" itemprop="datePublished">2022-12-20</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h2 id="材料准备"><a href="#材料准备" class="headerlink" title="材料准备"></a>材料准备</h2><p>树莓派3 魔镜的神经中枢</p>
+<p>usb麦克风</p>
+<p>显示屏 不论通过什么渠道取得的显示屏，在这里都建议自带hdmi 接口并侧面出口，剩下转接头的钱和空间，也方便未来背面走线</p>
+<p>如果考虑入触摸屏建议一步到位，目前面向树莓派生产的触控屏最大能到10寸左右，价格在400至500元。加装触摸屏，务必要考虑好触摸类型，因为最上面还需要覆盖一块单透镜。建议优先使用红外触摸，有能力在外框安置感应条即可；其次压敏，但是要考虑镜子的导电性；压感在覆盖镜子的前提下，基本不可能实现。</p>
+<p>驱动板+喇叭， LCD 屏需要加配高压条，一般来说近几年的屏幕都是LED 了，但还是要具体问题具体分析</p>
+<p>单向透视镜</p>
+<p>俗称原子镜，就是大家看的美剧里审讯室用的镜子，魔镜的“大脸”。目前，适配屏幕尺寸的单透镜需定制，价格较昂贵。定制时建议优先选择厚度较薄、透光率较强的镜面，否则会影响日间魔镜的展示效果。</p>
+<p>囊中羞涩的派友也可使用镜面贴膜曲线救国，效果参考汽车车窗贴膜，但透视效果较差。</p>
+<p>镜框</p>
+<p>电源 </p>
+<p>整套魔镜系统需要电源驱动的部件有树莓派，驱动板和显示屏，后两者并一体讨论，驱动板在外接喇叭的前提下，usb 供电接口无法为树莓派供电，因此必须独立供电树莓派，显示屏所需电源为12V5A 大家在购入电源适配器是务必看准电压电流、并兼顾走线，<br>有能力者，可手动并线</p>
+<p>可选材料</p>
+<p>智能插座</p>
+<p>超短HDMI 线</p>
+<p>工具  螺丝刀  电工胶布，泡棉胶</p>
+<p>显然，大部分的工作都集中在底层，我们需要把树莓派、驱动板等等部件合理安置在显示屏背部</p>
+<p>喇叭布置于头部，直立后出声位置位于上方，更具现实感。树莓派布置在底端，保证USB麦克风的收音效果，且方便拿取。中部安放驱动板，方便走线。<br>这里省略了一步操作，建议先将驱动板随附的控制板连接至驱动板，选定输入源、调整好音量后拔下，以节约背板空间。</p>
+<p>上述工作完成后，依次将单透镜和显示屏置入镜框内，扣入夹片固定好，避免松动。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-20221219-HomeAssistant智能家居系统搭建指南"
   class="article article-type-post"
   itemscope
@@ -1012,136 +1157,13 @@
 </article>
 
     
-    <article
-  id="post-20221216-HC-06蓝牙模块"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/12/16/20221216-HC-06%E8%93%9D%E7%89%99%E6%A8%A1%E5%9D%97/"
-    >20221216-HC-06蓝牙模块</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/12/16/20221216-HC-06%E8%93%9D%E7%89%99%E6%A8%A1%E5%9D%97/" class="article-date">
-  <time datetime="2022-12-16T11:46:36.000Z" itemprop="datePublished">2022-12-16</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>主机：用于向从机下发指令，能够搜索并主动建立连接的一方</p>
-<p>从机：用于接收主机下发的命令，不能主动建立连接，只能等别人连接自己。（HC-06只能工作在从机模式下。）<br>主从一体：能够在主机和从机模式间切换，即可做主机也可作从机。如：HC-05既可以设置为主机也可以设置为从机。</p>
-<p>引脚说明</p>
-<p>HC-05 和HC-06的硬件相同，都采用CSR 公司的BC417143 芯片，支持蓝牙2.1+EDR 规范，只是芯片内部的控制程序不同</p>
-<p>通常可采用万用表「电阻」档，测量底板RxD引脚和蓝牙模块本身（就是焊接上去那块板）的第2脚，如果电阻值为接近于0，则代表沒有限流电阻。如下图：</p>
-<p>使用AT 指令前，最好由一块USB 转TTL 的模块，将蓝牙模块与usb 转ttl 模块连接完成，</p>
-<p>AT指令<br>终端返回信息<br>功能描述<br>AT<br>oK<br>确认连接状态<br>AT+VERSION<br>OK linvor V1.8<br>查看软件版本号<br>AT+NAMEOOo<br>oK setname<br>设置蓝牙名称<br>AT+PINOO0o<br>oK setPIN<br>设定密码<br>AT+BAUD1<br>OK 1200<br>将波特率设置为:1200<br>AT+BAUD2<br>OK 2400<br>将波特率设置为:2400<br>AT+BAUD3<br>OK 4800<br>将波特率设置为:4800<br>AT+BAUD4<br>oK 9600<br>将波特率设置为:9600<br>AT+BAUD5<br>OK 19200<br>将波特率设置为:19200<br>AT+BAUD6<br>OK 38400<br>将波特率设置为:38400<br>AT+BAUD7<br>OK 57600<br>将波特率设置为:57600<br>AT+BAUD8<br>OK 115200<br>将波特率设置为::115200 dn.net&#x2F;O17136(</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20221216-AT指令介绍"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/12/16/20221216-AT%E6%8C%87%E4%BB%A4%E4%BB%8B%E7%BB%8D/"
-    >20221216-AT指令介绍</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/12/16/20221216-AT%E6%8C%87%E4%BB%A4%E4%BB%8B%E7%BB%8D/" class="article-date">
-  <time datetime="2022-12-16T08:37:08.000Z" itemprop="datePublished">2022-12-16</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>AT 指令最初是用来指导modem 工作的，</p>
-<p>虽然在PC 端，手机上已经没有了AT 的使用，但其却在嵌入式行业里各类联网模块中发挥着重要的作用，而且不仅仅只应用在蜂窝模块，还应用到了wifi ble 等模块中</p>
-<p>相关标准</p>
-<p>随着技术的发展，目前 AT 指令发展过程中形成两个重要标准</p>
-<p>V.250：该标准于 1995 年建立，1998 年重命名为 V.250<br>ETSI GSM 07.07（3GPP TS 27.007）：用于控制 GSM modem 的 AT 指令集<br>GSM 07.07 是基于 V.250 标准的。是目前最新的 AT 标准。</p>
-<p>当下AT 指令的应用</p>
-<p>目前 的AT 指令着重应用在蜂窝模块 wifi 模块，ble 模块，目的是为了简化嵌入式设备联网的复杂度</p>
-<p>AT 标准定义了At 命令的格式本身，比如命令以 AT 为前缀，以 或者 结尾，这被现有的AT 模块所延用</p>
-<p>但是，由于每个厂家的模块不一样，实现的功能不一样，导致每个 AT 模块厂家有自己的一套私有的 AT 命令集，每一个 AT 模块厂家实现的 AT 指令集解析器也不一样（解析器实现的 AT 标准功能也参差不齐）。像上图所示的 AT 命令使用方式不被大多数模块厂家所实现。</p>
-<p>AT模块的应用框图</p>
-<p>既然是指令集，那么必然会有指令集的解析处理，通常，我们把AT 模块端的解析处理程序称为AT Server，而将控制AT 模块的处理器端的解析处理程序称为AT client 由AT client 发起命令请求，AT Server 通过URC 来主动给AT client 发送数据</p>
-<p>一些约定</p>
-<p>AT 命令的常用格式</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">AT+CMD=&lt;xxx&gt;[,&lt;xxx&gt;,&lt;xxx&gt;]</span><br></pre></td></tr></table></figure>
-
-<p>AT命令以AT 开始，以 \r 或者 \r\n 结尾，参数之间使用 , 隔开，字符串参数使用双引号 “” 包裹，整形参数不适用双引号。</p>
-<p><CR>：回车符<br><LF>：换行符<br><xxx><br>尖括号中的名称 xxx 在 AT 里是一个语法元素，要求必须指定。尖括号本身不会出现在命令行里。<br>[xxx]<br>中括号中的名称 xxx 在 AT 里是一个语法元素，表示可选择指定。中括号本身不出现在命令行里。</p>
-<p>四类AT 命令</p>
-<p>Test 命令：AT+<x>&#x3D;?<br>测试指令类似于命令行里的 help 指令，用于提供该命令的使用信息，以及命令参数的取值范围。<br>Read 命令：AT+<x>?<br>用于查询该指令对应功能的当前值。<br>Set 命令：AT+<x>&#x3D;&lt;…&gt;<br>设置用户指定的参数到对应的功能里。<br>Execute 命令：AT+<x><br>执行相关操作。</p>
-<p>响应结果字符串</p>
-<p>AT 标准定义了标准的响应结果字符串：</p>
-<p>\r\nOK\r\n<br>如果 AT 指令被 AT Server 识别，并正确执行，则返回该结果。<br>“ 标准中的 V1 模式下响应结果代码的方式。V0 模式下返回 0\r。<br>”<br>\r\nERROR\r\n<br>“ 标准中的 V1 模式下响应结果代码的方式。V0 模式下返回 4\r。<br>”</p>
-<h2 id="数据模式与指令模式"><a href="#数据模式与指令模式" class="headerlink" title="数据模式与指令模式"></a>数据模式与指令模式</h2><p>在收到 +++，并且接下来 1s 内未收到其他数据的话，将从数据模式切换到指令模式。</p>
-<p>数据模式，可以透传数据，client 发什么，server 就原封不动发出去。指令模式时，AT Server 需要解析 AT 指令，并作出响应。</p>
-<!-- AT+name=”LiMou” --> 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
   </article>
   
 
   
   <nav class="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/5/">上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><a class="page-number" href="/page/8/">8</a><span class="space">&hellip;</span><a class="page-number" href="/page/19/">19</a><a class="extend next" rel="next" href="/page/7/">下一页</a>
+    <a class="extend prev" rel="prev" href="/page/5/">上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><a class="page-number" href="/page/8/">8</a><span class="space">&hellip;</span><a class="page-number" href="/page/20/">20</a><a class="extend next" rel="next" href="/page/7/">下一页</a>
   </nav>
   
 </section>
