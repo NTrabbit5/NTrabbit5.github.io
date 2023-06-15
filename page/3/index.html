@@ -126,6 +126,544 @@
     
     
     <article
+  id="post-20230419-C-文档doxygen-breathe语法"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/04/19/20230419-C-%E6%96%87%E6%A1%A3doxygen-breathe%E8%AF%AD%E6%B3%95/"
+    >20230419-C++文档doxygen/breathe语法</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/04/19/20230419-C-%E6%96%87%E6%A1%A3doxygen-breathe%E8%AF%AD%E6%B3%95/" class="article-date">
+  <time datetime="2023-04-19T04:33:39.000Z" itemprop="datePublished">2023-04-19</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>本手册用来给megengine 开发者提供常见的c++接口文档的语法模板作为参考，帮助其高效地撰写和修改复合megengine 工程规范的面向用户的c++接口文档</p>
+<p>不是所有的doxygen 语法都能在megengine 文档中被使用，我们仅使用它来提取信息，而用breathe 来构建文档，</p>
+<p>一份参考模块</p>
+<p>下面这个例子改自Breathe 官方文档的nutshell 示例</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * @file nutshell.h</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * @brief This is a nutshell example.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/*!</span></span><br><span class="line"><span class="comment"> *  With a little bit of a elaboration, should you feel it necessary.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Nutshell</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">public:</span><br><span class="line"></span><br><span class="line">   <span class="comment">//! Our tool set</span></span><br><span class="line">   <span class="comment">/*! The various tools we can opt to use to crack this particular nut */</span></span><br><span class="line">   <span class="class"><span class="keyword">enum</span> <span class="title">Tool</span></span></span><br><span class="line"><span class="class">   &#123;</span></span><br><span class="line">      kHammer = <span class="number">0</span>,          <span class="comment">//!&lt; What? It does the job</span></span><br><span class="line">      kNutCrackers,         <span class="comment">//!&lt; Boring</span></span><br><span class="line">      kNinjaThrowingStars   <span class="comment">//!&lt; Stealthy</span></span><br><span class="line">   &#125;;</span><br><span class="line"></span><br><span class="line">   <span class="comment">//! Nutshell constructor</span></span><br><span class="line">   Nutshell();</span><br><span class="line"></span><br><span class="line">   <span class="comment">//! Nutshell destructor</span></span><br><span class="line">   ~Nutshell();</span><br><span class="line"></span><br><span class="line">   <span class="comment">/*! Crack that shell with specified tool</span></span><br><span class="line"><span class="comment">    *</span></span><br><span class="line"><span class="comment">    * @param tool - the tool with which to crack the nut</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">   <span class="type">void</span> <span class="title function_">crack</span><span class="params">( Tool tool )</span>;</span><br><span class="line"></span><br><span class="line">   <span class="comment">/*!</span></span><br><span class="line"><span class="comment">    * @return Whether or not the nut is cracked</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">   <span class="type">bool</span> <span class="title function_">isCracked</span><span class="params">()</span>;</span><br><span class="line"></span><br><span class="line">private:</span><br><span class="line"></span><br><span class="line">   <span class="comment">//! Our cracked state</span></span><br><span class="line">   <span class="type">bool</span> m_isCracked;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>注意事项</p>
+<p>多行注释中带有前导星号 leading-asterisk * 而非单纯的空行</p>
+<p>使用@param 代替\param 写法，避免遇到后者形式在其他解析工具中被转义的情况</p>
+<p>MegEngine 文档只要是公开接口、成员，不论是否有相应备注，都会生成对应的api 文档</p>
+<p>使用breathe 语法</p>
+<p>breathe 文档中提供了一些简单的语法模板，可以在c++接口文档中添加数学公式、列表、表格等样式，在简单情况下可以使用</p>
+<p>参考breathe features 页面中给出的各种样例</p>
+<p>对于比较复杂的文档内容编辑和排版需求，推荐使用下一小节提到的ReST 语法，即 MegEngine 文档中最常使用的语法</p>
+<p>使用ReST 语法和组件</p>
+<p>MegEngine文档中使用了比较多的sphinx 拓展样式，使用时通过resTructuretext 语法来解析，当默认的样式不满足需求时，可以使用sphinx restructuretext 语法入门中展示的各种语法作为拓展，但需要注意的是，由于使用了前导星号，为了能够被正常解析，需要使用 embed:rst:leading-asterisk 标记</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">/*!</span><br><span class="line">* Inserting additional reStructuredText information.</span><br><span class="line">*</span><br><span class="line">* \verbatim embed:rst:leading-asterisk</span><br><span class="line">*     .. note::</span><br><span class="line">*</span><br><span class="line">*        This is a example.</span><br><span class="line">* \endverbatim</span><br><span class="line">*/</span><br></pre></td></tr></table></figure>
+
+<p>它等同于在C++ 接口文档中插入了如下ReST语法</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">.. note::</span><br><span class="line"></span><br><span class="line">   This is a example.</span><br></pre></td></tr></table></figure>
+
+<p>会得到对应的note 样式块内容，同理，你还可以使用这种方法来插入 数学公式和图片等等内容</p>
+<p>从源码到文档的流程</p>
+<p>MegEngine 的C++源码经历了如下流程变成megengine 文档中的api 参考页面</p>
+<p>C++ head files doxygen  xml files  breathe directive  sphinx rst doc</p>
+<p>由于MegEngine 文档与MegEngine 源码不再同一处维护，因此开发人员通常会规律性地使用doxygen 从MegEngine 的c++ 源码中生成最新的xml 文件，位于doxyxml 目录中，平时撰写文档只需要使用breathe 将xml 中的信息转换成sphinx 的rst 文档，体验上与从 MegEngine 的python package 生成api 文档类似</p>
+<p>以tensor 为例子，添加python 接口和c++接口 生成文档的sphinx 语法对比如下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">.. autoclass:: megengine.Tensor</span><br><span class="line"></span><br><span class="line">.. doxygenclass:: lite::Tensor</span><br></pre></td></tr></table></figure>
+
+<p>使用自动生成的文档的好处之一是，方便在文档其他的任何地方进行引用</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">比如此处直接引用 :class:`megengine.Tensor` 与 :cpp:class:`lite::Tensor` 的 API 文档。</span><br></pre></td></tr></table></figure>
+
+<p>详细的sphinx 和breathe 文档语法对比</p>
+<hr>
+<p>Breathe 文档</p>
+<p>breathe 在sphinx 和doxygen 文档系统之间提供了一座桥梁</p>
+<p>这是一个简单的方法，将doxygen 信息包含在由sphinx 生成的一组文档中，目的是为那些喜欢使用sphinx 但用python 以外的语言工作的人制作一个类似autodoc的支持，该系统依赖于doxygen的xml输出</p>
+<p>警告</p>
+<p>这个文档的构建不是来自于breathe的一个特定的标记版本，它反映了breathe的工作进展状态，请参阅github 仓库 <a target="_blank" rel="noopener" href="https://github.com/michaeljones/breathe">https://github.com/michaeljones/breathe</a> ，以获得更多的官方信息</p>
+<p>概述</p>
+<p>简单的设置，一个doxygen 配置值，一个sphinx 配置值和一个指令，你就可以上路了</p>
+<p>高级和低级指令，引用整个项目，只是一个类或只是一个函数的不同指令</p>
+<p>支持多个doxygen 项目，将其设置为知道不同的项目，并在每个指令中通过名称或路径引用它们</p>
+<p>允许在doxygen 标记中嵌入reStructureText 一些额外的doxygen 别名允许你在评论中添加 rst endrst 块，并将内容解释为reStructureText</p>
+<p>对sphinx 域的基本支持，用标准的sphinx 域引用链接到breathe输出中的函数</p>
+<p>设置与使用</p>
+<p>快速入门</p>
+<p>Directives Config Variables<br>与doxygen 和autodoc的差异</p>
+<p>running on Read the docs</p>
+<p>特性</p>
+<p>Supported markups </p>
+<p>latex math<br>domains</p>
+<p>custom css<br>groups<br>lists<br>tables</p>
+<p>template</p>
+<p>贡献</p>
+<p>contribute to breathe</p>
+<p>how it works<br>credits</p>
+<p>示例  测试页面</p>
+<p>test pages</p>
+<p>下载</p>
+<p>breathe 可从以下网站获得</p>
+<p>pypi the python package index<br>github</p>
+<h2 id="简而言之"><a href="#简而言之" class="headerlink" title="简而言之"></a>简而言之</h2><p>你写的代码看起来有点像这样：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line">    \file nutshell.h</span><br><span class="line">    An overly extended example of how to use breathe</span><br><span class="line">*/</span><br><span class="line"></span><br><span class="line">/*!</span><br><span class="line">    With a little bit of a elaboration, should you feel it necessary.</span><br><span class="line">*/</span><br><span class="line">class Nutshell</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line"></span><br><span class="line">    //! Our tool set</span><br><span class="line">    /*! The various tools we can opt to use to crack this particular nut */</span><br><span class="line">    enum Tool</span><br><span class="line">    &#123;</span><br><span class="line">        kHammer = 0,          //!&lt; What? It does the job</span><br><span class="line">        kNutCrackers,         //!&lt; Boring</span><br><span class="line">        kNinjaThrowingStars   //!&lt; Stealthy</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    //! Nutshell constructor</span><br><span class="line">    Nutshell();</span><br><span class="line"></span><br><span class="line">    //! Nutshell destructor</span><br><span class="line">    ~Nutshell();</span><br><span class="line"></span><br><span class="line">    /*! Crack that shell with specified tool</span><br><span class="line"></span><br><span class="line">      \param tool - the tool with which to crack the nut</span><br><span class="line">    */</span><br><span class="line">    void crack( Tool tool );</span><br><span class="line"></span><br><span class="line">    /*!</span><br><span class="line">      \return Whether or not the nut is cracked</span><br><span class="line">    */</span><br><span class="line">    bool isCracked();</span><br><span class="line"></span><br><span class="line">private:</span><br><span class="line"></span><br><span class="line">    //! Our cracked state</span><br><span class="line">    bool m_isCracked;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>然后你运行这个</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">doxygen</span><br></pre></td></tr></table></figure>
+
+<p>有一个设置是这样说的</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GENERATE_XML = YES</span><br></pre></td></tr></table></figure>
+
+<p>然后在你的 Sphinx 文档中，你可以添加这样的内容</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">.. doxygenclass:: Nutshell</span><br><span class="line">   :project: nutshell</span><br><span class="line">   :members:</span><br></pre></td></tr></table></figure>
+
+<p>通过像这样的 <code>conf.py</code> 设定</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">breathe_projects = &#123;</span><br><span class="line">    &quot;nutshell&quot;:&quot;../../examples/specific/nutshell/xml/&quot;,</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>并在 <code>conf.py</code> 中把 Breathe 注册为一个插件，像这样</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">extensions = [ &quot;breathe&quot; ]</span><br></pre></td></tr></table></figure>
+
+<p>你会得到类似这样的东西：</p>
+<hr>
+<ul>
+<li><p>class <strong>Nutshell</strong> </p>
+<p>With a little bit of a elaboration, should you feel it necessary.Public Typesenum <strong>Tool</strong> Our tool set.The various tools we can opt to use to crack this particular nut<em>Values:<em>enumerator <strong>kHammer</strong> What? It does the job.enumerator <strong>kNutCrackers</strong> Boring.enumerator <strong>kNinjaThrowingStars</strong> Stealthy.Public Functions**Nutshell</em></em>() <a target="_blank" rel="noopener" href="https://daobook.github.io/breathe/index.html#nutshellclass_nutshell">Nutshell</a> constructor.<strong>~Nutshell</strong>() <a target="_blank" rel="noopener" href="https://daobook.github.io/breathe/index.html#nutshellclass_nutshell">Nutshell</a> destructor.void <strong>crack</strong>(<a target="_blank" rel="noopener" href="https://daobook.github.io/breathe/index.html#_CPPv4NUt8_ex_index8Nutshell4ToolE">Tool</a> <em>tool</em>) Crack that shell with specified tool参数<strong>tool</strong> – the tool with which to crack the nutbool <strong>isCracked</strong>() 返回Whether or not the nut is cracked</p>
+</li>
+</ul>
+<hr>
+<p>&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</p>
+<p>快速入门</p>
+<p>对于这个快速入门，我们假设有以下先决条件</p>
+<p>在某处下载并提取了breathe<br>已经安装了doxygen 并且为要记录的项目生成了doxygen xml 格式 将 GENERATE_XML 标签设为 YES</p>
+<p>我们假设有以下的路径</p>
+<p>文档根路径<br>breathe 路径</p>
+<p>doxygen xml 输出路径</p>
+<p>文档路径应该包含一个文件夹source 其中包含conf.py 文件，doxygen xml 输出文件夹应该包含index.xml 由doxygen 生成的输出文件</p>
+<p>要整合breathe 功能，需要采取以下步骤</p>
+<p>在你的 conf.py 中添加breathe 路径，方法是添加以下一行</p>
+<p>sys.path.append( “&#x2F;home&#x2F;me&#x2F;docproj&#x2F;ext&#x2F;breathe&#x2F;“ )</p>
+<p>添加 breathe 作为插件，这一行可以这样写</p>
+<p>extensions &#x3D; [‘sphinx.ext.pngmath’, ‘sphinx.ext.todo’, ‘breathe’ ]</p>
+<p>告诉 breathe 关于项目的信息</p>
+<p>breathe_projects &#x3D; { “myproject”: “&#x2F;home&#x2F;me&#x2F;docproj&#x2F;doxyxml&#x2F;“ }</p>
+<p>指定默认的项目</p>
+<p>breathe_default_project &#x3D; “myproject”</p>
+<p>一旦完成这些工作，你可以使用以下命令</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">.. doxygenindex::</span><br><span class="line">.. doxygenfunction::</span><br><span class="line">.. doxygenstruct::</span><br><span class="line">.. doxygenenum::</span><br><span class="line">.. doxygentypedef::</span><br><span class="line">.. doxygenclass::</span><br></pre></td></tr></table></figure>
+
+<p>以包括不同结构的文档，对于这些命令中的每一条，都可以指定以下指令</p>
+<p>project 指定哪个项目，如breathe_projects 配置值中定义的，应该用于该指令，这取代了默认值</p>
+<p>path<br>直接指定到有doxygen 输出的文件夹的路径，这覆盖了project 和default project</p>
+<hr>
+<p>指令和配置变量</p>
+<p>指令和配置变量</p>
+<p>directives 指令</p>
+<p>doxygenclass<br>doxygendefine<br>doxygennum<br>doxygennumvalue<br>doxygenfile<br>autodoxygenfile<br>doxygenfunction<br>doxygengroup<br>doxygenindex<br>autodoxygenindex<br>doxygennamespace<br>doxygenstruct<br>doxygeninterface<br>doxygentypedef<br>doxygenunion<br>doxygenvariable<br>doxygenpage</p>
+<p>config values 配置值</p>
+<p>指令</p>
+<p>可用的指令如下所示，在每种情况下，project path no-link 和outline 选项具有以下含义</p>
+<p>project 指定配置值中定义的项目，应该用于此指令，这将覆盖默认项目 如果有，已指定 breathe_projects</p>
+<p>指令不使用此功能，改为用于指定配置值中的条目来使用 autodoxygenindexsourcebreathe_projects_source</p>
+<p>path 直接指定具有doxygen 输出的文件夹的路径，这覆盖项目和默认项目 如果已指定</p>
+<p>指令不使用此功能，改为用于指定要成为的源文件的根路径  autodoxygenindexsource-path</p>
+<p>no-link 指示 breathe 不要尝试为此特定指令生成的内容</p>
+<p>这使您可以将主要参考列表放在具有以下位置的某个位置目标，但随后能够将重复指令潜入其他指令， </p>
+<p>部分文档来说明将特定要点，但没有sphinx 对其他参考资料应该链接到什么感到困惑</p>
+<p>outline 导致breathe 仅输出原始代码定义，而无需任何其他描述信息</p>
+<p>如果指令上既没有提供项目也没有提供路径，那么breathe 将 breathe_default_project 配置值为设置</p>
+<p>此指令为单个类生成适当的输出，它采用标准项目、路径、大纲和无链接选项，此外还有 members protected-members private-members undoc-members membergroups 和members-only 选项</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">.. doxygenclass:: &lt;class name&gt;</span><br><span class="line">   :project: ...</span><br><span class="line">   :path: ...</span><br><span class="line">   :members: [...]</span><br><span class="line">   :protected-members:</span><br><span class="line">   :private-members:</span><br><span class="line">   :undoc-members:</span><br><span class="line">   :membergroups: ...</span><br><span class="line">   :members-only:</span><br><span class="line">   :outline:</span><br><span class="line">   :no-link:</span><br></pre></td></tr></table></figure>
+<p>重看 doxygenclass 文档以获取更多详细信息 并看到它的实际效果</p>
+<p>doxygendefine</p>
+<p>此指令为单个预处理器生成适当的输出定义，它的行为与doxygenstruct 指令相同</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">.. doxygendefine:: &lt;define name&gt;</span><br><span class="line">   :project: ...</span><br><span class="line">   :path: ...</span><br><span class="line">   :outline:</span><br><span class="line">   :no-link:</span><br></pre></td></tr></table></figure>
+<p>重看示例以查看其实际效果</p>
+<p>doxygenenum</p>
+<p>此指令为单个枚举生成适当的输出，它的行为与doxygenstruct 指令相同</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">.. doxygenenum:: &lt;enum name&gt;</span><br><span class="line">   :project: ...</span><br><span class="line">   :path: ...</span><br><span class="line">   :outline:</span><br><span class="line">   :no-link:</span><br></pre></td></tr></table></figure>
+
+<p>doxygenenumvalue<br>此指令为单个枚举值生成适当的输出</p>
+<p>doxygenfile<br>此指令为源的内容生成适当的输出文件</p>
+<p>autodoxygenfile<br>此指令是上述doxygenfile 指令的此版本，它像其他自动指令一样为您处理doxygen xml 生成auto</p>
+<p>查看示例以查看其实际效果</p>
+<p>doxygenfunction</p>
+<p>此指令为单个函数生成适当的输出，这个函数名称在项目中是唯一的</p>
+<p>doxygengroup<br>此指令为doxygen 的内容生成适当的输出群，可以使用特定的doxygen 标记声明doxygen 组来源注释如 doxygen 分组文档中所述</p>
+<p>它采用标准的project path outline 和no-link 选项和content-only members protected-member private-members undoc-members 选项</p>
+<p>查看 doxygengroup 文档以获取更多详细信息，并看到它的实际效果</p>
+<p>doxygenindex</p>
+<p>该指令处理并生成由 doxygen xml 输出，它读取文件并处理所有内容 由它引用 index.xml</p>
+<p>autodoxygenindex </p>
+<p>此指令执行与指令类似的角色，除了它为您处理doxygen xml 生成，它使用配置字典来判断哪个代码源文件应具有为其生成doxygen xml 该指令选项将指令与字典中的特定项目相关联，中条目引用的所有文件将包含在输出中，此外，任何中指定的选项将添加到生成的doxygen 配置文件和中指定的任何自定义别名都将添加到 doxygen 别名中</p>
+<p>doxygennamespace</p>
+<p>此指令为命名空间的内容生成相应的输出</p>
+<p>It takes the standard project, path, outline and no-link options and additionally the content-only, members, protected-members, private-members and undoc-members options.</p>
+<p>要引用嵌套命名空间，必须提供完整的命名空间路径，例如，对于命名空间内的命名空间， foo::bar  bar</p>
+<p>查看doxygennamespace 文档了解更多信息，细节并查看它的实际效果</p>
+<p>doxygenstruct<br>此指令为单个结构生成适当的输出，结构体名称在项目中必须是唯一的</p>
+<p>It takes the standard project, path, outline and no-link options and additionally the members, protected-members, private-members, membergroups, members-only and undoc-members options.</p>
+<p>查看示例以查看其实际效果</p>
+<p>doxygeninterface</p>
+<p>此指令为单个接口 专门使用 类，它的行为与doxygenclass 指令相同</p>
+<p>doxygentypedef</p>
+<p>此指令为单个typedef 生成适当的输出，它的行为与doxygenstruct 指令相同</p>
+<p>doxygenunion</p>
+<p>此指令为单个联合生成适当的输出，它的行为与doxygenstruct 指令相同</p>
+<p>doxygenvariable</p>
+<p>此指令为doxygen 的内容生成适当的输出页，为每个使用xrefitem 命令的每个键创建一个doxygen页面用于源注释中的标记，有关详细信息，请查看doxygen外部参照文档</p>
+<p>它采用标准 project 和 path 选项，以及 content-only选项，</p>
+<p>查看doxygenpage 文档以获取更多详细信息，并看到它的实际效果</p>
+<p>config values<br>breathe_projects</p>
+<p>这应该是一个字典，其中键是项目名称，值是包含该项目的doxygen 输出的文件夹的路径</p>
+<p>breathe_default_project</p>
+<p>这应该与字典中的一个键匹配，并且指示在未指定项目时应该使用哪个项目指令</p>
+<p>breathe_domain_by_extension</p>
+<p>允许您根据特定文件的域指定域外框</p>
+<p>breathe_domain_by_file_pattern<br>允许您通过通配符语法为特定文件指定域，这之后被检查，因此将覆盖必要时</p>
+<p>如果您希望将所有头文件都视为在cpp 域中，您可以使用以下示例 以上，但是，如果您有一个文件应被视为在c 域中，那么您可以如上所述进行覆盖，</p>
+<p>breathe_projects_source</p>
+<p>其中键是项目名称，值是元组的字典的目录和这些目录的源代码文件名列表，您希望使用doxygen 自动处理的项目，如果您在以下位置有一些文件</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/some/<span class="type">long</span>/path/to/myproject/file.c</span><br><span class="line">/some/<span class="type">long</span>/path/to/myproject/subfolder/otherfile.c</span><br></pre></td></tr></table></figure>
+
+<p>然后，您可以设置</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">breathe_projects_source = &#123;</span><br><span class="line">   <span class="string">&quot;myprojectsource&quot;</span> :</span><br><span class="line">       ( <span class="string">&quot;/some/long/path/to/myproject&quot;</span>, [ <span class="string">&quot;file.c&quot;</span>, <span class="string">&quot;subfolder/otherfile.c&quot;</span> ] )</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后，您的 autodoxygenfile 使用情况可能如下所示 </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">.. autodoxygenfile:: file.c</span><br><span class="line">   :project: myprojectsource</span><br></pre></td></tr></table></figure>
+
+<p>元组中的目录条目可以是空字符串，如果，列表是完整路径</p>
+<p>breathe_build_directory</p>
+<p>为了处理breathe，必须运行以创建要处理xml 文件，此配置值指定根应在其中创建这些文件的目录，默认情况下，这设置为输出文件夹的父目录，即正常构建目录，如果您有自定义，则可以使用此设置进行更改， </p>
+<p>breathe 将采用最终值并附加到路径以最大程度地减少冲突</p>
+<p>breathe_default_members</p>
+<p>提供应用于所有指令的指令标志  采取 和选项，默认情况下，此选项设置为空列表，这意味着没有成员显示，如果您想始终显示公众和公众，无文档成员，那么您可以像这样设置它 </p>
+<p>breathe_default_members &#x3D; (‘members’, ‘undoc-members’)</p>
+<p>breathe_implementation_filename_extensions<br>提供被视为实现文件，当指令查找未命名的函数名称时，将忽略这些文件，这是为了避免问题标头的doxygenxml 输出中出现相同的函数名称 文件和实现文件，因为声明在一个和定义在另一个，doxygen 将文档从定义到声明的xml 因此我们不会错过任何文档 来自实现文件的信息，此值的默认值 变量为 doxygenfunction</p>
+<p>breathe_implementation_filename_extensions &#x3D; [‘.c’, ‘.cc’, ‘.cpp’]</p>
+<p>breathe_doxygen_config_options</p>
+<p>一个字典，其中键和值是配置的名称和值，要放置在由 autodoxygenindex 生成的doxygen 配置文件中的选项</p>
+<p>breathe_doxygen_config_options &#x3D; {‘EXCLUDE_SYMBOLS’: ‘abc123’}</p>
+<p>将放置在配置文件中，默认值为空字典，exclude_symbols&#x3D;abc123</p>
+<p>breathe_doxygen_aliases</p>
+<p>其中键和值是别名的名称和值的字典，放置在由 autodoxygenindex 生成的doxygen 配置文件中</p>
+<p>breathe_doxygen_aliases &#x3D; {‘rstref{1}’: r’\verbatim embed:rst:inline :ref:<code>\1</code> \endverbatim’}</p>
+<p>将放置该行</p>
+<p>ALIASES +&#x3D; rstref{1}&#x3D;”\verbatim embed:rst:inline :ref:<code>\1</code> \endverbatim”</p>
+<p>在配置文件中，默认值为空字典，请注意使用原始字符串以确保反斜杠解释为文字字符，此示例别名允许使用 rstref</p>
+<p>breathe_show_define_initializer</p>
+<p>一个布尔标志，可以设置为在输出中显示定义的初始值设定项 true</p>
+<p>例如，如果将定义 MAX_LENGTH 100 设置为值为100 True 不带则为false</p>
+<p>breathe_show_enumvalue_initializer</p>
+<p>一个布尔标志，可以设置为在输出中显示枚举值的初始值设定项，True</p>
+<p>例如，如果将枚举值设置为 TWO&#x3D;2 为true 否则为false</p>
+<p>breathe_show_include</p>
+<p>一个布尔标志，可以设置为隐藏每个标头定义实体 结构 函数，宏 等 false</p>
+<p>例如，当设置为  True struct foo 将呈现</p>
+<p>但当设置为false 时，将呈现</p>
+<p>breathe_use_project_refids</p>
+<p>真或假设置，用于控制呼吸氧气是否产生的反射元素是否包含项目名称，旧版 行为是所有refid 都以项目名称为前缀，这导致尝试在多个项目之间链接文档时出现问题，因为项目无法看到彼此的文档元素，新的默认行为是不在refid 前面加上项目名称</p>
+<p>breathe_use_project_refids &#x3D; True</p>
+<p>如果需要，将恢复旧行为</p>
+<p>breathe_order_parameters_first</p>
+<p>True或false 设置，用于控制是否从doxygen 生成的参数部分 文档应紧跟在 简短和详细的描述之后，或在最后，在返回，备注和警告部分之后，默认值和旧行为也是false</p>
+<p>breathe_separate_member_pages</p>
+<p>True 或false 设置，用于控制doxygen 生成的输入xml 是否具有 doxygen separate_member_pages 选项设置为是或否，doxygen 选项末尾到no 生成允许breathe 解析所有引用的xml 设置时是的，元素 refid 得到一个额外的元素，呼吸试图摆脱它，当此设置为True 时</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-20230418-Doxygen快速入门"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/04/18/20230418-Doxygen%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/"
+    >20230418-Doxygen快速入门</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/04/18/20230418-Doxygen%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/" class="article-date">
+  <time datetime="2023-04-18T09:23:20.000Z" itemprop="datePublished">2023-04-18</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>我们在编写代码的时候，最头疼的就属于说明书了，很多代码一边写具体代码，一边写说明书，doxygen 主要解决说明书问题，可以在我们写代码的时候讲注释转化为说明书，graphviz 主要是用于图形展示，html help workshop 主要使用生成 CHM 文档</p>
+<p>doxygen<br>doxygen 能将程序中的特定批注转换成为说明文件，它可以依据程序本身的结构，将程序中按规范注释的批注经过处理生成一个纯粹的参考手册，通过提取代码结构或借助自动生成的包含依赖图<br>继承图 以及协作图来可视化文档之间的关系，doxygen 生成的帮助文档的格式可以是 CHM RTF Postscript PDF HTML 等</p>
+<p>graphiviz</p>
+<p>graphiviz 是一个由AT&amp;T 实验室启动的开源工具包，用于绘制dot 语言脚本描述的图形，要使用doxygen 生成依赖图，继承图以及协作图，必须先安装 graphiviz 软件</p>
+<p>HTML help workshop</p>
+<p>微软出品的HTML help workshop 是制作chm 文件的最佳工具，它能将HTML文件编译生成chm 文档，doxygen 软件默认生成HTML文件或latex 文件，我们要通过HTML生成chm 文档，需要先安装 HTML help workshop 软件，并在doxygen 中进行关联</p>
+<p>见示例效果图</p>
+<p>配置</p>
+<p>我们的所有配置都在doxywizard 中进行，生成参考手册是通过运行doxywizard 得到</p>
+<p>wizard &gt; project</p>
+<p>最重要的是工作目录，源代码目录，生成参考文件目录三处的设定，其他项目名称，项目简介、版本和标识可以依照实际情况选填</p>
+<p>工作目录是新建一个目录，在配置完成之后可以把配置文件存在这个目录里，每次从这个目录中导入配置文件 cfg 然后进行说明文档生成</p>
+<p>源代码目录和最终的结果目录在每一次运行doxywizard 时都进行设定</p>
+<p>wizard &gt; mode</p>
+<p>选择编程语言对应的最优化结果，按照编程语言选择</p>
+<p>wizard &gt; output</p>
+<p>选择输出格式，选HTML下的chm 选项，为最后生成chm 做准备，由于不需要latex 结果，不选此项</p>
+<p>wizard &gt; diagrams<br>选择 dot tool 项  通过graphviz 来作图</p>
+<p>expert &gt; project</p>
+<p>选择输出目录，选择输出语言，如果代码中采用了中文注释，此处选择为中文</p>
+<p>向下拉滑条，看见有JAVADOC_AUTOBRIEF和QT_AUTOBRIEF两个框，如果勾选了，在这两种风格下默认第一行为简单说明，以第一个句号为分隔；如果不选，则需要按照Doxygen的指令@brief来进行标准注释。</p>
+<p>Expert &gt; input</p>
+<p>将输入编码方式改为gbk 确保输出中不会由于utf-8 导致乱码</p>
+<p>最后也是经常遇到的问题就是doxygen 生成的chm文件的左边树目录的中文变成了乱码，这个只需要经chm索引的编码 的编码类型修改为 gb2312 即可，在HTML 的chm_index_encoding中输入gb2312 即可</p>
+<p>Expert HTML</p>
+<p>勾选 生成 HTMLhelp项，输入生成chm 名称，在 HHC_LOCATION中填入HTMLHELP WORKSHOP 安装目录中 hhc.exe 的路径，将chm 编码方式改为gbk 方式，与第6步中的输入编码方式一致</p>
+<p>Expert-&gt;Dot</p>
+<p>在dot_PATH 中填写 graphiviz 的安装路径</p>
+<p>需要在build 中配置 extract_all 和local_methods 才能生成所有的变量和函数</p>
+<ol start="9">
+<li>存储配置信息</li>
+</ol>
+<p>存储配置信息，到上一步doxygen 已经完全配置好，可以在run 中点击运行了，但为了保存以上配置信息，可以将配置好的文件存一个 .cfg 文件，之后再运行 doxygen 时 只需要将该文件用 doxygen 打开，改变第一步中的输入，输出目录及工程的信息再运行， file save as 取一个名，默认为doxygen，加 .cfg 点击保存，如果需要改变配置文件，改动之后再save 替换之前的配置文件即可</p>
+<ol start="10">
+<li>Run Run Doxygen</li>
+</ol>
+<p>即可运行doxygen 运行完成后在输出目录中的HTML文件夹中找到index.chm 文件即为输入代码的说明文档</p>
+<p>规范</p>
+<p>规范综述</p>
+<p>简单的说，doxygen 注释块其实就是在C C++ 注释块的基础添加一些额外标识，使doxygen 把它识别出来，并将它组织到生成的文档中去</p>
+<p>在每个代码项 中都可以有两类描述，一种就是brief 描述，另一种就是detailed ，两种都是可选的</p>
+<p>但不能同时没有，简述 brief 就是在一行内简述地描述，而详细描述 detailed 则提供更长，更详细的文档</p>
+<p>在doxygen 中，主要通过以下方法将注释块标识成详细detailed 描述</p>
+<p>javadoc 风格，在C 风格注释块开始使用两个星号 *</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line">* ... 描述 ...</span><br><span class="line">*</span><br><span class="line">*/</span><br></pre></td></tr></table></figure>
+
+<p>Qt 风格代码注释，即在C风格注释块开始处添加一个叹号!</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line">* ... 描述 ...</span><br><span class="line">*</span><br><span class="line">*/</span><br></pre></td></tr></table></figure>
+
+<p>使用连续两个以上 C++ 注释行所组成的注释块，而每个注释行开始处要多写一个斜杠或写一个叹号</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">///</span><br><span class="line">/// ... 描述 ...</span><br><span class="line">///</span><br></pre></td></tr></table></figure>
+
+
+<p>同样的，简要说明 brief 有也有多种方式标识，这里推荐使用@brief 命令强制说明，例如</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">/** </span><br><span class="line">* @brief 简要注释Brief Description. </span><br><span class="line">*/</span><br></pre></td></tr></table></figure>
+
+<p>注意以下几点</p>
+<p>Doxygen 并不处理所有的注释，doxygen 重点关注与程序结构有关的注释，比如 文件、类、结构、函数、全局变量，宏等注释，而忽略函数内局部变量 代码等的注释</p>
+<p>注释应写在对应的函数或变量前面，javadoc 风格下，自动会把第一个句号 . 前的文本作为简要注释，后面的为详细注释，你也可以用开航把简要注释和详细注释分开，注意要设置<br>JAVADOC_AUTOBRIEF或者QT_AUTOBRIEF设为YES。</p>
+<p>先从文件开始注释，然后是所在文件的全局函数、结构体、枚举变量，命名空间 – 命名空间中的类 成员函数和成员变量</p>
+<p>doxygen 无法为dll 中定义的类导出文档</p>
+<h3 id="常用指令"><a href="#常用指令" class="headerlink" title="常用指令"></a>常用指令</h3><p>指令说明</p>
+<p>@file 档案的批注说明</p>
+<p>author 作者的信息<br>brief 用于class 或function 的简易说明  eg: @brief 本函数负责打印错误信息串</p>
+<p>param 主要用于函数说明中，后面接参数的名字，然后再接关于该参数的说明</p>
+<p>return 描述该函数的返回值情况 eg @return 本函数返回执行结果，若成功则返回true 否则返回false</p>
+<p>retval 描述返回值类型</p>
+<p>note 注解</p>
+<p>attention 注意</p>
+<p>warning 警告信息</p>
+<p>enum  引用了某个枚举  doxygen 会在该枚举处产生一个链接 @enum CTest::MyEnum<br>var 引用了某个变量 doxygen会在该枚举处产生一个链接</p>
+<p>class 引用某个类，格式 @class [][]eq:@class CTest “inc&#x2F;class.h”</p>
+<p>exception 可能产生的异常描述 eg: @exception 本函数执行可能会产生超出范围的异常</p>
+<p>模块</p>
+<p>modules 是一种归组things 在分离的page 上的方式，组的成员可以是file namespace classes functions variables enums typedefs 和defines 但也可以是其他groups</p>
+<p>要定义一个group 应该在一个特殊注释块放置 \defgroup 命令的第一个参数应该是唯一标志该group 的标签，要将一个entity 归为某个group 的一个member 在entity前放置 \ingroup 命令</p>
+<p>第二个参数是group 的title</p>
+<p>要避免在注释中每个member 前放置\ingroup 命令可以将member 用@{ 和@} 封装起来，@{@} 标记可以放置group的注释中，也可以在一个独立的注释块</p>
+<p>使用这些group的标记符号 groups 也可以嵌套</p>
+<p>如果多次使用一个group 标签，将会出错，如果不希望doxygen强性执行唯一标签，可以使用 addtogroup 而非 defgroup 运作方式和defgroup 很像，但是如果该group 已经定义，它默认向已存在的注释中添加一个新的项，group 的title 对此命令是可选的，也可以考虑使用它</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">* @defgroup 模块名 模块的说明文字</span></span><br><span class="line"><span class="comment">* @&#123;</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"> ... 定义的内容 ...</span><br><span class="line"><span class="comment">/** @&#125; */</span> </span><br><span class="line"><span class="comment">// 模块结尾这样可以在其他地方以更加详细的说明添加members到一个group。</span></span><br></pre></td></tr></table></figure>
+
+<p>如果一个compound 例如一个class 或file 有多个members ，通常我们希望将其group doxygen 已经可以自动按照类型和protection 级别将这些things 归组在一起，但可能你会认为仅仅这样是不够的或者这种缺省的方法是错误的，例如你认为有不同语法的类型需要归入同一个group  语意</p>
+<p>这样定义一个member group</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">//@&#123; </span><br><span class="line">  ...</span><br><span class="line">//@&#125;</span><br></pre></td></tr></table></figure>
+<p>块或者使用</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">/*@&#123;*/ </span><br><span class="line">  ... </span><br><span class="line">/*@&#125;*/ </span><br></pre></td></tr></table></figure>
+
+<p>注释实例</p>
+<ol>
+<li>文件注释</li>
+</ol>
+<p>举例说明如下，在代码文件头部写上这段注释，可以看到可以标注一些文本名称、作者、邮件、版本、日期、介绍以及版本详细记录</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">  * @file       sensor.c</span></span><br><span class="line"><span class="comment">  * @author     JonesLee</span></span><br><span class="line"><span class="comment">  * @email    Jones_Lee3@163.com</span></span><br><span class="line"><span class="comment">  * @version  V4.01</span></span><br><span class="line"><span class="comment">  * @date     07-DEC-2017</span></span><br><span class="line"><span class="comment">  * @license    GNU General Public License (GPL)  </span></span><br><span class="line"><span class="comment">  * @brief    Universal Synchronous/Asynchronous Receiver/Transmitter </span></span><br><span class="line"><span class="comment">  * @detail   detail</span></span><br><span class="line"><span class="comment">  * @attention</span></span><br><span class="line"><span class="comment">  *  This file is part of OST.                                                  \n                                                                  </span></span><br><span class="line"><span class="comment">  *  This program is free software; you can redistribute it and/or modify     \n     </span></span><br><span class="line"><span class="comment">  *  it under the terms of the GNU General Public License version 3 as        \n   </span></span><br><span class="line"><span class="comment">  *  published by the Free Software Foundation.                                 \n </span></span><br><span class="line"><span class="comment">  *  You should have received a copy of the GNU General Public License      \n      </span></span><br><span class="line"><span class="comment">  *  along with OST. If not, see &lt;http://www.gnu.org/licenses/&gt;.            \n  </span></span><br><span class="line"><span class="comment">  *  Unless required by applicable law or agreed to in writing, software        \n</span></span><br><span class="line"><span class="comment">  *  distributed under the License is distributed on an &quot;AS IS&quot; BASIS,          \n</span></span><br><span class="line"><span class="comment">  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.   \n</span></span><br><span class="line"><span class="comment">  *  See the License for the specific language governing permissions and      \n  </span></span><br><span class="line"><span class="comment">  *  limitations under the License.                         \n</span></span><br><span class="line"><span class="comment">  *                                         \n</span></span><br><span class="line"><span class="comment">  * @htmlonly </span></span><br><span class="line"><span class="comment">  * &lt;span style=&quot;font-weight: bold&quot;&gt;History&lt;/span&gt; </span></span><br><span class="line"><span class="comment">  * @endhtmlonly </span></span><br><span class="line"><span class="comment">  * Version|Auther|Date|Describe</span></span><br><span class="line"><span class="comment">  * ------|----|------|-------- </span></span><br><span class="line"><span class="comment">  * V3.3|Jones Lee|07-DEC-2017|Create File</span></span><br><span class="line"><span class="comment">  * &lt;h2&gt;&lt;center&gt;&amp;copy;COPYRIGHT 2017 WELLCASA All Rights Reserved.&lt;/center&gt;&lt;/h2&gt;</span></span><br><span class="line"><span class="comment">  */</span>  </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>类和成员注释</li>
+</ol>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* @class &lt;class‐name&gt; [header‐file] [&lt;header‐name]</span></span><br><span class="line"><span class="comment">* @brief brief description</span></span><br><span class="line"><span class="comment">* @author &lt;list of authors&gt;</span></span><br><span class="line"><span class="comment">* @note</span></span><br><span class="line"><span class="comment">* detailed description</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+
+<p>如果对文件、结构体、联合体、类或者枚举的成员进行文档注释的话，并且要在成员中间添加注释，而这些注释往往都是在每个成员后面，为此，可以使用在注释段中使用&lt; 标识</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int var; /**&lt; Detailed description after the member */</span><br></pre></td></tr></table></figure>
+
+<p>对一个类的注释例子如下</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Test</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">public:</span><br><span class="line">    <span class="comment">/** @brief A enum, with inline docs */</span></span><br><span class="line">    <span class="class"><span class="keyword">enum</span> <span class="title">TEnum</span> </span></span><br><span class="line"><span class="class">    &#123;</span></span><br><span class="line">        TVal1, <span class="comment">/**&lt; enum value TVal1. */</span> </span><br><span class="line">        TVal2, <span class="comment">/**&lt; enum value TVal2. */</span> </span><br><span class="line">        TVal3 <span class="comment">/**&lt; enum value TVal3. */</span> </span><br><span class="line">    &#125; </span><br><span class="line">   *enumPtr, <span class="comment">/**&lt; enum pointer. */</span></span><br><span class="line">    enumVar; <span class="comment">/**&lt; enum variable. */</span></span><br><span class="line">    <span class="comment">/** @brief A constructor. */</span> </span><br><span class="line">Test(); </span><br><span class="line"><span class="comment">/** @brief A destructor. */</span> </span><br><span class="line">~Test();</span><br><span class="line"> <span class="comment">/** @brief a normal member taking two arguments and returning an integer value. */</span> </span><br><span class="line">    <span class="type">int</span> <span class="title function_">testMe</span><span class="params">(<span class="type">int</span> a,<span class="type">const</span> <span class="type">char</span> *s)</span>; </span><br><span class="line"></span><br><span class="line">    <span class="comment">/** @brief A pure virtual member. </span></span><br><span class="line"><span class="comment">    * @param[in] c1 the first argument. </span></span><br><span class="line"><span class="comment">    * @param[in] c2 the second argument. </span></span><br><span class="line"><span class="comment">    * @see testMe() </span></span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>函数注释<br>直接看案例如下，见明知意 不再赘述</li>
+</ol>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">  * @brief    can send the message</span></span><br><span class="line"><span class="comment">  * @param[in]  canx : The Number of CAN</span></span><br><span class="line"><span class="comment">  * @param[in]  id : the can id </span></span><br><span class="line"><span class="comment">  * @param[in]  p : the data will be sent</span></span><br><span class="line"><span class="comment">  * @param[in]  size : the data size</span></span><br><span class="line"><span class="comment">  * @param[in]  is_check_send_time : is need check out the time out</span></span><br><span class="line"><span class="comment">  * @note Notice that the size of the size is smaller than the size of the buffer.    </span></span><br><span class="line"><span class="comment">  * @return   </span></span><br><span class="line"><span class="comment">  * +1 Send successfully \n</span></span><br><span class="line"><span class="comment">  * -1 input parameter error \n</span></span><br><span class="line"><span class="comment">  * -2 canx initialize error \n</span></span><br><span class="line"><span class="comment">  * -3 canx time out error \n</span></span><br><span class="line"><span class="comment">  * @par Sample</span></span><br><span class="line"><span class="comment">  * @code</span></span><br><span class="line"><span class="comment">  * u8 p[8] = &#123;0&#125;;</span></span><br><span class="line"><span class="comment">  * res_ res = 0; </span></span><br><span class="line"><span class="comment">  *   res = can_send_msg(CAN1,1,p,0x11,8,1);</span></span><br><span class="line"><span class="comment">  * @endcode</span></span><br><span class="line"><span class="comment">  */</span>              </span><br><span class="line"><span class="keyword">extern</span> s32 <span class="title function_">can_send_msg</span><span class="params">(<span class="type">const</span> CAN_TypeDef * canx,</span></span><br><span class="line"><span class="params">            <span class="type">const</span> u32 id,</span></span><br><span class="line"><span class="params">            <span class="type">const</span> u8 *p,</span></span><br><span class="line"><span class="params">            <span class="type">const</span> u8 size,</span></span><br><span class="line"><span class="params">            <span class="type">const</span> u8 is_check_send_time)</span>; </span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li><p>枚举注释<br>直接看案例如下，见明知意  不再赘述</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** bool */</span>  </span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">enum</span></span></span><br><span class="line"><span class="class">  &#123;</span></span><br><span class="line">      <span class="literal">false</span> = <span class="number">0</span>,  <span class="comment">/**&lt; FALSE 0  */</span></span><br><span class="line">      <span class="literal">true</span> = <span class="number">1</span>    <span class="comment">/**&lt; TRUE  1  */</span></span><br><span class="line">  &#125;<span class="type">bool</span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>全局变量和宏</p>
+</li>
+<li><p>模块注释</p>
+</li>
+</ol>
+<p>group 定义命令的优先级 从高到低 \ingroup \defgroup \addtogroup \weakgroup 而\weakgroup 很像一个有低优先级的\addtogroup 它被设计为实现一个lazy 的group 定义方法，可以在.h 文件中使用高优先级来定义结构，在.cpp 文件中使用\weakgroup 这样不会重复.h 文件中的层次结构</p>
+<p>在实际使用中，我们可以看到具体的网页展示如下</p>
+<p>在图中有个BSP 下的LED模块，这个模块就是承载驱动文件LED ，具体代码如下，为了显示效果，我把函数的注释删除了</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">  * @file       led.h</span></span><br><span class="line"><span class="comment">  * @author     JonesLee</span></span><br><span class="line"><span class="comment">  * @email    Jones_Lee3@163.com</span></span><br><span class="line"><span class="comment">  * @version  V4.01</span></span><br><span class="line"><span class="comment">  * @date     07-DEC-2017</span></span><br><span class="line"><span class="comment">  * @license    GNU General Public License (GPL)  </span></span><br><span class="line"><span class="comment">  * @brief    Controller Area Network</span></span><br><span class="line"><span class="comment">  * @detail   detail</span></span><br><span class="line"><span class="comment">  * @attention</span></span><br><span class="line"><span class="comment">  *  This file is part of OST.                                                  \n                                                                  </span></span><br><span class="line"><span class="comment">  *  This program is free software; you can redistribute it and/or modify     \n     </span></span><br><span class="line"><span class="comment">  *  it under the terms of the GNU General Public License version 3 as        \n   </span></span><br><span class="line"><span class="comment">  *  published by the Free Software Foundation.                                 \n </span></span><br><span class="line"><span class="comment">  *  You should have received a copy of the GNU General Public License      \n      </span></span><br><span class="line"><span class="comment">  *  along with OST. If not, see &lt;http://www.gnu.org/licenses/&gt;.            \n  </span></span><br><span class="line"><span class="comment">  *  Unless required by applicable law or agreed to in writing, software        \n</span></span><br><span class="line"><span class="comment">  *  distributed under the License is distributed on an &quot;AS IS&quot; BASIS,          \n</span></span><br><span class="line"><span class="comment">  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.   \n</span></span><br><span class="line"><span class="comment">  *  See the License for the specific language governing permissions and      \n  </span></span><br><span class="line"><span class="comment">  *  limitations under the License.                         \n</span></span><br><span class="line"><span class="comment">  *                                         \n</span></span><br><span class="line"><span class="comment">  * @htmlonly </span></span><br><span class="line"><span class="comment">  * &lt;span style=&quot;font-weight: bold&quot;&gt;History&lt;/span&gt; </span></span><br><span class="line"><span class="comment">  * @endhtmlonly </span></span><br><span class="line"><span class="comment">  * Version|Auther|Date|Describe</span></span><br><span class="line"><span class="comment">  * ------|----|------|-------- </span></span><br><span class="line"><span class="comment">  * V3.3|Jones Lee|07-DEC-2017|Create File</span></span><br><span class="line"><span class="comment">  * &lt;h2&gt;&lt;center&gt;&amp;copy;COPYRIGHT 2017 WELLCASA All Rights Reserved.&lt;/center&gt;&lt;/h2&gt;</span></span><br><span class="line"><span class="comment">  */</span>  </span><br><span class="line"><span class="comment">/** @addtogroup  BSP</span></span><br><span class="line"><span class="comment">  * @&#123;</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">  * @brief Light Emitting Diode</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line"><span class="comment">/** @addtogroup LED </span></span><br><span class="line"><span class="comment">  * @&#123;</span></span><br><span class="line"><span class="comment">  */</span> </span><br><span class="line"><span class="meta">#<span class="keyword">ifndef</span> __LED_H__</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> __LED_H__</span></span><br><span class="line"><span class="meta">#<span class="keyword">ifdef</span> __cplusplus</span></span><br><span class="line"><span class="keyword">extern</span> <span class="string">&quot;C&quot;</span> &#123;</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span> </span></span><br><span class="line">  <span class="meta">#<span class="keyword">include</span> <span class="string">&quot;bsp.h&quot;</span></span></span><br><span class="line">  <span class="function"><span class="keyword">extern</span> s32  <span class="title">led_init</span><span class="params">(Led_TypeDef led)</span></span>;</span><br><span class="line">  <span class="function"><span class="keyword">extern</span> s32  <span class="title">led_config</span><span class="params">(<span class="type">void</span>)</span></span>;</span><br><span class="line">  <span class="function"><span class="keyword">extern</span> s32  <span class="title">led_on</span><span class="params">(Led_TypeDef led)</span></span>;</span><br><span class="line">  <span class="function"><span class="keyword">extern</span> s32  <span class="title">led_off</span><span class="params">(Led_TypeDef led)</span></span>;</span><br><span class="line">  <span class="function"><span class="keyword">extern</span> s32  <span class="title">led_toggle</span><span class="params">(Led_TypeDef led)</span></span>;</span><br><span class="line"><span class="meta">#<span class="keyword">ifdef</span> __cplusplus</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">endif</span>  <span class="comment">/*__LED_H__ */</span></span></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">  * @&#125;</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">  * @&#125;</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line"><span class="comment">/******************* (C)COPYRIGHT 2017 WELLCASA All Rights Reserved. *****END OF FILE****/</span></span><br></pre></td></tr></table></figure>
+
+<p>前面说明了是C语言的，C语言没有继承一说，在C++中有时候需要展示继承，如图</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-20230418-用sphinx快速制作文档"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/04/18/20230418-%E7%94%A8sphinx%E5%BF%AB%E9%80%9F%E5%88%B6%E4%BD%9C%E6%96%87%E6%A1%A3/"
+    >20230418-用sphinx快速制作文档</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/04/18/20230418-%E7%94%A8sphinx%E5%BF%AB%E9%80%9F%E5%88%B6%E4%BD%9C%E6%96%87%E6%A1%A3/" class="article-date">
+  <time datetime="2023-04-17T23:55:19.000Z" itemprop="datePublished">2023-04-18</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>Sphinx 快速制作文档</p>
+<p>简介</p>
+<p>sphinx 是一种文档工具，它可以令人轻松的撰写出清晰且优美的文档，由georg brandl 在bsd 许可证下开发，新版的python文档就是由sphinx 生成的，并且它已成为python项目的首选的文档工具，同时它对c++项目也有很好的支持，并计划对其他开发语言添加特殊支持，本站当然也是使用sphinx 生成的，它采用 reStructuredText Sphinx 还在继续开发，下面列出了其良好特性，这些特性在python官方文档中均有体现</p>
+<p>丰富的输出格式，支持HTML 包括windows 帮助文档，latex 可以打印PDF版本，manual pages man 文档，纯文本</p>
+<p>完备的交叉引用，语义化的标签，并可以自动化链接函数，类，引文，术语及相似的片段信息</p>
+<p>明晰的分层结构 可以轻松的定义文档树，并自动化链接同级 父级 下级文章</p>
+<p>美观的自动索引  可自动生成美观的模块索引</p>
+<p>精确的语法高亮  基于pygments 自动生成语法高亮</p>
+<p>开放的扩展，支持代码块的自动测试，并包含python模块的自述文档 api docs 等</p>
+<p>sphinx 使用reStructureText 作为标记语言，可以享有docutils 为restructureText 提供的分析，转换等多种工具</p>
+<p>安装sphinx </p>
+<p>sphinx 为python 语言的一个第三方库，我们需要在终端中输入下列命令进行安装</p>
+<p>pip install sphinx</p>
+<p>创建 sphinx 项目</p>
+<p>创建一个用于存放文档的文件夹，然后在该文件夹路径下运行下列命令快速生成sphinx 项目</p>
+<p>sphinx-quickstart</p>
+<p>接下来会让你选择一些配置</p>
+<p>设置文档的根路径  回车 使用默认设置</p>
+<p>是否分离source 和build 目录</p>
+<p>设定模板前缀  回车 使用默认选项</p>
+<p>输入项目名称和作者</p>
+<p>输入项目版本号</p>
+<p>文档语言 回车 默认即可</p>
+<p>设定文档就按的后缀</p>
+<p>设定首页名称  回车 选择默认index 即可</p>
+<p>根据需要选择是否开启 epub 输出 一般用不到 回车默认不开启即可</p>
+<p>根据需求选择是否开启相应的sphinx 拓展功能</p>
+<p>创建项目以后目录结构如下所示</p>
+<p>build 用来存放通过make html 生成文档网页文件的目录</p>
+<p>source 存放用于生成文档的源文件</p>
+<p>conf.py sphinx 的配置文件</p>
+<p>index.rst 主文档</p>
+<p>定义文档结构</p>
+<p>主文档 index.rst 的主要功能是被转换成欢迎页，它包含一个目录表 table of contents tree 或者 toctree sphinx 主要功能是使用reStructureText 把许多文件组织成一份结构合理的文档</p>
+<p>toctree 指令初始值如下</p>
+<p>你可以在content 的位置添加文档列表</p>
+<p>注 文档文件放在与index.rst 同级目录下</p>
+<p>支持markdown 文件、更改文档主题</p>
+<p>spinx 本身不支持md 文件生成文档，需要我们使用第三方库 recommonmark 进行转换，首先分别运行下列命令安装 recommonmark 与sphinx_rtd_theme 库</p>
+<p>pip install recommonmark</p>
+<p>pip install sphinx_rtd_theme</p>
+<p>a安装好 在conf.py 中修改下列两个配置</p>
+<p>并新增</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">source_parsers = &#123;</span><br><span class="line">    &#x27;.md&#x27;: CommonMarkParser,</span><br><span class="line">    &#x27;.MD&#x27;: CommonMarkParser,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>生成文档</p>
+<p>在sphinx 项目所在的文件夹路径下运行下列命令生成文档</p>
+<p>make html</p>
+<p>生成后的文档位于 build&#x2F;html 文件夹内，用浏览器打开index.html 即可看到生成后的文档</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-20230410-什么是DHCP？总结DHCP优缺点和工作原理"
   class="article article-type-post"
   itemscope
@@ -629,205 +1167,6 @@
 <p>FactoryBL 锁</p>
 <p>解锁后可以刷写全部分区，但是不能永久解锁，一般在救砖的时候去解锁，重启就会自动回所，不是广义上的BL锁</p>
 <p>免费的解锁工具 PotatoNV</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20230218-唐多令·芦叶满汀洲"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/02/18/20230218-%E5%94%90%E5%A4%9A%E4%BB%A4%C2%B7%E8%8A%A6%E5%8F%B6%E6%BB%A1%E6%B1%80%E6%B4%B2/"
-    >20230218-唐多令·芦叶满汀洲</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/02/18/20230218-%E5%94%90%E5%A4%9A%E4%BB%A4%C2%B7%E8%8A%A6%E5%8F%B6%E6%BB%A1%E6%B1%80%E6%B4%B2/" class="article-date">
-  <time datetime="2023-02-18T00:43:38.000Z" itemprop="datePublished">2023-02-18</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>唐多令·芦叶满汀洲<br>刘过 〔宋代〕</p>
-<p>安远楼小集，侑觞歌板之姬黄其姓者，乞词于龙洲道人，为赋此《唐多令》。同柳阜之、刘去非、石民瞻、周嘉仲、陈孟参、孟容。时八月五日也。</p>
-<p>芦叶满汀洲，寒沙带浅流。二十年重过南楼。柳下系船犹未稳，能几日，又中秋。<br>黄鹤断矶头，故人今在否？旧江山浑是新愁。欲买桂花同载酒，终不似，少年游。</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20230214-玫瑰扦插注意事项"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/02/14/20230214-%E7%8E%AB%E7%91%B0%E6%89%A6%E6%8F%92%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9/"
-    >20230214-玫瑰扦插注意事项</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/02/14/20230214-%E7%8E%AB%E7%91%B0%E6%89%A6%E6%8F%92%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9/" class="article-date">
-  <time datetime="2023-02-14T07:12:52.000Z" itemprop="datePublished">2023-02-14</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>玫瑰花种植笔记</p>
-<p>① 需要很多水，每天至少一次，浇水时间 早上10点和下午3点</p>
-<p>这样太阳落山时叶子就干了，玫瑰花不易得病</p>
-<p>② 需要阳光，但不能长时间暴晒，花朵会变色或提早枯黄</p>
-<p>③ 及时剪枯花苞，不剪的话营养严重受损，开花少</p>
-<p>④ 勤剪互相交叉枝条，玫瑰枝干和叶子之间要透气，交叉枝条或叶子很容易导致 白粉病、黑斑病、铁锈病、红蜘蛛等</p>
-<p>3IN1花园喷剂</p>
-<p>杀真菌剂 杀虫剂 杀螨剂</p>
-<p>控制白粉病 黑斑  铁锈 蚜虫 粉虱 红蜘蛛 及其他害虫</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20230209-功能强大车载obd接口解析及使用体验"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/02/09/20230209-%E5%8A%9F%E8%83%BD%E5%BC%BA%E5%A4%A7%E8%BD%A6%E8%BD%BDobd%E6%8E%A5%E5%8F%A3%E8%A7%A3%E6%9E%90%E5%8F%8A%E4%BD%BF%E7%94%A8%E4%BD%93%E9%AA%8C/"
-    >20230209-功能强大车载obd接口解析及使用体验</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/02/09/20230209-%E5%8A%9F%E8%83%BD%E5%BC%BA%E5%A4%A7%E8%BD%A6%E8%BD%BDobd%E6%8E%A5%E5%8F%A3%E8%A7%A3%E6%9E%90%E5%8F%8A%E4%BD%BF%E7%94%A8%E4%BD%93%E9%AA%8C/" class="article-date">
-  <time datetime="2023-02-09T03:53:28.000Z" itemprop="datePublished">2023-02-09</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h2 id="OBD接口简介"><a href="#OBD接口简介" class="headerlink" title="OBD接口简介"></a>OBD接口简介</h2><p>去4S店保养的时候看到技工在进行检测时将一个专用的电脑检测仪，接入这个看不清位置的插口，然后车辆的故障码就被清除，清洗过后的节气门也不再报错了，其实这个接口并没有想象中那么神秘，而且对于车主来说，学会使用obd 接口能让你变成一个汽车高手</p>
-<h2 id="OBD是什么"><a href="#OBD是什么" class="headerlink" title="OBD是什么"></a>OBD是什么</h2><p>OBD 作为一个专有名词的缩写，其全称是 on board diagnostics 中文的意思是，车载自动诊断系统，这套系统能在汽车运行过程中实时监测发动机电控系统及车辆的其他功能模块的工作状况，如有发现工况异常，则根据特定的算法判断出具体的故障，并以诊断故障代码 DTC Diagnostic trouble codes 的形式存储在系统内的存储器上，系统自动诊断后得到的有用信息可以为车辆的维修和保养提供帮助，维修人员可以利用汽车原厂专用仪器读取故障代码，从而可以对故障进行快速定位，以便于对车辆的修理，减少人工诊断的时间</p>
-<p>由于初期不同厂商的obd 系统之间各行其是，互不兼容，所以为了统一标准，美国汽车工程师协会 1988 年指定了obd-ii 标准  obd-ii 实行标准的检测程序，并且具有严格的排放针对性，用于实时监测汽车尾气排放情况</p>
-<p>作为一个检测尾气排放的系统，obd 在后来的发展中开始逐渐扩大了自己的控制范围，随着车辆的各种传感器及电子化程度的提高，obd 将各项检测功能都纳入到了自己的管辖范围内，现在我们说到obd 一般都会用obd 接口这个词，因为我们车辆上只能看到这个系统的传输接口，但它背后其实是整个车辆控制系统的集合体</p>
-<p>早期的obd 接口使用基于iso 协议的k-line 通讯方式，通过计算机标准的串口通讯方式与外接设备相连接，由于其半双工的通信效率比较低，所以这种通讯方式基本被淘汰，近几年的技术进步使得新的总线系统也就 CAN-BUS 通讯方式称为了主流，can-bus 同样使用了基于iso 的协议，但它属于网络型分布，具有很强的可扩展性，国内市场也在2008年7月份开始强制规定所有市场上出售的车辆都必须配备这个协议，这个协议的普及让车辆检测工作得到了大大的简化，一台检测仪就可以对多个品牌的车辆进行检测</p>
-<h2 id="OBD-接口能实现的功能"><a href="#OBD-接口能实现的功能" class="headerlink" title="OBD 接口能实现的功能"></a>OBD 接口能实现的功能</h2><p>OBD 接口可以做什么</p>
-<ol>
-<li>行车电脑数据显示</li>
-</ol>
-<p>obd 接口作为车载监控系统的通讯接口，除了读取故障码以供修车外，首要的功能就是可以提供车辆的各种工况数据，除了车辆仪表显示的数据外，实际在行车电脑中所记录的数据要多得多，包括很多无行车电脑显示屏配置的车辆，其实各项油耗记录，电池电压，空燃比 节气门开度，爆震数量等数据在系统中都是有记录的，但厂家会因为价格配置等因素，在较低配置车型上去掉行车电脑显示这项配置，导致用户无法参考这些有用的数据，所以市场上出现了一些专门的行车电脑显示产品</p>
-<p>这类产品有两种形式，一种就是通过一条专用的数据线连接到车辆的obd 接口，将数据读取出来再显示到配套的显示屏上，基本等于自己加装了一个行车电脑显示屏，平时连接线可以一直插在obd 接口上不用摘下，而只需固定显示屏即可，车主可以自行选择需要显示的数据</p>
-<p>另一种产品形式就是无线obd 接口适配器+智能手机端软件，这种与手机端配合的obd 端口读取器类似于一个加入了无线通讯模块的单片机，通过蓝牙或wifi 将obd 接口读取的数据传输到智能手机端，再通过手机端的软件呈现给使用者</p>
-<ol start="2">
-<li>更改代码实现更多功能</li>
-</ol>
-<p>现代汽车的电控系统可以通过obd 接口接入车辆控制系统的canbus总线，对车辆的各个控制模块的功能进行调节，这里最出名的应用就是由ross tech 开发的数据线及VCDS系统诊断软件，许多大众系的车友都爱用这套设备调节大众车系的系统功能，由于大众车系的can-bus 功能强大，而通过obd 接口的数据线接入车辆的can 总线并调节各个模块的代码就可以实现许多不同的隐藏功能，这样免费的 增配 对许多大众车主来说都非常具有吸引力</p>
-<ol start="3">
-<li>读取刷写 ECU TCU 程序</li>
-</ol>
-<p>随着车载电脑系统的硬件升级，现代车辆的ecu （electronic control unit）发动机电子控制单元内的程序存储器都由之前的只读式变为了可刷写式，厂家这样设置是为了随时能对ecu 的控制程序进行更新，就像手机的固件升级一样，针对不同的行驶地区或工况通过对ecu 系统程序的升级使得发动机能适应各种不同工作环境</p>
-<p>针对制动变速箱有些厂家还加入了可刷写式的TCU（Transmission Control Unit） 传动系统控制单元，大众的7速DSG 变速箱在出问题的初期就曾经试图通过在4S店用电脑刷写TCU的方式来改变DSG 变速箱的一些相应参数，来避免出现问题</p>
-<p>改装厂商跟敏捷的发现了可刷写程序的ECU 和TCU 的便利性，所以现代汽车改装多了ECU 程序刷写这样的改装项目，原厂的ECU 程序由于稳定性和经济性的考虑，一般在动力输出上都有所保留，而改装厂商通过改写原车ECU 数据即可实现对动力的提升，而TCU  的程序改写可以让变速箱反应更灵敏或者让换挡时机变得更激进来提升车辆的性能，这一切在有了obd 接口之后变得轻而易举，只需电脑和数据线连接到obd 接口就可以完成刷写的工作</p>
-<p>小结：obd 接口出现之初只是为了监控汽车的尾气排放而设置，但近些年的发展已经跨越了好几代，功能和作用都得到了极大的提升，而作为最终用户的我们，obd 接口对我们用车都能起到哪些具体的作用，而我们又该如何操作呢，</p>
-<h2 id="OBD接口作用和针脚定义图解"><a href="#OBD接口作用和针脚定义图解" class="headerlink" title="OBD接口作用和针脚定义图解"></a>OBD接口作用和针脚定义图解</h2><p>OBD 接口作用和针脚定义图解</p>
-<p>车辆obd 接口，连接车辆ecu 行车电脑的接口，检修车辆时把设备解码仪器插在此接口，进行扫描车辆是否有故障及故障代码，以后的车联网都是基于此口加以研发的</p>
-<p>OBDII 的作用</p>
-<p>obdII 程序使得汽车故障诊断简单而统一，维修人员不需专门学习每一个厂家的新系统</p>
-<ol>
-<li><p>随时检测零部件和系统的故障，保证汽车在使用寿命中的排放不超过 obd 法规的要求</p>
-</li>
-<li><p>检测到相关排放故障时，obd 系统可以用仪表板上的mil 灯进行报警</p>
-</li>
-</ol>
-<p>故障车辆能够得到及时修理，减少车辆排放</p>
-<p>obd 系统有助于 技师迅速诊断，对症修理，降低维修成本</p>
-<p>汽车obdii 接口定义</p>
-<p>除却各种电源和地线之外，关键的有can 线，iso 0141-2 K线 J1850 总线，接口也有很多，下面我们来看看obdii 接口引脚定义</p>
-<p>1 3 8 11 12 13 厂家自定义</p>
-<p>2 SAE J1850 总线+ 10 SAE J1850 总线-</p>
-<p>4 车身线  5 信号线</p>
-<p>6 CAN-H 14 CAN-L</p>
-<p>7 K-Line 15 L-Line</p>
-<p>16 常电源</p>
-<p>故障码标准</p>
-<p>SAE J2010 规定了一个5位标准故障代码，第一位是字母，后面4位是数字</p>
-<p>1 首位字母表示设置故障码的系统，当前分配的字母有四个，P 代表动力系统，B代表车身，C 代表底盘，u 代表未定义的系统</p>
-<p>2 第2位字符是0123 意义如下<br>  0 SAE 美国汽车工程师协会定义的通用故障码<br>  1 汽车厂家定义的扩展故障码<br>  2 3 随系统字符 PBCU 的不同而不同，动力系统故障码 P 的2 或3 由SAE 留作将来使用，车身或底盘故障码的2位厂家保留，车身或底盘故障码的3由SAE 保留</p>
-<p>3 第3位字符表示出故障的系统<br>  1 燃油或空气计量故障<br>  2 燃油或空气计量故障<br>  3 点火故障或发动机缺火<br>  4 辅助排放控制系统故障<br>  5 汽车或怠速控制系统故障<br>  6 电脑或输出电路故障<br>  7 变速器控制系统<br>  8 变速器控制系统</p>
-<p>4 最后两位字符表示触发故障码的条件，不同的传感器，执行器和电路分配了不同区段的数字，区段中较小的数字表示通用故障，即通过故障码，较大的数字表示扩展码，提供了更具体的信息，如电压低或高，响应慢，或信号超出范围</p>
  
       <!-- reward -->
       

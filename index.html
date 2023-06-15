@@ -126,6 +126,466 @@
     
     
     <article
+  id="post-20230614-手机充电协议"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/06/14/20230614-%E6%89%8B%E6%9C%BA%E5%85%85%E7%94%B5%E5%8D%8F%E8%AE%AE/"
+    >20230614-手机充电协议</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/06/14/20230614-%E6%89%8B%E6%9C%BA%E5%85%85%E7%94%B5%E5%8D%8F%E8%AE%AE/" class="article-date">
+  <time datetime="2023-06-14T08:02:07.000Z" itemprop="datePublished">2023-06-14</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>手机快充协议</p>
+<p>各家厂商为了提升充电速度于是发展出了多种快充协议快充，不同厂家选择的充电电压和电流都不同，所以需要一个协议在充电器和手机间进行协调，确保手机不会被过大的电流充坏</p>
+<p>USB PD 是目前通用性最高的公共协议之一，从iPhone、MacBook、市面上大部分采用 Type-C 接口的 Android 设备乃至 Nintendo Switch，都能使用这种协议进行快充。</p>
+<p>换句话说，如果你日常使用 Android 作为主力机，同时还有一部 iPhone 备用，游戏机是 Nintendo Switch，工作还需要用到笔记本电脑，理论上来说这些设备都可以使用同一个支持 PD 协议的电源来正常握手并实现快充。只要有type-c接口。</p>
+<p>目前最新的usb_pd 3.0 支持100W的充电功率，具体准则分为了10W 18W 36W 60W和100W五种，预期相对应的电压则有5V 12V 与20V 最大支持电流有1.5A 2 3 5 等不同的档位</p>
+<h2 id="私有协议"><a href="#私有协议" class="headerlink" title="私有协议"></a>私有协议</h2><p>高通 QC<br>QuickCharge，是由高通主导的快速充电技术。 主要解决硬件不同环境下的电池快速充电。 以是高通QC2.0为例，在不改变接口的情况下进一步提高充电速度，就需要引入更高的充电电压（HVDCP）。</p>
+<p>1、高通为usb接口设计了一套通过改变USB接口的d＋、d－两脚电压，实现充电头手机相互识别的握手协议。</p>
+<p>2、在手机通过握手协议申请更高电压后，充电器就输出手机申请的电压。这就是高通QC2.0的充电方式。</p>
+<p>3、根据电压档位的不同，又可以细分为classa和classb两个版本。其中A级标准支持5V、9V和12V三种电压，适用于智能手机、平板电脑以及其它便携式电子设备。</p>
+<p>4、B级则支持20V电压，最大可以输出40w功率，应用用对充电速度要求更高的设备。</p>
+<p>联发科 PE<br>联发科的快冲标准是Pump Express，就像高通的QuickCharge技术一样，也是一项用于移动设备为主的快冲协议，支持这个协议的设备和充电头在握手之后（通过充电电流的大小来触发协议，随后触发升压或者降压），可以通过提升电压及电流，实现快冲的效果。</p>
+<p>vivo：FlashCharge<br>这是vivo品牌手机采用的一种大功率快充技术，与其他快充技术一样，通过更高的充电功率实现较短的充电时间，由于在芯片端采用的是独家的协议，因此无法在其他品牌或不支持该快充技术的充电头、手机中使用；</p>
+<p>华为：FCP &amp; SCP<br>FCP和SCP是华为推出的快充协议，前者是18W快充，9V&#x2F;2A（比较早），后者是超级快充（充电时手机会显示超级快充）（2016年发布），22.5W快充和40W快充，4.5V&#x2F;5A或5V4.5A往上，另外有的手机只支持22.5W快充的话，不会显示超级快充，但升级系统后支持超级快充，并显示超级快充，有些手机同时这两种快充（22.5W和40W快充）。</p>
+<p>小米ChargeTurbo快充协议<br>目前小米快充有50W、40W、30W等快充规格。</p>
+<p>小米采用高通骁龙处理器的机型对QC快充协议具有不错的支持，例如小米10至尊版支持QC5.0，小米10 Pro支持QC4+，两者都兼容PD3.0。</p>
+<p>OPPO: VOOC系列快充<br>早在14年的时候，OPPO就推出了VOOC 1.0，与主流快充采用高压方式不同，VOOC闪充采用的是低压高电流的方案。</p>
+<p>相比传统的高压快充，低压快充温控更好，效率更高，3000毫安时的Find7可以在30分钟内充电到75%，要知道当时还是2014年。</p>
+<p>此外由于电池系统、线材、充电头都被重新定制过的，所以一般充电器都不适配VOOC闪充。</p>
+<p>三星：AFC<br>三星出品的Adapting Fast Charger同时向下兼容兼容QC2.0。</p>
+<p>各个厂商各自的技术，一般来说要搭配自家的充电器才能使用，不同的私有协议不互通，你用华为的scp就算是40w也不能给oppo充40w。</p>
+<h2 id="不同协议之间的区别"><a href="#不同协议之间的区别" class="headerlink" title="不同协议之间的区别"></a>不同协议之间的区别</h2><p>高电压  低电流</p>
+<p>高电压、低电流充电方式需要到手机端进行变压，让电压下降到适合手机电池消化的范围。期间的能量损耗会以热能形式散发出来，这也导致了手机充电发热问题。高电压、低电流充电方式需要到手机端进行变压，让电压下降到适合手机电池消化的范围。期间的能量损耗会以热能形式散发出来，这也导致了手机充电发热问题。</p>
+<p>低电压  大电流</p>
+<p>低电压、大电流方案的主要缺点则是较高的定制成本、以及低适用性。手机内部相关元件、充电头和充电线，都需要根据需求定制。以线材为例，常见的通用充电线材只能承载3A的电流，要实现5A大电流快充，就必须对充电线进行改造。我们看到当年在快充上投入大量宣传的OPPO、Vivo的充电头更大、充电线更粗，就是基于这个原因。</p>
+<p>动态调整</p>
+<p>动态调整的快充，基本是基于多电芯（电荷泵）串联和将电压的转换操作交给充电头，然后通过充电头而非手机去做细节的电压变动来实现的。</p>
+<p>目前很多的厂家的快充都开始基于pps 可编程电源，从而实现高功率 大于100W 充电，也许有一天能出现一统江湖的协议也说不一定</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-20230614-fdisk：linux下管理磁盘分区的利器"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/06/14/20230614-fdisk%EF%BC%9Alinux%E4%B8%8B%E7%AE%A1%E7%90%86%E7%A3%81%E7%9B%98%E5%88%86%E5%8C%BA%E7%9A%84%E5%88%A9%E5%99%A8/"
+    >20230614-fdisk：linux下管理磁盘分区的利器</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/06/14/20230614-fdisk%EF%BC%9Alinux%E4%B8%8B%E7%AE%A1%E7%90%86%E7%A3%81%E7%9B%98%E5%88%86%E5%8C%BA%E7%9A%84%E5%88%A9%E5%99%A8/" class="article-date">
+  <time datetime="2023-06-14T04:36:52.000Z" itemprop="datePublished">2023-06-14</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>一块硬盘可以被划分成一个或多个逻辑磁盘，我们将其称作分区。我们对硬盘进行的划分信息被储存于建立在扇区 0 的分区表（MBR 或 GPT）中。</p>
+<p>Linux 需要至少一个分区来当作根文件系统，所以我们不能在没有分区的情况下安装 Linux 系统。当我们创建一个分区时，我们必须将它格式化为一个适合的文件系统，否则我们就没办法往里面储存文件了。</p>
+<p>要在 Linux 中完成分区的相关工作，我们需要一些工具。Linux 下有很多可用的相关工具，我们曾介绍过 <a href="https://link.zhihu.com/?target=https://www.2daygeek.com/how-to-manage-disk-partitions-using-parted-command/">Parted 命令</a>。不过，今天我们的主角是 <code>fdisk</code>。</p>
+<p>人人都喜欢用 <code>fdisk</code>，它是 Linux 下管理磁盘分区的最佳利器之一。它可以操作最大 2TB 的分区。大量 Linux 管理员都喜欢使用这个工具，因为当下 LVM 和 SAN 的原因，并没有多少人会用到 2TB 以上的分区。并且这个工具被世界上许多的基础设施所使用。如果你还是想创建比 2TB 更大的分区，请使用 <code>parted</code> 命令 或 <code>cfdisk</code> 命令。</p>
+<p>对磁盘进行分区和创建文件系统是 Linux 管理员的日常。如果你在许多不同的环境中工作，你一定每天都会重复几次这项操作。</p>
+<h2 id="Linux-内核是如何理解硬盘的？"><a href="#Linux-内核是如何理解硬盘的？" class="headerlink" title="Linux 内核是如何理解硬盘的？"></a><strong>Linux 内核是如何理解硬盘的？</strong></h2><p>作为人类，我们可以很轻松地理解一些事情；但是电脑就不是这样了，它们需要合适的命名才能理解这些。</p>
+<p>在 Linux 中，外围设备都位于 <code>/dev</code> 挂载点，内核通过以下的方式理解硬盘：</p>
+<ul>
+<li><code>/dev/hdX[a-z]:</code> IDE 硬盘被命名为 hdX</li>
+<li><code>/dev/sdX[a-z]:</code> SCSI 硬盘被命名为 sdX</li>
+<li><code>/dev/xdX[a-z]:</code> XT 硬盘被命名为 xdX</li>
+<li><code>/dev/vdX[a-z]:</code> 虚拟硬盘被命名为 vdX</li>
+<li><code>/dev/fdN:</code> 软盘被命名为 fdN</li>
+<li><code>/dev/scdN or /dev/srN:</code> CD-ROM 被命名为 <code>/dev/scdN</code> 或 <code>/dev/srN</code></li>
+</ul>
+<h2 id="什么是-fdisk-命令？"><a href="#什么是-fdisk-命令？" class="headerlink" title="什么是 fdisk 命令？"></a><strong>什么是 fdisk 命令？</strong></h2><p><code>fdisk</code> 的意思是 <em>固定磁盘(Fixed Disk)</em> 或 *格式化磁盘(Format Disk)*，它是命令行下允许用户对分区进行查看、创建、调整大小、删除、移动和复制的工具。它支持 MBR、Sun、SGI、BSD 分区表，但是它不支持 GUID 分区表（GPT）。它不是为操作大分区设计的。</p>
+<p><code>fdisk</code> 允许我们在每块硬盘上创建最多四个主分区。它们中的其中一个可以作为扩展分区，并下设多个逻辑分区。1-4 扇区作为主分区被保留，逻辑分区从扇区 5 开始。</p>
+<p><img src="https://pic1.zhimg.com/80/v2-53354214fe60161a82a035c62ad1ce64_1440w.webp" alt="img"></p>
+<h2 id="如何在-Linux-下安装-fdisk？"><a href="#如何在-Linux-下安装-fdisk？" class="headerlink" title="如何在 Linux 下安装 fdisk？"></a><strong>如何在 Linux 下安装 fdisk？</strong></h2><p><code>fdisk</code> 作为核心组件内置于 Linux 中，所以你不必手动安装它。</p>
+<h2 id="如何用-fdisk-列出可用磁盘？"><a href="#如何用-fdisk-列出可用磁盘？" class="headerlink" title="如何用 fdisk 列出可用磁盘？"></a><strong>如何用 fdisk 列出可用磁盘？</strong></h2><p>在执行操作之前，我们必须知道的是哪些磁盘被加入了系统。要想列出所有可用的磁盘，请执行下文的命令。这个命令将会列出磁盘名称、分区数量、分区表类型、磁盘识别代号、分区 ID 和分区类型。</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">$ sudo fdisk -l</span><br><span class="line">Disk /dev/sda: 30 GiB, 32212254720 bytes, 62914560 sectors</span><br><span class="line">Units: sectors of 1 * 512 = 512 bytes</span><br><span class="line">Sector size (logical/physical): 512 bytes / 512 bytes</span><br><span class="line">I/O size (minimum/optimal): 512 bytes / 512 bytes</span><br><span class="line">Disklabel type: dos</span><br><span class="line">Disk identifier: 0xeab59449</span><br><span class="line"></span><br><span class="line">Device     Boot    Start      End  Sectors Size Id Type</span><br><span class="line">/dev/sda1  *    20973568 62914559 41940992  20G 83 Linux</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Disk /dev/sdb: 10 GiB, 10737418240 bytes, 20971520 sectors</span><br><span class="line">Units: sectors of 1 * 512 = 512 bytes</span><br><span class="line">Sector size (logical/physical): 512 bytes / 512 bytes</span><br><span class="line">I/O size (minimum/optimal): 512 bytes / 512 bytes</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Disk /dev/sdc: 10 GiB, 10737418240 bytes, 20971520 sectors</span><br><span class="line">Units: sectors of 1 * 512 = 512 bytes</span><br><span class="line">Sector size (logical/physical): 512 bytes / 512 bytes</span><br><span class="line">I/O size (minimum/optimal): 512 bytes / 512 bytes</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Disk /dev/sdd: 10 GiB, 10737418240 bytes, 20971520 sectors</span><br><span class="line">Units: sectors of 1 * 512 = 512 bytes</span><br><span class="line">Sector size (logical/physical): 512 bytes / 512 bytes</span><br><span class="line">I/O size (minimum/optimal): 512 bytes / 512 bytes</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Disk /dev/sde: 10 GiB, 10737418240 bytes, 20971520 sectors</span><br><span class="line">Units: sectors of 1 * 512 = 512 bytes</span><br><span class="line">Sector size (logical/physical): 512 bytes / 512 bytes</span><br><span class="line">I/O size (minimum/optimal): 512 bytes / 512 bytes</span><br></pre></td></tr></table></figure>
+
+<h2 id="如何使用-fdisk-列出特定分区信息？"><a href="#如何使用-fdisk-列出特定分区信息？" class="headerlink" title="如何使用 fdisk 列出特定分区信息？"></a><strong>如何使用 fdisk 列出特定分区信息？</strong></h2><p>如果你希望查看指定分区的信息，请使用以下命令：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ sudo fdisk -l /dev/sda</span><br><span class="line">Disk /dev/sda: 30 GiB, 32212254720 bytes, 62914560 sectors</span><br><span class="line">Units: sectors of 1 * 512 = 512 bytes</span><br><span class="line">Sector size (logical/physical): 512 bytes / 512 bytes</span><br><span class="line">I/O size (minimum/optimal): 512 bytes / 512 bytes</span><br><span class="line">Disklabel type: dos</span><br><span class="line">Disk identifier: 0xeab59449</span><br><span class="line"></span><br><span class="line">Device     Boot    Start      End  Sectors Size Id Type</span><br><span class="line">/dev/sda1  *    20973568 62914559 41940992  20G 83 Linux</span><br></pre></td></tr></table></figure>
+
+<h2 id="如何列出-fdisk-所有的可用操作？"><a href="#如何列出-fdisk-所有的可用操作？" class="headerlink" title="如何列出 fdisk 所有的可用操作？"></a><strong>如何列出 fdisk 所有的可用操作？</strong></h2><p>在 <code>fdisk</code> 中敲击 <code>m</code>，它便会列出所有可用操作：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">$ sudo fdisk /dev/sdc</span><br><span class="line"></span><br><span class="line">Welcome to fdisk (util-linux 2.30.1).</span><br><span class="line">Changes will remain in memory only, until you decide to write them.</span><br><span class="line">Be careful before using the write command.</span><br><span class="line"></span><br><span class="line">Device does not contain a recognized partition table.</span><br><span class="line">Created a new DOS disklabel with disk identifier 0xe944b373.</span><br><span class="line"></span><br><span class="line">Command (m for help): m</span><br><span class="line"></span><br><span class="line">Help:</span><br><span class="line"></span><br><span class="line">  DOS (MBR)</span><br><span class="line">   a   toggle a bootable flag</span><br><span class="line">   b   edit nested BSD disklabel</span><br><span class="line">   c   toggle the dos compatibility flag</span><br><span class="line"></span><br><span class="line">  Generic</span><br><span class="line">   d   delete a partition</span><br><span class="line">   F   list free unpartitioned space</span><br><span class="line">   l   list known partition types</span><br><span class="line">   n   add a new partition</span><br><span class="line">   p   print the partition table</span><br><span class="line">   t   change a partition type</span><br><span class="line">   v   verify the partition table</span><br><span class="line">   i   print information about a partition</span><br><span class="line"></span><br><span class="line">  Misc</span><br><span class="line">   m   print this menu</span><br><span class="line">   u   change display/entry units</span><br><span class="line">   x   extra functionality (experts only)</span><br><span class="line"></span><br><span class="line">  Script</span><br><span class="line">   I   load disk layout from sfdisk script file</span><br><span class="line">   O   dump disk layout to sfdisk script file</span><br><span class="line"></span><br><span class="line">  Save &amp; Exit</span><br><span class="line">   w   write table to disk and exit</span><br><span class="line">   q   quit without saving changes</span><br><span class="line"></span><br><span class="line">  Create a new label</span><br><span class="line">   g   create a new empty GPT partition table</span><br><span class="line">   G   create a new empty SGI (IRIX) partition table</span><br><span class="line">   o   create a new empty DOS partition table</span><br><span class="line">   s   create a new empty Sun partition table</span><br></pre></td></tr></table></figure>
+
+<h2 id="如何使用-fdisk-列出分区类型？"><a href="#如何使用-fdisk-列出分区类型？" class="headerlink" title="如何使用 fdisk 列出分区类型？"></a><strong>如何使用 fdisk 列出分区类型？</strong></h2><p>在 <code>fdisk</code> 中敲击 <code>l</code>，它便会列出所有可用分区的类型：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">$ sudo fdisk /dev/sdc</span><br><span class="line"></span><br><span class="line">Welcome to fdisk (util-linux 2.30.1).</span><br><span class="line">Changes will remain in memory only, until you decide to write them.</span><br><span class="line">Be careful before using the write command.</span><br><span class="line"></span><br><span class="line">Device does not contain a recognized partition table.</span><br><span class="line">Created a new DOS disklabel with disk identifier 0x9ffd00db.</span><br><span class="line"></span><br><span class="line">Command (m for help): l</span><br><span class="line"></span><br><span class="line"> 0  Empty           24  NEC DOS         81  Minix / old Lin bf  Solaris        </span><br><span class="line"> 1  FAT12           27  Hidden NTFS Win 82  Linux swap / So c1  DRDOS/sec (FAT-</span><br><span class="line"> 2  XENIX root      39  Plan 9          83  Linux           c4  DRDOS/sec (FAT-</span><br><span class="line"> 3  XENIX usr       3c  PartitionMagic  84  OS/2 hidden or  c6  DRDOS/sec (FAT-</span><br><span class="line"> 4  FAT16 &lt;32M      40  Venix 80286     85  Linux extended  c7  Syrinx         </span><br><span class="line"> 5  Extended        41  PPC PReP Boot   86  NTFS volume set da  Non-FS data    </span><br><span class="line"> 6  FAT16           42  SFS             87  NTFS volume set db  CP/M / CTOS / .</span><br><span class="line"> 7  HPFS/NTFS/exFAT 4d  QNX4.x          88  Linux plaintext de  Dell Utility   </span><br><span class="line"> 8  AIX             4e  QNX4.x 2nd part 8e  Linux LVM       df  BootIt         </span><br><span class="line"> 9  AIX bootable    4f  QNX4.x 3rd part 93  Amoeba          e1  DOS access     </span><br><span class="line"> a  OS/2 Boot Manag 50  OnTrack DM      94  Amoeba BBT      e3  DOS R/O        </span><br><span class="line"> b  W95 FAT32       51  OnTrack DM6 Aux 9f  BSD/OS          e4  SpeedStor      </span><br><span class="line"> c  W95 FAT32 (LBA) 52  CP/M            a0  IBM Thinkpad hi ea  Rufus alignment</span><br><span class="line"> e  W95 FAT16 (LBA) 53  OnTrack DM6 Aux a5  FreeBSD         eb  BeOS fs        </span><br><span class="line"> f  W95 Ext&#x27;d (LBA) 54  OnTrackDM6      a6  OpenBSD         ee  GPT            </span><br><span class="line">10  OPUS            55  EZ-Drive        a7  NeXTSTEP        ef  EFI (FAT-12/16/</span><br><span class="line">11  Hidden FAT12    56  Golden Bow      a8  Darwin UFS      f0  Linux/PA-RISC b</span><br><span class="line">12  Compaq diagnost 5c  Priam Edisk     a9  NetBSD          f1  SpeedStor      </span><br><span class="line">14  Hidden FAT16 &lt;3 61  SpeedStor       ab  Darwin boot     f4  SpeedStor      </span><br><span class="line">16  Hidden FAT16    63  GNU HURD or Sys af  HFS / HFS+      f2  DOS secondary  </span><br><span class="line">17  Hidden HPFS/NTF 64  Novell Netware  b7  BSDI fs         fb  VMware VMFS    </span><br><span class="line">18  AST SmartSleep  65  Novell Netware  b8  BSDI swap       fc  VMware VMKCORE </span><br><span class="line">1b  Hidden W95 FAT3 70  DiskSecure Mult bb  Boot Wizard hid fd  Linux raid auto</span><br><span class="line">1c  Hidden W95 FAT3 75  PC/IX           bc  Acronis FAT32 L fe  LANstep        </span><br><span class="line">1e  Hidden W95 FAT1 80  Old Minix       be  Solaris boot    ff  BBT</span><br></pre></td></tr></table></figure>
+
+<h2 id="如何使用-fdisk-创建一个磁盘分区？"><a href="#如何使用-fdisk-创建一个磁盘分区？" class="headerlink" title="如何使用 fdisk 创建一个磁盘分区？"></a><strong>如何使用 fdisk 创建一个磁盘分区？</strong></h2><p>如果你希望新建磁盘分区，请参考下面的步骤。比如我希望在 <code>/dev/sdc</code> 中新建四个分区（三个主分区和一个扩展分区），只需要执行下文的命令。</p>
+<p>首先，请在操作 “First sector” 的时候先按下回车，然后在 “Last sector” 中输入你希望创建分区的大小（可以在数字后面加 KB、MB、G 和 TB）。例如，你希望为这个分区扩容 1GB，就应该在 “Last sector” 中输入 <code>+1G</code>。当你创建三个分区之后，<code>fdisk</code> 默认会将分区类型设为扩展分区，如果你希望创建第四个主分区，请输入 <code>p</code> 来替代它的默认值 <code>e</code>。</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">$ sudo fdisk /dev/sdc</span><br><span class="line"></span><br><span class="line">Welcome to fdisk (util-linux 2.30.1).</span><br><span class="line">Changes will remain in memory only, until you decide to write them.</span><br><span class="line">Be careful before using the write command.</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Command (m for help): n</span><br><span class="line">Partition type</span><br><span class="line">   p   primary (0 primary, 0 extended, 4 free)</span><br><span class="line">   e   extended (container for logical partitions)</span><br><span class="line">Select (default p): Enter</span><br><span class="line"></span><br><span class="line">Using default response p.</span><br><span class="line">Partition number (1-4, default 1): Enter</span><br><span class="line">First sector (2048-20971519, default 2048): Enter</span><br><span class="line">Last sector, +sectors or +size&#123;K,M,G,T,P&#125; (2048-20971519, default 20971519): +1G</span><br><span class="line"></span><br><span class="line">Created a new partition 1 of type &#x27;Linux&#x27; and of size 1 GiB.</span><br><span class="line"></span><br><span class="line">Command (m for help): p</span><br><span class="line">Disk /dev/sdc: 10 GiB, 10737418240 bytes, 20971520 sectors</span><br><span class="line">Units: sectors of 1 * 512 = 512 bytes</span><br><span class="line">Sector size (logical/physical): 512 bytes / 512 bytes</span><br><span class="line">I/O size (minimum/optimal): 512 bytes / 512 bytes</span><br><span class="line">Disklabel type: dos</span><br><span class="line">Disk identifier: 0x8cc8f9e5</span><br><span class="line"></span><br><span class="line">Device     Boot Start     End Sectors Size Id Type</span><br><span class="line">/dev/sdc1        2048 2099199 2097152   1G 83 Linux</span><br><span class="line"></span><br><span class="line">Command (m for help): w</span><br><span class="line">The partition table has been altered.</span><br><span class="line">Calling ioctl() to re-read partition table.</span><br><span class="line">Syncing disks.</span><br></pre></td></tr></table></figure>
+
+<h2 id="如何使用-fdisk-创建扩展分区？"><a href="#如何使用-fdisk-创建扩展分区？" class="headerlink" title="如何使用 fdisk 创建扩展分区？"></a><strong>如何使用 fdisk 创建扩展分区？</strong></h2><p>请注意，创建扩展分区时，你应该使用剩下的所有空间，以便之后在扩展分区下创建逻辑分区。</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">$ sudo fdisk /dev/sdc</span><br><span class="line"></span><br><span class="line">Welcome to fdisk (util-linux 2.30.1).</span><br><span class="line">Changes will remain in memory only, until you decide to write them.</span><br><span class="line">Be careful before using the write command.</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Command (m for help): n</span><br><span class="line">Partition type</span><br><span class="line">   p   primary (3 primary, 0 extended, 1 free)</span><br><span class="line">   e   extended (container for logical partitions)</span><br><span class="line">Select (default e): Enter</span><br><span class="line"></span><br><span class="line">Using default response e.</span><br><span class="line">Selected partition 4</span><br><span class="line">First sector (6293504-20971519, default 6293504): Enter</span><br><span class="line">Last sector, +sectors or +size&#123;K,M,G,T,P&#125; (6293504-20971519, default 20971519): Enter</span><br><span class="line"></span><br><span class="line">Created a new partition 4 of type &#x27;Extended&#x27; and of size 7 GiB.</span><br><span class="line"></span><br><span class="line">Command (m for help): p</span><br><span class="line">Disk /dev/sdc: 10 GiB, 10737418240 bytes, 20971520 sectors</span><br><span class="line">Units: sectors of 1 * 512 = 512 bytes</span><br><span class="line">Sector size (logical/physical): 512 bytes / 512 bytes</span><br><span class="line">I/O size (minimum/optimal): 512 bytes / 512 bytes</span><br><span class="line">Disklabel type: dos</span><br><span class="line">Disk identifier: 0x8cc8f9e5</span><br><span class="line"></span><br><span class="line">Device     Boot   Start      End  Sectors Size Id Type</span><br><span class="line">/dev/sdc1          2048  2099199  2097152   1G 83 Linux</span><br><span class="line">/dev/sdc2       2099200  4196351  2097152   1G 83 Linux</span><br><span class="line">/dev/sdc3       4196352  6293503  2097152   1G 83 Linux</span><br><span class="line">/dev/sdc4       6293504 20971519 14678016   7G  5 Extended</span><br><span class="line"></span><br><span class="line">Command (m for help): w</span><br><span class="line">The partition table has been altered.</span><br><span class="line">Calling ioctl() to re-read partition table.</span><br><span class="line">Syncing disks.</span><br></pre></td></tr></table></figure>
+
+<h2 id="如何用-fdisk-查看未分配空间？"><a href="#如何用-fdisk-查看未分配空间？" class="headerlink" title="如何用 fdisk 查看未分配空间？"></a><strong>如何用 fdisk 查看未分配空间？</strong></h2><p>上文中，我们总共创建了四个分区（三个主分区和一个扩展分区）。在创建逻辑分区之前，扩展分区的容量将会以未分配空间显示。</p>
+<p>使用以下命令来显示磁盘上的未分配空间，下面的示例中显示的是 7GB：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">$ sudo fdisk /dev/sdc</span><br><span class="line"></span><br><span class="line">Welcome to fdisk (util-linux 2.30.1).</span><br><span class="line">Changes will remain in memory only, until you decide to write them.</span><br><span class="line">Be careful before using the write command.</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Command (m for help): F</span><br><span class="line">Unpartitioned space /dev/sdc: 7 GiB, 7515144192 bytes, 14678016 sectors</span><br><span class="line">Units: sectors of 1 * 512 = 512 bytes</span><br><span class="line">Sector size (logical/physical): 512 bytes / 512 bytes</span><br><span class="line"></span><br><span class="line">  Start      End  Sectors Size</span><br><span class="line">6293504 20971519 14678016   7G</span><br><span class="line"></span><br><span class="line">Command (m for help): q</span><br></pre></td></tr></table></figure>
+
+<h2 id="如何使用-fdisk-创建逻辑分区？"><a href="#如何使用-fdisk-创建逻辑分区？" class="headerlink" title="如何使用 fdisk 创建逻辑分区？"></a><strong>如何使用 fdisk 创建逻辑分区？</strong></h2><p>创建扩展分区后，请按照之前的步骤创建逻辑分区。在这里，我创建了位于 <code>/dev/sdc5</code> 的 <code>1GB</code> 逻辑分区。你可以查看分区表值来确认这点。</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">$ sudo fdisk /dev/sdc</span><br><span class="line"></span><br><span class="line">Welcome to fdisk (util-linux 2.30.1).</span><br><span class="line">Changes will remain in memory only, until you decide to write them.</span><br><span class="line">Be careful before using the write command.</span><br><span class="line"></span><br><span class="line">Command (m for help): n</span><br><span class="line">All primary partitions are in use.</span><br><span class="line">Adding logical partition 5</span><br><span class="line">First sector (6295552-20971519, default 6295552): Enter</span><br><span class="line">Last sector, +sectors or +size&#123;K,M,G,T,P&#125; (6295552-20971519, default 20971519): +1G</span><br><span class="line"></span><br><span class="line">Created a new partition 5 of type &#x27;Linux&#x27; and of size 1 GiB.</span><br><span class="line"></span><br><span class="line">Command (m for help): p</span><br><span class="line">Disk /dev/sdc: 10 GiB, 10737418240 bytes, 20971520 sectors</span><br><span class="line">Units: sectors of 1 * 512 = 512 bytes</span><br><span class="line">Sector size (logical/physical): 512 bytes / 512 bytes</span><br><span class="line">I/O size (minimum/optimal): 512 bytes / 512 bytes</span><br><span class="line">Disklabel type: dos</span><br><span class="line">Disk identifier: 0x8cc8f9e5</span><br><span class="line"></span><br><span class="line">Device     Boot   Start      End  Sectors Size Id Type</span><br><span class="line">/dev/sdc1          2048  2099199  2097152   1G 83 Linux</span><br><span class="line">/dev/sdc2       2099200  4196351  2097152   1G 83 Linux</span><br><span class="line">/dev/sdc3       4196352  6293503  2097152   1G 83 Linux</span><br><span class="line">/dev/sdc4       6293504 20971519 14678016   7G  5 Extended</span><br><span class="line">/dev/sdc5       6295552  8392703  2097152   1G 83 Linux</span><br><span class="line"></span><br><span class="line">Command (m for help): w</span><br><span class="line">The partition table has been altered.</span><br><span class="line">Calling ioctl() to re-read partition table.</span><br><span class="line">Syncing disks.</span><br></pre></td></tr></table></figure>
+
+<h2 id="如何使用-fdisk-命令删除分区？"><a href="#如何使用-fdisk-命令删除分区？" class="headerlink" title="如何使用 fdisk 命令删除分区？"></a><strong>如何使用 fdisk 命令删除分区？</strong></h2><p>如果我们不再使用某个分区，请按照下面的步骤删除它。</p>
+<p>请确保你输入了正确的分区号。在这里，我准备删除 <code>/dev/sdc2</code> 分区：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">$ sudo fdisk /dev/sdc</span><br><span class="line"></span><br><span class="line">Welcome to fdisk (util-linux 2.30.1).</span><br><span class="line">Changes will remain in memory only, until you decide to write them.</span><br><span class="line">Be careful before using the write command.</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Command (m for help): d</span><br><span class="line">Partition number (1-5, default 5): 2</span><br><span class="line"></span><br><span class="line">Partition 2 has been deleted.</span><br><span class="line"></span><br><span class="line">Command (m for help): p</span><br><span class="line">Disk /dev/sdc: 10 GiB, 10737418240 bytes, 20971520 sectors</span><br><span class="line">Units: sectors of 1 * 512 = 512 bytes</span><br><span class="line">Sector size (logical/physical): 512 bytes / 512 bytes</span><br><span class="line">I/O size (minimum/optimal): 512 bytes / 512 bytes</span><br><span class="line">Disklabel type: dos</span><br><span class="line">Disk identifier: 0x8cc8f9e5</span><br><span class="line"></span><br><span class="line">Device     Boot   Start      End  Sectors Size Id Type</span><br><span class="line">/dev/sdc1          2048  2099199  2097152   1G 83 Linux</span><br><span class="line">/dev/sdc3       4196352  6293503  2097152   1G 83 Linux</span><br><span class="line">/dev/sdc4       6293504 20971519 14678016   7G  5 Extended</span><br><span class="line">/dev/sdc5       6295552  8392703  2097152   1G 83 Linux</span><br><span class="line"></span><br><span class="line">Command (m for help): w</span><br><span class="line">The partition table has been altered.</span><br><span class="line">Calling ioctl() to re-read partition table.</span><br><span class="line">Syncing disks.</span><br></pre></td></tr></table></figure>
+
+<h2 id="如何在-Linux-下格式化分区或建立文件系统？"><a href="#如何在-Linux-下格式化分区或建立文件系统？" class="headerlink" title="如何在 Linux 下格式化分区或建立文件系统？"></a><strong>如何在 Linux 下格式化分区或建立文件系统？</strong></h2><p>在计算时，文件系统控制了数据的储存方式，并通过 <em>索引节点(Inode Tables)</em> 来检索数据。如果没有文件系统，操作系统是无法找到信息储存的位置的。</p>
+<p>在此，我准备在 <code>/dev/sdc1</code> 上创建分区。有三种方式创建文件系统：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">$ sudo mkfs.ext4 /dev/sdc1</span><br><span class="line">或</span><br><span class="line">$ sudo mkfs -t ext4 /dev/sdc1</span><br><span class="line">或</span><br><span class="line">$ sudo mke2fs /dev/sdc1</span><br><span class="line"></span><br><span class="line">mke2fs 1.43.5 (04-Aug-2017)</span><br><span class="line">Creating filesystem with 262144 4k blocks and 65536 inodes</span><br><span class="line">Filesystem UUID: c0a99b51-2b61-4f6a-b960-eb60915faab0</span><br><span class="line">Superblock backups stored on blocks: </span><br><span class="line">    32768, 98304, 163840, 229376</span><br><span class="line"></span><br><span class="line">Allocating group tables: done                            </span><br><span class="line">Writing inode tables: done                            </span><br><span class="line">Creating journal (8192 blocks): done</span><br><span class="line">Writing superblocks and filesystem accounting information: done</span><br></pre></td></tr></table></figure>
+
+<p>当你在分区上建立文件系统时，以下重要信息会同时被创建：</p>
+<ul>
+<li><code>Filesystem UUID:</code> UUID 代表了通用且独一无二的识别符，UUID 在 Linux 中通常用来识别设备。它 128 位长的数字代表了 32 个十六进制数。</li>
+<li><code>Superblock:</code> 超级块储存了文件系统的元数据。如果某个文件系统的超级块被破坏，我们就无法挂载它了（也就是说无法访问其中的文件了）。</li>
+<li><code>Inode:</code> Inode 是类 Unix 系统中文件系统的数据结构，它储存了所有除名称以外的文件信息和数据。</li>
+<li><code>Journal:</code> 日志式文件系统包含了用来修复电脑意外关机产生下错误信息的日志。</li>
+</ul>
+<h2 id="如何在-Linux-中挂载分区？"><a href="#如何在-Linux-中挂载分区？" class="headerlink" title="如何在 Linux 中挂载分区？"></a><strong>如何在 Linux 中挂载分区？</strong></h2><p>在你创建完分区和文件系统之后，我们需要挂载它们以便使用。我们需要创建一个挂载点来挂载分区，使用 <code>mkdir</code> 来创建一个挂载点。</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo mkdir -p /mnt/2g-new</span><br></pre></td></tr></table></figure>
+
+<p>如果你希望进行临时挂载，请使用下面的命令。在计算机重启之后，你会丢失这个挂载点。</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo mount /dev/sdc1 /mnt/2g-new</span><br></pre></td></tr></table></figure>
+
+<p>如果你希望永久挂载某个分区，请将分区详情加入 <code>fstab</code> 文件。我们既可以输入设备名称，也可以输入 UUID。</p>
+<p>使用设备名称来进行永久挂载：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># vi /etc/fstab</span><br><span class="line"></span><br><span class="line">/dev/sdc1 /mnt/2g-new ext4 defaults 0 0</span><br></pre></td></tr></table></figure>
+
+<p>使用 UUID 来进行永久挂载（请使用 <code>blkid</code> 来获取 UUID）：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ sudo blkid</span><br><span class="line">/dev/sdc1: UUID=&quot;d17e3c31-e2c9-4f11-809c-94a549bc43b7&quot; TYPE=&quot;ext2&quot; PARTUUID=&quot;8cc8f9e5-01&quot;</span><br><span class="line">/dev/sda1: UUID=&quot;d92fa769-e00f-4fd7-b6ed-ecf7224af7fa&quot; TYPE=&quot;ext4&quot; PARTUUID=&quot;eab59449-01&quot;</span><br><span class="line">/dev/sdc3: UUID=&quot;ca307aa4-0866-49b1-8184-004025789e63&quot; TYPE=&quot;ext4&quot; PARTUUID=&quot;8cc8f9e5-03&quot;</span><br><span class="line">/dev/sdc5: PARTUUID=&quot;8cc8f9e5-05&quot;</span><br><span class="line"></span><br><span class="line"># vi /etc/fstab</span><br><span class="line"></span><br><span class="line">UUID=d17e3c31-e2c9-4f11-809c-94a549bc43b7 /mnt/2g-new ext4 defaults 0 0</span><br></pre></td></tr></table></figure>
+
+<p>使用 <code>df</code> 命令亦可：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$ df -h</span><br><span class="line">Filesystem      Size  Used Avail Use% Mounted on</span><br><span class="line">udev            969M     0  969M   0% /dev</span><br><span class="line">tmpfs           200M  7.0M  193M   4% /run</span><br><span class="line">/dev/sda1        20G   16G  3.0G  85% /</span><br><span class="line">tmpfs           997M     0  997M   0% /dev/shm</span><br><span class="line">tmpfs           5.0M  4.0K  5.0M   1% /run/lock</span><br><span class="line">tmpfs           997M     0  997M   0% /sys/fs/cgroup</span><br><span class="line">tmpfs           200M   28K  200M   1% /run/user/121</span><br><span class="line">tmpfs           200M   25M  176M  13% /run/user/1000</span><br><span class="line">/dev/sdc1      1008M  1.3M  956M   1% /mnt/2g-new</span><br></pre></td></tr></table></figure>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-20230613-synology群晖ssh命令清单大全"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/06/13/20230613-synology%E7%BE%A4%E6%99%96ssh%E5%91%BD%E4%BB%A4%E6%B8%85%E5%8D%95%E5%A4%A7%E5%85%A8/"
+    >20230613-synology群晖ssh命令清单大全</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/06/13/20230613-synology%E7%BE%A4%E6%99%96ssh%E5%91%BD%E4%BB%A4%E6%B8%85%E5%8D%95%E5%A4%A7%E5%85%A8/" class="article-date">
+  <time datetime="2023-06-13T05:22:49.000Z" itemprop="datePublished">2023-06-13</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>群晖本质上还是一个Linux系统，也可以通过ssh来连接，并且可方便使用ssh命令行来管理 。群晖打开ssh命令行的设置很简单，进入控制面板，找到终端机和SNMP, 勾选上启动SSH功能即可，如果你有防火墙，需要在防火墙放行22端口：</p>
+<p>一、常用命令</p>
+<p>nas打印工作组</p>
+<p>synowin -getWorkgroup</p>
+<p>加入新的 NAS 工作组：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">synowin -joinWorkgroup &lt;group&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>打印一般信息：</p>
+<p>synoservice –status</p>
+<p>通过 cli 设置邮件：</p>
+<p>synosyslogmail</p>
+<p>检查升级：</p>
+<p>synoupgrade –check 3</p>
+<p>转储有关您的 nas 的数据：</p>
+<p>syno_system_dump</p>
+<p>打印网络信息包括。当前双工：</p>
+<p>synonet –show</p>
+<p>打印当前主机名：</p>
+<p>synonet –get_hostname</p>
+<p>设置一个新的主机名：</p>
+<p>synonet –set_hostname</p>
+<p>设置新网关：</p>
+<p>synonet –set_gateway gateway</p>
+<p>WOL 唤醒：</p>
+<p>synonet –wake xx:xx:xx:xx:xx:xx <interface></p>
+<p>打印分区布局表。</p>
+<p>synopartition –list</p>
+<h2 id="二、共享相关命令"><a href="#二、共享相关命令" class="headerlink" title="二、共享相关命令"></a>二、共享相关命令</h2><p>打印有关共享的信息：</p>
+<p>synoshare –get <sharefolder></p>
+<p>挂载共享加密文件夹：</p>
+<p>synoshare –enc_mount <sharefolder> <password></p>
+<p>卸载加密文件夹：</p>
+<p>synoshare –enc_unmount <sharefolder></p>
+<p>允许删除：</p>
+<p>synoshare –del {TRUE|FALSE} sharename1 sharename2 …</p>
+<p>为共享文件夹设置描述（在文件浏览器的评论中查看）</p>
+<p>synoshare –setdesc sharename desc</p>
+<p>允许浏览共享文件夹</p>
+<p>synoshare –setbrowse sharename browse_flag{0|1}</p>
+<p>重命名共享文件夹：</p>
+<p>synoshare –rename old_sharename new_sharename</p>
+<p>设置允许浏览共享文件夹的用户：</p>
+<p>synoshare –setuser sharename user_auth{NA|RO|RW} operator{+|-|&#x3D;} user_name_list_with_comma</p>
+<h2 id="三、用户相关命令"><a href="#三、用户相关命令" class="headerlink" title="三、用户相关命令"></a>三、用户相关命令</h2><p>打印有关用户的主要数据</p>
+<p>sh-4.3# synouser –get wuseman</p>
+<p>User Name : [wuseman]</p>
+<p>User Type : [AUTH_LOCAL]</p>
+<p>User uid : [1026]</p>
+<p>Primary gid : [100]</p>
+<p>Fullname : []</p>
+<p>User Dir : [&#x2F;var&#x2F;services&#x2F;homes&#x2F;wuseman]</p>
+<p>User Shell : [&#x2F;bin&#x2F;sh]</p>
+<p>Expired : [false]</p>
+<p>User Mail : []</p>
+<p>Alloc Size : [82]</p>
+<p>Member Of : [2]</p>
+<p>(100) users</p>
+<p>(101) administrators</p>
+<p>设置新密码&#x2F;更改密码：</p>
+<p>synouser –setpw oldpassword newpassword</p>
+<p>重命名用户：</p>
+<p>synouser –rename old_username new_username</p>
+<p>添加包含完整信息的用户名：</p>
+<p>synouser –add [username pwd “full name” expired{0|1} mail privilege]</p>
+<h2 id="四、通知相关命令："><a href="#四、通知相关命令：" class="headerlink" title="四、通知相关命令："></a>四、通知相关命令：</h2><p>发送有关存储的电子邮件：</p>
+<p>synostorage –mail</p>
+<p>锁管理</p>
+<p>synostorage –lock</p>
+<h2 id="五、调优功能："><a href="#五、调优功能：" class="headerlink" title="五、调优功能："></a>五、调优功能：</h2><p>获取当前调整配置文件：</p>
+<p>synotune –get</p>
+<p>Outut: Current Profile: performance_throughput</p>
+<p>设置新功能，选项：</p>
+<p>synotune –set performance_throughput OR performance_latency</p>
+<p>转储有关您的 Synology NAS 的信息：</p>
+<p>syno_system_dump</p>
+<h2 id="六、升级相关命令"><a href="#六、升级相关命令" class="headerlink" title="六、升级相关命令"></a>六、升级相关命令</h2><p>将您的 nas 设置为自动处理升级：</p>
+<p>synoupgrade –auto</p>
+<p>检查您当前的升级设置：</p>
+<p>synoupgrade –check</p>
+<p>如果有新的，请下载最新的升级：</p>
+<p>synoupgrade –download</p>
+<p>开始升级：</p>
+<p>synoupgrade –start</p>
+<p>检查分区布局表：</p>
+<p>synopartition –check &#x2F;dev&#x2F;sd<X></p>
+<p>查看群晖 NFS 监视器：</p>
+<p>synonfstop</p>
+<h2 id="七、重置Synology-Nas-和其它命令"><a href="#七、重置Synology-Nas-和其它命令" class="headerlink" title="七、重置Synology Nas 和其它命令"></a>七、重置Synology Nas 和其它命令</h2><p>重置 Synology NAS（仅限设置）</p>
+<p>&#x2F;usr&#x2F;syno&#x2F;sbin&#x2F;.&#x2F;synodsdefault –reset</p>
+<p>将 Synology Nas 重置为出厂默认设置（OBS OBS OBS ALL DATA 将被擦除）</p>
+<p>&#x2F;usr&#x2F;syno&#x2F;sbin&#x2F;.&#x2F;synodsdefault –factory-default</p>
+<p>重新安装 Synology Nas Station，将保留所有数据：</p>
+<p>&#x2F;usr&#x2F;syno&#x2F;sbin&#x2F;.&#x2F;synodsdefault –reinstall; reboot</p>
+<p>通过 cli 重启 NAS SSHD 的正确方法：</p>
+<p>synoservicectl –restart sshd</p>
+<p>列出、卸载或安装 .spk 包文件（本地可用）</p>
+<p>synopkg</p>
+<p>安装一组网络和 ELF 二进制调试工具（并进入根会话）</p>
+<p>synogear</p>
+<p>使用键&#x3D;值对行编写和读取 .ini 样式文件</p>
+<p>synosetkeyvalue</p>
+<p>synogetkeyvalue</p>
+<p>关闭并关闭 NAS（很像 shutdown -h now）</p>
+<p>synopoweroff</p>
+<p>显示已安装的包</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">synopkg list | sed &#x27;s/: .*$//&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>卸载软件包</p>
+<p>sudo synopkg uninstall</p>
+<p>Synology 也关机和关机</p>
+<p>syno_poweroff_task</p>
+<p>为本地用户设置&#x2F;建立密码</p>
+<p>synoauth local_username password</p>
+<p>管理 IP 自动阻止功能</p>
+<p>synoautoblock OPTIONS</p>
+<p>管理博客功能</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">synoblog_backup [-r|-b] p [-u username] [-o]</span><br></pre></td></tr></table></figure>
+
+<p>Synology 磁盘控制设备：类似于 &#x2F;dev&#x2F;hda 或 &#x2F;dev&#x2F;sda</p>
+<p>syno_disk_ctl OPTIONS DEVICE</p>
+<p>Synology clear .tbd-文件工具</p>
+<p>SYNOClearTdb FILE</p>
+<p>打印有关 NAS 的各种信息的不同方法</p>
+<p>more &#x2F;etc.defaults&#x2F;VERSION</p>
+<p>cat &#x2F;etc&#x2F;synoinfo.conf</p>
+<p>cat &#x2F;proc&#x2F;cmdline</p>
+<p>synoshare –enum ALL</p>
+<p>synonet –show</p>
+<p>synodisk –enum</p>
+<p>synospace –enum -a</p>
+<p>重启索引</p>
+<p>synoservicectl –restart synoindexd</p>
+<p>检查升级</p>
+<p>sudo synoupgrade –check</p>
+<p>重启网络服务器</p>
+<p>&#x2F;usr&#x2F;syno&#x2F;sbin&#x2F;synoservicecfg –restart httpd-user</p>
+<p>&#x2F;usr&#x2F;syno&#x2F;sbin&#x2F;synoservicectl –restart pkgctl-WebStation</p>
+<p>为您可以控制的内容生成列表</p>
+<p>&#x2F;usr&#x2F;syno&#x2F;sbin&#x2F;synoservice –list</p>
+<p>DSM API - 提供 DSM 信息</p>
+<p>syno dsm getInfo –pretty</p>
+<p>File Station API - 提供 File Station 信息</p>
+<p>syno fs getInfo –pretty</p>
+<p>File Station API - 枚举给定文件夹中的文件</p>
+<p>syno fs listFiles –payload ‘{“folder_path”:”&#x2F;path&#x2F;to&#x2F;folder”}’ –pretty</p>
+<p>Download Station API - 列出下载任务</p>
+<p>syno dl listFiles –payload ‘{“limit”:5, “offset”:10}’ –pretty</p>
+<p>Download Station API - 创建下载任务</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">syno dl createTask --payload &#x27;&#123;&quot;uri&quot;:&quot;[https://link](https://link.zhihu.com/?target=https%3A//link)&quot;&#125;&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>Audio Station API - 搜索歌曲</p>
+<p>syno as searchSong –payload ‘{“title”:”my_title_song”}’ –pretty</p>
+<p>Video Station API - 列出电影</p>
+<p>syno vs listMovies –payload ‘{“limit”:5}’ –pretty</p>
+<p>Video Station DTV API - 列出频道</p>
+<p>syno dtv listChannels –payload ‘{“limit”:1}’ –pretty</p>
+<p>Surveillance Station API - 获取摄像头信息</p>
+<p>syno ss getInfoCamera –payload ‘{“cameraIds”:8}’ –pretty</p>
+<p>重新启动、启用、停止 samba</p>
+<p>&#x2F;usr&#x2F;syno&#x2F;etc&#x2F;rc.sysv&#x2F;S80samba.sh –help</p>
+<p>获取 Synology 日期</p>
+<p>synodate –getSysDate</p>
+<p>打印机的东西</p>
+<p>synoprint</p>
+<p>更新索引较旧</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">indexfolder --type=&#123;SHARE_CREATE|SHARE_REMOVE&#125; --share=&lt;SHARED_FOLDER&gt; --share_path=&lt;SHARED_FOLDER&gt;</span><br></pre></td></tr></table></figure>
+
+<p>启动媒体服务器</p>
+<p>&#x2F;usr&#x2F;syno&#x2F;bin&#x2F;mediaserver.sh start</p>
+<p>小心，杀死NAS</p>
+<p>servicetool –get-service-volume download</p>
+<p>如果丢失，获取 2FA 密钥</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh root@nas cat /usr/syno/etc/preference/wuseman/google_authenticator</span><br></pre></td></tr></table></figure>
+
+
+<p>以非常奇特的方式列出磁盘信息</p>
+<p>dhm_tool -s</p>
+<h2 id="八、Synology-自动阻止"><a href="#八、Synology-自动阻止" class="headerlink" title="八、Synology 自动阻止"></a>八、Synology 自动阻止</h2><p>将 IP 添加到自动阻止数据库：</p>
+<p>synoautoblock –deny <ip-address></p>
+<p>重置错误添加的IP：</p>
+<p>synoautoblock –reset <ip-address></p>
+<p>将任何 IP 添加到白名单：</p>
+<p>synoautoblock –in-white-list <ip-address></p>
+<h2 id="九、调试和系统健康："><a href="#九、调试和系统健康：" class="headerlink" title="九、调试和系统健康："></a>九、调试和系统健康：</h2><p>调试风扇并通过电子邮件发送结果（如果已设置电子邮件）</p>
+<p>syno_fan_debug</p>
+<p>运行系统健康检查并在完成后通过电子邮件发送结果：</p>
+<p>syno_disk_health_record</p>
+<p>检查〜剩余寿命：</p>
+<p>syno_disk_remain_life_check</p>
+<p>运行 smartmontools 并在完成后发送电子邮件：</p>
+<p>syno_disk_smart_mail_send</p>
+<p>调试休眠：</p>
+<p>syno_hibernation_debug</p>
+<p>LED（获取最小值和最大值：&#x2F;usr&#x2F;syno&#x2F;etc.defaults&#x2F;led_brightness.xml）</p>
+<p>获取当前设置：</p>
+<p>syno_led_brightness –get (Default on DS416: 1985157252)</p>
+<p>设置新设置：</p>
+<p>syno_led_brightness –set <brightness></p>
+<h2 id="十、带宽"><a href="#十、带宽" class="headerlink" title="十、带宽"></a>十、带宽</h2><p>打印用户带宽使用情况：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">synobandwidth --status [&lt;list=user|group|all(default)&gt; &lt;transfer=upload|download|all(default)&gt;] &lt;merge=0|1(default)&gt;]</span><br></pre></td></tr></table></figure>
+
+
+<p>为用户设置新的带宽限制：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">synobandwidth --set-global-conf &lt;state=enabled|disabled&gt; [&lt;protocol=filestation|webdav|ftp|rsync|all(default)&gt;</span><br></pre></td></tr></table></figure>
+
+
+<p>按用户打印所有服务的用户状态：</p>
+<p>sh-4.3# synobandwidth –preview wuseman</p>
+<p>Protocol Upload Download</p>
+<p>filestation 0.00 0.00</p>
+<p>webdav 0.00 0.00</p>
+<p>ftp 0.00 0.00</p>
+<p>rsync 0.00 0.00</p>
+<h2 id="十一、ISCI"><a href="#十一、ISCI" class="headerlink" title="十一、ISCI"></a>十一、ISCI</h2><p>Synology iSCSI 性能分析器</p>
+<p>synoiscsitop40</p>
+<p>4202977879.png</p>
+<h2 id="十二、风扇"><a href="#十二、风扇" class="headerlink" title="十二、风扇"></a>十二、风扇</h2><p>设置风扇配置（最大声会听起来像飞机）</p>
+<p>synofanconfig -parseXML 1000000</p>
+<h2 id="十三、列出了更多-Synology-命令："><a href="#十三、列出了更多-Synology-命令：" class="headerlink" title="十三、列出了更多 Synology 命令："></a>十三、列出了更多 Synology 命令：</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br><span class="line">317</span><br><span class="line">318</span><br><span class="line">319</span><br><span class="line">320</span><br><span class="line">321</span><br><span class="line">322</span><br><span class="line">323</span><br><span class="line">324</span><br><span class="line">325</span><br><span class="line">326</span><br><span class="line">327</span><br><span class="line">328</span><br><span class="line">329</span><br><span class="line">330</span><br><span class="line">331</span><br><span class="line">332</span><br><span class="line">333</span><br><span class="line">334</span><br><span class="line">335</span><br><span class="line">336</span><br><span class="line">337</span><br><span class="line">338</span><br><span class="line">339</span><br><span class="line">340</span><br><span class="line">341</span><br><span class="line">342</span><br><span class="line">343</span><br><span class="line">344</span><br><span class="line">345</span><br><span class="line">346</span><br><span class="line">347</span><br><span class="line">348</span><br><span class="line">349</span><br><span class="line">350</span><br><span class="line">351</span><br><span class="line">352</span><br><span class="line">353</span><br><span class="line">354</span><br><span class="line">355</span><br><span class="line">356</span><br><span class="line">357</span><br><span class="line">358</span><br><span class="line">359</span><br><span class="line">360</span><br><span class="line">361</span><br><span class="line">362</span><br><span class="line">363</span><br><span class="line">364</span><br><span class="line">365</span><br><span class="line">366</span><br><span class="line">367</span><br><span class="line">368</span><br><span class="line">369</span><br><span class="line">370</span><br><span class="line">371</span><br><span class="line">372</span><br><span class="line">373</span><br><span class="line">374</span><br><span class="line">375</span><br><span class="line">376</span><br><span class="line">377</span><br><span class="line">378</span><br><span class="line">379</span><br><span class="line">380</span><br><span class="line">381</span><br><span class="line">382</span><br><span class="line">383</span><br><span class="line">384</span><br><span class="line">385</span><br><span class="line">386</span><br><span class="line">387</span><br><span class="line">388</span><br><span class="line">389</span><br><span class="line">390</span><br><span class="line">391</span><br><span class="line">392</span><br><span class="line">393</span><br><span class="line">394</span><br><span class="line">395</span><br><span class="line">396</span><br><span class="line">397</span><br><span class="line">398</span><br><span class="line">399</span><br><span class="line">400</span><br><span class="line">401</span><br><span class="line">402</span><br><span class="line">403</span><br><span class="line">404</span><br><span class="line">405</span><br><span class="line">406</span><br><span class="line">407</span><br><span class="line">408</span><br><span class="line">409</span><br><span class="line">410</span><br><span class="line">411</span><br><span class="line">412</span><br><span class="line">413</span><br><span class="line">414</span><br><span class="line">415</span><br><span class="line">416</span><br><span class="line">417</span><br><span class="line">418</span><br><span class="line">419</span><br><span class="line">420</span><br><span class="line">421</span><br><span class="line">422</span><br><span class="line">423</span><br><span class="line">424</span><br><span class="line">425</span><br><span class="line">426</span><br><span class="line">427</span><br><span class="line">428</span><br><span class="line">429</span><br><span class="line">430</span><br><span class="line">431</span><br><span class="line">432</span><br><span class="line">433</span><br><span class="line">434</span><br><span class="line">435</span><br><span class="line">436</span><br><span class="line">437</span><br><span class="line">438</span><br><span class="line">439</span><br><span class="line">440</span><br><span class="line">441</span><br><span class="line">442</span><br><span class="line">443</span><br><span class="line">444</span><br><span class="line">445</span><br><span class="line">446</span><br><span class="line">447</span><br><span class="line">448</span><br><span class="line">449</span><br><span class="line">450</span><br><span class="line">451</span><br><span class="line">452</span><br><span class="line">453</span><br><span class="line">454</span><br><span class="line">455</span><br><span class="line">456</span><br><span class="line">457</span><br><span class="line">458</span><br><span class="line">459</span><br><span class="line">460</span><br><span class="line">461</span><br><span class="line">462</span><br><span class="line">463</span><br><span class="line">464</span><br><span class="line">465</span><br><span class="line">466</span><br><span class="line">467</span><br><span class="line">468</span><br><span class="line">469</span><br><span class="line">470</span><br><span class="line">471</span><br><span class="line">472</span><br><span class="line">473</span><br><span class="line">474</span><br><span class="line">475</span><br><span class="line">476</span><br><span class="line">477</span><br><span class="line">478</span><br><span class="line">479</span><br><span class="line">480</span><br><span class="line">481</span><br><span class="line">482</span><br><span class="line">483</span><br><span class="line">484</span><br><span class="line">485</span><br><span class="line">486</span><br><span class="line">487</span><br><span class="line">488</span><br><span class="line">489</span><br><span class="line">490</span><br><span class="line">491</span><br><span class="line">492</span><br><span class="line">493</span><br><span class="line">494</span><br><span class="line">495</span><br><span class="line">496</span><br><span class="line">497</span><br><span class="line">498</span><br><span class="line">499</span><br><span class="line">500</span><br><span class="line">501</span><br><span class="line">502</span><br><span class="line">503</span><br><span class="line">504</span><br><span class="line">505</span><br><span class="line">506</span><br><span class="line">507</span><br><span class="line">508</span><br><span class="line">509</span><br><span class="line">510</span><br><span class="line">511</span><br><span class="line">512</span><br><span class="line">513</span><br><span class="line">514</span><br><span class="line">515</span><br><span class="line">516</span><br><span class="line">517</span><br><span class="line">518</span><br><span class="line">519</span><br><span class="line">520</span><br><span class="line">521</span><br><span class="line">522</span><br><span class="line">523</span><br><span class="line">524</span><br><span class="line">525</span><br><span class="line">526</span><br><span class="line">527</span><br><span class="line">528</span><br><span class="line">529</span><br><span class="line">530</span><br><span class="line">531</span><br><span class="line">532</span><br><span class="line">533</span><br><span class="line">534</span><br><span class="line">535</span><br><span class="line">536</span><br><span class="line">537</span><br><span class="line">538</span><br><span class="line">539</span><br><span class="line">540</span><br><span class="line">541</span><br><span class="line">542</span><br><span class="line">543</span><br><span class="line">544</span><br><span class="line">545</span><br><span class="line">546</span><br><span class="line">547</span><br><span class="line">548</span><br><span class="line">549</span><br><span class="line">550</span><br><span class="line">551</span><br><span class="line">552</span><br><span class="line">553</span><br><span class="line">554</span><br><span class="line">555</span><br><span class="line">556</span><br><span class="line">557</span><br><span class="line">558</span><br><span class="line">559</span><br><span class="line">560</span><br><span class="line">561</span><br></pre></td><td class="code"><pre><span class="line">sync</span><br><span class="line"></span><br><span class="line">synologconvert</span><br><span class="line"></span><br><span class="line">[syno-dbus-check.sh](https://link.zhihu.com/?target=http%3A//syno-dbus-check.sh)</span><br><span class="line"></span><br><span class="line">synologrotated</span><br><span class="line"></span><br><span class="line">syno-letsencrypt</span><br><span class="line"></span><br><span class="line">synologset</span><br><span class="line"></span><br><span class="line">syno-move-coredump</span><br><span class="line"></span><br><span class="line">synologset1</span><br><span class="line"></span><br><span class="line">syno8021Xtool</span><br><span class="line"></span><br><span class="line">synolunbackup</span><br><span class="line"></span><br><span class="line">synoRTCTime</span><br><span class="line"></span><br><span class="line">synolunbkp</span><br><span class="line"></span><br><span class="line">syno_adv_test</span><br><span class="line"></span><br><span class="line">synoluntransform</span><br><span class="line"></span><br><span class="line">syno_dc_ctrl_adapter.sh</span><br><span class="line"></span><br><span class="line">synomediaparserd</span><br><span class="line"></span><br><span class="line">syno_disk_config_check</span><br><span class="line"></span><br><span class="line">synomkflv</span><br><span class="line"></span><br><span class="line">syno_disk_ctl</span><br><span class="line"></span><br><span class="line">synomkflvd</span><br><span class="line"></span><br><span class="line">syno_disk_data_collector</span><br><span class="line"></span><br><span class="line">synomkthumb</span><br><span class="line"></span><br><span class="line">syno_disk_db_update</span><br><span class="line"></span><br><span class="line">synomkthumbd</span><br><span class="line"></span><br><span class="line">syno_disk_dsl</span><br><span class="line"></span><br><span class="line">synomoduletool</span><br><span class="line"></span><br><span class="line">syno_disk_health_record</span><br><span class="line"></span><br><span class="line">synomount</span><br><span class="line"></span><br><span class="line">syno_disk_information_daily_record</span><br><span class="line"></span><br><span class="line">synomustache</span><br><span class="line"></span><br><span class="line">syno_disk_log_convert</span><br><span class="line"></span><br><span class="line">synomyds</span><br><span class="line"></span><br><span class="line">syno_disk_log_import_from_xml</span><br><span class="line"></span><br><span class="line">synonclient_send</span><br><span class="line"></span><br><span class="line">syno_disk_remain_life_check</span><br><span class="line"></span><br><span class="line">synonet</span><br><span class="line"></span><br><span class="line">syno_disk_smart_mail_send</span><br><span class="line"></span><br><span class="line">synonetd</span><br><span class="line"></span><br><span class="line">syno_disk_test_log_import_from_xml</span><br><span class="line"></span><br><span class="line">synonetdtool</span><br><span class="line"></span><br><span class="line">syno_disk_test_scheduler_set</span><br><span class="line"></span><br><span class="line">synonetseqadj</span><br><span class="line"></span><br><span class="line">syno_disk_testlog_convert</span><br><span class="line"></span><br><span class="line">synonfstop</span><br><span class="line"></span><br><span class="line">syno_disk_wcache_config_init</span><br><span class="line"></span><br><span class="line">synonotify</span><br><span class="line"></span><br><span class="line">syno_dvb_admin.sh</span><br><span class="line"></span><br><span class="line">synootp</span><br><span class="line"></span><br><span class="line">syno_fan_debug</span><br><span class="line"></span><br><span class="line">synoovstool</span><br><span class="line"></span><br><span class="line">syno_hdd_util</span><br><span class="line"></span><br><span class="line">synopartition</span><br><span class="line"></span><br><span class="line">syno_hibernation_debug</span><br><span class="line"></span><br><span class="line">synopasswordmail</span><br><span class="line"></span><br><span class="line">syno_hw_video_transcoding.sh</span><br><span class="line"></span><br><span class="line">synopayment</span><br><span class="line"></span><br><span class="line">syno_iptables_common</span><br><span class="line"></span><br><span class="line">synoperfeventd</span><br><span class="line"></span><br><span class="line">syno_led_brightness</span><br><span class="line"></span><br><span class="line">synoperformancediagnose</span><br><span class="line"></span><br><span class="line">syno_mem_check</span><br><span class="line"></span><br><span class="line">synopftest</span><br><span class="line"></span><br><span class="line">syno_pkgicon_sprite.py</span><br><span class="line"></span><br><span class="line">synophoto_acl</span><br><span class="line"></span><br><span class="line">syno_poweroff_task</span><br><span class="line"></span><br><span class="line">synophoto_acl_pgsql</span><br><span class="line"></span><br><span class="line">syno_scemd_connector</span><br><span class="line"></span><br><span class="line">synophoto_autoblock</span><br><span class="line"></span><br><span class="line">syno_smart_result_collect</span><br><span class="line"></span><br><span class="line">synophoto_backup</span><br><span class="line"></span><br><span class="line">syno_smart_test</span><br><span class="line"></span><br><span class="line">synophoto_config</span><br><span class="line"></span><br><span class="line">syno_ssd_trim</span><br><span class="line"></span><br><span class="line">synophoto_config_root</span><br><span class="line"></span><br><span class="line">syno_system_dump</span><br><span class="line"></span><br><span class="line">synophoto_dsm_user</span><br><span class="line"></span><br><span class="line">synoabnormalloginmail</span><br><span class="line"></span><br><span class="line">synophoto_external_access</span><br><span class="line"></span><br><span class="line">synoacltool</span><br><span class="line"></span><br><span class="line">synophoto_extract_preview</span><br><span class="line"></span><br><span class="line">synoagentregisterd</span><br><span class="line"></span><br><span class="line">synophoto_music</span><br><span class="line"></span><br><span class="line">synoappbkp</span><br><span class="line"></span><br><span class="line">synophoto_sdk_share_set</span><br><span class="line"></span><br><span class="line">synoappnotify</span><br><span class="line"></span><br><span class="line">synophoto_sns_utils</span><br><span class="line"></span><br><span class="line">synoapppriv_updater</span><br><span class="line"></span><br><span class="line">synophoto_update_db</span><br><span class="line"></span><br><span class="line">synoarchivetool</span><br><span class="line"></span><br><span class="line">synophoto_watermark_util</span><br><span class="line"></span><br><span class="line">synoauth</span><br><span class="line"></span><br><span class="line">synophotoio</span><br><span class="line"></span><br><span class="line">synoautoblock</span><br><span class="line"></span><br><span class="line">synopingpong</span><br><span class="line"></span><br><span class="line">synobackup</span><br><span class="line"></span><br><span class="line">synopkg</span><br><span class="line"></span><br><span class="line">synobackupd</span><br><span class="line"></span><br><span class="line">synopkgctl</span><br><span class="line"></span><br><span class="line">synobandwidth</span><br><span class="line"></span><br><span class="line">synopkghelper</span><br><span class="line"></span><br><span class="line">synoblog_backup</span><br><span class="line"></span><br><span class="line">synoplatform</span><br><span class="line"></span><br><span class="line">synobootseq</span><br><span class="line"></span><br><span class="line">synoportforward</span><br><span class="line"></span><br><span class="line">synobootupcheck</span><br><span class="line"></span><br><span class="line">synopoweroff</span><br><span class="line"></span><br><span class="line">synobtrfssnap</span><br><span class="line"></span><br><span class="line">synopreferencedir</span><br><span class="line"></span><br><span class="line">synocacheclient</span><br><span class="line"></span><br><span class="line">synoprint</span><br><span class="line"></span><br><span class="line">synocachepinfiletool</span><br><span class="line"></span><br><span class="line">synopsql</span><br><span class="line"></span><br><span class="line">synocachepinfiletool-status</span><br><span class="line"></span><br><span class="line">synoquota</span><br><span class="line"></span><br><span class="line">synocachepinfiletoolha</span><br><span class="line"></span><br><span class="line">synoraidtool</span><br><span class="line"></span><br><span class="line">synocerttool</span><br><span class="line"></span><br><span class="line">synorecycle</span><br><span class="line"></span><br><span class="line">synocfgen</span><br><span class="line"></span><br><span class="line">synorelayd</span><br><span class="line"></span><br><span class="line">synocgid</span><br><span class="line"></span><br><span class="line">synoretainer</span><br><span class="line"></span><br><span class="line">synocgitool</span><br><span class="line"></span><br><span class="line">synoretention-lun</span><br><span class="line"></span><br><span class="line">synocheckhotspare</span><br><span class="line"></span><br><span class="line">synoretentionconf</span><br><span class="line"></span><br><span class="line">synocheckiscsitrg</span><br><span class="line"></span><br><span class="line">synoretentiontest</span><br><span class="line"></span><br><span class="line">synochecknetworkcfg</span><br><span class="line"></span><br><span class="line">[synoretentiontestutil.sh](https://link.zhihu.com/?target=http%3A//synoretentiontestutil.sh)</span><br><span class="line"></span><br><span class="line">synocheckshare</span><br><span class="line"></span><br><span class="line">synorouterportfwd</span><br><span class="line"></span><br><span class="line">synocheckswapconfig</span><br><span class="line"></span><br><span class="line">synoroutertool</span><br><span class="line"></span><br><span class="line">synocloudserviceauth</span><br><span class="line"></span><br><span class="line">synorsyncdtool</span><br><span class="line"></span><br><span class="line">synocmsclient</span><br><span class="line"></span><br><span class="line">synosavetime</span><br><span class="line"></span><br><span class="line">synocodectool</span><br><span class="line"></span><br><span class="line">synoscgi</span><br><span class="line"></span><br><span class="line">synoconfbkp</span><br><span class="line"></span><br><span class="line">synoscgi</span><br><span class="line"></span><br><span class="line">synoconfd</span><br><span class="line"></span><br><span class="line">synoschedtask</span><br><span class="line"></span><br><span class="line">synocontentextract</span><br><span class="line"></span><br><span class="line">synoschedtool</span><br><span class="line"></span><br><span class="line">synocontentextractd</span><br><span class="line"></span><br><span class="line">synoscimprofile</span><br><span class="line"></span><br><span class="line">synocopy</span><br><span class="line"></span><br><span class="line">synosdutils</span><br><span class="line"></span><br><span class="line">synocredential</span><br><span class="line"></span><br><span class="line">synosearch</span><br><span class="line"></span><br><span class="line">synocrond</span><br><span class="line"></span><br><span class="line">synosearchagent</span><br><span class="line"></span><br><span class="line">synocrtregister</span><br><span class="line"></span><br><span class="line">synoselfcheck</span><br><span class="line"></span><br><span class="line">synocrtunregister</span><br><span class="line"></span><br><span class="line">synoservice</span><br><span class="line"></span><br><span class="line">synodatacollect</span><br><span class="line"></span><br><span class="line">synoservicecfg</span><br><span class="line"></span><br><span class="line">synodataverifier</span><br><span class="line"></span><br><span class="line">synoservicectl</span><br><span class="line"></span><br><span class="line">synodate</span><br><span class="line"></span><br><span class="line">synoservicemigrate</span><br><span class="line"></span><br><span class="line">synodctest</span><br><span class="line"></span><br><span class="line">synosetkeyvalue</span><br><span class="line"></span><br><span class="line">synodd</span><br><span class="line"></span><br><span class="line">synoshare</span><br><span class="line"></span><br><span class="line">synoddnsinfo</span><br><span class="line"></span><br><span class="line">synosharequota</span><br><span class="line"></span><br><span class="line">synoddsmtool</span><br><span class="line"></span><br><span class="line">synosharesnapshot</span><br><span class="line"></span><br><span class="line">synodisk</span><br><span class="line"></span><br><span class="line">synosharesnaptool</span><br><span class="line"></span><br><span class="line">synodiskdatacollect</span><br><span class="line"></span><br><span class="line">synosharesnaptree</span><br><span class="line"></span><br><span class="line">synodiskfind</span><br><span class="line"></span><br><span class="line">synosharingbackup</span><br><span class="line"></span><br><span class="line">synodiskpathparse</span><br><span class="line"></span><br><span class="line">synosharingchecker</span><br><span class="line"></span><br><span class="line">synodiskport</span><br><span class="line"></span><br><span class="line">synosharingcron</span><br><span class="line"></span><br><span class="line">synodriveencode</span><br><span class="line"></span><br><span class="line">synosharingurl</span><br><span class="line"></span><br><span class="line">synodrivehook</span><br><span class="line"></span><br><span class="line">synosmartblock</span><br><span class="line"></span><br><span class="line">synodriveindex</span><br><span class="line"></span><br><span class="line">[synosnapschedtask.sh](https://link.zhihu.com/?target=http%3A//synosnapschedtask.sh)</span><br><span class="line"></span><br><span class="line">synodriveobject</span><br><span class="line"></span><br><span class="line">synosnmpcd</span><br><span class="line"></span><br><span class="line">synodrivesettings</span><br><span class="line"></span><br><span class="line">synospace</span><br><span class="line"></span><br><span class="line">synodriveversion</span><br><span class="line"></span><br><span class="line">[synospace.sh](https://link.zhihu.com/?target=http%3A//synospace.sh)</span><br><span class="line"></span><br><span class="line">synodrivevolume</span><br><span class="line"></span><br><span class="line">synosshdutils</span><br><span class="line"></span><br><span class="line">synodsdefault</span><br><span class="line"></span><br><span class="line">synostgpool</span><br><span class="line"></span><br><span class="line">synodsinfo</span><br><span class="line"></span><br><span class="line">synostgsysraid</span><br><span class="line"></span><br><span class="line">synodsmnotify</span><br><span class="line"></span><br><span class="line">synostgvolume</span><br><span class="line"></span><br><span class="line">synoeaupgrade</span><br><span class="line"></span><br><span class="line">synostorage</span><br><span class="line"></span><br><span class="line">synoethinfo</span><br><span class="line"></span><br><span class="line">synostoragecore</span><br><span class="line"></span><br><span class="line">synoexternal</span><br><span class="line"></span><br><span class="line">synostoraged</span><br><span class="line"></span><br><span class="line">synofanconfig</span><br><span class="line"></span><br><span class="line">synosupportchannelchecker</span><br><span class="line"></span><br><span class="line">synofileutil</span><br><span class="line"></span><br><span class="line">synosyncdctime</span><br><span class="line"></span><br><span class="line">synofirewall</span><br><span class="line"></span><br><span class="line">synosyslogmail</span><br><span class="line"></span><br><span class="line">synofirewallUpdater</span><br><span class="line"></span><br><span class="line">synotc</span><br><span class="line"></span><br><span class="line">synoflashcache</span><br><span class="line"></span><br><span class="line">synotc_common</span><br><span class="line"></span><br><span class="line">synoflvconv</span><br><span class="line"></span><br><span class="line">synothumb</span><br><span class="line"></span><br><span class="line">synofstool</span><br><span class="line"></span><br><span class="line">synotifyd</span><br><span class="line"></span><br><span class="line">synogear</span><br><span class="line"></span><br><span class="line">synotifydutil</span><br><span class="line"></span><br><span class="line">synogetkeyvalue</span><br><span class="line"></span><br><span class="line">synotimecontrol</span><br><span class="line"></span><br><span class="line">synogpoclientd</span><br><span class="line"></span><br><span class="line">synotlstool</span><br><span class="line"></span><br><span class="line">synogrinst</span><br><span class="line"></span><br><span class="line">synotune</span><br><span class="line"></span><br><span class="line">synogroup</span><br><span class="line"></span><br><span class="line">synotunnelexec</span><br><span class="line"></span><br><span class="line">synoguest</span><br><span class="line"></span><br><span class="line">synoupgrade</span><br><span class="line"></span><br><span class="line">synohacore</span><br><span class="line"></span><br><span class="line">synoupnp</span><br><span class="line"></span><br><span class="line">synoindex</span><br><span class="line"></span><br><span class="line">synoups</span><br><span class="line"></span><br><span class="line">synoindex_mgr</span><br><span class="line"></span><br><span class="line">synoupscommon</span><br><span class="line"></span><br><span class="line">synoindex_package.sh</span><br><span class="line"></span><br><span class="line">synousbcam</span><br><span class="line"></span><br><span class="line">synoindexd</span><br><span class="line"></span><br><span class="line">synousbcopy</span><br><span class="line"></span><br><span class="line">synoindexplugind</span><br><span class="line"></span><br><span class="line">synousbdisk</span><br><span class="line"></span><br><span class="line">synoindexscand</span><br><span class="line"></span><br><span class="line">synousbmodemd</span><br><span class="line"></span><br><span class="line">synoindexworkerd</span><br><span class="line"></span><br><span class="line">synouser</span><br><span class="line"></span><br><span class="line">synoiscsiep</span><br><span class="line"></span><br><span class="line">synouserdir</span><br><span class="line"></span><br><span class="line">synoiscsihook</span><br><span class="line"></span><br><span class="line">synouserhome</span><br><span class="line"></span><br><span class="line">synoiscsitool</span><br><span class="line"></span><br><span class="line">synovolumesnapshot</span><br><span class="line"></span><br><span class="line">synoiscsitop</span><br><span class="line"></span><br><span class="line">synovpnc</span><br><span class="line"></span><br><span class="line">synoiscsitop40</span><br><span class="line"></span><br><span class="line">synovspace</span><br><span class="line"></span><br><span class="line">synoiscsiunmap</span><br><span class="line"></span><br><span class="line">synovspace_wrapper</span><br><span class="line"></span><br><span class="line">synoiscsiwebapi</span><br><span class="line"></span><br><span class="line">synow3</span><br><span class="line"></span><br><span class="line">synoisns</span><br><span class="line"></span><br><span class="line">synow3tool</span><br><span class="line"></span><br><span class="line">synokerneltz</span><br><span class="line"></span><br><span class="line">synowebapi</span><br><span class="line"></span><br><span class="line">synolanstatus</span><br><span class="line"></span><br><span class="line">synowifid</span><br><span class="line"></span><br><span class="line">synoldapclient</span><br><span class="line"></span><br><span class="line">synowin</span><br><span class="line"></span><br><span class="line">synoldapclientd</span><br><span class="line"></span><br><span class="line">synowireless</span><br><span class="line"></span><br><span class="line">synologaccd</span><br><span class="line"></span><br><span class="line">synowsdiscoveryd</span><br><span class="line"></span><br><span class="line">synologand</span><br><span class="line"></span><br><span class="line">synowstransferd</span><br><span class="line"></span><br><span class="line">synologanutil</span><br><span class="line"></span><br><span class="line">synozram</span><br><span class="line"></span><br><span class="line">synologconfgen</span><br></pre></td></tr></table></figure> 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-20230611-深入理解ext4等linux文件系统"
   class="article article-type-post"
   itemscope
@@ -157,6 +617,70 @@
 <p>ext 监视￥</p>
 <p>minix 文件系统</p>
 <p>在有ext 之前，使用的是minix 文件系统，如果你不熟悉linux 历史，那么可以理解为minix 是用于ibm pc&#x2F;at微型计算机的一个非常小的类unix 系统 andrew tannenbaum 为了教学的目的而开发了它，并与1978年发布了源代码  以印刷版的格式</p>
+<p>ext 并没有长时间占据统治地位，主要是由于它原始的时间戳  每个文件仅有一个时间戳，而不是今天我们所熟悉的有inode 最近文件访问时间和最新文件修改时间的时间戳</p>
+<p>ext2 提供了GB 级别的最大文件大小和TB 级别的文件系统大小</p>
+<p>但这里仍然有一些问题需要解决，ext2 文件系统 与20世纪90年代的大多数文件系统一样，如果在将数据写入到磁盘的时候，系统发生崩溃或断电，则容易发生灾难性的数据损坏</p>
+<p>ext2 还是用在某些特殊的情况下，最常见的是，作为便携式usb 驱动的文件系统格式</p>
+<p>ext3 和20世纪90年代后期的其他文件系统，如微软的ntfs 使用日志来解决这个问题，日志是磁盘上的一种特殊的分配区域，其写入被存储在事务中，如果该事务完成磁盘写入，则日志中的数据将提交给文件系统自身，如果系统在该操作提交前崩溃，则重新启动的系统识别其为未完成的事务而将其进行回滚，就像从未发生过一样，这意味着正在处理的文件可能依然会丢失，但文件系统本身保持一致，且其他所有数据都是安全的</p>
+<p>在使用ext3文件系统的linux 内核中实现了三个级别的日志记录方式，日志  顺序和回写</p>
+<p>日记 是最低风险模式，在将数据和元数据提交给文件系统之前将其写入日志。这可以保证正在写入的文件与整个文件系统的一致性，但其显著降低了性能。<br>顺序 是大多数 Linux 发行版默认模式；顺序模式将元数据写入日志而直接将数据提交到文件系统。顾名思义，这里的操作顺序是固定的：首先，元数据提交到日志；其次，数据写入文件系统，然后才将日志中关联的元数据更新到文件系统。这确保了在发生崩溃时，那些与未完整写入相关联的元数据仍在日志中，且文件系统可以在回滚日志时清理那些不完整的写入事务。在顺序模式下，系统崩溃可能导致在崩溃期间文件的错误被主动写入，但文件系统它本身 —— 以及未被主动写入的文件 —— 确保是安全的。<br>回写 是第三种模式 —— 也是最不安全的日志模式。在回写模式下，像顺序模式一样，元数据会被记录到日志，但数据不会。与顺序模式不同，元数据和数据都可以以任何有利于获得最佳性能的顺序写入。这可以显著提高性能，但安全性低很多。尽管回写模式仍然保证文件系统本身的安全性，但在崩溃或崩溃之前写入的文件很容易丢失或损坏。</p>
+<p>ext3 使用16位内部寻址，这意味着对于有着￥K 块大小的ext3在最大规格位16TiB 的文件系统重可以处理的最大文件大小位1TiB</p>
+<p>ext4 在功能上与ext3在功能上非常相似，但支持大文件系统，提高了对碎片的抵抗力，有更高的性能以及更好的时间戳</p>
+<h3 id="ext4-vs-ext3"><a href="#ext4-vs-ext3" class="headerlink" title="ext4 vs ext3"></a>ext4 vs ext3</h3><p>ext3 和 ext4 有一些非常明确的差别，在这里集中讨论下。</p>
+<p>向后兼容性<br>ext4 特地设计为尽可能地向后兼容 ext3。这不仅允许 ext3 文件系统原地升级到 ext4；也允许 ext4 驱动程序以 ext3 模式自动挂载 ext3 文件系统，因此使它无需单独维护两个代码库。</p>
+<p>大文件系统<br>ext3 文件系统使用 32 位寻址，这限制它仅支持 2 TiB 文件大小和 16 TiB 文件系统系统大小（这是假设在块大小为 4 KiB 的情况下，一些 ext3 文件系统使用更小的块大小，因此对其进一步被限制）。</p>
+<p>ext4 使用 48 位的内部寻址，理论上可以在文件系统上分配高达 16 TiB 大小的文件，其中文件系统大小最高可达 1000000 TiB（1 EiB）。在早期 ext4 的实现中有些用户空间的程序仍然将其限制为最大大小为 16 TiB 的文件系统，但截至 2011 年，e2fsprogs 已经直接支持大于 16 TiB 大小的 ext4 文件系统。例如，红帽企业 Linux 在其合同上仅支持最高 50 TiB 的 ext4 文件系统，并建议 ext4 卷不超过 100 TiB。</p>
+<p>分配方式改进<br>ext4 在将存储块写入磁盘之前对存储块的分配方式进行了大量改进，这可以显著提高读写性能。</p>
+<p>区段</p>
+<p>区段(extent)是一系列连续的物理块 (最多达 128 MiB，假设块大小为 4 KiB），可以一次性保留和寻址。使用区段可以减少给定文件所需的 inode 数量，并显著减少碎片并提高写入大文件时的性能。</p>
+<p>多块分配</p>
+<p>ext3 为每一个新分配的块调用一次块分配器。当多个写入同时打开分配器时，很容易导致严重的碎片。然而，ext4 使用延迟分配，这允许它合并写入并更好地决定如何为尚未提交的写入分配块。</p>
+<p>持久的预分配</p>
+<p>在为文件预分配磁盘空间时，大部分文件系统必须在创建时将零写入该文件的块中。ext4 允许替代使用 fallocate()，它保证了空间的可用性（并试图为它找到连续的空间），而不需要先写入它。这显著提高了写入和将来读取流和数据库应用程序的写入数据的性能。</p>
+<p>延迟分配</p>
+<p>这是一个耐人寻味而有争议性的功能。延迟分配允许 ext4 等待分配将写入数据的实际块，直到它准备好将数据提交到磁盘。（相比之下，即使数据仍然在往写入缓存中写入，ext3 也会立即分配块。）</p>
+<p>当缓存中的数据累积时，延迟分配块允许文件系统对如何分配块做出更好的选择，降低碎片（写入，以及稍后的读）并显著提升性能。然而不幸的是，它 增加 了还没有专门调用 fsync() 方法（当程序员想确保数据完全刷新到磁盘时）的程序的数据丢失的可能性。</p>
+<p>假设一个程序完全重写了一个文件：</p>
+<p>fd&#x3D;open(“file”, O_TRUNC); write(fd, data); close(fd);<br>使用旧的文件系统，close(fd); 足以保证 file 中的内容刷新到磁盘。即使严格来说，写不是事务性的，但如果文件关闭后发生崩溃，则丢失数据的风险很小。</p>
+<p>如果写入不成功（由于程序上的错误、磁盘上的错误、断电等），文件的原始版本和较新版本都可能丢失数据或损坏。如果其它进程在写入文件时访问文件，则会看到损坏的版本。如果其它进程打开文件并且不希望其内容发生更改 —— 例如，映射到多个正在运行的程序的共享库。这些进程可能会崩溃。</p>
+<p>为了避免这些问题，一些程序员完全避免使用 O_TRUNC。相反，他们可能会写入一个新文件，关闭它，然后将其重命名为旧文件名：</p>
+<p>fd&#x3D;open(“newfile”); write(fd, data); close(fd); rename(“newfile”, “file”);<br>在 没有 延迟分配的文件系统下，这足以避免上面列出的潜在的损坏和崩溃问题：因为 rename() 是原子操作，所以它不会被崩溃中断；并且运行的程序将继续引用旧的文件。现在 file 的未链接版本只要有一个打开的文件文件句柄即可。但是因为 ext4 的延迟分配会导致写入被延迟和重新排序，rename(“newfile”, “file”) 可以在 newfile 的内容实际写入磁盘内容之前执行，这出现了并行进行再次获得 file 坏版本的问题。</p>
+<p>为了缓解这种情况，Linux 内核（自版本 2.6.30）尝试检测这些常见代码情况并强制立即分配。这会减少但不能防止数据丢失的可能性 —— 并且它对新文件没有任何帮助。如果你是一位开发人员，请注意：保证数据立即写入磁盘的唯一方法是正确调用 fsync()。</p>
+<p>无限制的子目录<br>ext3 仅限于 32000 个子目录；ext4 允许无限数量的子目录。从 2.6.23 内核版本开始，ext4 使用 HTree 索引来减少大量子目录的性能损失。</p>
+<p>日志校验<br>ext3 没有对日志进行校验，这给处于内核直接控制之外的磁盘或自带缓存的控制器设备带来了问题。如果控制器或具自带缓存的磁盘脱离了写入顺序，则可能会破坏 ext3 的日记事务顺序，从而可能破坏在崩溃期间（或之前一段时间）写入的文件。</p>
+<p>理论上，这个问题可以使用写入 障碍(barrier) —— 在安装文件系统时，你在挂载选项设置 barrier&#x3D;1，然后设备就会忠实地执行 fsync 一直向下到底层硬件。通过实践，可以发现存储设备和控制器经常不遵守写入障碍 —— 提高性能（和跟竞争对手比较的性能基准），但增加了本应该防止数据损坏的可能性。</p>
+<p>对日志进行校验和允许文件系统崩溃后第一次挂载时意识到其某些条目是无效或无序的。因此，这避免了回滚部分条目或无序日志条目的错误，并进一步损坏的文件系统 —— 即使部分存储设备假做或不遵守写入障碍。</p>
+<p>快速文件系统检查<br>在 ext3 下，在 fsck 被调用时会检查整个文件系统 —— 包括已删除或空文件。相比之下，ext4 标记了 inode 表未分配的块和扇区，从而允许 fsck 完全跳过它们。这大大减少了在大多数文件系统上运行 fsck 的时间，它实现于内核 2.6.24。</p>
+<p>改进的时间戳<br>ext3 提供粒度为一秒的时间戳。虽然足以满足大多数用途，但任务关键型应用程序经常需要更严格的时间控制。ext4 通过提供纳秒级的时间戳，使其可用于那些企业、科学以及任务关键型的应用程序。</p>
+<p>ext3 文件系统也没有提供足够的位来存储 2038 年 1 月 18 日以后的日期。ext4 在这里增加了两个位，将 Unix 纪元扩展了 408 年。如果你在公元 2446 年读到这篇文章，你很有可能已经转移到一个更好的文件系统 —— 如果你还在测量自 1970 年 1 月 1 日 00:00（UTC）以来的时间，这会让我死后得以安眠。</p>
+<p>在线碎片整理<br>ext2 和 ext3 都不直接支持在线碎片整理 —— 即在挂载时会对文件系统进行碎片整理。ext2 有一个包含的实用程序 e2defrag，它的名字暗示 —— 它需要在文件系统未挂载时脱机运行。（显然，这对于根文件系统来说非常有问题。）在 ext3 中的情况甚至更糟糕 —— 虽然 ext3 比 ext2 更不容易受到严重碎片的影响，但 ext3 文件系统运行 e2defrag 可能会导致灾难性损坏和数据丢失。</p>
+<p>尽管 ext3 最初被认为“不受碎片影响”，但对同一文件（例如 BitTorrent）采用大规模并行写入过程的过程清楚地表明情况并非完全如此。一些用户空间的手段和解决方法，例如 Shake，以这样或那样方式解决了这个问题 —— 但它们比真正的、文件系统感知的、内核级碎片整理过程更慢并且在各方面都不太令人满意。</p>
+<p>ext4 通过 e4defrag 解决了这个问题，且是一个在线、内核模式、文件系统感知、块和区段级别的碎片整理实用程序。</p>
+<p>正在进行的 ext4 开发<br>ext4，正如 Monty Python 中瘟疫感染者曾经说过的那样，“我还没死呢！”虽然它的主要开发人员认为它只是一个真正的下一代文件系统的权宜之计，但是在一段时间内，没有任何可能的候选人准备好（由于技术或许可问题）部署为根文件系统。</p>
+<p>在未来的 ext4 版本中仍然有一些关键功能要开发，包括元数据校验和、一流的配额支持和大分配块。</p>
+<p>元数据校验和<br>由于 ext4 具有冗余超级块，因此为文件系统校验其中的元数据提供了一种方法，可以自行确定主超级块是否已损坏并需要使用备用块。可以在没有校验和的情况下，从损坏的超级块恢复 —— 但是用户首先需要意识到它已损坏，然后尝试使用备用方法手动挂载文件系统。由于在某些情况下，使用损坏的主超级块安装文件系统读写可能会造成进一步的损坏，即使是经验丰富的用户也无法避免，这也不是一个完美的解决方案！</p>
+<p>与 Btrfs 或 ZFS 等下一代文件系统提供的极其强大的每块校验和相比，ext4 的元数据校验和的功能非常弱。但它总比没有好。虽然校验 所有的事情 都听起来很简单！—— 事实上，将校验和与文件系统连接到一起有一些重大的挑战；请参阅设计文档了解详细信息。</p>
+<p>一流的配额支持<br>等等，配额？！从 ext2 出现的那天开始我们就有了这些！是的，但它们一直都是事后的添加的东西，而且它们总是犯傻。这里可能不值得详细介绍，但设计文档列出了配额将从用户空间移动到内核中的方式，并且能够更加正确和高效地执行。</p>
+<p>大分配块<br>随着时间的推移，那些讨厌的存储系统不断变得越来越大。由于一些固态硬盘已经使用 8K 硬件块大小，因此 ext4 对 4K 模块的当前限制越来越受到限制。较大的存储块可以显著减少碎片并提高性能，代价是增加“松弛”空间（当你只需要块的一部分来存储文件或文件的最后一块时留下的空间）。</p>
+<p>你可以在设计文档中查看详细说明。</p>
+<p>ext4 的实际限制<br>ext4 是一个健壮、稳定的文件系统。如今大多数人都应该在用它作为根文件系统，但它无法处理所有需求。让我们简单地谈谈你不应该期待的一些事情 —— 现在或可能在未来：</p>
+<p>虽然 ext4 可以处理高达 1 EiB 大小（相当于 1,000,000 TiB）大小的数据，但你 真的 不应该尝试这样做。除了能够记住更多块的地址之外，还存在规模上的问题。并且现在 ext4 不会处理（并且可能永远不会）超过 50-100 TiB 的数据。</p>
+<p>ext4 也不足以保证数据的完整性。随着日志记录的重大进展又回到了 ext3 的那个时候，它并未涵盖数据损坏的许多常见原因。如果数据已经在磁盘上被破坏 —— 由于故障硬件，宇宙射线的影响（是的，真的），或者只是数据随时间衰减 —— ext4 无法检测或修复这种损坏。</p>
+<p>基于上面两点，ext4 只是一个纯 文件系统，而不是存储卷管理器。这意味着，即使你有多个磁盘 —— 也就是奇偶校验或冗余，理论上你可以从 ext4 中恢复损坏的数据，但无法知道使用它是否对你有利。虽然理论上可以在不同的层中分离文件系统和存储卷管理系统而不会丢失自动损坏检测和修复功能，但这不是当前存储系统的设计方式，并且它将给新设计带来重大挑战。</p>
+<p>备用文件系统<br>在我们开始之前，提醒一句：要非常小心，没有任何备用的文件系统作为主线内核的一部分而内置和直接支持！</p>
+<p>即使一个文件系统是 安全的，如果在内核升级期间出现问题，使用它作为根文件系统也是非常可怕的。如果你没有充分的理由通过一个 chroot 去使用替代介质引导，耐心地操作内核模块、grub 配置和 DKMS……不要在一个很重要的系统中去掉预留的根文件。</p>
+<p>可能有充分的理由使用你的发行版不直接支持的文件系统 —— 但如果你这样做，我强烈建议你在系统启动并可用后再安装它。（例如，你可能有一个 ext4 根文件系统，但是将大部分数据存储在 ZFS 或 Btrfs 池中。）</p>
+<p>XFS<br>XFS 与非 ext 文件系统在 Linux 中的主线中的地位一样。它是一个 64 位的日志文件系统，自 2001 年以来内置于 Linux 内核中，为大型文件系统和高度并发性提供了高性能（即大量的进程都会立即写入文件系统）。</p>
+<p>从 RHEL 7 开始，XFS 成为 Red Hat Enterprise Linux 的默认文件系统。对于家庭或小型企业用户来说，它仍然有一些缺点 —— 最值得注意的是，重新调整现有 XFS 文件系统是一件非常痛苦的事情，不如创建另一个并复制数据更有意义。</p>
+<p>虽然 XFS 是稳定的且是高性能的，但它和 ext4 之间没有足够具体的最终用途差异，以值得推荐在非默认（如 RHEL7）的任何地方使用它，除非它解决了对 ext4 的特定问题，例如大于 50 TiB 容量的文件系统。</p>
+<p>XFS 在任何方面都不是 ZFS、Btrfs 甚至 WAFL（一个专有的 SAN 文件系统）的“下一代”文件系统。就像 ext4 一样，它应该被视为一种更好的方式的权宜之计。</p>
+<p>ZFS<br>ZFS 由 Sun Microsystems 开发，以 zettabyte 命名 —— 相当于 1 万亿 GB —— 因为它理论上可以解决大型存储系统。</p>
+<p>作为真正的下一代文件系统，ZFS 提供卷管理（能够在单个文件系统中处理多个单独的存储设备），块级加密校验和（允许以极高的准确率检测数据损坏），自动损坏修复（其中冗余或奇偶校验存储可用），快速异步增量复制，内联压缩等，以及更多。</p>
+<p>从 Linux 用户的角度来看，ZFS 的最大问题是许可证问题。ZFS 许可证是 CDDL 许可证，这是一种与 GPL 冲突的半许可的许可证。关于在 Linux 内核中使用 ZFS 的意义存在很多争议，其争议范围从“它是 GPL 违规”到“它是 CDDL 违规”到“它完全没问题，它还没有在法庭上进行过测试。”最值得注意的是，自 2016 年以来 Canonical 已将 ZFS 代码内联在其默认内核中，而且目前尚无法律挑战。</p>
+<p>此时，即使我作为一个非常狂热于 ZFS 的用户，我也不建议将 ZFS 作为 Linux 的根文件系统。如果你想在 Linux 上利用 ZFS 的优势，用 ext4 设置一个小的根文件系统，然后将 ZFS 用在你剩余的存储上，把数据、应用程序以及你喜欢的东西放在它上面 —— 但把 root 分区保留在 ext4 上，直到你的发行版明确支持 ZFS 根目录。</p>
+<p>Btrfs<br>Btrfs 是 B-Tree Filesystem 的简称，通常发音为 “butter” —— 由 Chris Mason 于 2007 年在 Oracle 任职期间发布。Btrfs 旨在跟 ZFS 有大部分相同的目标，提供多种设备管理、每块校验、异步复制、直列压缩等，还有更多。</p>
+<p>截至 2018 年，Btrfs 相当稳定，可用作标准的单磁盘文件系统，但可能不应该依赖于卷管理器。与许多常见用例中的 ext4、XFS 或 ZFS 相比，它存在严重的性能问题，其下一代功能 —— 复制、多磁盘拓扑和快照管理 —— 可能非常多，其结果可能是从灾难性地性能降低到实际数据的丢失。</p>
+<p>Btrfs 的维持状态是有争议的；SUSE Enterprise Linux 在 2015 年采用它作为默认文件系统，而 Red Hat 于 2017 年宣布它从 RHEL 7.4 开始不再支持 Btrfs。可能值得注意的是，该产品支持 Btrfs 部署用作单磁盘文件系统，而不是像 ZFS 中的多磁盘卷管理器，甚至 Synology 在它的存储设备使用 Btrfs，但是它在传统 Linux 内核 RAID（mdraid）之上分层来管理磁盘。</p>
  
       <!-- reward -->
       
@@ -1505,235 +2029,6 @@
     <div class="article-entry" itemprop="articleBody">
        
   <p>KMSELDI</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20230514-楼宇协议，什么是BACnet"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/05/14/20230514-%E6%A5%BC%E5%AE%87%E5%8D%8F%E8%AE%AE%EF%BC%8C%E4%BB%80%E4%B9%88%E6%98%AFBACnet/"
-    >20230514-楼宇协议，什么是BACnet</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/05/14/20230514-%E6%A5%BC%E5%AE%87%E5%8D%8F%E8%AE%AE%EF%BC%8C%E4%BB%80%E4%B9%88%E6%98%AFBACnet/" class="article-date">
-  <time datetime="2023-05-14T09:08:03.000Z" itemprop="datePublished">2023-05-14</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/495107879">https://zhuanlan.zhihu.com/p/495107879</a></p>
-<p>IT  和 OT 正在走向融合</p>
-<p>后疫情时代，智能建筑只会变得越来越重要，楼宇设备的集成也会更加普及与深度</p>
-<p>bacnet 代表 楼宇自动化和控制网络，是楼宇自动化中使用最广泛的标准协议，它的创建是为了简化楼宇自动化设备并开放数据通信，但是，我们为什么要使用它，它来自哪里</p>
-<p>bacnet 起源</p>
-<p>bacnet 是用于智能建筑的通信协议，是国际标准化组织，美国国家标准协会及美国采暖，制冷与空调工程师学会 定义的通信协议，楼宇设备由不同的厂商提供，每个设备都有其自有通讯协议，因此对于业主来说，系统的维护和监管极其繁琐，为了解决这一问题，bacnet 标准委员会因此诞生，它可以提高供应商之间的互操作型，最大限度地减少对各个设备制造商定义的专有系统的约束，除此之外，系统的标准化也使得整个楼宇自动化工作站成为可能，所有相关设备的数据可以在工作站中进行处理，而不必在乎这些数据出自哪个设备供应商提供的<br>bacnet 的第一个版本为标准135，于1995年被采用，bacnet 协议的开发也有利于hvac 行业，引入了整合和标准化bas 功能的可能性，如数据共享，报警，事件管理、趋势、调度和远程管理，bacnet 不仅仅是一个通信协议，bacnet 还定义和描述了网络上的设备，以及这些设备提供的对象和服务</p>
-<p>所以不像其他一些通信协议只关注信息如何移动，bacnet 对于网络上的设备具有内置的规则和行为，它可以识别网络上设备的类型，并知道对它们的期望，这就是对象发挥作用的地方</p>
-<p>BACnet 对象的定义</p>
-<p>在bacnet 设备中，数据被组织成对象，对象表示物理输入，输出和数据变量，这些变量表示设备上的点，以及其他更复杂的结果，如趋势日志和时间表，对象进一步定义为一组属性，可以通过工作站或其他软件进行监视或命令，考虑房间中的温度传感器:它可能有一个点，表示为一个可以称为“SPACE-TEMP”的对象，以便使其成为经过认证的BACnet设备，该传感器还将包括标准服务。因此，其他bacnet 设备或软件可以发现和读取这个space-temp 对象</p>
-<p>工作站，甚至是移动设备，都可以调用温度传感器内的所有其他相关数据点，使其能够在网络上被看到，并正确地传输其数据，这些服务在控制器中启用并运行，非常像服务器，有许多潜在的对象类型</p>
-<p>BLC 认证</p>
-<p>为了使业界保持 bacnet 设备之间的互操作性，而不管它们的制造商是谁，供应商必须将每个设备型号提交给bacnet 测试实验室，以获得复合bacnet 标准的认证，该认证证明供应商的设备是作为12种公共认证类型的设备之一所生产的，并且其对象和服务是按照标准操作的，如果没有BTL 认证，您将面临设备在bacnet 网络中无法正常通讯的风险</p>
-<p>这一切在建筑中是如何运作的，bacnet 支持七种局域网类型，通过以下方式进行通信</p>
-<p>IP(IPv4 and IPv6);<br>Ethernet(ISO 8802-3);<br>Master Slave&#x2F;Token Passing MS&#x2F;TP(RS485)<br>Point-to-Point (PTP) (RS 232)<br>ZigBee<br>LonTalk<br>ARCNET</p>
-<p>BBMD 功能</p>
-<p>目前使用的两种最普遍的局域网类型是 BACnet&#x2F;IP和BACnet MS&#x2F;TP。BACnet&#x2F;IP 允许跨多个子网、多区控制系统进行通信，利用光纤和千兆以太网的优点 并为设备分配ip 地址</p>
-<p>但是，目前大多数bacnet 网络都采用了使用RS485双绞线的MSTP 在某些情况下，您可能混合使用mstp 和ip 网络，或者您可能希望在服务器上安装一个工作站，而不必将rs_485接口集成到服务器中</p>
-<p>在这些情况下，我们将使用bacnet 路由器将bacnet mstp 和bacnet ip 网络连接。在具有IP子网的多个建筑物或多个子网的情况下，您将使用具有称为“BBMD”的特殊功能的BACnet路由器。BBMD代表“BACnet Broadcast Management Device”广播管理设备，是一种将BACnet广播消息以定向单播消息的形式从一个IP子网隧道到另一个IP子网的方法。因为IP路由器会阻塞广播消息，所以需要BBMD，而在BACnet中，广播消息是设备之间发现和通信的必要条件。</p>
-<p>这只是bacnet 工作方式的表面，每个安装都有一些细微的差别，可以用来优化网络的通信方式</p>
-<p>同时也欢迎您访问我们的intesis 网站</p>
-<p>了解更多bacnet 设备的通信解决方案</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20230514-网络工程师常用命令合集"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/05/14/20230514-%E7%BD%91%E7%BB%9C%E5%B7%A5%E7%A8%8B%E5%B8%88%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E5%90%88%E9%9B%86/"
-    >20230514-网络工程师常用命令合集</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/05/14/20230514-%E7%BD%91%E7%BB%9C%E5%B7%A5%E7%A8%8B%E5%B8%88%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E5%90%88%E9%9B%86/" class="article-date">
-  <time datetime="2023-05-14T04:27:52.000Z" itemprop="datePublished">2023-05-14</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>ping 命令</p>
-<p>ping 是一个使用频率极高的实用程序，主要用于确定网络的连通性，这对确定网络是否正确连接，以及网络连接的状况十分有用，简单的说，ping 就是一个测试程序，如果ping 运行正确，大体上就可以排除网络访问层、网卡、modem 的输入输出线路，电缆和路由器等存在的故障，从而缩小问题的范围</p>
-<p>ping 能够以毫秒为单位显示发送请求到返回应答之间的时间量，如果应答时间短，表述数据报 不必通过太多的路由器或网络，连接速度比较快，ping 还能显示TTL Time to Live 生存时间</p>
-<p>通过ttl 值可以推算数据包通过了多少个路由器</p>
-<ol>
-<li>命令格式</li>
-</ol>
-<p>ping 主机名</p>
-<p>ping 域名</p>
-<p>ping IP地址</p>
-<ol start="2">
-<li>ping 命令的基本应用</li>
-</ol>
-<p>一般情况下，用户可以通过使用一系列ping 命令来查找问题出在什么地方，或检测网络运行的情况，下面就给出一个典型的检测次序及对应的可能故障</p>
-<p>ping 127.0.0.1</p>
-<p>如果测试成功，表明网卡，tcp ip 协议的安装 ip 地址，子网掩码的设置正常，如果测试不成功，就表示 TCP&#x2F;IP 的安装或设置存在有问题</p>
-<p>ping 本机ip 地址</p>
-<p>如果测试不成功，则表示本地配置或安装存在问题，应当对网络设备和通讯介质进行测试，检查并排除</p>
-<p>ping 局域网内其他ip</p>
-<p>如果测试成功，表明本地网络中的网卡和载体运行正确，但如果收到0个回送应答，那么表示子网掩码不正确或网卡配置错误或电缆系统有问题</p>
-<p>ping 网关ip</p>
-<p>这个命令如果应答正确，表示局域网中的网关路由器正在运行并能够做出应答</p>
-<p>ping 远程ip</p>
-<p>如果收到正确应答，表示成功的使用了缺省网关，对于拨号上网用户则表示能够成功的访问internet </p>
-<p>ping localhost</p>
-<p>local host 是系统的网络保留名，它是127.0.0.1 的别名，每台计算机都应该能够将该名字转换成该地址，否则，表示主机文件 windows host 中存在问题</p>
-<p>ping yahoo.com 一个著名网站地址</p>
-<p>对此域名执行ping 命令，计算机必须先将域名转换成ip 地址，通常是通过dns 服务器，如果这里出现故障，则表示本机dns 服务器的ip 地址配置不正确，或它所访问的dns 服务器有故障</p>
-<p>如果上面所列出的所有ping 命令都能正常运行，那么计算机进行本地和远程通信基本上就没有问题了，但是，这些命令的成功并不表示你所有的网络配置都没有问题，例如，某些子网掩码错误就可能无法用这些方法检测到</p>
-<p>ping 命令的常用参数选项</p>
-<p>ping ip -t 连续对ip 地址执行ping 命令，直到被用户以ctrl C中断</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20230512-视频监控三种存储方式NVR、IP-SAN和CVR哪种好"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/05/12/20230512-%E8%A7%86%E9%A2%91%E7%9B%91%E6%8E%A7%E4%B8%89%E7%A7%8D%E5%AD%98%E5%82%A8%E6%96%B9%E5%BC%8FNVR%E3%80%81IP-SAN%E5%92%8CCVR%E5%93%AA%E7%A7%8D%E5%A5%BD/"
-    >20230512-视频监控三种存储方式NVR、IP-SAN和CVR哪种好</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/05/12/20230512-%E8%A7%86%E9%A2%91%E7%9B%91%E6%8E%A7%E4%B8%89%E7%A7%8D%E5%AD%98%E5%82%A8%E6%96%B9%E5%BC%8FNVR%E3%80%81IP-SAN%E5%92%8CCVR%E5%93%AA%E7%A7%8D%E5%A5%BD/" class="article-date">
-  <time datetime="2023-05-12T03:46:05.000Z" itemprop="datePublished">2023-05-12</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>对于监控的项目来说，需要考虑四个部分，那就是前端系统，传输系统，存储系统以及显示系统</p>
-<p>存储系统是监控项目中非常重要的一部分，很多朋友也经常讨论到，那么今天我们来了解下常用的三种存储方式 NVR IP-SAN 和CVR 之间的区别</p>
-<p>NVR 存储 是网络硬盘录像机的缩写，NVR 最主要的功能是通过网络接收IPC 网络摄像机，设备传输的数字视频码流，并进行存储、管理，从而实现网络化带来的分布式架构优势，简单来说，通过NVR，可以同时观看，浏览，回放，管理，存储多个网络摄像机，摆脱了电脑硬件的牵绊，再也不用面临安装软件的繁琐</p>
-<p>NVR 框架</p>
-<p>现在市场上面也有少量的128路NVR 因为NVR 是x86 架构储存+监控软件，他本身也有磁盘阵列功能</p>
-<p>NVR 主要用于中小型监控的方案中，但对于大型监控应用来说，NVR 他短板大于他有时，监控点多，码流大，压力高，容量大等问题，都会使它使用起来力不从心，而对于大型公共监控的要考虑其扩展性，易管理性，所以采用IP-SAN或CVR 的存储方式</p>
-<p>第二种 IP-SAN存储</p>
-<p>IP-SAN 即基于ip 以太网络的san 存储架构，它使用iscsi 协议传输数据，直接在ip 网络上进行存储，iscsi 协议就是把scsi 命令包在tcp&#x2F;ip 包中传输，即为scsi over tcp&#x2F;ip</p>
-<p>ip san 也算是san 的一种，只是服务器和存储之间通过网络交换机互联，性能不算最好，但不受距离的限制，ip 存储应用十分广泛，一般也可作为大型监控存储</p>
-<p>IP-SAN 也算是san的一种，只是服务器和存储之间通过网络交换机互联，性能不算最好，但不受距离的限制，ip 存储应用十分广泛，一般也可作为大型监控存储</p>
-<p>ip-san 可以将存储设备分成一个或多个卷，并导出给前端应用客户端，客户端计算机可以对这些导过来的卷进行新建文件系统 格式化操作，客户端计算机对这些卷的访问方式为设备级的块访问，IP-SAN 通过把数据分成多个数据块 block 并行写入 读出磁盘，块级访问的特性决定了iscsi 数据访问的高io 性能和传输低延迟</p>
-<p>简单的说，它是以块作为存储的，你可以认为它是含阵列功能的硬盘，其实就是磁盘阵列+硬盘</p>
-<p>相比较nvr 存储来说，ip-san 一般会与流媒体服务器一起使用</p>
-<p>其中流媒体服务器的作用是为了有效的解决多用户同时访问同一实时视频数据信息时对网络宽带重复占用的问题，充分节省网络带宽资源，有效降低网络阻塞的发生，需要在联网监控中心配备一台流媒体服务器</p>
-<p>ip-san 存储模式具有如下特点</p>
-<p>具有高带宽 块 级数据传输的优势</p>
-<p>即使tpc ip ip 网络技术成熟，具有tcp ip 的所有优点，可路由等，减少了配置、维护管理的复杂度</p>
-<p>可以通过以太网来部署iscsi 存储网络，易部署，成本低</p>
-<p>易于扩展，当需要增加存储空间时，只需要增加存储设备即可完全满足，扩展性高</p>
-<p>数据迁移和远程镜像容易，只要网络带宽支持，基本没有距离限制，更好的支持备份和异地容灾</p>
-<p>CRV 存储<br>海康 crv 存储模式可支持视频流经编码器直接写入存储设备，省去存储服务器成本，避免服务器形成单点故障和性能瓶颈，独特的数据结构确保监控服务的高稳定和高性能</p>
-<p>存储框架</p>
-<p>而CVR 是安防监控的专用视频存储设备，cvr 是tcp ip 上的视频流改写成流数据结构直接写到磁盘里，所以磁盘里存的不是文件，没有碎片</p>
-<p>CVR 存储模式的特点</p>
-<p>前端直接统一管理</p>
-<p>海康cvr 存储模式可支持视频流经编码器直接写入存储设备，省去存储服务器，可通过集中管理平台可实现多网络存储设备的集中化管理和状态监控，可以实现业务系统中存储设备的集中配置，管理，实时监控存储设备单元工作状态及其对应可管理的设备部件，运行协议，RAID 组等内容，集中报警管理支持对存储设备的定期状态巡检功能，对系统运行状态  阵列运行，iscsi http cifs scsi 通道等状态进行实时监控，集中显示</p>
-<ol start="2">
-<li>简化网络结构</li>
-</ol>
-<p>海康cvr 存储模式通过前端编码设备直接写入存储设备中，不需要存储服务器，简化网络结构，解放原有设计中存储服务器与存储设备之间网络压力问题</p>
-<ol start="3">
-<li>独有的流媒体文件系统保护技术</li>
-</ol>
-<p>海康cvr 存储模式采用独特的vspp 视频流预保护技术，彻底解决由于断点断网引起的文件系统不稳定甚至文件系统损坏而导致的监控服务停止、数据只读或丢失等故障问题</p>
-<p>海康cvr 存储模式采用自身独有的数据块管理结构和容错机制，脱离对服务器端文件系统的依赖，避免其文件系统损坏对监控业务造成影响，提供更加稳定，高效的管理方式</p>
-<ol start="4">
-<li>高效的磁盘碎片免疫技术</li>
-</ol>
-<p>海康cvr 存储模式采用磁盘预分配与延迟分配技术相结合，首先查找空闲空间区域并用于存储新数据的过程，最大程度地提高系统性能和避免磁盘碎片，同时，结合高效的碎片整理程序，在系统空闲时对磁盘碎片进行整理，改善系统的性能</p>
  
       <!-- reward -->
       

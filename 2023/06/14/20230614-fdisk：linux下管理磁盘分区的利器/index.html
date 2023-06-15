@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-CN">
+  
+
+    <head>
+      <meta charset="utf-8" />
+        
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1"
+      />
+      <title>20230614-fdisk：linux下管理磁盘分区的利器 |  TeX_baitu blog</title>
+  <meta name="generator" content="hexo-theme-ayer">
+      
+      <link rel="shortcut icon" href="/favicon.ico" />
+       
+<link rel="stylesheet" href="/dist/main.css">
+
+      
+<link rel="stylesheet" href="/css/fonts/remixicon.css">
+
+      
+<link rel="stylesheet" href="/css/custom.css">
+ 
+      <script src="https://cdn.staticfile.org/pace/1.2.4/pace.min.js"></script>
+       
+ 
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma@5.0.1/bulma.min.css"
+      />
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+
+      <!-- mermaid -->
+      
+      <style>
+        .swal2-styled.swal2-confirm {
+          font-size: 1.6rem;
+        }
+      </style>
+    </head>
+  </html>
+</html>
+
+
+<body>
+  <div id="app">
+    
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-20230614-fdisk：linux下管理磁盘分区的利器"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  20230614-fdisk：linux下管理磁盘分区的利器
+</h1>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/06/14/20230614-fdisk%EF%BC%9Alinux%E4%B8%8B%E7%AE%A1%E7%90%86%E7%A3%81%E7%9B%98%E5%88%86%E5%8C%BA%E7%9A%84%E5%88%A9%E5%99%A8/" class="article-date">
+  <time datetime="2023-06-14T04:36:52.000Z" itemprop="datePublished">2023-06-14</time>
+</a>   
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">3.6k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">17 分钟</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+    <div class="tocbot"></div>
+
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>一块硬盘可以被划分成一个或多个逻辑磁盘，我们将其称作分区。我们对硬盘进行的划分信息被储存于建立在扇区 0 的分区表（MBR 或 GPT）中。</p>
+<p>Linux 需要至少一个分区来当作根文件系统，所以我们不能在没有分区的情况下安装 Linux 系统。当我们创建一个分区时，我们必须将它格式化为一个适合的文件系统，否则我们就没办法往里面储存文件了。</p>
+<p>要在 Linux 中完成分区的相关工作，我们需要一些工具。Linux 下有很多可用的相关工具，我们曾介绍过 <a href="https://link.zhihu.com/?target=https://www.2daygeek.com/how-to-manage-disk-partitions-using-parted-command/">Parted 命令</a>。不过，今天我们的主角是 <code>fdisk</code>。</p>
+<p>人人都喜欢用 <code>fdisk</code>，它是 Linux 下管理磁盘分区的最佳利器之一。它可以操作最大 2TB 的分区。大量 Linux 管理员都喜欢使用这个工具，因为当下 LVM 和 SAN 的原因，并没有多少人会用到 2TB 以上的分区。并且这个工具被世界上许多的基础设施所使用。如果你还是想创建比 2TB 更大的分区，请使用 <code>parted</code> 命令 或 <code>cfdisk</code> 命令。</p>
+<p>对磁盘进行分区和创建文件系统是 Linux 管理员的日常。如果你在许多不同的环境中工作，你一定每天都会重复几次这项操作。</p>
+<h2 id="Linux-内核是如何理解硬盘的？"><a href="#Linux-内核是如何理解硬盘的？" class="headerlink" title="Linux 内核是如何理解硬盘的？"></a><strong>Linux 内核是如何理解硬盘的？</strong></h2><p>作为人类，我们可以很轻松地理解一些事情；但是电脑就不是这样了，它们需要合适的命名才能理解这些。</p>
+<p>在 Linux 中，外围设备都位于 <code>/dev</code> 挂载点，内核通过以下的方式理解硬盘：</p>
+<ul>
+<li><code>/dev/hdX[a-z]:</code> IDE 硬盘被命名为 hdX</li>
+<li><code>/dev/sdX[a-z]:</code> SCSI 硬盘被命名为 sdX</li>
+<li><code>/dev/xdX[a-z]:</code> XT 硬盘被命名为 xdX</li>
+<li><code>/dev/vdX[a-z]:</code> 虚拟硬盘被命名为 vdX</li>
+<li><code>/dev/fdN:</code> 软盘被命名为 fdN</li>
+<li><code>/dev/scdN or /dev/srN:</code> CD-ROM 被命名为 <code>/dev/scdN</code> 或 <code>/dev/srN</code></li>
+</ul>
+<h2 id="什么是-fdisk-命令？"><a href="#什么是-fdisk-命令？" class="headerlink" title="什么是 fdisk 命令？"></a><strong>什么是 fdisk 命令？</strong></h2><p><code>fdisk</code> 的意思是 <em>固定磁盘(Fixed Disk)</em> 或 *格式化磁盘(Format Disk)*，它是命令行下允许用户对分区进行查看、创建、调整大小、删除、移动和复制的工具。它支持 MBR、Sun、SGI、BSD 分区表，但是它不支持 GUID 分区表（GPT）。它不是为操作大分区设计的。</p>
+<p><code>fdisk</code> 允许我们在每块硬盘上创建最多四个主分区。它们中的其中一个可以作为扩展分区，并下设多个逻辑分区。1-4 扇区作为主分区被保留，逻辑分区从扇区 5 开始。</p>
+<p><img src="https://pic1.zhimg.com/80/v2-53354214fe60161a82a035c62ad1ce64_1440w.webp" alt="img"></p>
+<h2 id="如何在-Linux-下安装-fdisk？"><a href="#如何在-Linux-下安装-fdisk？" class="headerlink" title="如何在 Linux 下安装 fdisk？"></a><strong>如何在 Linux 下安装 fdisk？</strong></h2><p><code>fdisk</code> 作为核心组件内置于 Linux 中，所以你不必手动安装它。</p>
+<h2 id="如何用-fdisk-列出可用磁盘？"><a href="#如何用-fdisk-列出可用磁盘？" class="headerlink" title="如何用 fdisk 列出可用磁盘？"></a><strong>如何用 fdisk 列出可用磁盘？</strong></h2><p>在执行操作之前，我们必须知道的是哪些磁盘被加入了系统。要想列出所有可用的磁盘，请执行下文的命令。这个命令将会列出磁盘名称、分区数量、分区表类型、磁盘识别代号、分区 ID 和分区类型。</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">$ sudo fdisk -l</span><br><span class="line">Disk /dev/sda: 30 GiB, 32212254720 bytes, 62914560 sectors</span><br><span class="line">Units: sectors of 1 * 512 = 512 bytes</span><br><span class="line">Sector size (logical/physical): 512 bytes / 512 bytes</span><br><span class="line">I/O size (minimum/optimal): 512 bytes / 512 bytes</span><br><span class="line">Disklabel type: dos</span><br><span class="line">Disk identifier: 0xeab59449</span><br><span class="line"></span><br><span class="line">Device     Boot    Start      End  Sectors Size Id Type</span><br><span class="line">/dev/sda1  *    20973568 62914559 41940992  20G 83 Linux</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Disk /dev/sdb: 10 GiB, 10737418240 bytes, 20971520 sectors</span><br><span class="line">Units: sectors of 1 * 512 = 512 bytes</span><br><span class="line">Sector size (logical/physical): 512 bytes / 512 bytes</span><br><span class="line">I/O size (minimum/optimal): 512 bytes / 512 bytes</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Disk /dev/sdc: 10 GiB, 10737418240 bytes, 20971520 sectors</span><br><span class="line">Units: sectors of 1 * 512 = 512 bytes</span><br><span class="line">Sector size (logical/physical): 512 bytes / 512 bytes</span><br><span class="line">I/O size (minimum/optimal): 512 bytes / 512 bytes</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Disk /dev/sdd: 10 GiB, 10737418240 bytes, 20971520 sectors</span><br><span class="line">Units: sectors of 1 * 512 = 512 bytes</span><br><span class="line">Sector size (logical/physical): 512 bytes / 512 bytes</span><br><span class="line">I/O size (minimum/optimal): 512 bytes / 512 bytes</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Disk /dev/sde: 10 GiB, 10737418240 bytes, 20971520 sectors</span><br><span class="line">Units: sectors of 1 * 512 = 512 bytes</span><br><span class="line">Sector size (logical/physical): 512 bytes / 512 bytes</span><br><span class="line">I/O size (minimum/optimal): 512 bytes / 512 bytes</span><br></pre></td></tr></table></figure>
+
+<h2 id="如何使用-fdisk-列出特定分区信息？"><a href="#如何使用-fdisk-列出特定分区信息？" class="headerlink" title="如何使用 fdisk 列出特定分区信息？"></a><strong>如何使用 fdisk 列出特定分区信息？</strong></h2><p>如果你希望查看指定分区的信息，请使用以下命令：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ sudo fdisk -l /dev/sda</span><br><span class="line">Disk /dev/sda: 30 GiB, 32212254720 bytes, 62914560 sectors</span><br><span class="line">Units: sectors of 1 * 512 = 512 bytes</span><br><span class="line">Sector size (logical/physical): 512 bytes / 512 bytes</span><br><span class="line">I/O size (minimum/optimal): 512 bytes / 512 bytes</span><br><span class="line">Disklabel type: dos</span><br><span class="line">Disk identifier: 0xeab59449</span><br><span class="line"></span><br><span class="line">Device     Boot    Start      End  Sectors Size Id Type</span><br><span class="line">/dev/sda1  *    20973568 62914559 41940992  20G 83 Linux</span><br></pre></td></tr></table></figure>
+
+<h2 id="如何列出-fdisk-所有的可用操作？"><a href="#如何列出-fdisk-所有的可用操作？" class="headerlink" title="如何列出 fdisk 所有的可用操作？"></a><strong>如何列出 fdisk 所有的可用操作？</strong></h2><p>在 <code>fdisk</code> 中敲击 <code>m</code>，它便会列出所有可用操作：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">$ sudo fdisk /dev/sdc</span><br><span class="line"></span><br><span class="line">Welcome to fdisk (util-linux 2.30.1).</span><br><span class="line">Changes will remain in memory only, until you decide to write them.</span><br><span class="line">Be careful before using the write command.</span><br><span class="line"></span><br><span class="line">Device does not contain a recognized partition table.</span><br><span class="line">Created a new DOS disklabel with disk identifier 0xe944b373.</span><br><span class="line"></span><br><span class="line">Command (m for help): m</span><br><span class="line"></span><br><span class="line">Help:</span><br><span class="line"></span><br><span class="line">  DOS (MBR)</span><br><span class="line">   a   toggle a bootable flag</span><br><span class="line">   b   edit nested BSD disklabel</span><br><span class="line">   c   toggle the dos compatibility flag</span><br><span class="line"></span><br><span class="line">  Generic</span><br><span class="line">   d   delete a partition</span><br><span class="line">   F   list free unpartitioned space</span><br><span class="line">   l   list known partition types</span><br><span class="line">   n   add a new partition</span><br><span class="line">   p   print the partition table</span><br><span class="line">   t   change a partition type</span><br><span class="line">   v   verify the partition table</span><br><span class="line">   i   print information about a partition</span><br><span class="line"></span><br><span class="line">  Misc</span><br><span class="line">   m   print this menu</span><br><span class="line">   u   change display/entry units</span><br><span class="line">   x   extra functionality (experts only)</span><br><span class="line"></span><br><span class="line">  Script</span><br><span class="line">   I   load disk layout from sfdisk script file</span><br><span class="line">   O   dump disk layout to sfdisk script file</span><br><span class="line"></span><br><span class="line">  Save &amp; Exit</span><br><span class="line">   w   write table to disk and exit</span><br><span class="line">   q   quit without saving changes</span><br><span class="line"></span><br><span class="line">  Create a new label</span><br><span class="line">   g   create a new empty GPT partition table</span><br><span class="line">   G   create a new empty SGI (IRIX) partition table</span><br><span class="line">   o   create a new empty DOS partition table</span><br><span class="line">   s   create a new empty Sun partition table</span><br></pre></td></tr></table></figure>
+
+<h2 id="如何使用-fdisk-列出分区类型？"><a href="#如何使用-fdisk-列出分区类型？" class="headerlink" title="如何使用 fdisk 列出分区类型？"></a><strong>如何使用 fdisk 列出分区类型？</strong></h2><p>在 <code>fdisk</code> 中敲击 <code>l</code>，它便会列出所有可用分区的类型：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">$ sudo fdisk /dev/sdc</span><br><span class="line"></span><br><span class="line">Welcome to fdisk (util-linux 2.30.1).</span><br><span class="line">Changes will remain in memory only, until you decide to write them.</span><br><span class="line">Be careful before using the write command.</span><br><span class="line"></span><br><span class="line">Device does not contain a recognized partition table.</span><br><span class="line">Created a new DOS disklabel with disk identifier 0x9ffd00db.</span><br><span class="line"></span><br><span class="line">Command (m for help): l</span><br><span class="line"></span><br><span class="line"> 0  Empty           24  NEC DOS         81  Minix / old Lin bf  Solaris        </span><br><span class="line"> 1  FAT12           27  Hidden NTFS Win 82  Linux swap / So c1  DRDOS/sec (FAT-</span><br><span class="line"> 2  XENIX root      39  Plan 9          83  Linux           c4  DRDOS/sec (FAT-</span><br><span class="line"> 3  XENIX usr       3c  PartitionMagic  84  OS/2 hidden or  c6  DRDOS/sec (FAT-</span><br><span class="line"> 4  FAT16 &lt;32M      40  Venix 80286     85  Linux extended  c7  Syrinx         </span><br><span class="line"> 5  Extended        41  PPC PReP Boot   86  NTFS volume set da  Non-FS data    </span><br><span class="line"> 6  FAT16           42  SFS             87  NTFS volume set db  CP/M / CTOS / .</span><br><span class="line"> 7  HPFS/NTFS/exFAT 4d  QNX4.x          88  Linux plaintext de  Dell Utility   </span><br><span class="line"> 8  AIX             4e  QNX4.x 2nd part 8e  Linux LVM       df  BootIt         </span><br><span class="line"> 9  AIX bootable    4f  QNX4.x 3rd part 93  Amoeba          e1  DOS access     </span><br><span class="line"> a  OS/2 Boot Manag 50  OnTrack DM      94  Amoeba BBT      e3  DOS R/O        </span><br><span class="line"> b  W95 FAT32       51  OnTrack DM6 Aux 9f  BSD/OS          e4  SpeedStor      </span><br><span class="line"> c  W95 FAT32 (LBA) 52  CP/M            a0  IBM Thinkpad hi ea  Rufus alignment</span><br><span class="line"> e  W95 FAT16 (LBA) 53  OnTrack DM6 Aux a5  FreeBSD         eb  BeOS fs        </span><br><span class="line"> f  W95 Ext&#x27;d (LBA) 54  OnTrackDM6      a6  OpenBSD         ee  GPT            </span><br><span class="line">10  OPUS            55  EZ-Drive        a7  NeXTSTEP        ef  EFI (FAT-12/16/</span><br><span class="line">11  Hidden FAT12    56  Golden Bow      a8  Darwin UFS      f0  Linux/PA-RISC b</span><br><span class="line">12  Compaq diagnost 5c  Priam Edisk     a9  NetBSD          f1  SpeedStor      </span><br><span class="line">14  Hidden FAT16 &lt;3 61  SpeedStor       ab  Darwin boot     f4  SpeedStor      </span><br><span class="line">16  Hidden FAT16    63  GNU HURD or Sys af  HFS / HFS+      f2  DOS secondary  </span><br><span class="line">17  Hidden HPFS/NTF 64  Novell Netware  b7  BSDI fs         fb  VMware VMFS    </span><br><span class="line">18  AST SmartSleep  65  Novell Netware  b8  BSDI swap       fc  VMware VMKCORE </span><br><span class="line">1b  Hidden W95 FAT3 70  DiskSecure Mult bb  Boot Wizard hid fd  Linux raid auto</span><br><span class="line">1c  Hidden W95 FAT3 75  PC/IX           bc  Acronis FAT32 L fe  LANstep        </span><br><span class="line">1e  Hidden W95 FAT1 80  Old Minix       be  Solaris boot    ff  BBT</span><br></pre></td></tr></table></figure>
+
+<h2 id="如何使用-fdisk-创建一个磁盘分区？"><a href="#如何使用-fdisk-创建一个磁盘分区？" class="headerlink" title="如何使用 fdisk 创建一个磁盘分区？"></a><strong>如何使用 fdisk 创建一个磁盘分区？</strong></h2><p>如果你希望新建磁盘分区，请参考下面的步骤。比如我希望在 <code>/dev/sdc</code> 中新建四个分区（三个主分区和一个扩展分区），只需要执行下文的命令。</p>
+<p>首先，请在操作 “First sector” 的时候先按下回车，然后在 “Last sector” 中输入你希望创建分区的大小（可以在数字后面加 KB、MB、G 和 TB）。例如，你希望为这个分区扩容 1GB，就应该在 “Last sector” 中输入 <code>+1G</code>。当你创建三个分区之后，<code>fdisk</code> 默认会将分区类型设为扩展分区，如果你希望创建第四个主分区，请输入 <code>p</code> 来替代它的默认值 <code>e</code>。</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">$ sudo fdisk /dev/sdc</span><br><span class="line"></span><br><span class="line">Welcome to fdisk (util-linux 2.30.1).</span><br><span class="line">Changes will remain in memory only, until you decide to write them.</span><br><span class="line">Be careful before using the write command.</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Command (m for help): n</span><br><span class="line">Partition type</span><br><span class="line">   p   primary (0 primary, 0 extended, 4 free)</span><br><span class="line">   e   extended (container for logical partitions)</span><br><span class="line">Select (default p): Enter</span><br><span class="line"></span><br><span class="line">Using default response p.</span><br><span class="line">Partition number (1-4, default 1): Enter</span><br><span class="line">First sector (2048-20971519, default 2048): Enter</span><br><span class="line">Last sector, +sectors or +size&#123;K,M,G,T,P&#125; (2048-20971519, default 20971519): +1G</span><br><span class="line"></span><br><span class="line">Created a new partition 1 of type &#x27;Linux&#x27; and of size 1 GiB.</span><br><span class="line"></span><br><span class="line">Command (m for help): p</span><br><span class="line">Disk /dev/sdc: 10 GiB, 10737418240 bytes, 20971520 sectors</span><br><span class="line">Units: sectors of 1 * 512 = 512 bytes</span><br><span class="line">Sector size (logical/physical): 512 bytes / 512 bytes</span><br><span class="line">I/O size (minimum/optimal): 512 bytes / 512 bytes</span><br><span class="line">Disklabel type: dos</span><br><span class="line">Disk identifier: 0x8cc8f9e5</span><br><span class="line"></span><br><span class="line">Device     Boot Start     End Sectors Size Id Type</span><br><span class="line">/dev/sdc1        2048 2099199 2097152   1G 83 Linux</span><br><span class="line"></span><br><span class="line">Command (m for help): w</span><br><span class="line">The partition table has been altered.</span><br><span class="line">Calling ioctl() to re-read partition table.</span><br><span class="line">Syncing disks.</span><br></pre></td></tr></table></figure>
+
+<h2 id="如何使用-fdisk-创建扩展分区？"><a href="#如何使用-fdisk-创建扩展分区？" class="headerlink" title="如何使用 fdisk 创建扩展分区？"></a><strong>如何使用 fdisk 创建扩展分区？</strong></h2><p>请注意，创建扩展分区时，你应该使用剩下的所有空间，以便之后在扩展分区下创建逻辑分区。</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">$ sudo fdisk /dev/sdc</span><br><span class="line"></span><br><span class="line">Welcome to fdisk (util-linux 2.30.1).</span><br><span class="line">Changes will remain in memory only, until you decide to write them.</span><br><span class="line">Be careful before using the write command.</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Command (m for help): n</span><br><span class="line">Partition type</span><br><span class="line">   p   primary (3 primary, 0 extended, 1 free)</span><br><span class="line">   e   extended (container for logical partitions)</span><br><span class="line">Select (default e): Enter</span><br><span class="line"></span><br><span class="line">Using default response e.</span><br><span class="line">Selected partition 4</span><br><span class="line">First sector (6293504-20971519, default 6293504): Enter</span><br><span class="line">Last sector, +sectors or +size&#123;K,M,G,T,P&#125; (6293504-20971519, default 20971519): Enter</span><br><span class="line"></span><br><span class="line">Created a new partition 4 of type &#x27;Extended&#x27; and of size 7 GiB.</span><br><span class="line"></span><br><span class="line">Command (m for help): p</span><br><span class="line">Disk /dev/sdc: 10 GiB, 10737418240 bytes, 20971520 sectors</span><br><span class="line">Units: sectors of 1 * 512 = 512 bytes</span><br><span class="line">Sector size (logical/physical): 512 bytes / 512 bytes</span><br><span class="line">I/O size (minimum/optimal): 512 bytes / 512 bytes</span><br><span class="line">Disklabel type: dos</span><br><span class="line">Disk identifier: 0x8cc8f9e5</span><br><span class="line"></span><br><span class="line">Device     Boot   Start      End  Sectors Size Id Type</span><br><span class="line">/dev/sdc1          2048  2099199  2097152   1G 83 Linux</span><br><span class="line">/dev/sdc2       2099200  4196351  2097152   1G 83 Linux</span><br><span class="line">/dev/sdc3       4196352  6293503  2097152   1G 83 Linux</span><br><span class="line">/dev/sdc4       6293504 20971519 14678016   7G  5 Extended</span><br><span class="line"></span><br><span class="line">Command (m for help): w</span><br><span class="line">The partition table has been altered.</span><br><span class="line">Calling ioctl() to re-read partition table.</span><br><span class="line">Syncing disks.</span><br></pre></td></tr></table></figure>
+
+<h2 id="如何用-fdisk-查看未分配空间？"><a href="#如何用-fdisk-查看未分配空间？" class="headerlink" title="如何用 fdisk 查看未分配空间？"></a><strong>如何用 fdisk 查看未分配空间？</strong></h2><p>上文中，我们总共创建了四个分区（三个主分区和一个扩展分区）。在创建逻辑分区之前，扩展分区的容量将会以未分配空间显示。</p>
+<p>使用以下命令来显示磁盘上的未分配空间，下面的示例中显示的是 7GB：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">$ sudo fdisk /dev/sdc</span><br><span class="line"></span><br><span class="line">Welcome to fdisk (util-linux 2.30.1).</span><br><span class="line">Changes will remain in memory only, until you decide to write them.</span><br><span class="line">Be careful before using the write command.</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Command (m for help): F</span><br><span class="line">Unpartitioned space /dev/sdc: 7 GiB, 7515144192 bytes, 14678016 sectors</span><br><span class="line">Units: sectors of 1 * 512 = 512 bytes</span><br><span class="line">Sector size (logical/physical): 512 bytes / 512 bytes</span><br><span class="line"></span><br><span class="line">  Start      End  Sectors Size</span><br><span class="line">6293504 20971519 14678016   7G</span><br><span class="line"></span><br><span class="line">Command (m for help): q</span><br></pre></td></tr></table></figure>
+
+<h2 id="如何使用-fdisk-创建逻辑分区？"><a href="#如何使用-fdisk-创建逻辑分区？" class="headerlink" title="如何使用 fdisk 创建逻辑分区？"></a><strong>如何使用 fdisk 创建逻辑分区？</strong></h2><p>创建扩展分区后，请按照之前的步骤创建逻辑分区。在这里，我创建了位于 <code>/dev/sdc5</code> 的 <code>1GB</code> 逻辑分区。你可以查看分区表值来确认这点。</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">$ sudo fdisk /dev/sdc</span><br><span class="line"></span><br><span class="line">Welcome to fdisk (util-linux 2.30.1).</span><br><span class="line">Changes will remain in memory only, until you decide to write them.</span><br><span class="line">Be careful before using the write command.</span><br><span class="line"></span><br><span class="line">Command (m for help): n</span><br><span class="line">All primary partitions are in use.</span><br><span class="line">Adding logical partition 5</span><br><span class="line">First sector (6295552-20971519, default 6295552): Enter</span><br><span class="line">Last sector, +sectors or +size&#123;K,M,G,T,P&#125; (6295552-20971519, default 20971519): +1G</span><br><span class="line"></span><br><span class="line">Created a new partition 5 of type &#x27;Linux&#x27; and of size 1 GiB.</span><br><span class="line"></span><br><span class="line">Command (m for help): p</span><br><span class="line">Disk /dev/sdc: 10 GiB, 10737418240 bytes, 20971520 sectors</span><br><span class="line">Units: sectors of 1 * 512 = 512 bytes</span><br><span class="line">Sector size (logical/physical): 512 bytes / 512 bytes</span><br><span class="line">I/O size (minimum/optimal): 512 bytes / 512 bytes</span><br><span class="line">Disklabel type: dos</span><br><span class="line">Disk identifier: 0x8cc8f9e5</span><br><span class="line"></span><br><span class="line">Device     Boot   Start      End  Sectors Size Id Type</span><br><span class="line">/dev/sdc1          2048  2099199  2097152   1G 83 Linux</span><br><span class="line">/dev/sdc2       2099200  4196351  2097152   1G 83 Linux</span><br><span class="line">/dev/sdc3       4196352  6293503  2097152   1G 83 Linux</span><br><span class="line">/dev/sdc4       6293504 20971519 14678016   7G  5 Extended</span><br><span class="line">/dev/sdc5       6295552  8392703  2097152   1G 83 Linux</span><br><span class="line"></span><br><span class="line">Command (m for help): w</span><br><span class="line">The partition table has been altered.</span><br><span class="line">Calling ioctl() to re-read partition table.</span><br><span class="line">Syncing disks.</span><br></pre></td></tr></table></figure>
+
+<h2 id="如何使用-fdisk-命令删除分区？"><a href="#如何使用-fdisk-命令删除分区？" class="headerlink" title="如何使用 fdisk 命令删除分区？"></a><strong>如何使用 fdisk 命令删除分区？</strong></h2><p>如果我们不再使用某个分区，请按照下面的步骤删除它。</p>
+<p>请确保你输入了正确的分区号。在这里，我准备删除 <code>/dev/sdc2</code> 分区：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">$ sudo fdisk /dev/sdc</span><br><span class="line"></span><br><span class="line">Welcome to fdisk (util-linux 2.30.1).</span><br><span class="line">Changes will remain in memory only, until you decide to write them.</span><br><span class="line">Be careful before using the write command.</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Command (m for help): d</span><br><span class="line">Partition number (1-5, default 5): 2</span><br><span class="line"></span><br><span class="line">Partition 2 has been deleted.</span><br><span class="line"></span><br><span class="line">Command (m for help): p</span><br><span class="line">Disk /dev/sdc: 10 GiB, 10737418240 bytes, 20971520 sectors</span><br><span class="line">Units: sectors of 1 * 512 = 512 bytes</span><br><span class="line">Sector size (logical/physical): 512 bytes / 512 bytes</span><br><span class="line">I/O size (minimum/optimal): 512 bytes / 512 bytes</span><br><span class="line">Disklabel type: dos</span><br><span class="line">Disk identifier: 0x8cc8f9e5</span><br><span class="line"></span><br><span class="line">Device     Boot   Start      End  Sectors Size Id Type</span><br><span class="line">/dev/sdc1          2048  2099199  2097152   1G 83 Linux</span><br><span class="line">/dev/sdc3       4196352  6293503  2097152   1G 83 Linux</span><br><span class="line">/dev/sdc4       6293504 20971519 14678016   7G  5 Extended</span><br><span class="line">/dev/sdc5       6295552  8392703  2097152   1G 83 Linux</span><br><span class="line"></span><br><span class="line">Command (m for help): w</span><br><span class="line">The partition table has been altered.</span><br><span class="line">Calling ioctl() to re-read partition table.</span><br><span class="line">Syncing disks.</span><br></pre></td></tr></table></figure>
+
+<h2 id="如何在-Linux-下格式化分区或建立文件系统？"><a href="#如何在-Linux-下格式化分区或建立文件系统？" class="headerlink" title="如何在 Linux 下格式化分区或建立文件系统？"></a><strong>如何在 Linux 下格式化分区或建立文件系统？</strong></h2><p>在计算时，文件系统控制了数据的储存方式，并通过 <em>索引节点(Inode Tables)</em> 来检索数据。如果没有文件系统，操作系统是无法找到信息储存的位置的。</p>
+<p>在此，我准备在 <code>/dev/sdc1</code> 上创建分区。有三种方式创建文件系统：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">$ sudo mkfs.ext4 /dev/sdc1</span><br><span class="line">或</span><br><span class="line">$ sudo mkfs -t ext4 /dev/sdc1</span><br><span class="line">或</span><br><span class="line">$ sudo mke2fs /dev/sdc1</span><br><span class="line"></span><br><span class="line">mke2fs 1.43.5 (04-Aug-2017)</span><br><span class="line">Creating filesystem with 262144 4k blocks and 65536 inodes</span><br><span class="line">Filesystem UUID: c0a99b51-2b61-4f6a-b960-eb60915faab0</span><br><span class="line">Superblock backups stored on blocks: </span><br><span class="line">    32768, 98304, 163840, 229376</span><br><span class="line"></span><br><span class="line">Allocating group tables: done                            </span><br><span class="line">Writing inode tables: done                            </span><br><span class="line">Creating journal (8192 blocks): done</span><br><span class="line">Writing superblocks and filesystem accounting information: done</span><br></pre></td></tr></table></figure>
+
+<p>当你在分区上建立文件系统时，以下重要信息会同时被创建：</p>
+<ul>
+<li><code>Filesystem UUID:</code> UUID 代表了通用且独一无二的识别符，UUID 在 Linux 中通常用来识别设备。它 128 位长的数字代表了 32 个十六进制数。</li>
+<li><code>Superblock:</code> 超级块储存了文件系统的元数据。如果某个文件系统的超级块被破坏，我们就无法挂载它了（也就是说无法访问其中的文件了）。</li>
+<li><code>Inode:</code> Inode 是类 Unix 系统中文件系统的数据结构，它储存了所有除名称以外的文件信息和数据。</li>
+<li><code>Journal:</code> 日志式文件系统包含了用来修复电脑意外关机产生下错误信息的日志。</li>
+</ul>
+<h2 id="如何在-Linux-中挂载分区？"><a href="#如何在-Linux-中挂载分区？" class="headerlink" title="如何在 Linux 中挂载分区？"></a><strong>如何在 Linux 中挂载分区？</strong></h2><p>在你创建完分区和文件系统之后，我们需要挂载它们以便使用。我们需要创建一个挂载点来挂载分区，使用 <code>mkdir</code> 来创建一个挂载点。</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo mkdir -p /mnt/2g-new</span><br></pre></td></tr></table></figure>
+
+<p>如果你希望进行临时挂载，请使用下面的命令。在计算机重启之后，你会丢失这个挂载点。</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo mount /dev/sdc1 /mnt/2g-new</span><br></pre></td></tr></table></figure>
+
+<p>如果你希望永久挂载某个分区，请将分区详情加入 <code>fstab</code> 文件。我们既可以输入设备名称，也可以输入 UUID。</p>
+<p>使用设备名称来进行永久挂载：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># vi /etc/fstab</span><br><span class="line"></span><br><span class="line">/dev/sdc1 /mnt/2g-new ext4 defaults 0 0</span><br></pre></td></tr></table></figure>
+
+<p>使用 UUID 来进行永久挂载（请使用 <code>blkid</code> 来获取 UUID）：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ sudo blkid</span><br><span class="line">/dev/sdc1: UUID=&quot;d17e3c31-e2c9-4f11-809c-94a549bc43b7&quot; TYPE=&quot;ext2&quot; PARTUUID=&quot;8cc8f9e5-01&quot;</span><br><span class="line">/dev/sda1: UUID=&quot;d92fa769-e00f-4fd7-b6ed-ecf7224af7fa&quot; TYPE=&quot;ext4&quot; PARTUUID=&quot;eab59449-01&quot;</span><br><span class="line">/dev/sdc3: UUID=&quot;ca307aa4-0866-49b1-8184-004025789e63&quot; TYPE=&quot;ext4&quot; PARTUUID=&quot;8cc8f9e5-03&quot;</span><br><span class="line">/dev/sdc5: PARTUUID=&quot;8cc8f9e5-05&quot;</span><br><span class="line"></span><br><span class="line"># vi /etc/fstab</span><br><span class="line"></span><br><span class="line">UUID=d17e3c31-e2c9-4f11-809c-94a549bc43b7 /mnt/2g-new ext4 defaults 0 0</span><br></pre></td></tr></table></figure>
+
+<p>使用 <code>df</code> 命令亦可：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$ df -h</span><br><span class="line">Filesystem      Size  Used Avail Use% Mounted on</span><br><span class="line">udev            969M     0  969M   0% /dev</span><br><span class="line">tmpfs           200M  7.0M  193M   4% /run</span><br><span class="line">/dev/sda1        20G   16G  3.0G  85% /</span><br><span class="line">tmpfs           997M     0  997M   0% /dev/shm</span><br><span class="line">tmpfs           5.0M  4.0K  5.0M   1% /run/lock</span><br><span class="line">tmpfs           997M     0  997M   0% /sys/fs/cgroup</span><br><span class="line">tmpfs           200M   28K  200M   1% /run/user/121</span><br><span class="line">tmpfs           200M   25M  176M  13% /run/user/1000</span><br><span class="line">/dev/sdc1      1008M  1.3M  956M   1% /mnt/2g-new</span><br></pre></td></tr></table></figure>
+ 
+      <!-- reward -->
+      
+      <div id="reword-out">
+        <div id="reward-btn">
+          打赏
+        </div>
+      </div>
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>版权声明： </strong>
+          
+          本博客所有文章除特别声明外，著作权归作者所有。转载请注明出处！
+          
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://example.com/2023/06/14/20230614-fdisk%EF%BC%9Alinux%E4%B8%8B%E7%AE%A1%E7%90%86%E7%A3%81%E7%9B%98%E5%88%86%E5%8C%BA%E7%9A%84%E5%88%A9%E5%99%A8/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>  
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2023/06/14/20230614-%E6%89%8B%E6%9C%BA%E5%85%85%E7%94%B5%E5%8D%8F%E8%AE%AE/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            20230614-手机充电协议
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2023/06/13/20230613-synology%E7%BE%A4%E6%99%96ssh%E5%91%BD%E4%BB%A4%E6%B8%85%E5%8D%95%E5%A4%A7%E5%85%A8/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">20230613-synology群晖ssh命令清单大全</div>
+      </a>
+    
+  </nav>
+
+  
+   
+    
+    <script src="https://cdn.staticfile.org/twikoo/1.4.18/twikoo.all.min.js"></script>
+    <div id="twikoo" class="twikoo"></div>
+    <script>
+        twikoo.init({
+            envId: ""
+        })
+    </script>
+ 
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2015-2023
+        <i class="ri-heart-fill heart_icon"></i> TeX_baitu
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+        
+        <span>
+  <span><i class="ri-user-3-fill"></i>访问人数:<span id="busuanzi_value_site_uv"></span></span>
+  <span class="division">|</span>
+  <span><i class="ri-eye-fill"></i>浏览次数:<span id="busuanzi_value_page_pv"></span></span>
+</span>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+        <script type="text/javascript" src='https://s9.cnzz.com/z_stat.php?id=1278069914&amp;web_id=1278069914'></script>
+        
+      </li>
+    </ul>
+  </div>
+</footer>    
+    </main>
+    <div class="float_btns">
+      <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+    </div>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/ayer-side.svg" alt="TeX_baitu blog"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags/%E6%97%85%E8%A1%8C/">旅行</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" target="_blank" rel="noopener" href="http://shenyu-vip.lofter.com">摄影</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/friends">友链</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/2019/about">关于我</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="搜索">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-3.6.0.min.js"></script>
+ 
+<script src="/js/lazyload.min.js"></script>
+
+<!-- Tocbot -->
+ 
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  tocbot.init({
+    tocSelector: ".tocbot",
+    contentSelector: ".article-entry",
+    headingSelector: "h1, h2, h3, h4, h5, h6",
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: "main",
+    positionFixedSelector: ".tocbot",
+    positionFixedClass: "is-position-fixed",
+    fixedSidebarOffset: "auto",
+  });
+</script>
+
+<script src="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.js"></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.css"
+/>
+<script src="https://cdn.staticfile.org/justifiedGallery/3.8.1/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+ <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/default-skin/default-skin.min.css">
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script> 
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+ 
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+ 
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+<!-- CodeCopy -->
+ 
+<link rel="stylesheet" href="/css/clipboard.css">
+ <script src="https://cdn.staticfile.org/clipboard.js/2.0.10/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+ 
+<!-- CanvasBackground -->
+
+<script>
+  if (window.mermaid) {
+    mermaid.initialize({ theme: "forest" });
+  }
+</script>
+
+
+    
+    
+
+  </div>
+</body>
+
+</html>
