@@ -126,6 +126,202 @@
     
     
     <article
+  id="post-20230403-如何用python分析股票"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/04/03/20230403-%E5%A6%82%E4%BD%95%E7%94%A8python%E5%88%86%E6%9E%90%E8%82%A1%E7%A5%A8/"
+    >20230403-如何用python分析股票</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/04/03/20230403-%E5%A6%82%E4%BD%95%E7%94%A8python%E5%88%86%E6%9E%90%E8%82%A1%E7%A5%A8/" class="article-date">
+  <time datetime="2023-04-03T07:52:20.000Z" itemprop="datePublished">2023-04-03</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>一个基本的股市分析项目，旨在了解金融市场 python编程的一些基本知识，让你5分钟上手股票可视化分析，</p>
+<p>导入必要的模块</p>
+<p>我们导入numpy pandas 和用于作图的matplotlib 库</p>
+<p>第一部分</p>
+<p>从雅虎财经获取特斯拉 通用和福特的每日收盘价数据</p>
+<p>第二部分 可视化数据，并对有趣的事情进行可视化检查，在本节中，我们还将从头开始教你怎样画蜡烛图</p>
+<p>在同一张图中画出特斯拉 通用和福特股票的开盘价曲线</p>
+<p>每只股票的最大成交量是在哪一天</p>
+<p>从开盘价格的时间序列可视化来看，似乎特斯拉的股价一直都要比通用和福特的股价更有高，但至于为什么特斯拉的股价一直高于其他两支股票，这个问题的答案不是单由股价决定，我们还需要考虑公司的总市值，尽管我们目前的数据并没有关于目前股票总单位的信息，但是，我们可以做一个简单的计算，在这里我们假设总的交易金额将是成交量列乘以开盘价格，这只是对市值的粗略估计而不是真实的市场价值，我们只是使用时间序列来直观地表示交易的总金额</p>
+<p>为每个dataframe 创建一个名为总交易量新的一列，及开盘价格与成交量的乘积</p>
+<p>第三部分，通过计算和比较每日收益来进行基本财务分析，并绘制每只股票的每日收益分布图来识别三者之间的关系</p>
+<p>每日百分比可以通过下面的公式计算所得</p>
+<p>从收盘价 列计算收益</p>
+<p>同时我们用一些box plot 来比较三只股票的收益范围</p>
+<p>比较股票的日收益</p>
+<p>我们绘制散点矩阵图，以查看每个股票日收益率之间的相关性</p>
+<p>从上面的scatter 矩阵图 ，我们可以看出只有通用和特斯拉汇报率关系图和其他4对关系图看起来不一样，所以我们可以推断特斯拉和通用确实有某种关系</p>
+<p>累积日收益</p>
+<p>日收益 是指股票价格相对于前一日的损益</p>
+<p>累积回报  累积回报是相对于投资计算的，如果累计回报超过一，你就是在盈利，否则就是亏损</p>
+<p>累积日收益的公式为</p>
+<p>df[daily_cumulative_return] &#x3D; ( 1+df[pct_daily_return] ).cumprod()</p>
+<p>假设我们从2012年1月3日开始买入这三支股票并一直持有，则我们的累积日均收益为</p>
+<p>下面我们来可视化一下三支股票的累计收益率，可以发现购入特斯拉后，它的价格涨了14倍</p>
+<p>使用python实时监控股票，并且持续扫描大盘</p>
+<p>使用python 实现监控股票并持续扫描大盘，可以通过以下步骤来完成</p>
+<ol>
+<li>安装必要的库，需要安装 pandas numpy requests matplotlib 等库，可以通过pip 命令进行安装</li>
+</ol>
+<p>获取数据 可以通过python来获取股票实时数据和历史数据</p>
+<p>可以使用pandas 库来处理数据</p>
+<p>数据分析，可以通过pandas 和numpy 库来进行数据分析，可以进行技术分析，例如移动平均线  MACD RSI 等，也可以进行基本面分析，例如 市盈率 市净率 ROE 等</p>
+<p>可视化 可以使用matplotlib 库来可视化数据，例如 绘制K线图，交易量图，技术指标图等</p>
+<p>持续扫描，可以使用python 的time 或schedule 模块来进行定时任务，例如每隔10秒钟获取一次股票数据</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-20230402-几款不错的RPA开源软件分享RPAPlus"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/04/02/20230402-%E5%87%A0%E6%AC%BE%E4%B8%8D%E9%94%99%E7%9A%84RPA%E5%BC%80%E6%BA%90%E8%BD%AF%E4%BB%B6%E5%88%86%E4%BA%ABRPAPlus/"
+    >20230402-几款不错的RPA开源软件分享RPAPlus</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/04/02/20230402-%E5%87%A0%E6%AC%BE%E4%B8%8D%E9%94%99%E7%9A%84RPA%E5%BC%80%E6%BA%90%E8%BD%AF%E4%BB%B6%E5%88%86%E4%BA%ABRPAPlus/" class="article-date">
+  <time datetime="2023-04-02T08:30:56.000Z" itemprop="datePublished">2023-04-02</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>智能自动化将成为大势所趋，但并不是所有公司都选择购买商业付费软件，有部分研发能力较强的公司可能会采取自研或结合开源框架的手段</p>
+<p>Robot Framework<br>是目前比较活跃的开源项目之一，是测试自动化和RPA 的通用框架，与其他语言一样，它强调自然语言或人类可读的语言，以使其更易于使用</p>
+<p>Robot Framework 还提供了一个web 演示和完整的文档</p>
+<p>RPAPlus 实际试用后觉得这个框架可能更偏向于自动化测试</p>
+<p>TagUI</p>
+<p>由AI singapore 维护，是一个用于RPA 的命令行界面，可以在任何主要的操作系统上运行，这是开源 RPA 工具的一个常见特性，也是它与一些商业工具的区别之一，TagUi 使用术语和相关的流程概念来表示运行一个基于计算机的自动化流程，该流程可以按需完成，也可以按固定的时间表完成，</p>
+<p>tagui 强调其语言的简单或自然，贡献者 ken soh 在2017年 发布的一篇介绍tagui 的媒体文章中写道，  这使得ui 自动化的快速原型化 部署和维护变得容易，无论你是否是开发人员，tagui 有丰富的在线文档</p>
+<p>tagui 的界面是纯命令行</p>
+<p>RPA for python</p>
+<p>以前叫做 tagui for python  这是一个用于rpa 开发的python包，rpa for python 是在tagui 上构建的，因此有了最初的名字，它拥有网站自动化，计算机视觉自动化，光学字符识别和键盘鼠标自动化等基本功能</p>
+<p>python 中 pip install rpa即可安装</p>
+<p>openRPA</p>
+<p>openrpa 也是一个蛮有趣的项目，基于windows workflow foundation 作为框架，wf 被uipath 和许多国内rpa 团队应用</p>
+<p>Github: <a target="_blank" rel="noopener" href="https://github.com/open-rpa/openrpa">https://github.com/open-rpa/openrpa</a></p>
+<p>remark 谈到 windowsWF 曾经我们基于WF的框架Demo 用很短的时间就可以做一个rpa的studio 原型出来，说明技术含量是不高的，请参考此文 含视频</p>
+<p>Robocorp</p>
+<p>Robocorp 是早期初创公司，该公司去年获得了560万美元的种子轮融资，承诺为开发人员提供基于云的开源RPA工具，官网目前可以通过邮件申请早期账户</p>
+<p>Automagica</p>
+<p>这可能是开源模式和免费增值模式之间的分界线  automagic 确实是开源的，对于非商业用途是免费的，但是商业用途需要商业许可证，这使得它成为希望学习、试验进而原型的个人的一个潜在的好选择，但是商业用例将需要迁移到它的商业 automagica 门户平，automagica 也有相对全面的介绍文档</p>
+<p>automagica的自动化能力实现是基于python，独立开发了一个云端应用平台，可以实现网页端的编码</p>
+<p>Github: <a target="_blank" rel="noopener" href="https://github.com/automagica/automagica">https://github.com/automagica/automagica</a></p>
+<p>Taskt 强调易用性和无代码或低代码，Taskt 是一个免费的开源工具，它承诺了同样的功能，无需编写代码就可以自动执行任务，它的功能之一是屏幕记录器，记录用户基于计算机的操作，然后将这些步骤转换成可重复的脚本，RPA bot 它还包括一个 看到什么就得到什么 的bot  设计器，其中包含一个用于无代码RPA 开发的标准命令菜单</p>
+<p>Github: <a target="_blank" rel="noopener" href="https://github.com/saucepleez/taskt">https://github.com/saucepleez/taskt</a></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-20230401-随笔"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/04/01/20230401-%E9%9A%8F%E7%AC%94/"
+    >20230401-随笔</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/04/01/20230401-%E9%9A%8F%E7%AC%94/" class="article-date">
+  <time datetime="2023-03-31T23:30:01.000Z" itemprop="datePublished">2023-04-01</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>立于皓月之边，不弱星光之势</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-20230320-ffmpeg使用笔记"
   class="article article-type-post"
   itemscope
@@ -615,250 +811,13 @@
 </article>
 
     
-    <article
-  id="post-20230207-侃哥侃英语"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/02/07/20230207-%E4%BE%83%E5%93%A5%E4%BE%83%E8%8B%B1%E8%AF%AD/"
-    >20230207-侃哥侃英语</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/02/07/20230207-%E4%BE%83%E5%93%A5%E4%BE%83%E8%8B%B1%E8%AF%AD/" class="article-date">
-  <time datetime="2023-02-07T01:21:19.000Z" itemprop="datePublished">2023-02-07</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>[TOC]</p>
-<h2 id="0x01"><a href="#0x01" class="headerlink" title="0x01"></a>0x01</h2><h2 id="0x02"><a href="#0x02" class="headerlink" title="0x02"></a>0x02</h2><h2 id="0x03"><a href="#0x03" class="headerlink" title="0x03"></a>0x03</h2><h2 id="0x04"><a href="#0x04" class="headerlink" title="0x04"></a>0x04</h2> 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20230206-成长自救指南"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/02/06/20230206-%E6%88%90%E9%95%BF%E8%87%AA%E6%95%91%E6%8C%87%E5%8D%97/"
-    >20230206-成长自救指南</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/02/06/20230206-%E6%88%90%E9%95%BF%E8%87%AA%E6%95%91%E6%8C%87%E5%8D%97/" class="article-date">
-  <time datetime="2023-02-06T14:08:12.000Z" itemprop="datePublished">2023-02-06</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>最好有长远目标</p>
-<p>A.学习</p>
-<p>1.量化学习目标（可以简历需求为参考）</p>
-<p>⊶证书优先（about绩点：出国留学重要，找工作不需要绩点高甚至是要低）</p>
-<p>⊶比赛论文项目追求含金量</p>
-<p>2.考研考公</p>
-<p>主要观点：迷茫去考公</p>
-<p>注意事项：通过考题了解出题人招生偏向&#x2F;提前了解考公岗位</p>
-<p>B.赚钱三种方式</p>
-<p>1.出卖时间</p>
-<p>2.出卖技术</p>
-<p>3.出卖信息差</p>
-<p>∇获取信息利用信息传递信息</p>
-<p>∇对于市场供需关系的敏锐观察能力</p>
-<p>例子：汇总统合信息出卖，中间人介绍供需两方（商品流通的渠道）</p>
-<p>How to 提升⊡</p>
-<p>a.获取：读书  严肃新闻（不带立场）  出门观察   与陌生人打交道</p>
-<p>b.传递：情绪信息与语言感染力</p>
-<p>锻炼方式：课堂展示≈自我推销—夹带私货</p>
-<p>C.成长（是视频里的大长篇，也是我的重点）</p>
-<p>市中心⊷穷街陋巷——价值与消费认识的塑造</p>
-<p>城市里年轻人的状态——未来定居问题</p>
-<p>社会生存能力：</p>
-<p>⊚基础—地铁 飞机 考驾照</p>
-<p>⊚电子设备—电脑 多媒体投影仪  文印设备</p>
-<p>电脑：剪辑PowerPoint Microsoft word</p>
-<p>⊚医院挂号⊚酒店安全⊚看地图⊚弄懂五险一金</p>
-<p>⊚点菜（怎么照顾不同人的口味）</p>
-<p>⊚学会写简历</p>
-<p>少废话 自我展示自我推销</p>
-<p>⊚房地产基本知识（租 买 避雷 找好房</p>
-<p>社会交往</p>
-<p>⊶大多数人点头之交 主动和陌生人打招呼 </p>
-<p>⊶拒绝完全向上社交：以早早释放善意的方式来合理化需求（对身边大多数人无差别释放就对了） </p>
-<p>⊶远离消耗关系⊶学生会社团：学习目的就不建议</p>
-<p>⊶惊喜：家里带了什么特产分给保安大爷宿管大妈</p>
-<p>（重点）D.快速放松的方法—多尝试</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20230206-学会点菜"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/02/06/20230206-%E5%AD%A6%E4%BC%9A%E7%82%B9%E8%8F%9C/"
-    >20230206-学会点菜</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/02/06/20230206-%E5%AD%A6%E4%BC%9A%E7%82%B9%E8%8F%9C/" class="article-date">
-  <time datetime="2023-02-06T13:07:19.000Z" itemprop="datePublished">2023-02-06</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <ol>
-<li>如有可能，提前了解所请对象的人数，个人偏好和有没有忌口<br>根据你的了解，预定餐馆，了解该饭店的特色菜<br>这样做到有的放矢，不太会出错</li>
-</ol>
-<p>这里强调一点，预定餐馆的时候，一定根据本次聚餐的目的，来定位置<br>比如请领导，商务宴请</p>
-<p>比如请对象父母长辈</p>
-<p>你需要预定私密性好的位置就餐</p>
-<p>最好是单间，确保谈话流畅不被打扰</p>
-<p>当然，请一帮好友日常聚聚</p>
-<p>就需要定一个气氛活跃的餐厅</p>
-<ol start="2">
-<li>菜品选择方面  主义荤素搭配 营养搭配 冷热搭配  干湿搭配</li>
-</ol>
-<p>一般根据就餐人数来确定总菜品数量</p>
-<p>一般办法是</p>
-<p>采用点菜数量是实际就餐人数加二的模式点菜</p>
-<p>同时维持凉菜和热菜的比例为1:2</p>
-<p>比如就餐人数为4人</p>
-<p>那么我们点2个凉菜 4个热菜</p>
-<p>最后再上一碗汤</p>
-<p>确保菜品有序上桌</p>
-<p>不至于一下子全上菜</p>
-<p>或者上来一个吃没了</p>
-<p>下一个还没端上桌</p>
-<p>这些都有讲究</p>
-<ol start="3">
-<li>商务宴请，或者由重要客人的情况下</li>
-</ol>
-<p>一定要保证菜品里有传统意义上的大菜，硬菜</p>
-<p>比如 龙虾，上等牛肉等等</p>
-<p>这样能让客人感觉自己的尊贵以及你对客人的尊重和重视</p>
-<ol start="4">
-<li>避免点重复种类的菜</li>
-</ol>
-<p>比如已经点了清蒸黄花鱼</p>
-<p>不要再点别的以鱼为主的菜品</p>
-<ol start="5">
-<li>针对不同请客对象，有不同点菜安排</li>
-</ol>
-<p>如果是你请朋友或同事吃饭</p>
-<p>如果你想兼顾民主的话</p>
-<p>可以把重要的菜按上述方法点好</p>
-<p>让其他人大概了解你本次的预算</p>
-<p>再点一些点缀又符合他们个人口味的菜肴</p>
-<p>如果请重要客人吃饭</p>
-<p>又不知道对方口味的话</p>
-<p>最简单又不失礼貌的做法是</p>
-<p>先询问对方有没有忌口</p>
-<p>然后挑几个不同样式  不同特色的菜品看他喜欢哪个或者几个</p>
-<p>这样避免留下私自做主的印象</p>
-<p>又照顾到客人的好恶</p>
-<p>还避免互相推诿的尴尬和浪费时间</p>
-<p>如遇宴请自己长辈和其他长辈一起吃饭</p>
-<p>可以先请其他长辈客人点菜</p>
-<p>再请自己父母点几个菜</p>
-<p>然后你添加调整菜品平衡</p>
-<p>以上是根据不同人群交流</p>
-<p>总结道的一些宴请时的点餐经验精髓</p>
-<p>总之一句话  点菜是门艺术  点得好</p>
-<p>不仅这餐饭吃的好</p>
-<p>更重要为你自己的为人处世加分</p>
-<p>也为你的将来聚拢人脉基础</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
   </article>
   
 
   
   <nav class="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/3/">上一页</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/20/">20</a><a class="extend next" rel="next" href="/page/5/">下一页</a>
+    <a class="extend prev" rel="prev" href="/page/3/">上一页</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/21/">21</a><a class="extend next" rel="next" href="/page/5/">下一页</a>
   </nav>
   
 </section>

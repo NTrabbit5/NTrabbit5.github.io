@@ -126,6 +126,225 @@
     
     
     <article
+  id="post-20220801-markdown2epub"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/08/01/20220801-markdown2epub/"
+    >20220801-markdown2epub</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/08/01/20220801-markdown2epub/" class="article-date">
+  <time datetime="2022-08-01T04:48:16.000Z" itemprop="datePublished">2022-08-01</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p><a target="_blank" rel="noopener" href="https://www.maemo.cc/2017/12/18/from-markdown-to-epub.html">https://www.maemo.cc/2017/12/18/from-markdown-to-epub.html</a></p>
+<h2 id="1-采集信息，编辑成MD文稿"><a href="#1-采集信息，编辑成MD文稿" class="headerlink" title="1.采集信息，编辑成MD文稿"></a>1.采集信息，编辑成MD文稿</h2><p>比如说我在逛HiPDA的时候，突然看到有个人批评《鸟哥的Linux私房菜》写的太繁琐，不如TLCL简明易懂，还给出了TLCL的链接。</p>
+<p>点进链接去一看，竟然是个Github的repo，而且是两年前就已经完工的项目。仔细查看一下文件结构，原来全都是由Markdown文件组成。</p>
+<p>有意思。这就非常适合制作成一本EPUB书籍，放到iPad上，慢慢看。</p>
+<p>有些发布成各种长帖的内容，需要你手动复制到一个个Markdown文件中去，这点有些繁琐，请务必有耐心。</p>
+<h3 id="信息来源：各种网站"><a href="#信息来源：各种网站" class="headerlink" title="信息来源：各种网站"></a>信息来源：各种网站</h3><p>一般比较好的来源是Github，里面有很多合众翻译的文档。一部分文档已经利用Gitbook制作成了电子书，另一部分则是以网页形式存在，这些网页就比较适合采集数据。</p>
+<p>另外一些阅读不方便的小说会发表在百度贴吧上。我使用一个贴吧的Python爬虫来爬取它的正文内容。</p>
+<p>这个爬虫有关的内容可以看我以后写的分享：<a href="">《我是怎么从百度贴吧找到那么多八雪同人的》</a>（笑）。</p>
+<p>这个爬虫是别人很久以前写的，有些不方便的地方需要手动操作，不过这至少比一点点复制强的多了。</p>
+<p><strong>【实际操作】</strong></p>
+<p>现在我们从Github上下载<a target="_blank" rel="noopener" href="https://github.com/billie66/TLCL">TLCL</a>的ZIP，下载下来之后自动解压缩成为一个文件夹。</p>
+<p><img src="https://pic.railgun.tech/2019-05-08-072502.jpg" alt="下载"></p>
+<p>打开文件夹中，可以看到里面的子文件夹Book正是盛放正文md文件的地方。</p>
+<h3 id="使用的App"><a href="#使用的App" class="headerlink" title="使用的App"></a>使用的App</h3><p>信息采集嘛，没有好用的工具可不行呢。</p>
+<h4 id="MWeb"><a href="#MWeb" class="headerlink" title="MWeb"></a>MWeb</h4><p>这是我首推的应用，国内独立开发者开发的，有Mac和iOS双平台，功能非常强大。</p>
+<h4 id="Typora"><a href="#Typora" class="headerlink" title="Typora"></a>Typora</h4><p>这是我其次推荐的应用，Mac和Windows、Linux三平台都有，可以直接导出EPUB，可是它导出的EPUB兼容性不好，在iBooks上无法解析。</p>
+<h3 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h3><p>复制、粘贴等等。</p>
+<p><strong>【实际操作】</strong></p>
+<p>我们在MWeb屏幕左上角的文件菜单中，打开外部模式。</p>
+<p>然后点击MWeb窗口左下角的<code>+</code>号，引入刚才下载到的<code>Book</code>目录进去。</p>
+<p><img src="https://pic.railgun.tech/2019-05-08-072503.jpg" alt="引入目录"></p>
+<p>点击<code>选择</code>进入下一步，修改排序方式为<code>按文件名升序</code>，即可。</p>
+<p><img src="https://pic.railgun.tech/uPic/2020-08-02-vGJ7dn.jpg" alt="修改排序"></p>
+<p>但是我们是无法把多个md文件导出成一个HTML文件的。</p>
+<p>怎么解决？</p>
+<p>两个方法：</p>
+<p>【方法一】合并成一个md文件，然后转换成HTML，再转换成EPUB</p>
+<p>想要做到这一步，简单的复制粘贴即可，如果你嫌烦的话呢，也可以跟我一样写个小程序，让它自动完成这件事情。</p>
+<p>好，我现在去写个程序。这种小程序代码量非常少，而且泛用性不高，很容易写。</p>
+<p><img src="https://pic.railgun.tech/uPic/2020-08-02-MNhfvV.jpg" alt="写程序"></p>
+<p>程序代码请点击：<a target="_blank" rel="noopener" href="https://github.com/iblueer/TLCL/blob/gh-pages/main.m">TLCL&#x2F;main.m</a></p>
+<p>我们通过不同的途径，得到了同样的一个md文件，这样，我们就可以继续来利用MWeb的导出功能了。</p>
+<p><img src="https://pic.railgun.tech/2019-05-08-072514.jpg" alt="同样的md文件"></p>
+<p>【方法二】分别转换成HTML文件，然后统一成一个EPUB</p>
+<p>这样其实也可以，但是支持多HTML合一的程序还是比较少的，而且……点很多次转换也很烦。重点是，在写这一段之前已经把程序写好了。</p>
+<p>给自己跪了。</p>
+<h2 id="2-导出成HTML文件"><a href="#2-导出成HTML文件" class="headerlink" title="2.导出成HTML文件"></a>2.导出成HTML文件</h2><h3 id="使用的App-1"><a href="#使用的App-1" class="headerlink" title="使用的App"></a>使用的App</h3><p>还是这两个应用，同上。</p>
+<h3 id="方法-1"><a href="#方法-1" class="headerlink" title="方法"></a>方法</h3><p>然后我们用MWeb打开上一步中获得的md文件，在<code>文件</code>菜单中选择<code>导出为HTML</code>即可。这样我们就获得了一个与md文件同名的HTML文件。</p>
+<p><img src="https://pic.railgun.tech/2019-05-08-072516.jpg" alt="同样的HTML文件"></p>
+<h2 id="3-将HTML转换为EPUB文件"><a href="#3-将HTML转换为EPUB文件" class="headerlink" title="3.将HTML转换为EPUB文件"></a>3.将HTML转换为EPUB文件</h2><h3 id="使用的App-2"><a href="#使用的App-2" class="headerlink" title="使用的App"></a>使用的App</h3><h4 id="HTML-to-ePUB-converter"><a href="#HTML-to-ePUB-converter" class="headerlink" title="HTML to ePUB converter"></a>HTML to ePUB converter</h4><p>一个很土鳖的程序，但是很好用。</p>
+<p>打开这个程序之后，选择文件，然后导出。</p>
+<p>虽然这个程序自带一个“Merge into one file”功能，可是我忘了啊。</p>
+<p>反正我都写好程序合成了一个md文件了。</p>
+<p>就把这个功能忘了吧（远目）。</p>
+<h4 id="Typora-1"><a href="#Typora-1" class="headerlink" title="Typora"></a>Typora</h4><p>其实有Typora的话，可以一步到位导出EPUB，但是上面有讲过，iBooks是无法识别Typora导出的EPUB的。我选择死亡。</p>
+<h3 id="方法-2"><a href="#方法-2" class="headerlink" title="方法"></a>方法</h3><p>将保存有TLCL.md的目录导入HTML to ePUB converter，然后点击“Convert”，选好导出目录之后进行转换。</p>
+<p><img src="https://pic.railgun.tech/2019-05-08-072522.jpg" alt="HTML to ePUB converter"></p>
+<p>导出之后我们就得到了一个EPUB电子书了！</p>
+<p><img src="https://pic.railgun.tech/2019-05-08-072524.jpg" alt="EPUB"></p>
+<p>别着急，这还不是成功的时候。</p>
+<h2 id="4-编辑EPUB文件"><a href="#4-编辑EPUB文件" class="headerlink" title="4.编辑EPUB文件"></a>4.编辑EPUB文件</h2><p>新鲜出炉的EPUB电子书里面的meta信息全都是空的，我们现在需要开始给他添加详细信息了。</p>
+<h3 id="使用的App-3"><a href="#使用的App-3" class="headerlink" title="使用的App"></a>使用的App</h3><h4 id="calibre"><a href="#calibre" class="headerlink" title="calibre"></a>calibre</h4><p>这个软件太有名我都不想说了。没有安装的请去搜索一下。</p>
+<h3 id="方法-3"><a href="#方法-3" class="headerlink" title="方法"></a>方法</h3><p>将EPUB导入calibre中，点击“编辑元数据”按钮。</p>
+<p><img src="https://pic.railgun.tech/2019-05-08-72525.jpg" alt="编辑元数据"></p>
+<ul>
+<li><strong>元数据</strong></li>
+</ul>
+<p>这个包含了书名、作者、ISDN、语言、封面等等关键内容。</p>
+<p>一本书最重要的东西不是内容，而是封面（被打死），我是说，对于我个人来讲。</p>
+<p>电子书当然也需要一个漂亮的封面，我们可以直接在网上搜索这本书的名字，找到它的图书封面，也可以使用Calibre的自带封面模板。</p>
+<p>其实可以使用calibre自带的“下载元数据”功能，只要你填对了书名。</p>
+<p>还有，注意语言一定要改成这本书应该有的语言。</p>
+<ul>
+<li><strong>目录</strong></li>
+</ul>
+<p>这一步比较重要，在书右键点击编辑书籍。</p>
+<p><img src="https://pic.railgun.tech/2019-05-08-072525.jpg" alt="编辑书籍"></p>
+<p>然后点编辑目录。</p>
+<p><img src="https://pic.railgun.tech/2019-05-08-072528.jpg" alt="编辑目录"></p>
+<p>然后删掉自动生成的目录，选择“从所有的标题中生成目录”。</p>
+<p><img src="https://pic.railgun.tech/2019-05-08-072532.jpg" alt="生成目录"></p>
+<p>然后确定，保存。</p>
+<p><img src="https://pic.railgun.tech/2019-05-08-072533.jpg" alt="保存"></p>
+<h2 id="大功告成"><a href="#大功告成" class="headerlink" title="大功告成"></a>大功告成</h2><p>这本EPUB电子书已经做好了，我们打开iBooks看看效果吧！</p>
+<p>在书上右键，点击文件所在目录，然后双击打开EPUB文件。</p>
+<p><img src="https://pic.railgun.tech/2019-05-08-072534.jpg" alt="效果"></p>
+<p>很尴尬，卡住了。</p>
+<p>没办法，只能传到iPad的多看阅读了。</p>
+<p>传送后的阅读效果如下。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-20220801-UX交互设计网址"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/08/01/20220801-UX%E4%BA%A4%E4%BA%92%E8%AE%BE%E8%AE%A1%E7%BD%91%E5%9D%80/"
+    >20220801-UX交互设计网址</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/08/01/20220801-UX%E4%BA%A4%E4%BA%92%E8%AE%BE%E8%AE%A1%E7%BD%91%E5%9D%80/" class="article-date">
+  <time datetime="2022-08-01T00:44:40.000Z" itemprop="datePublished">2022-08-01</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>故事板：<a target="_blank" rel="noopener" href="https://www.storyboardthat.com/">https://www.storyboardthat.com/</a><br>图表：<a target="_blank" rel="noopener" href="https://live.amcharts.com/">https://live.amcharts.com/</a><br><a target="_blank" rel="noopener" href="https://www.pixton.com/">https://www.pixton.com/</a><br>云图制作：<br><a target="_blank" rel="noopener" href="http://www.picdata.cn/indexb.php">http://www.picdata.cn/indexb.php</a></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-20220801-epub电子书制作"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/08/01/20220801-epub%E7%94%B5%E5%AD%90%E4%B9%A6%E5%88%B6%E4%BD%9C/"
+    >20220801-epub电子书制作</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/08/01/20220801-epub%E7%94%B5%E5%AD%90%E4%B9%A6%E5%88%B6%E4%BD%9C/" class="article-date">
+  <time datetime="2022-08-01T00:31:38.000Z" itemprop="datePublished">2022-08-01</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>软件 zigil</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-20220731-用DISM命令备份与还原windows系统"
   class="article article-type-post"
   itemscope
@@ -983,168 +1202,13 @@
 </article>
 
     
-    <article
-  id="post-20220609-python-yield-use"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/06/09/20220609-python-yield-use/"
-    >python中的yield用法</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/06/09/20220609-python-yield-use/" class="article-date">
-  <time datetime="2022-06-09T10:51:32.000Z" itemprop="datePublished">2022-06-09</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>yield 关键字做了什么</p>
-<p>可以先把yield 当作return 的同胞兄弟来看</p>
-<p>有return的函数直接返回所有结果，程序终止不再运行，并销毁局部变量</p>
-<p>而有yield 的函数则返回一个可迭代的generator 生成器对象，你可以使用for 循环或者调用next 方法遍历生成器对象来提取结果</p>
-<p>在python中，使用了yield 的函数被称为生成器，有点套娃的感觉</p>
-<p>调用一个yield ，就会返回一个生成器对象</p>
-<p>在调用生成器函数的过程中，每次遇到yield 时函数会暂停并保存当前所有的运行信息，保留局部变量，返回yield 的值，并在下一次执行next 方法时从当前位置继续运行，直到生成器全部遍历完</p>
-<p>可以看到，simple——generator 函数返回一个生成器，调用next 方法后，函数开始运行，遇到第一个yield 关键字，返回生成的值 1 ，程序暂停</p>
-<p>带yield 的函数是一个生成器，这个生成器有一个方法就是next next 就相当于 下一步 生成那个数，这一次的next 开始的地方是接着上一次的next 停止的地方执行的</p>
-<p>所以调用next 的时候，生成器并不会从函数的开始执行，只是接着上一步停止的地方开始，然后遇到yield 后，return 出要生成的数，此步就结束</p>
-<p>生成器有哪些作用，如果想具体化数据的形式，他唱会将数据存储在一个列表中，但这样做，列表的内容将占用有形内存，列表越大，占用的内存资源就越多</p>
-<p>但是，如果数据集有某种逻辑，就不必存储在一个列表中，只需编写一个生成器，它将在需要时生成这些值，基本不占用内存</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20220519-sublime修改光标颜色"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/05/19/20220519-sublime%E4%BF%AE%E6%94%B9%E5%85%89%E6%A0%87%E9%A2%9C%E8%89%B2/"
-    >20220519-sublime修改光标颜色</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/05/19/20220519-sublime%E4%BF%AE%E6%94%B9%E5%85%89%E6%A0%87%E9%A2%9C%E8%89%B2/" class="article-date">
-  <time datetime="2022-05-19T07:52:40.000Z" itemprop="datePublished">2022-05-19</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>Boxy Ocean.tmTheme</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;string&gt;#F07178&lt;/string&gt;</span><br><span class="line">&lt;key&gt;foreground&lt;/key&gt;</span><br></pre></td></tr></table></figure> 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20220512-工业软件"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/05/12/20220512-%E5%B7%A5%E4%B8%9A%E8%BD%AF%E4%BB%B6/"
-    >工业软件</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/05/12/20220512-%E5%B7%A5%E4%B8%9A%E8%BD%AF%E4%BB%B6/" class="article-date">
-  <time datetime="2022-05-12T13:49:03.000Z" itemprop="datePublished">2022-05-12</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p><a target="_blank" rel="noopener" href="https://www.bilibili.com/medialist/play/196986312?from=space&amp;business=space&amp;sort_field=play&amp;spm_id_from=333.999.0.0">https://www.bilibili.com/medialist/play/196986312?from=space&amp;business=space&amp;sort_field=play&amp;spm_id_from=333.999.0.0</a></p>
-<p>[TOC]</p>
-<h2 id="0x01"><a href="#0x01" class="headerlink" title="0x01"></a>0x01</h2><h2 id="0x02"><a href="#0x02" class="headerlink" title="0x02"></a>0x02</h2><h2 id="0x03"><a href="#0x03" class="headerlink" title="0x03"></a>0x03</h2><h2 id="0x04"><a href="#0x04" class="headerlink" title="0x04"></a>0x04</h2> 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
   </article>
   
 
   
   <nav class="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/14/">上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/">13</a><a class="page-number" href="/page/14/">14</a><span class="page-number current">15</span><a class="page-number" href="/page/16/">16</a><a class="page-number" href="/page/17/">17</a><span class="space">&hellip;</span><a class="page-number" href="/page/20/">20</a><a class="extend next" rel="next" href="/page/16/">下一页</a>
+    <a class="extend prev" rel="prev" href="/page/14/">上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/">13</a><a class="page-number" href="/page/14/">14</a><span class="page-number current">15</span><a class="page-number" href="/page/16/">16</a><a class="page-number" href="/page/17/">17</a><span class="space">&hellip;</span><a class="page-number" href="/page/21/">21</a><a class="extend next" rel="next" href="/page/16/">下一页</a>
   </nav>
   
 </section>
