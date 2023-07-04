@@ -126,6 +126,91 @@
     
     
     <article
+  id="post-20230410-什么是DHCP？总结DHCP优缺点和工作原理"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/04/10/20230410-%E4%BB%80%E4%B9%88%E6%98%AFDHCP%EF%BC%9F%E6%80%BB%E7%BB%93DHCP%E4%BC%98%E7%BC%BA%E7%82%B9%E5%92%8C%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/"
+    >20230410-什么是DHCP？总结DHCP优缺点和工作原理</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/04/10/20230410-%E4%BB%80%E4%B9%88%E6%98%AFDHCP%EF%BC%9F%E6%80%BB%E7%BB%93DHCP%E4%BC%98%E7%BC%BA%E7%82%B9%E5%92%8C%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/" class="article-date">
+  <time datetime="2023-04-10T12:01:45.000Z" itemprop="datePublished">2023-04-10</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>了解DHCP或动态主机配置协议</p>
+<p>DHCP 是动态主机配置协议的缩写，它是一种存在于应用层的网络管理协议，在DHCP 的帮助下，可以动态地给网络上的任何设备或节点分配一个互联网协议ip 地址，使它们可以使用这个ip 进行通信，网络管理员的任务是将大量的ip 地址手动分配给网络中的所有设备，然而，在DHCP 中，这个任务是自动化的，是集中管理，而不是手工管理，无论是小型本地网络还是大型企业网络都实现了DHCP DHCP 的基本目标是为主机分配一个唯一的ip地址</p>
+<p>子网掩码</p>
+<p>路由器地址</p>
+<p>DNS 地址</p>
+<p>供应商类别标识符</p>
+<p>DHCP 有两种不同的方式，即作为客户端和服务器</p>
+<p>DHCP的历史</p>
+<p>DHCP 是bootp的扩展版本，也是1985年开始的一个网络管理协议，DHCP 服务器有足够的能力处理来自 BOOTP 客户端的请求，不仅如此，与BOOTP 相比，DHCP 更先进</p>
+<p>DHCP 是如何工作的</p>
+<p>当DHCP服务器作为服务器时，DHCP 服务器是用来自动分配唯一的ip 地址，同时配置网络的其他信息，在小型企业或家庭中，DHCP 服务器除了路由器之外，没有其他任何一个是DHCP 服务器，然而，在大型网络中，DHCP 服务器可以是一台计算机</p>
+<p>在这个过程中发生了什么，简单的总结如下，</p>
+<p>客户端向主机发送一个ip 地址请求，客户端可以是任何发送请求的设备，主机可以是路由器，主机将寻找一个可用的ip地址并分配给客户端</p>
+<p>使用这个ip 地址，客户端就可以在网络上进行通信</p>
+<p>现在我们就来详细了解一下这个过程，下面提到的步骤可以深入了解一下</p>
+<p>连接到有DHCP 服务器的网络的设备发送的请求称为 DHCPDISCOVER 请求</p>
+<p>这个请求以一个名为discover 的数据包的形式发送给DHCP 服务器，DHCP 服务器收到这个数据包，服务器就会立即寻找设备使用的ip 地址，一旦找到后，服务器会通过向客户端发送一个名为DHCPoffer 的数据包进行响应</p>
+<p>设备或客户端现在必须用一个名为 DHCPrequest 的数据包回馈给服务器，以接受所选的ip 地址，对于这个数据包，服务器会立即寻找设备使用的ip 地址，一旦找到后，服务器会通过向客户端发送一个名为dhcp offer 的数据包进行响应</p>
+<p>设备或客户端现在必须用一个名为dhcprequest的数据包回馈给服务器，以接受所选的ip 地址，对于这个数据包，服务器会发送一个确认 ack 确认设备现在可以使用这个特定的ip 地址，它还声明了特定 ip 地址的有效性，这样设备就能准确地知道何时必须获得一个新的ip 地址</p>
+<p>如果服务器不希望设备拥有给定的ip地址，它将不会通过发送一个nac来确认设备的请求</p>
+<p>虽然上面提到的步骤看起来很费时间，但实际操作起来却非常快，让人不自觉地就会想到，当然，这个过程不需要技术上的细节，只需阅读就可以从dhcp 服务器上获得一个ip 地址</p>
+<p>DHCP 是如何让工作变得轻松</p>
+<p>DHCP 服务器有一个地址池，可以让设备获得有效的网络连接，它基本上给出了谁be接收地址的范围，或范围内的ip 地址</p>
+<p>DHCP 有用的第二个原因是，很多设备可以在指定的时间段内连接到一个网络，甚至不需要任何可用的地址池，例如，考虑20个地址由DHCP 服务器定义 40 80 100 的设备只要不超过20个地址同时使用其中一个可用的ip 地址就可以连接到网络</p>
+<p>像ipconfig 这样的的命令在使用dhcp 时，会随着时间的推移返回不同的ip 地址，因为这些地址是提供给你的计算机网络的，在指定的时间段内也称为租期，拥有手动分配ip 地址的设备不一定能与动态接收ip 地址的设备在同一网络中共存，手动分配的ip 地址也称为静态ip 地址</p>
+<p>DHCP 的优缺点</p>
+<p>DHCP 的优点和缺点如下</p>
+<p>优点</p>
+<p>DHCP 有很多好处，因此它非常受欢迎，以下是使用dhcp 的一些优点</p>
+<p>可以很容易地在网络中添加新的客户端</p>
+<p>ip 地址是由 dhcp 集中管理的</p>
+<p>ip 地址可以重复使用，从而减少了对ip 地址总数的要求</p>
+<p>DHCP 服务器上的ip 地址空间可以很容易地进行重新配置，而不需要单独重新配置客户端</p>
+<p>网络管理员可以利用 dhcp 协议提供的方法，从集中区域配置网络</p>
+<p>缺点</p>
+<p>就像每一个硬币都有它的优点和缺点一样，使用DHCP 也有以下缺点</p>
+<p>在将ip 地址分配给不同的主机时，有时会出现ip 地址冲突的情况</p>
+<p>总结</p>
+<p>动态主机配置协议是一个非常关键和重要的网络服务，是必须要有的，因为使用它可以帮助你作为一个系统管理员或网络管理员，通过分配、跟踪和重新分配ip 来处理客户端，离开管理，此外，如果有任何外提，你只需要保持与服务器连接，并验证设置，而不是在客户端之间运行</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-20230403-如何用python分析股票"
   class="article article-type-post"
   itemscope
@@ -743,56 +828,6 @@
 <p>2 第2位字符是0123 意义如下<br>  0 SAE 美国汽车工程师协会定义的通用故障码<br>  1 汽车厂家定义的扩展故障码<br>  2 3 随系统字符 PBCU 的不同而不同，动力系统故障码 P 的2 或3 由SAE 留作将来使用，车身或底盘故障码的2位厂家保留，车身或底盘故障码的3由SAE 保留</p>
 <p>3 第3位字符表示出故障的系统<br>  1 燃油或空气计量故障<br>  2 燃油或空气计量故障<br>  3 点火故障或发动机缺火<br>  4 辅助排放控制系统故障<br>  5 汽车或怠速控制系统故障<br>  6 电脑或输出电路故障<br>  7 变速器控制系统<br>  8 变速器控制系统</p>
 <p>4 最后两位字符表示触发故障码的条件，不同的传感器，执行器和电路分配了不同区段的数字，区段中较小的数字表示通用故障，即通过故障码，较大的数字表示扩展码，提供了更具体的信息，如电压低或高，响应慢，或信号超出范围</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20230208-svncleanup失败的方法"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/02/08/20230208-svncleanup%E5%A4%B1%E8%B4%A5%E7%9A%84%E6%96%B9%E6%B3%95/"
-    >20230208-svncleanup失败的方法</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/02/08/20230208-svncleanup%E5%A4%B1%E8%B4%A5%E7%9A%84%E6%96%B9%E6%B3%95/" class="article-date">
-  <time datetime="2023-02-08T02:46:54.000Z" itemprop="datePublished">2023-02-08</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>1、先下载sqlite3.exe<br>链接：<a target="_blank" rel="noopener" href="https://pan.baidu.com/s/19NoROpm9_1CuGwOG6j5x3Q">https://pan.baidu.com/s/19NoROpm9_1CuGwOG6j5x3Q</a></p>
-<p>提取码：tc8b</p>
-<p>2、找到你项目的.svn文件，查看是否存在wc.db（如果看不到.svn，说明你电脑设置了不显示隐藏文件，改成显示隐藏文件就可以了）<br>3、将sqlite3.exe放到.svn的文件夹目录下<br>4、启动cmd执行sqlite3 wc.db “select * from work_queue”<br>5、启动cmd执行sqlite3 wc.db “delete from work_queue”</p>
-<p>现在在到项目里面，执行cleanup，应该成功了，如果还不成功提示fail to process file的情况，提示xxx file has been locked，需要执行一个清除数据库中的wc_lock的表的操作。<br>6、启动cmd执行sqlite3 .svn&#x2F;wc.db “select * from wc_lock”<br>7、启动cmd执行sqlite3 .svn&#x2F;wc.db “delete from wc_lock”<br>现在在到项目里面，执行cleanup，应该成功了，如果还不成功，那就行勾选上下面的Break write locks，然后在执行Cleanup，这样应该成功了吧！</p>
  
       <!-- reward -->
       
