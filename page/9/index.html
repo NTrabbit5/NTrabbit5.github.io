@@ -126,6 +126,76 @@
     
     
     <article
+  id="post-20221215-使用wttr-in在你的终端中显示天气预报"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/12/15/20221215-%E4%BD%BF%E7%94%A8wttr-in%E5%9C%A8%E4%BD%A0%E7%9A%84%E7%BB%88%E7%AB%AF%E4%B8%AD%E6%98%BE%E7%A4%BA%E5%A4%A9%E6%B0%94%E9%A2%84%E6%8A%A5/"
+    >20221215-使用wttr.in在你的终端中显示天气预报</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/12/15/20221215-%E4%BD%BF%E7%94%A8wttr-in%E5%9C%A8%E4%BD%A0%E7%9A%84%E7%BB%88%E7%AB%AF%E4%B8%AD%E6%98%BE%E7%A4%BA%E5%A4%A9%E6%B0%94%E9%A2%84%E6%8A%A5/" class="article-date">
+  <time datetime="2022-12-15T02:04:16.000Z" itemprop="datePublished">2022-12-15</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>wttr.in 是一个功能丰富的天气预报服务，它支持在命令行显示天气，它可以 根据你的ip 地址<br>自动检测你的位置，也支持指定位置或搜索地理位置，如城市，山区等，另外，你不需要安装它，你只需要使用curl 或wget </p>
+<p>wttr.in 功能包括</p>
+<p>显示当前天气以及3天内的天气预报，分为早晨，中午、傍晚和夜晚 包括温度范围、风速和风向 可见度，降水量 和概率</p>
+<p>可以显示月相</p>
+<p>基于你的ip地址自动检测位置</p>
+<p>允许指定城市名称，3字母的机场代码，区域代码，GPS坐标，IP 地址或域名，你还可以指定地理位置，如湖泊 山脉，地标等</p>
+<p>支持多语言位置名称  查询字符串必须以unicode 指定</p>
+<p>支持指定天气预报显示的语言  它支持超过50种语言</p>
+<p>来自美国的查询使用uscs 单位用于，世界其他地方使用公制系统，但你可以通过附加?u 使用uscs 附加?m 使用公制系统</p>
+<p>3种输出格式，终端的ansi 浏览器的html 和png </p>
+<p>或者你可以安装wego 这是一个使用wtter.in 的终端气候应用，虽然wego 要求注册一个api 密钥来安装</p>
+<p><a target="_blank" rel="noopener" href="http://wttr.in/">http://wttr.in</a> 命令行示例<br>获取你所在位置的天气（<a target="_blank" rel="noopener" href="http://wttr.in/">http://wttr.in</a> 会根据你的 IP 地址猜测你的位置）：</p>
+<p>curl wttr.in<br>通过在 curl 之后添加 -4，强制 cURL 将名称解析为 IPv4 地址（如果你用 IPv6 访问 wttr.in 有问题）：</p>
+<p>curl -4 wttr.in<br>如果你想检索天气预报保存为 png，还可以使用 Wget（而不是 cURL），或者你想这样使用它：</p>
+<p>wget -O- -q wttr.in<br>如果相对 cURL 你更喜欢 Wget ，可以在下面的所有命令中用 wget -O- -q 替换 curl。</p>
+<p>指定位置：</p>
+<p>curl wttr.in&#x2F;Dublin<br>显示地标的天气信息（本例中为艾菲尔铁塔）：</p>
+<p>curl wttr.in&#x2F;~Eiffel+Tower<br>获取 IP 地址位置的天气信息（以下 IP 属于 GitHub）：</p>
+<p>curl wttr.in&#x2F;@192.30.253.113<br>使用 USCS 单位检索天气：</p>
+<p>curl wttr.in&#x2F;Paris?u<br>如果你在美国，强制 <a target="_blank" rel="noopener" href="http://wttr.in/">http://wttr.in</a> 使用公制系统（SI）：</p>
+<p>curl wttr.in&#x2F;New+York?m<br>使用 Wget 将当前天气和 3 天预报下载为 PNG 图像：</p>
+<p>wget wttr.in&#x2F;Istanbul.png<br>你可以指定 PNG 的透明度，这在你要使用一个脚本自动添加天气信息到某些图片（比如墙纸）上有用。</p>
+<p>对于其他示例，请查看wttr.in 项目页面或在终端中输入 </p>
+<p>curl wttr.in&#x2F;:help</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-20221214-通过Content-Type和文件头判断文件类型"
   class="article article-type-post"
   itemscope
@@ -1465,98 +1535,6 @@
 <p>RXNEIE:发送完成中断使能。</p>
 <p>USART_CR1寄存器：<br>USART_CR2寄存器：<br>USART_CR3寄存器：</p>
 <p>之后会基于STM32继续介绍怎样配置并使用UART，包括串口轮询&#x2F;中断&#x2F;DMA方式发送&#x2F;接收数据。</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20221213-VGA显示图像详细总结"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/12/13/20221213-VGA%E6%98%BE%E7%A4%BA%E5%9B%BE%E5%83%8F%E8%AF%A6%E7%BB%86%E6%80%BB%E7%BB%93/"
-    >20221213-VGA显示图像详细总结</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/12/13/20221213-VGA%E6%98%BE%E7%A4%BA%E5%9B%BE%E5%83%8F%E8%AF%A6%E7%BB%86%E6%80%BB%E7%BB%93/" class="article-date">
-  <time datetime="2022-12-13T02:09:18.000Z" itemprop="datePublished">2022-12-13</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_44406200/article/details/103823607">https://blog.csdn.net/weixin_44406200/article/details/103823607</a></p>
-<h2 id="VGA-显示原理"><a href="#VGA-显示原理" class="headerlink" title="VGA 显示原理"></a>VGA 显示原理</h2><p>VGA 概念</p>
-<p>VGA 不是用来显示的那块屏幕，而是用来传输信号的接口，VGA 全称是video graphics array 及视频图形阵列，是模拟信号的一种视频传输标准，VGA 传输接口实物图如下</p>
-<p>自测试 地址码 蓝基色  绿基色  红基色</p>
-<p>数字地        蓝地  绿地   红地<br>地址码 场同步 行同步  地址码 地址码</p>
-<p>操作VGA 的过程就是给你一块有横纵坐标范围的区域，区域上的每一个坐标点就是一个像素点，你可以做的事情是给这个像素点特定的rgb 色彩，既可以通过自定义rgb 也可以去取图像某个像素点的rgb ，这也就提供了你在vga 上画图以及显示图片的能力</p>
-<p>VGA 分辨率及理解误区</p>
-<p>640 * 480 的规格就是显示屏幕上每行有640 个像素点，总共有480行，注意，一件很重要的事情是，虽然你看到的屏幕上的大小是640 * 480 的 但是它实际大小并不只有那么点，形象一点就是说，VGA 的扫描范围是包含了你能够看到的640 480 这一块区域的更大区域，他会在周围一圈你看不到的区域部分进行扫描，因此，我们在处理扫描信号的时候一定要注意只有扫描到有效区域的时候才能把像素点数据传给 VGa 显示 </p>
-<p>VGA 显示器扫描方式从屏幕左上角一点开始，从左向右逐点扫描，每扫描完一行，电子束回到屏幕的左边下一行的起始位置，在这期 间，CRT 对电子束进行消隐，每行结束时，用行同步信号进行同步，当扫描完所有的行，形成一帧，用场同步信号进行场同步，并使扫描回到屏幕左上方，同时进行场消隐，开始下一帧，完成一行扫描的时间称为水平扫描时间，其倒数称为行频率，完成一帧，扫描的时间称为垂直扫描时间，其倒数称为场频率，及屏幕的刷新频率，其扫描示意图如下图所示</p>
-<p>有效显示区域</p>
-<p>关于那一块非有效显示区域，实际上是因为每一行和每一列的扫描区间都是由以下几部分组成</p>
-<p>行扫描  Hor Sync 、Hor Back Porch 、Hor Active Video和Hor Front Porch</p>
-<p>Hor Scan Time 是一个扫描周期，它会先扫描到hor sync 再扫描 hor back porch 然后才进入有效显示区  hor active video 最后是一段 hor front porch 可以看出来，四段区间只有hor active video 这一段是能够正常显示图像信息的，也就是屏幕上显示的那一块区间</p>
-<p>列扫描也同理</p>
-<p>给定参数</p>
-<p>实际上，根据固定的分辨率大小，比如我们实验室的板子使用的640 480 的屏幕大小，这些非有效区间的长度值都是一个固定的常数，因此你只要在扫描的时候把这些常数稍加处理即可</p>
-<p>下图罗列了不同分辨率所对应的各个参数，其中的a、b、c、d、e、f、g、h、i、k的含义，与上面给出的两张图的标注一一对应；我们实验使用的是第一组数据，可以看到行时序参数中的c代表每一行的有效显示区间640，列时序参数中的h代表每一列的有效显示区间480</p>
-<p>需要扫描频率，很重要的一件事，无论是行扫描还是给像素点赋值，我们都需要用一个时钟，这个时钟不是系统时针，必须要先将50MHZ 的时钟分频为25MHZ 然后拿去作为扫描信号的时钟</p>
-<p>这一点是特别需要注意的，否则到时候会出现out of range 的现象</p>
-<p>前期准备 coe 文件的生成</p>
-<p>coe 和ip 核介绍</p>
-<p>我们调用VGA 的终极目标是想要能够显示一张图片，在这之前，我们要先对这张图片进行一些预处理，因为我们是通过verilog 语言去调用图片数据的，但是verilog 并不知道怎么从一张已有的图片上去取相应的数据</p>
-<p>因此我们要先将图片转换为coe 文件，coe 文件实际上就是按照某种规律将图像每一个像素点的rgb 数据都摆放成单独一行 16进制，然后借助ISE 的IP 核生成将coe 文件转化成ROM ，生成的ROM.xco 和ROM.v 文件就可以被verilog 语言所识别调用，最终就能够取到图像的数据了</p>
-<p>24位bmp 图像转换为coe 文件 复原代码</p>
-<p>为了统一规范，这里我们使用24位真彩色的bmp 格式图像进行转换，好处是，bmp 的三通道数据特征是非常明显的，易于处理</p>
-<p>如何获取24位bmp 图像 </p>
-<p>然后bmp 格式也有很多种，如单色 16色 24 256 ，这里我们统一选择24位位图选项，点击保存即可</p>
-<p>使用matlab 将24位真彩色bmp 位图转化为coe 文件 </p>
-<p>由于24位共rgb 三个通道，每个通道分到的是8位，占用资源太多，且老师给的ucf 引脚约束对rgb 每一个通道只给了4位，因此我们在转化为coe 文件的同时，要将每个通道压缩成4位，即整张图像同时转化为12位</p>
-<p>压缩图像是一件非常重要的事情，因为经过后续的实践我们发现，板子内存资源有限，无法同时加载多张大图</p>
-<p>为了能够对多张图像进行批量处理，我使用matlab 写了一个 img2coe.m 函数，只要对bmp 图像调用这个函数即可转换成coe 文件了，转换过程介绍如下</p>
-<p>先将rgb 提取为三个通道，用reshape 函数对转置后的矩阵进行重组，对rgb 三个分量的数据都右移，舍去细节，留下高四位作为最终的数据，然后写入到coe 文件中</p>
-<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">img2coe</span><span class="params">(path,name)</span></span></span><br><span class="line">    <span class="comment">% 利用imread函数把图片转化为一个三维矩阵</span></span><br><span class="line">    image_array = imread(path);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">% 利用size函数把图片矩阵的三个维度大小计算出来</span></span><br><span class="line">    <span class="comment">% 第一维为图片的高度，第二维为图片的宽度，第三维为图片的RGB分量</span></span><br><span class="line">    [height,width,z]=<span class="built_in">size</span>(image_array);   </span><br><span class="line"></span><br><span class="line">    red   = image_array(:,:,<span class="number">1</span>); <span class="comment">% 提取红色分量，数据类型为uint8</span></span><br><span class="line">    green = image_array(:,:,<span class="number">2</span>); <span class="comment">% 提取绿色分量，数据类型为uint8</span></span><br><span class="line">    blue  = image_array(:,:,<span class="number">3</span>); <span class="comment">% 提取蓝色分量，数据类型为uint8</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">% 把上面得到了各个分量重组成一个1维矩阵，由于reshape函数重组矩阵的</span></span><br><span class="line">    <span class="comment">% 时候是按照列进行重组的，所以重组前需要先把各个分量矩阵进行转置以后再重组</span></span><br><span class="line">    <span class="comment">% 利用reshape重组完毕以后，由于后面需要对数据拼接，所以为了避免溢出</span></span><br><span class="line">    <span class="comment">% 这里把uint8类型的数据扩大为uint32类型</span></span><br><span class="line">    r = uint32(<span class="built_in">reshape</span>(red&#x27;   , <span class="number">1</span> ,height*width));</span><br><span class="line">    g = uint32(<span class="built_in">reshape</span>(green&#x27; , <span class="number">1</span> ,height*width));</span><br><span class="line">    b = uint32(<span class="built_in">reshape</span>(blue&#x27;  , <span class="number">1</span> ,height*width));</span><br><span class="line"></span><br><span class="line">    <span class="comment">% 初始化要写入.coe文件中的RGB颜色矩阵</span></span><br><span class="line">    rgb=<span class="built_in">zeros</span>(<span class="number">1</span>,height*width);</span><br><span class="line"></span><br><span class="line">    <span class="comment">% 因为导入的图片是24-bit真彩色图片，每个像素占用24-bit，其中RGB分别占用8-bit</span></span><br><span class="line">    <span class="comment">% 而我这里需要的是12-bit，其中R为4-bit，G为4-bit，B为4-bit，所以需要在这里对24-bit的数据进行重组与拼接</span></span><br><span class="line">    <span class="comment">% bitshift()函数的作用是对数据进行移位操作，其中第一个参数是要进行移位的数据，第二个参数为负数表示向右移，为</span></span><br><span class="line">    <span class="comment">% 正数表示向左移，更详细的用法直接在Matlab命令窗口输入 doc bitshift 进行查看</span></span><br><span class="line">    <span class="comment">% 所以这里对红色分量先右移4位取出高4位，然后左移11位作为ROM中RGB数据的第11-bit到第8-bit</span></span><br><span class="line">    <span class="comment">% 对绿色分量先右移4位取出高4位，然后左移5位作为ROM中RGB数据的第7-bit到第4-bit</span></span><br><span class="line">    <span class="comment">% 对蓝色分量先右移4位取出高4位，然后左移0位作为ROM中RGB数据的第3-bit到第0-bit</span></span><br><span class="line">    <span class="keyword">for</span> <span class="built_in">i</span> = <span class="number">1</span>:height*width</span><br><span class="line">        rgb(<span class="built_in">i</span>) = bitshift(bitshift(r(<span class="built_in">i</span>),<span class="number">-3</span>),<span class="number">11</span>) + bitshift(bitshift(g(<span class="built_in">i</span>),<span class="number">-2</span>),<span class="number">5</span>) + bitshift(bitshift(b(<span class="built_in">i</span>),<span class="number">-3</span>),<span class="number">0</span>);</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">    fid = fopen( name , <span class="string">&#x27;w+&#x27;</span> );</span><br><span class="line"></span><br><span class="line">    <span class="comment">% .coe文件的最前面一行必须为这个字符串，其中16表示16进制</span></span><br><span class="line">    fprintf( fid, <span class="string">&#x27;memory_initialization_radix=16;\n&#x27;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">% .coe文件的第二行必须为这个字符串</span></span><br><span class="line">    fprintf( fid, <span class="string">&#x27;memory_initialization_vector =\n&#x27;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">% 把rgb数据的前 height*width-1  个数据写入.coe文件中，每个数据之间用逗号隔开</span></span><br><span class="line">    fprintf( fid, <span class="string">&#x27;%x,\n&#x27;</span>,rgb(<span class="number">1</span>:<span class="keyword">end</span><span class="number">-1</span>));</span><br><span class="line"></span><br><span class="line">    <span class="comment">% 把rgb数据的最后一个数据写入.coe文件中，并用分号结尾</span></span><br><span class="line">    fprintf( fid, <span class="string">&#x27;%x;&#x27;</span>,rgb(<span class="keyword">end</span>));</span><br><span class="line"></span><br><span class="line">    fclose( fid ); <span class="comment">% 关闭文件指针</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-
-
-<p>中期准备 coe 转换为rom </p>
-<p>经过上面的步骤我们已经得到了coe 文件</p>
-<p>接下来就是把它转化成verilog 能够调用的rom 文件了 </p>
-<p>在ISE 工程中，点击右键新建文件，选择ip 核生成 </p>
-<p>选择Memories选项中的RAMs&amp;ROMs里的Block Memory Generator</p>
-<p>然后进入到这个设置参数的界面</p>
-<p>其中width代表你设置的图片数据是几进制，由于之前写coe的时候是用16进制写的，因此这里写16；depth表示图像的大小，即长乘宽，由于我使用的是640<em>480的图片，因此这里填207200(&#x3D;640</em>480)</p>
-<p>当你的文件路径成功出现的时候，你就可以点击下方的generate生成了，当然这个generate也要很久很久，一般一张640 *480的图片要generate近一个小时左右才能生成</p>
-<p>生成完毕的标志是creating结束，并且在你的目录下出现类型太阳的这个标记</p>
-<p>后期调用与测试 </p>
-<p>VGA 显示的过程中会遇到很多小bug 有些小bug 的原因你根本找不出，比如 out of range ，你只能静下心来慢慢调试仿真</p>
  
       <!-- reward -->
       

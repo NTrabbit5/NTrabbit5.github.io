@@ -126,6 +126,91 @@
     
     
     <article
+  id="post-20230512-视频监控三种存储方式NVR、IP-SAN和CVR哪种好"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/05/12/20230512-%E8%A7%86%E9%A2%91%E7%9B%91%E6%8E%A7%E4%B8%89%E7%A7%8D%E5%AD%98%E5%82%A8%E6%96%B9%E5%BC%8FNVR%E3%80%81IP-SAN%E5%92%8CCVR%E5%93%AA%E7%A7%8D%E5%A5%BD/"
+    >20230512-视频监控三种存储方式NVR、IP-SAN和CVR哪种好</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/05/12/20230512-%E8%A7%86%E9%A2%91%E7%9B%91%E6%8E%A7%E4%B8%89%E7%A7%8D%E5%AD%98%E5%82%A8%E6%96%B9%E5%BC%8FNVR%E3%80%81IP-SAN%E5%92%8CCVR%E5%93%AA%E7%A7%8D%E5%A5%BD/" class="article-date">
+  <time datetime="2023-05-12T03:46:05.000Z" itemprop="datePublished">2023-05-12</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>对于监控的项目来说，需要考虑四个部分，那就是前端系统，传输系统，存储系统以及显示系统</p>
+<p>存储系统是监控项目中非常重要的一部分，很多朋友也经常讨论到，那么今天我们来了解下常用的三种存储方式 NVR IP-SAN 和CVR 之间的区别</p>
+<p>NVR 存储 是网络硬盘录像机的缩写，NVR 最主要的功能是通过网络接收IPC 网络摄像机，设备传输的数字视频码流，并进行存储、管理，从而实现网络化带来的分布式架构优势，简单来说，通过NVR，可以同时观看，浏览，回放，管理，存储多个网络摄像机，摆脱了电脑硬件的牵绊，再也不用面临安装软件的繁琐</p>
+<p>NVR 框架</p>
+<p>现在市场上面也有少量的128路NVR 因为NVR 是x86 架构储存+监控软件，他本身也有磁盘阵列功能</p>
+<p>NVR 主要用于中小型监控的方案中，但对于大型监控应用来说，NVR 他短板大于他有时，监控点多，码流大，压力高，容量大等问题，都会使它使用起来力不从心，而对于大型公共监控的要考虑其扩展性，易管理性，所以采用IP-SAN或CVR 的存储方式</p>
+<p>第二种 IP-SAN存储</p>
+<p>IP-SAN 即基于ip 以太网络的san 存储架构，它使用iscsi 协议传输数据，直接在ip 网络上进行存储，iscsi 协议就是把scsi 命令包在tcp&#x2F;ip 包中传输，即为scsi over tcp&#x2F;ip</p>
+<p>ip san 也算是san 的一种，只是服务器和存储之间通过网络交换机互联，性能不算最好，但不受距离的限制，ip 存储应用十分广泛，一般也可作为大型监控存储</p>
+<p>IP-SAN 也算是san的一种，只是服务器和存储之间通过网络交换机互联，性能不算最好，但不受距离的限制，ip 存储应用十分广泛，一般也可作为大型监控存储</p>
+<p>ip-san 可以将存储设备分成一个或多个卷，并导出给前端应用客户端，客户端计算机可以对这些导过来的卷进行新建文件系统 格式化操作，客户端计算机对这些卷的访问方式为设备级的块访问，IP-SAN 通过把数据分成多个数据块 block 并行写入 读出磁盘，块级访问的特性决定了iscsi 数据访问的高io 性能和传输低延迟</p>
+<p>简单的说，它是以块作为存储的，你可以认为它是含阵列功能的硬盘，其实就是磁盘阵列+硬盘</p>
+<p>相比较nvr 存储来说，ip-san 一般会与流媒体服务器一起使用</p>
+<p>其中流媒体服务器的作用是为了有效的解决多用户同时访问同一实时视频数据信息时对网络宽带重复占用的问题，充分节省网络带宽资源，有效降低网络阻塞的发生，需要在联网监控中心配备一台流媒体服务器</p>
+<p>ip-san 存储模式具有如下特点</p>
+<p>具有高带宽 块 级数据传输的优势</p>
+<p>即使tpc ip ip 网络技术成熟，具有tcp ip 的所有优点，可路由等，减少了配置、维护管理的复杂度</p>
+<p>可以通过以太网来部署iscsi 存储网络，易部署，成本低</p>
+<p>易于扩展，当需要增加存储空间时，只需要增加存储设备即可完全满足，扩展性高</p>
+<p>数据迁移和远程镜像容易，只要网络带宽支持，基本没有距离限制，更好的支持备份和异地容灾</p>
+<p>CRV 存储<br>海康 crv 存储模式可支持视频流经编码器直接写入存储设备，省去存储服务器成本，避免服务器形成单点故障和性能瓶颈，独特的数据结构确保监控服务的高稳定和高性能</p>
+<p>存储框架</p>
+<p>而CVR 是安防监控的专用视频存储设备，cvr 是tcp ip 上的视频流改写成流数据结构直接写到磁盘里，所以磁盘里存的不是文件，没有碎片</p>
+<p>CVR 存储模式的特点</p>
+<p>前端直接统一管理</p>
+<p>海康cvr 存储模式可支持视频流经编码器直接写入存储设备，省去存储服务器，可通过集中管理平台可实现多网络存储设备的集中化管理和状态监控，可以实现业务系统中存储设备的集中配置，管理，实时监控存储设备单元工作状态及其对应可管理的设备部件，运行协议，RAID 组等内容，集中报警管理支持对存储设备的定期状态巡检功能，对系统运行状态  阵列运行，iscsi http cifs scsi 通道等状态进行实时监控，集中显示</p>
+<ol start="2">
+<li>简化网络结构</li>
+</ol>
+<p>海康cvr 存储模式通过前端编码设备直接写入存储设备中，不需要存储服务器，简化网络结构，解放原有设计中存储服务器与存储设备之间网络压力问题</p>
+<ol start="3">
+<li>独有的流媒体文件系统保护技术</li>
+</ol>
+<p>海康cvr 存储模式采用独特的vspp 视频流预保护技术，彻底解决由于断点断网引起的文件系统不稳定甚至文件系统损坏而导致的监控服务停止、数据只读或丢失等故障问题</p>
+<p>海康cvr 存储模式采用自身独有的数据块管理结构和容错机制，脱离对服务器端文件系统的依赖，避免其文件系统损坏对监控业务造成影响，提供更加稳定，高效的管理方式</p>
+<ol start="4">
+<li>高效的磁盘碎片免疫技术</li>
+</ol>
+<p>海康cvr 存储模式采用磁盘预分配与延迟分配技术相结合，首先查找空闲空间区域并用于存储新数据的过程，最大程度地提高系统性能和避免磁盘碎片，同时，结合高效的碎片整理程序，在系统空闲时对磁盘碎片进行整理，改善系统的性能</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-20230512-端口映射应用场景"
   class="article article-type-post"
   itemscope
@@ -1832,101 +1917,6 @@
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">  * @file       led.h</span></span><br><span class="line"><span class="comment">  * @author     JonesLee</span></span><br><span class="line"><span class="comment">  * @email    Jones_Lee3@163.com</span></span><br><span class="line"><span class="comment">  * @version  V4.01</span></span><br><span class="line"><span class="comment">  * @date     07-DEC-2017</span></span><br><span class="line"><span class="comment">  * @license    GNU General Public License (GPL)  </span></span><br><span class="line"><span class="comment">  * @brief    Controller Area Network</span></span><br><span class="line"><span class="comment">  * @detail   detail</span></span><br><span class="line"><span class="comment">  * @attention</span></span><br><span class="line"><span class="comment">  *  This file is part of OST.                                                  \n                                                                  </span></span><br><span class="line"><span class="comment">  *  This program is free software; you can redistribute it and/or modify     \n     </span></span><br><span class="line"><span class="comment">  *  it under the terms of the GNU General Public License version 3 as        \n   </span></span><br><span class="line"><span class="comment">  *  published by the Free Software Foundation.                                 \n </span></span><br><span class="line"><span class="comment">  *  You should have received a copy of the GNU General Public License      \n      </span></span><br><span class="line"><span class="comment">  *  along with OST. If not, see &lt;http://www.gnu.org/licenses/&gt;.            \n  </span></span><br><span class="line"><span class="comment">  *  Unless required by applicable law or agreed to in writing, software        \n</span></span><br><span class="line"><span class="comment">  *  distributed under the License is distributed on an &quot;AS IS&quot; BASIS,          \n</span></span><br><span class="line"><span class="comment">  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.   \n</span></span><br><span class="line"><span class="comment">  *  See the License for the specific language governing permissions and      \n  </span></span><br><span class="line"><span class="comment">  *  limitations under the License.                         \n</span></span><br><span class="line"><span class="comment">  *                                         \n</span></span><br><span class="line"><span class="comment">  * @htmlonly </span></span><br><span class="line"><span class="comment">  * &lt;span style=&quot;font-weight: bold&quot;&gt;History&lt;/span&gt; </span></span><br><span class="line"><span class="comment">  * @endhtmlonly </span></span><br><span class="line"><span class="comment">  * Version|Auther|Date|Describe</span></span><br><span class="line"><span class="comment">  * ------|----|------|-------- </span></span><br><span class="line"><span class="comment">  * V3.3|Jones Lee|07-DEC-2017|Create File</span></span><br><span class="line"><span class="comment">  * &lt;h2&gt;&lt;center&gt;&amp;copy;COPYRIGHT 2017 WELLCASA All Rights Reserved.&lt;/center&gt;&lt;/h2&gt;</span></span><br><span class="line"><span class="comment">  */</span>  </span><br><span class="line"><span class="comment">/** @addtogroup  BSP</span></span><br><span class="line"><span class="comment">  * @&#123;</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">  * @brief Light Emitting Diode</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line"><span class="comment">/** @addtogroup LED </span></span><br><span class="line"><span class="comment">  * @&#123;</span></span><br><span class="line"><span class="comment">  */</span> </span><br><span class="line"><span class="meta">#<span class="keyword">ifndef</span> __LED_H__</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> __LED_H__</span></span><br><span class="line"><span class="meta">#<span class="keyword">ifdef</span> __cplusplus</span></span><br><span class="line"><span class="keyword">extern</span> <span class="string">&quot;C&quot;</span> &#123;</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span> </span></span><br><span class="line">  <span class="meta">#<span class="keyword">include</span> <span class="string">&quot;bsp.h&quot;</span></span></span><br><span class="line">  <span class="function"><span class="keyword">extern</span> s32  <span class="title">led_init</span><span class="params">(Led_TypeDef led)</span></span>;</span><br><span class="line">  <span class="function"><span class="keyword">extern</span> s32  <span class="title">led_config</span><span class="params">(<span class="type">void</span>)</span></span>;</span><br><span class="line">  <span class="function"><span class="keyword">extern</span> s32  <span class="title">led_on</span><span class="params">(Led_TypeDef led)</span></span>;</span><br><span class="line">  <span class="function"><span class="keyword">extern</span> s32  <span class="title">led_off</span><span class="params">(Led_TypeDef led)</span></span>;</span><br><span class="line">  <span class="function"><span class="keyword">extern</span> s32  <span class="title">led_toggle</span><span class="params">(Led_TypeDef led)</span></span>;</span><br><span class="line"><span class="meta">#<span class="keyword">ifdef</span> __cplusplus</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">endif</span>  <span class="comment">/*__LED_H__ */</span></span></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">  * @&#125;</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">  * @&#125;</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line"><span class="comment">/******************* (C)COPYRIGHT 2017 WELLCASA All Rights Reserved. *****END OF FILE****/</span></span><br></pre></td></tr></table></figure>
 
 <p>前面说明了是C语言的，C语言没有继承一说，在C++中有时候需要展示继承，如图</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20230418-用sphinx快速制作文档"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/04/18/20230418-%E7%94%A8sphinx%E5%BF%AB%E9%80%9F%E5%88%B6%E4%BD%9C%E6%96%87%E6%A1%A3/"
-    >20230418-用sphinx快速制作文档</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/04/18/20230418-%E7%94%A8sphinx%E5%BF%AB%E9%80%9F%E5%88%B6%E4%BD%9C%E6%96%87%E6%A1%A3/" class="article-date">
-  <time datetime="2023-04-17T23:55:19.000Z" itemprop="datePublished">2023-04-18</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>Sphinx 快速制作文档</p>
-<p>简介</p>
-<p>sphinx 是一种文档工具，它可以令人轻松的撰写出清晰且优美的文档，由georg brandl 在bsd 许可证下开发，新版的python文档就是由sphinx 生成的，并且它已成为python项目的首选的文档工具，同时它对c++项目也有很好的支持，并计划对其他开发语言添加特殊支持，本站当然也是使用sphinx 生成的，它采用 reStructuredText Sphinx 还在继续开发，下面列出了其良好特性，这些特性在python官方文档中均有体现</p>
-<p>丰富的输出格式，支持HTML 包括windows 帮助文档，latex 可以打印PDF版本，manual pages man 文档，纯文本</p>
-<p>完备的交叉引用，语义化的标签，并可以自动化链接函数，类，引文，术语及相似的片段信息</p>
-<p>明晰的分层结构 可以轻松的定义文档树，并自动化链接同级 父级 下级文章</p>
-<p>美观的自动索引  可自动生成美观的模块索引</p>
-<p>精确的语法高亮  基于pygments 自动生成语法高亮</p>
-<p>开放的扩展，支持代码块的自动测试，并包含python模块的自述文档 api docs 等</p>
-<p>sphinx 使用reStructureText 作为标记语言，可以享有docutils 为restructureText 提供的分析，转换等多种工具</p>
-<p>安装sphinx </p>
-<p>sphinx 为python 语言的一个第三方库，我们需要在终端中输入下列命令进行安装</p>
-<p>pip install sphinx</p>
-<p>创建 sphinx 项目</p>
-<p>创建一个用于存放文档的文件夹，然后在该文件夹路径下运行下列命令快速生成sphinx 项目</p>
-<p>sphinx-quickstart</p>
-<p>接下来会让你选择一些配置</p>
-<p>设置文档的根路径  回车 使用默认设置</p>
-<p>是否分离source 和build 目录</p>
-<p>设定模板前缀  回车 使用默认选项</p>
-<p>输入项目名称和作者</p>
-<p>输入项目版本号</p>
-<p>文档语言 回车 默认即可</p>
-<p>设定文档就按的后缀</p>
-<p>设定首页名称  回车 选择默认index 即可</p>
-<p>根据需要选择是否开启 epub 输出 一般用不到 回车默认不开启即可</p>
-<p>根据需求选择是否开启相应的sphinx 拓展功能</p>
-<p>创建项目以后目录结构如下所示</p>
-<p>build 用来存放通过make html 生成文档网页文件的目录</p>
-<p>source 存放用于生成文档的源文件</p>
-<p>conf.py sphinx 的配置文件</p>
-<p>index.rst 主文档</p>
-<p>定义文档结构</p>
-<p>主文档 index.rst 的主要功能是被转换成欢迎页，它包含一个目录表 table of contents tree 或者 toctree sphinx 主要功能是使用reStructureText 把许多文件组织成一份结构合理的文档</p>
-<p>toctree 指令初始值如下</p>
-<p>你可以在content 的位置添加文档列表</p>
-<p>注 文档文件放在与index.rst 同级目录下</p>
-<p>支持markdown 文件、更改文档主题</p>
-<p>spinx 本身不支持md 文件生成文档，需要我们使用第三方库 recommonmark 进行转换，首先分别运行下列命令安装 recommonmark 与sphinx_rtd_theme 库</p>
-<p>pip install recommonmark</p>
-<p>pip install sphinx_rtd_theme</p>
-<p>a安装好 在conf.py 中修改下列两个配置</p>
-<p>并新增</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">source_parsers = &#123;</span><br><span class="line">    &#x27;.md&#x27;: CommonMarkParser,</span><br><span class="line">    &#x27;.MD&#x27;: CommonMarkParser,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>生成文档</p>
-<p>在sphinx 项目所在的文件夹路径下运行下列命令生成文档</p>
-<p>make html</p>
-<p>生成后的文档位于 build&#x2F;html 文件夹内，用浏览器打开index.html 即可看到生成后的文档</p>
  
       <!-- reward -->
       
