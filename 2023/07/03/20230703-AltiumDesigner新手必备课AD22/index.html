@@ -80,7 +80,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> 字数统计:</span>
-            <span class="post-count">2.1k</span>
+            <span class="post-count">2.6k</span>
         </span>
     </span>
 
@@ -89,7 +89,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> 阅读时长≈</span>
-            <span class="post-count">7 分钟</span>
+            <span class="post-count">9 分钟</span>
         </span>
     </span>
 </div>
@@ -194,6 +194,47 @@
 <p>元件模型的元素，菜单命令下面的圆弧 椭圆 线条 多边形 等元素进行组合成</p>
 <p>创建的元件进行器件属性的设置，完成该元件的模型创建</p>
 <p>原理图库只是一个实物器件在我们图纸上的一个表示，无需对事物尺寸负责，但还需要对其进行规范绘制，利于原理图可读性</p>
+<hr>
+<p>调用 他人的原理图库</p>
+<p>ctrl cv  SCH Library</p>
+<p>PCB联盟网</p>
+<p><a target="_blank" rel="noopener" href="http://www.pcbbar.com/">www.pcbbar.com</a></p>
+<p>pcb 超级库</p>
+<p>虽然我们有时候需要根据自己需求创建原理图库，但是毕竟这要花费带量的时间和精力 元件库的来源</p>
+<ol>
+<li><p>复制现有库</p>
+</li>
+<li><p>已有原理图进行生成</p>
+</li>
+<li><p>IC 封装网 <a target="_blank" rel="noopener" href="http://www.iclib.com/">www.iclib.com</a></p>
+</li>
+</ol>
+<hr>
+<p>第7节  检查原理图库的正确性病生成报告</p>
+<p>我们需要知晓我们创建完成的原理图库是否满足规范要求，这个时候我们可以通过软件的检查与报告这个功能来实现</p>
+<p>duplicate-component name 重复的元件名称<br>duplicate-pins 重复的管脚<br>missing-description 元件描述未填写<br>missing-pin name 管脚名称未填写<br>missing-footprint 元件封装未填写<br>missing-pin number 元件管脚号未填写<br>missing-default designator 文件位号未填写<br>missing-missing pins in sequence  在一个序列的管脚号中缺少某个号码</p>
+<p>demo.cmp</p>
+<p>报告-器件规则检查</p>
+<p>全部勾选</p>
+<p>demo.err</p>
+<p>原理图页的大小设置及注意事项</p>
+<p>双击页边缘</p>
+<p>options 进行设置</p>
+<p>custom</p>
+<p>原理图库的设计<br>原理图的设计</p>
+<p>PCB封装库的设计<br>pcb布局和pcb 布线</p>
+<p>在设计原理图之前我们一般需要对原理图页进行一定的设置，可以提高设计原理图的效率，虽然在实际的应用中，有时候不进行准备设置也没有很大关系，但是基于设计效率的提供，推荐读者进行设置</p>
+<p>网格的设置有利于放置元件及绘制导线的对齐，以达到 规范和美化设计的目的</p>
+<p>推荐设置格点为100mil</p>
+<p>09 原理图库调用与器件的摆放</p>
+<p>放置元件，需要先装载或者打开创建的元件库，可以通过执行右下角命令<br>Panels-Components 调出原理图库 libraries 进行装载</p>
+<p>打开绘制的原理图</p>
+<p>原理图模型的放置</p>
+<p>放置</p>
+<p>Panels - components </p>
+<p>Models 预览</p>
+<p>二极管模型</p>
+<p>调用别人的原理图库</p>
  
       <!-- reward -->
       
