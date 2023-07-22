@@ -80,7 +80,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> 字数统计:</span>
-            <span class="post-count">76</span>
+            <span class="post-count">795</span>
         </span>
     </span>
 
@@ -89,7 +89,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> 阅读时长≈</span>
-            <span class="post-count">1 分钟</span>
+            <span class="post-count">2 分钟</span>
         </span>
     </span>
 </div>
@@ -106,6 +106,15 @@
 <p>svg png eps ps 包括所有alyph 全放在一张上的以及单个glyph 一张</p>
 <p>raw data 存储为json 格式，还有metric 信息以及 outline bitmap data<br>OTF TTF PFB 这个目前会通过libfontforge 或otfcc 实现</p>
 <p>以mf 资源存储：以otf 存储 &#x3D; 1:10</p>
+<hr>
+<p>字体对于我们到底是什么<br>字体是一种可以用以表现特定目的资源<br>而对于另外一些人而言，字体其实可以是一种程序产物，是一种数据，但也可以本身是程序产物，是一种数据，但也可以本身就是程序</p>
+<p>对于metafont 而言，字体其实就是第三种形态的东西</p>
+<p>这个meta 的意思就是第三种，你们大可以理解为是一种高阶的字体描述语言，那么低阶 是什么，低阶其实可以理解为字体的点阵形式或者矢量形式本身</p>
+<p>metafont 的这个meta ，其实归根到底是通过一系列算法生成bezier 曲线，然后通过转换变为点阵的，正因为只能输出点阵，所以很多人以为metafont 是一种过时的东西，但是呢，其实历史上也是有过多例生成曲线的实验性质的项目  mf2ps mflua 但是大多数没有坚持下来</p>
+<p>第二个准备知识就是bezier 曲线，这个是比较基础的计算机图形学的概念了，在一般教科书中都能够找到，但是有一点必须说明，metafont 之中使用的是3次bezier 曲线来做的，而且，METAFONT中的所有线都是用bezier描述，也就是说，就连直线也是用四个点描述的。这个在某方面会觉得多余，但是等到我的扩展版METAFONT出来之后，是可以在运行的时候开相应的flag做优化的。还有一个比较有意思的东西，就是现在的TrueType以及OpenType，其实都是可以转换为METAFONT进行输出的，当然输出来的曲线形式和原始的并没有差别，但是这个东西很少有人去做了。</p>
+<p>第三个准备知识，是metafont 中的一些概念，比如说pen 和绘制曲线的东西，上一段所说的，是最简单的，按照你输入的完备的曲线构成的path 输出，metafont 的威力就在于可以使用pen 来绕着一个path 进行绘制，实际上画出包络线，这种底层细节实际上是被隐藏在plain 格式之中了，大部分人基本上没有写过metafont 的宏</p>
+<p>第四个准备知识，是METAFONT语言本身。拿现在比较流行的观念来看，其实TeX和METAFONT本身就是领域特定语言，在语法上其实要求并没有那么高的，宏语言是足够的。但是，对比下来，METAFONT的一般语法还是要比TeX好学的，语法是类似于当时的AOGOL的，还是比较好写出结构化的字体程序的。</p>
+<p>精心设计好的metafont 字体系统，能够大大较低字体制作的人工成本</p>
  
       <!-- reward -->
       
