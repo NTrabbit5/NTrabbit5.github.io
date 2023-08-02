@@ -126,6 +126,106 @@
     
     
     <article
+  id="post-20221216-Appinventor学习环境搭建"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/12/16/20221216-Appinventor%E5%AD%A6%E4%B9%A0%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/"
+    >20221216-Appinventor学习环境搭建</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/12/16/20221216-Appinventor%E5%AD%A6%E4%B9%A0%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" class="article-date">
+  <time datetime="2022-12-16T12:44:55.000Z" itemprop="datePublished">2022-12-16</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>[TOC]</p>
+<h2 id="0x01"><a href="#0x01" class="headerlink" title="0x01"></a>0x01</h2><h2 id="0x02"><a href="#0x02" class="headerlink" title="0x02"></a>0x02</h2><h2 id="0x03"><a href="#0x03" class="headerlink" title="0x03"></a>0x03</h2><h2 id=""><a href="#" class="headerlink" title=""></a></h2> 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-20221216-HC-06蓝牙模块"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/12/16/20221216-HC-06%E8%93%9D%E7%89%99%E6%A8%A1%E5%9D%97/"
+    >20221216-HC-06蓝牙模块</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/12/16/20221216-HC-06%E8%93%9D%E7%89%99%E6%A8%A1%E5%9D%97/" class="article-date">
+  <time datetime="2022-12-16T11:46:36.000Z" itemprop="datePublished">2022-12-16</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>主机：用于向从机下发指令，能够搜索并主动建立连接的一方</p>
+<p>从机：用于接收主机下发的命令，不能主动建立连接，只能等别人连接自己。（HC-06只能工作在从机模式下。）<br>主从一体：能够在主机和从机模式间切换，即可做主机也可作从机。如：HC-05既可以设置为主机也可以设置为从机。</p>
+<p>引脚说明</p>
+<p>HC-05 和HC-06的硬件相同，都采用CSR 公司的BC417143 芯片，支持蓝牙2.1+EDR 规范，只是芯片内部的控制程序不同</p>
+<p>通常可采用万用表「电阻」档，测量底板RxD引脚和蓝牙模块本身（就是焊接上去那块板）的第2脚，如果电阻值为接近于0，则代表沒有限流电阻。如下图：</p>
+<p>使用AT 指令前，最好由一块USB 转TTL 的模块，将蓝牙模块与usb 转ttl 模块连接完成，</p>
+<p>AT指令<br>终端返回信息<br>功能描述<br>AT<br>oK<br>确认连接状态<br>AT+VERSION<br>OK linvor V1.8<br>查看软件版本号<br>AT+NAMEOOo<br>oK setname<br>设置蓝牙名称<br>AT+PINOO0o<br>oK setPIN<br>设定密码<br>AT+BAUD1<br>OK 1200<br>将波特率设置为:1200<br>AT+BAUD2<br>OK 2400<br>将波特率设置为:2400<br>AT+BAUD3<br>OK 4800<br>将波特率设置为:4800<br>AT+BAUD4<br>oK 9600<br>将波特率设置为:9600<br>AT+BAUD5<br>OK 19200<br>将波特率设置为:19200<br>AT+BAUD6<br>OK 38400<br>将波特率设置为:38400<br>AT+BAUD7<br>OK 57600<br>将波特率设置为:57600<br>AT+BAUD8<br>OK 115200<br>将波特率设置为::115200 dn.net&#x2F;O17136(</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-20221216-AT指令介绍"
   class="article article-type-post"
   itemscope
@@ -810,440 +910,6 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Java<span class="meta">@ResponseBody</span>    <span class="meta">@GetMapping(&quot;validate&quot;)</span>    <span class="keyword">public</span> Map&lt;String, String&gt; <span class="title function_">validate</span><span class="params">(<span class="meta">@Validated(&#123;AllFiled.class&#125;)</span> UserInfo userInfo, BindingResult result)</span>&#123;<span class="comment">//        SpringValidatorAdapter adapter = (SpringValidatorAdapter)result;        Map&lt;String, String&gt; map = new HashMap&lt;String, String&gt;();        if (result.hasErrors()) &#123;            List&lt;ObjectError&gt; list  = result.getAllErrors();            for (ObjectError error :                    list) &#123;                FieldError fieldError = (FieldError)error;                String defaultMessage = fieldError.getDefaultMessage();                String field = fieldError.getField();                map.put(field, defaultMessage);            &#125;        &#125;        return map;    &#125;//    consumes = &#123;//        MediaType.MULTIPART_FORM_DATA_VALUE &#125;, produces = MediaType.TEXT_PLAIN_VALUE    @PostMapping(value = &quot;file&quot;)    @ResponseBody    public String file(@RequestParam(&quot;username&quot;) String name, MultipartFile file) throws IOException &#123;        //获取文件名        String fileName = file.getOriginalFilename();        //获取表单提交文件使用的字段        String partName = file.getName();        //判断文件是否为空        boolean empty = file.isEmpty();        //获取ContentType        String contentType = file.getContentType();        //获取文件直接数        Long size = file.getSize();        //获取文件所有字节        byte[] bytes = file.getBytes();        //获取InputStream        InputStream in = file.getInputStream();        //根据文件头获取文件类型        String type = FileType.getFileType(in);                //业务.....        StringBuilder builder = new StringBuilder();        //存储文件        File root = new File(&quot;D:/temp&quot;);        if (!root.isDirectory()) &#123;            root.mkdirs();        &#125;        try &#123;            file.transferTo(new File(root, name));            return String.format(&quot;Upload to %s&quot;, fileName);        &#125; catch (IllegalStateException e) &#123;            e.printStackTrace();        &#125; catch (IOException e) &#123;            e.printStackTrace();        &#125;        return &quot;Upload Failed&quot;;    &#125;</span></span><br></pre></td></tr></table></figure>
 
 
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20221214-二维码版本与容量"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/12/14/20221214-%E4%BA%8C%E7%BB%B4%E7%A0%81%E7%89%88%E6%9C%AC%E4%B8%8E%E5%AE%B9%E9%87%8F/"
-    >20221214-二维码版本与容量</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/12/14/20221214-%E4%BA%8C%E7%BB%B4%E7%A0%81%E7%89%88%E6%9C%AC%E4%B8%8E%E5%AE%B9%E9%87%8F/" class="article-date">
-  <time datetime="2022-12-14T12:07:19.000Z" itemprop="datePublished">2022-12-14</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>二维码 QR - 版本与容量</p>
-<table>
-<thead>
-<tr>
-<th>版本</th>
-<th>矩阵大小</th>
-<th>纠错等级</th>
-<th>八位字节</th>
-<th>数字</th>
-<th>字母数字</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>1</td>
-<td>21</td>
-<td>L</td>
-<td>17</td>
-<td>41</td>
-<td>25</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td>M</td>
-<td>14</td>
-<td>34</td>
-<td>20</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td>Q</td>
-<td>11</td>
-<td>27</td>
-<td>16</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td>H</td>
-<td>7</td>
-<td>17</td>
-<td>10</td>
-</tr>
-<tr>
-<td>2</td>
-<td>25</td>
-<td>L</td>
-<td>32</td>
-<td>77</td>
-<td>47</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td>M</td>
-<td>26</td>
-<td>63</td>
-<td>38</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td>Q</td>
-<td>20</td>
-<td>48</td>
-<td>29</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td>H</td>
-<td>14</td>
-<td>34</td>
-<td>20</td>
-</tr>
-<tr>
-<td>3</td>
-<td>29</td>
-<td>L</td>
-<td>53</td>
-<td>127</td>
-<td>77</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td>M</td>
-<td>42</td>
-<td>101</td>
-<td>61</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td>Q</td>
-<td>32</td>
-<td>77</td>
-<td>47</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td>H</td>
-<td>24</td>
-<td>58</td>
-<td>35</td>
-</tr>
-<tr>
-<td>4</td>
-<td>33</td>
-<td>L</td>
-<td>78</td>
-<td>187</td>
-<td>114</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td>M</td>
-<td>62</td>
-<td>149</td>
-<td>90</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td>Q</td>
-<td>46</td>
-<td>111</td>
-<td>67</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td>H</td>
-<td>34</td>
-<td>82</td>
-<td>50</td>
-</tr>
-<tr>
-<td>5</td>
-<td>37</td>
-<td>L</td>
-<td>106</td>
-<td>255</td>
-<td>154</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td>M</td>
-<td>84</td>
-<td>202</td>
-<td>122</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td>Q</td>
-<td>60</td>
-<td>144</td>
-<td>87</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td>H</td>
-<td>44</td>
-<td>106</td>
-<td>64</td>
-</tr>
-<tr>
-<td>6</td>
-<td>41</td>
-<td>L</td>
-<td>134</td>
-<td>322</td>
-<td>195</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td>M</td>
-<td>106</td>
-<td>255</td>
-<td>154</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td>Q</td>
-<td>74</td>
-<td>178</td>
-<td>108</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td>H</td>
-<td>58</td>
-<td>139</td>
-<td>84</td>
-</tr>
-<tr>
-<td>7</td>
-<td>45</td>
-<td>L</td>
-<td>154</td>
-<td>370</td>
-<td>224</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td>M</td>
-<td>122</td>
-<td>293</td>
-<td>178</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td>Q</td>
-<td>86</td>
-<td>207</td>
-<td>125</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td>H</td>
-<td>64</td>
-<td>154</td>
-<td>93</td>
-</tr>
-<tr>
-<td>8</td>
-<td>49</td>
-<td>L</td>
-<td>192</td>
-<td>461</td>
-<td>279</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td>M</td>
-<td>152</td>
-<td>365</td>
-<td>221</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td>Q</td>
-<td>108</td>
-<td>259</td>
-<td>157</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td>H</td>
-<td>84</td>
-<td>202</td>
-<td>122</td>
-</tr>
-<tr>
-<td>9</td>
-<td>53</td>
-<td>L</td>
-<td>230</td>
-<td>552</td>
-<td>335</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td>M</td>
-<td>180</td>
-<td>432</td>
-<td>262</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td>Q</td>
-<td>130</td>
-<td>312</td>
-<td>189</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td>H</td>
-<td>98</td>
-<td>235</td>
-<td>143</td>
-</tr>
-<tr>
-<td>10</td>
-<td>57</td>
-<td>L</td>
-<td>271</td>
-<td>652</td>
-<td>395</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td>M</td>
-<td>213</td>
-<td>513</td>
-<td>311</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td>Q</td>
-<td>151</td>
-<td>364</td>
-<td>221</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td>H</td>
-<td>119</td>
-<td>288</td>
-<td>174</td>
-</tr>
-</tbody></table>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20221214-PDF文本的基本结构"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/12/14/20221214-PDF%E6%96%87%E6%9C%AC%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%BB%93%E6%9E%84/"
-    >20221214-PDF文本的基本结构</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/12/14/20221214-PDF%E6%96%87%E6%9C%AC%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%BB%93%E6%9E%84/" class="article-date">
-  <time datetime="2022-12-14T06:11:47.000Z" itemprop="datePublished">2022-12-14</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>PDF 文件是可以有效随机存取和增量更新的，根据基本规则，一个PDF 文件由四部分组成</p>
-<ol>
-<li>header部分：占一行，标识PDF规范的版本；</li>
-<li>body部分：包含PDF文件中的所有obj对象；</li>
-<li>cross-reference table 部分：交叉引用表，包含文件中间接对象的信息；</li>
-<li>trailer部分：包含交叉引用表和文件正文中某些特殊对象的位置；</li>
-</ol>
-<p>按照惯例，PDF 文件中的标记按行排列，每行的终止标记可以是回车、换行、或两者兼有，包含二进制数据的PDF 文件可以有任意长的行</p>
-<p>为了提高PDF 文件的兼容性，不属于流对象的数据行限制为不超过255个字符，但有一个例外，签名字典的内容字符串不受行长度限制</p>
  
       <!-- reward -->
       
