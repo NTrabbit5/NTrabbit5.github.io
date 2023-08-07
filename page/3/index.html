@@ -126,6 +126,79 @@
     
     
     <article
+  id="post-20230614-手机充电协议"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/06/14/20230614-%E6%89%8B%E6%9C%BA%E5%85%85%E7%94%B5%E5%8D%8F%E8%AE%AE/"
+    >20230614-手机充电协议</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/06/14/20230614-%E6%89%8B%E6%9C%BA%E5%85%85%E7%94%B5%E5%8D%8F%E8%AE%AE/" class="article-date">
+  <time datetime="2023-06-14T08:02:07.000Z" itemprop="datePublished">2023-06-14</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>手机快充协议</p>
+<p>各家厂商为了提升充电速度于是发展出了多种快充协议快充，不同厂家选择的充电电压和电流都不同，所以需要一个协议在充电器和手机间进行协调，确保手机不会被过大的电流充坏</p>
+<p>USB PD 是目前通用性最高的公共协议之一，从iPhone、MacBook、市面上大部分采用 Type-C 接口的 Android 设备乃至 Nintendo Switch，都能使用这种协议进行快充。</p>
+<p>换句话说，如果你日常使用 Android 作为主力机，同时还有一部 iPhone 备用，游戏机是 Nintendo Switch，工作还需要用到笔记本电脑，理论上来说这些设备都可以使用同一个支持 PD 协议的电源来正常握手并实现快充。只要有type-c接口。</p>
+<p>目前最新的usb_pd 3.0 支持100W的充电功率，具体准则分为了10W 18W 36W 60W和100W五种，预期相对应的电压则有5V 12V 与20V 最大支持电流有1.5A 2 3 5 等不同的档位</p>
+<h2 id="私有协议"><a href="#私有协议" class="headerlink" title="私有协议"></a>私有协议</h2><p>高通 QC<br>QuickCharge，是由高通主导的快速充电技术。 主要解决硬件不同环境下的电池快速充电。 以是高通QC2.0为例，在不改变接口的情况下进一步提高充电速度，就需要引入更高的充电电压（HVDCP）。</p>
+<p>1、高通为usb接口设计了一套通过改变USB接口的d＋、d－两脚电压，实现充电头手机相互识别的握手协议。</p>
+<p>2、在手机通过握手协议申请更高电压后，充电器就输出手机申请的电压。这就是高通QC2.0的充电方式。</p>
+<p>3、根据电压档位的不同，又可以细分为classa和classb两个版本。其中A级标准支持5V、9V和12V三种电压，适用于智能手机、平板电脑以及其它便携式电子设备。</p>
+<p>4、B级则支持20V电压，最大可以输出40w功率，应用用对充电速度要求更高的设备。</p>
+<p>联发科 PE<br>联发科的快冲标准是Pump Express，就像高通的QuickCharge技术一样，也是一项用于移动设备为主的快冲协议，支持这个协议的设备和充电头在握手之后（通过充电电流的大小来触发协议，随后触发升压或者降压），可以通过提升电压及电流，实现快冲的效果。</p>
+<p>vivo：FlashCharge<br>这是vivo品牌手机采用的一种大功率快充技术，与其他快充技术一样，通过更高的充电功率实现较短的充电时间，由于在芯片端采用的是独家的协议，因此无法在其他品牌或不支持该快充技术的充电头、手机中使用；</p>
+<p>华为：FCP &amp; SCP<br>FCP和SCP是华为推出的快充协议，前者是18W快充，9V&#x2F;2A（比较早），后者是超级快充（充电时手机会显示超级快充）（2016年发布），22.5W快充和40W快充，4.5V&#x2F;5A或5V4.5A往上，另外有的手机只支持22.5W快充的话，不会显示超级快充，但升级系统后支持超级快充，并显示超级快充，有些手机同时这两种快充（22.5W和40W快充）。</p>
+<p>小米ChargeTurbo快充协议<br>目前小米快充有50W、40W、30W等快充规格。</p>
+<p>小米采用高通骁龙处理器的机型对QC快充协议具有不错的支持，例如小米10至尊版支持QC5.0，小米10 Pro支持QC4+，两者都兼容PD3.0。</p>
+<p>OPPO: VOOC系列快充<br>早在14年的时候，OPPO就推出了VOOC 1.0，与主流快充采用高压方式不同，VOOC闪充采用的是低压高电流的方案。</p>
+<p>相比传统的高压快充，低压快充温控更好，效率更高，3000毫安时的Find7可以在30分钟内充电到75%，要知道当时还是2014年。</p>
+<p>此外由于电池系统、线材、充电头都被重新定制过的，所以一般充电器都不适配VOOC闪充。</p>
+<p>三星：AFC<br>三星出品的Adapting Fast Charger同时向下兼容兼容QC2.0。</p>
+<p>各个厂商各自的技术，一般来说要搭配自家的充电器才能使用，不同的私有协议不互通，你用华为的scp就算是40w也不能给oppo充40w。</p>
+<h2 id="不同协议之间的区别"><a href="#不同协议之间的区别" class="headerlink" title="不同协议之间的区别"></a>不同协议之间的区别</h2><p>高电压  低电流</p>
+<p>高电压、低电流充电方式需要到手机端进行变压，让电压下降到适合手机电池消化的范围。期间的能量损耗会以热能形式散发出来，这也导致了手机充电发热问题。高电压、低电流充电方式需要到手机端进行变压，让电压下降到适合手机电池消化的范围。期间的能量损耗会以热能形式散发出来，这也导致了手机充电发热问题。</p>
+<p>低电压  大电流</p>
+<p>低电压、大电流方案的主要缺点则是较高的定制成本、以及低适用性。手机内部相关元件、充电头和充电线，都需要根据需求定制。以线材为例，常见的通用充电线材只能承载3A的电流，要实现5A大电流快充，就必须对充电线进行改造。我们看到当年在快充上投入大量宣传的OPPO、Vivo的充电头更大、充电线更粗，就是基于这个原因。</p>
+<p>动态调整</p>
+<p>动态调整的快充，基本是基于多电芯（电荷泵）串联和将电压的转换操作交给充电头，然后通过充电头而非手机去做细节的电压变动来实现的。</p>
+<p>目前很多的厂家的快充都开始基于pps 可编程电源，从而实现高功率 大于100W 充电，也许有一天能出现一统江湖的协议也说不一定</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-20230614-fdisk：linux下管理磁盘分区的利器"
   class="article article-type-post"
   itemscope
@@ -1956,73 +2029,6 @@
     <div class="article-entry" itemprop="articleBody">
        
   <p>KMSELDI</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20230514-楼宇协议，什么是BACnet"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/05/14/20230514-%E6%A5%BC%E5%AE%87%E5%8D%8F%E8%AE%AE%EF%BC%8C%E4%BB%80%E4%B9%88%E6%98%AFBACnet/"
-    >20230514-楼宇协议，什么是BACnet</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/05/14/20230514-%E6%A5%BC%E5%AE%87%E5%8D%8F%E8%AE%AE%EF%BC%8C%E4%BB%80%E4%B9%88%E6%98%AFBACnet/" class="article-date">
-  <time datetime="2023-05-14T09:08:03.000Z" itemprop="datePublished">2023-05-14</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/495107879">https://zhuanlan.zhihu.com/p/495107879</a></p>
-<p>IT  和 OT 正在走向融合</p>
-<p>后疫情时代，智能建筑只会变得越来越重要，楼宇设备的集成也会更加普及与深度</p>
-<p>bacnet 代表 楼宇自动化和控制网络，是楼宇自动化中使用最广泛的标准协议，它的创建是为了简化楼宇自动化设备并开放数据通信，但是，我们为什么要使用它，它来自哪里</p>
-<p>bacnet 起源</p>
-<p>bacnet 是用于智能建筑的通信协议，是国际标准化组织，美国国家标准协会及美国采暖，制冷与空调工程师学会 定义的通信协议，楼宇设备由不同的厂商提供，每个设备都有其自有通讯协议，因此对于业主来说，系统的维护和监管极其繁琐，为了解决这一问题，bacnet 标准委员会因此诞生，它可以提高供应商之间的互操作型，最大限度地减少对各个设备制造商定义的专有系统的约束，除此之外，系统的标准化也使得整个楼宇自动化工作站成为可能，所有相关设备的数据可以在工作站中进行处理，而不必在乎这些数据出自哪个设备供应商提供的<br>bacnet 的第一个版本为标准135，于1995年被采用，bacnet 协议的开发也有利于hvac 行业，引入了整合和标准化bas 功能的可能性，如数据共享，报警，事件管理、趋势、调度和远程管理，bacnet 不仅仅是一个通信协议，bacnet 还定义和描述了网络上的设备，以及这些设备提供的对象和服务</p>
-<p>所以不像其他一些通信协议只关注信息如何移动，bacnet 对于网络上的设备具有内置的规则和行为，它可以识别网络上设备的类型，并知道对它们的期望，这就是对象发挥作用的地方</p>
-<p>BACnet 对象的定义</p>
-<p>在bacnet 设备中，数据被组织成对象，对象表示物理输入，输出和数据变量，这些变量表示设备上的点，以及其他更复杂的结果，如趋势日志和时间表，对象进一步定义为一组属性，可以通过工作站或其他软件进行监视或命令，考虑房间中的温度传感器:它可能有一个点，表示为一个可以称为“SPACE-TEMP”的对象，以便使其成为经过认证的BACnet设备，该传感器还将包括标准服务。因此，其他bacnet 设备或软件可以发现和读取这个space-temp 对象</p>
-<p>工作站，甚至是移动设备，都可以调用温度传感器内的所有其他相关数据点，使其能够在网络上被看到，并正确地传输其数据，这些服务在控制器中启用并运行，非常像服务器，有许多潜在的对象类型</p>
-<p>BLC 认证</p>
-<p>为了使业界保持 bacnet 设备之间的互操作性，而不管它们的制造商是谁，供应商必须将每个设备型号提交给bacnet 测试实验室，以获得复合bacnet 标准的认证，该认证证明供应商的设备是作为12种公共认证类型的设备之一所生产的，并且其对象和服务是按照标准操作的，如果没有BTL 认证，您将面临设备在bacnet 网络中无法正常通讯的风险</p>
-<p>这一切在建筑中是如何运作的，bacnet 支持七种局域网类型，通过以下方式进行通信</p>
-<p>IP(IPv4 and IPv6);<br>Ethernet(ISO 8802-3);<br>Master Slave&#x2F;Token Passing MS&#x2F;TP(RS485)<br>Point-to-Point (PTP) (RS 232)<br>ZigBee<br>LonTalk<br>ARCNET</p>
-<p>BBMD 功能</p>
-<p>目前使用的两种最普遍的局域网类型是 BACnet&#x2F;IP和BACnet MS&#x2F;TP。BACnet&#x2F;IP 允许跨多个子网、多区控制系统进行通信，利用光纤和千兆以太网的优点 并为设备分配ip 地址</p>
-<p>但是，目前大多数bacnet 网络都采用了使用RS485双绞线的MSTP 在某些情况下，您可能混合使用mstp 和ip 网络，或者您可能希望在服务器上安装一个工作站，而不必将rs_485接口集成到服务器中</p>
-<p>在这些情况下，我们将使用bacnet 路由器将bacnet mstp 和bacnet ip 网络连接。在具有IP子网的多个建筑物或多个子网的情况下，您将使用具有称为“BBMD”的特殊功能的BACnet路由器。BBMD代表“BACnet Broadcast Management Device”广播管理设备，是一种将BACnet广播消息以定向单播消息的形式从一个IP子网隧道到另一个IP子网的方法。因为IP路由器会阻塞广播消息，所以需要BBMD，而在BACnet中，广播消息是设备之间发现和通信的必要条件。</p>
-<p>这只是bacnet 工作方式的表面，每个安装都有一些细微的差别，可以用来优化网络的通信方式</p>
-<p>同时也欢迎您访问我们的intesis 网站</p>
-<p>了解更多bacnet 设备的通信解决方案</p>
  
       <!-- reward -->
       
