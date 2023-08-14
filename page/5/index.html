@@ -126,6 +126,88 @@
     
     
     <article
+  id="post-20230506-markdown绘图技巧"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/05/06/20230506-markdown%E7%BB%98%E5%9B%BE%E6%8A%80%E5%B7%A7/"
+    >20230506-markdown绘图技巧</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/05/06/20230506-markdown%E7%BB%98%E5%9B%BE%E6%8A%80%E5%B7%A7/" class="article-date">
+  <time datetime="2023-05-06T02:04:32.000Z" itemprop="datePublished">2023-05-06</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <ol>
+<li>流程图</li>
+</ol>
+<p>先在typora 中输入<br><code>```mermaid</code><br>然后敲击回车，即可初始化一张空白图</p>
+<p>语法解释 graph 关键字就是声明一张流程图，TD 向下，LR 向右边，这里的含义是 top-down 由上至下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">graph TD</span><br><span class="line">  A[Hard edge] --&gt;B(Round edge)</span><br><span class="line">    B --&gt; C&#123;Decision&#125;</span><br><span class="line">    C --&gt;|One| D[Result one]</span><br><span class="line">    C --&gt;|Two| E[Result two]</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>时序图</li>
+</ol>
+<p>语法解释 -&gt;&gt; 代表实线箭头 –&gt;&gt; 则代表虚线</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">sequenceDiagram</span><br><span class="line">    Alice--&gt;&gt;Bob: Hello Bob, how are you?</span><br><span class="line">    alt is sick</span><br><span class="line">    Bob-&gt;Alice: Not so good :(</span><br><span class="line">    else is well</span><br><span class="line">    Bob-&gt;&gt;Alice: Feeling fresh like a daisy</span><br><span class="line">    end</span><br><span class="line">    opt Extra response</span><br><span class="line">    Bob-&gt;&gt;Alice: Thanks for asking</span><br><span class="line">    end</span><br><span class="line">    Bob-&gt;&gt;Alice: Thanks </span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>状态图</li>
+</ol>
+<p>语法解释 <code>[*]</code> 表示开始或者结束，如果在箭头右边则表示结束</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">stateDiagram</span><br><span class="line">    [*] --&gt; Still</span><br><span class="line">    Still --&gt; [*]</span><br><span class="line"></span><br><span class="line">    Still --&gt; Moving</span><br><span class="line">    Moving --&gt; Still</span><br><span class="line">    Moving --&gt; Crash</span><br><span class="line">    Crash --&gt; [*]</span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>类图</li>
+</ol>
+<p>语法解释， <code>&lt;|--</code> 表示继承 + 表示 public - 表示private</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">classDiagram</span><br><span class="line">      Animal &lt;|--Duck</span><br><span class="line">      Animal &lt;|-- Fish</span><br><span class="line">      Animal &lt;|-- Zebra</span><br><span class="line">      Animal : +int age</span><br><span class="line">      Animal : +String gender</span><br><span class="line">      Animal: +isMammal()</span><br><span class="line">      Animal: +mate()</span><br><span class="line">      class Duck&#123;</span><br><span class="line">          +String beakColor</span><br><span class="line">          +swim()</span><br><span class="line">          +quack()</span><br><span class="line">      &#125;</span><br><span class="line">      class Fish&#123;</span><br><span class="line">          -int sizeInFeet</span><br><span class="line">          -canEat()</span><br><span class="line">      &#125;</span><br><span class="line">      class Zebra&#123;</span><br><span class="line">          +bool is_wild</span><br><span class="line">          +run()</span><br><span class="line">      &#125;</span><br></pre></td></tr></table></figure>
+
+
+<ol start="5">
+<li>甘特图</li>
+</ol>
+<p>甘特图 一般用来表示项目的计划排期，目前在工作中经常会用到</p>
+<p>语法也非常简单，从上到下依次是 图片标题、日期格式、项目、项目细分的任务</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">gantt</span><br><span class="line">    title 工作计划</span><br><span class="line">    dateFormat  YYYY-MM-DD</span><br><span class="line">    section Section</span><br><span class="line">    A task           :a1, 2020-01-01, 30d</span><br><span class="line">    Another task     :after a1  , 20d</span><br><span class="line">    section Another</span><br><span class="line">    Task in sec      :2020-01-12  , 12d</span><br><span class="line">    another task      : 24d</span><br></pre></td></tr></table></figure>
+
+<ol start="6">
+<li>饼图</li>
+</ol>
+<p>饼图使用pie 表示，标题下面分别是区域名称及其百分比</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-20230504-onvif协议快速入门"
   class="article article-type-post"
   itemscope
@@ -1548,60 +1630,13 @@
 </article>
 
     
-    <article
-  id="post-20230401-随笔"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/04/01/20230401-%E9%9A%8F%E7%AC%94/"
-    >20230401-随笔</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/04/01/20230401-%E9%9A%8F%E7%AC%94/" class="article-date">
-  <time datetime="2023-03-31T23:30:01.000Z" itemprop="datePublished">2023-04-01</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>立于皓月之边，不弱星光之势</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
   </article>
   
 
   
   <nav class="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/4/">上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/page/22/">22</a><a class="extend next" rel="next" href="/page/6/">下一页</a>
+    <a class="extend prev" rel="prev" href="/page/4/">上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/page/23/">23</a><a class="extend next" rel="next" href="/page/6/">下一页</a>
   </nav>
   
 </section>

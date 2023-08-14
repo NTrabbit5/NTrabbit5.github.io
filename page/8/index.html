@@ -126,6 +126,93 @@
     
     
     <article
+  id="post-20221224-HomeAssistant树莓派-远程安全访问"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/12/24/20221224-HomeAssistant%E6%A0%91%E8%8E%93%E6%B4%BE-%E8%BF%9C%E7%A8%8B%E5%AE%89%E5%85%A8%E8%AE%BF%E9%97%AE/"
+    >20221224-HomeAssistant树莓派-远程安全访问</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/12/24/20221224-HomeAssistant%E6%A0%91%E8%8E%93%E6%B4%BE-%E8%BF%9C%E7%A8%8B%E5%AE%89%E5%85%A8%E8%AE%BF%E9%97%AE/" class="article-date">
+  <time datetime="2022-12-24T03:57:15.000Z" itemprop="datePublished">2022-12-24</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>Home Assistant 本身为外网访问提供完整的 Let’s Encryption + Duck Dns 支持，<br>基于国内的网络环境，个人不太推荐，一是前者的加密需要每3个月进行更新，虽然有自动更新脚本和组件，但心里始终挂着一件事不舒服，二是国内网络运行商基本上封闭了80端口，后者直接ng</p>
+<p>国内进行端口转发，内网穿透、端口映射甚至是公网ip 设置都障碍重重，所以很多外文教程并不适用于国内的网络环境</p>
+<p>背景 </p>
+<p>80 端口封闭，443 端口开放，。<br>443 端口是https 的默认端口，映射之后访问不需要在域名后面添加端口号，适合强迫症使用，如果几个端口都封了的话，老实说，除了内网穿透，我也没有办法了</p>
+<p>无内网穿透 目前内网穿透没有什么好的免费方法，要么使用花生壳 ，要么使用frps 但是你也得有个服务器</p>
+<p>华硕路由器+改版梅林固件，选择koolshare 梅林固件主要是由 阿里云DDNS 插件，手动提交其实也是没有问题的，端口转发的话，基本上所有路由器固件都自带，无需担心</p>
+<p>HA 加密且无摄像头接入，没有一个摄像头是安全的，而且犯罪成本低，犯罪收益相当大，你可以试想一下你的生活轨迹、家庭情况瞬间暴露在外。当然，室外监控和店铺使用的朋友可以忽略此项。</p>
+<p>申请域名</p>
+<p>首先登陆阿里云 进入域名购买界面，在国内购买 cn com 域名必须进行实名认证</p>
+<p>这里选择万网的原因是方便接入去CA 证书的申请，一条龙服务舒心</p>
+<p>申请证书</p>
+<p>阿里云的云盾证书服务  对官人站提供免费的一年期CA 证书，一个账户可以申请5份免费证书</p>
+<p>免费证书实际上是由 赛门铁克 颁发的，如果你使用万网的域名，只要在签发过程中选择自动认证即可，手动认证的方法也很简单，前往域名解析页添加一段txt 记录即可</p>
+<p>证书签发后，我们就可以下载相关的证书了，如果你是使用ngix 或者apache 的话 按照指南下载调用即可，拿不准的话就选择其他下载，一般情况下可以下载到如下3个文件</p>
+<p>xxxx.pem 公钥文件<br>xxxx.key 私钥文件<br>xxxx.chain 证书链文件</p>
+<p>前2者必须有，后者可有可无，到这里我们的前期准备就基本完成了，接下来是一系列的路由器操作</p>
+<p>DDNS</p>
+<p>有了域名之后，我们就要将其解析到家中的公网ip ，才能实现外网访问，如背景中所述，目前大部分的家庭宽带用户只有动态的公网ip，而我们不可能每次都手动修改解析，因此需要DDNS 这一动态解析工具</p>
+<p>从插件中心下载安装 ALIDDNS 插件</p>
+<p>app key 和secret 从阿里云账户详情里面获取，检查时间可以设置地大一些，毕竟ip 更换得不是那么勤</p>
+<p>设置完毕后你就可以通过这个域名访问该ip 下的服务了，如果你在路由器的 系统管理 中打开了从互联网 设置路由器的话，那么现在你就可以通过访问域名+端口号 进入路由器设置面板了</p>
+<p>SSL 证书验证</p>
+<p>华硕路由器自带的ai cloud 功能默认使用https 服务，并支持上传 证书，可以简便地帮助我们验证证书的有效性</p>
+<p>当然最后的端口号是可以更改的。点击网址进入后，选择左下角的设定 - 证书 -汇入证书，依次上传下载的 3 个文件。之后保存退出，刷新网页，不出意外的话，你的地址左侧将会出现 绿钥匙图标。这说明你的证书是安全有效的。我们可以放心地将其用在 HA 中了。</p>
+<h2 id="端口转发"><a href="#端口转发" class="headerlink" title="端口转发"></a>端口转发</h2><p>既然要做到外网访问，就必须把内网的服务映射到外网，在这里就是所谓的进行端口转发，我们的ha 使用的是默认端口 8123 ，我们前往  外部网络，端口转发，中添加如下规则</p>
+<p>你可以将 通信端口范围，更改成其他外网访问的端口，443 是https 的默认访问端口</p>
+<p>至此，所有的铺垫工作都完成了，我们正式将ha 映射到外网中</p>
+<p>ha https </p>
+<p>打开 configuration.yaml 文件，配置 http 项：</p>
+<p>http:<br>  api_password: !secret http_password &#x2F;&#x2F;访问密码<br>  trusted_networks:     &#x2F;&#x2F;免密登陆白名单，建议添加内网地址<br>    - 127.0.0.1<br>    - ::1<br>    - 192.168.50.0&#x2F;24<br>  base_url: <a target="_blank" rel="noopener" href="http://www.cxlwill.pub/">www.cxlwill.pub</a>  &#x2F;&#x2F;访问地址，填入  DDNS 中设置的网址<br>  ssl_certificate: &#x2F;home&#x2F;homeassistant&#x2F;.homeassistant&#x2F;cert.pem  &#x2F;&#x2F;公钥文件地址，注意放在有读取权限的文件夹<br>  ssl_key: &#x2F;home&#x2F;homeassistant&#x2F;.homeassistant&#x2F;cert.key &#x2F;&#x2F;私钥文件地址，注意放在有读取权限的文件夹<br>之后重启 HA，你会发现之前的 <a target="_blank" rel="noopener" href="http://ip:8213/">http://IP:8213</a> 无法登陆了。请将访问地址更改为 https:&#x2F;&#x2F;域名:端口号，如果设置为 443 端口，则无需端口号。</p>
+<p>现在你的ha 已经可以完美进行外网的登陆了，并且在浏览的地址栏左侧 你可以看到令人安心的绿钥匙图标</p>
+<p>HB HADashboard 等相关服务</p>
+<p>HA 进行全站https 后，千万记得更改相关服务的访问地址</p>
+<p>HB 中的 config.json ：</p>
+<p>“platforms”: [<br>{<br>“platform”: “HomeAssistant”,<br>“name”: “HomeAssistant”,<br>“host”: “https:&#x2F;&#x2F;“, &#x2F;&#x2F;修改为最新的域名，注意使用 https<br>•••<br>“verify_ssl”: false &#x2F;&#x2F;建议使用 false<br>}<br>],<br>之后重启 HB，无响应的状况应该就消失了。</p>
+<p>HADashboard 中的 Appdaemon.yaml：</p>
+<p>HASS:<br>  ha_url: <a target="_blank" rel="noopener" href="https://xxx.com/">https://xxx.com</a>      &#x2F;&#x2F;这里也要更改为最新的地址<br>  ha_key:</p>
+<p>其他使用ha api 服务，例如ifttt 中的调用地址也需要进行即使更新，具体就不展开了</p>
+<p>同样，iod app 中的访问地址也需要一并进行更改</p>
+<p>后续注意事项</p>
+<p>HA 全站 Https 之后，所有接入的服务都必须为 https，否则将会出现不安全的警示。请特别留意一些自定义组件的 API 和图标源，官方的组件一般情况下不会出现此类情况，RTSP 等协议不受影响</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-20221224-HomeAssistant树莓派-高德地图篇"
   class="article article-type-post"
   itemscope
@@ -895,77 +982,13 @@
 </article>
 
     
-    <article
-  id="post-20221220-树莓派魔镜"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/12/20/20221220-%E6%A0%91%E8%8E%93%E6%B4%BE%E9%AD%94%E9%95%9C/"
-    >20221220-树莓派魔镜</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/12/20/20221220-%E6%A0%91%E8%8E%93%E6%B4%BE%E9%AD%94%E9%95%9C/" class="article-date">
-  <time datetime="2022-12-20T02:58:50.000Z" itemprop="datePublished">2022-12-20</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h2 id="材料准备"><a href="#材料准备" class="headerlink" title="材料准备"></a>材料准备</h2><p>树莓派3 魔镜的神经中枢</p>
-<p>usb麦克风</p>
-<p>显示屏 不论通过什么渠道取得的显示屏，在这里都建议自带hdmi 接口并侧面出口，剩下转接头的钱和空间，也方便未来背面走线</p>
-<p>如果考虑入触摸屏建议一步到位，目前面向树莓派生产的触控屏最大能到10寸左右，价格在400至500元。加装触摸屏，务必要考虑好触摸类型，因为最上面还需要覆盖一块单透镜。建议优先使用红外触摸，有能力在外框安置感应条即可；其次压敏，但是要考虑镜子的导电性；压感在覆盖镜子的前提下，基本不可能实现。</p>
-<p>驱动板+喇叭， LCD 屏需要加配高压条，一般来说近几年的屏幕都是LED 了，但还是要具体问题具体分析</p>
-<p>单向透视镜</p>
-<p>俗称原子镜，就是大家看的美剧里审讯室用的镜子，魔镜的“大脸”。目前，适配屏幕尺寸的单透镜需定制，价格较昂贵。定制时建议优先选择厚度较薄、透光率较强的镜面，否则会影响日间魔镜的展示效果。</p>
-<p>囊中羞涩的派友也可使用镜面贴膜曲线救国，效果参考汽车车窗贴膜，但透视效果较差。</p>
-<p>镜框</p>
-<p>电源 </p>
-<p>整套魔镜系统需要电源驱动的部件有树莓派，驱动板和显示屏，后两者并一体讨论，驱动板在外接喇叭的前提下，usb 供电接口无法为树莓派供电，因此必须独立供电树莓派，显示屏所需电源为12V5A 大家在购入电源适配器是务必看准电压电流、并兼顾走线，<br>有能力者，可手动并线</p>
-<p>可选材料</p>
-<p>智能插座</p>
-<p>超短HDMI 线</p>
-<p>工具  螺丝刀  电工胶布，泡棉胶</p>
-<p>显然，大部分的工作都集中在底层，我们需要把树莓派、驱动板等等部件合理安置在显示屏背部</p>
-<p>喇叭布置于头部，直立后出声位置位于上方，更具现实感。树莓派布置在底端，保证USB麦克风的收音效果，且方便拿取。中部安放驱动板，方便走线。<br>这里省略了一步操作，建议先将驱动板随附的控制板连接至驱动板，选定输入源、调整好音量后拔下，以节约背板空间。</p>
-<p>上述工作完成后，依次将单透镜和显示屏置入镜框内，扣入夹片固定好，避免松动。</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
   </article>
   
 
   
   <nav class="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/7/">上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><a class="page-number" href="/page/10/">10</a><span class="space">&hellip;</span><a class="page-number" href="/page/22/">22</a><a class="extend next" rel="next" href="/page/9/">下一页</a>
+    <a class="extend prev" rel="prev" href="/page/7/">上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><a class="page-number" href="/page/10/">10</a><span class="space">&hellip;</span><a class="page-number" href="/page/23/">23</a><a class="extend next" rel="next" href="/page/9/">下一页</a>
   </nav>
   
 </section>

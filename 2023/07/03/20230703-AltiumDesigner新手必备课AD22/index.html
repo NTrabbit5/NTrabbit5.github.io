@@ -80,7 +80,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> 字数统计:</span>
-            <span class="post-count">5.4k</span>
+            <span class="post-count">5.6k</span>
         </span>
     </span>
 
@@ -89,7 +89,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> 阅读时长≈</span>
-            <span class="post-count">18 分钟</span>
+            <span class="post-count">19 分钟</span>
         </span>
     </span>
 </div>
@@ -412,10 +412,27 @@
 <p>第29 课  固定孔及期间的精准定义</p>
 <p>对于导入型板框，其有实物结构模型，固定孔的位置及大小已经定义好，只能严格按照要求的位置和大小精准地放置，对于开发板，因为不需要考虑有外壳，只需pcba 即可，对于固定孔的位置及大小要求不那么严格，一般按照常规进行设置即可</p>
 <ol>
-<li>位置要求：放置在里 中心间距X轴5mm Y 轴5mm的位置</li>
+<li><p>位置要求：放置在里 中心间距X轴5mm Y 轴5mm的位置</p>
+</li>
+<li><p>大小要求，一般采用直径为3mm的非金属化孔</p>
+</li>
 </ol>
-<p>大小要求，一般采用直径为3mm的非金属化孔</p>
+<p>Plated 金属化孔  不勾选 为 非金属化孔</p>
+<p>可以通过坐标，可以通过复制的偏移量进行定义</p>
+<p>通过过孔辅助定义</p>
 <hr>
+<p>第30课 层叠的定义及添加</p>
+<p>对告诉多层板来说，默认的两层设计无法满足布线信号质量及走线密度要求，这个时候需要对PCB 层叠进行添加，以满足设计的要求。</p>
+<p>DK 层叠管理器</p>
+<p>Stack symmetry 去掉勾选</p>
+<p>signal 正片层 绘制的填充和走线都是铜，看到的是铜</p>
+<p>plane 负片层  绘制的是分割线，没有铜</p>
+<p>板厚修改，层属性修改</p>
+<p>厚度</p>
+<p>内缩量</p>
+<p>第31课  PCB的交互式与模块化布局操作</p>
+<p>为了方便元件的找寻，需要把原理图与PCB 对应起来，使两者之间能相互映射，简称交互</p>
+<p>利用交互式布局可以比较快速地定位元件，从而缩短设计时间，提供工作效率，菜单命令 工具-交叉选择模式，激活交互模式</p>
  
       <!-- reward -->
       

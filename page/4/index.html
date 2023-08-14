@@ -126,6 +126,92 @@
     
     
     <article
+  id="post-20230605-roff排版系统的概念和历史"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/06/05/20230605-roff%E6%8E%92%E7%89%88%E7%B3%BB%E7%BB%9F%E7%9A%84%E6%A6%82%E5%BF%B5%E5%92%8C%E5%8E%86%E5%8F%B2/"
+    >20230605-roff排版系统的概念和历史</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/06/05/20230605-roff%E6%8E%92%E7%89%88%E7%B3%BB%E7%BB%9F%E7%9A%84%E6%A6%82%E5%BF%B5%E5%92%8C%E5%8E%86%E5%8F%B2/" class="article-date">
+  <time datetime="2023-06-05T00:54:54.000Z" itemprop="datePublished">2023-06-05</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>roff 是一系列排版程序，如troff nroff fitroff groff 等等的通称，一个roff 排版系统包含一个可扩展的文本格式化语言和一系列程序用以打印和转换为其他文本格式，传统的，它是unix 的主要文本处理系统，现在，每个类unix 操作系统仍然附带一个roff 系统作为核心软件包</p>
+<p>roff 在文本设备上的输出效果仍然是无可比拟的，并且，与其他自由的排版系统相比，它的图形输出也不差， 甚至强于很多商业的系统</p>
+<p>unix 的一个著名的来源，出现于1963，同时runoff 成为文档和文本处理的主要格式。</p>
+<p>multics</p>
+<p>这种语言的模型是根据 前计算机时代的排版习惯而建立的，那时，以点 dot 开头的行被写在手稿中，向之后进行手工排版工作得工人指示格式化的要求</p>
+<p>所有现代的roff 系统都试图实现同这个系统兼容</p>
+<p>最早的roff 系统有三个排版程序</p>
+<p>troff 为它唯一支持的cat 排字机产生一个图形的输出</p>
+<p>nroff 为终端和文本打印机产生合适的文本输出</p>
+<p>roff 对最初的runoff 程序的有限功能进行重新实现，这个程序在后来的版本中被抛弃，现在，roff 这个名字只用来替代一个troff nroff 系统的整体</p>
+<p>在一些系统上，这个设备无关的troff 有一个可执行文件叫做 ditroff ，所有现代的troff 程序都已经自动提供了对distroff 完整的兼容性</p>
+<p>古老的unix 和传统的troff 的源代码在长达20年时间里不再可以自由获得</p>
+<p>grodd 系统仍然在继续开发，它与传统 troff 兼容，但是还添加了很多扩展，它是第一个可以在几乎所有操作系统上运行的，roff 系统并且 它是自由开放的，这使得groff 成为现在 roff 的事实标准</p>
+<p>使用 using roff</p>
+<p>预处理器产生roff 代码，传给一个roff 处理器，例如，troff，然后roff 处理器接下来产生中间输出，传给一个后处理器程序，用来打印或者产生最终输出</p>
+<p>预处理器 preprocessors</p>
+<p>一些不能在所有系统上使用，还有一些预处理器被认为是roff 系统不可分割的部分，传统的预处理器有</p>
+<p>tbl 制表</p>
+<p>eqn 数学公式</p>
+<p>pic 绘图</p>
+<p>refer 书目索引</p>
+<p>soelim 包含标准位置的宏文件</p>
+<p>其他已知预处理器，但不是在所有系统上都可用</p>
+<p>chem 化学公式</p>
+<p>grap 构造图元</p>
+<p>grn 插入 gremlin 图片</p>
+<p>设备 后处理器</p>
+<p>设备是类似打印机、字符或图形终端等的硬件接口，或者是用于转换为另一种字符或图形设备的软件接口</p>
+<p>现在，操作系统为大多数类似打印机的硬件提供了设备驱动，因此不必为每个打印机写一个特殊的后处理器</p>
+<p>roff 编程</p>
+<p>roff 文档是加入了roff 排版元素的普通文档，roff 排版语言非常强大，它几乎是一个完整的程序语言，并且提供了扩充自身的元素，使用这些元素，就可以开发为特殊程序定制的宏包</p>
+<p>宏包 </p>
+<p>一个包的宏定义保存在一个叫做 name.tmac 的文件中</p>
+<p>文档中用到的宏包可以使用命令行选项 -m 提供给排版程序，参见 troff 它们也可以在文档中指定，使用roff 语言的包含文件命令，参见 groof</p>
+<p>roff 语言是完整的编程语言，提供了命令，宏定义，转义序列，字符串变量，数字或数量寄存器，还有流程控制语句</p>
+<p>文件扩展名</p>
+<p>文件扩展名与 less 格式化工具结合，会非常好用，它提供了用单一的方式打开各种输入的可能性，方法是定义一个shell 环境变量lessopen，这种方法没有什么文档，这是一个例子</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sh# LESSOPEN=&#x27;|lesspipe %s&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>lesspipe 可以是一个系统提供的命令或者是你自己的脚本</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-20230521-如何选择一个CPU"
   class="article article-type-post"
   itemscope
@@ -2021,95 +2107,13 @@
 </article>
 
     
-    <article
-  id="post-20230506-markdown绘图技巧"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/05/06/20230506-markdown%E7%BB%98%E5%9B%BE%E6%8A%80%E5%B7%A7/"
-    >20230506-markdown绘图技巧</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/05/06/20230506-markdown%E7%BB%98%E5%9B%BE%E6%8A%80%E5%B7%A7/" class="article-date">
-  <time datetime="2023-05-06T02:04:32.000Z" itemprop="datePublished">2023-05-06</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <ol>
-<li>流程图</li>
-</ol>
-<p>先在typora 中输入<br><code>```mermaid</code><br>然后敲击回车，即可初始化一张空白图</p>
-<p>语法解释 graph 关键字就是声明一张流程图，TD 向下，LR 向右边，这里的含义是 top-down 由上至下</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">graph TD</span><br><span class="line">  A[Hard edge] --&gt;B(Round edge)</span><br><span class="line">    B --&gt; C&#123;Decision&#125;</span><br><span class="line">    C --&gt;|One| D[Result one]</span><br><span class="line">    C --&gt;|Two| E[Result two]</span><br></pre></td></tr></table></figure>
-
-<ol start="2">
-<li>时序图</li>
-</ol>
-<p>语法解释 -&gt;&gt; 代表实线箭头 –&gt;&gt; 则代表虚线</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">sequenceDiagram</span><br><span class="line">    Alice--&gt;&gt;Bob: Hello Bob, how are you?</span><br><span class="line">    alt is sick</span><br><span class="line">    Bob-&gt;Alice: Not so good :(</span><br><span class="line">    else is well</span><br><span class="line">    Bob-&gt;&gt;Alice: Feeling fresh like a daisy</span><br><span class="line">    end</span><br><span class="line">    opt Extra response</span><br><span class="line">    Bob-&gt;&gt;Alice: Thanks for asking</span><br><span class="line">    end</span><br><span class="line">    Bob-&gt;&gt;Alice: Thanks </span><br></pre></td></tr></table></figure>
-
-<ol start="3">
-<li>状态图</li>
-</ol>
-<p>语法解释 <code>[*]</code> 表示开始或者结束，如果在箭头右边则表示结束</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">stateDiagram</span><br><span class="line">    [*] --&gt; Still</span><br><span class="line">    Still --&gt; [*]</span><br><span class="line"></span><br><span class="line">    Still --&gt; Moving</span><br><span class="line">    Moving --&gt; Still</span><br><span class="line">    Moving --&gt; Crash</span><br><span class="line">    Crash --&gt; [*]</span><br></pre></td></tr></table></figure>
-<ol start="4">
-<li>类图</li>
-</ol>
-<p>语法解释， <code>&lt;|--</code> 表示继承 + 表示 public - 表示private</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">classDiagram</span><br><span class="line">      Animal &lt;|--Duck</span><br><span class="line">      Animal &lt;|-- Fish</span><br><span class="line">      Animal &lt;|-- Zebra</span><br><span class="line">      Animal : +int age</span><br><span class="line">      Animal : +String gender</span><br><span class="line">      Animal: +isMammal()</span><br><span class="line">      Animal: +mate()</span><br><span class="line">      class Duck&#123;</span><br><span class="line">          +String beakColor</span><br><span class="line">          +swim()</span><br><span class="line">          +quack()</span><br><span class="line">      &#125;</span><br><span class="line">      class Fish&#123;</span><br><span class="line">          -int sizeInFeet</span><br><span class="line">          -canEat()</span><br><span class="line">      &#125;</span><br><span class="line">      class Zebra&#123;</span><br><span class="line">          +bool is_wild</span><br><span class="line">          +run()</span><br><span class="line">      &#125;</span><br></pre></td></tr></table></figure>
-
-
-<ol start="5">
-<li>甘特图</li>
-</ol>
-<p>甘特图 一般用来表示项目的计划排期，目前在工作中经常会用到</p>
-<p>语法也非常简单，从上到下依次是 图片标题、日期格式、项目、项目细分的任务</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">gantt</span><br><span class="line">    title 工作计划</span><br><span class="line">    dateFormat  YYYY-MM-DD</span><br><span class="line">    section Section</span><br><span class="line">    A task           :a1, 2020-01-01, 30d</span><br><span class="line">    Another task     :after a1  , 20d</span><br><span class="line">    section Another</span><br><span class="line">    Task in sec      :2020-01-12  , 12d</span><br><span class="line">    another task      : 24d</span><br></pre></td></tr></table></figure>
-
-<ol start="6">
-<li>饼图</li>
-</ol>
-<p>饼图使用pie 表示，标题下面分别是区域名称及其百分比</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
   </article>
   
 
   
   <nav class="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/3/">上一页</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/22/">22</a><a class="extend next" rel="next" href="/page/5/">下一页</a>
+    <a class="extend prev" rel="prev" href="/page/3/">上一页</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/23/">23</a><a class="extend next" rel="next" href="/page/5/">下一页</a>
   </nav>
   
 </section>
