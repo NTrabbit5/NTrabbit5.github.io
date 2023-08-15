@@ -126,6 +126,98 @@
     
     
     <article
+  id="post-20230703-基尔霍夫定律"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/07/03/20230703-%E5%9F%BA%E5%B0%94%E9%9C%8D%E5%A4%AB%E5%AE%9A%E5%BE%8B/"
+    >20230703-基尔霍夫定律</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/07/03/20230703-%E5%9F%BA%E5%B0%94%E9%9C%8D%E5%A4%AB%E5%AE%9A%E5%BE%8B/" class="article-date">
+  <time datetime="2023-07-03T02:25:05.000Z" itemprop="datePublished">2023-07-03</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>基尔霍夫定律指的是两条定律，第一条是电流定律，第二条是电压定律，下面，我们分别讲</p>
+<p>基尔霍夫电流定律</p>
+<p>简写为KCL</p>
+<p>基尔霍夫电流定律指出，流入电路中某节点的电流之和等于流出电流之和</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">\sum I_&#123;流入&#125; = \sum I_&#123;流出&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="基尔霍夫电流定律"><a href="#基尔霍夫电流定律" class="headerlink" title="基尔霍夫电流定律"></a>基尔霍夫电流定律</h2><p>其中 sum 符号是求和符号，表示对一系列的数求和，就是把它们一个一个加起来</p>
+<p>举个例子，对于下面这个节点，有两个流入电流，三个流出电流</p>
+<p>对于上面节点，流入电流之和等于流出电流之和</p>
+<p>为了方便记忆，我们将KCL 总结为</p>
+<p>流入电流&#x3D;流出电流</p>
+<p>基尔霍夫电流定律也被称为基尔霍夫第一定律，节点法则，点法则，因为它是研究电路中某个节点的电流的</p>
+<p>我们可以用张艺谋的电影 一个都不能少 来助记这条定律的</p>
+<h2 id="基尔霍夫电压定律"><a href="#基尔霍夫电压定律" class="headerlink" title="基尔霍夫电压定律"></a>基尔霍夫电压定律</h2><p>简称为KVL</p>
+<p>基尔霍夫电压定律指出，闭合回路轴电压升之和等于电压降之和</p>
+<p>如果我们规定电压升为正，电压降为负，基尔霍夫电压定律也可以表达为 闭合电路中电压的代数和为零</p>
+<p>用数学符号表达就是</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">\sum V =0</span><br></pre></td></tr></table></figure>
+
+<p>为了方便记忆，我们可以降kvl 总结为</p>
+<p>升压&#x3D; 降压</p>
+<p>基尔霍夫电压定律也被称为基尔霍夫第二定律<br>回路法则  网格法则</p>
+<h2 id="升压还是降压"><a href="#升压还是降压" class="headerlink" title="升压还是降压"></a>升压还是降压</h2><p>在用基尔霍夫电压定律分析电路问题时，确定器件是升压还是降压是至关重要的</p>
+<p>升压还是降压由两个方向决定，一个是电流的方向，一个是绕行方向，电流防线就是传统电流的方向  和电子的流动方向，绕行方向就是分析电路时沿着的反向，我面下面用一个简单的电路来说明</p>
+<p>下图中电池电压为12V 电阻值为10Ω  求电路中的电流</p>
+<p>电阻升压</p>
+<p>电阻的压降是沿着电流的方向产生的，如果我们逆着电流的方向看，它就是升压的，</p>
+<p>对电阻来说，如果顺着电流方向，电阻是降压的，但是逆着电流反向看，它就是升压的，总结电阻升降压规律如下</p>
+<p>电流方向和绕行方向相同 降压</p>
+<p>电流方向和绕行方向相反 升压</p>
+<p>对电池或电源来说，如果我们规定其电动势的方向为电源内部负极指向正极的方向，那么</p>
+<p>电动势方向和绕行方向相同  升压</p>
+<p>电动势方向和绕行方向相反，降压</p>
+<p>我们用下图表示上述电池升降压规律</p>
+<hr>
+<p>我们总结一下解题步骤</p>
+<p>标定各回路中的电流方向</p>
+<p>选择绕行方向</p>
+<p>选择节点，应用KCL 写出节点方程</p>
+<p>选择回路，应用KVL 写出回路方程</p>
+<p>解方程</p>
+<p>一开始标定的电流方向可能是错的，没关系，大胆选就行，最后的计算结果会纠正</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>KCL 是描述节点的，KVL 是描述回路的</p>
+<p>KCL 是说流过电路中任意节点的电流的代数和为零，或者说对任意节点流入电流之和等于流出电路之和</p>
+<p>KVL 是说对于任意闭合回路电压的代数和为零，或者说闭合回路中电压升之和等于电压降之和。</p>
+<p>在应用 KVL 进行分析时，器件是升压还是降压取决于你怎么看，对于电阻来说取决于两个方向：电流方向和绕行方向；对于电源来说，取决于：电动势方向和绕行方向。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-20230703-AltiumDesigner新手必备课AD22"
   class="article article-type-post"
   itemscope
@@ -482,6 +574,24 @@
 <p>第31课  PCB的交互式与模块化布局操作</p>
 <p>为了方便元件的找寻，需要把原理图与PCB 对应起来，使两者之间能相互映射，简称交互</p>
 <p>利用交互式布局可以比较快速地定位元件，从而缩短设计时间，提供工作效率，菜单命令 工具-交叉选择模式，激活交互模式</p>
+<p>Shift+Ctrl+X</p>
+<p>右键  垂直分割</p>
+<p>navigation</p>
+<p>交叉选择模式</p>
+<p>交叉选择对象  一般选择元件</p>
+<p>改快捷键，右键自定义</p>
+<p>封装有问题，在原理图库里 update pcb with all</p>
+<hr>
+<p>第32课 PCB布局的常用操作命令介绍</p>
+<p>器件的选择</p>
+<p>框选，从上往下与从下往上的区别</p>
+<p>器件的移动 Ctrl+G</p>
+<p>器件的对齐</p>
+<p>器件的快速换层 在拖动的状态下按L</p>
+<p>器件的联合处理 右键 联合 u</p>
+<p>器件的锁定</p>
+<p>丝印 A 定位器件文本</p>
+<p>凡亿课堂 </p>
  
       <!-- reward -->
       
@@ -1402,93 +1512,6 @@
 <p>这种模块工作时，只要热释电传感器监测区域内有人走动，传感器便会输出相应的电信号，该信号经感应信号处理电路处理后输出一个控制信号去控制负载的工作。</p>
 <p>上述两种感应模块皆可用于感应灯、自动门的控制。使用微波感应模块控制的优点是无方向性，只要有人或其它物体在模块的监测区域内移动，即可实现控制，其缺点是模块的耗电较大（工作电流在mA级），并且这种雷达感应模块价格要比热释电人体感应模块贵好几倍。</p>
 <p>​人体感应模块的优点是价格低廉、待机耗电小（一些电路设计合理的模块，静态耗电可低至100μA以内），可以使用电池供电，缺点是使用有方向性，只有在传感器的前方有人移动，才能实现控制。</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20230605-linux系统目录结构"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/06/05/20230605-linux%E7%B3%BB%E7%BB%9F%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84/"
-    >20230605-linux系统目录结构</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/06/05/20230605-linux%E7%B3%BB%E7%BB%9F%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84/" class="article-date">
-  <time datetime="2023-06-05T03:52:44.000Z" itemprop="datePublished">2023-06-05</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>登录系统后，在当前命令窗口下输入命令</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls /</span><br></pre></td></tr></table></figure>
-
-<p>树状目录结构</p>
-<p>以下是对这些目录的解释</p>
-<p>bin<br>是binaries 二进制文件的缩写，这个目录存放着最经常使用的命令</p>
-<p>boot 这里存放的是启动linux 时使用的一些核心文件，包括一些连接文件以及镜像文件</p>
-<p>dev 是device 设备的缩写，该目录下存放的是linux 的外部设备，在linux 中访问设备的方式和访问文件的方式是相同的</p>
-<p>etc 是etcetera 等等的缩写，这个目录用来存放所有的系统管理所需要的配置文件和子目录</p>
-<p>home 用户的主目录，在linux中，每个用户都有一个子集的目录，一般该目录是以用户的账号命名的，如上图中的alice bob eve</p>
-<p>lib</p>
-<p>是library 库的缩写，这个目录里存放着系统最基本的动态连接共享库，其作用是类似于windows 里的dll 文件，几乎所有的应用程序都需要用到这些共享库</p>
-<p>lost+found 这个目录一般情况下是空的，当系统非法关机后，这里就准方了一些文件</p>
-<p>media  linux 会自动识别一些设备，例如 u 盘，光驱等等，当识别后，linux 会把设备挂载到这个目录下</p>
-<p>mnt 系统提供该目录是为了让用户临时挂载别的文件系统，我们可以将光驱挂载在 mnt 上，然后进入该目录就可以查看光驱里的内容了</p>
-<p>opt 是optional 的缩写，这是给主机额外安装软件搜摆放的目录，比如你安装一个oracle 数据库则就可以放到这个目录下，默认是空的</p>
-<p>proc<br>proc 是processes 进程的缩写，proc 是一种伪文件 系统，也即虚拟文件系统，存储的是当前内核运行状态的一系列特殊文件，这个目录是一个虚拟目录，它是系统内存的映射，我们可以通过直接访问这个目录来获取系统信息</p>
-<p>这个目录的内容不在硬盘上而是在内存里，我们也可以直接修改里面的某些文件，比如可以通过下面的命令来屏蔽主机的ping 命令，使别人无法ping 你的机器</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo 1 &gt; /proc/sys/net/ipv4/icmp_echo_ignore_all</span><br></pre></td></tr></table></figure>
-
-<p>root 该目录为系统管理员，也称作超级权限者的用户主目录</p>
-<p>sbin s 就是super user 的意思，是superuser binaries 超级用户的二进制文件的缩写，这里存放的是系统管理员使用的系统管理程序</p>
-<p>selinux 这个目录是centos 所特有的目录 selinux 是一个安全机制，类似于windows 的防火墙，但是这套机制比较复杂，这个目录就是存放selinux 相关的文件的</p>
-<p>srv 该目录存放一些服务启动之后需要提取的数据</p>
-<p>sys 这是linux 2.6 内核的一个很大的变化，该目录下安装了2.6内核中新出现的一个文件系统 sysfs</p>
-<p>sysfs 文件系统集成了下面3种文件系统的信息</p>
-<p>针对进程信息的proc 文件系统，针对设备的devfs 文件系统以及针对伪终端的devpts 文件系统</p>
-<p>该文件系统是内核设备树的一个直观反映</p>
-<p>当一个内核对象被创建的时候，对应的文件和目录也在内核对象子系统重被创建</p>
-<p>tmp 是temporary 的缩写 这个目录是用来存放一些临时文件</p>
-<p>usr 是unix shared resources 共享资源的缩写，这是一个非常重要的目录，用户的很多应用程序和文件都放在这个目录下，类似于windows 下的program files 目录</p>
-<p>usr&#x2F;bin<br>系统用户使用的应用程序</p>
-<p>usr&#x2F;sbin 超级用户使用的比较高级的管理程序和系统守护程序</p>
-<p>usr&#x2F;src 内核源代码默认的放置目录</p>
-<p>var 是variable 变量的缩写，这个目录中存放着在不断扩展着的东西，我们习惯将那些经常被修改的目录放在这个目录下，包括各种日志文件</p>
-<p>run 是一个临时文件系统，存储系统启动以来的信息，当系统重启时，这个目录下的文件应该被删掉或清除，如果你的系统上诱var&#x2F;run 目录，应该让它指向 run</p>
-<p>在linux 系统中，诱几个目录是比较重要的，平时需要注意不要误删或者随意更改内部文件</p>
-<p>&#x2F;etc： 上边也提到了，这个是系统中的配置文件，如果你更改了该目录下的某个文件可能会导致系统不能启动。</p>
-<p>&#x2F;bin, &#x2F;sbin, &#x2F;usr&#x2F;bin, &#x2F;usr&#x2F;sbin: 这是系统预设的执行文件的放置目录，比如 ls 就是在 &#x2F;bin&#x2F;ls 目录下的。</p>
-<p>值得提出的是 &#x2F;bin、&#x2F;usr&#x2F;bin 是给系统用户使用的指令（除 root 外的通用用户），而&#x2F;sbin, &#x2F;usr&#x2F;sbin 则是给 root 使用的指令。</p>
-<p>&#x2F;var： 这是一个非常重要的目录，系统上跑了很多程序，那么每个程序都会有相应的日志产生，而这些日志就被记录到这个目录下，具体在 &#x2F;var&#x2F;log 目录下，另外 mail 的预设放置也是在这里。</p>
  
       <!-- reward -->
       
