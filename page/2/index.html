@@ -126,6 +126,286 @@
     
     
     <article
+  id="post-20230804-使用strchr与strrchr函数查找单个字符"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/08/04/20230804-%E4%BD%BF%E7%94%A8strchr%E4%B8%8Estrrchr%E5%87%BD%E6%95%B0%E6%9F%A5%E6%89%BE%E5%8D%95%E4%B8%AA%E5%AD%97%E7%AC%A6/"
+    >20230804-使用strchr与strrchr函数查找单个字符</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/08/04/20230804-%E4%BD%BF%E7%94%A8strchr%E4%B8%8Estrrchr%E5%87%BD%E6%95%B0%E6%9F%A5%E6%89%BE%E5%8D%95%E4%B8%AA%E5%AD%97%E7%AC%A6/" class="article-date">
+  <time datetime="2023-08-04T04:32:55.000Z" itemprop="datePublished">2023-08-04</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p><a target="_blank" rel="noopener" href="http://c.biancheng.net/view/340.html">http://c.biancheng.net/view/340.html</a></p>
+<h2 id="使用-strchr-与-strrchr-函数查找单个字符"><a href="#使用-strchr-与-strrchr-函数查找单个字符" class="headerlink" title="使用 strchr 与 strrchr 函数查找单个字符"></a>使用 strchr 与 strrchr 函数查找单个字符</h2><p>如果需要对字符串中的单个字符进行查找，那么应该使用 strchr 或 strrchr 函数。其中，strchr 函数原型的一般格式如下：<br>它表示在字符串 s 中查找字符 c，返回字符 c 第一次在字符串 s 中出现的位置，如果未找到字符 c，则返回 NULL。也就是说，strchr 函数在字符串 s 中从前到后（或者称为从左到右）查找字符 c，找到字符 c 第一次出现的位置就返回，返回值指向这个位置，如果找不到字符 c 就返回 NULL。</p>
+<p>相对于 strchr 函数，strrchr 函数原型的一般格式如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">char</span> *<span class="title function_">strrchr</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *s, <span class="type">int</span> c)</span>;</span><br></pre></td></tr></table></figure>
+
+<p>与 strchr 函数一样，它同样表示在字符串 s 中查找字符 c，返回字符 c 第一次在字符串 s 中出现的位置，如果未找到字符 c，则返回 NULL。但两者唯一不同的是，strrchr 函数在字符串 s 中是从后到前（或者称为从右向左）查找字符 c，找到字符 c 第一次出现的位置就返回，返回值指向这个位置。下面的示例代码演示了两者之间的区别：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">char</span> str[] = <span class="string">&quot;I welcome any ideas from readers， of course.&quot;</span>;</span><br><span class="line">    <span class="type">char</span> *lc = <span class="built_in">strchr</span>(str, <span class="string">&#x27;o&#x27;</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;strchr： %s\n&quot;</span>, lc);</span><br><span class="line">    <span class="type">char</span> *rc = <span class="built_in">strrchr</span>(str, <span class="string">&#x27;o&#x27;</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;strrchr： %s\n&quot;</span>, rc);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>对于上面的示例代码，strchr 函数是按照从前到后的顺序进行查找，所以得到的结果为</p>
+<p>“ome any ideas from readers，of course.”; 而 strrchr 函数则相反，它按照从后到前的顺序进行查找，所以得到的结果为“ourse.”。<br>示例代码运行结果为：strchr： ome any ideas from readers， of course.strrchr： ourse.</p>
+<p>其实原因很简单，这里用的是字符的 ASCII 码（因为每个字符都对应着一个 ASCII 码），这样在传值的时候既可以传“char”类型的值，又可以传“int”类型的值（0 ~ 127）。</p>
+<h2 id="使用-strpbrk-函数查找多个字符"><a href="#使用-strpbrk-函数查找多个字符" class="headerlink" title="使用 strpbrk 函数查找多个字符"></a>使用 strpbrk 函数查找多个字符</h2><p>上面的 strchr 与 strrchr 函数解决了对字符串中单个字符的查找，那么需要查找多个字符时怎么办呢？<br>如果要查找多个字符，就需要使用 strpbrk 函数了。该函数在源字符串（s1）中按从前到后顺序找出最先含有搜索字符串（s2）中任一字符的位置并返回，空字符 null(‘\0’) 不包括在内，若找不到则返回空指针。其函数原型的一般格式如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">char</span> *<span class="title function_">strpbrk</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *s1,<span class="type">const</span> <span class="type">char</span> *s2)</span>;</span><br></pre></td></tr></table></figure>
+<p>例如，在 strpbrk 函数的定义如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">char</span> *<span class="title function_">strpbrk</span> <span class="params">(<span class="type">const</span> <span class="type">char</span> *s, <span class="type">const</span> <span class="type">char</span> *accept)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">while</span> (*s != <span class="string">&#x27;\0&#x27;</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="type">const</span> <span class="type">char</span> *a = accept;</span><br><span class="line">        <span class="keyword">while</span> (*a != <span class="string">&#x27;\0&#x27;</span>)</span><br><span class="line">            <span class="keyword">if</span> (*a++ == *s)</span><br><span class="line">                <span class="keyword">return</span> (<span class="type">char</span> *) s;</span><br><span class="line">        ++s;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如上面的代码所示，strpbrk 数首先依次循环检查字符串 s 中的字符，当被检验的字符在字符串 accept 中也包含时（即<code>if（*a++==*s）</code>），则停止检验，并返回<code>（char*）s</code>。如果没有匹配字符，则返回空指针 NULL。这里需要注意的是，空字符 <code>null(&#39;\0&#39;)</code>不包括在内。函数的调用示例如下面的代码所示：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">char</span> str[] = <span class="string">&quot;I welcome any ideas from readers， of course.&quot;</span>;</span><br><span class="line">    <span class="type">char</span> *rc=<span class="built_in">strpbrk</span>(str,<span class="string">&quot;come&quot;</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%s\n&quot;</span>,rc);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>很显然，示例代码的运行结果为“elcome any ideas from readers，of course.”。</p>
+<h2 id="使用-strstr-函数查找一个子串"><a href="#使用-strstr-函数查找一个子串" class="headerlink" title="使用 strstr 函数查找一个子串"></a>使用 strstr 函数查找一个子串</h2><p>相对于 strpbrk 函数，strstr 函数表示在字符串 haystack 中从前到后查找子串 needle 第一次出现的位置（不比较结束符 <code>null(&#39;\0&#39;)</code>），并返回指向第一次出现 needle 位置的指针，如果没找到则返回 NULL。其函数原型的一般格式如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">char *strstr(const char *haystack, const char *needle);</span><br></pre></td></tr></table></figure>
+<p>strstr 函数的调用示例如下面的代码所示：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">char</span> str[] = <span class="string">&quot;I welcome any ideas from readers， of course.&quot;</span>;</span><br><span class="line">    <span class="type">char</span> *c1=<span class="built_in">strstr</span>(str, <span class="string">&quot;come&quot;</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;come：%s\n&quot;</span>,c1);</span><br><span class="line">    <span class="type">char</span> *c2=<span class="built_in">strstr</span>(str, <span class="string">&quot;icome&quot;</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;icome：%s\n&quot;</span>,c2);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里需要注意的是，因为 strstr 函数与 strpbrk 函数不同，strstr 函数匹配的是字符串，所以语句<code>strstr(str,&quot;icome&quot;)</code>将返回 NULL。运行结果为：</p>
+<p>strspn 函数表示从字符串 s 的第一个字符开始，逐个检查字符与字符串 accept 中的字符是否不相同，如果不相同，则停止检查，并返回以字符串 s 开头连续包含字符串 accept 内的字符数目。其函数原型的一般格式如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">size_t strspn(const char *s, const char *accept);</span><br></pre></td></tr></table></figure>
+<p>例如，该函数的定义如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">size_t</span> <span class="title function_">strspn</span> <span class="params">(<span class="type">const</span> <span class="type">char</span> *s,<span class="type">const</span> <span class="type">char</span> *accept)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">const</span> <span class="type">char</span> *p;</span><br><span class="line">    <span class="type">const</span> <span class="type">char</span> *a;</span><br><span class="line">    <span class="type">size_t</span> count = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (p = s; *p != <span class="string">&#x27;\0&#x27;</span>; ++p)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span> (a = accept; *a != <span class="string">&#x27;\0&#x27;</span>; ++a)</span><br><span class="line">            <span class="keyword">if</span> (*p == *a)</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">if</span> (*a == <span class="string">&#x27;\0&#x27;</span>)</span><br><span class="line">                <span class="keyword">return</span> count;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                ++count;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> count;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>从上面的示例代码中可以看出，strspn 函数从字符串参数 s 的开头计算连续的字符，而这些字符完全是 accept 所指字符串中的字符。简单地说，如果 strspn 函数返回的数值为 n，则代表字符串 s 开头连续有 n 个字符都属于字符串 accept 内的字符。</p>
+<p>函数的调用示例如下面的代码所示：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">char</span> str[] = <span class="string">&quot;I welcome any ideas from readers， of course.&quot;</span>;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;I wel：%d\n&quot;</span>,<span class="built_in">strspn</span>(str,<span class="string">&quot;I wel&quot;</span>));</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Iwel：%d\n&quot;</span>,<span class="built_in">strspn</span>(str,<span class="string">&quot;Iwel&quot;</span>));</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;welcome：%d\n&quot;</span>,<span class="built_in">strspn</span>(str,<span class="string">&quot;welcome&quot;</span>));</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;5：%d\n&quot;</span>,<span class="built_in">strspn</span>(str,<span class="string">&quot;5&quot;</span>));</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在上面的示例代码中，因为 strspn 函数返回的是以字符串 s 开头连续包含字符串 accept 内的字符数目。而源字符串 str 中的“I”与“welcome”之间有一个空格（即“I welcome”），所以，语句“strspn（str，”Iwel”）”将返回 1，而语句“strspn（str，”I wel”）”将返回 5。因此，输出结果为：I wel：5Iwel：1welcome：05：0</p>
+<p>相对于 strspn 函数，strcspn 函数与之相反，它表示从字符串 s 第一个字符开始，逐个检查字符与 reject 中的字符是否相同，如果相同，则停止检查，并返回以字符串 s 开头连续不含字符串 reject 内的字符数目。其函数原型的一般格式如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">size_t strcspn(const char *s, const char *reject);</span><br></pre></td></tr></table></figure>
+
+<p>该函数的定义如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">size_t</span> <span class="title function_">strcspn</span> <span class="params">(<span class="type">const</span> <span class="type">char</span> *s,<span class="type">const</span> <span class="type">char</span> *reject)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">size_t</span> count = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span> (*s != <span class="string">&#x27;\0&#x27;</span>)</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">strchr</span> (reject, *s++) == <span class="literal">NULL</span>)</span><br><span class="line">            ++count;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            <span class="keyword">return</span> count;</span><br><span class="line">    <span class="keyword">return</span> count;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>从上面的代码中不难发现，strcspn 函数正好与 strspn 函数相反。strcspn 函数从字符串参数 s 的开头计算连续的字符，而这些字符都完全不在参数 reject 所指的字符串中。简单地说，如果 strcspn 函数返回的数值为 n，则代表字符串 s 开头连续有 n 个字符都不包含字符串 reject 内的字符。</p>
+<p>函数的调用示例如下面的代码所示：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">char</span> str[] = <span class="string">&quot;I welcome any ideas from readers， of course.&quot;</span>;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;I wel：%d\n&quot;</span>,<span class="built_in">strcspn</span>(str,<span class="string">&quot;I wel&quot;</span>));</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Iwel：%d\n&quot;</span>,<span class="built_in">strcspn</span>(str,<span class="string">&quot;Iwel&quot;</span>));</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;welcome：%d\n&quot;</span>,<span class="built_in">strcspn</span>(str,<span class="string">&quot;welcome&quot;</span>));</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;5：%d\n&quot;</span>,<span class="built_in">strcspn</span>(str,<span class="string">&quot;5&quot;</span>));</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在上面的示例代码中，因为 strcspn 函数返回的是以字符串 s 开头连续不包含字符串 accept 内的字符数目。因此，其运行结果为：</p>
+<p>I wel：0<br>Iwel：0<br>welcome：2<br>5：45</p>
+<p>由此可见，对于 strspn 函数，如果找到了 reject 与 s 不相同元素时，指针停止移动，并返回以字符串 s 开头连续包含字符串 accept 内的字符数目；而 strncspn 函数则是找到了 reject 与 s 相同元素时，指针停止移动，并返回以字符串 s 开头连续不包含字符串 accept 内的字符数目。这一点一定要注意，千万不要混淆了。  </p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-20230803-C语言如何实现动态数组"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/08/03/20230803-C%E8%AF%AD%E8%A8%80%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E5%8A%A8%E6%80%81%E6%95%B0%E7%BB%84/"
+    >20230803-C语言如何实现动态数组</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/08/03/20230803-C%E8%AF%AD%E8%A8%80%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E5%8A%A8%E6%80%81%E6%95%B0%E7%BB%84/" class="article-date">
+  <time datetime="2023-08-03T09:37:13.000Z" itemprop="datePublished">2023-08-03</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h2 id="提出问题"><a href="#提出问题" class="headerlink" title="提出问题"></a><strong>提出问题</strong></h2><p>请问在c语言里如何实现动态大小的数组啊，比如说<code>int a[N];</code>，这里N的值可以在程序中定，或者有什么方法可以实现类似的功能？总之只要在编译时不用制定数组大小就行。</p>
+<h2 id="分析问题"><a href="#分析问题" class="headerlink" title="分析问题"></a><strong>分析问题</strong></h2><p>嵌入式系统的内存是宝贵的，内存是否高效率的使用，往往意味着嵌入式设备的高质量和高性能，有时我们所需的内存空间无法预先确定，这里使用静态数组的办法很难解决，所以高效的使用内存对我们来说是很重要的。</p>
+<p>所以我们在自己编写C语言代码的时候，就应该学会使用动态数组，那么怎么实现呢？</p>
+<h3 id="静态数组与动态数组的区别"><a href="#静态数组与动态数组的区别" class="headerlink" title="静态数组与动态数组的区别"></a><strong>静态数组与动态数组的区别</strong></h3><p>对于静态数组，一旦定义了，数组长度也就指定好了，系统将为它分配一个固定大小的空间，使用完无需释放，引用简单，但是创建后无法改变其大小，这在应用中是一个致命弱点！</p>
+<p>对于动态数组，它可以随程序需要而重新指定大小，其创建麻烦，使用完必须由程序员自己释放，否则将会引起内存泄露。但其使用非常灵活，能根据程序需要动态分配大小。所以相对于静态数组的来说我们对于使用动态数组有很大的自由度。</p>
+<p>动态数组的内存空间是从堆上分配的，通过执行代码而为其分配存储空间。当程序执行到这些语句时，才为其分配，程序员自己负责释放内存。</p>
+<p>在创建动态数组的过程中要遵循以下原则：</p>
+<ul>
+<li>在创建的时候从外层往里层，逐层创建；</li>
+<li>在释放的时候从里层往外层，逐层释放。</li>
+</ul>
+<h2 id="如何创建动态数组？"><a href="#如何创建动态数组？" class="headerlink" title="如何创建动态数组？"></a><strong>如何创建动态数组？</strong></h2><p>下面是一个创建动态数组的例子，按照需求设置数组大小：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span>&#123;</span><br><span class="line">    <span class="type">int</span> arrLen; </span><br><span class="line">    <span class="type">int</span> *<span class="built_in">array</span>;</span><br><span class="line">    <span class="type">int</span> i;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;please enter length：&quot;</span>);</span><br><span class="line">    scanf_s(<span class="string">&quot;%d&quot;</span>, &amp;arrLen);</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">array</span> = (<span class="type">int</span>*)<span class="built_in">malloc</span>( arrLen*<span class="keyword">sizeof</span>(<span class="type">int</span>) );</span><br><span class="line">    <span class="keyword">if</span>(!<span class="built_in">array</span>)&#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;create error！\n&quot;</span>);</span><br><span class="line">        <span class="built_in">exit</span>(<span class="number">1</span>); </span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>; i&lt;arrLen; i++)&#123;</span><br><span class="line">        <span class="built_in">array</span>[i] = i+<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>; i&lt;arrLen; i++)&#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;%d  &quot;</span>, <span class="built_in">array</span>[i]);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;\n&quot;</span>);</span><br><span class="line">    <span class="built_in">free</span>(<span class="built_in">array</span>); </span><br><span class="line">    </span><br><span class="line">    system(<span class="string">&quot;pause&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>运行结果：</p>
+<p><img src="https://pic4.zhimg.com/80/v2-10e77eac8505ca3ffdf77932ff5abeeb_1440w.webp" alt="img"></p>
+<h3 id="使用内存中的数据"><a href="#使用内存中的数据" class="headerlink" title="使用内存中的数据"></a><strong>使用内存中的数据</strong></h3><p>上面的代码中，我们通过下标<code>array[i]</code>来引用数组元素，这个静态数组没有什么区别。另外还可以通过指针来引用数组元素，对上面的程序稍作修改：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span>&#123;</span><br><span class="line">    <span class="type">int</span> arrLen;</span><br><span class="line">    <span class="type">int</span> *<span class="built_in">array</span>;</span><br><span class="line">    <span class="type">int</span> *arrayCopy;<span class="comment">//用来指向具体的数组元素</span></span><br><span class="line">    <span class="type">int</span> i;  </span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;please enter length：&quot;</span>);</span><br><span class="line">    scanf_s(<span class="string">&quot;%d&quot;</span>, &amp;arrLen);</span><br><span class="line">    </span><br><span class="line">    arrayCopy = <span class="built_in">array</span> = (<span class="type">int</span>*)<span class="built_in">malloc</span>( arrLen*<span class="keyword">sizeof</span>(<span class="type">int</span>) );</span><br><span class="line">    <span class="keyword">if</span>(!<span class="built_in">array</span>)&#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;create error！\n&quot;</span>);</span><br><span class="line">        <span class="built_in">exit</span>(<span class="number">1</span>); </span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>; i&lt;arrLen; i++)&#123;</span><br><span class="line">        *arrayCopy++ = i+<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    arrayCopy = <span class="built_in">array</span>;<span class="comment">//重置到数组首地址</span></span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>; i&lt;arrLen; i++)&#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;%d  &quot;</span>, *arrayCopy++);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;\n&quot;</span>);</span><br><span class="line">    <span class="built_in">free</span>(<span class="built_in">array</span>); </span><br><span class="line">    </span><br><span class="line">    system(<span class="string">&quot;pause&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>需要注意的是，free() 函数必须释放整块内存，多定义一个变量 arrayCopy，不断改变它的值，以指向不同的数组元素。这样可以保证 array 变量的值不变，始终指向内存首地址，用于free()整块内存。</p>
+<p>当然也可以动态创建多维数组，其原理都是一样的，并且需要遵循创建与释放的原则。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-20230802-cpp中cin的详细用法"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/08/02/20230802-cpp%E4%B8%ADcin%E7%9A%84%E8%AF%A6%E7%BB%86%E7%94%A8%E6%B3%95/"
+    >20230802-cpp中cin的详细用法</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/08/02/20230802-cpp%E4%B8%ADcin%E7%9A%84%E8%AF%A6%E7%BB%86%E7%94%A8%E6%B3%95/" class="article-date">
+  <time datetime="2023-08-02T09:14:54.000Z" itemprop="datePublished">2023-08-02</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="1-cin简介"><a href="#1-cin简介" class="headerlink" title="1.cin简介"></a>1.cin简介</h1><p>cin是C++编程语言中的标准输入流对象，即istream类的对象。cin主要用于从标准输入读取数据，这里的标准输入，指的是终端的键盘。此外，cout是流的对象，即ostream类的对象，cerr是标准错误输出流的对象，也是ostream 类的对象。这里的标准输出指的是终端键盘，标准错误输出指的是终端的屏幕。</p>
+<p>在理解cin功能时，不得不提标准输入缓冲区。当我们从键盘输入字符串的时候需要敲一下回车键才能够将这个字符串送入到缓冲区中，那么敲入的这个回车键(\r)会被转换为一个换行符\n，这个换行符\n也会被存储在cin的缓冲区中并且被当成一个字符来计算！比如我们在键盘上敲下了123456这个字符串，然后敲一下回车键（\r）将这个字符串送入了缓冲区中，那么此时缓冲区中的字节个数是7 ，而不是6。</p>
+<p>cin读取数据也是从缓冲区中获取数据，缓冲区为空时，cin的成员函数会阻塞等待数据的到来，一旦缓冲区中有数据，就触发cin的成员函数去读取数据。</p>
+<hr>
+<h1 id="2-cin的常用读取方法"><a href="#2-cin的常用读取方法" class="headerlink" title="2. cin的常用读取方法"></a>2. cin的常用读取方法</h1><p>使用cin从标准输入读取数据时，通常用到的方法有cin&gt;&gt;，cin.get，cin.getline。</p>
+<h2 id="2-1cin-gt-gt-的用法"><a href="#2-1cin-gt-gt-的用法" class="headerlink" title="2.1cin&gt;&gt;的用法"></a>2.1cin&gt;&gt;的用法</h2><p>cin可以连续从键盘读取想要的数据，以空格、tab或换行作为分隔符。实例程序如下。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">char</span> a;</span><br><span class="line">    <span class="type">int</span> b;</span><br><span class="line">    <span class="type">float</span> c;</span><br><span class="line">    string </span><br><span class="line">    cin&gt;&gt;a&gt;&gt;b&gt;&gt;c;</span><br><span class="line">    cout&lt;&lt;a&lt;&lt;<span class="string">&quot; &quot;</span>&lt;&lt;b&lt;&lt;<span class="string">&quot; &quot;</span>&lt;&lt;c&lt;&lt;<span class="string">&quot; &quot;</span>&lt;&lt;endl;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">system</span>(<span class="string">&quot;pause&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在屏幕中一次输入：a[回车]11[回车]5.56[回车]，程序将输出如下结果：<br><img src="https://img-blog.csdn.net/20150904213426227"></p>
+<p><strong>注意：</strong><br>（1）<code>cin&gt;&gt;</code> 等价于<code>cin.operator&gt;&gt;()</code>，即调用成员函数<code>operator&gt;&gt;()</code>进行读取数据。<br>（2）当<code>cin&gt;&gt;</code>从缓冲区中读取数据时，若缓冲区中第一个字符是空格、tab或换行这些分隔符时，<code>cin&gt;&gt;</code>会将其忽略并清除，继续读取下一个字符，若缓冲区为空，则继续等待。但是如果读取成功，字符后面的分隔符是残留在缓冲区的，<code>cin&gt;&gt;</code>不做处理。<br>（3）不想略过空白字符，那就使用 noskipws 流控制。比如<code>cin&gt;&gt;noskipws&gt;&gt;input</code>;</p>
+<p>验证程序见如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string&gt;</span> </span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">char</span> a;</span><br><span class="line">    <span class="type">int</span> b;</span><br><span class="line">    <span class="type">float</span> c;</span><br><span class="line">    string str;</span><br><span class="line">    cin&gt;&gt;a&gt;&gt;b&gt;&gt;c&gt;&gt;str;</span><br><span class="line">    cout&lt;&lt;a&lt;&lt;<span class="string">&quot; &quot;</span>&lt;&lt;b&lt;&lt;<span class="string">&quot; &quot;</span>&lt;&lt;c&lt;&lt;<span class="string">&quot; &quot;</span>&lt;&lt;str&lt;&lt;endl;</span><br><span class="line"></span><br><span class="line">    string test;</span><br><span class="line">    <span class="built_in">getline</span>(cin,test);<span class="comment">//不阻塞</span></span><br><span class="line">    cout&lt;&lt;<span class="string">&quot;test:&quot;</span>&lt;&lt;test&lt;&lt;endl;</span><br><span class="line">    <span class="built_in">system</span>(<span class="string">&quot;pause&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>从键盘输入:[回车][回车][回车]a[回车]5[回车]2.33[回车]hello[回车]，输出结果是：<br><img src="https://img-blog.csdn.net/20150904213554338"></p>
+<p>从结果可以看出，cin&gt;&gt;对缓冲区中的第一个换行符视而不见，采取的措施是忽略清除，继续阻塞等待缓冲区有效数据的到来。但是，getline()读取数据时，并非像cin&gt;&gt;那样忽略第一个换行符，getline()发现cin的缓冲区中有一个残留的换行符，不阻塞请求键盘输入，直接读取，送入目标字符串后，再将换行符替换为空字符’\0’，因此程序中的test为空串。</p>
+<h2 id="2-2-cin-get的用法"><a href="#2-2-cin-get的用法" class="headerlink" title="2.2 cin.get的用法"></a>2.2 cin.get的用法</h2><p>该函数有有多种重载形式，分为四种格式：无参，一参数，二参数，三个参数。常用的的函数原型如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> cin.<span class="built_in">get</span>();</span><br><span class="line">istream&amp; cin.<span class="built_in">get</span>(<span class="type">char</span>&amp; var);</span><br><span class="line"><span class="function">istream&amp; <span class="title">get</span> <span class="params">( <span class="type">char</span>* s, streamsize n )</span></span>;</span><br><span class="line"><span class="function">istream&amp; <span class="title">get</span> <span class="params">( <span class="type">char</span>* s,  streamsize  n, <span class="type">char</span> delim )</span>。</span></span><br></pre></td></tr></table></figure>
+
+<p>其中streamsize 在VC++中被定义为long long型。另外，还有两个重载形式不怎么使用，就不详述了，函数原型如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">istream&amp; <span class="title">get</span> <span class="params">( streambuf&amp; sb)</span></span>;</span><br><span class="line"><span class="function">istream&amp; <span class="title">get</span> <span class="params">( streambuf&amp; sb, <span class="type">char</span> delim )</span></span>;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-2-1-cin-get读取一个字符"><a href="#2-2-1-cin-get读取一个字符" class="headerlink" title="2.2.1 cin.get读取一个字符"></a>2.2.1 cin.get读取一个字符</h3><p>读取一个字符，可以使用cin.get或者cin.get(var)，示例代码如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">char</span> a;</span><br><span class="line">    <span class="type">char</span> b;</span><br><span class="line">    a=cin.<span class="built_in">get</span>();</span><br><span class="line">    cin.<span class="built_in">get</span>(b);</span><br><span class="line">    cout&lt;&lt;a&lt;&lt;b&lt;&lt;endl;</span><br><span class="line">    <span class="built_in">system</span>(<span class="string">&quot;pause&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>输入：e[回车]，输出：<br><img src="https://img-blog.csdn.net/20150904213700306"><br><strong>注意：</strong><br>（1）从结果可以看出，cin.get()从输入缓冲区读取单个字符时不忽略分隔符，直接将其读取，就出现了如上情况，将换行符读入变量b，输出时打印两次。</p>
+<p>（2）cin.get()的返回值是int类型，成功：读取字符的ASCII码值，遇到文件结束符时，返回EOF，即-1，Windows下标准输入输入文件结束符为Ctrl+z，<a target="_blank" rel="noopener" href="http://lib.csdn.net/base/linux">Linux</a>为Ctrl+d。cin.get(char var)如果成功返回的是cin对象，因此可以支持链式操作，如cin.get(b).get(c)。</p>
+<h3 id="2-2-2-cin-get读取一行"><a href="#2-2-2-cin-get读取一行" class="headerlink" title="2.2.2 cin.get读取一行"></a>2.2.2 cin.get读取一行</h3><p>读取一行可以使用istream&amp; get ( char* s, streamsize n )或者istream&amp; get ( char* s, size_t n, streamsize delim )。二者的区别是前者默认以换行符结束，后者可指定结束符。n表示目标空间的大小。示例代码如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">char</span> a;</span><br><span class="line">    <span class="type">char</span> array[<span class="number">20</span>]=&#123;<span class="literal">NULL</span>&#125;; </span><br><span class="line">    cin.<span class="built_in">get</span>(array,<span class="number">20</span>);</span><br><span class="line">    cin.<span class="built_in">get</span>(a);</span><br><span class="line">    cout&lt;&lt;array&lt;&lt;<span class="string">&quot; &quot;</span>&lt;&lt;(<span class="type">int</span>)a&lt;&lt;endl;</span><br><span class="line">    <span class="built_in">system</span>(<span class="string">&quot;pause&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>输入：123456789[回车]，输出：<br><img src="https://img-blog.csdn.net/20150904213736035"></p>
+<p><strong>注意：</strong><br>（1）从结果可以看出，cin.get(array,20);读取一行时，遇到换行符时结束读取，但是不对换行符进行处理，换行符仍然残留在输入缓冲区。第二次由cin.get()将换行符读入变量b，打印输入换行符的ASCII码值为10。这也是cin.get()读取一行与使用getline读取一行的区别所在。getline读取一行字符时，默认遇到<code>\n</code>时终止，并且将<code>\n</code>直接从输入缓冲区中删除掉，不会影响下面的输入处理。</p>
+<p>（2）cin.get(str,size);读取一行时，只能将字符串读入C风格的字符串中，即char*，但是C++的getline函数可以将字符串读入C++风格的字符串中，即string类型。鉴于getline较cin.get()的这两种优点，建议使用getline进行行的读取。关于getline的用法，下文将进行详述。</p>
+<h2 id="2-3-cin-getline读取一行"><a href="#2-3-cin-getline读取一行" class="headerlink" title="2.3 cin.getline读取一行"></a>2.3 cin.getline读取一行</h2><p>函数作用：从标准输入设备键盘读取一串字符串，并以指定的结束符结束。<br>函数原型有两个：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">istream&amp; <span class="title">getline</span><span class="params">(<span class="type">char</span>* s, streamsize count)</span></span>; <span class="comment">//默认以换行符结束</span></span><br><span class="line"><span class="function">istream&amp; <span class="title">getline</span><span class="params">(<span class="type">char</span>* s, streamsize count, <span class="type">char</span> delim)</span></span>;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>使用示例：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">char</span> array[<span class="number">20</span>]=&#123;<span class="literal">NULL</span>&#125;;</span><br><span class="line">    cin.<span class="built_in">getline</span>(array,<span class="number">20</span>); <span class="comment">//或者指定结束符，使用下面一行</span></span><br><span class="line">    <span class="comment">//cin.getline(array,20,&#x27;\n&#x27;);</span></span><br><span class="line">    cout&lt;&lt;array&lt;&lt;endl;</span><br><span class="line">    <span class="built_in">system</span>(<span class="string">&quot;pause&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>注意，cin.getline与cin.get的区别是，cin.getline不会将结束符或者换行符残留在输入缓冲区中。</p>
+<hr>
+<h1 id="3-cin的条件状态"><a href="#3-cin的条件状态" class="headerlink" title="3. cin的条件状态"></a>3. cin的条件状态</h1><p>使用cin读取键盘输入时，难免发生错误，一旦出错，cin将设置条件状态(condition state)。条件状态标识符号为:<br>goodbit:无错误<br>eofbit:已到达文件尾<br>failbit:非致命的输入&#x2F;输出错误，可挽回<br>badbit:致命的输入&#x2F;输出错误,无法挽回<br>若在输入输出类里.需要加<a target="_blank" rel="noopener" href="http://lib.csdn.net/base/ios">iOS</a>::标识符号。与这些条件状态对应的就是设置、读取和判断条件状态的流对象的成员函数。他们主要有：<br>s.eof()：若流s的eofbit置位，则返回true；<br>s.fail()：若流s的failbit置位，则返回true；<br>s.bad()：若流s的badbit置位，则返回true；<br>s.good()：若流s的goodbit置位，则返回true；<br>s.clear(flags)：清空状态标志位，并将给定的标志位flags置为1，返回void。<br>s.setstate(flags)：根据给定的flags条件状态标志位，将流s中对应的条件状态位置为1，返回void。<br>s.rdstate()：返回流s的当前条件状态，返回值类型为strm::iostate。strm::iostate 机器相关的整形名,由各个iostream类定义,用于定义条件状态。</p>
+<p>了解以上关于输入流的条件状态与相关操作函数，下面看一个因输入缓冲区未读取完造成的条件状态位failbit被置位，再通过clear()复位的例子。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"><span class="type">char</span> ch, str[<span class="number">20</span>]; </span><br><span class="line">    cin.<span class="built_in">getline</span>(str, <span class="number">5</span>);</span><br><span class="line">    cout&lt;&lt;<span class="string">&quot;flag1:&quot;</span>&lt;&lt;cin.<span class="built_in">good</span>()&lt;&lt;endl;    <span class="comment">// 查看goodbit状态，即是否有异常</span></span><br><span class="line">    cin.<span class="built_in">clear</span>();                         <span class="comment">// 清除错误标志</span></span><br><span class="line">    cout&lt;&lt;<span class="string">&quot;flag1:&quot;</span>&lt;&lt;cin.<span class="built_in">good</span>()&lt;&lt;endl;    <span class="comment">// 清除标志后再查看异常状态</span></span><br><span class="line">    cin&gt;&gt;ch; </span><br><span class="line">    cout&lt;&lt;<span class="string">&quot;str:&quot;</span>&lt;&lt;str&lt;&lt;endl;</span><br><span class="line">    cout&lt;&lt;<span class="string">&quot;ch :&quot;</span>&lt;&lt;ch&lt;&lt;endl;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">system</span>(<span class="string">&quot;pause&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>输入：12345[回车]，输出结果为：<br><img src="https://img-blog.csdn.net/20150904213958795"></p>
+<p>可以看出，因输入缓冲区未读取完造成输入异常，通过clear()可以清除输入流对象cin的异常状态。，不影响后面的cin&gt;&gt;ch从输入缓冲区读取数据。因为cin.getline读取之后，输入缓冲区中残留的字符串是：5[换行]，所以cin&gt;&gt;ch将5读取并存入ch，打印输入并输出5。</p>
+<p>如果将clear()注释，cin&gt;&gt;ch;将读取失败，ch为空。<br>cin.clear()等同于cin.clear(<a target="_blank" rel="noopener" href="http://lib.csdn.net/base/ios">ios</a>::goodbit);因为cin.clear()的默认参数是ios::goodbit，所以不需显示传递，故而你最常看到的就是:<br>cin.clear()。</p>
+<hr>
+<h1 id="4-cin清空输入缓冲区"><a href="#4-cin清空输入缓冲区" class="headerlink" title="4. cin清空输入缓冲区"></a>4. cin清空输入缓冲区</h1><p>从上文中可以看出，上一次的输入操作很有可能是输入缓冲区中残留数据，影响下一次的输入。那么如何解决这个问题呢？自然而然，我们想到了在进行输入时，对输入缓冲区进行清空和状态条件的复位。条件状态的复位使用clear()，清空输入缓冲区应该使用：<br>函数原型：<code>istream &amp;ignore( streamsize num=1, int delim=EOF );</code><br>函数作用：跳过输入流中n个字符，或在遇到指定的终止字符时提前结束（此时跳过包括终止字符在内的若干字符）。<br>使用示例如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">char</span> str1[<span class="number">20</span>]=&#123;<span class="literal">NULL</span>&#125;,str2[<span class="number">20</span>]=&#123;<span class="literal">NULL</span>&#125;;</span><br><span class="line">    cin.<span class="built_in">getline</span>(str1,<span class="number">5</span>);</span><br><span class="line">    cin.<span class="built_in">clear</span>();  <span class="comment">// 清除错误标志   </span></span><br><span class="line">    cin.<span class="built_in">ignore</span>(numeric_limits&lt;std::streamsize&gt;::<span class="built_in">max</span>(),<span class="string">&#x27;\n&#x27;</span>); <span class="comment">//清除缓冲区的当前行</span></span><br><span class="line">    cin.<span class="built_in">getline</span>(str2,<span class="number">20</span>);</span><br><span class="line">    cout&lt;&lt;<span class="string">&quot;str1:&quot;</span>&lt;&lt;str1&lt;&lt;endl;</span><br><span class="line">    cout&lt;&lt;<span class="string">&quot;str2:&quot;</span>&lt;&lt;str2&lt;&lt;endl;</span><br><span class="line">    <span class="built_in">system</span>(<span class="string">&quot;pause&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>程序输入：12345[回车]success[回车]，程序输出：<br><img src="https://img-blog.csdn.net/20150904214119892"></p>
+<p><strong>注意：</strong><br>（1）程序中使用cin.ignore清空了输入缓冲区的当前行，使上次的输入残留下的数据没有影响到下一次的输入，这就是ignore()函数的主要作用。其中，numeric_limits::max()不过是头文件定义的流使用的最大值，你也可以用一个足够大的整数代替它。<br>如果想清空输入缓冲区，去掉换行符，使用：<br>cin.ignore(numeric_limits&lt; std::streamsize&gt;::max()); 清除cin里所有内容。</p>
+<p>（2）cin.ignore()；当输入缓冲区没有数据时，也会阻塞等待数据的到来。</p>
+<p>（3）有个疑问，网上很多资料说调用cin.sync()即可清空输入缓冲区，本人<a target="_blank" rel="noopener" href="http://lib.csdn.net/base/softwaretest">测试</a>了一下，VC++可以，但是在<a target="_blank" rel="noopener" href="http://lib.csdn.net/base/linux">linux</a>下使用GNU C++却不行，无奈之下，linux下就选择了cin.ignore()。</p>
+<hr>
+<h1 id="5-其它从标准输入读取一行字符串的方法"><a href="#5-其它从标准输入读取一行字符串的方法" class="headerlink" title="5.其它从标准输入读取一行字符串的方法"></a>5.其它从标准输入读取一行字符串的方法</h1><h2 id="5-1-getline读取一行"><a href="#5-1-getline读取一行" class="headerlink" title="5.1 getline读取一行"></a>5.1 getline读取一行</h2><p>C++中定义了一个在std名字空间的全局函数getline，因为这个getline函数的参数使用了string字符串，所以声明在了&lt; string&gt;头文件中了。</p>
+<p>getline利用cin可以从标准输入设备键盘读取一行，当遇到如下三种情况会结束读操作：1）到文件结束，2）遇到函数的定界符，3）输入达到最大限度。</p>
+<p>函数原型有两个重载形式：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">istream&amp; <span class="title">getline</span> <span class="params">( istream&amp; is, string&amp; str)</span></span>;<span class="comment">//默认以换行符结束</span></span><br><span class="line"><span class="function">istream&amp; <span class="title">getline</span> <span class="params">( istream&amp; is, string&amp; str, <span class="type">char</span> delim)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>使用示例：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string&gt;</span> </span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    string str;</span><br><span class="line">    <span class="built_in">getline</span>(cin,str);</span><br><span class="line">    cout&lt;&lt;str&lt;&lt;endl;</span><br><span class="line">    <span class="built_in">system</span>(<span class="string">&quot;pause&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>输入：hello world[回车]，输出：<br><img src="https://img-blog.csdn.net/20150904214254021"></p>
+<p>注意，getline遇到结束符时，会将结束符一并读入指定的string中，再将结束符替换为空字符。因此，进行从键盘读取一行字符时，建议使用getline，较为安全。但是，最好还是要进行标准输入的安全检查，提高程序容错能力。</p>
+<p>cin.getline()类似，但是cin.getline()属于istream流，而getline()属于string流，是不一样的两个函数。</p>
+<h2 id="5-2-gets读取一行"><a href="#5-2-gets读取一行" class="headerlink" title="5.2 gets读取一行"></a>5.2 gets读取一行</h2><p>gets是C中的库函数，在&lt; stdio.h&gt;申明，从标准输入设备读字符串，可以无限读取，不会判断上限，以回车结束或者EOF时停止读取，所以程序员应该确保buffer的空间足够大，以便在执行读操作时不发生溢出。<br>函数原型：<code>char *gets( char *buffer );</code><br>使用示例：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">char</span> array[<span class="number">20</span>]=&#123;<span class="literal">NULL</span>&#125;;</span><br><span class="line">    <span class="built_in">gets</span>(array);</span><br><span class="line">    cout&lt;&lt;array&lt;&lt;endl;</span><br><span class="line">    <span class="built_in">system</span>(<span class="string">&quot;pause&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>输入：I am lvlv[回车]，输出：<br><img src="https://img-blog.csdn.net/20150904214323777"></p>
+<p>由于该函数是C的库函数，所以不建议使用，既然是C++程序，就尽量使用C++的库函数吧。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-20230802-VisualStudio2022构建调试Cpp项目"
   class="article article-type-post"
   itemscope
@@ -888,266 +1168,6 @@
 <li>PaaS</li>
 </ol>
 <p>按照PaaS业务模式的定义，大多数SaaS公司自己开发的PaaS都不是真正意义上的PaaS，这些PaaS其实都是SaaS。反过来说，所有SaaS必须具有PaaS的业务可定义和可扩展的能力，这是为了补偿SaaS个性化能力的不足。</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20230707-高级电工全套笔记"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/07/07/20230707-%E9%AB%98%E7%BA%A7%E7%94%B5%E5%B7%A5%E5%85%A8%E5%A5%97%E7%AC%94%E8%AE%B0/"
-    >20230707-高级电工全套笔记</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/07/07/20230707-%E9%AB%98%E7%BA%A7%E7%94%B5%E5%B7%A5%E5%85%A8%E5%A5%97%E7%AC%94%E8%AE%B0/" class="article-date">
-  <time datetime="2023-07-07T04:10:01.000Z" itemprop="datePublished">2023-07-07</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>T68 镗床控制电路的故障检查和排除</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20230704-windows查看文件被哪个进程占用"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/07/04/20230704-windows%E6%9F%A5%E7%9C%8B%E6%96%87%E4%BB%B6%E8%A2%AB%E5%93%AA%E4%B8%AA%E8%BF%9B%E7%A8%8B%E5%8D%A0%E7%94%A8/"
-    >20230704-windows查看文件被哪个进程占用</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/07/04/20230704-windows%E6%9F%A5%E7%9C%8B%E6%96%87%E4%BB%B6%E8%A2%AB%E5%93%AA%E4%B8%AA%E8%BF%9B%E7%A8%8B%E5%8D%A0%E7%94%A8/" class="article-date">
-  <time datetime="2023-07-04T07:24:04.000Z" itemprop="datePublished">2023-07-04</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>经常当我们删除文件时，有时会提示【操作无法完成，因为文件已在另一个程序中打开，请关闭该文件并重试】，到底是哪些程序呢？</p>
-<p>有时候一个一个找真不是办法，已经被这个问题折磨很久了，今天下决心要把它解决，找到办法了。如果系统是win10&#x2F;win7，可以这么做：</p>
-<p>在开始菜单中的搜索框内输入“资源监视器”，回车，打开“资源监视器”。</p>
-<p>看下图，在“资源监视器”界面中，点击第二个选项卡“CPU”。在“关联的句柄”右侧搜索框内输入文件名称，点击右侧下拉箭头，就可以查看该文件被那几个程序占用了。</p>
-<p><img src="https://pic1.zhimg.com/80/v2-7f03646ebe5bf74e7185145d7d31c1e8_1440w.webp" alt="img"></p>
-<p>选中程序，右击选择结束进程。</p>
-<p><img src="https://pic3.zhimg.com/80/v2-12b5e03f4cbb730780a985e76a1b2b0a_1440w.webp" alt="img"></p>
-<p>现在就可以删除文件了。结束系统进程前最好查一下，看看能不能结束，免得出现问题，那就得不偿失了。</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20230703-缝纫线迹科普"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/07/03/20230703-%E7%BC%9D%E7%BA%AB%E7%BA%BF%E8%BF%B9%E7%A7%91%E6%99%AE/"
-    >20230703-缝纫线迹科普</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/07/03/20230703-%E7%BC%9D%E7%BA%AB%E7%BA%BF%E8%BF%B9%E7%A7%91%E6%99%AE/" class="article-date">
-  <time datetime="2023-07-03T03:12:24.000Z" itemprop="datePublished">2023-07-03</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV16e4y177tE">https://www.bilibili.com/video/BV16e4y177tE</a></p>
-<p>ISO 4915 </p>
-<p>GB 24118-2009 4915,1991</p>
-<p>纺织品  线迹型式 分类和术语</p>
-<p>100种缝纫线迹</p>
-<p>8种链式线迹</p>
-<p>20种手工线迹</p>
-<p>30种锁式线迹</p>
-<p>17种多线链式线迹</p>
-<p>16 种包缝链式线迹</p>
-<p>300 系列最常见的就是301 线迹</p>
-<p>它由两根线组成</p>
-<p>两根线互相交错</p>
-<p>在我们的面料正反面，呈现虚线的样式</p>
-<p>这其实是最常见的 301 锁式线迹，没有之一，在行业内，一般称呼它为平缝线迹</p>
-<p>也叫平车线迹</p>
-<p>平车 这个词翻译过来就是可以缝纫出301 线迹的缝纫机</p>
-<p>老式缝纫机就是一种平车</p>
-<p>当然还有符合这个时代的家用平缝机</p>
-<p>以及工业平缝机</p>
-<p>301 线迹通常会用到机织面料上</p>
-<p>例如基础款的衬衫，使用平缝机完全可以完成整件衬衫的制作</p>
-<p>不过前提是会手工缝纽扣和扣眼</p>
-<p>当然在工业上会使用专业机器</p>
-<p>钉扣缝纫机和扣眼缝纫机</p>
-<p>有些衬衫制作也会使用到套结缝纫机</p>
-<p>401 线迹的面线呈现虚线样式</p>
-<p>双线链式线迹</p>
-<p>三条线 一个结  三条线 一个结 重复的样式</p>
-<p>在服装领域</p>
-<p>这种线迹通常在家用绷缝机以及工业双重环缝缝纫机上可以缝制出来</p>
-<p>因此这样的线迹也被称为双重环缝</p>
-<p>也有不少地方直接称呼为链缝</p>
-<p>然而我们在成衣上比较容易看到的是两条 401 线迹</p>
-<p>举个例子，在做功还算考究的T恤领域里</p>
-<p>通常会缝制捆条防止T恤领口变形</p>
-<p>而固定捆条就需要使用到两条401 线迹</p>
-<p>很多人会认为这两条线迹是平车车缝的</p>
-<p>平车车缝出来的是锁式线迹</p>
-<p>拉伸性能比较差</p>
-<p>使用平车车缝弹性针织面料的时候</p>
-<p>极容易开线</p>
-<p>因此缝制两条401 线迹也是需要专业的缝纫机</p>
-<p>也就是双针双重环缝缝纫机</p>
-<p>406 是双针网底线迹</p>
-<p>正面呈现两条虚线</p>
-<p>反面呈现网状</p>
-<p>该线迹非常有弹性</p>
-<p>通常出现在T恤的下摆 袖口</p>
-<p>锁边 翻折后 再缝制406 线迹</p>
-<p>当然如果你想看清除</p>
-<p>也可以在 裤袢 上找一下</p>
-<p>通常家用绷缝机以及工业绷缝机可以缝制406 线迹</p>
-<p>406 线迹也被常称呼为三线绷缝线迹</p>
-<p>三线单面绷缝</p>
-<p>407 是406 线迹的升级版</p>
-<p>三针网底线迹</p>
-<p>性能较406 是一致的</p>
-<p>407 线迹也叫四线绷缝 通常在男士内裤上使用</p>
-<p>500 系列是包缝链式线迹</p>
-<p>502 线迹 </p>
-<p>主要作用就是把面料的边缘包住防止散开</p>
-<p>512 线迹</p>
-<p>522 线迹</p>
-<p>或者是几层面料包在一起固定</p>
-<p>504 是更常见的三线包缝</p>
-<p>缝制这种三线锁边线迹可以使用家用包缝机和工业单针包缝机</p>
-<p>锁边机</p>
-<p>四线  五线 锁边机</p>
-<p>五线锁边实际上就是三线包缝504 线迹加上链缝401 线迹</p>
-<p>于是另外给这个线迹取名为516 五线包缝线迹</p>
-<p>516 线迹通常会用在裤子的侧缝</p>
-<p>这种线迹只需要车缝一遍</p>
-<p>就可以完成锁边和固定布片</p>
-<p>效率高且牢固</p>
-<p>四线锁边指的就是514 线迹</p>
-<p>与三线包缝直观区别就是中间多了一条线迹</p>
-<p>当然 缝制514 线迹使用的缝纫机和三线包缝是一样的</p>
-<p>只需要增加一根线而已</p>
-<p>605 是三针五线 绷缝线迹</p>
-<p>605 三针五线绷缝线和407三针网底线迹的区别</p>
-<p>就在面料正面多了一条缠绕的覆盖线</p>
-<p>600 系列的覆盖线迹通常用于拼接布料或者单纯装饰</p>
-<p>607 线迹<br>四针六线绷缝线迹  此线迹常用在泳裤上</p>
-<hr>
-<p>服装材料科普</p>
-<p>陶纺轮</p>
-<p>纺轮 中间有一个孔</p>
-<p>可以插一根杆</p>
-<p>纤维是什么</p>
-<p>纺纱和服装材料有什么关系</p>
-<p>织布必先纺纱</p>
-<p>斜纹布</p>
-<p>汗布</p>
-<p>针织面料</p>
-<p>罗纹布</p>
-<p>把纤维或者纱线经过化学  机械或热的处理</p>
-<p>加工成布的样子，这就是非织造布了</p>
-<p>热熔粘和衬</p>
-<p>羊皮</p>
-<p>皮革的意思绝对不是真皮与合成革</p>
-<p>木棉 攀枝花</p>
-<p>木棉纤维与棉纤维  的化学成分比较</p>
-<p>韧皮纤维</p>
-<p>脱胶</p>
-<p>去除果胶  半纤维素和木质素等非纤维素物质</p>
-<p>苎麻</p>
-<p>动物纤维大多是蛋白质纤维</p>
-<p>山羊绒</p>
-<p>人造纤维 合成纤维</p>
-<p>棉浆粕</p>
-<p>铜氨纤维</p>
-<p>醋酯纤维</p>
  
       <!-- reward -->
       

@@ -126,6 +126,275 @@
     
     
     <article
+  id="post-20221213-VGA显示图像详细总结"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/12/13/20221213-VGA%E6%98%BE%E7%A4%BA%E5%9B%BE%E5%83%8F%E8%AF%A6%E7%BB%86%E6%80%BB%E7%BB%93/"
+    >20221213-VGA显示图像详细总结</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/12/13/20221213-VGA%E6%98%BE%E7%A4%BA%E5%9B%BE%E5%83%8F%E8%AF%A6%E7%BB%86%E6%80%BB%E7%BB%93/" class="article-date">
+  <time datetime="2022-12-13T02:09:18.000Z" itemprop="datePublished">2022-12-13</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_44406200/article/details/103823607">https://blog.csdn.net/weixin_44406200/article/details/103823607</a></p>
+<h2 id="VGA-显示原理"><a href="#VGA-显示原理" class="headerlink" title="VGA 显示原理"></a>VGA 显示原理</h2><p>VGA 概念</p>
+<p>VGA 不是用来显示的那块屏幕，而是用来传输信号的接口，VGA 全称是video graphics array 及视频图形阵列，是模拟信号的一种视频传输标准，VGA 传输接口实物图如下</p>
+<p>自测试 地址码 蓝基色  绿基色  红基色</p>
+<p>数字地        蓝地  绿地   红地<br>地址码 场同步 行同步  地址码 地址码</p>
+<p>操作VGA 的过程就是给你一块有横纵坐标范围的区域，区域上的每一个坐标点就是一个像素点，你可以做的事情是给这个像素点特定的rgb 色彩，既可以通过自定义rgb 也可以去取图像某个像素点的rgb ，这也就提供了你在vga 上画图以及显示图片的能力</p>
+<p>VGA 分辨率及理解误区</p>
+<p>640 * 480 的规格就是显示屏幕上每行有640 个像素点，总共有480行，注意，一件很重要的事情是，虽然你看到的屏幕上的大小是640 * 480 的 但是它实际大小并不只有那么点，形象一点就是说，VGA 的扫描范围是包含了你能够看到的640 480 这一块区域的更大区域，他会在周围一圈你看不到的区域部分进行扫描，因此，我们在处理扫描信号的时候一定要注意只有扫描到有效区域的时候才能把像素点数据传给 VGa 显示 </p>
+<p>VGA 显示器扫描方式从屏幕左上角一点开始，从左向右逐点扫描，每扫描完一行，电子束回到屏幕的左边下一行的起始位置，在这期 间，CRT 对电子束进行消隐，每行结束时，用行同步信号进行同步，当扫描完所有的行，形成一帧，用场同步信号进行场同步，并使扫描回到屏幕左上方，同时进行场消隐，开始下一帧，完成一行扫描的时间称为水平扫描时间，其倒数称为行频率，完成一帧，扫描的时间称为垂直扫描时间，其倒数称为场频率，及屏幕的刷新频率，其扫描示意图如下图所示</p>
+<p>有效显示区域</p>
+<p>关于那一块非有效显示区域，实际上是因为每一行和每一列的扫描区间都是由以下几部分组成</p>
+<p>行扫描  Hor Sync 、Hor Back Porch 、Hor Active Video和Hor Front Porch</p>
+<p>Hor Scan Time 是一个扫描周期，它会先扫描到hor sync 再扫描 hor back porch 然后才进入有效显示区  hor active video 最后是一段 hor front porch 可以看出来，四段区间只有hor active video 这一段是能够正常显示图像信息的，也就是屏幕上显示的那一块区间</p>
+<p>列扫描也同理</p>
+<p>给定参数</p>
+<p>实际上，根据固定的分辨率大小，比如我们实验室的板子使用的640 480 的屏幕大小，这些非有效区间的长度值都是一个固定的常数，因此你只要在扫描的时候把这些常数稍加处理即可</p>
+<p>下图罗列了不同分辨率所对应的各个参数，其中的a、b、c、d、e、f、g、h、i、k的含义，与上面给出的两张图的标注一一对应；我们实验使用的是第一组数据，可以看到行时序参数中的c代表每一行的有效显示区间640，列时序参数中的h代表每一列的有效显示区间480</p>
+<p>需要扫描频率，很重要的一件事，无论是行扫描还是给像素点赋值，我们都需要用一个时钟，这个时钟不是系统时针，必须要先将50MHZ 的时钟分频为25MHZ 然后拿去作为扫描信号的时钟</p>
+<p>这一点是特别需要注意的，否则到时候会出现out of range 的现象</p>
+<p>前期准备 coe 文件的生成</p>
+<p>coe 和ip 核介绍</p>
+<p>我们调用VGA 的终极目标是想要能够显示一张图片，在这之前，我们要先对这张图片进行一些预处理，因为我们是通过verilog 语言去调用图片数据的，但是verilog 并不知道怎么从一张已有的图片上去取相应的数据</p>
+<p>因此我们要先将图片转换为coe 文件，coe 文件实际上就是按照某种规律将图像每一个像素点的rgb 数据都摆放成单独一行 16进制，然后借助ISE 的IP 核生成将coe 文件转化成ROM ，生成的ROM.xco 和ROM.v 文件就可以被verilog 语言所识别调用，最终就能够取到图像的数据了</p>
+<p>24位bmp 图像转换为coe 文件 复原代码</p>
+<p>为了统一规范，这里我们使用24位真彩色的bmp 格式图像进行转换，好处是，bmp 的三通道数据特征是非常明显的，易于处理</p>
+<p>如何获取24位bmp 图像 </p>
+<p>然后bmp 格式也有很多种，如单色 16色 24 256 ，这里我们统一选择24位位图选项，点击保存即可</p>
+<p>使用matlab 将24位真彩色bmp 位图转化为coe 文件 </p>
+<p>由于24位共rgb 三个通道，每个通道分到的是8位，占用资源太多，且老师给的ucf 引脚约束对rgb 每一个通道只给了4位，因此我们在转化为coe 文件的同时，要将每个通道压缩成4位，即整张图像同时转化为12位</p>
+<p>压缩图像是一件非常重要的事情，因为经过后续的实践我们发现，板子内存资源有限，无法同时加载多张大图</p>
+<p>为了能够对多张图像进行批量处理，我使用matlab 写了一个 img2coe.m 函数，只要对bmp 图像调用这个函数即可转换成coe 文件了，转换过程介绍如下</p>
+<p>先将rgb 提取为三个通道，用reshape 函数对转置后的矩阵进行重组，对rgb 三个分量的数据都右移，舍去细节，留下高四位作为最终的数据，然后写入到coe 文件中</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">img2coe</span><span class="params">(path,name)</span></span></span><br><span class="line">    <span class="comment">% 利用imread函数把图片转化为一个三维矩阵</span></span><br><span class="line">    image_array = imread(path);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">% 利用size函数把图片矩阵的三个维度大小计算出来</span></span><br><span class="line">    <span class="comment">% 第一维为图片的高度，第二维为图片的宽度，第三维为图片的RGB分量</span></span><br><span class="line">    [height,width,z]=<span class="built_in">size</span>(image_array);   </span><br><span class="line"></span><br><span class="line">    red   = image_array(:,:,<span class="number">1</span>); <span class="comment">% 提取红色分量，数据类型为uint8</span></span><br><span class="line">    green = image_array(:,:,<span class="number">2</span>); <span class="comment">% 提取绿色分量，数据类型为uint8</span></span><br><span class="line">    blue  = image_array(:,:,<span class="number">3</span>); <span class="comment">% 提取蓝色分量，数据类型为uint8</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">% 把上面得到了各个分量重组成一个1维矩阵，由于reshape函数重组矩阵的</span></span><br><span class="line">    <span class="comment">% 时候是按照列进行重组的，所以重组前需要先把各个分量矩阵进行转置以后再重组</span></span><br><span class="line">    <span class="comment">% 利用reshape重组完毕以后，由于后面需要对数据拼接，所以为了避免溢出</span></span><br><span class="line">    <span class="comment">% 这里把uint8类型的数据扩大为uint32类型</span></span><br><span class="line">    r = uint32(<span class="built_in">reshape</span>(red&#x27;   , <span class="number">1</span> ,height*width));</span><br><span class="line">    g = uint32(<span class="built_in">reshape</span>(green&#x27; , <span class="number">1</span> ,height*width));</span><br><span class="line">    b = uint32(<span class="built_in">reshape</span>(blue&#x27;  , <span class="number">1</span> ,height*width));</span><br><span class="line"></span><br><span class="line">    <span class="comment">% 初始化要写入.coe文件中的RGB颜色矩阵</span></span><br><span class="line">    rgb=<span class="built_in">zeros</span>(<span class="number">1</span>,height*width);</span><br><span class="line"></span><br><span class="line">    <span class="comment">% 因为导入的图片是24-bit真彩色图片，每个像素占用24-bit，其中RGB分别占用8-bit</span></span><br><span class="line">    <span class="comment">% 而我这里需要的是12-bit，其中R为4-bit，G为4-bit，B为4-bit，所以需要在这里对24-bit的数据进行重组与拼接</span></span><br><span class="line">    <span class="comment">% bitshift()函数的作用是对数据进行移位操作，其中第一个参数是要进行移位的数据，第二个参数为负数表示向右移，为</span></span><br><span class="line">    <span class="comment">% 正数表示向左移，更详细的用法直接在Matlab命令窗口输入 doc bitshift 进行查看</span></span><br><span class="line">    <span class="comment">% 所以这里对红色分量先右移4位取出高4位，然后左移11位作为ROM中RGB数据的第11-bit到第8-bit</span></span><br><span class="line">    <span class="comment">% 对绿色分量先右移4位取出高4位，然后左移5位作为ROM中RGB数据的第7-bit到第4-bit</span></span><br><span class="line">    <span class="comment">% 对蓝色分量先右移4位取出高4位，然后左移0位作为ROM中RGB数据的第3-bit到第0-bit</span></span><br><span class="line">    <span class="keyword">for</span> <span class="built_in">i</span> = <span class="number">1</span>:height*width</span><br><span class="line">        rgb(<span class="built_in">i</span>) = bitshift(bitshift(r(<span class="built_in">i</span>),<span class="number">-3</span>),<span class="number">11</span>) + bitshift(bitshift(g(<span class="built_in">i</span>),<span class="number">-2</span>),<span class="number">5</span>) + bitshift(bitshift(b(<span class="built_in">i</span>),<span class="number">-3</span>),<span class="number">0</span>);</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">    fid = fopen( name , <span class="string">&#x27;w+&#x27;</span> );</span><br><span class="line"></span><br><span class="line">    <span class="comment">% .coe文件的最前面一行必须为这个字符串，其中16表示16进制</span></span><br><span class="line">    fprintf( fid, <span class="string">&#x27;memory_initialization_radix=16;\n&#x27;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">% .coe文件的第二行必须为这个字符串</span></span><br><span class="line">    fprintf( fid, <span class="string">&#x27;memory_initialization_vector =\n&#x27;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">% 把rgb数据的前 height*width-1  个数据写入.coe文件中，每个数据之间用逗号隔开</span></span><br><span class="line">    fprintf( fid, <span class="string">&#x27;%x,\n&#x27;</span>,rgb(<span class="number">1</span>:<span class="keyword">end</span><span class="number">-1</span>));</span><br><span class="line"></span><br><span class="line">    <span class="comment">% 把rgb数据的最后一个数据写入.coe文件中，并用分号结尾</span></span><br><span class="line">    fprintf( fid, <span class="string">&#x27;%x;&#x27;</span>,rgb(<span class="keyword">end</span>));</span><br><span class="line"></span><br><span class="line">    fclose( fid ); <span class="comment">% 关闭文件指针</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+
+<p>中期准备 coe 转换为rom </p>
+<p>经过上面的步骤我们已经得到了coe 文件</p>
+<p>接下来就是把它转化成verilog 能够调用的rom 文件了 </p>
+<p>在ISE 工程中，点击右键新建文件，选择ip 核生成 </p>
+<p>选择Memories选项中的RAMs&amp;ROMs里的Block Memory Generator</p>
+<p>然后进入到这个设置参数的界面</p>
+<p>其中width代表你设置的图片数据是几进制，由于之前写coe的时候是用16进制写的，因此这里写16；depth表示图像的大小，即长乘宽，由于我使用的是640<em>480的图片，因此这里填207200(&#x3D;640</em>480)</p>
+<p>当你的文件路径成功出现的时候，你就可以点击下方的generate生成了，当然这个generate也要很久很久，一般一张640 *480的图片要generate近一个小时左右才能生成</p>
+<p>生成完毕的标志是creating结束，并且在你的目录下出现类型太阳的这个标记</p>
+<p>后期调用与测试 </p>
+<p>VGA 显示的过程中会遇到很多小bug 有些小bug 的原因你根本找不出，比如 out of range ，你只能静下心来慢慢调试仿真</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-20221212-SPI协议详解"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/12/12/20221212-SPI%E5%8D%8F%E8%AE%AE%E8%AF%A6%E8%A7%A3/"
+    >20221212-SPI协议详解</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/12/12/20221212-SPI%E5%8D%8F%E8%AE%AE%E8%AF%A6%E8%A7%A3/" class="article-date">
+  <time datetime="2022-12-12T11:58:24.000Z" itemprop="datePublished">2022-12-12</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/290620901">https://zhuanlan.zhihu.com/p/290620901</a></p>
+<p>UART 没有时钟信号，无法控制何时发送数据，也无法保证双方按照完全相同的速度接收数据，因此，双方以不同的速度进行数据接收和发送，就会出现问题</p>
+<p>如果要解决这个问题，uart 为每个字节添加额外的起始位和停止位，以帮助接收器在数据到达时进行同步</p>
+<p>双方还必须事先就传输速度达成共识，设置相同的波特率 例如每秒9600位</p>
+<p>传输速率如果有微小差异不是问题，因为接收器会在每个字节的开头重新同步</p>
+<p>如果您注意到上图中的11001010不等于0x53，这是一个细节。串口协议通常会首先发送最低有效位，因此最小位在最左边LSB。低四位字节实际上是0011 &#x3D; 0x3，高四位字节是0101 &#x3D; 0x5。</p>
+<p>异步串行工作得很好，但是在每个字节发送的时候都需要额外的起始位和停止位 以及在发送和接收数据所需的复杂硬件方面都有很多开销</p>
+<p>不难发现，如果接收端和发送端设置的速度都不一致，那么接收到的数据将是垃圾 乱码</p>
+<h2 id="SPI-通讯协议"><a href="#SPI-通讯协议" class="headerlink" title="SPI 通讯协议"></a>SPI 通讯协议</h2><p>spi 是一个同步的数据总线，也就是说它是用单独的数据线和一个单独的时钟信号来保证发送端和接收端的完美同步</p>
+<p>时钟是一个振荡信号，它告诉接收端在确切的时机对数据线上的信号进行采样</p>
+<p>产生时钟的一侧称为主机，另一侧为从机，总是只有一个主机 一般来说可以是微控制器 MCU 但是可以有多个从机</p>
+<p>数据的采集时机可能是时钟信号的上升沿 或下降沿</p>
+<p>具体要看对 spi 的配置</p>
+<p>整体的传输大概可以分为以下几个过程</p>
+<p>主机先将NSS 信号拉低，这样保证开始接收数据</p>
+<p>当接收端检测到时钟的边沿信号时，它将立即读取数据线上的信号，这样就得到了一位数据 1bit</p>
+<p>由于时钟是随数据一起发送的，因此指定数据的传输速度并不重要，尽管设备将具有可以运行的最高速度</p>
+<p>主机发送到从机时：主机产生相应的时钟信号，然后数据一位一位地将从MOSI信号线上进行发送到从机；<br>主机接收从机数据：如果从机需要将数据发送回主机，则主机将继续生成预定数量的时钟信号，并且从机会将数据通过MISO信号线发送；</p>
+<p>注意  spi 是全双工 具有单独的发送和接收线路，因此可以在同一时间发送和接收数据，另外 spi 的接收硬件可以是一个简单的移位寄存器，这笔异步串行通信所需的完整uart 要简单得多，并且更加便宜</p>
+<p>spi 特性</p>
+<p>spi 总线包括4条 逻辑线，定义如下</p>
+<p>MISO 主机输入，从机输出，数据来自从机</p>
+<p>MOSI 主机输出，从机输入</p>
+<p>SCLK 串行时钟信号，由主机产生发送给从机</p>
+<p>SS 片选信号，由主机发送，以控制与哪个从机通信，通常是低电平有效信号</p>
+<p>其他制造商可能会遵循其他命名规则，但是最终他们指的相同的含义。以下是一些常用术语；</p>
+<p>MISO也可以是SIMO，DOUT，DO，SDO或SO（在主机端）;<br>MOSI也可以是SOMI，DIN，DI，SDI或SI（在主机端）;<br>NSS也可以是CE，CS或SSEL;<br>SCLK也可以是SCK;<br>本文将按照以下命名进行讲解[MISO, MOSI, SCK，NSS]</p>
+<p>时钟频率</p>
+<p>SPI 总线上的主机必须在通信开始时候配置并生成相应的时钟信号，在每个SPI 时钟周期内，都会发生全双工数据传输</p>
+<p>主机在mosi 线上发送一位数据，从机读取它，而从机在miso 线上发送一位数据，主机读取它</p>
+<p>就算只进行单向的数据传输，也要保持这样的顺序，这就意味着无论接收任何数据，必须实际发送一些东西，在这种情况下，我们称其为虚拟数据</p>
+<p>从理论上讲，只要实际可行，时钟速率就可以是您想要的任何速率，当然这个速率受限于每个系统能提供多大的系统时钟频率，以及最大的SPI传输速率。</p>
+<p>时钟极性 CKP Clock Polarity</p>
+<p>除了配置串行时钟频率 外，SPI 主设备还需要配置时钟极性</p>
+<p>根据硬件制造商的命名规则不同，时钟极性通常写为CKP或CPOL。时钟极性和相位共同决定读取数据的方式，比如信号上升沿读取数据还是信号下降沿读取数据；</p>
+<p>CKP 可以配置为1或0 ，这意味着您可以根据需要将时钟的默认状态 IDLE 设置为高或低，极性反转可以通过简单的逻辑逆变器实现，您必须参考设备的数据手册才能正确设置CKP 和CKE</p>
+<p>CKP &#x3D; 0：时钟空闲IDLE为低电平0；<br>CKP &#x3D; 1：时钟空闲IDLE为高电平1；</p>
+<p>时钟相位 CKE Clock Phase Edge</p>
+<p>除配置串行时钟速率和极性外，SPI 主设备还应配置时钟相位，根据硬件制造商的不同，时钟相位通常写为CKE 或CPHA</p>
+<p>顾明思义，时钟相位&#x2F;边沿，也就是采集数据时是在时钟信号的具体相位或者边沿</p>
+<p>CKE &#x3D; 0 在时钟信号SCK 的第一个跳变沿采样</p>
+<p>CKE &#x3D; 1 在时钟信号SCK 的第二个跳变沿采样</p>
+<p>时钟配置总结</p>
+<p>综上几种情况，下图总结了所有时钟配置组合，并突出显示了实际采样数据的时刻</p>
+<p>其中黑色线为采样数据的时刻</p>
+<p>蓝色线为SCK 时钟信号</p>
+<p>具体如下图所示</p>
+<p>模式编号</p>
+<p>SPI 的时钟极性和相位的配置通常称为SPI 模式，所有可能的模式都遵循以下约定，具体如下表所示</p>
+<p>除此之外，我们还应该仔细检查微控制器数据手册中包含的模式表，以确保一切正常</p>
+<p>多从机模式</p>
+<p>前面说到的SPI 总线必须有一个主机，可以有多个从机，那么具体连接到SPI 总线的方法有以下两种</p>
+<p>第一种方法 多NSS</p>
+<p>通常，每个从机都需要一条单独的SS 线</p>
+<p>如果要和特定的从机进行通讯，可以将相应的NSS 信号线拉低，并保持其他NSS 信号线的状态为高电平，如果同时将两个NSS 信号线拉低，则可能会出现乱码，因为从机可能都试图在同一条MISO 线上传输数据，最终导致接收数据乱码</p>
+<p>具体连接方式如下图所示</p>
+<p>第二种方法 菊花链</p>
+<p>在数字通信世界中，在设备信号 （总线信号或中断信号） 以串行的方式从一个设备依次传到下一个设备，不断循环直到数据到达目标设备的方式被称为菊花链</p>
+<ol>
+<li>菊花链的最大缺点是因为信号串行传输，所以一旦数据链路中的某设备发生故障的时候，它下面优先级较低的设备就不可能得到服务了</li>
+</ol>
+<p>另一方面，距离主机越远的从机，获得服务的优先级越低，所以需要安排好从机的优先级，并且设置总线检测器，如果某个从机超时，则对该从机进行短路，防止单个从机损坏造成整个链路崩溃的情况</p>
+<p>具体的连接如下图所示</p>
+<p>其中红线加粗为数据的流向</p>
+<p>所以最终的数据流向图可以表示为</p>
+<p>SCK 为时钟信号，8clks 表示8个边沿信号</p>
+<p>其中D 为数据，X 为无效数据</p>
+<p>所以不难发现，菊花链模式充分使用了SPI 其移位寄存器的功能，整个链充当通信移位寄存器，每个从机在下一个时钟周期将输入数据复制到输出</p>
+<p>优缺点</p>
+<p>SPI 通讯的优势</p>
+<p>使SPI 作为串口通信接口脱颖而出的原因很多</p>
+<p>全双工串行通信；<br>高速数据传输速率。<br>简单的软件配置；<br>极其灵活的数据传输，不限于8位，它可以是任意大小的字；<br>非常简单的硬件结构。从站不需要唯一地址（与I2C不同）。从机使用主机时钟，不需要精密时钟振荡器&#x2F;晶振（与UART不同）。不需要收发器（与CAN不同）。</p>
+<p>SPI 的缺点 </p>
+<p>没有硬件从机应答信号  主机可能在不知情的情况下无处发送</p>
+<p>通常仅支持一个主设备</p>
+<p>需要更多的引脚 与I2C 不同</p>
+<p>没有定义硬件级别的错误检查协议</p>
+<p>与RS232 和CAN 总线相比，只能支持非常短的距离</p>
+<p>编程实现<br>下面是通过STM32的cubemx自动生成的HAL库代码，比较简单，截取了其中一部分，具体如下；</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">static</span> <span class="type">void</span> <span class="title function_">MX_SPI1_Init</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    hspi1.Instance = SPI1;</span><br><span class="line">    hspi1.Init.Mode = SPI_MODE_MASTER;    <span class="comment">//主机模式</span></span><br><span class="line">    hspi1.Init.Direction = SPI_DIRECTION_2LINES; <span class="comment">//全双工</span></span><br><span class="line">    hspi1.Init.DataSize = SPI_DATASIZE_8BIT;  <span class="comment">//数据位为8位</span></span><br><span class="line">    hspi1.Init.CLKPolarity = SPI_POLARITY_LOW;  <span class="comment">//CPOL=0</span></span><br><span class="line">    hspi1.Init.CLKPhase = SPI_PHASE_1EDGE;   <span class="comment">//CPHA为数据线的第一个变化沿</span></span><br><span class="line">    hspi1.Init.NSS = SPI_NSS_SOFT;     <span class="comment">//软件控制NSS</span></span><br><span class="line">    hspi1.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_2;<span class="comment">//2分频，32M/2=16MHz</span></span><br><span class="line">    hspi1.Init.FirstBit = SPI_FIRSTBIT_MSB;   <span class="comment">//最高位先发送</span></span><br><span class="line">    hspi1.Init.TIMode = SPI_TIMODE_DISABLE;   <span class="comment">//TIMODE模式关闭</span></span><br><span class="line">    hspi1.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;<span class="comment">//CRC关闭</span></span><br><span class="line">    hspi1.Init.CRCPolynomial = <span class="number">10</span>;     <span class="comment">//默认值，无效</span></span><br><span class="line">    <span class="keyword">if</span> (HAL_SPI_Init(&amp;hspi1) != HAL_OK)    <span class="comment">//初始化</span></span><br><span class="line">    &#123;</span><br><span class="line">        _Error_Handler(__FILE__, __LINE__);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">    </span><br><span class="line"><span class="comment">//发送数据</span></span><br><span class="line">HAL_StatusTypeDef  </span><br><span class="line"><span class="title function_">HAL_SPI_Transmit</span><span class="params">(SPI_HandleTypeDef *hspi, </span></span><br><span class="line"><span class="params">                 <span class="type">uint8_t</span> *pData, </span></span><br><span class="line"><span class="params">                 <span class="type">uint16_t</span> Size, </span></span><br><span class="line"><span class="params">                 <span class="type">uint32_t</span> Timeout)</span>;</span><br><span class="line"><span class="comment">//接收数据</span></span><br><span class="line">HAL_StatusTypeDef  </span><br><span class="line"><span class="title function_">HAL_SPI_Receive</span><span class="params">(SPI_HandleTypeDef *hspi, </span></span><br><span class="line"><span class="params">                <span class="type">uint8_t</span> *pData, </span></span><br><span class="line"><span class="params">                <span class="type">uint16_t</span> Size, </span></span><br><span class="line"><span class="params">                <span class="type">uint32_t</span> Timeout)</span>;</span><br></pre></td></tr></table></figure>
+
+<p>% SPI、UART、RS232、RS485、IIC 5</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-20221212-RS2329针串口定义"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/12/12/20221212-RS2329%E9%92%88%E4%B8%B2%E5%8F%A3%E5%AE%9A%E4%B9%89/"
+    >20221212-RS2329针串口定义</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/12/12/20221212-RS2329%E9%92%88%E4%B8%B2%E5%8F%A3%E5%AE%9A%E4%B9%89/" class="article-date">
+  <time datetime="2022-12-12T11:43:43.000Z" itemprop="datePublished">2022-12-12</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>电脑 9 针串口<br>电脑串口引脚定义<br>这里写图片描述<br>按序号说明：<br>1 载波检测(DCD)<br>2 接受数据(RXD)<br>3 发出数据(TXD)<br>4 数据终端准备好(DTR)<br>5 信号地线(SG)<br>6 数据准备好(DSR)<br>7 请求发送(RTS)<br>8 清除发送(CTS)<br>9 振铃指示(RI)<br>串口母头连接器的管脚定义<br>这里写图片描述<br>此上为计算机串口管脚定义说明。<br>1、 RS-232C 母接头定义(9 芯)：<br>这里写图片描述<br>注意图和总引脚的标号。<br>针脚 定义 符号<br>1 载波检测 DCD<br>2 接收数据 RXD<br>3 发送数据 TXD<br>4 数据终端准备好 DTR<br>5 信号地 SG<br>6 数据准备好 DSR<br>7 请求发送 RTS<br>8 清除发送 CTS<br>9 振铃提示 RI<br>Pin 1 Received Line Signal Detector(Data Carrier Detect)<br>Pin 2 Received Data<br>Pin 3 Transmit Data<br>Pin 4 Data Terminal Ready<br>Pin 5 Signal Ground<br>Pin 6 Data Set Ready<br>Pin 7 Request To Send<br>Pin 8 Clear To Send<br>Pin 9 Ring Indicator</p>
+<p>2、 RS-232C 母接头定义(25 芯)<br>针脚 定义 符号<br>1 频蔽地线<br>2 发送数据 TXD<br>3 接收数据 RXD<br>4 请求发送 RTS<br>5 允许发送 CTS<br>6 数据准备好 DSR<br>7 信号地 SG<br>8 载波检测 DCD<br>9 发送返回(+)<br>10 未定义<br>11 数据发送(-)<br>12<del>17 未定义<br>18 数据接收(+)<br>19 未定义<br>20 数据终端准备好 DTR<br>21 未定义<br>22 振铃 RI<br>23</del>24 未定义<br>25 接收返回(-)<br>Pin 1 Protective Ground<br>Pin 2 Transmit Data<br>Pin 3 Received Data<br>Pin 4 Request To Send<br>Pin 5 Clear To Send<br>Pin 6 Data Set Ready<br>Pin 7 Signal Ground<br>Pin 8 Received Line Signal Detector<br>(Data Carrier Detect)<br>Pin 20 Data Terminal Ready<br>Pin 22 Ring Indicator<br>RS-232C,25 芯针转换为 9 芯针<br>这里写图片描述</p>
+<p><strong>二、 补充 （几个小时的查询和求助才弄明白的，呵呵，珍贵<br>啊）</strong><br>1.RX232 公接头的图片和引脚编号 ：<br>这里写图片描述<br>2.从两个图可以看出， 公接头和母接头相连时 rx-rx，<br>tx-tx，进而可知下载线的两端接口本应该 rx-rx、t<br>x-tx 的，但买串口线时需要买交叉串口线（实现 RX-<br>tx 的连接），进而实现一段发送一段接收。<br>三、更详细的引脚标号规则（超准）<br>DB9 Male (Pin Side) DB9 Female (Pin Side)<br>DB9 Female (Solder Side) DB9 Male (Solder Side)<br>这里写图片描述<br>1 ，RS232 的定义：<br>RS-232 串行接口标准详细介绍<br>目前 RS-232 是 PC 机与通信工业中应用最广泛的一种串行接口。RS-232 被定义为一种在低速率串<br>行通讯中增加通讯距离的单端标准。RS-232 采取不平衡传输方式，即所谓单端通讯。<br>这里写图片描述<br>图一<br>在 RS-232 的通讯标准中是以一个 25 针的接口来定义的，并在早期的计算机如 PC 或 XT 机型上广<br>泛使用，但在 AT 机以后的机型上，实际均采用了 9 针的简化版本应用，现在所说的 232 通讯均默认为 9<br>针的接口。图一显示了 9 针通讯的接口管脚名称，以下是各管脚的说明：<br>这里写图片描述<br>现在通常计算机均配有这种标准的 232 接口，通常这种接口用于联接鼠标、MODEM 或打印机等外<br>部设备。<br>实际应用中，电子工程师在设计计算机与外围设备的通信时，通常在 9 针的基础再进行简化，只用<br>其中的 2、3、5 三个管脚进行通信。这三个管脚分别是接收线、发送线和地线，在一般情况下即可满足通<br>讯的要求，计算机和外部通讯的接线方法如图二：<br>这里写图片描述<br>值得注意的是，图二中 2、3 两脚是交叉互联的，这很容易理解，因为一个设备的发送线必须联接到<br>另外一台设备的接收线上，反之亦然。<br>对于 232 信号的电器特性等知识，在这里无法详细解说，有兴趣的话可以去网站查阅这方面的文章，<br>232 是最常用的通信方式之一，大量应用于各种工业控制或电子家电等产品中，是电子工程师必须掌握的<br>知识之一。<br>另外说明一下，232 信号的有效通讯距离是 15M。<br>2.RS232 TO TTL 电路：</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-20221212-蓝牙协议分析"
   class="article article-type-post"
   itemscope
@@ -610,823 +879,6 @@
 <p>802.11n 的核心技术概念是MIMO 之前的无线通信我们都是单天线的传输系统，在mimo 的设计上，我们可以通过多根天线，并行传输多个不同数据，从而提高传输速率，提供更高的系统带宽</p>
 <p>实际上在网络发展中，各个不同源头的技术实际上是时有交互的，然而，是否成功，还是要根据市场和时机的检验，<br>好比wifi 虽然获得了比较大的成功，而wimax 则没有被广泛采用</p>
 <p>在2010年时候，在时任美国总统奥巴马的支持下，FCC同意在未来增加500MHz新频段用以无线通信，该500MHz是分散在多个不同的频段下，具体是根据具体的功能需求进行的设定。</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20221129-大疆模拟器键盘表示"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/11/29/20221129-%E5%A4%A7%E7%96%86%E6%A8%A1%E6%8B%9F%E5%99%A8%E9%94%AE%E7%9B%98%E8%A1%A8%E7%A4%BA/"
-    >20221129-大疆模拟器键盘表示</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/11/29/20221129-%E5%A4%A7%E7%96%86%E6%A8%A1%E6%8B%9F%E5%99%A8%E9%94%AE%E7%9B%98%E8%A1%A8%E7%A4%BA/" class="article-date">
-  <time datetime="2022-11-29T12:11:38.000Z" itemprop="datePublished">2022-11-29</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h2 id="DJI-Lightbridge-遥控器"><a href="#DJI-Lightbridge-遥控器" class="headerlink" title="DJI Lightbridge 遥控器"></a>DJI Lightbridge 遥控器</h2><p>拍照 小地图 （长按）</p>
-<p>飞行模式</p>
-<p>切换视角  切换控制（长按）</p>
-<p>自定义菜单</p>
-<p>自动返航<br>中断返航<br>飞行模式<br>轨迹开关（长按） 录像&#x2F;停止  跳跃</p>
-<p>云台角度</p>
-<p>暂停 介绍面板（长按）</p>
-<h2 id="DJI-Mavic-Air-遥控器"><a href="#DJI-Mavic-Air-遥控器" class="headerlink" title="DJI Mavic Air 遥控器"></a>DJI Mavic Air 遥控器</h2><p>自动返航（长按）  中断返航</p>
-<p>暂停  介绍面板（长按）</p>
-<p>飞行模式</p>
-<p>自定义菜单</p>
-<p>拍照  小地图（长按）</p>
-<p>切换视角  切换控制（长按）</p>
-<p>录像</p>
-<p>轨迹开关（长按）  跳跃</p>
-<p>云台角度</p>
-<h2 id="DJI-Cendence-S"><a href="#DJI-Cendence-S" class="headerlink" title="DJI Cendence S"></a>DJI Cendence S</h2><p>录像&#x2F;停止 轨迹开关（长按） 跳跃</p>
-<p>拍照 小地图（长按）</p>
-<p>切换视角  切换控制（长按）</p>
-<p>自定义菜单</p>
-<p>飞行模式</p>
-<p>云台角度</p>
-<p>暂停  介绍面板（长按）</p>
-<h2 id="DJI-T16-遥控器"><a href="#DJI-T16-遥控器" class="headerlink" title="DJI T16 遥控器"></a>DJI T16 遥控器</h2><p>拍照 小地图（长按）</p>
-<p>切换视角  切换控制（长按）</p>
-<p>自定义菜单</p>
-<p>录像&#x2F;停止<br>轨迹开关（长按）<br>跳跃<br>喷洒农药</p>
-<p>暂停 介绍面板（长按）</p>
-<h2 id="DJI-带屏遥控器"><a href="#DJI-带屏遥控器" class="headerlink" title="DJI 带屏遥控器"></a>DJI 带屏遥控器</h2><p>自动返航（长按） 中断返航</p>
-<p>切换视角 切换控制（长按）</p>
-<p>飞行模式</p>
-<p>拍照  小地图（长按）</p>
-<p>自定义菜单</p>
-<p>录像&#x2F;停止  轨迹开关（长按） 跳跃</p>
-<p>云台角度</p>
-<p>暂停 介绍面板（长按）</p>
-<p>键盘</p>
-<p>暂停 P<br>拍照 H<br>录像&#x2F;停止 L<br>轨迹开关 space<br>自动返航&#x2F;中断返航 O<br>跳跃 Space<br>自定义菜单 Enter</p>
-<p>云台上转 R<br>云台下转 F<br>切换视角 C<br>飞行模式 V<br>切换控制 J<br>小地图 M<br>介绍面板 I</p>
-<h2 id="摇杆模式"><a href="#摇杆模式" class="headerlink" title="摇杆模式"></a>摇杆模式</h2><h3 id="日本手"><a href="#日本手" class="headerlink" title="日本手"></a>日本手</h3><p>左逆时针  前进 左转 后退 右转<br>右逆时针  上升 左飞 下降 右飞</p>
-<h3 id="美国手"><a href="#美国手" class="headerlink" title="美国手"></a>美国手</h3><p>左逆时针  上升 左转 下降 右转<br>右逆时针  前进 左飞 后退 右飞</p>
-<h3 id="中国手"><a href="#中国手" class="headerlink" title="中国手"></a>中国手</h3><p>左逆时针  前进 左飞 后退 右飞<br>右逆时针  上升 左转 下降 右转</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20221129-和风天气api"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/11/29/20221129-%E5%92%8C%E9%A3%8E%E5%A4%A9%E6%B0%94api/"
-    >20221129-和风天气api</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/11/29/20221129-%E5%92%8C%E9%A3%8E%E5%A4%A9%E6%B0%94api/" class="article-date">
-  <time datetime="2022-11-29T06:07:37.000Z" itemprop="datePublished">2022-11-29</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h2 id="开发文档"><a href="#开发文档" class="headerlink" title="开发文档"></a>开发文档</h2><h3 id="GeoAPI"><a href="#GeoAPI" class="headerlink" title="GeoAPI"></a>GeoAPI</h3><p>和风天气GeoAPI 提供全球地理位置，全球城市搜索服务，支持经纬坐标反查、多语言、模糊搜索等功能</p>
-<p>天气数据是基于地理位置的数据，因此获取天气之前需要先知道具体的位置信息，和风天气提供一个功能强大的位置信息搜索API 服务</p>
-<p>通过GeoAPI，你可获取到需要查询城市或POI的基本信息，包括查询地区的location id 你需要这个id 去查询天气，geoapi 还可以帮助你</p>
-<p>避免重名城市的困扰</p>
-<p>支持名称模糊搜索</p>
-<p>在你的应用网站中根据用户输入的名称返回多个城市结果，便于用户选择准确的城市并返回该城市天气</p>
-<p>在你的应用或网站中展示热门城市</p>
-<p>不需要维护城市列表，城市信息更新实时获取</p>
-<h4 id="城市搜索"><a href="#城市搜索" class="headerlink" title="城市搜索"></a>城市搜索</h4><p>城市搜索api 提供全球地理位置、全球城市搜索服务，支持经纬度坐标反查，多语言，模糊搜索等功能</p>
-<h4 id="热门城市查询"><a href="#热门城市查询" class="headerlink" title="热门城市查询"></a>热门城市查询</h4><p>获取全球各国热门城市列表</p>
-<p>POI搜索</p>
-<p>使用关键字和坐标查询POI 信息 （景点、火车站、港口等）</p>
-<h4 id="POI范围搜索"><a href="#POI范围搜索" class="headerlink" title="POI范围搜索"></a>POI范围搜索</h4><p>提供指定区域范围内查询所有poi 信息</p>
-<h3 id="城市天气"><a href="#城市天气" class="headerlink" title="城市天气"></a>城市天气</h3><p>城市天气预报提供包括中国3000+市县区内的全球20万+城市的天气预报，支持实时天气、最多30天预报及最多7天逐小时天气预报</p>
-<h4 id="实时天气"><a href="#实时天气" class="headerlink" title="实时天气"></a>实时天气</h4><p>获取中国3000+市县区和还为20万个城市实时天气数据，包括实时温度，体感温度、风力风向、相对湿度、大气压强、降水量、能见度、露点温度、云量等</p>
-<h4 id="每日天气预报"><a href="#每日天气预报" class="headerlink" title="每日天气预报"></a>每日天气预报</h4><p>每日天气预报API，提供全球未来3-30天天气预报，包括：日出日落、月升月落、最高最低温度、天气白天和夜间状况、风力、风速、风向、相对湿度、大气压强、降水量、露点温度、紫外线强度、能见度等。</p>
-<p>逐小时天气预报</p>
-<p>逐小时天气预报api，提供全球城市未来24-168小时逐小时天气预报，包括：温度、天气状况、风力、风速、风向、相对湿度、大气压强、降水概率、露点温度、云量。</p>
-<h3 id="分钟预报"><a href="#分钟预报" class="headerlink" title="分钟预报"></a>分钟预报</h3><p>分钟级降水api 临近预报 支持中国1公里精度的分钟级降雨预报数据，为每一分钟的降雨进行精准预测</p>
-<h4 id="分钟级降水"><a href="#分钟级降水" class="headerlink" title="分钟级降水"></a>分钟级降水</h4><p>分钟级降水api 临近预报 支持中国1公里精度的未来2小时每5分钟降雨预报数据</p>
-<h3 id="格点天气"><a href="#格点天气" class="headerlink" title="格点天气"></a>格点天气</h3><p>以经纬度为基准的高精度、公里级、格点化天气预报产品，包括任意经纬度的实时天气和天气预报</p>
-<p>格点天气的空间分辨率为3-5公里</p>
-<p>格点天气是一种数值预报，由卫星、气象雷达等数据通过模型算法运算而来的，它可能收到许多因素的影响，如山脉、建筑物、人类活动、打起变化等。格点天气与观测站数据会有所不同，不可直接对比</p>
-<h4 id="格点实时天气"><a href="#格点实时天气" class="headerlink" title="格点实时天气"></a>格点实时天气</h4><p>基于全球任意坐标的高精度实时天气，精确到3-5公里范围，包括：温度、适度、大气压、天气状况、风力、风向等</p>
-<h4 id="格点每日天气预报"><a href="#格点每日天气预报" class="headerlink" title="格点每日天气预报"></a>格点每日天气预报</h4><p>基于全球任意坐标的高精度每日天气预报，精确到3-5公里范围，包括温度、湿度、大气压、天气状况、风力、风向等。</p>
-<h4 id="格点逐小时天气预报"><a href="#格点逐小时天气预报" class="headerlink" title="格点逐小时天气预报"></a>格点逐小时天气预报</h4><p>基于全球任意坐标的高精度逐小时天气预报，精确到3-5公里范围，包括温度、湿度、大气压、天气状况、风力、风向等。</p>
-<h3 id="预警"><a href="#预警" class="headerlink" title="预警"></a>预警</h3><p>和风天气灾害预警API提供了全球极端天气预警服务，覆盖中国及全球数十个国家或地区。</p>
-<p>预警数据包含近百种灾害预警类型，例如：台风、暴雨、暴雪、寒潮、大风、沙尘暴、高温、干旱、雷电、冰雹、霜冻、大雾、霾、道路结冰、寒冷、灰霾、雷雨大风、森林火险、降温、道路冰雪、干热风、低温、冰冻、空气重污染、海上大雾、雷暴大风、持续低温、浓浮尘、龙卷风、低温冻害、海上大风、低温雨雪冰冻、强对流、臭氧、大雪、强降雨、强降温、雪灾、森林（草原）火险、雷暴、严寒、沙尘等等。</p>
-<p>了解更多关于我们支持的国家或地区、支持的预警等级和预警类型。</p>
-<h4 id="天气灾害预警"><a href="#天气灾害预警" class="headerlink" title="天气灾害预警"></a>天气灾害预警</h4><p>天气灾害预警api 可以获取中国及全球多个国家或地区官方发布的实时天气灾害预警数据</p>
-<h4 id="天气预警城市列表"><a href="#天气预警城市列表" class="headerlink" title="天气预警城市列表"></a>天气预警城市列表</h4><p>获取指定国家或地区当前正在发生预警的城市列表，你可以通过这个列表快速的了解到当前国家或地区都有哪些地方正在发生天气预警</p>
-<h3 id="天气指数"><a href="#天气指数" class="headerlink" title="天气指数"></a>天气指数</h3><p>天气生活指数包括洗车指数、穿衣指数、感冒指数、过敏指数、紫外线指数、钓鱼指数等数据。天气指数支持中国3000+个市区县和海外15万个城市天气预报</p>
-<h4 id="天气指数预报"><a href="#天气指数预报" class="headerlink" title="天气指数预报"></a>天气指数预报</h4><p>货物中国和全球城市天气生活指数预报数据</p>
-<h3 id="空气质量"><a href="#空气质量" class="headerlink" title="空气质量"></a>空气质量</h3><p>中国3000+市县区及1700+监测站点的空气质量AQI数据，包括空气质量（AQI）实时数据，空气质量未来5天预报。</p>
-<h4 id="实时空气质量"><a href="#实时空气质量" class="headerlink" title="实时空气质量"></a>实时空气质量</h4><p>实时空气质量API，支持中国3000+市县区以及1700+国控站点实时空气质量的查询，包括AQI数值、空气质量等级、首要污染物、PM10、PM2.5、臭氧、二氧化氮、二氧化硫、一氧化碳数值。</p>
-<h4 id="空气质量每日预报"><a href="#空气质量每日预报" class="headerlink" title="空气质量每日预报"></a>空气质量每日预报</h4><p>空气质量每日预报API，支持全国3000+市县区空气质量预报数据的查询，包括AQI预报、首要污染物预报、空气质量等级预报。</p>
-<p>时光机</p>
-<p>时光机可以获取最近10天的历史天气和空气质量数据</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">和风天气额外提供了2000年至今的历史再分析气象数据，通过数据文件的形式发送，如需要长时间的历史气象数据数据，请提供下列信息，发送邮件至sales@qweather.com，我们将有专人与你联系:</span><br><span class="line"></span><br><span class="line">企业名称</span><br><span class="line">联系方式</span><br><span class="line">所需要的城市或坐标</span><br><span class="line">所需要的时间范围</span><br></pre></td></tr></table></figure>
-
-<h3 id="天气时光机"><a href="#天气时光机" class="headerlink" title="天气时光机"></a>天气时光机</h3><p>获取最近10天的天气历史再分析数据</p>
-<h4 id="空气质量时光机"><a href="#空气质量时光机" class="headerlink" title="空气质量时光机"></a>空气质量时光机</h4><p>获取最近10天的中国空气质量历史再分析数据</p>
-<h3 id="热带气旋-台风"><a href="#热带气旋-台风" class="headerlink" title="热带气旋  台风"></a>热带气旋  台风</h3><p>热带气旋（台风）API提供全球主要海洋流域的台风信息，包括台风实时位置、等级、气压、风速，还可查询台风路径和台风预报信息。</p>
-<h4 id="台风预报"><a href="#台风预报" class="headerlink" title="台风预报"></a>台风预报</h4><p>台风预报api 提供全球主要海洋流域的台风预测位置、等级、气压、风速等</p>
-<h4 id="台风实况和路径"><a href="#台风实况和路径" class="headerlink" title="台风实况和路径"></a>台风实况和路径</h4><p>台风实况和路径api 提供全球主要海洋流域的台风实时位置、等级、气压、风速以及活跃台风的轨迹路径</p>
-<h4 id="台风列表"><a href="#台风列表" class="headerlink" title="台风列表"></a>台风列表</h4><p>台风列表api 提供全球主要海洋流域最近2年的台风列表</p>
-<h3 id="海洋数据"><a href="#海洋数据" class="headerlink" title="海洋数据"></a>海洋数据</h3><p>海洋数据api 提供全球主要港口和城市的潮汐和潮流数据</p>
-<h4 id="潮汐"><a href="#潮汐" class="headerlink" title="潮汐"></a>潮汐</h4><p>未来10天全球潮汐数据，包括满潮、干潮高度和时间，逐小时潮汐数据。</p>
-<h4 id="潮流"><a href="#潮流" class="headerlink" title="潮流"></a>潮流</h4><p>未来10天全球潮流数据，包括潮流流速和流向。</p>
-<h3 id="太阳辐射"><a href="#太阳辐射" class="headerlink" title="太阳辐射"></a>太阳辐射</h3><p>太阳辐射api 支持获取全球任意坐标的辐射数据，包括净太阳散射辐射和太阳直接辐射</p>
-<h4 id="太阳辐射逐小时预报"><a href="#太阳辐射逐小时预报" class="headerlink" title="太阳辐射逐小时预报"></a>太阳辐射逐小时预报</h4><p>太阳辐射api 支持获取全球任意坐标的辐射数据，包括净太阳辐射，太阳散射辐射和太阳直接辐射</p>
-<p>太阳和月亮</p>
-<p>太阳和月亮API提供了全球任意地点未来60天的日出日落、太阳高度角、月升月落和月相数据，</p>
-<p>日出日落</p>
-<p>获取未来60天全球任意地点日出日落时间</p>
-<p>月升月落和月相</p>
-<p>获取未来60天全球城市月升月落和逐小时的月相数据。</p>
-<p>太阳高度角</p>
-<p>任意时间点的全球太阳高度及方位角</p>
-<hr>
-<h2 id="实用资料"><a href="#实用资料" class="headerlink" title="实用资料"></a>实用资料</h2><h3 id="专用词汇表"><a href="#专用词汇表" class="headerlink" title="专用词汇表"></a>专用词汇表</h3><p>Project</p>
-<p>项目是承载和风天气数据服务的容器，也可以理解为是你需要开发的一个产品，例如 旅游app  或者毕业设计，查看如何创建项目</p>
-<p>key 是获取和天气开发服务的密钥（或称为token，认证信息）， 在创建项目后，你可以为你的不同业务和需求创建key，例如ios 正式环境或测试专用</p>
-<p>public id</p>
-<p>public id 是用户某一个数据key 的公钥，当你使用数字加密签名获取数据时，需要传递 public id</p>
-<p>rank</p>
-<p>Rank值是表明一个城市或地区排名的数字，基于多种因素综合计算而来，例如：人口、面积、GDP、搜索热度等。取值范围为1-10，在定位搜索服务中，返回的结果除了关键字的相关性以外，也会参考该城市的Rank值。数值越大代表该城市或地区的人口越多、面积更大或更加热门。例如陕西省西安市的Rank值就要比黑龙江省牡丹江市西安区更高，当使用“西安”作为关键字定位的时候，西安市的排名要高于西安区。</p>
-<p>坐标</p>
-<ul>
-<li>中国大陆地区应使用GCJ-02坐标系，在其他地区应使用WGS-84坐标系</li>
-<li>查询格式：经度,纬度（经度在前纬度在后，英文逗号分隔，十进制格式，北纬东经为正，南纬西经为负）。例如：location&#x3D;116.41,39.92</li>
-</ul>
-<p>行政区划</p>
-<p>在全国各个国家中，都有不同的行政等级划分，为了便于理解和方便查询到正确的天气和信息，和风天气的所有城市都会属于至少2个行政区划等级，请注意，和风天气的行政区划等级不完全等于各国的实际行政区划等级</p>
-<p>locationid</p>
-<p>locationid 或locid 是城市、地区或poi 点的id ，一般由数字或字母+数字组成，是一个地点的唯一标识，locationid 可以通过定位搜索服务获取，中国地区、热门海外城市、一些poi 点的locationid 还可以通过城市列表下载</p>
-<p>Adcode</p>
-<p>Adcode 是中国行政区域编码</p>
-<p>iso 3166</p>
-<p>ISO 3166是国际标准化组织（ISO）发布的全球国家代码标准，正式名称是国家名称和其分支的代码。该标准规定了国家名称、附属领土、地理利益的特殊区域以及它们的主要分支（如省或州）的名称。国家代码有二位字母代码、三位字母代码、以及三位数字代码，和风天气采用的是其中的二位字母代码（alpha-2）。</p>
-<p>完整的二位数字ISO 3166可通过我们的Github下载。</p>
-<p>POI </p>
-<p>point of interest，兴趣点，在和风天气的兴趣点概念中包括 机场、港口、火车站、中国控制质量监测站和中国景点</p>
-<p>日期和时间</p>
-<p>和风天气 在v7 版本及以上使用iso 8601 2004 作为所有日期和时间表达式，日期和时间均为当地时间</p>
-<p>日期格式：YYYY-MM-DD，例如 2019-12-30，代表2019年12月30日。<br>长时间格式：YYYY-MM-DDTHH:MM±timezone，例如 2019-12-30T08:35+0800，代表东八区2019年12月30日上午8点35分。<br>短时间格式：HH:MM，例如 20:31</p>
-<p>Timezone 时区，在api 中的字段名为tz 该时区的表达规范采用了tz database 格式，或称 iana time zone database</p>
-<p>夏令时</p>
-<p>isDST 表示当前是否处于夏令时，天气数据中的时间已经对夏令时做了调整，你不需要再进行任何转换</p>
-<p>UTC Offset<br>在城市搜索接口中，utcOffset字段表示该地区&#x2F;城市当前时间与UTC时间的偏移，该偏移已经考虑了一些国家在进入夏令时的情况，因此这个偏移与时区偏移不完全一样。例如纽约的时区是America&#x2F;New_York，与UTC相差-5小时，当纽约在每年3月的第二个星期日进入夏令时后，纽约当地时间与UTC相差-4小时，此时utcOffset的值是-04:00</p>
-<p>public time</p>
-<p>数据发布时间，是观测站或数据源发布的时间，代表当前数据是在什么时刻发布的</p>
-<p>update time</p>
-<p>和风天气数据更新时间，与pubTime不同，该时间是和风天气系统进行数据更新的时间，表示当前获取的数据最近一次更新的时间。</p>
-<ul>
-<li>可以通过相同的更新时间来判断数据内容是否有变化，但不能依靠不同的更新时间来判断数据内容一定有变化，在有些情况下，气象模型计算结果有可能在不同的更新时间得到相同的结果。</li>
-<li>由于天气数据的特殊性以及数据更新的持续性，无法确定精确的更新时间，请以接口返回数据的updateTime字段为准。</li>
-</ul>
-<p>数据  更新间隔<br>灾害预警  5分钟<br>逐天预报  1-8小时<br>逐小时预报 1小时<br>生活指数  1小时<br>实况类数据 10-40分钟<br>分钟级降雨 10-20分钟<br>卫星云图  30-60分钟</p>
-<p>iOS Bundle identifier<br>Xcode切换到Info下，可查看Bundle Identifier。</p>
-<p>请注意Bundle ID仅限英文字母、数字、短横线和下划线。</p>
-<p>Android Package Name<br>打开Android 应用工程的AndroidManifest.xml配置文件，package属性所对应的内容为应用包名。</p>
-<p>请注意Android Package Name仅限英文字母、数字、短横线和下划线。</p>
-<p>最大连接数<br>API或SDK服务能够承载的最大连接数量。当连接超过当前应用版本所限制的最大连接数时，新建连接请求将被丢弃。</p>
-<p>QPM<br>QPM (Query Per Minute)，每分钟请求数，超过每分钟请求数量的请求将返回错误代码，在下一分钟后恢复。</p>
-<p>不同订阅的QPM不相同。参考订阅对比。<br>QPM以单独项目计算，一个项目下所有数据KEY共享QPM，不同项目分别计算QPM。<br>风力等级<br>风力等级用于直接展示，不建议作为枚举项使用；例如以后出现更高等级风力或者变更了风力等级的标准，采用枚举项的方式则会出现匹配不到的情况，此情况请谨慎使用。</p>
-<p>风力等级</p>
-<p>依据风速而来，可参考风力等级与风速对照，和风天气采用 KM&#x2F;H 为单位。</p>
-<p>当风力等级为0时，风向角度为-1，风向为无持续风向。</p>
-<h3 id="加密签名认证"><a href="#加密签名认证" class="headerlink" title="加密签名认证"></a>加密签名认证</h3><p>为了提供更安全的api 认证，我们推荐你使用数字签名认证方式进行接口的访问的认证，数字签名方式是一种替代单独api key 的更安全的接口访问方式，它会对请求参数加密后得到的签名字串进行身份验证</p>
-<p>签名参数<br>publicid: 公共ID，每个KEY都对应一个公共ID，可在控制台查看</p>
-<p>t: 时间戳，秒级</p>
-<p>sign: 数字签名</p>
-<p>创建签名<br>将请求参数格式化为“key&#x3D;value”格式，如“k1&#x3D;v1”、“k2&#x3D;v2”、“k3&#x3D;v3”；<br>去除请求参数中值为空的参数<br>去除请求参数中参数为sign 的参数 ( 签名参数不参与签名算法 )<br>将第3步剩余的键值对以字典序升序排列，并用 &amp; 符号连接，如 a&#x3D;1&amp;b&#x3D;2&amp;m&#x3D;3&amp;w&#x3D;4<br>将第4步得到的字符串后拼接上API密钥, 假设密钥为 abc , 则 结果为: a&#x3D;1&amp;b&#x3D;2&amp;m&#x3D;3&amp;w&#x3D;4abc<br>将第5步得到的字符串进行MD5加密 ( 注 ：字符集为 UTF-8 )，得到签名结果<br>将第6步得到的签名结果 作为参数添加至请求中，参数名为 sign, 即 sign&#x3D;xxxxxxx</p>
-<h3 id="单位"><a href="#单位" class="headerlink" title="单位"></a>单位</h3><p>和风天气默认采用公制单位，例如，公里、摄氏度等，如需要采用英制单位，可以通过添加对应的参数进行设置</p>
-<p>单位参数</p>
-<p>单位  API请求参数 iOS常量属性 Android常量属性<br>公制单位  m UNIT_TYPE_M METRIC<br>英制单位  i UNIT_TYPE_I IMPERIAL</p>
-<p>单位列表</p>
-<p>数据项 公制单位  英制单位<br>温度  摄氏度 华氏度<br>风速  公里&#x2F;小时 km&#x2F;h  英里&#x2F;小时 mile&#x2F;h<br>能见度 公里 km 英里 mile<br>大气压强  百帕 hPa  百帕 hPa<br>降水量 毫米 mm 毫米 mm<br>PM2.5 微克&#x2F;立方米 μg&#x2F;m3  微克&#x2F;立方米 μg&#x2F;m3<br>PM10  微克&#x2F;立方米 μg&#x2F;m3  微克&#x2F;立方米 μg&#x2F;m3<br>O3  微克&#x2F;立方米 μg&#x2F;m3  微克&#x2F;立方米 μg&#x2F;m3<br>SO2 微克&#x2F;立方米 μg&#x2F;m3  微克&#x2F;立方米 μg&#x2F;m3<br>CO  毫克&#x2F;立方米 mg&#x2F;m3  毫克&#x2F;立方米 mg&#x2F;m3<br>NO2 微克&#x2F;立方米 μg&#x2F;m3  微克&#x2F;立方米 μg&#x2F;m3</p>
-<h3 id="预警信息"><a href="#预警信息" class="headerlink" title="预警信息"></a>预警信息</h3><p>和风天气预警服务支持中国及全球多个国家和地区的气象预警服务(API，iOS SDK，Android SDK)，这里可以了解我们所支持的预警信息的详细说明，例如支持的国家或地区列表，预警等级和预警类型。</p>
-<p>警告：天气预警的等级、类型、紧迫程度等信息有可能发生变化，包括新增、修改或删除，这些变化我们可能无法提前通知到你，因此你需要让你的程序更具有兼容性，避免在发生变化的时候导致错误出现！</p>
-<p>我们的建议是不要尝试枚举这些数值，或做其他形式的映射，而是直接输出到屏幕上。</p>
-<p>提示：天气预警不一定适用于多语言设置，当一条预警信息无法响应你的多语言设置时，我们会返回英文或当地语言的信息，而且这可能是混合的，即部分内容为英文，另一部分是本地语言。</p>
-<p>支持的国家或地区<br>天气灾害预警并非适用于所有城市，我们将不断的扩展这些数据，目前和风天气预警服务支持的国家或地区如下：</p>
-<p>提示：你可以使用range参数通过预警城市列表获取该国家的所有预警城市信息。</p>
-<p>注意：天气预警基于各国政府部门的官方数据，当官方数据无法正常发布时，我们可能会临时下线遇到问题的国家。</p>
-<p>ISO 3166-1  国家或地区<br>ar  阿根廷<br>at  奥地利<br>be  比利时<br>br  巴西<br>bg  保加利亚<br>cn  中国<br>hr  克罗地亚<br>cy  塞浦路斯<br>cz  捷克<br>dk  丹麦<br>ee  爱沙尼亚<br>fi  芬兰<br>fr  法国<br>de  德国<br>gr  希腊<br>hk  中国香港<br>hu  匈牙利<br>is  冰岛<br>in  印度<br>ie  爱尔兰<br>il  以色列<br>it  意大利<br>kw  科威特<br>lv  拉脱维亚<br>lt  立陶宛<br>lu  卢森堡<br>mo  中国澳门<br>mt  马耳他<br>md  摩尔多瓦<br>me  黑山<br>nl  荷兰<br>mk  北马其顿<br>no  挪威<br>pl  波兰<br>pt  葡萄牙<br>ro  罗马尼亚<br>ru  俄罗斯<br>rs  塞尔维亚<br>sk  斯洛伐克<br>si  斯洛文尼亚<br>za  南非<br>es  西班牙<br>se  瑞典<br>ch  瑞士<br>gb  英国<br>预警状态<br>warning.status 代表当前预警信息的发布状态，包括：</p>
-<p>Active - 当前预警处于激活状态<br>Update - 当前预警是一次对之前指定预警信息的升级或修改<br>Cancel - 由于各种原因取消之前指定预警信息的发布。该状态是一个预保留的值，你目前不能使用这个值去判断预警是否有效。<br>过期时间<br>提示：一般预警信息的有效期不会超过48小时，因此如果预警信息中未能提供warning.endTime，我们建议将这条预警信息的过期时间设置为从warning.startTime开始后的24小时（我们也是这样做的）。</p>
-<p>你可以根据warning.endTime来预估一条预警信息的失效时间，或者当你更新数据的时候无法再获取当之前相同ID的预警信息时，代表这一条预警已经过期或失效。</p>
-<p>预警等级（弃用）<br>warning.level代表预警信息的等级。</p>
-<p>警告：目前该字段已弃用，使用严重等级和严重等级颜色替代。</p>
-<p>严重等级<br>warning.severity表示预警事件所造成的影响强度。</p>
-<p>不同国家和地区对预警严重等级有自己的的定义和规范，在科威特适用于Minor、Moderate、Severe和Extreme。对于巴西，适用于Moderate、Severe和Extreme。对于南非，适用于Minor、Moderate、Extreme和Unknown。对于澳大利亚适用于Cancel、None、Unknown、Standard、Minor、Moderate、Major、Severe和Extreme。对于其他国家适用于Unknown、Minor、Moderate、Severe和Extreme。</p>
-<p>目前预警严重等级包括：</p>
-<p>Cancel<br>None<br>Unknown<br>Standard<br>Minor<br>Moderate<br>Major<br>Severe<br>Extreme<br>严重等级颜色<br>对于严重等级，一些国家和地区的预警严重等级习惯采用颜色进行定义，我们将根据当地习惯提供严重等级所适用的颜色。</p>
-<p>注意：如果当地没有更适合的颜色，则返回为空。</p>
-<p>目前预警严重等级颜色包括：</p>
-<p>White<br>Blue<br>Green<br>Yellow<br>Orange<br>Red<br>Black<br>紧迫程度<br>注意：这个字段在一些国家和地区不可用，或者与所列出的值不尽相同。</p>
-<p>warning.urgency 表示预警信息的紧迫性，包括：</p>
-<p>Immediate<br>Expected<br>Future<br>Past<br>Unknown<br>确定性<br>注意：这个字段在一些国家和地区不可用，或者与所列出的值不尽相同。</p>
-<p>warning.certainty 表示预警信息的确定性或可信度，包括：</p>
-<p>Observed<br>Likely<br>Possible<br>Unlikely<br>Unknown<br>预警类型<br>和风天气根据各国官方气象部门的定义，提供了超过100种预警类型，这些类型并非适用于所有国家或地区。</p>
-<p>我们也根据预警类型制作了对应的图标，请参考和风天气图标。</p>
-<p>Type  TypeName<br>1001  台风<br>1002  龙卷风<br>1003  暴雨<br>1004  暴雪<br>1005  寒潮<br>1006  大风<br>1007  沙尘暴<br>1008  低温冻害<br>1009  高温<br>1010  热浪<br>1011  干热风<br>1012  下击暴流<br>1013  雪崩<br>1014  雷电<br>1015  冰雹<br>1016  霜冻<br>1017  大雾<br>1018  低空风切变<br>1019  霾<br>1020  雷雨大风<br>1021  道路结冰<br>1022  干旱<br>1023  海上大风<br>1024  高温中暑<br>1025  森林火险<br>1026  草原火险<br>1027  冰冻<br>1028  空间天气<br>1029  重污染<br>1030  低温雨雪冰冻<br>1031  强对流<br>1032  臭氧<br>1033  大雪<br>1034  寒冷<br>1035  连阴雨<br>1036  渍涝风险<br>1037  地质灾害气象风险<br>1038  强降雨<br>1039  强降温<br>1040  雪灾<br>1041  森林（草原）火险<br>1042  医疗气象<br>1043  雷暴<br>1044  停课信号<br>1045  停工信号<br>1046  海上风险<br>1047  春季沙尘天气<br>1048  降温<br>1049  台风暴雨<br>1050  严寒<br>1051  沙尘<br>1052  海上雷雨大风<br>1053  海上大雾<br>1054  海上雷电<br>1055  海上台风<br>1056  低温<br>1057  道路冰雪<br>1058  雷暴大风<br>1059  持续低温<br>1061  浓浮沉<br>1064  短时强降雨<br>1101  洪水<br>1302  泥石流<br>1402  风暴潮<br>1601  炎热<br>1602  强烈季风信号<br>1603  山泥倾泻<br>1604  热带气旋<br>1605  火灾危险<br>1606  新界北部水浸特别报告<br>1607  寒冷天气<br>2001  大风<br>2002  强降雪和结冰<br>2003  大雾<br>2004  海岸风险<br>2005  森林火险<br>2006  雨<br>2007  大雨洪水<br>2008  冻雨和结冰<br>2009  地面霜<br>2010  扬尘风<br>2011  强地面风<br>2012  炎热<br>2013  夜间炎热<br>2014  寒冷<br>2015  雷暴和闪电<br>2016  冰雹风暴<br>2017  海况风险<br>2018  渔业风险<br>2019  低湿度<br>2020  累计降水风险<br>2021  冲浪风险<br>2022  海上大风<br>2023  道路天气风险<br>2024  雷雨<br>2025  雷雨大雾<br>2026  破坏性大风<br>2027  草原火灾条件<br>2028  天气预警建议<br>2052  大雪<br>2053  Zonda Wind<br>2054  风暴<br>9998  天气预警<br>9999  其他</p>
-<h3 id="天气指数信息"><a href="#天气指数信息" class="headerlink" title="天气指数信息"></a>天气指数信息</h3><p>天气生活指数是一种根据多种气象要素而计算出的指数，使用不同类型的指数可以直观的了解天气对人类活动的影响</p>
-<p>支持的国家或地区</p>
-<p>天气指数并非适用于所有国家或地区，目前对于中国（包括港澳台地区），所有天气指数均可用。对于其他国家或地区，可使用运动指数、洗车指数、穿衣指数、紫外线指数和钓鱼指数。</p>
-<p>天气指数类型<br>注意：当选择全部天气指数时，不能再选择其他指数。</p>
-<p>天气指数类型  API类型值  iOS SDK类型常量 Android SDK类型常量<br>全部天气指数  0 INDICES_TYPE_all  ALL<br>运动指数  1 INDICES_TYPE_spt  SPT<br>洗车指数  2 INDICES_TYPE_cw CW<br>穿衣指数  3 INDICES_TYPE_drsg DRSG<br>钓鱼指数  4 INDICES_TYPE_fis  FIS<br>紫外线指数 5 INDICES_TYPE_uv UV<br>旅游指数  6 INDICES_TYPE_tra  TRA<br>花粉过敏指数  7 INDICES_TYPE_ag AG<br>舒适度指数 8 INDICES_TYPE_comf COMF<br>感冒指数  9 INDICES_TYPE_flu  FLU<br>空气污染扩散条件指数  10  INDICES_TYPE_ap AP<br>空调开启指数  11  INDICES_TYPE_ac AC<br>太阳镜指数 12  INDICES_TYPE_gl GL<br>化妆指数  13  INDICES_TYPE_mu MU<br>晾晒指数  14  INDICES_TYPE_dc DC<br>交通指数  15  INDICES_TYPE_ptfc PTFC<br>防晒指数  16  INDICES_TYPE_spi  SPI<br>天气指数等级<br>注意：生活指数等级有可能会进行调整。</p>
-<p>天气指数类型  级别名称(对应等级数值)<br>运动指数  适宜(1)、较适宜(2)、较不宜(3)<br>洗车指数  适宜(1)、较适宜(2)、较不宜(3)、不宜(4)<br>穿衣指数  寒冷(1)、冷(2)、较冷(3)、较舒适(4)、舒适(5)、热(6)、炎热(7)<br>钓鱼指数  适宜(1)、较适宜(2)、不宜(3)<br>紫外线指数 最弱(1)、弱(2)、中等(3)、强(4)、很强(5)<br>旅游指数  适宜(1)、较适宜(2)、一般(3)、较不宜(4)、不适宜(5)<br>花粉过敏指数  极不易发(1)、不易发(2)、较易发(3)、易发(4)、极易发(5)<br>舒适度指数 舒适(1)、较舒适(2)、较不舒适(3)、很不舒适(4)、极不舒适(5)、不舒适(6)、非常不舒适(7)<br>感冒指数  少发(1)、较易发(2)、易发(3)、极易发(4)<br>空气污染扩散条件指数  优(1)、良(2)、中(3)、较差(4)、很差(5)<br>空调开启指数  长时间开启(1)、部分时间开启(2)、较少开启(3)、开启制暖空调(4)<br>太阳镜指数 不需要(1)、需要(2)、必要(3)、很必要(4)、非常必要(5)<br>化妆指数  保湿(1)、保湿防晒(2)、去油防晒(3)、防脱水防晒(4)、去油(5)、防脱水(6)、防晒(7)、滋润保湿(8)<br>晾晒指数  极适宜(1)、适宜(2)、基本适宜(3)、不太适宜(4)、不宜(5)、不适宜(6)<br>交通指数  良好(1)、较好(2)、一般(3)、较差(4)、很差(5)<br>防晒指数  弱(1)、较弱(2)、中等(3)、强(4)、极强(5)</p>
-<h3 id="空气质量信息"><a href="#空气质量信息" class="headerlink" title="空气质量信息"></a>空气质量信息</h3><p>空气质量指数（Air Quality Index）简称AQI，是定量描述空气质量状况的非线性无量纲指数，其数值越大、等级和类别越高、颜色越深，代表空气污染状况越严重，对人体的健康危害也就越大。</p>
-<p>支持的国家或地区<br>目前空气质量数据仅支持中国（含港澳台）地区使用。</p>
-<p>空气质量指数等级<br>空气质量指数等级的划分以《环境空气质量指数（AQI）技术规定（试行）（HJ 633—2012）》为准，未来支持更多国家或地区时，会根据当地地区的规范发布新的等级。</p>
-<p>数值  等级  级别  级别颜色<br>0-50  一级  优 绿色<br>51-100  二级  良 黄色<br>101-150 三级  轻度污染  橙色<br>151-200 四级  中度污染  红色<br>201-300 五级  重度污染  紫色</p>
-<blockquote>
-<p>300  六级  严重污染  褐红色</p>
-</blockquote>
-<h3 id="太阳和原谅信息"><a href="#太阳和原谅信息" class="headerlink" title="太阳和原谅信息"></a>太阳和原谅信息</h3><p>太阳和月亮信息<br>一般来说，我们每天都可以看到太阳和月亮，但是如果你仔细观察，会发现在一些地区和特殊日期，太阳或月亮并没有出现。本片文档将介绍关于太阳和月亮的特殊情况。</p>
-<p>注意：你需要处理日出日落或月升月落返回为空的情况，避免造成你的程序故障。</p>
-<p>日出日落<br>日出一般是指太阳由东方的地平线徐徐升起的景象，日出时间的定义为日面刚从地平线出现的一刹那，而非整个日面离开地平线。</p>
-<p>日落是每日太阳因为地球自转的结果而消失在地平线下的现象，日落时间的定义是太阳盘面的边缘完全消逝在西方地平线下的时间。</p>
-<p>对于生活在高纬度地区（60度+）的人来说，看到的日出日落的时间和其他地区有所不同。由于极昼和极夜的原因，高纬度地区可能不存在日出和日落数据，此时日出日落时间将返回为空。例如在朗伊尔城，每年11月份至次年3月份处于极夜期，在此期间查询该城市的日出日落将可能返回空数值。</p>
-<p>而在极昼或极夜开始和结束的时候，sunrise 或 sunset 可能为空。</p>
-<p>月升月落<br>月升月落的时间更加复杂和多变，我们列举了一些常见场景。</p>
-<p>为什么月亮在早上升起？<br>为什么有时候月升的时间是上午9点？月亮不是只在晚上出现吗？你们的数据出错了吧？</p>
-<p>实际上，月亮并非只在晚上出现。</p>
-<p>月球的公转周期大约是29.53天，因此对于地球来说，月球每天移动的角度是:</p>
-<p> 360° &#x2F; 29.53天 ≈ 12.2°<br>这导致地球在完成一次自转后，需要再移动12.2°才能看到月亮。而地球移动12.2°需要多长时间呢？我们知道地球的自转周期大约是24小时，也就是说我们每个小时移动 360° &#x2F; 24小时 &#x3D; 15°，那么显然地球移动12.2°需要:</p>
-<p>12.2° &#x2F; 15° * 60分钟 ≈ 48.8分钟<br>换句话说，每天的月升时间相比前一天都要延迟50分钟左右。</p>
-<p>因此如果你在晚上9点看到月亮升起来了，那么大概再过15天，你将发现月亮在早上9点升起来了。一般来说，在新月前后，月亮几乎只在白天出现，而在满月前后，月亮则在一整晚都在。</p>
-<p>提示：上述计算和数据仅为举例说明，并非严谨计算。实际上每天的月升时间相比前一天可能推迟30-70分钟。</p>
-<p>为什么一整天都有月亮？<br>由于月球的公转轨道不是地球的赤道平面，而是比较接近黄道平面，你可以理解为月亮是倾斜着围绕地球进行公转，因此在高纬度地区，每个月至少有一天完全看不到月亮，也至少有一天月亮在一整天都出现，此时moonrise 和 moonset可能为空。</p>
-<p>月球轨道地球和月球轨道（原始图片Wikimedia）</p>
-<p>只有月升或只有月落<br>还记得上边我们说到每天月升时间都会比前一天晚50分钟吗？所以当一个特定日期的月升时间在23:10-23:59分时，那么下一次的月升则会推迟到第三天的00:00-00:49，月落也是如此。因此通常情况下，每个月都会有一天只有月升，有一天只有月落，并且一般发生在上弦月和下弦月的前后。</p>
-<p>北京月升月落时间表北京2022年月升月落时间表，空白的地方表示月升或月落时间没有发生在当天24小时内。这并非是月亮惹的祸，而是我们的人为的历法导致的。</p>
-<p>月相<br>月相，是由地球上所观看之月光形态。月球本身不发光，月球直接被太阳照射之部分反射太阳光，才可见发亮，当地球位于月球和太阳之间时，我们可以看到整个被太阳直射的月球部分，这就是“满月”。当月球位于地球和太阳之间时，我们只能看到月球不被太阳照射的部分，这就是“朔”，而当首度再见到月球明亮的部分时，称为“新月”。</p>
-<p>月相这张图代表了不同月相对应的太阳、地球和月球的相对位置，此时观察者位于北半球，如果观察者位于南半球时，看到的月相形状是左右倒置的。（原始图片Wikimedia by Orion 8）</p>
-<p>下方表格代表了不同月相的示例。</p>
-<p>提示：因为月球轨道较接近黄道而非赤道，故下表南北半球的分界严格来说以黄道为分割。</p>
-<p>提示：南北半球观看到的月相形状是左右倒置的，但名称是一样的。在数据中的moonPhase.icon已经进行了适配。例如当处于蛾眉月的时候，北半球的moonPhase.icon &#x3D; 801，而南半球的moonPhase.icon &#x3D; 807</p>
-<p>月相  北半球 南半球 平均月出时间  平均月落时间  北半球示意图  南半球示意图<br>新月（朔月）  肉眼不可见，月球完全在太阳的阴影内 肉眼不可见，月球完全在太阳的阴影内 06:00 18:00<br>蛾眉月（娥眉月）  右侧的1–49%可见  左侧的1–49%可见  09:00 21:00<br>上弦月 右侧的50%可见  左侧的50%可见  12:00 00:00<br>盈凸月 右侧的51–99%可见 左侧的51–99%可见 15:00 03:00<br>满月（望月）  100%  100%  18:00 06:00<br>亏凸月 左侧的99–51%可见 右侧的99–51%可见 21:00 09:00<br>下弦月 左侧的50%可见  右侧的50%可见  00:00 12:00<br>残月  左侧的49–1%可见  右侧的49–1%可见  03:00 15:00<br>了解更多：</p>
-<p>这篇文章中的视频代表了2022年每小时的月相的变化以及月球相对地球的位置：Moon Phase and Libration, 2022<br>这个视频代表了月相是如何产生的以及在太空中观看的效果，这有助于你理解月相的概念：The Moon’s Phases as Seen from Space</p>
-<h2 id="最佳实践"><a href="#最佳实践" class="headerlink" title="最佳实践"></a>最佳实践</h2><p>天气变化瞬息万变，天气数据也是如此，为了确保你的程序更加强壮，无论任何时候，请不要假定返回的数据都是完整的，或者对返回数据的长度、范围进行假设。</p>
-<p>天气数据会受到多种因素的影响，并且大多数情况下是完全无法避免的，包括自然和物理现象、行政区划的变更、各国气象部门的发布规则、气象算法的迭代以及我们对数据的升级，这些因素都会导致天气数据的变化。</p>
-<p>例如：当我们的数据源缺少某些数据的时候可能会导致字段缺失；高纬度地区某一天可能会出现没有日出日落的情况；预警类型会增加新的代码；当我们的功能升级时，可能在数据返回中增加新的字段或参数。</p>
-<p>因此在你的程序中必须考虑如何处理这些问题。</p>
-<p>我们的建议有：</p>
-<p>定期查看我们发布的公告和最新版本的开发文档</p>
-<p>不要完全依赖枚举值，对新增、删除和变更的值进行适配</p>
-<p>对新增、删除和变更的字段进行适配</p>
-<p>对缺省值、空值提前做好适配</p>
-<p>不要按顺序或字段的数量进行编码</p>
-<p>了解数据中的状态码及其含义</p>
-<p>一般来说，数据的变化我们会提前发布公告，然而请注意，这些变化不一定会向下兼容，如果你没有做好适配，那么你可能必须升级你的程序才能避免发生错误，另外一些更加紧迫性的变更有可能在无法提前通知你的时候发生。</p>
-<h3 id="优化请求"><a href="#优化请求" class="headerlink" title="优化请求"></a>优化请求</h3><p>优化请求<br>和风天气会根据你的请求，通过API或SDK的方式向你提供天气服务，在这一过程中，需要尽量优化你的请求，以便更高效的使用我们的服务，这篇文档将介绍几种常见的优化方式。</p>
-<p>为了更有效的使用和风天气开发服务，你需要尽量优化你的请求。这篇文档将介绍几种常见的优化方式。</p>
-<p>构建合法的URL<br>当你使用API获取数据的时候，会通过URL向我们发起请求，例如：</p>
-<p><a target="_blank" rel="noopener" href="https://api.qweather.com/v7/weather/3d?parameters">https://api.qweather.com/v7/weather/3d?parameters</a><br>一般来说，这段请求URL不会出现错误，但是在传递一些特殊的参数和值的时候需要特别注意：</p>
-<p>不要使用空格<br>请求链接中不要输入一个空格，这通常发生在复制粘贴的情况下，这种错误可能不会被立即发现，因此需要你在复制粘贴的时候特别注意。</p>
-<p>例如: 通常我们会复制粘贴KEY，根据不同的系统或软件，有可能被复制的内容的前后存在空格，当你完成粘贴后，需要将这些空格删除。</p>
-<p>使用标准的URI规范字符<br>你可能需要在API的请求地址中拼接多个参数或值，这些内容会采用特殊符号进行分割，例如坐标的值通过,分割经度和维度，而不要使用中文，</p>
-<p>关于标准URI的规范请参考Uniform Resource Identifier (URI): Generic Syntax</p>
-<p>URL encoding<br>对于非ASCII字符集以内的字符，如北京市，你需要对这些字符进行URL encoding</p>
-<p>安全的请求<br>请不要在网页中直接编写URL请求或共享这段URL，这有可能泄露你的敏感信息，使用HTTPS、签名认证等方式可以有效的保护你的敏感信息。关于如果保护KEY及其他发送请求时携带的敏感信息，请参考保护你的KEY。</p>
-<p>处理错误<br>当你遇到返回的数据中code字段的值不是2xx的时候，代表你的请求出现了错误，此时你需要暂停请求并妥善的处理这些错误，否则极端情况下，你可能会违反我们的使用限制而被冻结帐号。</p>
-<p>例如: 当你传入了错误的参数或KEY，将返回400或403，此时你应该暂停这一次的请求，排除故障后再继续。否则当产生大量请求错误时，我们可能会冻结你的帐号。</p>
-<p>了解状态码<br>在API&#x2F;SDK返回的数据中，code字段代表当前请求的状态，返回的值和含义与HTTP Status Code类似，并略有修改。</p>
-<p>完整的解释说明请参考状态码。</p>
-<p>使用指数退避算法处理错误<br>当出现错误的时候，请停止请求并进行检查，待故障排除后再恢复请求。然而一些错误并非由于请求不符合规范而导致的，例如超过每分钟请求限制，没有足够的余额等等，这时你应该使用指数退避算法优化请求。</p>
-<p>例如，当你的请求收到429状态码时，代表你超过了每分钟请求次数，此时你应该在下次请求开始前添加x秒的等待期。如果下次请求仍然返回402，则将等待期延长一倍，再发送另一次请求，以此类推，继续延长等待期，直至不再返回错误状态码。</p>
-<p>简单的公式可以参考：</p>
-<p>t &#x3D; bc</p>
-<p>其中t代表下次请求的间隔时间，或称之为等待期，b代表基数，c是发生错误的次数。如果按照上述的例子来讲，假设b &#x3D; 2，那么在出现第一次错误时，下一次请求应该等待21 &#x3D; 2秒，再下一次请求应等待22 &#x3D; 4秒，第三次请求等待23 &#x3D; 8秒，如果第四次请求响应正常，则恢复之前的请求频率并重置c &#x3D; 1。</p>
-<p>避免冲突<br>如果你有大量独立设备发送请求，为了避免这些设备产生了相同的等待期而产生冲突（比如都在等待2秒后重新发送，这并不能恢复QPM），你可以在等待期中设置一个随机数，或称之为插槽，这个随机数的取值范围可以是0～2c-1。在上述例子中，前三次的等待期的随机数分别是：</p>
-<p>第一次：0, 1<br>第二次：0, 1, 2, 3<br>第三次：0, 1, 2, 3, 4, 5, 6, 7<br>这样你的多个独立设备每次都有不同的等待期而避免了冲突。</p>
-<p>截断<br>等待期不应是无限的，如果连续出现20次错误，那么此时的等待期就已经长达291个小时，这显然是不现实的。因此你需要为等待期设置一个最大值，当达到这个值时，则不再增加c的取值。我们的建议是c &#x3D; 10。</p>
-<p>按需请求<br>仅在需要天气数据的时候再进行请求。</p>
-<p>例如：在APP中，天气内容的位置较为靠下，你可以让程序在用户滑动到天气内容部分再进行请求。</p>
-<p>如果已经加载了天气内容，你也可以为这个内容设置缓存时间，或者增加一个刷新按钮，让用户手动去刷新数据。关于设置缓存，请参考缓存你的数据。</p>
-<p>处理Gzip</p>
-<p>和风天气的web api 默认采用gzip 进行压缩，这将极大的减少网络流量，加快请求</p>
-<p>提示：如果使用iOS SDK或Android SDK，不需要考虑处理Gzip。</p>
-<p>对于不同开发语言如何处理Gzip，我们在这里给出一些官方参考文档，这些文档可能与你当前使用的版本不一致，请注意它们的区别。</p>
-<p>C#<br><a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/dotnet/api/system.io.compression.gzipstream?view=net-6.0">https://learn.microsoft.com/zh-cn/dotnet/api/system.io.compression.gzipstream?view=net-6.0</a></p>
-<p>Dart<br><a target="_blank" rel="noopener" href="https://api.dart.cn/stable/2.17.0/dart-io/GZipCodec-class.html">https://api.dart.cn/stable/2.17.0/dart-io/GZipCodec-class.html</a></p>
-<p>Go<br><a target="_blank" rel="noopener" href="https://pkg.go.dev/compress/gzip">https://pkg.go.dev/compress/gzip</a></p>
-<p>Java<br><a target="_blank" rel="noopener" href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/zip/GZIPInputStream.html">https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/zip/GZIPInputStream.html</a></p>
-<p>Python<br><a target="_blank" rel="noopener" href="https://docs.python.org/zh-cn/3/library/gzip.html">https://docs.python.org/zh-cn/3/library/gzip.html</a></p>
-<p>Ruby<br><a target="_blank" rel="noopener" href="https://ruby-doc.org/stdlib-2.7.0/libdoc/zlib/rdoc/Zlib/GzipReader.html">https://ruby-doc.org/stdlib-2.7.0/libdoc/zlib/rdoc/Zlib/GzipReader.html</a></p>
-<h3 id="缓存你的数据"><a href="#缓存你的数据" class="headerlink" title="缓存你的数据"></a>缓存你的数据</h3><p>天气数据普遍具有时效性，对于不同的数据种类，时效性也有所不同。在你请求和风天气数据的时候，可以考虑设置弹性的、合理的缓存，这样可以有效降低服务器、带宽的消耗，加快用户的访问。</p>
-<p>注意：缓存不是强制的要求，请认真阅读本文档，然后根据你的产品进行充分的评估，否则可能会对你的产品造成严重错误。如果你不确定，或者无法处理所有应用场景，请不要使用缓存。</p>
-<p>警告：你不能缓存、提取、批量存储GeoAPI中提供的所有数据，这将违反我们的服务条款或侵犯版权，这些数据的版权所有者可能会对你采取法律行动。</p>
-<p>合理性<br>对于时效性较强的数据，你不应该设置过长的缓存时间，例如实时天气，一天的温度变化较多，如果你设置超过了1小时的缓存，有可能造成用户在上午甚至中午查看到的是早上较为凉爽的气温。</p>
-<p>提示：缓存数据与原数据的间隔时间最多相差2倍，例如你的缓存时间与和风天气的更新频率均为60分钟，和风天气在15:00发布了新的数据，用户从15:59开始访问你的产品，在16:59的时候用户通过你的缓存获取依然是15:00发布的原数据，在这种情况下，缓存数据与原数据的间隔时间达到了119分钟。</p>
-<p>弹性<br>缓存应该是弹性的，你不应该为所有数据或在所有时间范围内设置相同的缓存策略，否则你的程序可以出现严重错误或崩溃，因此你需要特别注意：</p>
-<p>跨小时和跨天的场景，否则用户可能无法查看到完整的天气数据，严重情况可能导致你的程序错误。<br>例如：对于逐天预报，用户在23:00使用了你的产品查看了7天预报，在第二天00:00之后，如果你不刷新缓存，用户看到的7天预报的第一天将变成前一天或者只剩下6天预报，极端情况下，你的程序还可能报错。</p>
-<p>夏令时对缓存的影响，避免夏令时开始和结束的时刻发生时间显示错误的问题。<br>如果你在服务端采用缓存，需要注意时区的问题，每个国家会有不同的时区，你设置的弹性缓存应该确保在不同时区都可以正常工作。<br>清除缓存<br>你应该为你的程序设置一种可以立即清除缓存的功能，当出现错误的时候，可以通过清除缓存来实时的解决问题，而不需要重新发布新版本程序。</p>
-<p>推荐的缓存时间<br>对于不同数据设置的缓存时间，我们推荐如下，当然更少的缓存时间可以获得更加及时的数据响应，还包括我们额外对数据进行的修复和优化。</p>
-<p>注意：当已发布的数据需要进行修复时，我们会增加更新次数和更新频率。</p>
-<p>注意：推荐的缓存时间并非适用于所有场景和需求，你应该根据你的产品进行评估。和风天气的数据发布频率也有可能会变更，我们会更新文档。</p>
-<p>数据类型  推荐的缓存时间 和风天气的更新频率<br>实时天气  10-30分钟 5-10分钟<br>逐小时天气预报 30-60分钟 60分钟<br>逐天天气预报  1-6小时 60分钟<br>天气预警  5-20分钟  3分钟<br>天气指数  6-12小时  60分钟<br>分钟降水  5-10分钟  5分钟<br>实时空气质量  30-60分钟 30-60分钟<br>空气质量逐天预报  8-12小时  1-6小时<br>潮汐和潮流 8-12小时  8小时<br>台风  活跃期 20分钟<br>非活跃期60分钟  10-60分钟<br>太阳辐照  6小时 3-6小时<br>限制<br>你不能缓存、提取、批量存储GeoAPI中提供的所有数据，这将违反我们的使用限制和服务条款。</p>
-<p>GeoAPI中提供的数据内容来源于多个地理信息服务商，他们拥有不同的版权许可，大多数服务商（几乎是所有）许可你实时的使用，但禁止你将这些数据进行任何形式的存储，否则你可能会面临严重的法律风险。</p>
-<h3 id="保护数据key"><a href="#保护数据key" class="headerlink" title="保护数据key"></a>保护数据key</h3><p>KEY是获取和风天气数据的重要敏感信息，你有责任妥善保管，避免泄露KEY而造成的损失，在这里介绍几种保护KEY的方式：</p>
-<p>使用HTTPS<br>从2014年开始，我们的API就支持了HTTPS加密访问，在2016年底，我们关闭了所有非HTTPS的访问。使用HTTPS可以有效的阻止请求中的敏感信息被泄露，请不要跳过HTTPS的保护。</p>
-<p>使用加密签名认证<br>使用加密签名的方式进行认证，这样即使他人抓取到了你的请求信息，也很难获得更多有价值的内容。</p>
-<p>为每个产品创建不同的KEY<br>我们支持创建多个KEY和项目，因此不要把鸡蛋都放在一个篮子里，对于不同的产品或者同一产品的不同平台，应该创建不同KEY进行使用，例如你要做一个款关于旅游的项目，可以为iOS、Android、小程序和网站创建不同的KEY。</p>
-<p>更改KEY<br>如果你认为你的KEY已经泄露或者怀疑泄露，你可以新建一个KEY，然后升级你的程序，测试并确保程序都运行在新的KEY，最后删除旧的KEY。</p>
-<p>在服务端保存KEY<br>在服务端存储KEY，再通过服务端发送到前端需要展示的天气数据，这样他人就无法在前端中抓取到你的KEY。</p>
-<p>混淆或加密KEY<br>如果不可避免的在前端中存储KEY，那么也可以通过混淆或加密代码的方式，再配合不定期的更改KEY，从而让他人获取这些数据更加困难。</p>
-<p>不要在代码中共享<br>在开发过程中，不可避免的会与其他人共享你的代码，因此将KEY存储在环境变量或独立的文件中，则可以有效的避免代码共享时泄露你的KEY。如果你的代码会发布在公共源代码管理系统时（例如Github），请确保存储KEY的文件包含在.gitignore或其他类似功能的配置文件中，换句话说，让KEY不要保留在源代码管理系统中。</p>
-<h2 id="订阅"><a href="#订阅" class="headerlink" title="订阅"></a>订阅</h2><p>和风天气开发服务采用订阅模式，当你创建项目时，你至少需要选择一种订阅。使用和风天气的服务订阅非常简单和自由，免费或者你只需要为你实际使用的部分付费。</p>
-<p>我们有三种订阅模式：</p>
-<p>免费订阅<br>标准订阅<br>高级订阅<br>免费订阅<br>提示： 免费订阅在开发前需要进行额外的配置，请参考API配置、iOS SDK配置和Android SDK配置。</p>
-<p>对于中小开发者来说，和风天气开发服务的免费订阅提供了基本的天气服务。在免费订阅下，你可以每天有限次数的使用大部分的天气服务，另外我们为免费订阅提供了知识共享 署名-相同方式共享 4.0 国际 许可协议，这样在符合上述许可的条件下，你可以自由的使用，甚至包括商业用途。参考我们的许可证文档。</p>
-<p>免费订阅可使用的天气服务和其他规格请参考下方的订阅对比。</p>
-<p>标准订阅<br>提示：在初次使用标准订阅时，你需要确保你的可用额度大于等于10元。</p>
-<p>标准订阅，是使用最广泛的订阅计划。使用标准订阅，你可以获取和风天气的所有开发服务，没有任何请求量的限制，支持全球加速和自动路由功能，因此你的应用可以部署在世界各地，而不用担心响应速度的问题。</p>
-<p>标准订阅采用按量计费模式，你只需要为你实际使用的部分付费，无需预付大量资金。标准订阅的价格是阶梯价格，意味着你的请求量越多，单价越低，参考按量计费和定价或使用价格计算器预估你的成本。标准订阅还支持节省计划，可以进一步的降低你的成本。了解节省计划。</p>
-<p>对于签约的企业开发者，标准订阅还支持定期付款功能，了解定期付款。</p>
-<p>标准订阅提供了和风天气许可，你可以更加自由和方便在你的业务中使用我们的服务。</p>
-<p>标准订阅的具体规格请参考下方的订阅对比。</p>
-<p>高级订阅<br>高级订阅适合于高请求量（一般指每天100万次请求量）的企业客户或对性能和稳定性有严格要求的客户。高级订阅包含了标准订阅的所有内容，除此之外，还提供了更加强大的服务和网络性能：独立的、可扩展的网络和服务器，高达50000的QPM，SLA 99.9%，自定义API域名，遍布全球的CDN边缘加速。</p>
-<p>与更加强大的性能对比，高级订阅反而提供了更低的单价，用于满足你海量的业务需求。</p>
-<p>如果对高级订阅感兴趣，请与我们联系，我们将为你制定合适的方案。</p>
-<p>高级订阅的具体规格请参考下方的订阅对比。</p>
-<p>订阅对比<br>功能  免费订阅  标准订阅  高级订阅<br>价格  免费  按量计费  按需<br>请求量 1000次请求&#x2F;天 按需  按需<br>地理信息  ✓ ✓ ✓<br>天气预报  实时<br>每小时预报(24小时)<br>每日预报(3-7天)  实时天气<br>每小时预报(24-168小时)<br>每日预报(3-30天) 实时天气<br>每小时预报(24-168小时)<br>每日预报(3-30天)<br>分钟降水  ✓ ✓ ✓<br>格点天气  实时天气<br>每小时预报(24小时)<br>每日预报(3-7天)  实时天气<br>每小时预报(24-72小时)<br>每日预报(3-7天)  实时天气<br>每小时预报(24-72小时)<br>每日预报(3-7天)<br>天气预警  ✓ ✓ ✓<br>天气指数  ✓ ✓ ✓<br>空气质量  ✓ ✓ ✓<br>太阳和月亮 ✓ ✓ ✓<br>时光机 × ✓ ✓<br>台风  × ✓ ✓<br>海洋  × ✓ ✓<br>太阳辐照  × × ✓<br>服务器性能 共享  商业共享  独立部署<br>SLA × 99.5% 99.95%<br>QPM 100 3000  50000起<br>最大连接数 100 5000  50000起<br>网络  共享  商业共享  独立网络<br>自动路由  ✓ ✓ ✓<br>数据节点  2个  4个  10个<br>边缘加速  × × ✓<br>自定义API地址  × × ✓<br>许可证 CC BY-SA 4.0  和风开发许可  和风开发许可<br>技术支持  × 电子邮件&#x2F;工单 电话&#x2F;电子邮件&#x2F;工单<br>合同  × × 按需<br>限制<br>每个帐号：<br>仅可创建一个免费订阅。<br>标准订阅的数量取决于你的项目数量限制。<br>初次使用标准订阅，你的可用额度必须大于等于10元。<br>免费订阅不支持按量计费，也不支持节省计划。<br>不同订阅无法互相转换，但是可以通过删除项目解除订阅，之后再创建新的项目并选择合适的订阅。</p>
-<h3 id="账单和支付"><a href="#账单和支付" class="headerlink" title="账单和支付"></a>账单和支付</h3><p>和风天气开发服务基于按量计费模式的计费系统，是更加透明、简单和有竞争力的定价方案，而账单则是按量计费的费用凭证和计费系统的核心。本文档将介绍我们的账单和计费系统是如何工作的。</p>
-<p>计费和账单<br>和风天气开发服务的标准订阅采用按量计费的后付费模式，即按照你的每一次请求记录费用，你不需要提前预付大量资金，也不需要为用不到的服务买单，你只需要为你实际使用的部分付费即可。另外，按量计费的定价是阶梯价格，意味着你使用的越多，单次请求的价格越低。</p>
-<p>你的所有请求量和应付费用都将记录在账单中，我们将根据账单向你收取费用。以下是关于计费和账单的重要规则：</p>
-<p>计价单位: 按量计费的计价单位是一次请求。<br>账单周期: 按量计费的账单周期是一个自然月，在每个月的5日前生成。<br>应计费用: 应计费用是你每个小时产生的请求所需要支付的费用，一个自然月内所有小时的应计费用账单合计即为当月按量计费账单。<br>账单支付: 当你使用自动支付模式时，我们会根据每个小时的应计费用账单向你扣减费用；当你使用定期支付模式时，我们会根据你每个月的账单向你扣减费用。参考本篇文档支付账单章节。<br>价格累进周期: 按量计费的阶梯价格累进周期是一个自然月，即在每个月的最开始，都将按照阶梯价格的第一档开始计算。<br>注意：账单由系统自动生成，无需签字或盖章，是你和我们之间的具有法律效力的凭证，你应根据账单金额向我们支付或根据账单向你的组织申请支付费用，我们不再额外提供其他形式的合同。</p>
-<p>关于按量计费的定价请参考按量计费定价。</p>
-<p>举例说明<br>下方是关于计费和账单的示例，其中价格以当前价格为例。</p>
-<p>按量计费</p>
-<p>你在8月10日请求了2000次城市实时天气，在8月20日请求了1000次每日天气预报（15天），之后停止使用，那么你只需要支付下列费用，并且之后不再需要支付任何费用。</p>
-<p>2000次请求 x 0.001元 + 1000次请求 x 0.002元 &#x3D; 4元<br>应计费用</p>
-<p>你在8月10日13:00-13:59获取了10000次城市实时天气，那么在14:00之后将生成一份应计费用账单，该账单记录了你上一个小时的10000次请求，计算出的应付金额为10元（10000次请求 x 0.001元，忽略阶梯价格因素）。</p>
-<p>如果你使用的是自动支付，在这份应计费用账单生成后，会自动扣减你的可用额度或节省计划金额；如果你使用的是定期支付，应计费用仅扣减你的节省计划金额（如有），但不会扣减你的可用额度，定期支付将在月账单生成后一次性扣减可用额度。</p>
-<p>阶梯价格</p>
-<p>你在8月份总计获取了100万次城市实时天气，阶梯价格的计算公式为：</p>
-<p>300000次请求量 x 0.001元 + 700000次请求量 x 0.0009元 &#x3D; 930元<br>在9月再次获取了100万次城市实时天气，阶梯价格将重置，计算公式与上个月相同。</p>
-<p>如何降低成本？<br>按量计费可以根据你的需求灵活的增加或减少请求量，避免提前预付大量金额。当你的请求量较多或需求较稳定的时候，你可以使用节省计费，大幅降低你的成本。参考节省计划。</p>
-<p>对于有大量请求量的用户（通常指的是日均50万次请求以上），请与我们的商务专家联系，以便提供更佳的解决方案。</p>
-<p>当停止使用时，是否继续收费？<br>按量计费的其中一个优势就是你可以随时开始或随时停止，在你停止使用后，你不会再收到任何账单，也无需支付费用。</p>
-<p>注意：当你停止使用时，请确保你的程序已经移除了KEY或已经完全停止向我们发送请求，否则你依然需要继续支付费用。</p>
-<p>支付账单<br>在账单生成后，我们会自动尝试从你的账户可用额度中扣除费用。除了自动支付外，我们还支持定期支付和手动付款。</p>
-<p>自动支付<br>标准订阅默认采用自动支付的方式。自动支付将根据每个小时的应计费用扣减你的可用额度，因此你需要随时关注你的可用额度，当可用额度&lt;0时，你的服务可能会暂停。</p>
-<p>如购买了节省计划，自动支付将优先通过节省计划支付费用。参考节省计划。</p>
-<p>定期支付<br>提示： 开通定期支付需要与你的商务经理联系或发送工单申请。</p>
-<p>对于企业开发者，标准订阅可以使用定期付款。定期支付是一种按月后付费模式，在每个月固定日期（默认每月10日）支付上个月标准订阅的费用。</p>
-<p>定期支付与自动支付不同，在你设定的每月应付日期之前，应计费用不会通过可用额度进行扣款（但依然会扣减资源包或节省计划），在标准订阅账单生成当天和应付日期的第二天，我们才会尝试从你的可用额度中扣款，即当月的消费金额将在下个月进行支付。因此，定期支付的用户需要在支付日期前确保可用额度足够支付账单金额。</p>
-<p>定期支付的扣款时间</p>
-<p>我们会在两个时间点尝试使用你的可用额度支付标准订阅账单：</p>
-<p>账单日期：在标准订阅账单生成时，我们将尝试使用你的可用额度支付账单<br>可用额度 ≥ 账单应付金额：扣减你的可用额度，账单将立即被结清。<br>可用额度 &lt; 账单应付金额：扣减你的可用额度，账单状态为待支付，此时你的可用额度为负值，但这不是影响到你的服务运行。<br>付款日期：在你设定的付款日期的第二天，我们会再次尝试使用你的可用额度支付账单<br>可用额度 ≥ 账单应付金额：扣减你的可用额度，账单将立即被结清。<br>可用额度 &lt; 账单应付金额：扣减你的可用额度，账单状态为欠款，你的服务将被暂停。<br>关于更多定期支付的说明，可以参考下方的支付场景。</p>
-<p>手动支付<br>你可以进行一次性手动付款，这将增加你的可用额度，用于支付订阅的账单或其他预付费服务。请参考添加可用额度。</p>
-<p>支付场景<br>以下是一些你可能遇到的支付场景。对于这些场景，我们假设的前提条件是：</p>
-<p>你每个小时请求1000次实时天气<br>每个月为30天（720个小时）<br>你的初始可用额度为100元<br>当使用节省计划时，你的节省计划规格为：1年期并承诺金额为500元<br>每个月账单的生成日期为1日<br>定期支付的支付日期为每个月10日<br>使用自动支付</p>
-<p>每个小时，你的应计费用是1元（0.001元 x 1000次请求）并通过你的可用额度进行支付。在第100个小时之后，你的可用额度将被全部扣减，此时你应该及时进行充值操作，否则在第101个小时之后，你的可用额度将为-1元，这将导致你的服务被中止，并且进入欠款状态。</p>
-<p>使用自动支付和节省计划</p>
-<p>每个小时，你的应计费用是0.6元（0.001元 x 0.6节省系数 x 1000次请求）并通过你的节省计划进行支付。在你消耗完节省计划的承诺金额后，每个小时的应计费用账单将改为从你的可用额度中进行支付。</p>
-<p>使用定期支付</p>
-<p>每个小时，你的应计费用是1元（0.001元 x 1000次请求），在下个月1日生成的账单规格如下：</p>
-<p>账单金额：678元（0.001元 x 300000次请求 + 0.0009元 x 420000次请求）<br>应付金额：678元<br>账单状态：待支付<br>此时你的可用额度为-578元（100元可用额度 - 678元应付金额）。你可以在10日23:59:59前随时支付578元，否则在11日起， 你的服务被中止，并进入欠款状态。</p>
-<p>使用定期支付和节省计划</p>
-<p>第一个月，每个小时，你的应计费用是0.6元（0.001元 x 0.6节省系数 x 1000次请求）并通过节省计划进行支付，在下个月1日生成的账单内容如下：</p>
-<p>账单金额：406.8元（0.001元 x 0.6节省系数 x 300000次请求 + 0.0009元 x 0.6节省系数 x 420000次请求）<br>应付金额：0元<br>账单状态：已结清<br>此时你不需要任何操作，你的可用额度为100元，剩余的承诺金额为93.2元（500元节省计划 - 406.8元账单金额）。</p>
-<p>在第三个月的1日将生成第二个月的账单，账单内容如下：</p>
-<p>账单金额：614.86元（0.001元 x 0.6节省系数 x 155334次请求 + 0.001元 x 144666次请求 + 0.0009元 x 420000次请求）<br>应付金额：521.66元（614.86元账单金额 - 93.2元节省计划）<br>账单状态：待支付<br>此时你的可用额度为-421.66元（100元可用额度 - 521.66元应付金额）。你可以在10日23:59:59前随时支付421.66元，否则在11日起，你的服务被中止，并进入欠款状态。</p>
-<p>支付方式<br>我们提供多种支付方式。</p>
-<p>支付宝：对于中国地区的用户，我们推荐使用支付宝进行支付。支持支付宝中绑定的信用卡、储蓄卡、余额以及花呗。<br>银行转帐：对于中国地区的企业开发者，我们支持使用银行转账进行支付。请注意，银行转账需要24-72小时的审核时间或以银行到账为准（如遇节假日可能会延后），无法做到实时支付。<br>信用卡：如果希望使用信用卡支付，请使用上述支付宝中绑定的信用卡进行支付。<br>欠款<br>如果账单未能在付款日完成支付，则进入欠款状态。此时你需要尽快完成欠款账单的支付。</p>
-<p>警告： 在“欠款”状态下，和风天气开发服务将被暂停，如“欠款”状态持续30天，你的帐号将被冻结。</p>
-<p>退款<br>标准订阅和高级订阅采用后付费模式，因此你无法对已经使用的服务申请退款。</p>
-<p>对于充值到可用额度的费用，请参考提取可用额度。</p>
-<p>对于其他一次性预付费购买的服务，在符合下列条件时，我们支持无理由退款：</p>
-<p>还未开始使用<br>没有开具增值税发票<br>购买不超过60天<br>退款需要支付5%手续费，退款金额将退回到原支付渠道。如需要退款，请提交工单。</p>
-<p>可用额度<br>可用额度是你帐号中可以使用的金额，用于支付账单费用。</p>
-<p>注意： 每次创建新的标准订阅，可用额度必须大于等于10元。</p>
-<p>对于自动付款的用户，你必须确保可用额度大于或等于0，否则你的服务将被中止。</p>
-<p>对于定期付款的用户，你必须在约定的支付日期当天确保可用额度大于或等于0，否则你的服务将被中止。</p>
-<p>增加可用额度<br>你可以使用多种支付方式增加可用额度。</p>
-<p>每次增加可用额度的最小金额为0.01。当你存在待支付&#x2F;欠款账单时，增加可用额度的最小金额为待支付&#x2F;欠款金额，并且增加的可用额度将被立即用于支付待支付&#x2F;欠款账单。</p>
-<p>例如：当你有一个待支付账单，金额为123元，你选择增加200元的可用额度，此时将有123元用于支付账单，你的可用额度为200元 - 123元 &#x3D; 77元。</p>
-<p>提取可用额度<br>你可以随时将可用额度提取出来，但是需要符合下列条件：</p>
-<p>可用额度大于1元<br>帐号内没有标准订阅或高级订阅的项目<br>没有欠款或待支付帐单<br>帐号未处于冻结状态<br>提取可用额度需要支付5%手续费，提取的金额将退回到原支付渠道。如需要提取可用额度，请提交工单。</p>
-<p>增值税<br>对于中国大陆地区用户的购买，账单金额已经包含了增值税。如需要获取增值税发票，参考增值税发票。</p>
-<p>对于其他国家或地区用户的购买，账单金额不包含所需要征收的任何税种。</p>
-<p>暂停和冻结<br>当帐单状态为欠款的时候，你的和风天气服务将被暂停，你需要尽快增加可用额度用于支付欠款帐单。当欠款帐单的状态持续30天后，你的帐号将被冻结并且你仍然需要支付欠款账单，请参考帐号冻结。</p>
-<h3 id="按量计费定价"><a href="#按量计费定价" class="headerlink" title="按量计费定价"></a>按量计费定价</h3><p>和风天气开发服务采用按量计费的定价模式，不需要提前预付大量资金，也不需要为用不到的服务买单，你只需要为你实际使用的部分付费即可。当你停止使用的时候，你不需要再支付任何费用。另外，按量计费的定价是阶梯价格，意味着你使用的越多，单次请求的价格越低。</p>
-<p>本文将介绍按量计费的定价和规则。</p>
-<p>计费标准<br>计价单位：一次请求。参考什么是一次请求。<br>账单周期：一个自然月<br>应计费用周期：一个小时<br>阶梯价累进周期：一个自然月<br>例如：用户每个月实时天气服务的请求量为100万次，那么该用户每个月标准订阅的成本为：(300000次请求 x 0.001元) + (700000次请求 x 0.0009元) &#x3D; 930元</p>
-<p>当你的请求量较为稳定时，可以购买节省计划大幅降低成本。</p>
-<p>定价<br>GeoAPI<br>For 城市搜索 热门城市查询</p>
-<p>请求量(每月) 价格(每次请求)<br>0-30万次  CNY 0.0005<br>之后的70万次 CNY 0.00045<br>之后的400万次  CNY 0.00035<br>之后的500万次  CNY 0.00025<br>之后的4000万次 CNY 0.0002<br>超过5000万次  CNY 0.00015<br>天气预报<br>For 实时天气 每日天气预报 逐小时天气预报</p>
-<p>*不含每日预报（10-30天）与每小时预报（72-168小时）</p>
-<p>请求量(每月) 价格(每次请求)<br>0-30万次  CNY 0.001<br>之后的70万次 CNY 0.0009<br>之后的400万次  CNY 0.0007<br>之后的500万次  CNY 0.0005<br>之后的4000万次 CNY 0.0004<br>超过5000万次  CNY 0.0003<br>扩展天气<br>For 每日天气预报 逐小时天气预报</p>
-<p>*仅每日预报（10-30天）以及每小时预报（72-168小时）</p>
-<p>请求量(每月) 价格(每次请求)<br>0-30万次  CNY 0.002<br>之后的70万次 CNY 0.0018<br>之后的400万次  CNY 0.0014<br>之后的500万次  CNY 0.001<br>之后的4000万次 CNY 0.0008<br>超过5000万次  CNY 0.0006<br>分钟预报<br>For 分钟级降水</p>
-<p>请求量(每月) 价格(每次请求)<br>0-30万次  CNY 0.001<br>之后的70万次 CNY 0.0009<br>之后的400万次  CNY 0.0007<br>之后的500万次  CNY 0.0005<br>之后的4000万次 CNY 0.0004<br>超过5000万次  CNY 0.0003<br>格点天气<br>For 格点实时天气 格点每日天气预报 格点逐小时天气预报</p>
-<p>请求量(每月) 价格(每次请求)<br>0-30万次  CNY 0.001<br>之后的70万次 CNY 0.0009<br>之后的400万次  CNY 0.0007<br>之后的500万次  CNY 0.0005<br>之后的4000万次 CNY 0.0004<br>超过5000万次  CNY 0.0003<br>预警<br>For 天气灾害预警 天气预警城市列表</p>
-<p>请求量(每月) 价格(每次请求)<br>0-30万次  CNY 0.001<br>之后的70万次 CNY 0.0009<br>之后的400万次  CNY 0.0007<br>之后的500万次  CNY 0.0005<br>之后的4000万次 CNY 0.0004<br>超过5000万次  CNY 0.0003<br>天气指数<br>For 天气指数预报</p>
-<p>请求量(每月) 价格(每次请求)<br>0-30万次  CNY 0.001<br>之后的70万次 CNY 0.0009<br>之后的400万次  CNY 0.0007<br>之后的500万次  CNY 0.0005<br>之后的4000万次 CNY 0.0004<br>超过5000万次  CNY 0.0003<br>空气质量<br>For 实时空气质量 空气质量每日预报</p>
-<p>请求量(每月) 价格(每次请求)<br>0-30万次  CNY 0.001<br>之后的70万次 CNY 0.0009<br>之后的400万次  CNY 0.0007<br>之后的500万次  CNY 0.0005<br>之后的4000万次 CNY 0.0004<br>超过5000万次  CNY 0.0003<br>时光机<br>For 天气时光机 空气质量时光机</p>
-<p>请求量(每月) 价格(每次请求)<br>0-30万次  CNY 0.002<br>之后的70万次 CNY 0.0018<br>之后的400万次  CNY 0.0014<br>之后的500万次  CNY 0.001<br>之后的4000万次 CNY 0.0008<br>超过5000万次  CNY 0.0006<br>热带气旋（台风）<br>For 台风列表 台风实况和路径 台风预报</p>
-<p>请求量(每月) 价格(每次请求)<br>0-30万次  CNY 0.005<br>之后的70万次 CNY 0.004<br>之后的400万次  CNY 0.0035<br>之后的500万次  CNY 0.0025<br>之后的4000万次 CNY 0.002<br>超过5000万次  CNY 0.001<br>海洋数据<br>For 潮汐 潮流</p>
-<p>请求量(每月) 价格(每次请求)<br>0-30万次  CNY 0.005<br>之后的70万次 CNY 0.004<br>之后的400万次  CNY 0.0035<br>之后的500万次  CNY 0.0025<br>之后的4000万次 CNY 0.002<br>超过5000万次  CNY 0.001<br>太阳和月亮<br>For 日出日落 月升月落和月相 太阳高度角</p>
-<p>请求量(每月) 价格(每次请求)<br>0-30万次  CNY 0.0001<br>之后的70万次 CNY 0.0009<br>之后的400万次  CNY 0.0007<br>之后的500万次  CNY 0.0005<br>之后的4000万次 CNY 0.0004<br>超过5000万次  CNY 0.0003<br>限制<br>按量计费定价仅支持标准订阅和高级订阅，免费订阅不需要支付费用也无法使用按量计费。</p>
-<h3 id="节省计划"><a href="#节省计划" class="headerlink" title="节省计划"></a>节省计划</h3><p>节省计划用于抵扣标准订阅产生的费用，是针对数据请求量较多和较稳定的用户所推出的一项折扣计划，它不依赖于具体的数据，只需要用户承诺每年的消费金额就可以获取大量折扣。相比较标准按量计费，节省计划可以节省40%-70%的成本。</p>
-<p>你可以理解为节省计划是办了一张VIP卡，使用这张卡的所有消费都会享受折扣价格。</p>
-<p>用户可以自行预估每天或每年的数据请求量，根据这些预估数据计算每年的大致费用，然后购买对应的节省计划。节省计划按年计算，根据承诺的时长和金额，享受不同的折扣价格。</p>
-<p>例如：用户承诺每年消费1000元，并预付了3年的费用，此时该用户的API&#x2F;SDK请求费用以按量计费价格的4折计算，即请求一次实时天气数据的价格从0.001元降低到0.0004元。或者可以理解为，用户支付1000元，在未购买节省计划的情况下，可以请求实时天气约100万次；在购买3年期节省计划后，可以请求实时天气约250万次。</p>
-<p>承诺金额<br>承诺金额是你承诺在一年内使用的金额，该金额将在1年内有效或消耗完毕后失效，参考有效期，同时在有效期内，所有标准订阅产生的费用均按照节省计划系数计算折扣。</p>
-<p>承诺期数<br>承诺期数是你购买节省计划需要预付的总时长。承诺期数分为1年期和3年期，当购买1年期节省计划时，预付总费用&#x3D;年承诺费用；当购买3年期节省计划时，预付总费用 &#x3D; 3年 x 年承诺费用。</p>
-<p>节省系数<br>根据你的承诺期限，节省计划提供了不同的节省系数。节省系数即为你在使用节省计划期间按量计费价格所享受的折扣。</p>
-<p>例如：购买1年期节省计划后，实时天气的单次请求费用为： 0.001元 x 0.6节省系数 &#x3D; 0.0006元</p>
-<p>承诺期数  节省系数<br>1 年 0.6<br>3 年 0.4<br>购买<br>请访问控制台-财务与费用-节省计划，选择承诺的消费金额并购买。</p>
-<p>价格测算<br>使用价格计算器可以快速的帮你计算所需要购买的节省计划。</p>
-<p>有效期<br>节省计划中的承诺金额有效期为1年或在1年内消耗完毕。在节省计划到期后，如还有未使用的金额将作废处理，请参考下方的例子：</p>
-<p>承诺期数&#x3D;1年期<br>前提：在2022年3月20日购买了一份节省计划（1年期）</p>
-<p>1年内使用完  1年内未使用完<br>在2022年12月30日23点，全部承诺金额使用完，从下一个小时开始的请求将不再享受节省计划折扣。 在2023年3月20日23点59分59秒时，节省计划内还有剩余承诺金额234元，则从2023年3月21日起，剩余的234元将作废无法再使用。<br>承诺期数&#x3D;3年期<br>前提：在2022年3月20日购买了一份承诺金额为1000元的节省计划（3年期），总预付金额为1000元 x 3年 &#x3D; 3000元。</p>
-<p>1年内使用完  1年内未使用完<br>在2022年12月30日23点，1000元的承诺金额使用完，从下一个小时开始的请求将不再享受节省计划折扣。<br>从2023年3月21日起，可以继续使用下一期的承诺金额1000元，以此类推。  在2023年3月20日23点59分59秒时，第一期的承诺金额还有剩余承诺金额234元，则从2023年3月21日起，剩余的234元将作废无法再使用。<br>从2023年3月21日起，可以继续使用下一期的承诺金额1000元，以此类推。<br>生效<br>节省计划的生效时间为购买成功的当前小时。</p>
-<p>例如： 你在2022年3月20日14点30分成功购买了一份节省计划，则在2022年3月20日14点开始的所有数据请求，按照节省系数计算和扣款。</p>
-<p>折扣规则<br>节省计划按照对应节省系数进行计费，当节省计划过期或承诺金额消耗完毕后，不再享受折扣。</p>
-<p>例如： 购买承诺金额为1000元的节省计划（1年期），节省系数为0.6，此时实时天气的单次请求价格为：0.001元 x 0.6节省系数 &#x3D; 0.006元。在一年内，如已使用超过1000元，则之后实时天气的单次请求价格为：0.001元。</p>
-<p>扣款顺序<br>购买节省计划的之后，标准订阅账单将优先使用承诺金额，如果承诺金额已经使用完毕，则将从可用额度中扣款，为了避免出现欠款而造成的服务中止，我们建议你及时关注账单金额并确保足够的可用额度。</p>
-<p>如果该用户购买了多份节省计划，参考多份节省计划的说明。</p>
-<p>多份节省计划<br>你可以购买多份节省计划，可以叠加使用，以满足更加灵活的使用。多份节省计划，均按照购买时间先后顺序进行扣减。如果用户购买的是不同承诺期数的节省计划，则按不同的节省系数计算。</p>
-<p>例如：你在2022年3月20日购买了一份节省计划（3年期），并在5月31日又购买了一份节省计划（1年期），之后在10月25日第一份节省计划的承诺金额消耗完毕，那么在3月20日至10月25日之间将通过第一份节省计划进行标准订阅费用的支付，节省系数为0.4，在10月25日之后的节省系数为0.6，从2023年3月21日起，将继续使用第一份节省计划的承诺金额，节省系数为0.4。</p>
-<p>升降级和续费<br>节省计划不支持升降级，但是你可以购买多份节省计划。如果在到期时需要对节省计划续费，只需要重新购买一份即可。</p>
-<p>取消节省计划<br>节省计划一旦购买，不支持取消和退款。如有特殊情况，请提交工单。</p>
-<h3 id="增值税发票"><a href="#增值税发票" class="headerlink" title="增值税发票"></a>增值税发票</h3><p>对于中国地区的用户，和风天气开发服务的费用均已包含增值税，你可以在支付账单后申请开具增值税发票。我们支持开具增值税电子普通发票和增值税专用发票。</p>
-<p>注意：请认真阅读本篇文档，了解我们如何向你开具增值税发票、增值税发票的类型、开票时间以及开票限制，必要时请将本篇文档发送给你的财务人员查看。</p>
-<p>申请流程<br>访问控制台：</p>
-<p>在左侧导航中选择财务与费用-增值税发票，点击发票信息卡片的“编辑”按钮，添加发票信息<br>点击开票金额卡片当“申请发票”按钮<br>选择你需要开具发票的账单，可以选择一个账单或多个账单合并开具发票，点击“下一步”按钮<br>选择增值税电子普通发票或增值税专用发票，检查发票信息，填写联系人信息，最后点击“申请发票”按钮<br>提示： 请务必与你的财务人员确认企业信息，建议复制粘贴企业信息，避免打字错误。</p>
-<p>提示： 增值税专用发票仅限企业开发者申请。</p>
-<p>充值金额的发票<br>对于充值金额，必须在消费后才可根据账单金额开具发票。消费指的是：</p>
-<p>支付标准订阅账单<br>购买节省计划<br>支付其他待支付或欠款账单<br>购买其他服务或产品<br>对于上述第一项，标准订阅账单每个月5日前自动生成，因此在当月的标准订阅消费的金额在下个月生成账单后，可以根据账单金额开具发票。</p>
-<p>例如：在2022年3月20日充值1000元用于支付标准订阅的费用，但此时你无法申请1000元的增值税发票。在4月1日生成标准订阅账单，账单金额为400元，此时你可以申请400元的发票。</p>
-<p>不可开票金额<br>当出现下列情况时，你可能会产生不可开票金额。你所选择的账单金额将减去不可开票金额作为最终的开票总金额。</p>
-<p>在2022年10月8日之前对充值金额开具了发票，但是还有剩余金额未消费的。例如：在2022年10月8日之前充值100元并开具了100元发票，但在2022年10月8日之后还剩余30元可用额度未使用，则此时不可开票金额为30元。<br>对于已开具发票的服务或产品进行了退款，退款金额将为不可开票金额。<br>税率<br>根据税务部门的政策，我们会调整税率，税率范围在0-3%之间，请以实际发票为准。</p>
-<p>发票项目<br><em>研发和技术服务</em>气象服务</p>
-<p>发票格式<br>增值税电子普通发票为电子格式，我们提供PDF和OFD两种格式便于你使用，参考样例。</p>
-<p>提示： 根据国家税务总局公告2020年第1号《关于增值税发票综合服务平台等事项的公告》，增值税电子普通发票采用电子签名代替发票专用章，其法律效力、基本用途、基本使用规定等与增值税普通发票相同。</p>
-<p>增值税专用发票为纸质发票，参考样例。</p>
-<p>提示： 增值税专用发票由国家税务总局北京市电子税务局代开，由于北京电子税务局代开发票系统的规则，发票中的收款人、复核人和开票人均为系统生成，无法变更，如对此有疑问，请拨打电话010-62212366核实。</p>
-<p>送达和下载<br>对于增值税电子普通发票，在申请开票后，10个工作日内将发送到你的电子邮箱，你也可以在控制台 - 财务与费用 - 增值税发票中查看并下载你的发票。</p>
-<p>对于增值税专用发票，我们将在每个自然月20日前后（如遇节假日顺延）统一开具并邮寄到你的地址，如你错过了这个日期，开票时间将顺延至下个月的20日前后，请耐心等待。</p>
-<p>注意： 如果增值税专用发票的金额不足1000元的，需要你支付快递费用。</p>
-<p>修改发票<br>在发票正式开具前，你可以随时取消发票申请以便修改信息：访问控制台 - 财务与费用 - 增值税发票，选择需要修改的发票，点击取消按钮。</p>
-<p>如发票开具后出现错误或需要修改，请提交工单进行修改：</p>
-<p>对于增值税电子普通发票，无论何种原因，都可以申请修改发票，无需额外费用，但每年度仅限修改3次。<br>对于增值税专用发票，如申请方原因需要修改发票的，每次修改需要自行承担邮寄发票的全部费用。每年度仅限修改3次。<br>提示： 请在开具发票完成后的12个月内提出修改申请，逾期不再受理。</p>
-<p>限制<br>如有欠款状态的账单，无法申请发票，请先完成欠款账单的支付。<br>如果帐号被冻结，无法申请发票。<br>超过12个月的账单，无法申请发票。<br>增值税专用发票仅限企业开发者申请。<br>其他<br>如果你对发票有其他问题，请与你的商务专员联系或提交工单。</p>
-<hr>
-<p>使用限制</p>
-<p>注明来源</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20221128-飞防公开课笔记"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/11/28/20221128-%E9%A3%9E%E9%98%B2%E5%85%AC%E5%BC%80%E8%AF%BE%E7%AC%94%E8%AE%B0/"
-    >20221128-飞防公开课笔记</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/11/28/20221128-%E9%A3%9E%E9%98%B2%E5%85%AC%E5%BC%80%E8%AF%BE%E7%AC%94%E8%AE%B0/" class="article-date">
-  <time datetime="2022-11-28T05:47:06.000Z" itemprop="datePublished">2022-11-28</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>链接 <a target="_blank" rel="noopener" href="https://uastc.dewx.net/course/275127?curriculumId=275127k6vlwv2h&amp;isNeedLog=undefined">https://uastc.dewx.net/course/275127?curriculumId=275127k6vlwv2h&amp;isNeedLog=undefined</a></p>
-<h2 id="中国地理气候分区及作业节点"><a href="#中国地理气候分区及作业节点" class="headerlink" title="中国地理气候分区及作业节点"></a>中国地理气候分区及作业节点</h2><p>程忠义</p>
-<h3 id="中国地理气候分区"><a href="#中国地理气候分区" class="headerlink" title="中国地理气候分区"></a>中国地理气候分区</h3><p>种植业受自然条件的影响，一般要求地形平坦、土壤肥沃、水源丰富，并且具有可供农作物生长需要的足够的热量、水分、光照等气候条件</p>
-<h4 id="中国整体地形"><a href="#中国整体地形" class="headerlink" title="中国整体地形"></a>中国整体地形</h4><p>黑河–腾冲线</p>
-<p>地形和海拔决定了当地适不适合种植以及适合种植哪种作物。平原地形适合种植业的开展，像河南省、山东省，小麦不仅品质好还产量高。<br>同时还决定了飞防好不好开展，例如云贵地区多山地地形，规模种植不好开展。</p>
-<p>温度带决定了当地的耕种制度，一年能种几季</p>
-<p>还有就是当地能种什么作物，例如小麦是喜温作物，放在炎热的江西、浙江等地就不适合。</p>
-<hr>
-<p>青藏高原，垂直温度带 一年一熟<br>寒温带<br>中温带  一年一熟<br>暖温带 两年三熟  一年两熟<br>亚热带 一年两熟  一年三熟<br>热带  一年三熟</p>
-<hr>
-<p>降水决定了当地是否适合种植，以及种植什么作物，例如水稻是喜水作物，适合种植在长江中下游，并不适合种植在缺水的甘肃地区。</p>
-<h3 id="作物分类与分布"><a href="#作物分类与分布" class="headerlink" title="作物分类与分布"></a>作物分类与分布</h3><p>水稻是喜水喜温作物，分为籼xian稻和粳jing稻。籼稻是基本型，适合种植在平均温度较高、降水良好的区域，如长江中下游、云贵等，粳稻是耐寒品种，主要分布在东北地区和南方高海拔地区。</p>
-<p>小麦是喜温凉、耐寒耐旱的作物，适应性很强，全国冬小麦种植面积占 93% ，春小麦占7%  冬小麦主要在华北平原，淮河流域，春小麦主要集中在新疆，内蒙以及其他地区。</p>
-<p>玉米是耐寒作物，东北地区，内蒙、陕西和山西普遍种植春玉米，一年一季；华北平原和秦淮流域普遍种植夏玉米，一年二季；西南地区和南方地区也有分布。</p>
-<p>棉花主要分为细绒棉 为主，和长绒棉 ，新疆是主产区。</p>
-<p>棉花种植打药作业次数多，不仅包括病虫害防治，还包括喷洒免打顶剂、脱叶剂</p>
-<p>其他作物的分布</p>
-<p>糖料作物  南蔗北甜</p>
-<p>云南 广西 广东 福建产 甘蔗</p>
-<p>东北地区 内蒙产甜菜</p>
-<p>花生，主要集中在山东与河北</p>
-<p>油菜花 主要集中在四川 湖北 江西 湖南 江苏等</p>
-<h3 id="各地区作物与作业节点"><a href="#各地区作物与作业节点" class="headerlink" title="各地区作物与作业节点"></a>各地区作物与作业节点</h3><h4 id="东北三省作物及作业节点"><a href="#东北三省作物及作业节点" class="headerlink" title="东北三省作物及作业节点"></a>东北三省作物及作业节点</h4><p>东三省都处在中温带，全部为一年一熟终止模式，主要种水稻 粳稻，春玉米 大豆</p>
-<p>以水稻作业为例，5月水稻封闭作业，6-7月份以水稻病虫草害作业，8月份以杀虫杀菌作业为主。</p>
-<p>东三省因为冬季温度低，虫害无法安全过冬，所以相对来说病虫害情况相对较轻，当耕地面积较大，所以作业效率非常高。</p>
-<p>黑龙江是我国耕地面积最多的省份，粮食产量全国第一，单户种植规模大、农业机械化率高，飞防作业面积全国第一。</p>
-<p>作业模式首选全自主作业</p>
-<p>飞行打点是标配技能</p>
-<p>地块较为规整，必须学会如何优化降落点问题。</p>
-<p>如何实现电池优化使用</p>
-<p>黄淮海平原，涵盖山东，河南、河北南部、陕西南部、山西南部、安徽背部、江苏背部，是中国最大的连片性平原，两年三熟制，主要以连种的方式中值动小麦和玉米，主要作业旺季在小麦 3 4 5 月，玉米 7 8 月，11-12 有少量除草作业</p>
-<p>因为小麦种植面积大，作业时间比较统一，所以该区域一年主要作业集中在3 4 5 月，6月份小麦陆续收获，开始种植夏玉米，一直到10月份玉米收获，再次播种冬小麦形成循环。</p>
-<p>河南地区飞防经验</p>
-<p>河南除了西部洛阳、三门峡大部分处于华北平原，更低质量好，小麦产量高，但是是人口大省，人均耕地少，单户种植面积较小</p>
-<p>作业模式可以选择全自主与AB 点</p>
-<p>地块形式多种多样，应具备手动作业基本能力，</p>
-<p>当地机井较多，注意安全</p>
-<p>长江中下游地区，涵盖湖北 湖南，江西，安徽南部、江苏南部、浙江，是中国的主要水稻产区。<br>水稻的种植方式包括早稻、中稻、晚稻</p>
-<p>中值一季稻的区域，作业节点非常不统一</p>
-<p>因该区域的种植特点，每年的植保无人机作业最早于3月份开始，此时周边能存在油菜花，需注意漂移药害。需醋意避免高温作业，过量使用。</p>
-<p>湖北省耕地面积5000万亩，但是人均耕地面积小，一半以上种植水稻，另外在襄阳与随州普遍种植小麦，油菜种植面积1千万亩</p>
-<p>应充分掌握自主作业，AB点作业、手动作业</p>
-<p>虾稻共作地区，应按照专家建议选择安全的药剂，</p>
-<p>水稻小麦除草作业时，应避免对油菜产生漂移药害</p>
-<p>新疆地区</p>
-<p>新疆，被天山分割为北疆与南疆，因南北跨度较大，所以在农业也有一定差异，该地区为暖温带及中温带，降水量较少，所以其农业特点为灌溉农业，新疆耕地面积6000万亩，远不及黑龙江，但是因为该地区人口较少，种植面积较大，棉花作业频次高，是仅次于黑龙江的飞防大省</p>
-<p>新疆耕地面积6000万亩，人均耕地面积3.1亩，在全国排名靠前，地方上普遍耕地较为分散，在兵团耕地则较为规整且规模较大</p>
-<p>作业模式全自主为主，AB为辅</p>
-<p>应掌握飞行打点技能，</p>
-<p>新疆为少数民族聚集区，注意当地习俗</p>
-<p>新疆棉花作业介绍</p>
-<p>棉花种植到最终收获，基本会有4-5次杀虫杀菌作业，2次生长调节剂作业<br>2次脱叶剂作业，所以作业频次远高于其他作物</p>
-<p>棉花脱叶剂作业，是全国最大规模的集中作业，</p>
-<p>需要注意的是，棉花脱叶剂药液配制需严格按照二次稀释法完成，否则将可能造成药剂失效。</p>
-<h3 id="不同地区飞防作业经验"><a href="#不同地区飞防作业经验" class="headerlink" title="不同地区飞防作业经验"></a>不同地区飞防作业经验</h3><hr>
-<h2 id="对作物造成药害"><a href="#对作物造成药害" class="headerlink" title="对作物造成药害"></a>对作物造成药害</h2><p>因为各种因素，对当前作物或周边作物造成药害</p>
-<p>作物对于药剂剂量最为敏感的是除草剂，其次是杀菌剂  尤其是三唑类杀菌剂，对杀虫剂剂量则相对不敏感。如果不属性植保无人机的作业参数，行距设置过小造成重喷，就可能造成药害，所以必须熟悉所使用植保无人机其性能。</p>
-<p>高温造成的药害</p>
-<p>35 摄氏度 以上高温状态下作业，以下几个因素叠加亦可能造成药害</p>
-<p>作物生理活动活跃</p>
-<p>药剂活性较高</p>
-<p>飞防药剂浓度较高</p>
-<p>另外高温状态下作业，作业效果降低且容易产生农药中毒，所以应极力避免</p>
-<p>零度以下作业，也常造成冬小麦药害事件发生</p>
-<p>三环唑过量造成的药害</p>
-<p>因为飞防用水量少，药剂浓度高，一些在自走式植保机械能够安全使用的药剂在飞防上并不一定安全，</p>
-<p>小麦除草剂甲基二磺隆，无法在飞防上安全应用</p>
-<p>一旦温度较高，剂量超标，其产生药害的可能性大为增加。<br>灭生性除草剂飘逸药害</p>
-<p>草甘膦造成的药害</p>
-<p>草甘膦药剂一旦飘逸到其他作物上势必会造成药害，所以应非常谨慎地对待灭生性除草剂飞防作业</p>
-<p>选择性除草剂飘逸药害</p>
-<p>小麦除草剂作业造成油菜受害</p>
-<p>选择性除草剂对于目标作物相对安全，但是如果其漂移到其他作物上，而该作物恰恰在该除草剂的杀伤范围内，则会发生漂移药害</p>
-<p>在遇到类似情况时应停止作业，待风力减少风向改变时在进行作业，并添加一定距离安全隔离带</p>
-<p>药剂特性造成的飘移药害</p>
-<p>丙环唑对西瓜造成药害</p>
-<p>部分药剂其安全性不高，对部分作物安全，而对另外一部分作物则易产生药害，</p>
-<p>如丙环唑在小麦、水稻上广泛应用，但是其对西瓜，葡萄、草莓安全性较低，不可在这些作物上使用飞防播撒该药剂</p>
-<h2 id="对养殖物造成毒害"><a href="#对养殖物造成毒害" class="headerlink" title="对养殖物造成毒害"></a>对养殖物造成毒害</h2><p>任何药剂都有一定毒性，如在作业时药液飘逸到养殖区域，则有可能产生毒害</p>
-<p>养殖龙虾的水稻田<br>植保队在养殖有虾蟹鱼 的稻田区域作业需采取多项措施保障用药安全，避免养殖物中毒</p>
-<p>使用毒性低，安全性好的药剂</p>
-<p>禁止使用阿维菌素，甲维盐等药剂</p>
-<p>使用专用药箱，或者打虾田之前彻底清洗药箱，</p>
-<p>如果存在药剂残留并且未清洗，易造成养植物中毒。</p>
-<p>药剂飘逸导致鱼类大批死亡</p>
-<p>杀虫剂作业易造成毒害，所以须观察作业区域下风向是否存在养殖</p>
-<p>杀虫剂作业造成鱼塘所养殖锦鲤全部死亡，经济损失达到26万元</p>
-<p>药剂飘移药害及毒害风险评估过程</p>
-<p>风向  下风向有什么，药剂有什么风险，风险评估</p>
-<h2 id="中毒伤人事件"><a href="#中毒伤人事件" class="headerlink" title="中毒伤人事件"></a>中毒伤人事件</h2><p>中毒是指作业不规范造成的农药中毒事件，涵盖植保无人机作业各个环节，伤人事故是指由于作业不规范或者意外事件造成的人身伤害事故</p>
-<p>中毒风险- 农药选用环节</p>
-<p>一旦使用高毒、剧毒农药，最容易产生中毒的环节就是运输阶段，这往往是几个因素共同导致的</p>
-<p>使用了高毒农药</p>
-<p>装车运输之前未彻底清洗药箱</p>
-<p>选择了人机不分离的车型，且关闭了车窗</p>
-<p>中毒风险  配药环节</p>
-<p>配药过程应做到以下几点</p>
-<p>穿戴合适的防护用品，包括口罩，眼睛，丁腈手套</p>
-<p>处于药桶上风向</p>
-<p>药剂缓慢倒入，避免飞溅</p>
-<p>配药后，必须把手彻底清洗干净在接触身体其他部分</p>
-<p>作业过程</p>
-<p>作业过程中依然要</p>
-<p>注意自身防护</p>
-<p>处于上风向作业</p>
-<p>与植保无人机保持6米以上安全距离，避免受到农药飘溅</p>
-<p>另外，对于玉米，高粱等高杆作物，应禁止在作业完毕后进入作业区域，避免吸入性中毒</p>
-<p>良好的防护措施</p>
-<p>储存过程</p>
-<p>植保无人机及设备应单独存放</p>
-<p>存储过程需要做到以下几点</p>
-<p>存储之前应清洗药箱，降低农药残留</p>
-<p>通风，避免农药气味聚集</p>
-<p>单独存放，禁止存储在卧室，避免人机共处一室</p>
-<p>伤人风险  不规范操作</p>
-<p>植保无人机具有一定破坏力</p>
-<p>为避免自身受到植保无人机的伤害，应注意</p>
-<p>时刻与植保无人机保持6米以上安全距离</p>
-<p>在出现意外情况时，禁止抓握植保无人机任何部位，避免被打伤</p>
-<p>禁止对头起飞</p>
-<p>伤人风险-疲劳驾驶</p>
-<p>现在的植保队大多是植保无人机操作手并兼职四级，其一天工作量几乎是满负荷运转，易产生疲劳驾驶，为做到行驶安全提供下列建议</p>
-<p>中午务必休息，保持良好精神状态</p>
-<p>避免超长时间飞防作业后，人处于极度疲乏的状态下上路行驶</p>
-<p>作业区域内存在人员</p>
-<p>为避免此类事故的发生，应严格遵守</p>
-<p>提前清空作业区域内无关人员<br>如发现作业区域内存在人员应like停止作业</p>
-<p>如发现即将撞击，可通过升高高度，打横滚及俯仰杆的方式避免撞击</p>
-<p>如确实已经撞击，可操作摇杆进行内外吧字操作迅速锁死油门，降低撞击伤害</p>
-<p>作业区域外的伤人风险</p>
-<p>作业区域周边的伤人事故主要包括几个类似情况</p>
-<p>在人流较多的道路上起降，与行人、车辆产生撞击</p>
-<p>与围观的观众产生的撞击</p>
-<p>植保无人机失控</p>
-<p>作业人员操作失误，植保无人机飞向错误方向</p>
-<p>操作手与地勤配合不默契，造成的撞击</p>
-<p>严禁在马路上起降无人机</p>
-<h2 id="设备损失"><a href="#设备损失" class="headerlink" title="设备损失"></a>设备损失</h2><p>因为使用或选择不当，造成植保无人机设备损坏或加速老化</p>
-<p>维护不当</p>
-<p>避免在阳光暴晒下充电</p>
-<p>不当的维护或使用包括</p>
-<p>连接插头没有维护或更换，插头发热或融头</p>
-<p>充电总是在高温状态下进行，包括太阳暴晒 或电池使用完毕未冷却而直接使用，都会导致电池或者充电器寿命降低</p>
-<p>在北方低温地区，直接将电池长期存储在低温地区，造成电池性能迅速下降</p>
-<p>在长期存储前，未能对喷洒系统做多次的清洗，造成管路 水泵长时间受农药残留腐蚀</p>
-<p>使用伪劣配件</p>
-<p>部分植保队为贪图便宜而选择非原厂配件，其质量往往存在严重隐患，例如下图所展示的螺旋桨在飞行时从根部裂开，导致植保无人机在空中产生自旋 所幸未造成重大损失</p>
-<hr>
-<p>植保无人机五大优势</p>
-<p>效率高</p>
-<p>安全性好</p>
-<p>作物适应性好</p>
-<p>地形适应性好</p>
-<p>用水少</p>
-<p>T16 植保无人机</p>
-<p>遥控器<br>植保机系统<br>电池<br>药箱</p>
-<p>植保无人机动力系统</p>
-<p>电池<br>电调<br>电机<br>螺旋桨</p>
-<p>植保无人机机身</p>
-<p>脚架<br>机臂<br>套筒</p>
-<p>药箱<br>滤网<br>液位计<br>电子流量计<br>水泵</p>
-<p>喷嘴 XR11001VS</p>
-<p>遥控器</p>
-<p>植保无人机操作基础</p>
-<p>摇杆模式</p>
-<p>飞行注意事项</p>
-<p>禁止在未锁紧套筒情况下起飞</p>
-<p>禁止在未锁紧螺旋桨情况下起飞</p>
-<p>飞行注意事项</p>
-<p>避免在四周有遮挡区域或室内起飞</p>
-<p>避免在高压线附近起飞 10m以上</p>
-<p>机型介绍</p>
-<p>多旋翼无人机基础知识</p>
-<p>电机序号与旋转方向</p>
-<p>电机旋转方向与类型</p>
-<p>1 3 6 正桨<br>2 4 5 反桨</p>
-<p>固定角度 不可调整</p>
-<p>激活与使用</p>
-<p>卫星定位技术 GNSS</p>
-<p>D-RTK 移动站</p>
-<p>植保无人机作业模式</p>
-<ol>
-<li>手动作业</li>
-</ol>
-<p>适用于小地块，效率较低，操作员工作强度高</p>
-<ol start="2">
-<li>AB 点作业</li>
-</ol>
-<p>适用于规整田块，自动化程度较高，部分区域需手动作业</p>
-<ol start="3">
-<li>自主作业</li>
-</ol>
-<p>自动化作业，地形适应力好，操作人员工作量小</p>
-<p>AB点作业注意事项</p>
-<ol>
-<li><p>作业地应为长方形规整田块，且AB 点形成的航线需与边界平行，通过观察飞行器与田块边界距离检查航线是否与边界平行</p>
-</li>
-<li><p>作业时最后一条航线将与边界产生撞击，需提前切换到手动作业模式作业，避免重喷漏喷</p>
-</li>
-<li><p>地块规划</p>
-</li>
-</ol>
-<p>遥控器规划<br>植保机规划<br>RTK 测绘规划<br>二维正射规划</p>
-<ol start="2">
-<li>执行作业</li>
-</ol>
-<p>航线生成</p>
-<p>MG-1P 标定点与纠正偏移</p>
-<p>为什么要添加标定点 并纠正偏移</p>
-<p>怎样选取合适的标定点</p>
-<p>标定点的选取应注意以下两点</p>
-<ol>
-<li>标定点周围场地开阔，便于放置飞机和获取卫星信号</li>
-<li>应该选择一个长期固定存在且易于辨识的参照物作为标定点</li>
-</ol>
-<p>如田块旁的水泥桩，井盖，地钉，地面喷漆或其他明显的标记物等</p>
-<p>怎样添加标定点</p>
-<p>在规划田块过程中，手持遥控器，走到作业田外</p>
-<p>选一个具有标识性的参照物作为标定点<br>确定标定点位置后点击 添加标定点</p>
-<p>点击结束测量，点击，保存地块，命名作业任务选择对象</p>
-<p>怎样纠正偏移</p>
-<p>打开任务列表，选择已规划的作业任务<br>将飞行器放置在标定点所示位置，点击 纠正偏移</p>
-<p>点击纠正到飞行器位置，点击确定</p>
-<p>纠正偏移完成之后，点击执行，开始执行任务</p>
-<p>大疆农服的使用</p>
-<p>订单上传<br>地块上传</p>
-<hr>
-<p>植保无人机的</p>
-<p>法律法规</p>
-<p>V 分类等级的驾驶员执照，或经农业农村部等部门规定的由符合资质要求的植保无人机生产企业自主负责的植保无人机操作人员培训考核</p>
-<p>民用无人驾驶航空器实名制登记管理规定</p>
-<p>民用无人驾驶器经营性飞行活动管理办法</p>
-<p>植保无人机安全操作规范</p>
-<p>植保无人机安全用药规范</p>
-<p>飞行安全</p>
-<p>用药安全</p>
-<p>购买植保产品</p>
-<p>存储与运输<br>飞防施药前<br>飞防施药时<br>飞防施药后</p>
-<p>2016年陕西渭南  大规模玉米黏虫灾害，玉米叶片在几小时内被啃食干净，不及时放置会直接造成作物减产甚至绝产</p>
-<p>病害概念及分类</p>
-<p>生物性病源</p>
-<p>真菌 细菌  病毒，病源线虫、寄生性种子植物</p>
-<p>非生物性病原</p>
-<p>各种不良环境条件，如不宜的温度，光照，水分，营养等条件</p>
  
       <!-- reward -->
       

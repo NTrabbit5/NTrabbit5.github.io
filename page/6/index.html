@@ -126,6 +126,266 @@
     
     
     <article
+  id="post-20230418-用sphinx快速制作文档"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/04/18/20230418-%E7%94%A8sphinx%E5%BF%AB%E9%80%9F%E5%88%B6%E4%BD%9C%E6%96%87%E6%A1%A3/"
+    >20230418-用sphinx快速制作文档</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/04/18/20230418-%E7%94%A8sphinx%E5%BF%AB%E9%80%9F%E5%88%B6%E4%BD%9C%E6%96%87%E6%A1%A3/" class="article-date">
+  <time datetime="2023-04-17T23:55:19.000Z" itemprop="datePublished">2023-04-18</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>Sphinx 快速制作文档</p>
+<p>简介</p>
+<p>sphinx 是一种文档工具，它可以令人轻松的撰写出清晰且优美的文档，由georg brandl 在bsd 许可证下开发，新版的python文档就是由sphinx 生成的，并且它已成为python项目的首选的文档工具，同时它对c++项目也有很好的支持，并计划对其他开发语言添加特殊支持，本站当然也是使用sphinx 生成的，它采用 reStructuredText Sphinx 还在继续开发，下面列出了其良好特性，这些特性在python官方文档中均有体现</p>
+<p>丰富的输出格式，支持HTML 包括windows 帮助文档，latex 可以打印PDF版本，manual pages man 文档，纯文本</p>
+<p>完备的交叉引用，语义化的标签，并可以自动化链接函数，类，引文，术语及相似的片段信息</p>
+<p>明晰的分层结构 可以轻松的定义文档树，并自动化链接同级 父级 下级文章</p>
+<p>美观的自动索引  可自动生成美观的模块索引</p>
+<p>精确的语法高亮  基于pygments 自动生成语法高亮</p>
+<p>开放的扩展，支持代码块的自动测试，并包含python模块的自述文档 api docs 等</p>
+<p>sphinx 使用reStructureText 作为标记语言，可以享有docutils 为restructureText 提供的分析，转换等多种工具</p>
+<p>安装sphinx </p>
+<p>sphinx 为python 语言的一个第三方库，我们需要在终端中输入下列命令进行安装</p>
+<p>pip install sphinx</p>
+<p>创建 sphinx 项目</p>
+<p>创建一个用于存放文档的文件夹，然后在该文件夹路径下运行下列命令快速生成sphinx 项目</p>
+<p>sphinx-quickstart</p>
+<p>接下来会让你选择一些配置</p>
+<p>设置文档的根路径  回车 使用默认设置</p>
+<p>是否分离source 和build 目录</p>
+<p>设定模板前缀  回车 使用默认选项</p>
+<p>输入项目名称和作者</p>
+<p>输入项目版本号</p>
+<p>文档语言 回车 默认即可</p>
+<p>设定文档就按的后缀</p>
+<p>设定首页名称  回车 选择默认index 即可</p>
+<p>根据需要选择是否开启 epub 输出 一般用不到 回车默认不开启即可</p>
+<p>根据需求选择是否开启相应的sphinx 拓展功能</p>
+<p>创建项目以后目录结构如下所示</p>
+<p>build 用来存放通过make html 生成文档网页文件的目录</p>
+<p>source 存放用于生成文档的源文件</p>
+<p>conf.py sphinx 的配置文件</p>
+<p>index.rst 主文档</p>
+<p>定义文档结构</p>
+<p>主文档 index.rst 的主要功能是被转换成欢迎页，它包含一个目录表 table of contents tree 或者 toctree sphinx 主要功能是使用reStructureText 把许多文件组织成一份结构合理的文档</p>
+<p>toctree 指令初始值如下</p>
+<p>你可以在content 的位置添加文档列表</p>
+<p>注 文档文件放在与index.rst 同级目录下</p>
+<p>支持markdown 文件、更改文档主题</p>
+<p>spinx 本身不支持md 文件生成文档，需要我们使用第三方库 recommonmark 进行转换，首先分别运行下列命令安装 recommonmark 与sphinx_rtd_theme 库</p>
+<p>pip install recommonmark</p>
+<p>pip install sphinx_rtd_theme</p>
+<p>a安装好 在conf.py 中修改下列两个配置</p>
+<p>并新增</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">source_parsers = &#123;</span><br><span class="line">    &#x27;.md&#x27;: CommonMarkParser,</span><br><span class="line">    &#x27;.MD&#x27;: CommonMarkParser,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>生成文档</p>
+<p>在sphinx 项目所在的文件夹路径下运行下列命令生成文档</p>
+<p>make html</p>
+<p>生成后的文档位于 build&#x2F;html 文件夹内，用浏览器打开index.html 即可看到生成后的文档</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-20230410-什么是DHCP？总结DHCP优缺点和工作原理"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/04/10/20230410-%E4%BB%80%E4%B9%88%E6%98%AFDHCP%EF%BC%9F%E6%80%BB%E7%BB%93DHCP%E4%BC%98%E7%BC%BA%E7%82%B9%E5%92%8C%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/"
+    >20230410-什么是DHCP？总结DHCP优缺点和工作原理</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/04/10/20230410-%E4%BB%80%E4%B9%88%E6%98%AFDHCP%EF%BC%9F%E6%80%BB%E7%BB%93DHCP%E4%BC%98%E7%BC%BA%E7%82%B9%E5%92%8C%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/" class="article-date">
+  <time datetime="2023-04-10T12:01:45.000Z" itemprop="datePublished">2023-04-10</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>了解DHCP或动态主机配置协议</p>
+<p>DHCP 是动态主机配置协议的缩写，它是一种存在于应用层的网络管理协议，在DHCP 的帮助下，可以动态地给网络上的任何设备或节点分配一个互联网协议ip 地址，使它们可以使用这个ip 进行通信，网络管理员的任务是将大量的ip 地址手动分配给网络中的所有设备，然而，在DHCP 中，这个任务是自动化的，是集中管理，而不是手工管理，无论是小型本地网络还是大型企业网络都实现了DHCP DHCP 的基本目标是为主机分配一个唯一的ip地址</p>
+<p>子网掩码</p>
+<p>路由器地址</p>
+<p>DNS 地址</p>
+<p>供应商类别标识符</p>
+<p>DHCP 有两种不同的方式，即作为客户端和服务器</p>
+<p>DHCP的历史</p>
+<p>DHCP 是bootp的扩展版本，也是1985年开始的一个网络管理协议，DHCP 服务器有足够的能力处理来自 BOOTP 客户端的请求，不仅如此，与BOOTP 相比，DHCP 更先进</p>
+<p>DHCP 是如何工作的</p>
+<p>当DHCP服务器作为服务器时，DHCP 服务器是用来自动分配唯一的ip 地址，同时配置网络的其他信息，在小型企业或家庭中，DHCP 服务器除了路由器之外，没有其他任何一个是DHCP 服务器，然而，在大型网络中，DHCP 服务器可以是一台计算机</p>
+<p>在这个过程中发生了什么，简单的总结如下，</p>
+<p>客户端向主机发送一个ip 地址请求，客户端可以是任何发送请求的设备，主机可以是路由器，主机将寻找一个可用的ip地址并分配给客户端</p>
+<p>使用这个ip 地址，客户端就可以在网络上进行通信</p>
+<p>现在我们就来详细了解一下这个过程，下面提到的步骤可以深入了解一下</p>
+<p>连接到有DHCP 服务器的网络的设备发送的请求称为 DHCPDISCOVER 请求</p>
+<p>这个请求以一个名为discover 的数据包的形式发送给DHCP 服务器，DHCP 服务器收到这个数据包，服务器就会立即寻找设备使用的ip 地址，一旦找到后，服务器会通过向客户端发送一个名为DHCPoffer 的数据包进行响应</p>
+<p>设备或客户端现在必须用一个名为 DHCPrequest 的数据包回馈给服务器，以接受所选的ip 地址，对于这个数据包，服务器会立即寻找设备使用的ip 地址，一旦找到后，服务器会通过向客户端发送一个名为dhcp offer 的数据包进行响应</p>
+<p>设备或客户端现在必须用一个名为dhcprequest的数据包回馈给服务器，以接受所选的ip 地址，对于这个数据包，服务器会发送一个确认 ack 确认设备现在可以使用这个特定的ip 地址，它还声明了特定 ip 地址的有效性，这样设备就能准确地知道何时必须获得一个新的ip 地址</p>
+<p>如果服务器不希望设备拥有给定的ip地址，它将不会通过发送一个nac来确认设备的请求</p>
+<p>虽然上面提到的步骤看起来很费时间，但实际操作起来却非常快，让人不自觉地就会想到，当然，这个过程不需要技术上的细节，只需阅读就可以从dhcp 服务器上获得一个ip 地址</p>
+<p>DHCP 是如何让工作变得轻松</p>
+<p>DHCP 服务器有一个地址池，可以让设备获得有效的网络连接，它基本上给出了谁be接收地址的范围，或范围内的ip 地址</p>
+<p>DHCP 有用的第二个原因是，很多设备可以在指定的时间段内连接到一个网络，甚至不需要任何可用的地址池，例如，考虑20个地址由DHCP 服务器定义 40 80 100 的设备只要不超过20个地址同时使用其中一个可用的ip 地址就可以连接到网络</p>
+<p>像ipconfig 这样的的命令在使用dhcp 时，会随着时间的推移返回不同的ip 地址，因为这些地址是提供给你的计算机网络的，在指定的时间段内也称为租期，拥有手动分配ip 地址的设备不一定能与动态接收ip 地址的设备在同一网络中共存，手动分配的ip 地址也称为静态ip 地址</p>
+<p>DHCP 的优缺点</p>
+<p>DHCP 的优点和缺点如下</p>
+<p>优点</p>
+<p>DHCP 有很多好处，因此它非常受欢迎，以下是使用dhcp 的一些优点</p>
+<p>可以很容易地在网络中添加新的客户端</p>
+<p>ip 地址是由 dhcp 集中管理的</p>
+<p>ip 地址可以重复使用，从而减少了对ip 地址总数的要求</p>
+<p>DHCP 服务器上的ip 地址空间可以很容易地进行重新配置，而不需要单独重新配置客户端</p>
+<p>网络管理员可以利用 dhcp 协议提供的方法，从集中区域配置网络</p>
+<p>缺点</p>
+<p>就像每一个硬币都有它的优点和缺点一样，使用DHCP 也有以下缺点</p>
+<p>在将ip 地址分配给不同的主机时，有时会出现ip 地址冲突的情况</p>
+<p>总结</p>
+<p>动态主机配置协议是一个非常关键和重要的网络服务，是必须要有的，因为使用它可以帮助你作为一个系统管理员或网络管理员，通过分配、跟踪和重新分配ip 来处理客户端，离开管理，此外，如果有任何外提，你只需要保持与服务器连接，并验证设置，而不是在客户端之间运行</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-20230403-如何用python分析股票"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/04/03/20230403-%E5%A6%82%E4%BD%95%E7%94%A8python%E5%88%86%E6%9E%90%E8%82%A1%E7%A5%A8/"
+    >20230403-如何用python分析股票</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/04/03/20230403-%E5%A6%82%E4%BD%95%E7%94%A8python%E5%88%86%E6%9E%90%E8%82%A1%E7%A5%A8/" class="article-date">
+  <time datetime="2023-04-03T07:52:20.000Z" itemprop="datePublished">2023-04-03</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>一个基本的股市分析项目，旨在了解金融市场 python编程的一些基本知识，让你5分钟上手股票可视化分析，</p>
+<p>导入必要的模块</p>
+<p>我们导入numpy pandas 和用于作图的matplotlib 库</p>
+<p>第一部分</p>
+<p>从雅虎财经获取特斯拉 通用和福特的每日收盘价数据</p>
+<p>第二部分 可视化数据，并对有趣的事情进行可视化检查，在本节中，我们还将从头开始教你怎样画蜡烛图</p>
+<p>在同一张图中画出特斯拉 通用和福特股票的开盘价曲线</p>
+<p>每只股票的最大成交量是在哪一天</p>
+<p>从开盘价格的时间序列可视化来看，似乎特斯拉的股价一直都要比通用和福特的股价更有高，但至于为什么特斯拉的股价一直高于其他两支股票，这个问题的答案不是单由股价决定，我们还需要考虑公司的总市值，尽管我们目前的数据并没有关于目前股票总单位的信息，但是，我们可以做一个简单的计算，在这里我们假设总的交易金额将是成交量列乘以开盘价格，这只是对市值的粗略估计而不是真实的市场价值，我们只是使用时间序列来直观地表示交易的总金额</p>
+<p>为每个dataframe 创建一个名为总交易量新的一列，及开盘价格与成交量的乘积</p>
+<p>第三部分，通过计算和比较每日收益来进行基本财务分析，并绘制每只股票的每日收益分布图来识别三者之间的关系</p>
+<p>每日百分比可以通过下面的公式计算所得</p>
+<p>从收盘价 列计算收益</p>
+<p>同时我们用一些box plot 来比较三只股票的收益范围</p>
+<p>比较股票的日收益</p>
+<p>我们绘制散点矩阵图，以查看每个股票日收益率之间的相关性</p>
+<p>从上面的scatter 矩阵图 ，我们可以看出只有通用和特斯拉汇报率关系图和其他4对关系图看起来不一样，所以我们可以推断特斯拉和通用确实有某种关系</p>
+<p>累积日收益</p>
+<p>日收益 是指股票价格相对于前一日的损益</p>
+<p>累积回报  累积回报是相对于投资计算的，如果累计回报超过一，你就是在盈利，否则就是亏损</p>
+<p>累积日收益的公式为</p>
+<p>df[daily_cumulative_return] &#x3D; ( 1+df[pct_daily_return] ).cumprod()</p>
+<p>假设我们从2012年1月3日开始买入这三支股票并一直持有，则我们的累积日均收益为</p>
+<p>下面我们来可视化一下三支股票的累计收益率，可以发现购入特斯拉后，它的价格涨了14倍</p>
+<p>使用python实时监控股票，并且持续扫描大盘</p>
+<p>使用python 实现监控股票并持续扫描大盘，可以通过以下步骤来完成</p>
+<ol>
+<li>安装必要的库，需要安装 pandas numpy requests matplotlib 等库，可以通过pip 命令进行安装</li>
+</ol>
+<p>获取数据 可以通过python来获取股票实时数据和历史数据</p>
+<p>可以使用pandas 库来处理数据</p>
+<p>数据分析，可以通过pandas 和numpy 库来进行数据分析，可以进行技术分析，例如移动平均线  MACD RSI 等，也可以进行基本面分析，例如 市盈率 市净率 ROE 等</p>
+<p>可视化 可以使用matplotlib 库来可视化数据，例如 绘制K线图，交易量图，技术指标图等</p>
+<p>持续扫描，可以使用python 的time 或schedule 模块来进行定时任务，例如每隔10秒钟获取一次股票数据</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-20230402-几款不错的RPA开源软件分享RPAPlus"
   class="article article-type-post"
   itemscope
@@ -569,198 +829,6 @@
 <p>杀真菌剂 杀虫剂 杀螨剂</p>
 <p>控制白粉病 黑斑  铁锈 蚜虫 粉虱 红蜘蛛 及其他害虫</p>
  
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20230209-功能强大车载obd接口解析及使用体验"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/02/09/20230209-%E5%8A%9F%E8%83%BD%E5%BC%BA%E5%A4%A7%E8%BD%A6%E8%BD%BDobd%E6%8E%A5%E5%8F%A3%E8%A7%A3%E6%9E%90%E5%8F%8A%E4%BD%BF%E7%94%A8%E4%BD%93%E9%AA%8C/"
-    >20230209-功能强大车载obd接口解析及使用体验</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/02/09/20230209-%E5%8A%9F%E8%83%BD%E5%BC%BA%E5%A4%A7%E8%BD%A6%E8%BD%BDobd%E6%8E%A5%E5%8F%A3%E8%A7%A3%E6%9E%90%E5%8F%8A%E4%BD%BF%E7%94%A8%E4%BD%93%E9%AA%8C/" class="article-date">
-  <time datetime="2023-02-09T03:53:28.000Z" itemprop="datePublished">2023-02-09</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h2 id="OBD接口简介"><a href="#OBD接口简介" class="headerlink" title="OBD接口简介"></a>OBD接口简介</h2><p>去4S店保养的时候看到技工在进行检测时将一个专用的电脑检测仪，接入这个看不清位置的插口，然后车辆的故障码就被清除，清洗过后的节气门也不再报错了，其实这个接口并没有想象中那么神秘，而且对于车主来说，学会使用obd 接口能让你变成一个汽车高手</p>
-<h2 id="OBD是什么"><a href="#OBD是什么" class="headerlink" title="OBD是什么"></a>OBD是什么</h2><p>OBD 作为一个专有名词的缩写，其全称是 on board diagnostics 中文的意思是，车载自动诊断系统，这套系统能在汽车运行过程中实时监测发动机电控系统及车辆的其他功能模块的工作状况，如有发现工况异常，则根据特定的算法判断出具体的故障，并以诊断故障代码 DTC Diagnostic trouble codes 的形式存储在系统内的存储器上，系统自动诊断后得到的有用信息可以为车辆的维修和保养提供帮助，维修人员可以利用汽车原厂专用仪器读取故障代码，从而可以对故障进行快速定位，以便于对车辆的修理，减少人工诊断的时间</p>
-<p>由于初期不同厂商的obd 系统之间各行其是，互不兼容，所以为了统一标准，美国汽车工程师协会 1988 年指定了obd-ii 标准  obd-ii 实行标准的检测程序，并且具有严格的排放针对性，用于实时监测汽车尾气排放情况</p>
-<p>作为一个检测尾气排放的系统，obd 在后来的发展中开始逐渐扩大了自己的控制范围，随着车辆的各种传感器及电子化程度的提高，obd 将各项检测功能都纳入到了自己的管辖范围内，现在我们说到obd 一般都会用obd 接口这个词，因为我们车辆上只能看到这个系统的传输接口，但它背后其实是整个车辆控制系统的集合体</p>
-<p>早期的obd 接口使用基于iso 协议的k-line 通讯方式，通过计算机标准的串口通讯方式与外接设备相连接，由于其半双工的通信效率比较低，所以这种通讯方式基本被淘汰，近几年的技术进步使得新的总线系统也就 CAN-BUS 通讯方式称为了主流，can-bus 同样使用了基于iso 的协议，但它属于网络型分布，具有很强的可扩展性，国内市场也在2008年7月份开始强制规定所有市场上出售的车辆都必须配备这个协议，这个协议的普及让车辆检测工作得到了大大的简化，一台检测仪就可以对多个品牌的车辆进行检测</p>
-<h2 id="OBD-接口能实现的功能"><a href="#OBD-接口能实现的功能" class="headerlink" title="OBD 接口能实现的功能"></a>OBD 接口能实现的功能</h2><p>OBD 接口可以做什么</p>
-<ol>
-<li>行车电脑数据显示</li>
-</ol>
-<p>obd 接口作为车载监控系统的通讯接口，除了读取故障码以供修车外，首要的功能就是可以提供车辆的各种工况数据，除了车辆仪表显示的数据外，实际在行车电脑中所记录的数据要多得多，包括很多无行车电脑显示屏配置的车辆，其实各项油耗记录，电池电压，空燃比 节气门开度，爆震数量等数据在系统中都是有记录的，但厂家会因为价格配置等因素，在较低配置车型上去掉行车电脑显示这项配置，导致用户无法参考这些有用的数据，所以市场上出现了一些专门的行车电脑显示产品</p>
-<p>这类产品有两种形式，一种就是通过一条专用的数据线连接到车辆的obd 接口，将数据读取出来再显示到配套的显示屏上，基本等于自己加装了一个行车电脑显示屏，平时连接线可以一直插在obd 接口上不用摘下，而只需固定显示屏即可，车主可以自行选择需要显示的数据</p>
-<p>另一种产品形式就是无线obd 接口适配器+智能手机端软件，这种与手机端配合的obd 端口读取器类似于一个加入了无线通讯模块的单片机，通过蓝牙或wifi 将obd 接口读取的数据传输到智能手机端，再通过手机端的软件呈现给使用者</p>
-<ol start="2">
-<li>更改代码实现更多功能</li>
-</ol>
-<p>现代汽车的电控系统可以通过obd 接口接入车辆控制系统的canbus总线，对车辆的各个控制模块的功能进行调节，这里最出名的应用就是由ross tech 开发的数据线及VCDS系统诊断软件，许多大众系的车友都爱用这套设备调节大众车系的系统功能，由于大众车系的can-bus 功能强大，而通过obd 接口的数据线接入车辆的can 总线并调节各个模块的代码就可以实现许多不同的隐藏功能，这样免费的 增配 对许多大众车主来说都非常具有吸引力</p>
-<ol start="3">
-<li>读取刷写 ECU TCU 程序</li>
-</ol>
-<p>随着车载电脑系统的硬件升级，现代车辆的ecu （electronic control unit）发动机电子控制单元内的程序存储器都由之前的只读式变为了可刷写式，厂家这样设置是为了随时能对ecu 的控制程序进行更新，就像手机的固件升级一样，针对不同的行驶地区或工况通过对ecu 系统程序的升级使得发动机能适应各种不同工作环境</p>
-<p>针对制动变速箱有些厂家还加入了可刷写式的TCU（Transmission Control Unit） 传动系统控制单元，大众的7速DSG 变速箱在出问题的初期就曾经试图通过在4S店用电脑刷写TCU的方式来改变DSG 变速箱的一些相应参数，来避免出现问题</p>
-<p>改装厂商跟敏捷的发现了可刷写程序的ECU 和TCU 的便利性，所以现代汽车改装多了ECU 程序刷写这样的改装项目，原厂的ECU 程序由于稳定性和经济性的考虑，一般在动力输出上都有所保留，而改装厂商通过改写原车ECU 数据即可实现对动力的提升，而TCU  的程序改写可以让变速箱反应更灵敏或者让换挡时机变得更激进来提升车辆的性能，这一切在有了obd 接口之后变得轻而易举，只需电脑和数据线连接到obd 接口就可以完成刷写的工作</p>
-<p>小结：obd 接口出现之初只是为了监控汽车的尾气排放而设置，但近些年的发展已经跨越了好几代，功能和作用都得到了极大的提升，而作为最终用户的我们，obd 接口对我们用车都能起到哪些具体的作用，而我们又该如何操作呢，</p>
-<h2 id="OBD接口作用和针脚定义图解"><a href="#OBD接口作用和针脚定义图解" class="headerlink" title="OBD接口作用和针脚定义图解"></a>OBD接口作用和针脚定义图解</h2><p>OBD 接口作用和针脚定义图解</p>
-<p>车辆obd 接口，连接车辆ecu 行车电脑的接口，检修车辆时把设备解码仪器插在此接口，进行扫描车辆是否有故障及故障代码，以后的车联网都是基于此口加以研发的</p>
-<p>OBDII 的作用</p>
-<p>obdII 程序使得汽车故障诊断简单而统一，维修人员不需专门学习每一个厂家的新系统</p>
-<ol>
-<li><p>随时检测零部件和系统的故障，保证汽车在使用寿命中的排放不超过 obd 法规的要求</p>
-</li>
-<li><p>检测到相关排放故障时，obd 系统可以用仪表板上的mil 灯进行报警</p>
-</li>
-</ol>
-<p>故障车辆能够得到及时修理，减少车辆排放</p>
-<p>obd 系统有助于 技师迅速诊断，对症修理，降低维修成本</p>
-<p>汽车obdii 接口定义</p>
-<p>除却各种电源和地线之外，关键的有can 线，iso 0141-2 K线 J1850 总线，接口也有很多，下面我们来看看obdii 接口引脚定义</p>
-<p>1 3 8 11 12 13 厂家自定义</p>
-<p>2 SAE J1850 总线+ 10 SAE J1850 总线-</p>
-<p>4 车身线  5 信号线</p>
-<p>6 CAN-H 14 CAN-L</p>
-<p>7 K-Line 15 L-Line</p>
-<p>16 常电源</p>
-<p>故障码标准</p>
-<p>SAE J2010 规定了一个5位标准故障代码，第一位是字母，后面4位是数字</p>
-<p>1 首位字母表示设置故障码的系统，当前分配的字母有四个，P 代表动力系统，B代表车身，C 代表底盘，u 代表未定义的系统</p>
-<p>2 第2位字符是0123 意义如下<br>  0 SAE 美国汽车工程师协会定义的通用故障码<br>  1 汽车厂家定义的扩展故障码<br>  2 3 随系统字符 PBCU 的不同而不同，动力系统故障码 P 的2 或3 由SAE 留作将来使用，车身或底盘故障码的2位厂家保留，车身或底盘故障码的3由SAE 保留</p>
-<p>3 第3位字符表示出故障的系统<br>  1 燃油或空气计量故障<br>  2 燃油或空气计量故障<br>  3 点火故障或发动机缺火<br>  4 辅助排放控制系统故障<br>  5 汽车或怠速控制系统故障<br>  6 电脑或输出电路故障<br>  7 变速器控制系统<br>  8 变速器控制系统</p>
-<p>4 最后两位字符表示触发故障码的条件，不同的传感器，执行器和电路分配了不同区段的数字，区段中较小的数字表示通用故障，即通过故障码，较大的数字表示扩展码，提供了更具体的信息，如电压低或高，响应慢，或信号超出范围</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20230208-svncleanup失败的方法"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/02/08/20230208-svncleanup%E5%A4%B1%E8%B4%A5%E7%9A%84%E6%96%B9%E6%B3%95/"
-    >20230208-svncleanup失败的方法</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/02/08/20230208-svncleanup%E5%A4%B1%E8%B4%A5%E7%9A%84%E6%96%B9%E6%B3%95/" class="article-date">
-  <time datetime="2023-02-08T02:46:54.000Z" itemprop="datePublished">2023-02-08</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>1、先下载sqlite3.exe<br>链接：<a target="_blank" rel="noopener" href="https://pan.baidu.com/s/19NoROpm9_1CuGwOG6j5x3Q">https://pan.baidu.com/s/19NoROpm9_1CuGwOG6j5x3Q</a></p>
-<p>提取码：tc8b</p>
-<p>2、找到你项目的.svn文件，查看是否存在wc.db（如果看不到.svn，说明你电脑设置了不显示隐藏文件，改成显示隐藏文件就可以了）<br>3、将sqlite3.exe放到.svn的文件夹目录下<br>4、启动cmd执行sqlite3 wc.db “select * from work_queue”<br>5、启动cmd执行sqlite3 wc.db “delete from work_queue”</p>
-<p>现在在到项目里面，执行cleanup，应该成功了，如果还不成功提示fail to process file的情况，提示xxx file has been locked，需要执行一个清除数据库中的wc_lock的表的操作。<br>6、启动cmd执行sqlite3 .svn&#x2F;wc.db “select * from wc_lock”<br>7、启动cmd执行sqlite3 .svn&#x2F;wc.db “delete from wc_lock”<br>现在在到项目里面，执行cleanup，应该成功了，如果还不成功，那就行勾选上下面的Break write locks，然后在执行Cleanup，这样应该成功了吧！</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20230207-侃哥侃英语"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/02/07/20230207-%E4%BE%83%E5%93%A5%E4%BE%83%E8%8B%B1%E8%AF%AD/"
-    >20230207-侃哥侃英语</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/02/07/20230207-%E4%BE%83%E5%93%A5%E4%BE%83%E8%8B%B1%E8%AF%AD/" class="article-date">
-  <time datetime="2023-02-07T01:21:19.000Z" itemprop="datePublished">2023-02-07</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>[TOC]</p>
-<h2 id="0x01"><a href="#0x01" class="headerlink" title="0x01"></a>0x01</h2><h2 id="0x02"><a href="#0x02" class="headerlink" title="0x02"></a>0x02</h2><h2 id="0x03"><a href="#0x03" class="headerlink" title="0x03"></a>0x03</h2><h2 id="0x04"><a href="#0x04" class="headerlink" title="0x04"></a>0x04</h2> 
       <!-- reward -->
       
     </div>
