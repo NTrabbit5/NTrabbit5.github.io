@@ -216,6 +216,32 @@
 <p>后备电池接口</p>
 <p>引出 IO</p>
 <p>一键下载电路</p>
+<hr>
+<p>JTAG SWD</p>
+<p>joint test action group 即联合测试行动小组</p>
+<p>用标准的JTAG 调试，需要占用5个io 口，有些时候，可能造成io 口不够用，而用swd 则只需要2个io 口，大大节约了io 数量，但他们达到的效果是一样的</p>
+<p>强烈建议仿真器使用swd模式</p>
+<p>JTAG引脚说明：</p>
+<p>TDI(Test Data In)：串行输入引脚</p>
+<p>TDO(Test Data Out)：串行输出引脚</p>
+<p>TCK(Test Clock)：时钟引脚</p>
+<p>TMS（Test Mode Select）：模式选择（控制信号）引脚</p>
+<p>TRST (Test Reset)：复位引脚</p>
+<p>SWD：Serial Wire Debug，代表串行线调试</p>
+<p>SWD是ARM设计的协议，主要针对他们内核的芯片进行程序调试和下载。</p>
+<p>SWD引脚说明：</p>
+<p>SWDIO(Serial Wire Data Input Output)：串行数据输入输出引脚</p>
+<p>SWCLK(Serial Wire Clock)：串行线时钟引脚</p>
+<p>2.JTAG和SWD协议各自优缺点</p>
+<p>JTAG优点：</p>
+<p>a). 不限于ARM内核单片机，能支持更多单片机程序调试和下载。</p>
+<p>b). 用途更广，用于编程，调试和生产测试.</p>
+<p>JTAG缺点：占用引脚数比较多，比较占用板子尺寸。</p>
+<p>SWD优点：</p>
+<p>a). 引脚数更少，有利于节约电路板尺寸。</p>
+<p>b). SWD具有特殊功能，例如通过其I &#x2F; O线打印调试信息。</p>
+<p>c). 在高速大数据情况下，SWD整体性能比JTAG更好。</p>
+<p>SWD缺点：只能用于ARM内核的单片机。</p>
  
       <!-- reward -->
       
@@ -959,6 +985,35 @@
 <p>adhesive agent 粘合剂 screw 螺丝</p>
 <p>waterproof layer 防水层 T-grid support strips T型龙骨（矿面板）</p>
 <p>Mineral fiber suspended 矿棉纤维板</p>
+<hr>
+<p>方案设计思路</p>
+<p>识图技巧</p>
+<p>找入口<br>房间有几个</p>
+<p>厨房 卫生间 阳台</p>
+<p>找出所有空间并进行标注</p>
+<p>功能需求 找出项目所有功能需求</p>
+<p>注意，让客户提需求而不是要求</p>
+<p>工具 需求收集表</p>
+<ol start="2">
+<li>功能划分</li>
+</ol>
+<p>分隔空间体块</p>
+<p>做功能分析</p>
+<p>动静区分区</p>
+<p>动线分析</p>
+<p>泡泡图草图构思等</p>
+<p>考虑空间功能的关联性与动线以及使用者的便利性</p>
+<p>界定空间</p>
+<p>单元设计</p>
+<p>设身处地法</p>
+<p>分隔空间的方法</p>
+<p>辅助线分割法</p>
+<p>空间三分法</p>
+<p>tips 考虑动线  尺寸、人体工程学</p>
+<ol start="4">
+<li>建筑平面图及其形成</li>
+</ol>
+<p>平面剖切位置一般在1.2–1.5 m的位置</p>
  
       <!-- reward -->
       
