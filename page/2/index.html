@@ -126,6 +126,88 @@
     
     
     <article
+  id="post-20230804-字符串匹配算法（C语言实现）"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/08/04/20230804-%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%8C%B9%E9%85%8D%E7%AE%97%E6%B3%95%EF%BC%88C%E8%AF%AD%E8%A8%80%E5%AE%9E%E7%8E%B0%EF%BC%89/"
+    >20230804-字符串匹配算法（C语言实现）</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/08/04/20230804-%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%8C%B9%E9%85%8D%E7%AE%97%E6%B3%95%EF%BC%88C%E8%AF%AD%E8%A8%80%E5%AE%9E%E7%8E%B0%EF%BC%89/" class="article-date">
+  <time datetime="2023-08-04T04:55:39.000Z" itemprop="datePublished">2023-08-04</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>字符串匹配算法 又称模式匹配算法，该算法的目的是为了子串从主串中寻找是否有与其匹配的部分</p>
+<p>其可分为BF暴力检索，RK 哈希检索，KMP BM 等等，本文仅介绍BF 算法和KMP 算法的视线，前者的时间复杂度是O(mn) ，后者的时间复杂度为O(m+n)，本文就是对这两者的核心思路进行总结分析，以加强记忆。</p>
+<p>算法的思路如下：</p>
+<p><img src="https://img-blog.csdnimg.cn/c19e6cd7e42843e38f666e001e0c9f86.png"></p>
+<p>代码实现如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;assert.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"> </span><br><span class="line"><span class="type">int</span> <span class="title function_">BF</span><span class="params">(<span class="type">char</span>* str, <span class="type">char</span>* sub)</span><span class="comment">//str代表主串，sub代表子串</span></span><br><span class="line">&#123;</span><br><span class="line">  assert(str&amp;&amp;sub);<span class="comment">//断言</span></span><br><span class="line">  <span class="keyword">if</span> (str == <span class="literal">NULL</span> || sub == <span class="literal">NULL</span>)<span class="comment">//串为空值时直接返回-1</span></span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="type">int</span> i = <span class="number">0</span>;<span class="comment">//遍历主串</span></span><br><span class="line">  <span class="type">int</span> j = <span class="number">0</span>;<span class="comment">//遍历子串</span></span><br><span class="line">  <span class="type">int</span> lenstr = <span class="built_in">strlen</span>(str);<span class="comment">//求出主串的长度</span></span><br><span class="line">  <span class="type">int</span> lensub = <span class="built_in">strlen</span>(sub);<span class="comment">//求出子串的长度</span></span><br><span class="line">  <span class="keyword">while</span> ((i &lt; lenstr) &amp;&amp; (j &lt; lensub))<span class="comment">//当子串遍历结束或主串遍历结束时，跳出循环</span></span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">if</span> (str[i] == sub[j])<span class="comment">//匹配成功</span></span><br><span class="line">    &#123;</span><br><span class="line">      i++;</span><br><span class="line">      j++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span><span class="comment">//匹配失败</span></span><br><span class="line">    &#123;</span><br><span class="line">      i = i - j + <span class="number">1</span>;</span><br><span class="line">      j = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> (j &gt;= lensub)<span class="comment">//如果是因为子串遍历结束而跳出循环，说明匹配成功，返回下标</span></span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">return</span> i - j;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span><span class="comment">//匹配失败，返回-1</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, BF(<span class="string">&quot;ababcabcdabcde&quot;</span>, <span class="string">&quot;abcd&quot;</span>));<span class="comment">//匹配成功，预期返回下标5</span></span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, BF(<span class="string">&quot;ababcabcdabcde&quot;</span>, <span class="string">&quot;abcds&quot;</span>));<span class="comment">//匹配失败，返回-1</span></span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, BF(<span class="string">&quot;ababcabcdabcde&quot;</span>, <span class="string">&quot;ab&quot;</span>));<span class="comment">//匹配成功，返回下标0</span></span><br><span class="line"> </span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>BF 算法缺点，有大量匹配无效，效率低</p>
+<h2 id="KMP-算法"><a href="#KMP-算法" class="headerlink" title="KMP 算法"></a>KMP 算法</h2><ol>
+<li>算法介绍</li>
+</ol>
+<p>KMP算法是一种改进的字符串匹配算法，由D.E.Knuth，J.H.Morris和V.R.Pratt同时发现，因此人们称它为克努特–莫里斯–普拉特操作(简称KMP算法)。KMP算法的关键是利用匹配失败后的信息，尽量减少模式串与主串的匹配次数以达到快速匹配的目的。具体实现就是实现一个next()函数，函数本身包含了模式串的局部匹配信息。时间复杂度O(m+n)。</p>
+<ol start="2">
+<li>算法思路</li>
+</ol>
+<p>next 数组的求解</p>
+<p>例：有一个字符串ababcabc ，求其对应的next 数组</p>
+<p>解  第一个字符对应的next 数组值为-1，第二个字符对应的next 数组值为0 ，从第三个字符开始，判断第一个字符和第n-1 个字符是否有匹配的</p>
+<p><img src="https://img-blog.csdnimg.cn/1cd93d1dd8844ba2a333d136331407e2.png"></p>
+<p>数学分析：</p>
+<p>假设next[i]&#x3D;k，可推出p[0]…p[k-1]&#x3D;p[x]…p[i-1]，既k-1-0&#x3D;i-1-x，得x&#x3D;i-k</p>
+<p>即p[0]…p[k-1]&#x3D;p[i-k]…p[i-1]</p>
+<p>若能证得p[i]&#x3D;&#x3D;p[k]，则可求得next[i+1]&#x3D;k+1。</p>
+<p>若p[i]!&#x3D;p[k]，next[i+1]&#x3D;??</p>
+<p>举个例子：</p>
+<p><img src="https://img-blog.csdnimg.cn/d7da4597aa9f4274905ed16cc0d9c044.png"></p>
+<p>代码分析</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">GetNext</span><span class="params">(<span class="type">char</span>* sub, <span class="type">int</span>* next, <span class="type">int</span> lensub)</span><span class="comment">/*sub代表子串；next是外部开辟的动态内存数组；lensub是子串长度*/</span></span><br><span class="line">&#123;</span><br><span class="line">  next[<span class="number">0</span>] = <span class="number">-1</span>;</span><br><span class="line">  next[<span class="number">1</span>] = <span class="number">0</span>;</span><br><span class="line">  <span class="type">int</span> i = <span class="number">2</span>;<span class="comment">//当前i下标</span></span><br><span class="line">  <span class="type">int</span> k = <span class="number">0</span>;<span class="comment">//前一项的k</span></span><br><span class="line"> </span><br><span class="line">  <span class="keyword">while</span>(i &lt; lensub)</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">if</span> (k == <span class="number">-1</span> || sub[i - <span class="number">1</span>] == sub[k])<span class="comment">//k回退到-1或前一项sub[i-1]==sub[k]</span></span><br><span class="line">    &#123;</span><br><span class="line">      next[i] = k + <span class="number">1</span>;</span><br><span class="line">      i++;</span><br><span class="line">      k++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">      k = next[k];<span class="comment">//if条件不满足时则需将k回退到-1下标</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>附加知识：next 数组的优化</p>
+<p>同样以例子来讲</p>
+<p>图中所示，当i&#x3D;5时匹配失败，若按照nextr 数组回退的话，到i&#x3D;4时，依旧是a，匹配失败还得回退，每次回退都是相同的字符，这些回退无疑是无效的。而nextval数组就是对这一现象的优化。</p>
+<p><img src="https://img-blog.csdnimg.cn/f995d5b8d759407aaad257ab6837aa59.png"></p>
+<h2 id="3-整体代码的实现"><a href="#3-整体代码的实现" class="headerlink" title="3.整体代码的实现"></a>3.整体代码的实现</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;assert.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="type">void</span> <span class="title function_">GetNext</span><span class="params">(<span class="type">char</span>* sub, <span class="type">int</span>* next, <span class="type">int</span> lensub)</span><span class="comment">/*sub代表子串；next是外部开辟的动态内存数组；lensub是子串长度*/</span></span><br><span class="line">&#123;</span><br><span class="line">  next[<span class="number">0</span>] = <span class="number">-1</span>;</span><br><span class="line">  next[<span class="number">1</span>] = <span class="number">0</span>;</span><br><span class="line">  <span class="type">int</span> i = <span class="number">2</span>;<span class="comment">//当前i下标</span></span><br><span class="line">  <span class="type">int</span> k = <span class="number">0</span>;<span class="comment">//前一项的k</span></span><br><span class="line"> </span><br><span class="line">  <span class="keyword">while</span>(i &lt; lensub)</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">if</span> (k == <span class="number">-1</span> || sub[i - <span class="number">1</span>] == sub[k])<span class="comment">//k回退到-1或前一项sub[i-1]==sub[k]</span></span><br><span class="line">    &#123;</span><br><span class="line">      next[i] = k + <span class="number">1</span>;</span><br><span class="line">      i++;</span><br><span class="line">      k++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">      k = next[k];<span class="comment">//if条件不满足时则需将k回退到-1下标</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="type">int</span> <span class="title function_">KMP</span><span class="params">(<span class="type">char</span>* str, <span class="type">char</span>* sub, <span class="type">int</span> pos)</span><span class="comment">/*str:代表主串；sub:代表子串；pos:代表从主串的pos位置开始找*/</span></span><br><span class="line">&#123;</span><br><span class="line">  assert(str&amp;&amp;sub);<span class="comment">//断言</span></span><br><span class="line">  <span class="keyword">if</span> (str == <span class="literal">NULL</span> || sub == <span class="literal">NULL</span>)<span class="comment">//字符串为空直接返回-1</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">  <span class="type">int</span> lenstr = <span class="built_in">strlen</span>(str);<span class="comment">//求主串长度</span></span><br><span class="line">  <span class="type">int</span> lensub = <span class="built_in">strlen</span>(sub);<span class="comment">//求子串长度</span></span><br><span class="line">  <span class="keyword">if</span> (pos &lt; <span class="number">0</span> || pos &gt;= lenstr)<span class="comment">//pos位置不合法直接返回-1</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line"> </span><br><span class="line">  <span class="type">int</span> *next = (<span class="type">int</span>*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="type">int</span>)*lensub);<span class="comment">//开辟动态内存给next数组存放数据</span></span><br><span class="line">  assert(next);</span><br><span class="line"> </span><br><span class="line">  GetNext(sub, next,lensub);<span class="comment">//求出next数组</span></span><br><span class="line"> </span><br><span class="line">  <span class="type">int</span> i = pos;<span class="comment">//遍历主串</span></span><br><span class="line">  <span class="type">int</span> j = <span class="number">0</span>;<span class="comment">//遍历子串</span></span><br><span class="line"> </span><br><span class="line">  <span class="keyword">while</span> (i &lt; lenstr&amp;&amp;j &lt; lensub)</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">if</span> (j == <span class="number">-1</span> || str[i] == sub[j])</span><br><span class="line">    &#123;</span><br><span class="line">      i++;</span><br><span class="line">      j++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">      j = next[j];</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">free</span>(next);</span><br><span class="line">  next = <span class="literal">NULL</span>;</span><br><span class="line">  <span class="keyword">if</span> (j &gt;= lensub)</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">return</span> i - j;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, KMP(<span class="string">&quot;ababcabcdabcde&quot;</span>, <span class="string">&quot;abcd&quot;</span>, <span class="number">0</span>));<span class="comment">//预期返回5</span></span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, KMP(<span class="string">&quot;ababcabcdabcde&quot;</span>, <span class="string">&quot;abcdf&quot;</span>, <span class="number">0</span>));<span class="comment">//预期返回-1</span></span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, KMP(<span class="string">&quot;ababcabcdabcde&quot;</span>, <span class="string">&quot;ab&quot;</span>, <span class="number">0</span>));<span class="comment">//预期返回0</span></span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>以上就是今天要讲的内容，本文介绍了关于字符串匹配的BF算法和KMP算法，通过比特大博哥的视频学习，对算法思路与实现代码进行理解和分析，简单学习记录。欢迎大家探讨指正！</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-20230804-使用strchr与strrchr函数查找单个字符"
   class="article article-type-post"
   itemscope
@@ -962,212 +1044,6 @@
 <hr>
 <p>104条PCB电路设计制作专业术语汇总</p>
 <p>annular&#x3D; ring&#x3D; 孔环</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20230709-客服系统哪家好，主流SaaS云客服系统功能全面对比"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/07/09/20230709-%E5%AE%A2%E6%9C%8D%E7%B3%BB%E7%BB%9F%E5%93%AA%E5%AE%B6%E5%A5%BD%EF%BC%8C%E4%B8%BB%E6%B5%81SaaS%E4%BA%91%E5%AE%A2%E6%9C%8D%E7%B3%BB%E7%BB%9F%E5%8A%9F%E8%83%BD%E5%85%A8%E9%9D%A2%E5%AF%B9%E6%AF%94/"
-    >20230709-客服系统哪家好，主流SaaS云客服系统功能全面对比</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/07/09/20230709-%E5%AE%A2%E6%9C%8D%E7%B3%BB%E7%BB%9F%E5%93%AA%E5%AE%B6%E5%A5%BD%EF%BC%8C%E4%B8%BB%E6%B5%81SaaS%E4%BA%91%E5%AE%A2%E6%9C%8D%E7%B3%BB%E7%BB%9F%E5%8A%9F%E8%83%BD%E5%85%A8%E9%9D%A2%E5%AF%B9%E6%AF%94/" class="article-date">
-  <time datetime="2023-07-09T02:09:18.000Z" itemprop="datePublished">2023-07-09</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h2 id="1-前言"><a href="#1-前言" class="headerlink" title="1 前言"></a><strong>1 前言</strong></h2><p>如今，深度信息化应用时代，企业信息应用生态已经不再局限OA、ERP，越来越多的企业开始重视自身服务水平和运营能力提升，将客服系统纳入企业整体信息规划和管理之中，为企业提高订单转化、降低运营成本、有效提升获客、留存。因门槛低成本、快部署、快迭代、开放性，SAAS云客服系统脱颖而出。<br>近年来，云客服系统存在同质化趋势，这与其自身市场战略目标、市场格局走向等都有一定关系。即使这样，考虑企业业务应用的复杂度和成熟度，云客服系统涵盖功能越来越多、越来越深，但也存在边界，从测评的结果来看也反映了这种情况。<br>因此，企业选型还是从自身业务需求出发，考虑适用性和实用性。适用性是指适配企业业务场景需求，实用性是指能发挥其价值达到上线初衷。本文档整理了市场上主流云客服系统在多渠道接入、在线客服、工单管理、APP移动客服、呼叫中心、开放平台等功能模块的测评比对，每个测评项目包含功能点对比一览表和测评小结，最后也有适用场景的选型产品建议，希望能对观看者有一定参考性。</p>
-<h2 id="2-多渠道接入功能对比"><a href="#2-多渠道接入功能对比" class="headerlink" title="2 多渠道接入功能对比"></a><strong>2 多渠道接入功能对比</strong></h2><h2 id="2-1应用场景"><a href="#2-1应用场景" class="headerlink" title="2.1应用场景"></a><strong>2.1应用场景</strong></h2><p>目前，SaaS客服系统趋于全渠道接入，提高产品的适用性，以满足来自不同服务渠道的用户请求，更便捷服务客户。</p>
-<p>那么，什么是服务支持渠道呢？供客户反馈意见，请求服务和接受支持的媒介和工具，让企业能倾听客户建议或意见、企业与客户之间互动、监督客服与客户互动，实现企业与客户的零距离连接。</p>
-<h2 id="2-2功能对比及分析"><a href="#2-2功能对比及分析" class="headerlink" title="2.2功能对比及分析"></a><strong>2.2功能对比及分析</strong></h2><p><img src="https://pic3.zhimg.com/80/v2-b273ad7cc866b365d397497f17158426_1440w.webp" alt="img"></p>
-<p>主流产品的渠道接入对比表</p>
-<p>简单梳理各渠道的适用场景：</p>
-<ol>
-<li>网页嵌入：主要用于官方网站的嵌入反馈表单和在线客服，适用售前、售后场景；</li>
-<li>App SDK：主要用于将客服中心嵌入到原生 App 中，相比网页接入其稳定性更高、系统适配度更高、用户体验更好，缺点是需要增加应用安装包的大小，且需要版本迭代升级， 适用售前、售后场景；</li>
-<li>邮件：客户可以通过企业的 feedback 邮箱提交工单，并持续跟进，多适用售前&#x2F;售后协同；</li>
-<li>微信：接入微信公众号或企业号，客户在微信内发起服务请求，接受在线客服、工单和FAQ自助等，适用售前、售后场景；</li>
-<li>云之家：将帮助中心接入云之家的轻应用，多适用于售后协同；</li>
-<li>帮助中心：为企业官网打造的 support 页面，可以跟官网 menu 相融合，多适用售后场景;</li>
-<li>电话渠道：主要用于对接 call center 及其他模拟、SIP 电话线路，适用售前、售后场景。</li>
-</ol>
-<p>虽然各个产品都以全渠道为卖点，实际上真正做到全渠道接入的很少，这与各个产品定位差异相关。</p>
-<h2 id="2-3小结"><a href="#2-3小结" class="headerlink" title="2.3小结"></a><strong>2.3小结</strong></h2><p>上表来看，网页、App SDK、微信、电话渠道&#x2F;呼叫中心的渠道接入已经是客服系统的标配，而适用于售后服务尤其是协同流转类的渠道接入，还存在明显缺失。综合来看，易维帮助台、逸创在渠道接入方面比较齐，尤其是易维帮助台不限渠道的收费模式性价比高，当然随着主流收费模式越来越倾向于按渠道收费，不排除这个产品后期可能会按渠道收费。</p>
-<p>虽然客服系统倾向于提供更多更贴切的渠道选择，企业还应考虑自身业务的是适配性，还需要注意方便性、快捷性、参与度、高效性、稳定性等方面，综合考虑选择合适的渠道接入，可以说，更好的用户体验&#x3D;更高的满意度。</p>
-<h2 id="3-在线客服功能对比"><a href="#3-在线客服功能对比" class="headerlink" title="3 在线客服功能对比"></a><strong>3 在线客服功能对比</strong></h2><h2 id="3-1应用场景"><a href="#3-1应用场景" class="headerlink" title="3.1应用场景"></a><strong>3.1应用场景</strong></h2><p>目前，云客服系统中在线客服的功能是核心模块，适用场景广泛。</p>
-<p>在线客服，即是将IM技术应用到客服场景中，主要面向的痛点是 IM 研发成本较高，企业投入巨大的研发及维护成本，也难以保证系统稳定且易用，而SAAS产品正好价格低廉，且提供持续不断的更新维护。</p>
-<h2 id="3-2功能对比及分析"><a href="#3-2功能对比及分析" class="headerlink" title="3.2功能对比及分析"></a><strong>3.2功能对比及分析</strong></h2><p><img src="https://pic4.zhimg.com/80/v2-b833425a10be54359a18b2e2b960f387_1440w.webp" alt="img"></p>
-<p>主流云客服系统的在线客服功能对比表</p>
-<p>简单梳理主要应用场景所需功能差异：</p>
-<ol>
-<li>售前咨询：需要用户轨迹、自动邀请、智能分派、智能机器人、评价反馈等功能点，高并发会话、实时性要求高，适用于电商、O2O等企业；</li>
-<li>售后服务：需要转接会话、多方会话、智能分派、会话转工单等功能点，一线客服与二线技术之间、IM交互与工单流转之间无缝切换，无论是传统企业还是互联网行业都适用；</li>
-<li>在线技术支持：需要转接会话、多方会话、远程桌面、视频通话、截屏&#x2F;录屏等，实现在线服务直达用户，在线解决客户问题，尤其适用于IT、软件类企业；</li>
-<li>综合客户服务：售前、售中、售后全过程，需要包含不限于以上场景所需功能。</li>
-</ol>
-<p>目前，还没有一个产品完全满足售前、售后全过程及各种场景。这个除了与各个产品定位有关，还需要强大的技术实力支撑，满足IM的稳定性，特别是面向高并发的应用场景，而复杂的网络环境、国内外路由节点的差异化也是其运维的主要难点。</p>
-<p>上表来看，主流的云客服系统都能满足基础的在线会话要求，包括用户来源轨迹、基础分派规则、在线基础交互、数据统计和评价反馈等。但在更复杂的场景方面，各个产品的功能存在一定差异。</p>
-<h2 id="3-3小结："><a href="#3-3小结：" class="headerlink" title="3.3小结："></a><strong>3.3小结：</strong></h2><p>从适用场景来看，网易七鱼、环信、小能等主打售前客服场景，都是IM起家，具有较好的技术优势，而智能机器人最好的是智齿，让诟病的智能客服不只是摆设沦为智障客服，问答匹配度比较高，但美中不足的是，都缺失售后服务场景的功能。如果是在线技术支持场景和售后协同场景的话，首选易维帮助台，能完全满足这些场景所需功能点，遗憾的是，易维帮助台的智能机器人是其短板，难以满足越来越多企业降低人工客服成本的需求。</p>
-<h2 id="4-工单管理功能对比"><a href="#4-工单管理功能对比" class="headerlink" title="4 工单管理功能对比"></a><strong>4 工单管理功能对比</strong></h2><h2 id="4-1应用场景"><a href="#4-1应用场景" class="headerlink" title="4.1应用场景"></a><strong>4.1应用场景</strong></h2><p>工单管理是客服系统的核心功能模块。企业运营事务可以拆分成多个事件，一个事件是一个工单，也就是说企业的整个运营过程可以全都用工单进行管控并且记录。事务又分为内外事务，对客户而言，每一次服务都可以是一张工单，在线客服和工单都是客户服务的载体。</p>
-<p>不同于实时交互的在线客服，工单侧重于事件流转。工单可以来自外部客户请求，也可以来自内部提交，岗位之间、部门之间甚至企业之间的事件流程化管理。</p>
-<h2 id="4-2功能对比及分析"><a href="#4-2功能对比及分析" class="headerlink" title="4.2功能对比及分析"></a><strong>4.2功能对比及分析</strong></h2><p><img src="https://pic4.zhimg.com/80/v2-b39a795c58cab9a6e0370002bc146847_1440w.webp" alt="img"></p>
-<p>主流产品的工单管理功能对比表</p>
-<p>工单作为承载前后台沟通的独立模块，包含表单提交、分派、统计、质量管控，所需主要功能点罗列如下：</p>
-<ol>
-<li>表单提交：字段自定义、多类型表单、工单模板等，适配不同业务内容。</li>
-<li>流程设置：分派规则包含手动分派、智能分派，工作流、触发器&#x2F;批量化自动化等。</li>
-<li>质量管控：SLA指标、服务目录、营业时间、满意度调查等，人+事件+优先级+免责条件&#x3D;SLA指标，全程质监过程。</li>
-<li>数据统计：工单视图、检索查询、工单列表、统计报表等，归类归集相应工单。</li>
-</ol>
-<p>这样来看，只有网易七鱼、Udesk、易维帮助台、逸创可满足。其中，易维帮助台、逸创从工单系统起步，功能相比更完善，前者基于IT运维的ITIL流程化，后者是模仿Zendesk。其他产品是IM或CTI起步，定位有差异。这几家产品还有触发器&#x2F;批量自动化等提效工具，以满足日增工单量较大的场景。</p>
-<h2 id="4-3小结"><a href="#4-3小结" class="headerlink" title="4.3小结"></a><strong>4.3小结</strong></h2><p>工单不仅适用于部门级应用，如客服部内部流转或简单的岗位之间流转，也可应用于全企业，不同部门之间甚至企业之间流转。根据应用场景罗列功能点如下：</p>
-<ul>
-<li>部门级应用：自定义字段、分派规则设置、工单列表自定义、SLA指标、满意度调查等。</li>
-<li>企业级应用：包含部门级应用所有功能，还需要工单视图、多类型的表单、服务事件分级等，不仅可满足客服部门，还能在同一平台弹性满足其他部门的业务场景，当然SLA绩效指标颗粒度需要更细化，与营业时间、服务对象、服务事件、优先级等综合相关。</li>
-</ul>
-<p>这样看来，目前行业主流产品基本都是定位于部门级应用。值得注意的是，这些产品中易维帮助台是特例，其产品定位于企业级应用，还有“不限坐席”的收费模式与其相配套，如果是应用于全员或全企业的话，更加贴合。</p>
-<h2 id="5-APP移动客服功能对比"><a href="#5-APP移动客服功能对比" class="headerlink" title="5 APP移动客服功能对比"></a><strong>5 APP移动客服功能对比</strong></h2><h2 id="5-1APP应用场景"><a href="#5-1APP应用场景" class="headerlink" title="5.1APP应用场景"></a><strong>5.1APP应用场景</strong></h2><p>移动信息化背景下，越来越多的服务商企业开始重视客服系统APP的应用场景，既可随时随地响应和处理客户服务请求，也可以解决外派服务管理盲区。</p>
-<h2 id="5-2APP功能比对及分析"><a href="#5-2APP功能比对及分析" class="headerlink" title="5.2APP功能比对及分析"></a><strong>5.2APP功能比对及分析</strong></h2><p><img src="https://pic4.zhimg.com/80/v2-d5f3baa36db0a1c2298837189c17fdcb_1440w.webp" alt="img"></p>
-<p>主流云客服系统的APP移动客服功能对比表</p>
-<ol>
-<li>辅助售前咨询：如网易七鱼、环信。界面非常简洁，功能主要是会话处理，网易七鱼还有话务处理（可满足呼叫中心的移动端呼入、录音）功能，还兼顾基础的管理需求—坐席监控。但相比其WEB端的功能完整性，其APP只能作为客服售前咨询的辅助工具。</li>
-<li>主打售前咨询：如智齿、美洽、容联七陌、小能。功能兼具在线会话、工单处理，容联七陌还有话务处理功能。遗憾的是这几家的工单管理功能缺失较多（另见“主流云客服系统测评之工单管理”），只能满足简单的轻量级工单应用。其中，美洽兼顾一定的管理需求，可一定程度上作为移动化客服场景应用；而智齿和容联七陌的APP客服端，一定程度上分别承继了各自产品特点，可满足弱移动化场景需求。</li>
-<li>兼顾售前和售后：如Udesk、易维帮助台、逸创。功能兼具在线会话、工单处理，以及客服管理、统计报表等管理方面功能。其中，Udesk和易维帮助台各有特点：具备话务处理功能的产品中，Udesk是唯一可以满足在线咨询、工单管理及管理需求的APP客服系统；易维帮助台APP与其WEB端的功能基本一致，是所有APP移动客服系统功能最完整的，可真正满足APP外派管理甚至LBS调度场景需求。</li>
-</ol>
-<h2 id="5-3小结"><a href="#5-3小结" class="headerlink" title="5.3小结"></a><strong>5.3小结</strong></h2><p>如上所述，主流云客服系统的APP客服端要么与其WEB端的功能一脉相承，要么作为其WEB端的补充和辅助应用。基本上，APP移动客服都将会话处理作为移动场景必不可少的功能，一方面是由于在线客服的请求需要及时接待，另一方面移动设备是唯一能够适应复杂环境全工作时段应对客户服务的工作终端。</p>
-<h2 id="6-云呼叫中心功能对比"><a href="#6-云呼叫中心功能对比" class="headerlink" title="6 云呼叫中心功能对比"></a><strong>6 云呼叫中心功能对比</strong></h2><h2 id="6-1云呼叫中心应用场景"><a href="#6-1云呼叫中心应用场景" class="headerlink" title="6.1云呼叫中心应用场景"></a><strong>6.1云呼叫中心应用场景</strong></h2><p>云呼叫中心无需企业自行研发、建设和维护，随时随地部署，随时随地接入，日益受到越来越多企业的青睐。云呼叫中心的基础功能包含来电弹屏、IVR导航、队列管理、话务控制、话务监控、数据报表、服务记录、转工单等。当然，除了基础功能，企业还应考虑灵活的接入方案、流程设置、部署方式，以及更好的扩展性，以更好适配自身多元化的业务应用场景。</p>
-<h2 id="6-2云呼叫中心功能对比及分析"><a href="#6-2云呼叫中心功能对比及分析" class="headerlink" title="6.2云呼叫中心功能对比及分析"></a><strong>6.2云呼叫中心功能对比及分析</strong></h2><p><img src="https://pic1.zhimg.com/80/v2-02cb356e9757fb4ca502d62e6209e360_1440w.webp" alt="img"></p>
-<p>主流云呼叫中心系统功能测评对比表</p>
-<p>重要功能点简要梳理：</p>
-<ol>
-<li>接入方案：为了满足不同规模、不同网络环境的电话客服坐席需求，产品应提供多种接入方案。易维帮助台考虑全面，提供了适应10以下的电话盒子，10-20人的IP语音网关，以及20以上的集成呼叫中心。</li>
-<li>IVR导航：可自定义多套语音导航，满足拨打不同外线号码；默认支持多级，并可扩展，灵活设置按键对应的交互功能，如预设语音播放号码归属匹配、VIP坐席留言、挂断等，大多数产品能满足。</li>
-<li>ACD（智能路由分派）：按客户的分配规则，如回头客优先，客户号码归属地区域、客户性别、客户标签、客户分组、VIP客户等。按客服分配规则，如客服技能等级、空闲时长、轮询、随机等。更多的智能分派规则非常有必要，如Udesk和易维帮助台可以更好地适配多元化复杂的业务场景应用。</li>
-<li>坐席管理：呼叫中心坐席至少超过20个，坐席的基础管理功能还是比较实用的，诸如组长监控（包含通话监听、通话强插、强拆、强转等）、通话质检等，大多数产品能满足。</li>
-<li>队列异常：是指排队超时、无坐席接待、排队超员等异常情况的处理机制。常见的是给管理员发送提醒，易维帮助台和小能可提供自动转留言、队列、指定号码等多种自定义选择。</li>
-<li>电销外呼：包含智能语音外呼机器人、智能自动外呼、回访计划、外呼任务等功能点，这个功能目前不是云客服系统的主打功能点，Udesk、智齿、小能、美洽可满足。</li>
-<li>开放接口：主要是指与第三方系统的对接接口，如API接口、IVR接口。易维帮助台一如既往的主打优势，Udesk和容联七陌也不弱。</li>
-<li>SaaS&#x2F;独立部署：如果考虑数据私密性和高并发稳定性，企业优选独立部署；如果倾向低成本快部署，优选考虑SaaS部署。因而，产品应满足不同部署方案，易维帮助台、容联七陌、智齿、逸创、小能可满足。</li>
-</ol>
-<h2 id="6-3小结"><a href="#6-3小结" class="headerlink" title="6.3小结"></a><strong>6.3小结</strong></h2><p>综上，各产品定位有一定侧重性。呼叫中心适用售前售后场景，推荐Udesk和智齿，功能较为完整；如果是售后场景，优选易维帮助台，接入方式多元，部署灵活，自定义和开放接口是其一贯的主打优势，还能接受定制化开发服务。</p>
-<h2 id="7-平台开放性对比"><a href="#7-平台开放性对比" class="headerlink" title="7 平台开放性对比"></a><strong>7 平台开放性对比</strong></h2><h2 id="7-1应用场景"><a href="#7-1应用场景" class="headerlink" title="7.1应用场景"></a><strong>7.1应用场景</strong></h2><p>SaaS 产品为了适配不同业务场景，满足具有一定信息化程度的服务商企业对于信息应用生态互联互通的需求，平台开放性是必不可少的。</p>
-<h2 id="7-2平台开放性功能对比及分析"><a href="#7-2平台开放性功能对比及分析" class="headerlink" title="7.2平台开放性功能对比及分析"></a><strong>7.2平台开放性功能对比及分析</strong></h2><p><img src="https://pic3.zhimg.com/80/v2-5c00b9b35ed7e46b20376cbae26fec56_1440w.webp" alt="img"></p>
-<p>主流客服系统开放平台功能的对比表</p>
-<p>各个开放接口的主要用途如下：</p>
-<ol>
-<li>第三方账号登录：用于帮助台账号与QQ、微信、微博等社交产品账号绑定以实现单点登录，用户将无需单独为帮助台管理账号，便捷用户账户管理。</li>
-<li>SSO（单点登录）：一般多个系统管理会有多个账号密码，员工在登录系统之间来回切换，不仅使用麻烦、效率低，也容易出错。SSO可以让登录入口始终只有一个。但服务商须具有再开发接口的能力。</li>
-<li>API（数据调用）：批量导入或导出客服系统中的数据，可在第三方系统增、删、改、查操作。</li>
-<li>LDAP（轻量目录访问协议）：域控服务器，用户账号的数据字典，自带标准协议，完成对接后，用户在其他产品登录时即到 LDAP 服务器确认用户身份，以实现多系统账号体系的统一，解决痛点问题类似SSO，且无需服务商具有再开发接口的能力。</li>
-<li>WebHook 消息订阅：将客服系统的变动更新信息同步通知到第三方系统。比如审批某个业务流，要求某张关联工单处理完毕，WebHook可将工单回复、处理完毕这类变动，向管理员指定的 URL推送消息，自动完成这个动作。</li>
-<li>字段扩展URL：工单、客户、客户组自定义字段支持设置扩展 url，将值以固定参数传递到指定的 url ，以实现客服控制台中一键跳转至第三方系统查询相关信息，比如：一键查询快递信息。</li>
-<li>应用市场：利用平台开放式应用框架，实现服务商企业个性化的应用安装或选择第三方应用安装。比如可在不影响其他服务商应用的前提下，实现某服务商报表个性化定制应用。不仅如此，服务商还可根据业务场景，安装调用外部应用，而不受限于该软件应用边界。</li>
-</ol>
-<h2 id="7-3小结"><a href="#7-3小结" class="headerlink" title="7.3小结"></a><strong>7.3小结</strong></h2><p>其中，第三方账号登录、API、WebHook是平台开放接口的标配。如果服务商企业还想要进一步的体验升级，大多产品尚待优化，值得一提的是易维帮助台、逸创，平台开放性具有明显优势。</p>
-<h2 id="8测评总结"><a href="#8测评总结" class="headerlink" title="8测评总结"></a><strong>8测评总结</strong></h2><p>云客服系统最大的特点在于标准化和通用性，无需服务商企业搭建研发和维护，按需付费即可使用，并享受持续迭代更新。测评结果综合来看，主流云客服系统包含多渠道接入、在线客服、工单管理、APP移动客服、呼叫中心、开放平台等主要功能模块。</p>
-<p>主要功能模块的标配功能：</p>
-<ol>
-<li>多渠道接入：网页嵌入、App SDK、微信、电话渠道&#x2F;呼叫中心，满足客户随时随地服务请求响应和处理。</li>
-<li>在线客服：用户来源轨迹、基础分派规则、在线基础交互、数据统计和评价反馈，满足在线咨询或技术支持的基础需求。</li>
-<li>工单管理：表单提交、智能分派、反馈评价、数据统计、SLA质量管控，满足规范化和标准化的基础服务流程。</li>
-<li>APP移动客服：在线会话、工单和基础管理，满足企业移动化客服基础需求。</li>
-<li>呼叫中心：来电弹屏、IVR导航、队列管理、话务控制及监控、数据报表、转工单，满足企业电话客服基础需求。</li>
-<li>开放平台：第三方账号登录、API、WebHook，满足企业对于信息应用生态互联互通的基础需求。</li>
-</ol>
-<p>因服务场景多元复杂化，目前还没有一个客服系统满足售前、售中、售后全企业级的应用，各品牌的产品定位存在明显差异优势。</p>
-<p>适用场景和品牌推荐：</p>
-<ul>
-<li><strong>售前场景：</strong>网易七鱼、智齿为代表，优势功能依次为在线客服、呼叫中心（主打智能机器人），应对大量的售前咨询。</li>
-<li><strong>售前售中场景：</strong>网易七鱼、UDESK为代表，即时服务为主，轻量级工单应用。</li>
-<li><strong>售中售后场景：</strong>易维帮助台、逸创为代表，在多渠道接入、工单管理、 APP移动客服、呼叫中心、平台开放等功能优势明显。</li>
-<li><strong>全企业级应用：</strong>易维帮助台，功能模块较完整、自定义程度高、多种部署方案，尤其是不限坐席、不限渠道的收费模式，适合全企业贯通的应用场景。</li>
-</ul>
-<hr>
-<h2 id="SaaS-的演进过程"><a href="#SaaS-的演进过程" class="headerlink" title="SaaS 的演进过程"></a>SaaS 的演进过程</h2><p>SaaS software as a Service 软件即服务  </p>
-<p>马克坚信：一定有一种方式，让购买软件更加方便和便宜。企业不再需要动辄数十万、上百万美元的投入，也不需要经历漫长的安装和实施周期，只要注册和付费，用户通过自行配置就可以使用软件，对软件进行维护和升级也不需要用户亲自动手。</p>
-<p>更关键的是，在移动应用还没有诞生的年代，用户就能在世界各地使用任何终端设备，像访问网站一样随时访问自己的应用。</p>
-<p>这种将软件作为一种服务来销售，而用户只需要每月缴纳固定的费用即可使用软件的模式，在20世纪90年代就已经出现了，当时被称为按需（on-demand）服务，这就是SaaS的雏形。</p>
-<p>在详细说明SaaS模式之前，我们有必要了解一下SaaS的演进过程，看它是如何从一个设想发展成为一种主流的企业服务模式的。</p>
-<p>SaaS在企业服务领域成为一种主流形式，也只是近些年的事情。实际上，这个演进过程相当长，主要经历了4个阶段，如图1-1所示。</p>
-<p>▲图1-1 SaaS的演进过程</p>
-<p>终端设备：通过远程终端访问集中式的主机机房，来处理或获取业务的信息和数据。现在还能在一些影片中看到这种终端设备的身影。<br>C&#x2F;S应用：即客户端&#x2F;服务器的访问模式。通过桌面客户端访问独立服务器，处理或获取业务信息和数据。这是早期开发者和用户在局域网中常用的一种应用架构。<br>网页托管：通过网页托管访问分布式服务器，处理或获取业务信息和数据，也就是所谓ASP（Application Service Provider，应用程序服务提供商）。这时已经出现了诸如多租户、应用共享、订阅收费等形式，有一点SaaS的雏形了。<br>云原生应用：通过云原生应用，访问由软件定义的、虚拟化的服务器，也就是今天的SaaS模式。</p>
-<p>总的来说，SaaS以应用托管和多租户的概念为发端，随着互联网和云计算技术的普及，逐步发展成为一种新的企业服务形式。</p>
-<p>02 怎样理解SaaS</p>
-<p>因为对象和语境不同，所以很难为SaaS做出一个既通俗易懂又科学严谨的定义。</p>
-<p>对于大众群体而言，我们用一个类比来解释SaaS：以前，每家每户都需要挖一口井解决吃水问题；后来改为集中供水，即由自来水公司供水，用户只要按时缴纳水费，打开水龙头就会有水。这省却了找水和打井的过程，也节省了工程成本。自来水公司的业务模式就变成了“供水即服务”。</p>
-<p>对于软件技术人员而言，SaaS是一种新的应用架构模式，引入了共享单个实例、多租户、权限模式、存储模式和计费模式等概念。<br>对于SaaS服务商而言，由于采用与传统软件不同的交付模式和订阅收入模式，SaaS意味着一种全新的商业模式和新的生意机会。</p>
-<p>对于客户而言，SaaS相当于把IT设备、软件和运维服务，全部外包给了SaaS服务商。</p>
-<p>03 IaaS、PaaS和SaaS的概念</p>
-<p>在谈到云服务时，经常会出现IaaS、PaaS和SaaS这三个概念，它们构成了云服务的三层主体。</p>
-<ol>
-<li>XaaS的概念</li>
-</ol>
-<p>我们知道，SaaS是位于应用层面上的服务。想要深入了解SaaS，有必要了解SaaS的基础和周边。与SaaS密切相关的概念还有PaaS和IaaS。</p>
-<p>通过抽象和分层，IT行业创造了“一切即服务”的概念，也就是XaaS。SaaS周边除了PaaS（Platform as a Service，平台即服务）和IaaS（Infrastructure as a Service，基础设施即服务）以外，还衍生出了很多“即服务”概念，如DaaS（数据即服务）、OaaS（运维即服务）等。</p>
-<p>实际上，对这些XaaS仔细分析和分类后会发现，大多数新创的XaaS概念，都可以归结到SaaS、PaaS和IaaS三种核心服务之一。将XaaS分为三层核心服务模式的好处在于，可以清晰界定各自的功能定位。</p>
-<p>很早以前就有了按需服务和服务订阅的概念，如ASP等模式。它们之所以没有成为主流服务形式，除了受技术制约外，主要原因是当时没有做出像今天这样清晰的体系结构以及分层、分工标准。毕竟一家公司除了做应用以外，同时还要做设施、做平台，应用就很难做好。</p>
-<ol start="2">
-<li>SaaS、PaaS和IaaS</li>
-</ol>
-<p>IaaS相当于由软件定义的虚拟服务器，SaaS公司一般不会涉及IaaS。但是SaaS公司要不要做PaaS，到目前都有争论，这主要是因为业内对PaaS的定义还存在不同的理解。</p>
-<p>严格意义上的PaaS是由专业平台服务商运营的服务，它为SaaS提供部署环境和公共工具，比如组织结构、权限、计费、API等，即PaaS是一种公共服务。</p>
-<p>所以，如果严格按照PaaS的定义，大多数SaaS服务商是不可能做、也没必要做PaaS的，至少在SaaS创业初期是这样。实际上，做PaaS需要的技术能力和资源，并不是SaaS创业公司所具备的。因为SaaS服务商的强项在于业务和应用，而不是平台技术和服务能力。</p>
-<p>实际上，目前国内对PaaS的理解都不太准确。所谓的PaaS实际上是SaaS公司的内部应用平台，它其实是SaaS的一部分，为了便于从层次概念上进行区分，将其称为应用PaaS（Application PaaS，APaaS）。IaaS、PaaS和SaaS三者的关系如图1-2所示。</p>
-<p>▲图1-2 IaaS、PaaS和SaaS三者的关系</p>
-<p>04 与SaaS有关的几个概念</p>
-<p>在谈到SaaS时，我们经常听到诸如ToB、企业服务、软件、PaaS等概念。这些概念很容易混淆，所以有必要在此说明一下它们的含义以及相互之间的关系。</p>
-<ol>
-<li>ToB</li>
-</ol>
-<p>从服务对象的角度看，服务可以分为两大类：ToB，即面向组织；ToC，即面向个人消费者。此外还有所谓的ToG（面向政府机构），我们一般将其算作面向组织，也就是当作ToB看待。</p>
-<p>ToB的范围很大，SaaS只是ToB中的一个类别，它们之间是包含关系，但有时这两个词被混用。</p>
-<ol start="2">
-<li>企业服务</li>
-</ol>
-<p>企业服务是一个面向组织的服务的统称。实际上，企业服务有很多种类和形式，为企业提供诸如IT服务外包、人力资源、法律服务、咨询服务、财税服务、企业培训等业务，甚至物流服务和企业保洁，也属于企业服务。</p>
-<p>SaaS只是众多企业服务方式中的一种，SaaS领域所说的企业服务，特指以SaaS方式为企业提供的服务，如SaaS CRM、SaaS财税等。</p>
-<p>虽然SaaS与企业服务经常被混用，但二者还是有差别的：SaaS代表了一种服务的提供方式；而企业服务则代表服务的具体内容。也就是说，SaaS服务商看到的是SaaS，而企业客户看到的是服务。SaaS改变的是服务方式，并不是改变服务的内容。</p>
-<ol start="3">
-<li>软件</li>
-</ol>
-<p>虽然软件业务和SaaS二者都包含软件，但它们是完全不同的两种业务，有着不同的商业模式。也就是说，软件和SaaS是两种不同的生意，一个卖产品，一个卖服务。</p>
-<p>从行业市场看，软件与SaaS是竞争和替代关系，软件本身也有向SaaS转型的趋势。</p>
-<ol start="4">
-<li>PaaS</li>
-</ol>
-<p>按照PaaS业务模式的定义，大多数SaaS公司自己开发的PaaS都不是真正意义上的PaaS，这些PaaS其实都是SaaS。反过来说，所有SaaS必须具有PaaS的业务可定义和可扩展的能力，这是为了补偿SaaS个性化能力的不足。</p>
  
       <!-- reward -->
       
