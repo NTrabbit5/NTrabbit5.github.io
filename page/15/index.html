@@ -126,6 +126,53 @@
     
     
     <article
+  id="post-20221113-身份证校验"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/11/13/20221113-%E8%BA%AB%E4%BB%BD%E8%AF%81%E6%A0%A1%E9%AA%8C/"
+    >20221113-身份证校验</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/11/13/20221113-%E8%BA%AB%E4%BB%BD%E8%AF%81%E6%A0%A1%E9%AA%8C/" class="article-date">
+  <time datetime="2022-11-13T12:54:07.000Z" itemprop="datePublished">2022-11-13</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>国内身份证号码查询验证<br>1、身份证号合法性验证<br>2、支持15位和18位身份证号<br>3、支持地址编码、出生日期、校验位验证<br>其他说明<br>根据〖中华人民共和国国家标准 GB 11643-1999〗中有关公民身份号码的规定，公民身份号码是特征组合码，由十七位数字本体码和一位数字校验码组成。<br>排列顺序从左至右依次为：六位数字地址码，八位数字出生日期码，三位数字顺序码和一位数字校验码。<br>地址码表示编码对象常住户口所在县(市、旗、区)的行政区划代码。<br>出生日期码表示编码对象出生的年、月、日，其中年份用四位数字表示，年、月、日之间不用分隔符。<br>顺序码表示同一地址码所标识的区域范围内，对同年、月、日出生的人员编定的顺序号。顺序码的奇数分给男性，偶数分给女性。<br>校验码是根据前面十七位数字码，按照ISO 7064:1983.MOD 11-2校验码计算出来的检验码。<br>出生日期计算方法。<br>15位的身份证编码首先把出生年扩展为4位，简单的就是增加一个19或18,这样就包含了所有1800-1999年出生的人;<br>2000年后出生的肯定都是18位的了没有这个烦恼，至于1800年前出生的,那啥那时应该还没身份证号这个东东，⊙﹏⊙b汗…<br>下面是正则表达式:<br>出生日期1800-2099 (18|19|20)?\d{2}(0[1-9]|1[12])(0[1-9]|[12]\d|3[01])<br>身份证正则表达式 &#x2F;^\d{6}(18|19|20)?\d{2}(0[1-9]|1[12])(0[1-9]|[12]\d|3[01])\d{3}(\d|X)$&#x2F;i<br>15位校验规则 6位地址编码+6位出生日期+3位顺序号<br>18位校验规则 6位地址编码+8位出生日期+3位顺序号+1位校验位<br>校验位规则 公式:∑(ai×Wi)(mod 11)……………………………………(1)<br>公式(1)中：<br>i—-表示号码字符从由至左包括校验码在内的位置序号；<br>ai—-表示第i位置上的号码字符值；<br>Wi—-示第i位置上的加权因子，其数值依据公式Wi&#x3D;2^(n-1）(mod 11)计算得出。<br>i 18 17 16 15 14 13 12 11 10 9 8 7 6 5 4 3 2 1<br>Wi 7 9 10 5 8 4 2 1 6 3 7 9 10 5 8 4 2 1</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-20221113-用python发邮件"
   class="article article-type-post"
   itemscope
@@ -2547,78 +2594,6 @@
 </tbody></table>
 <h2 id="五．命令行"><a href="#五．命令行" class="headerlink" title="五．命令行"></a>五．命令行</h2><p>  Everything的命令行选项：everything提供的命令提供了更多选项，用于配置设置和搜索，窗口的功能大部分都可以通过命令实现，此外还提供编辑搜索列表、全屏显示结果、调试everything、设置数据库等很多小功能。<br>   命令行界面的everything：如前所述，官网提供了命令行界面的everything，直接下载就可以用。由于该软件强大的搜索功能，因此用于二次开发也不为过(这就是下面要说的Everything-SDK.zip)，官网也提供了该程序源码，解压后是个es-src文件夹，我采用vc6编译之，为了成功编译，需要建立一个控制台程序，然后在everything_ipc.h里定义typedef unsigned long ULONG_PTR;，之后把工程改成UNICODE的，就成功了。顺便看了他的实现代码，它是通过命令行接受用户的搜索字符串，通过发送一个WM_COPYDATA消息吧这些数据发给后台everything.exe处理，处理完成后会发送回WM_COPYDATA消息给命令行程序，命令行接收搜索结果并显示。<br>   Everything-sdk则是一个更加专业的接口可以用c&#x2F;c++调用，源码提供了封装成dll调用的方法。和命令行界面的everything相比，这个代码更加专业、安全、稳定，除了WM_COPYDATA它还提供了第二种方法实现进程通信，那就是在后台创建一个everything线程，传递参数，目标程序会发送WM_COPYDATA回来，这样就可以接收到搜索结果。<br>   注意：上述几种方式都要求后台everything程序在运行且数据库处理完毕。</p>
 <h2 id="题外话"><a href="#题外话" class="headerlink" title="题外话"></a>题外话</h2><p>  有人说了，everything是很强大，那么搜索文件内容怎么办呢，我推荐你使用notepad++，同样，这也是一款神器，支持正则表达式，不支持通配符。他的文件查找有一项“文件查找“可以指定单个目录，筛选特定文件类型的文件进行内容查找。曾经有人让我找所有形如E<em>G</em>D*I的单词，我下了一个牛津高阶词典，然后使用正则表达式：[a-z]*e[a-z]*g[a-z]*d[a-z]<em>i[a-z]</em><br>   然后就开始搜索吧，enjoy it!!!</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20220826-Mac定时睡眠、关机、重启命令"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/08/26/20220826-Mac%E5%AE%9A%E6%97%B6%E7%9D%A1%E7%9C%A0%E3%80%81%E5%85%B3%E6%9C%BA%E3%80%81%E9%87%8D%E5%90%AF%E5%91%BD%E4%BB%A4/"
-    >20220826-Mac定时睡眠、关机、重启命令</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/08/26/20220826-Mac%E5%AE%9A%E6%97%B6%E7%9D%A1%E7%9C%A0%E3%80%81%E5%85%B3%E6%9C%BA%E3%80%81%E9%87%8D%E5%90%AF%E5%91%BD%E4%BB%A4/" class="article-date">
-  <time datetime="2022-08-26T04:45:29.000Z" itemprop="datePublished">2022-08-26</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h2 id="命令说明"><a href="#命令说明" class="headerlink" title="命令说明"></a>命令说明</h2><ol>
-<li>命令如下：<br> <code>sudo shutdown [-h | -r | -s] [time]</code><br> <strong>此命令需要管理员权限</strong></li>
-<li>参数说明：</li>
-</ol>
-<ul>
-<li><p><code>-h</code> ：关机（halt）</p>
-</li>
-<li><p><code>-r</code> ：重启（reboot）</p>
-</li>
-<li><p><code>-s</code> ：休眠（sleep）</p>
-</li>
-<li><p>&#96;&#96;&#96;<br>time</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">   ：执行操作的时间 </span><br><span class="line"></span><br><span class="line">  - yymmddhhmm ：指定年月日时分，如 17022318 表示2017年2月23日18时</span><br><span class="line">  - now ：现在</span><br><span class="line">  - +n ：n分钟后</span><br><span class="line">  - hh:mm ：今天某时某分</span><br><span class="line"></span><br><span class="line">1. 其他关机和重启命令</span><br><span class="line">    立刻关机：`sudo halt`</span><br><span class="line">    立刻重启：`sudo reboot` </span><br><span class="line"></span><br><span class="line">## 例子</span><br><span class="line"></span><br><span class="line">1. 在 2017年2月23日18时 关机</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">```bash</span><br><span class="line">sudo shutdown -h 1702231800</span><br></pre></td></tr></table></figure></li>
-</ul>
-<ol>
-<li>立刻重启</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo shutdown -r now</span><br></pre></td></tr></table></figure>
-
-<p>或者</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo reboot</span><br></pre></td></tr></table></figure>
-
-<ol>
-<li>今晚 20 点休眠</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo shutdown -s 20:00</span><br></pre></td></tr></table></figure>
  
       <!-- reward -->
       
