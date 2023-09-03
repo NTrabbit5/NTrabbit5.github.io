@@ -126,6 +126,104 @@
     
     
     <article
+  id="post-20221224-HomeAssistant树莓派-维护答疑"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/12/24/20221224-HomeAssistant%E6%A0%91%E8%8E%93%E6%B4%BE-%E7%BB%B4%E6%8A%A4%E7%AD%94%E7%96%91/"
+    >20221224-HomeAssistant树莓派-维护答疑</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/12/24/20221224-HomeAssistant%E6%A0%91%E8%8E%93%E6%B4%BE-%E7%BB%B4%E6%8A%A4%E7%AD%94%E7%96%91/" class="article-date">
+  <time datetime="2022-12-24T03:02:34.000Z" itemprop="datePublished">2022-12-24</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>求人不如求己</p>
+<p>官网</p>
+<p>Home Assistant<br>Github</p>
+<p>Homebridge<br>Home Assistant<br>Homebridge-homeassistant<br>Homebridge-mi-aqara<br>Hassio 第三方源<br>HA-floorplan</p>
+<p>社群&amp;论坛</p>
+<p>个人主导的文档翻译 home assistant 中文文档 中文 </p>
+<p>个人相关 专题 slack 中文 </p>
+<p>ha 官方论坛 </p>
+<p>瀚思彼岸论坛 （中文）<br>HA 汉化参考文档（非官方，我参与部分翻译工作）</p>
+<h2 id="系统更新"><a href="#系统更新" class="headerlink" title="系统更新"></a>系统更新</h2><p>home assistant</p>
+<p>ha 的更新方法跟随安装方法各不相同，我在安装篇中均有涉及，这里特别提取出来，方便大家参考</p>
+<p>注意，为了保证国内用户的更新速度，我特别在更新指令中明确了pypi 源，海外的派友可以忽略，此外的以下命令均使用sudo 权限</p>
+<p>All-in-One<br>sudo systemctl stop home-assistant.service<br>sudo su -s &#x2F;bin&#x2F;bash homeassistant<br>source &#x2F;srv&#x2F;homeassistant&#x2F;homeassistant_venv&#x2F;bin&#x2F;activate<br>pip3 install –upgrade homeassistant -i <a target="_blank" rel="noopener" href="https://pypi.doubanio.com/simple/">https://pypi.doubanio.com/simple/</a><br>exit<br>sudo system start home-assistant.service<br>Hassbian<br>sudo systemctl stop <a href="mailto:&#x68;&#111;&#109;&#x65;&#x2d;&#97;&#115;&#x73;&#105;&#x73;&#x74;&#x61;&#110;&#116;&#64;&#x68;&#x6f;&#109;&#101;&#x61;&#115;&#x73;&#x69;&#x73;&#116;&#x61;&#x6e;&#x74;&#46;&#x73;&#x65;&#x72;&#118;&#105;&#x63;&#101;">&#x68;&#111;&#109;&#x65;&#x2d;&#97;&#115;&#x73;&#105;&#x73;&#x74;&#x61;&#110;&#116;&#64;&#x68;&#x6f;&#109;&#101;&#x61;&#115;&#x73;&#x69;&#x73;&#116;&#x61;&#x6e;&#x74;&#46;&#x73;&#x65;&#x72;&#118;&#105;&#x63;&#101;</a><br>sudo su -s &#x2F;bin&#x2F;bash homeassistant<br>source &#x2F;srv&#x2F;homeassistant&#x2F;bin&#x2F;activate<br>pip3 install –upgrade homeassistant -i <a target="_blank" rel="noopener" href="https://pypi.doubanio.com/simple/">https://pypi.doubanio.com/simple/</a><br>exit<br>sudo systemctl start <a href="mailto:&#x68;&#x6f;&#x6d;&#x65;&#45;&#97;&#115;&#115;&#105;&#115;&#x74;&#97;&#110;&#116;&#64;&#x68;&#111;&#x6d;&#x65;&#97;&#x73;&#115;&#x69;&#x73;&#116;&#x61;&#x6e;&#116;&#x2e;&#115;&#101;&#x72;&#x76;&#105;&#99;&#x65;">&#x68;&#x6f;&#x6d;&#x65;&#45;&#97;&#115;&#115;&#105;&#115;&#x74;&#97;&#110;&#116;&#64;&#x68;&#111;&#x6d;&#x65;&#97;&#x73;&#115;&#x69;&#x73;&#116;&#x61;&#x6e;&#116;&#x2e;&#115;&#101;&#x72;&#x76;&#105;&#99;&#x65;</a></p>
+<h3 id="homebridge"><a href="#homebridge" class="headerlink" title="homebridge"></a>homebridge</h3><p>hb 及其组件的更新是在node.js 框架内进行的，使用sudo npm upgrade -g 包名 相关命令即可完成，常用的包有</p>
+<p>homebridge<br>homebridge-yeelight<br>homebridge-mi-aqara<br>homebridge-homeassistant<br>homebridge-mi-acpartner<br>homebridge-mi-airpurifier<br>homebridge-mi-philips-light</p>
+<p>具体的配置方法可在github 里直接搜索插件名获取</p>
+<p>国内派友可以转用淘宝镜像源</p>
+<p>npm config set registry <a target="_blank" rel="noopener" href="https://registry.npm.taobao.org/">https://registry.npm.taobao.org</a></p>
+<p>日志监测</p>
+<p>系统日志是debug 的核心参考文件，希望大家遇到问题学会第一时间查看log ，定位问题，同时在向人提问时，附上相关的log ，也是良好的提问习惯</p>
+<p>当我们把 HB&amp;HA 添加进系统后台自启项目后，便可以直接通过systemctl 命令进行打开，关闭，重启、查询系统服务日志等一系列操作，常见的命令有</p>
+<p>启动 systemctl start 服务名<br>终止：systemctl stop 服务名<br>重启：systemctl restart 服务名<br>查询服务状态：systemctl status 服务名 -l<br>查询日志：journalctl -u 服务名<br>列出所有服务：systemctl list-unit-files –type&#x3D;service</p>
+<p>经常使用的服务有</p>
+<p>homebridge<br>home-assistant.service (Raspbian)<br><a href="mailto:&#x68;&#111;&#x6d;&#x65;&#45;&#x61;&#115;&#x73;&#105;&#x73;&#116;&#x61;&#110;&#x74;&#x40;&#104;&#x6f;&#109;&#101;&#x61;&#115;&#115;&#105;&#x73;&#116;&#x61;&#110;&#x74;&#x2e;&#x73;&#101;&#114;&#118;&#x69;&#x63;&#x65;">&#x68;&#111;&#x6d;&#x65;&#45;&#x61;&#115;&#x73;&#105;&#x73;&#116;&#x61;&#110;&#x74;&#x40;&#104;&#x6f;&#109;&#101;&#x61;&#115;&#115;&#105;&#x73;&#116;&#x61;&#110;&#x74;&#x2e;&#x73;&#101;&#114;&#118;&#x69;&#x63;&#x65;</a> (Hassbian)<br><a href="mailto:&#x61;&#x70;&#112;&#x64;&#x61;&#101;&#x6d;&#x6f;&#x6e;&#x40;&#97;&#x70;&#112;&#x64;&#x61;&#x65;&#109;&#x6f;&#x6e;&#46;&#115;&#101;&#x72;&#x76;&#x69;&#x63;&#x65;">&#x61;&#x70;&#112;&#x64;&#x61;&#101;&#x6d;&#x6f;&#x6e;&#x40;&#97;&#x70;&#112;&#x64;&#x61;&#x65;&#109;&#x6f;&#x6e;&#46;&#115;&#101;&#x72;&#x76;&#x69;&#x63;&#x65;</a> (HADashborad)<br>samba (SMB)</p>
+<p>另外还可以使用下述指令追踪所有服务日志，tail -F &#x2F;var&#x2F;log&#x2F;daemon.log</p>
+<p>除了通过systemctl 查询日志，ha 查看日志的方法比较锁阳，最直观的就是在系统前端的dev-info 面板查看，日志文件放在配置文件所在的文件夹中，home-assistant.log 文件便是，HB 如若手动开启，默认在终端中滚动显示实时日志</p>
+<p>Q&amp;A<br>HB 端口被占用</p>
+<p>events.js:160 throw er; &#x2F;&#x2F; Unhandled ‘error’ event ^ Error: listen EADDRINUSE :::51826 at Object.exports._errnoException</p>
+<p>出现上述错误的原因是用户在添加 HB 为自启任务的情况下，手动开启 HB。通俗来说就是你在同一端口试图开启 2 个 HB，因此显示端口被占用。</p>
+<p>解决办法就是无需重复开启 HB，直接使用上面提及的指令重启已开启的 HB 服务即可；或者关闭已开启的 HB，再使用 homebridge 手动开启新的 HB 服务。</p>
+<p>成功安装 HB + HA 并在家庭 app 添加“桥”后，显示无设备</p>
+<p>这是由于 HB-HA 插件更新导致的，最新的插件中，HB 的 config.json配置文件增加了一项设置 “default_visibility”:”visible”，在 2.3.1 版本前默认是隐藏的，因此就出现了所有设备被隐藏的情况。解决方法非常简单，将 HB-HA 插件更新到最新版本即可，默认会自动添加以上指令，大家也可以手动添加。</p>
+<p>HA 配置文件格式错误</p>
+<p>需要再次提醒的是，yaml文档非常强调代码的格式，因此请大家额外重视空格、换行、-号的使用。一般来说，在最新 HA 系统中，如果配置文件格式出现错误，首页中会出现如下提示：</p>
+<p>null<br>同时结合 Log，可以快速定位出错的位置。</p>
+<p>格式正确，无法添加小米网关</p>
+<p>很多情况下，这表明你的格式并不正确 ：（ ，常见的错误有：</p>
+<p>key 大小写问题<br>mac 的 : 号问题</p>
+<p>另，小米平台在 0.53 之后的更新中统一为 2 个 接入方式：Zigbee 设备统一使用 xiaomi_aqara；WiFi 设备统一使用 xiaomi_miio，请注意区别。</p>
+<p>设备在家庭 app 中重复出现</p>
+<p>出现此错误的原因是用户将同一设备同时接入了 HA 和 HB，那么 Homekit 就会通过 HB-HA 插件识别一次设备，后再通过 HB 的其他相关插件识别一次设备，最终导致重复识别添加。</p>
+<p>解决方法就是在 HA 配置文件 configuration.yaml的 customize模块中找到对应设备，添加 homebridge_hidden: true 设置，之后重启 HA、HB 服务即可。如果仍未生效，请清除 HB 缓存后重试。 更具体的设置方法，欢迎参考系列的”个性化配置篇”</p>
+<p>平面图在 iOS 及 macOS 中显示 script error</p>
+<p>由于之前代码未跟进 Polymer 2.0 框架，导致 Apple Webkit 载入错误。目前作者已经修复了这个问题，请大家前往 Github 下载最新的源码。</p>
+<p>HA 或者 HB 配置文件进行改动后，没有生效<br>如果你在 HA 进行了有关 HB 的配置变更，如设置 homebridge_hidden 等属性或者对 HB 的 config.json 文件进行了修改。修改后首先需要做的是重启 HB，清除 iOS 家庭 app 的后台。重新打开 app，如若发现配置尚未生效，就需要考虑清除 HB 的缓存：</p>
+<p>sudo rm -rf &#x2F;home&#x2F;pi&#x2F;.homebridge&#x2F;persist&#x2F;<br>需要注意的是清除缓存将导致先前所有在家庭 app 内的分组命名等操作失效。<br>之后重启 HB，配置应该就如期生效了。</p>
+<p>在 HB 中删除“桥”后无法再添加或嗅探到<br>发生此问题的原因是，系统已经对你的设备和配置有了记忆，因此需要删除有关缓存。<br>首先，使用和 『问题7』同样的操作，清理 HB 缓存，重开 APP，确认是否可以添加。<br>如果该方法依旧不能解决问题，则打开 HB 的配置文件 config.json，将开头的 username 项类似 mac 地址的字符串更改几个数字，之后同样清除缓存，重启 HB，重开 app。</p>
+<p>Apple Home 可以实现外网控制吗?<br>可以，实现外网控制需要一台处于内网环境下的 Apple TV （3代及以上）或者 iPad 当做『家庭中枢』。如果需要使用 家庭 App 自带的『自动化设置』功能，则只有 第 4 代 Apple TV 支持。</p>
+<p>安装不完整导致 dns 服务器错误<br>如果启动 HB 后遇到如下错误：</p>
+<p>module.js:328<br>    throw err;<br>    ^</p>
+<p>Error: Cannot find module ‘..&#x2F;build&#x2F;Release&#x2F;dns_sd_bindings’<br>    at Function.Module._resolveFilename (module.js:326:15)<br>    at Function.Module._load (module.js:277:25)<br>    at Module.require (module.js:354:17)<br>    at require (internal&#x2F;module.js:12:17)<br>    at Object.<anonymous> (&#x2F;usr&#x2F;local&#x2F;lib&#x2F;node_modules&#x2F;homebridge&#x2F;node_modules&#x2F;mdns&#x2F;lib&#x2F;dns_sd.js:32:22)<br>    at Module._compile (module.js:410:26)<br>    at Object.Module._extensions..js (module.js:417:10)<br>    at Module.load (module.js:344:32)<br>    at Function.Module._load (module.js:301:12)<br>    at Module.require (module.js:354:17)<br>请操作如下指令：</p>
+<p>cd &#x2F;usr&#x2F;local&#x2F;lib&#x2F;node_modules&#x2F;homebridge<br>sudo npm install –unsafe-perm mdns<br>sudo npm rebuild –unsafe-perm<br>以上是比较普遍出现在派友中的问题，我也将不断更新，大家亦可通过评论及其他渠道反映个人遇到的困难。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-20221222-python：PIL库中getpixel方法的使用"
   class="article article-type-post"
   itemscope
@@ -907,70 +1005,6 @@
 <p>FireBeetle-ESP32全称是FireBeetle Board-ESP32微控制器，是由DFRobot基于Espressif ESP32主芯片开发的物联网、低功耗为控制器。FireBeetle-ESP32板载ESP-WROOM-32双核芯片，支持WiFi和蓝牙双模通信，外围兼容低功耗硬件设计，深度睡眠模式下功耗仅为10uA。FireBeetle-ESP32控制器还提供了3.7V锂电池接口，并可以通过USB口给锂电池充电。其次，在软件方面，已经支持WiFi和蓝牙功能的使用，支持I2S音频的解码，结合uPyCraft IDE，可以轻松完成物联网开发设计。值得说明的是，本书的microPython教程是基于FireBeetle-ESP32控制器硬件。</p>
 <p>WiPy</p>
 <p>WiPy是支持microPython编程、支持WiFi和蓝牙的开发板，定位于物联网应用的设计。WiPy控制器的核心采用Espressif ESP32芯片，其最大的特点在于体积小巧，支持蓝牙和WiFi，这点和DFRobot的FireBeetle萤火虫系列主板相似。</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20221219-固件firmware固件与驱动的区别"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/12/19/20221219-%E5%9B%BA%E4%BB%B6firmware%E5%9B%BA%E4%BB%B6%E4%B8%8E%E9%A9%B1%E5%8A%A8%E7%9A%84%E5%8C%BA%E5%88%AB/"
-    >20221219-固件firmware固件与驱动的区别</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/12/19/20221219-%E5%9B%BA%E4%BB%B6firmware%E5%9B%BA%E4%BB%B6%E4%B8%8E%E9%A9%B1%E5%8A%A8%E7%9A%84%E5%8C%BA%E5%88%AB/" class="article-date">
-  <time datetime="2022-12-19T03:12:53.000Z" itemprop="datePublished">2022-12-19</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/0222686c0fb4">https://www.jianshu.com/p/0222686c0fb4</a></p>
-<p>固件 firmware 就是写入EROM 可擦写只读存储器，或者EEPROM 电可擦写可编程只读存储器中的程序</p>
-<p>固件是指设备内部保存的设备驱动程序，通过固件，操作系统才能按照标准的设备驱动实现特定机器的运行运作，比如 光驱、刻录机 等都有内部固件</p>
-<p>固件是担任着一个系统最基础最底层工作的软件，而在硬件设备中，固件就是硬件设备的灵魂，因为一些硬件设备除了固件以外没有其他软件组成，因此固件也就决定了这硬件设备的功能以及性能</p>
-<p>手机、数码相机、mp3、mp4、路由器、电子书、交换机、猫、PSP、PS3、NDS、XBOX、U盘、主板、打印机的BIOS（BIOS就是一种固件）、显卡的BIOS。</p>
-<p>固件既然是软件，就有大小之分，大的可有几百兆，小的也许只有几K 甚至不足1k</p>
-<p>而对于非独立的电子产品，比如硬盘、鼠标 bios 光驱、是、盘等设备，固件就是指其最底层的，让设备得以运行的程序代码</p>
-<p>固件与驱动的区别</p>
-<p>驱动和固件都是代码，前者为软件服务，后者为硬件服务</p>
-<p>随着计算机体系结构的发展，硬件的种类开始变多，操作系统的种类也变多了，这个时候，因为各种技术的、商业的原因，硬件厂商希望自己的硬件能被更多的软件厂商使用，所以就需要在硬件之上做一些封装，让自己的硬件操纵起来更容易，这个时候就要有 firmware 这种东西了，它简化了软件与硬件的交互</p>
-<p>但是为什么不把firmware 做的很完美，做的不需要驱动支持呢？因为有不同的操作系统</p>
-<p>不同的操作系统，对于操作硬件的方式完全不同，在windows 里应用态是无法直接写io 端口的，而在嵌入式系统里，一般都不限制直接操作io 端口，所以，硬件厂商一方面为了自己的硬件能被软件更简单的使用，就需要写firmware ，而另一方面为了兼容各种操作系统，又不能把firmware 写的太死，必须预留足够的余地让软件自由发挥，软件的自由发挥就是驱动</p>
-<p>不同操作系统的驱动是不能兼容的，原因就是驱动是为操作系统服务的，有的操作系统是单线程的，有些操作系统不允许动态申请内存，所以不同的操作系统要操作硬件，就要根据自身的特性编写对应的操作代码，这就是驱动存在的意义–适应系统需要</p>
-<p>假如世界上只有一种操作系统，并且版本永远不会改变，那么firmware 和驱动就可以融合在一起，但这只能是一个不现实的梦想，要知道民用操作系统和工业控制操作系统差别是十分巨大的</p>
-<p>从计算机领域来说，驱动和固件从来没有过明确的定义，就好像今天我们说内存，大部分人用来表示SDRAM 但也有人把android 里的固化的flash storage 称为内存，你不能说这样说就错了，因为这确实是一种内部存储</p>
-<p>但在linux kernel 中，driver 和firmware 是有明确含义的，其中 driver 是控制被操作系统管理的外部设备 device 的代码段，很多时候 driver 会被实现为LKM 但这不是必要条件，driver 通过 register_driver 注册到总线上，当某个device 被注册到同样的总线的时候，driver 和device 会通过一定的策略进行binding ，最终在probe 函数中由driver 实际控制对应的设备，并把对该设备的控制接口注册到linux 的其他子系统上</p>
-<p>而 firmware，是表示运行在非 控制处理器 （指不直接运行操作系统的处理器，例如外设中的处理器，或者被用于bare metal 的主处理器的其中一些核） 中的程序，这些程序很多时候使用和操作所运行的处理器完全不同的指令集，这些程序以二进制形式存在于linux内核的源代码树中，根据配置，可以直接集成到最终的映像中，或者被拷贝到指定的位置，当driver 对device 进行初始化的时候，通过load_firmware 等接口，可以把指定的firmware 加载到内存中，由驱动传输到指定的设备上</p>
-<p>所以，总的来说，其实 driver 和firmware 没有什么直接的关系</p>
  
       <!-- reward -->
       

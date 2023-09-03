@@ -126,6 +126,53 @@
     
     
     <article
+  id="post-20230903-BiBTeX逆波兰语法"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/09/03/20230903-BiBTeX%E9%80%86%E6%B3%A2%E5%85%B0%E8%AF%AD%E6%B3%95/"
+    >20230903-BiBTeX逆波兰语法</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/09/03/20230903-BiBTeX%E9%80%86%E6%B3%A2%E5%85%B0%E8%AF%AD%E6%B3%95/" class="article-date">
+  <time datetime="2023-09-03T02:05:05.000Z" itemprop="datePublished">2023-09-03</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>[TOC]</p>
+<h2 id="0x01"><a href="#0x01" class="headerlink" title="0x01"></a>0x01</h2><h2 id="0x02"><a href="#0x02" class="headerlink" title="0x02"></a>0x02</h2><h2 id="0x03"><a href="#0x03" class="headerlink" title="0x03"></a>0x03</h2><h2 id="0x04"><a href="#0x04" class="headerlink" title="0x04"></a>0x04</h2> 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-20230821-Lean交互式定理证明器简介"
   class="article article-type-post"
   itemscope
@@ -1491,54 +1538,6 @@
 <p>我们来简单的说说降压型开关电源的工作原理：电路由开关（实际电路中为三极管或者场效应管），续流二极管、储能电感、滤波电容等构成。</p>
 <p>当开关闭合时，电源通过开关、电感给负载供电，并将部分电能储存在电感以及电容中。由于电感的自感，在开关接通后，电流增大得比较缓慢，即输出不能立刻达到电源电压值。<br>一定时间后，开关断开，由于电感的自感作用（可以比较形象的认为电感中的电流有惯性作用），将保持电路中的电流不变，即从左往右继续流。这电流流过负载，从地线返回，流到续流二极管的正极，经过二极管，返回电感的左端，从而形成了一个回路。<br>通过控制开关闭合跟断开的时间（即PWM——脉冲宽度调制），就可以控制输出电压。如果通过检测输出电压来控制开、关的时间，以保持输出电压不变，这就实现了稳压的目的。　　 <strong>普通电源和开关电源相同的是都有电压调整管，利用反馈原理来进行稳压的，不同的是开关电源利用开关管进行调整，普通电源一般利用三极管的线性放大区进行调整。比较而言，开关电源的能耗低，对交流电压适用范围要宽，输出直流的波纹系数要好，缺点是开关脉冲干扰。</strong><br>　　普通半桥开关电源的主要工作原理就是上桥和下桥的开关管(频率高时开关管为VMOS)轮流导通，首先电流通过上桥开关管流入，利用电感线圈的存储功能，将电能集聚在线圈中，最后关闭上桥开关管，打开下桥的开关管，电感线圈和电容持续给外部供电。然后又关闭下桥开关管，再打开上桥让电流进入，就这样重复进行，因为要轮流开关两开关管，所以称为开关电源。　　而线性电源就不一样了，由于没有开关介入，使得上水管一直在放水，如果有多的，就会漏出来，这就是我们经常看到的某些线性电源的调整管发热量很大，用不完的电能，全部转换成了热能。从这个角度来看，线性电源的转换效率就非常低了，而且热量高的时候，元件的寿命势必要下降，影响最终的使用效果。</p>
 <p><strong>主要区别：工作方式</strong><br>线性电源的功率调整管总是工作在放大区，流过的电流是连续的。由于调整管上损耗较大的功率，所以需要较大功率调整管并装有体积很大的散热器，发热严重，效率很低，一般在40%~60%（还得说是很好的线性电源）。<br>线性电源的工作方式，使从高压变低压必须有将压装置，一般的都是变压器，也有别的像KX电源，再经过整流输出直流电压。这样一来体积也就很大，比较笨重，效率低、发热量也大；但也有优点：纹波小、调整率好、对外干扰小、适合用与模拟电路&#x2F;各类放大器等。　　开关电源它的功率器件工作在开关状态，在电压调整时能量是通过电感线圈来临时贮存，这样他的损耗就小，效率也就高，对散热的要求低，但它对变压器和贮能电感也有了更高的要求，要用低损耗高磁导率的材料来做。它的变压器就是一个字小。总效率在80%～98%，开关电源的效率高但体积小，但是和线性电源比他的纹波，电压电流调整率就有一定的折扣了。</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20230808-直播相关软件知识"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/08/08/20230808-%E7%9B%B4%E6%92%AD%E7%9B%B8%E5%85%B3%E8%BD%AF%E4%BB%B6%E7%9F%A5%E8%AF%86/"
-    >20230808-直播相关软件知识</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/08/08/20230808-%E7%9B%B4%E6%92%AD%E7%9B%B8%E5%85%B3%E8%BD%AF%E4%BB%B6%E7%9F%A5%E8%AF%86/" class="article-date">
-  <time datetime="2023-08-08T01:22:59.000Z" itemprop="datePublished">2023-08-08</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>OBS</p>
-<p>下载地址 <a target="_blank" rel="noopener" href="https://www.obs.pub/">https://www.obs.pub</a></p>
  
       <!-- reward -->
       
