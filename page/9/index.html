@@ -126,6 +126,219 @@
     
     
     <article
+  id="post-20221224-HomeAssistant树莓派-远程安全访问"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/12/24/20221224-HomeAssistant%E6%A0%91%E8%8E%93%E6%B4%BE-%E8%BF%9C%E7%A8%8B%E5%AE%89%E5%85%A8%E8%AE%BF%E9%97%AE/"
+    >20221224-HomeAssistant树莓派-远程安全访问</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/12/24/20221224-HomeAssistant%E6%A0%91%E8%8E%93%E6%B4%BE-%E8%BF%9C%E7%A8%8B%E5%AE%89%E5%85%A8%E8%AE%BF%E9%97%AE/" class="article-date">
+  <time datetime="2022-12-24T03:57:15.000Z" itemprop="datePublished">2022-12-24</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>Home Assistant 本身为外网访问提供完整的 Let’s Encryption + Duck Dns 支持，<br>基于国内的网络环境，个人不太推荐，一是前者的加密需要每3个月进行更新，虽然有自动更新脚本和组件，但心里始终挂着一件事不舒服，二是国内网络运行商基本上封闭了80端口，后者直接ng</p>
+<p>国内进行端口转发，内网穿透、端口映射甚至是公网ip 设置都障碍重重，所以很多外文教程并不适用于国内的网络环境</p>
+<p>背景 </p>
+<p>80 端口封闭，443 端口开放，。<br>443 端口是https 的默认端口，映射之后访问不需要在域名后面添加端口号，适合强迫症使用，如果几个端口都封了的话，老实说，除了内网穿透，我也没有办法了</p>
+<p>无内网穿透 目前内网穿透没有什么好的免费方法，要么使用花生壳 ，要么使用frps 但是你也得有个服务器</p>
+<p>华硕路由器+改版梅林固件，选择koolshare 梅林固件主要是由 阿里云DDNS 插件，手动提交其实也是没有问题的，端口转发的话，基本上所有路由器固件都自带，无需担心</p>
+<p>HA 加密且无摄像头接入，没有一个摄像头是安全的，而且犯罪成本低，犯罪收益相当大，你可以试想一下你的生活轨迹、家庭情况瞬间暴露在外。当然，室外监控和店铺使用的朋友可以忽略此项。</p>
+<p>申请域名</p>
+<p>首先登陆阿里云 进入域名购买界面，在国内购买 cn com 域名必须进行实名认证</p>
+<p>这里选择万网的原因是方便接入去CA 证书的申请，一条龙服务舒心</p>
+<p>申请证书</p>
+<p>阿里云的云盾证书服务  对官人站提供免费的一年期CA 证书，一个账户可以申请5份免费证书</p>
+<p>免费证书实际上是由 赛门铁克 颁发的，如果你使用万网的域名，只要在签发过程中选择自动认证即可，手动认证的方法也很简单，前往域名解析页添加一段txt 记录即可</p>
+<p>证书签发后，我们就可以下载相关的证书了，如果你是使用ngix 或者apache 的话 按照指南下载调用即可，拿不准的话就选择其他下载，一般情况下可以下载到如下3个文件</p>
+<p>xxxx.pem 公钥文件<br>xxxx.key 私钥文件<br>xxxx.chain 证书链文件</p>
+<p>前2者必须有，后者可有可无，到这里我们的前期准备就基本完成了，接下来是一系列的路由器操作</p>
+<p>DDNS</p>
+<p>有了域名之后，我们就要将其解析到家中的公网ip ，才能实现外网访问，如背景中所述，目前大部分的家庭宽带用户只有动态的公网ip，而我们不可能每次都手动修改解析，因此需要DDNS 这一动态解析工具</p>
+<p>从插件中心下载安装 ALIDDNS 插件</p>
+<p>app key 和secret 从阿里云账户详情里面获取，检查时间可以设置地大一些，毕竟ip 更换得不是那么勤</p>
+<p>设置完毕后你就可以通过这个域名访问该ip 下的服务了，如果你在路由器的 系统管理 中打开了从互联网 设置路由器的话，那么现在你就可以通过访问域名+端口号 进入路由器设置面板了</p>
+<p>SSL 证书验证</p>
+<p>华硕路由器自带的ai cloud 功能默认使用https 服务，并支持上传 证书，可以简便地帮助我们验证证书的有效性</p>
+<p>当然最后的端口号是可以更改的。点击网址进入后，选择左下角的设定 - 证书 -汇入证书，依次上传下载的 3 个文件。之后保存退出，刷新网页，不出意外的话，你的地址左侧将会出现 绿钥匙图标。这说明你的证书是安全有效的。我们可以放心地将其用在 HA 中了。</p>
+<h2 id="端口转发"><a href="#端口转发" class="headerlink" title="端口转发"></a>端口转发</h2><p>既然要做到外网访问，就必须把内网的服务映射到外网，在这里就是所谓的进行端口转发，我们的ha 使用的是默认端口 8123 ，我们前往  外部网络，端口转发，中添加如下规则</p>
+<p>你可以将 通信端口范围，更改成其他外网访问的端口，443 是https 的默认访问端口</p>
+<p>至此，所有的铺垫工作都完成了，我们正式将ha 映射到外网中</p>
+<p>ha https </p>
+<p>打开 configuration.yaml 文件，配置 http 项：</p>
+<p>http:<br>  api_password: !secret http_password &#x2F;&#x2F;访问密码<br>  trusted_networks:     &#x2F;&#x2F;免密登陆白名单，建议添加内网地址<br>    - 127.0.0.1<br>    - ::1<br>    - 192.168.50.0&#x2F;24<br>  base_url: <a target="_blank" rel="noopener" href="http://www.cxlwill.pub/">www.cxlwill.pub</a>  &#x2F;&#x2F;访问地址，填入  DDNS 中设置的网址<br>  ssl_certificate: &#x2F;home&#x2F;homeassistant&#x2F;.homeassistant&#x2F;cert.pem  &#x2F;&#x2F;公钥文件地址，注意放在有读取权限的文件夹<br>  ssl_key: &#x2F;home&#x2F;homeassistant&#x2F;.homeassistant&#x2F;cert.key &#x2F;&#x2F;私钥文件地址，注意放在有读取权限的文件夹<br>之后重启 HA，你会发现之前的 <a target="_blank" rel="noopener" href="http://ip:8213/">http://IP:8213</a> 无法登陆了。请将访问地址更改为 https:&#x2F;&#x2F;域名:端口号，如果设置为 443 端口，则无需端口号。</p>
+<p>现在你的ha 已经可以完美进行外网的登陆了，并且在浏览的地址栏左侧 你可以看到令人安心的绿钥匙图标</p>
+<p>HB HADashboard 等相关服务</p>
+<p>HA 进行全站https 后，千万记得更改相关服务的访问地址</p>
+<p>HB 中的 config.json ：</p>
+<p>“platforms”: [<br>{<br>“platform”: “HomeAssistant”,<br>“name”: “HomeAssistant”,<br>“host”: “https:&#x2F;&#x2F;“, &#x2F;&#x2F;修改为最新的域名，注意使用 https<br>•••<br>“verify_ssl”: false &#x2F;&#x2F;建议使用 false<br>}<br>],<br>之后重启 HB，无响应的状况应该就消失了。</p>
+<p>HADashboard 中的 Appdaemon.yaml：</p>
+<p>HASS:<br>  ha_url: <a target="_blank" rel="noopener" href="https://xxx.com/">https://xxx.com</a>      &#x2F;&#x2F;这里也要更改为最新的地址<br>  ha_key:</p>
+<p>其他使用ha api 服务，例如ifttt 中的调用地址也需要进行即使更新，具体就不展开了</p>
+<p>同样，iod app 中的访问地址也需要一并进行更改</p>
+<p>后续注意事项</p>
+<p>HA 全站 Https 之后，所有接入的服务都必须为 https，否则将会出现不安全的警示。请特别留意一些自定义组件的 API 和图标源，官方的组件一般情况下不会出现此类情况，RTSP 等协议不受影响</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-20221224-HomeAssistant树莓派-高德地图篇"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/12/24/20221224-HomeAssistant%E6%A0%91%E8%8E%93%E6%B4%BE-%E9%AB%98%E5%BE%B7%E5%9C%B0%E5%9B%BE%E7%AF%87/"
+    >20221224-HomeAssistant树莓派-高德地图篇</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/12/24/20221224-HomeAssistant%E6%A0%91%E8%8E%93%E6%B4%BE-%E9%AB%98%E5%BE%B7%E5%9C%B0%E5%9B%BE%E7%AF%87/" class="article-date">
+  <time datetime="2022-12-24T03:31:50.000Z" itemprop="datePublished">2022-12-24</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>Home assistant 就目前来说，本地化的工作还不到位</p>
+<p>这一次的教程呢 就先聚焦一下地图 吧，我们知道 ha 默认的地图面板 使用的是 openstreet 地图，社区内大部分的组件也是基于google map 开发优化的，必须全部替换掉</p>
+<p>至于替换后所考虑的国内地图服务商，我这里还是推荐高德，众所周知，由于特别的保密政策及地图法，我国的地图坐标系都是加密后的数据，在这种情况下，大家常用的百度地图使用的是百度特有的BD09 坐标系，在我们实际接入中会产生较大的地图偏移，所以弃用之</p>
+<p>在HA上显示地图，一种方法呢是通过panel 面板，另一种是通过card 卡片，两种方法我一并介绍</p>
+<p>面板 </p>
+<p>使用面板将 高德地图 接入HA 一种方法是直接替换掉原有地图面板的底层地图，另一种方法是接入自定义面板，前者需要在ha 每次更新后替换源文件，后者则需要忍受左侧栏有2个地图面板入口，可以说都不是那么完美，<br>权衡再三我还是选择直接替换源文件，毕竟 ha 更新没有那么频繁</p>
+<p>打开默认的map 界面，我们不难从右下角标注部分发现其使用的是Leaflet 框架，有关该框架的具体介绍我就不展开了，简单来说，它的运行原理就是提供一张底图图层，之后在上面增加标记图层，因此，我们只需要把底图替换为 高德地图 就ok 了</p>
+<p>首先 打开地图页面的源文件，如果你是通过虚拟环境安装ha 的，那么源文件路径在</p>
+<p>&#x2F;srv&#x2F;homeassistant&#x2F;homeassistant_venv&#x2F;lib&#x2F;python3.4&#x2F;site-packages&#x2F;homeassistant&#x2F;components&#x2F;frontend&#x2F;www_static&#x2F;panels</p>
+<p>先使用格式化工具进行格式化，找到图层相关的语句</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">attached: function() &#123;</span><br><span class="line">    var t = this._map = window.L.<span class="built_in">map</span>(this.$.<span class="built_in">map</span>);</span><br><span class="line">    t.setView([<span class="number">51.505</span>, <span class="number">-.09</span>], <span class="number">13</span>),</span><br><span class="line">    window.L.tileLayer(<span class="string">&quot;https://cartodb-basemaps-&#123;s&#125;.global.ssl.fastly.net/light_all/&#123;z&#125;/&#123;x&#125;/&#123;y&#125;.png&quot;</span>).addTo(t),</span><br><span class="line">    this.drawEntities(this.hass),</span><br><span class="line">    this.async(function() &#123;</span><br><span class="line">        t.invalidateSize(),</span><br><span class="line">        this.fitMap()</span><br><span class="line">        &#125;.bind(this), <span class="number">1</span>)</span><br><span class="line">    &#125;,</span><br></pre></td></tr></table></figure>
+
+
+<p>将 window.L.tileLayer 中图层路径部分 <a target="_blank" rel="noopener" href="https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/%7Bz%7D/%7Bx%7D/%7By%7D.png">https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png</a> 替换为高德地图 <a target="_blank" rel="noopener" href="http://webrd02.is.autonavi.com/appmaptile?lang=zh_cn&amp;size=1&amp;scale=1&amp;style=8&amp;x=%7Bx%7D&amp;y=%7By%7D&amp;z=%7Bz%7D%EF%BC%8C%E4%B9%8B%E5%90%8E%E4%BF%9D%E5%AD%98%E6%96%87%E4%BB%B6%EF%BC%9B">http://webrd02.is.autonavi.com/appmaptile?lang=zh_cn&amp;size=1&amp;scale=1&amp;style=8&amp;x={x}&amp;y={y}&amp;z={z}，之后保存文件；</a></p>
+<p>接着，在终端内使用gzip 指令压缩 html 文件，替换源 html 与html.gz 文件</p>
+<p>再次使用md5指令获取html 文件的md5值，打开上上级文件夹内的 version.py 文件，替换 “panels&#x2F;ha-panel-map.html”的值；</p>
+<p>最后，大功告成，重启ha 即可，你可以看到 map 页面的地图已经变为了高德地图</p>
+<p>卡片 </p>
+<p>使用卡片 将高德地图 接入 ha ，我们需要利用 genric 这个组件，将地图转化为摄像头画面</p>
+<p>首先，申请高德开发者账户，新建应用，获取 API 接口秘钥『key』。</p>
+<p>接着，仔细阅读该份静态地图 技术文档，了解各项值代表的意义和表示方法。</p>
+<p>最后，打开 configuration.yaml 添加 Generic 组件：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#高德地图</span></span><br><span class="line"><span class="attr">camera:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">Home</span></span><br><span class="line">  <span class="attr">platform:</span> <span class="string">generic</span></span><br><span class="line">  <span class="attr">still_image_url:</span> <span class="string">http://restapi.amap.com/v3/staticmap?location=地图中心经度,地图中心纬度&amp;zoom=14&amp;scale=2&amp;size=305*185&amp;traffic=1&amp;&amp;labels=家,0,0,35,0xFFFFFF,0x5288d8:标记经度,标记纬度&amp;key=秘钥</span></span><br><span class="line">  <span class="attr">limit_refetch_to_url_change:</span> <span class="literal">false</span></span><br></pre></td></tr></table></figure>
+
+<p>重启 ha 后，你想要显示的地图区域就会以卡片的形式展现在前端中了</p>
+<p>到这里，相信大家可以自如地在 HA 中使用高德地图了，配合 device_tracker 组件，能更好地掌握接入设备的地理位置信息。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-20221224-HomeAssistant树莓派-动态平面图"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/12/24/20221224-HomeAssistant%E6%A0%91%E8%8E%93%E6%B4%BE-%E5%8A%A8%E6%80%81%E5%B9%B3%E9%9D%A2%E5%9B%BE/"
+    >20221224-HomeAssistant树莓派-动态平面图</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/12/24/20221224-HomeAssistant%E6%A0%91%E8%8E%93%E6%B4%BE-%E5%8A%A8%E6%80%81%E5%B9%B3%E9%9D%A2%E5%9B%BE/" class="article-date">
+  <time datetime="2022-12-24T03:27:36.000Z" itemprop="datePublished">2022-12-24</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>平面图设计</p>
+<p>Floorplan 是由底层 的平面设计图加上顶层 的矢量图交互元素部分组成，对于底图的格式并没有硬核的规定，但需要以方便导入为前提，底图可随意发挥，或2D或3D，甚至是简单的一个交互面板都可以，不必拘泥于 房屋平面图 这个概念，这也是floorp-lan 的魅力所在</p>
+<p>最终的成图必须为svg 的矢量图格式，视频中使用的是inkscape ，软件较为轻量，当然 illustrator 更是没有问题，其他的矢量图绘图工具也可以使用</p>
+<p>这里提供几个交互元素图标的下载地址：</p>
+<p>Find Icons with the…<br>Used by millions of designers…<br> fontawesome.io</p>
+<p>Millions of images …<br>Download Free Icons and Stick…<br> flaticon.com</p>
+<p>绘图工具</p>
+<p>绘制平面图，除了高大上的3dmax 其实有很多亲民的apps 可供选择，这里推荐几个</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-20221224-HomeAssistant树莓派-维护答疑"
   class="article article-type-post"
   itemscope
@@ -769,267 +982,13 @@
 </article>
 
     
-    <article
-  id="post-20221220-树莓派魔镜"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/12/20/20221220-%E6%A0%91%E8%8E%93%E6%B4%BE%E9%AD%94%E9%95%9C/"
-    >20221220-树莓派魔镜</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/12/20/20221220-%E6%A0%91%E8%8E%93%E6%B4%BE%E9%AD%94%E9%95%9C/" class="article-date">
-  <time datetime="2022-12-20T02:58:50.000Z" itemprop="datePublished">2022-12-20</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h2 id="材料准备"><a href="#材料准备" class="headerlink" title="材料准备"></a>材料准备</h2><p>树莓派3 魔镜的神经中枢</p>
-<p>usb麦克风</p>
-<p>显示屏 不论通过什么渠道取得的显示屏，在这里都建议自带hdmi 接口并侧面出口，剩下转接头的钱和空间，也方便未来背面走线</p>
-<p>如果考虑入触摸屏建议一步到位，目前面向树莓派生产的触控屏最大能到10寸左右，价格在400至500元。加装触摸屏，务必要考虑好触摸类型，因为最上面还需要覆盖一块单透镜。建议优先使用红外触摸，有能力在外框安置感应条即可；其次压敏，但是要考虑镜子的导电性；压感在覆盖镜子的前提下，基本不可能实现。</p>
-<p>驱动板+喇叭， LCD 屏需要加配高压条，一般来说近几年的屏幕都是LED 了，但还是要具体问题具体分析</p>
-<p>单向透视镜</p>
-<p>俗称原子镜，就是大家看的美剧里审讯室用的镜子，魔镜的“大脸”。目前，适配屏幕尺寸的单透镜需定制，价格较昂贵。定制时建议优先选择厚度较薄、透光率较强的镜面，否则会影响日间魔镜的展示效果。</p>
-<p>囊中羞涩的派友也可使用镜面贴膜曲线救国，效果参考汽车车窗贴膜，但透视效果较差。</p>
-<p>镜框</p>
-<p>电源 </p>
-<p>整套魔镜系统需要电源驱动的部件有树莓派，驱动板和显示屏，后两者并一体讨论，驱动板在外接喇叭的前提下，usb 供电接口无法为树莓派供电，因此必须独立供电树莓派，显示屏所需电源为12V5A 大家在购入电源适配器是务必看准电压电流、并兼顾走线，<br>有能力者，可手动并线</p>
-<p>可选材料</p>
-<p>智能插座</p>
-<p>超短HDMI 线</p>
-<p>工具  螺丝刀  电工胶布，泡棉胶</p>
-<p>显然，大部分的工作都集中在底层，我们需要把树莓派、驱动板等等部件合理安置在显示屏背部</p>
-<p>喇叭布置于头部，直立后出声位置位于上方，更具现实感。树莓派布置在底端，保证USB麦克风的收音效果，且方便拿取。中部安放驱动板，方便走线。<br>这里省略了一步操作，建议先将驱动板随附的控制板连接至驱动板，选定输入源、调整好音量后拔下，以节约背板空间。</p>
-<p>上述工作完成后，依次将单透镜和显示屏置入镜框内，扣入夹片固定好，避免松动。</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20221219-HomeAssistant智能家居系统搭建指南"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/12/19/20221219-HomeAssistant%E6%99%BA%E8%83%BD%E5%AE%B6%E5%B1%85%E7%B3%BB%E7%BB%9F%E6%90%AD%E5%BB%BA%E6%8C%87%E5%8D%97/"
-    >20221219-HomeAssistant智能家居系统搭建指南</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/12/19/20221219-HomeAssistant%E6%99%BA%E8%83%BD%E5%AE%B6%E5%B1%85%E7%B3%BB%E7%BB%9F%E6%90%AD%E5%BB%BA%E6%8C%87%E5%8D%97/" class="article-date">
-  <time datetime="2022-12-19T09:16:41.000Z" itemprop="datePublished">2022-12-19</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>Home assistant 是一个成熟完整的基于python 的智能家居系统，设备支持度高，支持自动化 automation 群组化，ui 客制化等等高度定制化设置，背后又有庞大的社群基础，且不断更新，最重要的是我们可以通过homeassistant-homebridge 插件打通两个平台，同样实现设备的siri 控制，整套体系的框架如下</p>
-<p>本系列将围绕安装，配置、开发等内容，详细介绍HASS 平台的方方面面，同时针对HASS 与hb 兼容与选择，自动化配置方法等等问题给出自己的观点和探索</p>
-<p>HASS 支持大部分平台，简而言之，只要你的主机能跑python 基本就能安装hass 配合魔镜项目，以及便捷性的考虑，<br>本系列教程也将基于树莓派展开</p>
-<p>初始安装</p>
-<p>在树莓派安装HASS 有2种方法供选择</p>
-<p>以其他操作系统，（这里以树莓派 官方系统 raspbian 为例） 为根系统，再通过指令安装</p>
-<p>直接安装集成了HASS 的hassbian 操作系统</p>
-<p>以上2种方法从性能上来说并无二异，均能实现hass全部功能，hassbian 实际上亦基于raspbian 唯一需要纳入考虑的是图形化操作界面的需求。由于树莓派基金官方尚未公开单独安装图形化操作界面的方法，在当下，如果有该需求，只能通过官方图形化操作系统 raspbian with desktop 实现</p>
-<p>方法1<br>安装前，请参考 <a href="https://link.zhihu.com/?target=https://sspai.com/user/714086">梓姵君</a> 的 <a href="https://link.zhihu.com/?target=https://sspai.com/post/38542">文章</a> 对树莓派进行初始基础设置，重点关注地区、WiFi、源替换的内容，这里不再展开，特别注意，2016年11月 后的官方系统默认关闭ssh 功能，请务必打开</p>
-<p>使用任何方法连接到树莓派终端、输入以下安装代码</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ curl -O https://raw.GitHubusercontent.com/home-assistant/fabric-home-assistant/master/hass_rpi_installer.sh &amp;&amp; sudo <span class="built_in">chown</span> pi:pi hass_rpi_installer.sh &amp;&amp; bash hass_rpi_installer.sh</span><br></pre></td></tr></table></figure>
-<p>注意，不要以sudo 运行，然后泡杯茶，做点别的事情，等待程序跑完，安装时间根据网络情况不等，大约需要1-2 个小时，国内网络环境大家自行改善</p>
-<p>如果你是使用此方法安装hass 的话，未来更新指令如下</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo su -s /bin/bash homeassistant</span><br><span class="line"><span class="built_in">source</span> /srv/homeassistant/homeassistant_venv/bin/activate</span><br><span class="line">pip3 install --upgrade homeassistant</span><br><span class="line"><span class="built_in">exit</span></span><br></pre></td></tr></table></figure>
-
-<p>方法2 </p>
-<p>参考 copriwolf 的</p>
-<p><a href="https://link.zhihu.com/?target=https://sspai.com/post/39851">教程</a></p>
-<p>使用 Etcher 安装官方最新</p>
-<p><a href="https://link.zhihu.com/?target=https://github.com/home-assistant/pi-gen/releases/latest">固件</a></p>
-<p>镜像。</p>
-<p>感谢少数派友 <strong>DJ</strong> 千辛万苦的搬运至<a href="https://link.zhihu.com/?target=https://pan.baidu.com/s/1dFpaaAH">度娘盘</a>（password: 2e98）</p>
-<p>要注意的是，hassbian 初次启动时需要联网进行原始设置，由于无法在初次启动前设置无限网络，因此务必将树莓派与电脑或者路由器有线连接起来，以保证树莓派在有网环境下顺利设置</p>
-<p>官方教程告知初次启动需要等待5分钟左右，基于国内的网络环境，我这里测试多次，都需要等待近10分钟，所以大家不要焦躁，可以看部番剧或者往下研究一下此篇文章以便接下来顺利进展。</p>
-<p>如果等待时间过久却没有出现初始界面，可尝试使用以下命令强制初始安装</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl <span class="built_in">enable</span> install_homeassistant.service</span><br><span class="line">sudo systemctl start install_homeassistant.service</span><br></pre></td></tr></table></figure>
-
-<p>如果使用此方法，未来更新指令如下</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ sudo systemctl stop home-assistant@homeassistant.service</span><br><span class="line">$ sudo su -s /bin/bash homeassistant</span><br><span class="line">$ <span class="built_in">source</span> /srv/homeassistant/bin/activate</span><br><span class="line">$ pip3 install --upgrade homeassistant</span><br><span class="line">$ <span class="built_in">exit</span></span><br><span class="line">$ sudo systemctl start home-assistant@homeassistant.service</span><br></pre></td></tr></table></figure>
-
-
-<p>无论使用哪种方法，等待过后，在浏览器输入 http:&#x2F;&#x2F;树莓派的ip 地址:8123 查找树莓派ip 地址可以直接前往路由器界面</p>
-<p>如果出现类似下图，则表示初始安装完成，如若没有出现界面，或者无法连接，有很大可能是尚未安装完毕，不要着急再等等，注意地址冒号为英文字符，请勿输入中文冒号</p>
-<p>Hassbian 安装注意，初次启动请等待安装出现以下界面，再进行后续操作，否则你的一切工作都是前功尽弃，并且除此启动时，勿SSH ，勿输入任何代码，保持通电，联网，静置状态，非常重要</p>
-<p>macOS</p>
-<p>macos 自带python，如果你不小心误删，请先重新安装，macos 下安装hass 也相当简单</p>
-<p>pip3 install homeassistant</p>
-<p>附加功能</p>
-<p>SMB 必须</p>
-<p>SMB 可以帮助我们开启树莓派的网盘模式，方便未来文件传输，这里我们除安装外把该功能加入了系统自启项目</p>
-<p>通用安装指令</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install samba </span><br><span class="line">sudo smbpasswd -a homeassistant -n</span><br><span class="line">sudo nano /etc/samba/smb.conf</span><br><span class="line">[global]</span><br><span class="line">netbios name = raspberrypi</span><br><span class="line">server string = The Pi File Center</span><br><span class="line">workgroup = WORKGROUP</span><br><span class="line">hosts allow =</span><br><span class="line">remote announce =</span><br><span class="line">remote browse <span class="built_in">sync</span> =</span><br><span class="line">[HOME ASSISTANT]</span><br><span class="line">path = /home/homeassistant/.homeassistant</span><br><span class="line">comment = No comment</span><br><span class="line">browsable = <span class="built_in">yes</span></span><br><span class="line"><span class="built_in">read</span> only = no</span><br><span class="line">valid <span class="built_in">users</span> =</span><br><span class="line">writable = <span class="built_in">yes</span></span><br><span class="line">guest ok = <span class="built_in">yes</span></span><br><span class="line">public = <span class="built_in">yes</span></span><br><span class="line">create mask = 0777</span><br><span class="line">directory mask = 0777</span><br><span class="line">force user = homeassistant</span><br><span class="line">force create mode = 0777</span><br><span class="line">force directory mode = 0777</span><br><span class="line">hosts allow =</span><br></pre></td></tr></table></figure>
-
-<p>Ctrl+X，Y，回车</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl restart smbd.service</span><br></pre></td></tr></table></figure>
-
-<p>hassbian 提供了一个附加功能工具包hassbian-config 这使我们的安装更加简单，使用工具包安装原则上已经自动配置好一切，建议大家还是修改一下权限和密码</p>
-<p>安装指令</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo hassbian-config install samba</span><br><span class="line">sudo smbpasswd -a pi</span><br></pre></td></tr></table></figure>
-
-<p>重启服务</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl restart home-assistant@homeassistant.service</span><br></pre></td></tr></table></figure>
-
-<p>2.2 MQTT<br>MQTT 是基于二进制消息的发布，订阅编程模式的消息协议，广泛用于物联网部署中，部分智能家居设备需要MQTT 连接</p>
-<p>通用安装指令</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install mosquitto mosquitto-clients python-mosquitto</span><br><span class="line">sudo systemctl start mosquitto</span><br></pre></td></tr></table></figure>
-
-<p>hassbian 工具包安装</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo hassbian-config install mosquitto</span><br><span class="line">sudo systemctl start mosquitto</span><br></pre></td></tr></table></figure>
-
-<ol start="3">
-<li>Homebridge 安装<br>HASS 本身可以通过网页控制，这也赋予了其全平台的控制能力，当然，想必不少人还是冲着语言控制功能考虑智能家居的，对于ios 用户来说，想要更自由地使用homekit HB依然是绕不开的环节</li>
-</ol>
-<p>HB 的安装我就更不多说了，欢迎大家参考另外几篇文章，这里我根据之前指导派友的经验简单概括一下。</p>
-<p>HB 提供一行安装指令：sudo npm install -g –unsafe-perm homebridge 但是安装成功率比较低，推荐大家使用下面的手动安装指令。</p>
-<p>sudo apt-get install git make<br>sudo apt-get install g++<br>curl -sL <a target="_blank" rel="noopener" href="https://deb.nodesource.com/setup_7.x">https://deb.nodesource.com/setup_7.x</a> | sudo -E bash -<br>sudo apt-get install -y nodejs<br>sudo apt-get install libavahi-compat-libdnssd-dev<br>sudo npm install -g –unsafe-perm homebridge hap-nodejs node-gyp<br>cd &#x2F;usr&#x2F;local&#x2F;lib&#x2F;node_modules&#x2F;homebridge&#x2F;<br>（注意这里如果显示不存在文件夹，替换成 cd &#x2F;usr&#x2F;lib&#x2F;node_modules&#x2F;homebridge&#x2F;)<br>sudo npm install –unsafe-perm bignum<br>cd &#x2F;usr&#x2F;local&#x2F;lib&#x2F;node_modules&#x2F;hap-nodejs&#x2F;node_modules&#x2F;mdns<br>（注意这里如果显示不存在文件夹，替换成 cd &#x2F;usr&#x2F;lib&#x2F;node_modules&#x2F;hap-nodejs&#x2F;node_modules&#x2F;mdns）<br>sudo node-gyp BUILDTYPE&#x3D;Release rebuild</p>
-<p>运行到这里，HB就已经安装完成了，这里建议大家直接输入homebridge 运行一次，以生成示例配置文件，然后ctrl+C退出</p>
-<p>接着，安装homeassistant-homebridge 插件，实现平台联动</p>
-<p>sudo npm install -g homebridge-homeassistant</p>
-<ol start="4">
-<li>添加自启任务</li>
-</ol>
-<p>忙活了那么久，即将大功告成了，最后临门一脚，我们把HASS和HB 添加至树莓派开机任务中，这样每次启动后就会自动运行上述2个进程</p>
-<p>注意：配置 HB 前程序会运行错误，提示缺少配置文件，可先不理会。</p>
-<p>cd &#x2F;<br>sudo useradd –system homebridge<br>sudo mkdir &#x2F;var&#x2F;homebridge<br>sudo cp ~&#x2F;.homebridge&#x2F;config.json &#x2F;var&#x2F;homebridge&#x2F;<br>sudo cp -r ~&#x2F;.homebridge&#x2F;persist &#x2F;var&#x2F;homebridge<br>sudo chmod -R 0777 &#x2F;var&#x2F;homebridge<br>cd &#x2F;etc&#x2F;default<br>sudo nano homebridge 复制粘贴</p>
-<h1 id="Defaults-x2F-Configuration-options-for-homebridge"><a href="#Defaults-x2F-Configuration-options-for-homebridge" class="headerlink" title="Defaults &#x2F; Configuration options for homebridge"></a>Defaults &#x2F; Configuration options for homebridge</h1><h1 id="The-following-settings-tells-homebridge-where-to-find-the-config-json-file-and-where-to-persist-the-data-i-e-pairing-and-others"><a href="#The-following-settings-tells-homebridge-where-to-find-the-config-json-file-and-where-to-persist-the-data-i-e-pairing-and-others" class="headerlink" title="The following settings tells homebridge where to find the config.json file and where to persist the data (i.e. pairing and others)"></a>The following settings tells homebridge where to find the config.json file and where to persist the data (i.e. pairing and others)</h1><p>HOMEBRIDGE_OPTS&#x3D;-U &#x2F;var&#x2F;homebridge</p>
-<h1 id="If-you-uncomment-the-following-line-homebridge-will-log-more"><a href="#If-you-uncomment-the-following-line-homebridge-will-log-more" class="headerlink" title="If you uncomment the following line, homebridge will log more"></a>If you uncomment the following line, homebridge will log more</h1><h1 id="You-can-display-this-via-systemd’s-journalctl-journalctl-f-u-homebridge"><a href="#You-can-display-this-via-systemd’s-journalctl-journalctl-f-u-homebridge" class="headerlink" title="You can display this via systemd’s journalctl: journalctl -f -u homebridge"></a>You can display this via systemd’s journalctl: journalctl -f -u homebridge</h1><h1 id="DEBUG-x3D"><a href="#DEBUG-x3D" class="headerlink" title="DEBUG&#x3D;*"></a>DEBUG&#x3D;*</h1><p>Ctrl+X，Y，回车</p>
-<p>cd &#x2F;etc&#x2F;systemd&#x2F;system<br>sudo nano homebridge.service<br>复制粘贴</p>
-<p>[Unit]<br>Description&#x3D;Node.js HomeKit Server<br>After&#x3D;syslog.target network-online.target<br>[Service]<br>Type&#x3D;simple<br>User&#x3D;homebridge<br>EnvironmentFile&#x3D;&#x2F;etc&#x2F;default&#x2F;homebridge<br>ExecStart&#x3D;&#x2F;usr&#x2F;lib&#x2F;node_modules&#x2F;homebridge&#x2F;bin&#x2F;homebridge $HOMEBRIDGE_OPTS<br>Restart&#x3D;on-failure<br>RestartSec&#x3D;10<br>KillMode&#x3D;process<br>[Install]<br>WantedBy&#x3D;multi-user.target<br>Ctrl+X，Y，回车</p>
-<p>cd &#x2F;<br>sudo systemctl daemon-reload<br>sudo systemctl enable homebridge<br>sudo systemctl start homebridge<br>sudo systemctl status homebridge<br>sudo systemctl enable mosquitto</p>
-<p>最后重启，sudo reboot</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20221219-microPython是什么"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/12/19/20221219-microPython%E6%98%AF%E4%BB%80%E4%B9%88/"
-    >20221219-microPython是什么</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/12/19/20221219-microPython%E6%98%AF%E4%BB%80%E4%B9%88/" class="article-date">
-  <time datetime="2022-12-19T08:11:09.000Z" itemprop="datePublished">2022-12-19</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>microPython是什么</p>
-<p>先了解一下，什么是python</p>
-<p>python 是一种简单易用的，能够运行在多个平台下的计算机编程语言</p>
-<p>microPython 是跑在mcu 微控制器上的python，通过内置的解释器执行py 文件或者py 命令，就可以让微控制器运行您想要的功能了，microPython 和python 编程语言一样，在任何板子上都可以使用通用的api 控制硬件底层，比如点亮LED 灯，读取传感器信息，LCD 显示字符串，控制电机、连接网络、连接蓝牙等等</p>
-<p>如果说Arduino让创客摆脱了各种编程环境配置，那么micropython直接让创客摆脱了底层。命令行和解释执行，都是C语言所不具备的优势，运行micropython的soc，就类似一台完整的电脑，我们用python文件和命令行，轻松控制这台电脑中的一切。</p>
-<p>micropython 是人们连接各种任务的黏合剂，即便您不懂编程，不懂硬件，也可以通过它来控制mcu 要给microPython </p>
-<p>microPython诞生啦！</p>
-<p>Damien George是一名计算机工程师，他每天都要使用Python语言工作，同时也在做一些机器人项目。有一天，他突然冒出了一个想法：能否用Python语言来控制单片机，进行实现对机器人的操控呢？</p>
-<p>要知道，Python是一款比较容易上手的脚本语言，而且有强大的社区支持，一些非计算机专业领域的人都选它作为入门语言。遗憾的是，它不能实现一些非常底层的操控，所以在硬件领域并不起眼。</p>
-<p>Damien为了突破这种限制，他花费了六个月的时间来打造Micro Python。它基于ANSI C，语法跟Pyton 3基本一致，拥有自家的解析器、编译器、虚拟机和类库等。目前它支持基于32-bit的ARM处理器，比如说pyboard（STM32F405），支持NRF51822（micro:bit）、支持FireBeetle-ESP32、支持WiPy、支持ESP8266核心主控、支持CC3200等等。</p>
-<p>pyload 是microPython 官方出的一款支持microPython 的微控制器，采用stm32f405rg MCU主芯片，邮票孔设计，体积小巧<br>在性能方面，pyboard除了将stm32f405rg本身的外设延用出来，还拓展了微型SD卡插槽、三周加速度计（mma7660）。在小巧的pyboard上，设有29个GPIO，4个LED灯，板载3.3V LDO电源管理芯片，可以提供高达250mA的电流，3.6~16V的宽电压输入。</p>
-<p>micro:bit</p>
-<p>micro：bit是由英国广播公司BBC推出的可编程微型计算机，可以帮助用户学习基础编程知识。它最大的亮点在于支持图形化编程，支持microPython编程。micro：bit主控采用nrf51822芯片作为主控，IC包括256KB片上闪存，16KB RAM，32位ARM®Cortex™ M0 CPU，支持Bluetooth低功耗，在低功耗模式下，最低功耗可以达到0.6uA。</p>
-<p>FireBeetle-ESP32</p>
-<p>FireBeetle-ESP32全称是FireBeetle Board-ESP32微控制器，是由DFRobot基于Espressif ESP32主芯片开发的物联网、低功耗为控制器。FireBeetle-ESP32板载ESP-WROOM-32双核芯片，支持WiFi和蓝牙双模通信，外围兼容低功耗硬件设计，深度睡眠模式下功耗仅为10uA。FireBeetle-ESP32控制器还提供了3.7V锂电池接口，并可以通过USB口给锂电池充电。其次，在软件方面，已经支持WiFi和蓝牙功能的使用，支持I2S音频的解码，结合uPyCraft IDE，可以轻松完成物联网开发设计。值得说明的是，本书的microPython教程是基于FireBeetle-ESP32控制器硬件。</p>
-<p>WiPy</p>
-<p>WiPy是支持microPython编程、支持WiFi和蓝牙的开发板，定位于物联网应用的设计。WiPy控制器的核心采用Espressif ESP32芯片，其最大的特点在于体积小巧，支持蓝牙和WiFi，这点和DFRobot的FireBeetle萤火虫系列主板相似。</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
   </article>
   
 
   
   <nav class="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/8/">上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/">10</a><a class="page-number" href="/page/11/">11</a><span class="space">&hellip;</span><a class="page-number" href="/page/23/">23</a><a class="extend next" rel="next" href="/page/10/">下一页</a>
+    <a class="extend prev" rel="prev" href="/page/8/">上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/">10</a><a class="page-number" href="/page/11/">11</a><span class="space">&hellip;</span><a class="page-number" href="/page/24/">24</a><a class="extend next" rel="next" href="/page/10/">下一页</a>
   </nav>
   
 </section>

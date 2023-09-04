@@ -126,6 +126,273 @@
     
     
     <article
+  id="post-20230720-METAFONT教程"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/07/20/20230720-METAFONT%E6%95%99%E7%A8%8B/"
+    >20230720-METAFONT教程</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/07/20/20230720-METAFONT%E6%95%99%E7%A8%8B/" class="article-date">
+  <time datetime="2023-07-20T10:01:15.000Z" itemprop="datePublished">2023-07-20</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>可以输出如下格式</p>
+<p>svg png eps ps 包括所有alyph 全放在一张上的以及单个glyph 一张</p>
+<p>raw data 存储为json 格式，还有metric 信息以及 outline bitmap data<br>OTF TTF PFB 这个目前会通过libfontforge 或otfcc 实现</p>
+<p>以mf 资源存储：以otf 存储 &#x3D; 1:10</p>
+<hr>
+<p>字体对于我们到底是什么<br>字体是一种可以用以表现特定目的资源<br>而对于另外一些人而言，字体其实可以是一种程序产物，是一种数据，但也可以本身是程序产物，是一种数据，但也可以本身就是程序</p>
+<p>对于metafont 而言，字体其实就是第三种形态的东西</p>
+<p>这个meta 的意思就是第三种，你们大可以理解为是一种高阶的字体描述语言，那么低阶 是什么，低阶其实可以理解为字体的点阵形式或者矢量形式本身</p>
+<p>metafont 的这个meta ，其实归根到底是通过一系列算法生成bezier 曲线，然后通过转换变为点阵的，正因为只能输出点阵，所以很多人以为metafont 是一种过时的东西，但是呢，其实历史上也是有过多例生成曲线的实验性质的项目  mf2ps mflua 但是大多数没有坚持下来</p>
+<p>第二个准备知识就是bezier 曲线，这个是比较基础的计算机图形学的概念了，在一般教科书中都能够找到，但是有一点必须说明，metafont 之中使用的是3次bezier 曲线来做的，而且，METAFONT中的所有线都是用bezier描述，也就是说，就连直线也是用四个点描述的。这个在某方面会觉得多余，但是等到我的扩展版METAFONT出来之后，是可以在运行的时候开相应的flag做优化的。还有一个比较有意思的东西，就是现在的TrueType以及OpenType，其实都是可以转换为METAFONT进行输出的，当然输出来的曲线形式和原始的并没有差别，但是这个东西很少有人去做了。</p>
+<p>第三个准备知识，是metafont 中的一些概念，比如说pen 和绘制曲线的东西，上一段所说的，是最简单的，按照你输入的完备的曲线构成的path 输出，metafont 的威力就在于可以使用pen 来绕着一个path 进行绘制，实际上画出包络线，这种底层细节实际上是被隐藏在plain 格式之中了，大部分人基本上没有写过metafont 的宏</p>
+<p>第四个准备知识，是METAFONT语言本身。拿现在比较流行的观念来看，其实TeX和METAFONT本身就是领域特定语言，在语法上其实要求并没有那么高的，宏语言是足够的。但是，对比下来，METAFONT的一般语法还是要比TeX好学的，语法是类似于当时的AOGOL的，还是比较好写出结构化的字体程序的。</p>
+<p>精心设计好的metafont 字体系统，能够大大较低字体制作的人工成本</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-20230718-猪肉的各个部位名称"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/07/18/20230718-%E7%8C%AA%E8%82%89%E7%9A%84%E5%90%84%E4%B8%AA%E9%83%A8%E4%BD%8D%E5%90%8D%E7%A7%B0/"
+    >20230718-猪肉的各个部位名称</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/07/18/20230718-%E7%8C%AA%E8%82%89%E7%9A%84%E5%90%84%E4%B8%AA%E9%83%A8%E4%BD%8D%E5%90%8D%E7%A7%B0/" class="article-date">
+  <time datetime="2023-07-18T05:28:56.000Z" itemprop="datePublished">2023-07-18</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p><img src="http://5b0988e595225.cdn.sohucs.com/images/20181102/7b4a0c646fb34eb9a9fe2c0293b4bd8f.jpeg" alt="img"></p>
+<p>猪肉算是我们平常吃最多的肉食了。除了北方部分地区，以牛肉或者羊肉为主要肉食，我国大部分的城市都是以猪肉为主要的肉食。虽然我们平常都很容易接触到猪肉。到那个菜市场都有猪肉店。可是菜市场的猪肉都是提前切块卖的。切块后，可能大家也不大清楚猪肉的各个部位究竟长成怎样的了。并且猪肉的每个部位在烹饪时都各有用途。你问卖猪肉的老板，他们可没有这么有耐心的跟你慢慢讲解，在你不懂的情况下，很容易就被卖猪肉的老板忽悠。今天肉肉厨为大家详细的讲解猪肉14个部位的分布图，并且教会大家猪肉各个部位的用途。这可是我偶遇一个杀了30年猪的大叔，他告诉我的。大家学会了，以后买猪肉就不会买错咯！</p>
+<p><strong>1、里脊肉：</strong>里脊肉大家可能接触比较多，价格也比较贵。这部分的肉分为大里脊肉和小里脊肉。是脊骨下面一条与大排骨相连的瘦肉，肉中无筋，是猪肉中最嫩的部位。大里脊肉可以切丝，切丁适合做猪排，炒，蒸炸着吃等。小里脊肉比大里脊肉更加嫩，最适合做掺汤。</p>
+<p><img src="http://5b0988e595225.cdn.sohucs.com/images/20181102/f6c27371297a402ba2e22b3382c6f40c.jpeg" alt="img"></p>
+<p><img src="http://5b0988e595225.cdn.sohucs.com/images/20181102/d6d506be04d4435bad6c84c3b3e856c4.jpeg" alt="img"></p>
+<p><strong>2、臀尖肉：</strong>位于猪臀部上面的肉，都是瘦肉。肉质鲜嫩。一般能替代里脊肉。适合炸，熘，炒。</p>
+<p><strong>3、坐臀肉：</strong>位于后腿上方。也即是猪屁股上的肉。全是瘦肉。但肉质比较老。纤维比较长。一般用来做卤肉和回锅肉。</p>
+<p><img src="http://5b0988e595225.cdn.sohucs.com/images/20181102/d0540073d0a048fbaa37f15055050403.jpeg" alt="img"></p>
+<p><strong>4、五花肉：</strong>就是猪肚皮上的肉，一层肥，一层瘦分层，皮非常薄。适合做红烧肉，炖肉，卤肉，蒸肉等。</p>
+<p><img src="http://5b0988e595225.cdn.sohucs.com/images/20181102/48523f2d411c45ca94627cd45e3bdaaa.jpeg" alt="img"></p>
+<p><strong>5、夹心肉：</strong>位于前腿上部。质老有筋。吸收水分强。适合做肉馅，制肉丸子。在这一部分有一排肋骨。称为小肋排。适合做糖醋排骨，蒸排骨，或煮排骨汤。</p>
+<p><img src="http://5b0988e595225.cdn.sohucs.com/images/20181102/b78726d0c7af496589abbf74ccca4843.jpeg" alt="img"></p>
+<p><strong>6、前排肉（上脑肉）：</strong>是背部靠近颈部的一块肉。肥中夹瘦，肉质比较嫩，适合炒，米粉肉，炖等。</p>
+<p><img src="http://5b0988e595225.cdn.sohucs.com/images/20181102/0389cc0529b6445fa761f0030a820944.jpeg" alt="img"></p>
+<p><strong>7、奶脯肉：</strong>在肋骨下面的腹部。结缔组织多，呈泡泡状，肉质差，多用于熬油。</p>
+<p><strong>8、弹子肉：</strong>在猪后腿的上方，都是瘦肉，肉质比较嫩。可切片，切丁。适合炒，炸。可替代里脊肉。</p>
+<p><strong>9、猪颊肉：</strong>猪面和猪下巴相连的肉，由于猪颊肉是猪活动比较多的地方，所以吃起来非常劲道。口感嫩，用于卤，做包子馅料。</p>
+<p><strong>10、血脖，猪颈肉：</strong>血脖肉是脖子两侧到下巴的肉，也就是杀猪时下刀那一块地方。血脖肉肥瘦不分。肉质比较差，多淋巴，用于做包子肉馅。但是位于猪颈部两边的肉却十分珍贵。有“黄金六两”之称。此部位肉脂如雪花般均匀分布 肉质鲜嫩，入喉爽口滑顺，口劲适中。</p>
+<p><img src="http://5b0988e595225.cdn.sohucs.com/images/20181102/183e8ac5816d4537ac1807e67c0c64de.jpeg" alt="img"></p>
+<p><strong>11、前腿肉：</strong>猪前腿瘦肉含量少，胶质，筋比较多，适合炖，卤，红烧。</p>
+<p><strong>12、后腿肉：</strong>口感中等，瘦肉比前腿肉多，适合炖，卤，腌制。</p>
+<p><img src="http://5b0988e595225.cdn.sohucs.com/images/20181102/8c386783020c4576bb3fbd0c70aa2fef.jpeg" alt="img"></p>
+<p><strong>13、梅花肉：</strong>猪的上肩肉，这里的肉肥瘦想兼，肉质很嫩，适合煎，炸，炖，做肉丸子。</p>
+<p><img src="http://5b0988e595225.cdn.sohucs.com/images/20181102/f466c2be681840a9a09362f9bf57ad9a.jpeg" alt="img"></p>
+<p><strong>14、猪头，猪尾巴，猪耳朵，猪舌头，猪前，后蹄（猪小腿）：</strong>猪头多用于酱，烧，煮，腌制作冷盘。猪耳，猪舌头可以炒，用来下酒。猪蹄含丰富的胶原蛋白，脂肪含量低，可以用来做红烧或冷盘，煲汤。</p>
+<p><img src="http://5b0988e595225.cdn.sohucs.com/images/20181102/e3a45096129e48fc9ae3a02c99f4f8c0.jpeg" alt="img"></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-20230718-TTF与OTF差异与比较"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/07/18/20230718-TTF%E4%B8%8EOTF%E5%B7%AE%E5%BC%82%E4%B8%8E%E6%AF%94%E8%BE%83/"
+    >20230718-TTF与OTF差异与比较</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/07/18/20230718-TTF%E4%B8%8EOTF%E5%B7%AE%E5%BC%82%E4%B8%8E%E6%AF%94%E8%BE%83/" class="article-date">
+  <time datetime="2023-07-18T04:33:06.000Z" itemprop="datePublished">2023-07-18</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>字体是具有特定属性 如大小,粗细 颜色和样式,的可打印文本<br>Google Docs、Notepad 或 Microsoft Word 等许多软件都设置了默认字体和字体大小。</p>
+<p>不同的字体被用于设计网页和文档的样式,有些字体会影响可读性,具体取决于媒体,而有些字体会影响内容的美感</p>
+<p>truetype 字体由二次贝塞尔曲线构成, 而opentype 字体由三次贝塞尔曲线构成</p>
+<h2 id="关键精华"><a href="#关键精华" class="headerlink" title="关键精华"></a>关键精华</h2><ol>
+<li>TTF (Truetype字体) 是由apple 和Microsoft 开发的一种字体格式, 银企在各种尺寸和分辨率下的简单性和高效光栅化而被广泛使用</li>
+<li>OTF (OpenType字体) 是一种基于TTF 的更高级字体格式,由adobe 和Microsoft 创建,提供附加功能, 例如更好地支持连字, 多种字符集和风格变化</li>
+<li>TTF 和OTF 都是流行的字体格式,但otf 提供更高级的功能,推荐用于复杂的排版项目</li>
+</ol>
+<h2 id="TTF与OTF"><a href="#TTF与OTF" class="headerlink" title="TTF与OTF"></a>TTF与OTF</h2><p>TTF 是一种字体，它使用基于矢量的轮廓来定义每个字符。 多年来，它们已广泛用于数字排版和图形设计。 Otf 是一种数字字体文件格式，可以包含范围广泛的排版功能，包括连字、替代字符等。</p>
+<h2 id="对比表"><a href="#对比表" class="headerlink" title="对比表"></a>对比表</h2><table>
+<thead>
+<tr>
+<th align="left">比较参数</th>
+<th align="left">TTF</th>
+<th align="left">OTF</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">质质量</td>
+<td align="left">TrueType 字体由 Apple 和 Microsoft 开发</td>
+<td align="left">OpenType 字体由 Adobe 和 Microsoft 开发</td>
+</tr>
+<tr>
+<td align="left">字体文件大小</td>
+<td align="left">TTF 字体文件比 OTF 字体文件大</td>
+<td align="left">OTF 字体文件通常比 TTF 字体文件小</td>
+</tr>
+<tr>
+<td align="left">声望</td>
+<td align="left">TTF比OTF更受欢迎</td>
+<td align="left">OTF 似乎不如 TrueType 字体受欢迎</td>
+</tr>
+<tr>
+<td align="left">可行性</td>
+<td align="left">TTF的制作比OFT简单多了</td>
+<td align="left">与TTF相比，OTF的创建更难</td>
+</tr>
+<tr>
+<td align="left">依赖</td>
+<td align="left">TrueType 字体依赖于字形表</td>
+<td align="left">OpenType 字体依赖于字形表和 CCF</td>
+</tr>
+<tr>
+<td align="left">支持</td>
+<td align="left">TTF 一般支持所有旧浏览器</td>
+<td align="left">另一方面，由于其高级功能，OTF 支持几乎所有浏览器，无论是旧的还是新的</td>
+</tr>
+<tr>
+<td align="left">适应性</td>
+<td align="left">最适合日常工作</td>
+<td align="left">OTF 发现它适用于设计领域，因为它让用户可以自由地操纵和玩角色</td>
+</tr>
+<tr>
+<td align="left">成本</td>
+<td align="left">TTF 通常是成本友好的</td>
+<td align="left">由于高级功能和规定，购买 OTF 时价格更高。</td>
+</tr>
+</tbody></table>
+<h2 id="什么是TTF"><a href="#什么是TTF" class="headerlink" title="什么是TTF"></a>什么是TTF</h2><p>TrueType 技术包括两部分</p>
+<ol>
+<li>TrueType 光栅器</li>
+<li>TrueType-Schriften</li>
+</ol>
+<p>对于 TrueType 字体或具有 TrueType 轮廓的 OpenType 字体，使用 .ttf 扩展名。</p>
+<p>PostScript 包装器用于管理TrueType 轮廓。</p>
+<p>那时候最常用的字体 windows mac 是TrueType.ttf 允许在网站和排放文件中附加字体文件。</p>
+<p>TTF 在支持几乎所有旧浏览器方面表现出色。 对于最终用户来说，这是一种成本友好的字体格式。</p>
+<p>TTF 主要在日常任务中找到它的应用。 它无法接受输入和产生 <a target="_blank" rel="noopener" href="https://askanydifference.com/zh-CN/difference-between-outcome-and-output/">产量</a> 正如编程语言所期望的那样，但它的暗示语言提供了编程语言的其他要求。</p>
+<h2 id="什么是OTF"><a href="#什么是OTF" class="headerlink" title="什么是OTF"></a>什么是OTF</h2><p>OpenType 是 MS Corporation 的官方标志。 OpenType 字体最常用于重要的计算机平台，因为它们具有广泛的可用性和灵活性。</p>
+<p>OpenType 字体很灵活，它们可以快速调整大小而不会降低质量</p>
+<p>OTF 支持国际字符集</p>
+<p>OpenType 字体较新，因此它有更多高级功能供最终用户使用，OTF由于其高级功能，在购买时对用户来说有点贵</p>
+<p>它的应用程序主要用于图形设计师的特定设计任务。OpenType 从 1.3 版开始终止了 Multiple Master 功能。</p>
+<h2 id="之间的主要区别TTF-和OTF"><a href="#之间的主要区别TTF-和OTF" class="headerlink" title="之间的主要区别TTF 和OTF"></a>之间的主要区别TTF 和OTF</h2><ol>
+<li>TrueType 字体的文件扩展名为 TTF，而 OTF 扩展用于 OpenType 字体。</li>
+<li>在这两者中，Truetype 更受欢迎。</li>
+<li>OpenType 优于 TrueType 字体。</li>
+<li>TrueType 字体比 OTF 旧。</li>
+<li>Apple 引入了 TTF，而 Opentype 则起源于 Adobe 和 Microsoft。</li>
+<li>与 TTF 相比，OpenType 字体更难制作。</li>
+</ol>
+<p><strong>参考资料</strong></p>
+<ol>
+<li><a target="_blank" rel="noopener" href="https://meeting.contextgarden.net/2010/talks/2010-09-17-karelpiska-complexopentype/piska-artcle-ot.pdf">https://meeting.contextgarden.net/2010/talks/2010-09-17-karelpiska-complexopentype/piska-artcle-ot.pdf</a></li>
+<li><a target="_blank" rel="noopener" href="https://faculty.washington.edu/cadolph/software/caxetexFree.pdf">https://faculty.washington.edu/cadolph/software/caxetexFree.pdf</a></li>
+<li><a target="_blank" rel="noopener" href="https://356labs.com/blog/from-otf-to-ttf-how-to-choose-the-right-font/">从OTF到TTF：如何选择合适的字体？- 博客 |356实验室 (356labs.com)</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/25037285">https://zhuanlan.zhihu.com/p/25037285</a></li>
+</ol>
+<hr>
+<h2 id="连字有什么意义"><a href="#连字有什么意义" class="headerlink" title="连字有什么意义"></a>连字有什么意义</h2><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/26358470">https://zhuanlan.zhihu.com/p/26358470</a></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-20230716-EEPROM的详细分析"
   class="article article-type-post"
   itemscope
@@ -937,640 +1204,13 @@
 </article>
 
     
-    <article
-  id="post-20230703-AltiumDesigner新手必备课AD22"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/07/03/20230703-AltiumDesigner%E6%96%B0%E6%89%8B%E5%BF%85%E5%A4%87%E8%AF%BEAD22/"
-    >20230703-AltiumDesigner新手必备课AD22</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/07/03/20230703-AltiumDesigner%E6%96%B0%E6%89%8B%E5%BF%85%E5%A4%87%E8%AF%BEAD22/" class="article-date">
-  <time datetime="2023-07-03T02:23:27.000Z" itemprop="datePublished">2023-07-03</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h2 id="Altium-公司推荐的系统要求"><a href="#Altium-公司推荐的系统要求" class="headerlink" title="Altium 公司推荐的系统要求"></a>Altium 公司推荐的系统要求</h2><p>win10 i7处理器或同等产品，尽管不推荐使用，仍支持win7 sp1 和win 8</p>
-<p>16gb 随机存储内存</p>
-<p>10 gb 硬盘空间</p>
-<p>固态硬盘</p>
-<p>高性能显卡</p>
-<p>分辨率为 2560*1440 的双显示器</p>
-<p>用于3D pcb 设计的3d 鼠标，如space navigator</p>
-<p>adobe reader 用于3d pdf 查看的xi 或以上版本</p>
-<p>工程</p>
-<p>元件库文件<br>原理图文件<br>pcb库文件<br>网络表文件<br>pcb文件<br>生产文件</p>
-<p>一个完整的工程应该包含元件库文件、原理图文件、pcb 库文件、网络表文件、pcb文件、生产文件，应保证工程里面文件的唯一性，只一份pcb 一份原理图  一份封装等，一些不相关的文件应及时删掉</p>
-<p>游离于文件之外的文件称为 free document，所有针对它的设置及操作和工程无关，设计当中应当尽量避免出现</p>
-<p>第01课  整套实操视频学习方法及注意事项</p>
-<p>原理图库的设计</p>
-<p>原理图的设计</p>
-<p>pcb 布局和pcb 布线</p>
-<p>pcb 封装库的设计</p>
-<p>游离于工程之外的文件称为 free document，所有针对他的设置及操作和工程无关，设计当中应当尽量避免出现</p>
-<hr>
-<p>AD 提供了多种操作命令，它们位于工作区的右上角，单击用户按钮，弹出1-2 所示的下拉菜单</p>
-<p>sign in 标记altium 信息命令：用于设置altium 基本信息，包括服务地址，用户名和密码</p>
-<p>license manager 许可证管理器 命令，选择该命令，在主窗口右侧弹出</p>
-<p>exensions and updates 命令，用于检查软件更新，</p>
-<p>在ad18 的集成开发环境窗口中可以同时打开多个设计文件，各个窗口会叠加在一起</p>
-<p>开发环境</p>
-<p>原理图开发环境</p>
-<p>印制板电路的开发环境</p>
-<p>仿真编辑环境</p>
-<p>多板装配编辑环境</p>
-<p>显示 创建的项目类型</p>
-<p>pcb 工程 选择创建新的pcb 项目</p>
-<p>multi-board design project 选择创建新的多板项目</p>
-<p>创建该项目文件后，可创建的新的文件类型包括以下两种</p>
-<p>multi_board schematic .MbsDoc 当多板项目为活动文件时可用</p>
-<p>multi_board assembly .MbaDoc 当多板项目为活动文件时可用</p>
-<p>集成库  选择创建新的集成元器件库项目<br>在project 面板显示一个新的integrated_library.LibPkg</p>
-<p>project 当选中该选项时，将打开 新建</p>
-<p>工程文件的保存</p>
-<p>Myproject.PrjPcb</p>
-<p>原理图编辑器的启动<br>SchDoc  系统自动将其保存在已打开的工程文件中，同时整个窗口添加了许多菜单项 和工具项</p>
-<p>主窗口</p>
-<p>altium designer 18 启动后便进入主窗口，</p>
-<p>主窗口类似于 windows 的界面，主要包括 菜单栏、工具栏、快速访问栏 状态栏及导航栏 6个部分</p>
-<p>快速访问栏 位于工作区的左上角  quick access 允许快速访问常用的命令，包括保存当前的活动文档，单击适当的按钮打开任何现有的文档，以及撤销和重做功能，还可以单击保存 按钮来一键保存 所有文档</p>
-<p>显示差异 </p>
-<p>可以进行文件之间、文件与工程之间、工程之间的比较</p>
-<p>version control 版本控制命令，单击该命令，可以查看版本信息，可以将文件添加到 版本控制 数据库中，并对数据库中的各种文件进行管理</p>
-<h3 id="工具栏"><a href="#工具栏" class="headerlink" title="工具栏"></a>工具栏</h3><p>启动AD 后，系统将自动激活 library 面板，project 面板 和navigator 面板</p>
-<p>可以单击面板底部的选项卡，在不同的面板之间进行切换</p>
-<h2 id="文件管理系统"><a href="#文件管理系统" class="headerlink" title="文件管理系统"></a>文件管理系统</h2><p>project 面板提供了两种文件，工程文件和设计时生成的自由文件，设计时生成的文件可以放在工程文件中，也可以放在自由文件中</p>
-<p>自由文件在存盘时以单个文件的形式存入，而不是以工程文件的形式整体存盘</p>
-<p>自由文件的存在方便了设计的进行，将文件从自由文档文件夹中删除时，文件将会彻底被删除</p>
-<p>存盘文件</p>
-<p>存盘文件是在工程文件存盘时生成的文件，altium 保存文件时并不是将整个工程文件保存，而是单个保存，工程文件只起到管理的作用<br>这样的保存方法有利于实施大规模电路的设计</p>
-<p>一般常用的电子元件符号都可以在它的元件库中找到</p>
-<p>ad元件库中的元件数量庞大，分类明确</p>
-<p>一级分类  以元件制造厂家的名称分类</p>
-<p>原理图有两个基本要素，即元件符号和线路连接，绘制原理图的主要操作就是将元件符号放置在原理图图纸上，然后将元件符号中的引脚连接起来，建立正确的电气连接</p>
-<p>搜索元件需要设置的参数如下</p>
-<p>scope 范围选项区，用于设置搜索的范围</p>
-<p>path 文件路径，用于设置查找元件的路径</p>
-<p>advanced 高级选项，用于进行高级查询，单击该按钮后，</p>
-<p>可以输入一些与查询内容有关的过滤语句表达式</p>
-<p>放置元件</p>
-<p>在这里原理图中共需要放置4个电阻 2个电容，2个晶体管 和一个链接器</p>
-<p>电阻 电容 和晶体管用于产生多谐振荡</p>
-<p>原理图符号是元件在原理图上的表现形式，主要由元件边框、管脚  包括管脚序号和管脚名称，元件名称及元件说明组成，通过放置的管脚来建立电气连接关系</p>
-<p>元件符号中的管脚序号是和电子元件实物管脚一一对应，在创建元件的时候，图形不一定和实物完全一样，但是对于管脚序号和名称，一定要严格按照元件规格书中的说明一一对应好</p>
-<p>调整元件位置</p>
-<p>每个元件被放置时，其初始位置并不是很准确，在进行连线前，需要根据原理图的整体布局对元件的位置进行调整，这样不仅便于布线，也会使所绘制的电路原理图清晰、美观</p>
-<p>使用鼠标移动未选中的单个元件</p>
-<p>技巧与提示——选择元件位置</p>
-<p>在进行元件布局的过程中，不需要考虑元件的真实排列，只需要在满足电路要求的基础上，保持美观、大方。</p>
-<p>用同样的方法对电阻、电容、发光二极管进行旋转布局</p>
-<h2 id="绘制工具"><a href="#绘制工具" class="headerlink" title="绘制工具"></a>绘制工具</h2><p>原理图绘制过程中，除了绘制元件外，还需要多种绘制工具进行电气连接，电气注释等，绘制工具是电路原理图中最重要也是用得最多的图元</p>
-<p>绘制原理图的工具</p>
-<p>绘制电路原理图主要通过电路图绘制工具来完成，因此必须熟练使用电路图绘制工具</p>
-<p>导线是电路原理图中最基本的电气组件之一，原理图中的导线具有电气连接意义</p>
-<p>单击 编辑————打破线命令，则切割绘制的完整导线，将一根导线打断分为两根，并添加间隔</p>
-<p>导线的宽度设置是通过width 线宽右边的下拉按钮来实现的<br>送</p>
-<hr>
-<p>管脚放置格点 100mil</p>
-<p>图形元素格点 10mil</p>
-<p>复杂原理图的创建 </p>
-<p>二极管<br>运放</p>
-<p>创建心得</p>
-<p>设置格点100mil 放置管脚，设置格点10mil 绘制元件元素</p>
-<p>元件模型的元素，菜单命令下面的圆弧 椭圆 线条 多边形 等元素进行组合成</p>
-<p>创建的元件进行器件属性的设置，完成该元件的模型创建</p>
-<p>原理图库只是一个实物器件在我们图纸上的一个表示，无需对事物尺寸负责，但还需要对其进行规范绘制，利于原理图可读性</p>
-<hr>
-<p>调用 他人的原理图库</p>
-<p>ctrl cv  SCH Library</p>
-<p>PCB联盟网</p>
-<p><a target="_blank" rel="noopener" href="http://www.pcbbar.com/">www.pcbbar.com</a></p>
-<p>pcb 超级库</p>
-<p>虽然我们有时候需要根据自己需求创建原理图库，但是毕竟这要花费带量的时间和精力 元件库的来源</p>
-<ol>
-<li><p>复制现有库</p>
-</li>
-<li><p>已有原理图进行生成</p>
-</li>
-<li><p>IC 封装网 <a target="_blank" rel="noopener" href="http://www.iclib.com/">www.iclib.com</a></p>
-</li>
-</ol>
-<hr>
-<p>第7节  检查原理图库的正确性病生成报告</p>
-<p>我们需要知晓我们创建完成的原理图库是否满足规范要求，这个时候我们可以通过软件的检查与报告这个功能来实现</p>
-<p>duplicate-component name 重复的元件名称<br>duplicate-pins 重复的管脚<br>missing-description 元件描述未填写<br>missing-pin name 管脚名称未填写<br>missing-footprint 元件封装未填写<br>missing-pin number 元件管脚号未填写<br>missing-default designator 文件位号未填写<br>missing-missing pins in sequence  在一个序列的管脚号中缺少某个号码</p>
-<p>demo.cmp</p>
-<p>检查方法 报告-器件规则检查</p>
-<p>全部勾选</p>
-<p>demo.err</p>
-<p>原理图页的大小设置及注意事项</p>
-<p>双击页边缘</p>
-<p>options 进行设置</p>
-<p>custom</p>
-<p>原理图库的设计<br>原理图的设计</p>
-<p>PCB封装库的设计<br>pcb布局和pcb 布线</p>
-<p>在设计原理图之前我们一般需要对原理图页进行一定的设置，可以提高设计原理图的效率，虽然在实际的应用中，有时候不进行准备设置也没有很大关系，但是基于设计效率的提供，推荐读者进行设置</p>
-<p>网格的设置有利于放置元件及绘制导线的对齐，以达到 规范和美化设计的目的</p>
-<p>推荐设置格点为100mil</p>
-<p>09 原理图库调用与器件的摆放</p>
-<p>放置元件，需要先装载或者打开创建的元件库，可以通过执行右下角命令<br>Panels-Components 调出原理图库 libraries 进行装载</p>
-<p>打开绘制的原理图</p>
-<p>原理图模型的放置</p>
-<p>放置</p>
-<p>Panels - components </p>
-<p>Models 预览</p>
-<p>二极管模型</p>
-<p>调用别人的原理图库</p>
-<p>第10课 – 元件的复制、剪切、旋转及镜像</p>
-<p>可以按住 shift 键,然后拖动一个元件即可复制<br>如果想多个一起复制,可以选择多种类元件,再执行步骤1 即可</p>
-<p>根据实际需要放置各类元件,然后进行复制即可</p>
-<p>原理图只是电气性能在图纸上的表示,可以对绘制图形进行水平或者垂直翻转而不影响电气属性</p>
-<p>拖动元件的状态下按x 键或者y 键,实现x 轴镜像或者y轴镜像</p>
-<p>逆时针旋转选中元件,快捷键为空格键</p>
-<p>顺时针旋转选中对象,快捷键为shift + 空格键</p>
-<hr>
-<p>第11节</p>
-<p>放置好元件之后，为了使所放置的元件更加规范，可以利用altium designer 提供的排列与对齐命令来进行操作</p>
-<p>常用命令，为了更加直观地学习这些排列与对齐命令，对此进行常用命令的介绍</p>
-<p>向左对齐<br>向右对齐<br>向上对齐<br>向下对齐</p>
-<p>D水平等间距</p>
-<p>垂直等间距</p>
-<p>快捷键 A（align） T</p>
-<p>放置线 没有电气连接属性 2D 辅助走线</p>
-<p>走线 放置 线 网络 wire Ctrl + W</p>
-<p>接地，有很多的端口</p>
-<p>电源端口 双击进行属性的设置</p>
-<p>电源需要加宽进行处理<br>双击线，进行属性设置，有宽度的设置 medium<br>对走线进行颜色的标识 </p>
-<hr>
-<p>第12 节  绘制器件导线及导线的属性设置</p>
-<p>元件放置好之后，就可对电气连接进行设置，让没有关联的元件之间形成逻辑联系，组成各个电路功能网</p>
-<p>绘制导线 导线是用来连接电气元件、具有电气特性的连线</p>
-<p>导线属性设置 在导线放置状态下按tab 键，可以对导线属性，颜色等设置</p>
-<p>布线角度切换 在布线的状态下可以按快捷键 shift+space 切换布线角度</p>
-<p>原理图绘制一般采用直角</p>
-<hr>
-<p>第13课 放置器件网络标号链接</p>
-<p>对于一些比较长的链接网络或者数量比较多的网络连接，绘制时如果全部采用导线的连接方式去连接，很难从表观上去识别链接关系，不方便设计，这个时候可以采取网络标号 方式来协助设计，它也是网络连接的一种</p>
-<p>可以对网络标号的颜色、名称、是否锁定进行设置，一般来说主要是设置好名称，增强原理图的可读性</p>
-<p>对于原理图的设计、altium Designer 专门提供一种电源和地的符号，是一种特殊的网络标号，可以让设计工程师比较形象地识别</p>
-<blockquote>
-<p>放置 – 网络标签</p>
-</blockquote>
-<p>为了方便识别</p>
-<p>按住 Ctrl 移动<br>按 shift 复制</p>
-<hr>
-<p>第14课 非电气对象放置 辅助线、文字等</p>
-<p>原理图中的非电气对象包含辅助线、文字注释等，它们没有电气属性，但是可以增强原理图的可读性，本节对常用非电气对象的放置进行说明</p>
-<p>一定要弄清楚 放置——绘图工具——线 和放置——线 的不同，前面一种是有电气性能的，后面一种是没有电气性能的，设计当中千万不要用后面一种充当电气线 去连接，否则会产生电气开路的现象</p>
-<p>文本字符串</p>
-<p>进行文字描述</p>
-<p>模块化操作</p>
-<p>副主框</p>
-<p>USB 5V 3.3V</p>
-<p>信号流向的标识</p>
-<hr>
-<p>第15课 元器件的位号编号排序及注意事项</p>
-<p>原理图绘制常利用复制的功能，复制完之后会存在位号重复或者同类型元件编号杂乱的现象，使后期BOM 表的整理十分不便，重新编号可以对原理图中的位号进行复位和统一，方便设计及维护</p>
-<p>工具 标注  原理图标注<br>Reset all 复位</p>
-<p>更新列表</p>
-<p>锁定标号 锁定 sub</p>
-<p>全选 解锁 所有标记</p>
-<p>保持之前的位号不变</p>
-<p>参数设置</p>
-<p>Schematic</p>
-<p>graphical editing</p>
-<p>粘贴时重置元件位号 去掉</p>
-<p>更改某一部分的位号</p>
-<p>选中  只针对选择的器件</p>
-<p>编号可以添加后缀</p>
-<hr>
-<p>第16课  如何快速查找原理图中的元件</p>
-<p>大面积的原理图无法直接定位某个元件的位号，网络标签所在的位置，可以通过跳转课查找功能来实现定位查找</p>
-<p>ctrl+F 查找 位号</p>
-<p>图纸的范围</p>
-<p>下面的选项</p>
-<p>区分大小写<br>跳转至结果</p>
-<p>whole words only</p>
-<p>快捷键 JC</p>
-<p>跳转到原点</p>
-<hr>
-<p>第17课  原理图常见错误的编译与检查</p>
-<p>一份好的原理图，不只是设计完成，同样需要对其进行常规性的检查核对，在设计完原理图之后，设计pcb 之前，工程师可以利用软件自带的ERC 功能对常规的一些电气性能进行检查，避免一些常规性 错误和查漏补缺，以及为正确完整性地导入pcb 进行电路设计做准备</p>
-<p>对常规检查来说，集中检查以下对象</p>
-<p>存在重复元件位号<br>存在悬浮的网络标号<br>存在悬浮的电源端口<br>存在单端网络</p>
-<p>工程 单击右键 project options </p>
-<p>error reporting 错误的报告类型</p>
-<p>单击右键 选择动态编译</p>
-<p>pannels</p>
-<p>视图 状态栏  message</p>
-<p>off grid</p>
-<hr>
-<p>第18课 BOM物料表的导出</p>
-<p>报告 bom 物料清单</p>
-<p>可以导出 txt xls csv</p>
-<p>第19课  原理图的pdf打印输出</p>
-<p>可以吧原理图以pdf的形式输出图纸,发给别人阅读,从而降低被直接篡改的风险<br>即 智能PDF 这个功能,可以把原理图以pdf 的形式进行输出</p>
-<hr>
-<p>第20课  原理图常用设计快捷键命令汇总</p>
-<p>适合文件 VD 当设计图页不在目视范围内时,可以快速归位</p>
-<p>适合所有对象&lt;<br>VFe<br>对整个图纸文档进行图纸归位-<br>放大-<br>Page Upe7<br>以鼠标指针为中心进行放大-<br>缩小e1<br>Page Downe<br>以鼠标指针为中心进行缩小-<br>选中的对象<br>VEe1<br>可以快速对选择的对象进行放大显示-</p>
-<p>命令c<br>快捷键<br>功能说明<br>左对齐<br>AL<br>向左对齐-<br>右对齐(<br>ARe<br>向右对齐<br>顶对齐<br>ATe<br>向顶部对齐1<br>底对齐<br>ABe<br>向底部对齐<br>水平分布-<br>AD<br>水平等间距分布对齐<br>垂直分布<br>AI7<br>垂直等间距分布对齐</p>
-<p>命令1<br>快捷键<br>功能说明<br>放置-线-<br>Pw<br>放置导线<br>放置-总线F<br>PBP<br>放置总线<br>放置-器件<br>PPe1<br>放置元件1<br>放置-网络标签<br>PNG’<br>放置网络标签(<br>放置-文本字符串<br>PT<br>放置字符标注</p>
-<p>命<br>快捷键<br>功能说明-<br>删除<br>ED<br>删除操作e<br>&#x2F;e<br>Shift+拖动1<br>递增复制-<br>e<br>Ctrl+F4<br>快速查找1<br>跳转到元件<br>JCe<br>跳转到某元件<br>&#x2F;e<br>Alt+单击<br>高亮相同网络<br>&#x2F;e<br>TP<br>系统参数设墨-</p>
-<hr>
-<p>第21课  PCB封装元素组成及简单pcb 封装创建</p>
-<p>PCB 封装的组成一般有以下元素，如图所示</p>
-<p>PCB 焊盘  用来焊接元件管脚的载体</p>
-<p>管脚序号，用来和元件进行电气连接关系匹配的序号</p>
-<p>元件丝印 用来描述元件腔体大小的识别框</p>
-<p>阻焊  防止绿油覆盖，可以有效地保护焊盘焊接区域</p>
-<p>极性表示，主要是用来定位元件方向的标识符号</p>
-<p>封装库，</p>
-<p>放置焊盘 -&gt;<br>管脚号</p>
-<p>元件丝印</p>
-<p>top solder 阻焊</p>
-<p>封装库</p>
-<p>PCB library</p>
-<p>添加我们的描述</p>
-<p>0603</p>
-<p>顶视图  推荐焊盘尺寸</p>
-<p>预览图</p>
-<p>侧面图</p>
-<p>.965mm</p>
-<p>0.8mm</p>
-<p>toplayer</p>
-<hr>
-<p>第22 课 异形焊盘PCB封装创建</p>
-<p>基于封装元素及规格尺寸要求，可以多元素进行组合叠加设计，从而组成一个异形焊盘，并由此制作异形pcb封装</p>
-<p>转换  从选择的元素创建区域</p>
-<p>第 23 课 IPC 封装创建向导的利用</p>
-<p>直接填数据 不用计算，满足IPC 行业标准，3D PCB 封装模型</p>
-<p>工具选项卡里</p>
-<p>QFP 封装样式</p>
-<p>丝印的宽度</p>
-<p>第24课 库安装与如何调用他人的PCB 库</p>
-<p>类似于元件库，有时候由于拥有多个PCB 封装库，不方便管理，需要把多个PCB 封装合并到一个库中，</p>
-<p>PCB 库的来源</p>
-<ol>
-<li><p>复制现有库</p>
-</li>
-<li><p>已有PCB 进行库生成</p>
-</li>
-<li><p>ic封装网  iclib.com</p>
-</li>
-</ol>
-<p>设计– 生成pcb库</p>
-<hr>
-<p>第25课  PCB封装的检查与报告</p>
-<p>ad 提供pcb 封装错误的检查功能，创建完封装之后，可以执行菜单命令  </p>
-<p>报告-元件规则检查，对所创建的封装进行一些常规检查</p>
-<p>检查重复的焊盘<br>检查重复的元素，包括丝印、填充等<br>检查重复的封装<br>检查pcb封装中缺失的焊盘名称</p>
-<p>检查导线短路<br>检查镜像的元件<br>检查没有连接的导线铜皮<br>检查参考点是否在本体进行设置<br>检查所有的pcb封装</p>
-<hr>
-<p>第26课  3DPCB封装模型调用与创建</p>
-<p>AD的3DPCB设计比较简单，只需建立库的3D模型</p>
-<p>即工作就在库的设计</p>
-<p>3D 模型来源</p>
-<p>自绘制3D模型<br>IC 封装网 下载</p>
-<p>solidworks 等专业3D软件绘制导入</p>
-<p>放置3D元件体</p>
-<p>旋转</p>
-<hr>
-<p>第27课 原理图如何导入pcb及导入常见报错</p>
-<p>在绘制pcb之前我们首先要做的是把原理图与我们pcb 进行交互导入</p>
-<p>确保这个pcb 文件一定在当前工程中，如果是free documents 是不能导入成功的，这一点一定要注意</p>
-<p>pcb 导入过程不是一帆风顺的，经常出现各种问题</p>
-<p>设计 import</p>
-<hr>
-<p>第28课  快速定义pcb板框与dxf 导入定义</p>
-<p>板框一定是闭合的，不然无法定义成功</p>
-<p>工具 - 器件摆放</p>
-<p>文件 导入 dxf 文件</p>
-<p>单位mm</p>
-<p>作为元素导入</p>
-<p>结构导入，尽量低版本dxf文件导入</p>
-<p>ctrl + Q 切换到毫米单位</p>
-<p>eos 设置原点</p>
-<p>结构工程师</p>
-<p>tvb 创建板切挖槽</p>
-<p>放置 线条</p>
-<hr>
-<p>第29 课  固定孔及期间的精准定义</p>
-<p>对于导入型板框，其有实物结构模型，固定孔的位置及大小已经定义好，只能严格按照要求的位置和大小精准地放置，对于开发板，因为不需要考虑有外壳，只需pcba 即可，对于固定孔的位置及大小要求不那么严格，一般按照常规进行设置即可</p>
-<ol>
-<li><p>位置要求：放置在里 中心间距X轴5mm Y 轴5mm的位置</p>
-</li>
-<li><p>大小要求，一般采用直径为3mm的非金属化孔</p>
-</li>
-</ol>
-<p>Plated 金属化孔  不勾选 为 非金属化孔</p>
-<p>可以通过坐标，可以通过复制的偏移量进行定义</p>
-<p>通过过孔辅助定义</p>
-<hr>
-<p>第30课 层叠的定义及添加</p>
-<p>对告诉多层板来说，默认的两层设计无法满足布线信号质量及走线密度要求，这个时候需要对PCB 层叠进行添加，以满足设计的要求。</p>
-<p>DK 层叠管理器</p>
-<p>Stack symmetry 去掉勾选</p>
-<p>signal 正片层 绘制的填充和走线都是铜，看到的是铜</p>
-<p>plane 负片层  绘制的是分割线，没有铜</p>
-<p>板厚修改，层属性修改</p>
-<p>厚度</p>
-<p>内缩量</p>
-<hr>
-<p>第31课  PCB的交互式与模块化布局操作</p>
-<p>为了方便元件的找寻，需要把原理图与PCB 对应起来，使两者之间能相互映射，简称交互</p>
-<p>利用交互式布局可以比较快速地定位元件，从而缩短设计时间，提供工作效率，菜单命令 工具-交叉选择模式，激活交互模式</p>
-<p>Shift+Ctrl+X</p>
-<p>右键  垂直分割</p>
-<p>设置 system navigation</p>
-<p>交叉选择模式</p>
-<p>交叉选择对象  一般选择元件</p>
-<p>改快捷键，右键自定义</p>
-<p>封装有问题，在原理图库里 update pcb with all</p>
-<hr>
-<p>第32课 PCB布局的常用操作命令介绍</p>
-<p>器件的选择</p>
-<p>框选，从上往下与从下往上的区别</p>
-<p>线选 sl</p>
-<p>选择快捷键 s</p>
-<p>器件的移动 Ctrl+G</p>
-<p>器件的对齐</p>
-<p>器件的快速换层 在拖动的状态下按L</p>
-<p>器件的联合处理 右键 联合 u</p>
-<p>器件的锁定</p>
-<p>丝印 A 定位器件文本</p>
-<p>凡亿课堂 </p>
-<h2 id="33-鼠线的打开及关闭"><a href="#33-鼠线的打开及关闭" class="headerlink" title="33 鼠线的打开及关闭"></a>33 鼠线的打开及关闭</h2><p>鼠线又叫飞线，指两点间表示连接关系的线，鼠线有利于理清信号的流向，有逻辑地进行布线操作，在进行pcb布线时，可以选择性地对某类网络或某个网络的鼠线进行打开与关闭</p>
-<p>al7</p>
-<p>显示连线</p>
-<p>隐藏连线</p>
-<h2 id="34-Class创建与Class-应用"><a href="#34-Class创建与Class-应用" class="headerlink" title="34 Class创建与Class 应用"></a>34 Class创建与Class 应用</h2><p>Class 就是类，同属性网络或元件或层或差分放置一起构成一个类别，相同属性的网络放置在一起，就是网络类<br>90欧姆的USB 差分，host otg 的差分放置一起，构成90欧差分类，分类的目的在于可以对相同属性的类进行统一的规则的约束或编辑管理</p>
-<h2 id="35"><a href="#35" class="headerlink" title="35."></a>35.</h2><p>对于一些常用的操作命令，设置快捷键，利用快捷键可以有效的提高设计效率</p>
-<p>agda 语言</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20230620-艾草"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/06/20/20230620-%E8%89%BE%E8%8D%89/"
-    >20230620-艾草</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/06/20/20230620-%E8%89%BE%E8%8D%89/" class="article-date">
-  <time datetime="2023-06-20T05:20:48.000Z" itemprop="datePublished">2023-06-20</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>艾叶草  又称艾蒿  艾草是我国南方普遍都有的一种植物可食用可入药</p>
-<ol>
-<li>艾叶可以用来泡脚洗澡</li>
-</ol>
-<p>艾叶本身来说是一种用的比较多的重要，它除了可以用来服用以外，也可以用来泡澡，或者是泡脚，因为艾叶性质比较温，可以用来祛除体内的湿气和寒气，对于女性来说，宫寒，月经不调，痛经，用艾叶泡澡，有一定的效果。</p>
-<p>它具有驱寒，驱除疲劳，促进睡眠，包括还有消毒杀菌的作用。因此用艾叶泡澡来说是比较好的，还可以可预防妇科疾病。但是对于阴虚体燥的人来说，艾叶泡澡并不适合。所以艾叶泡澡还是要根据个人的体质而定，要对症进行。</p>
-<ol start="2">
-<li>艾草与艾灸</li>
-</ol>
-<p>正所谓“痛则不通”湿邪之风堵塞了流畅的气血，气血相冲，疼痛之感自然就跟着来了。艾草具有温热除湿驱寒，活血化瘀舒缓疼痛的作用，祛风除湿通经活络艾草是在我国民间一直被广泛使用的药草，具有祛风除湿、活血通络的功效。中医认为关节、风湿病的发生，与正虚、邪侵、痰浊淤血有关。对中医有关注的人都知道，艾，是个好东西。古语云：“艾草不离身，医家不登门”。艾草通络贴片经过多道工序细心研磨、提纯，将艾草精华融进膏药里，只要轻松一贴，艾草精华就会深层渗透，直达皮肤深层，起到祛风除湿，通络止痛的作用。</p>
-<ol start="3">
-<li>艾叶制作美食</li>
-</ol>
-<p>以艾叶入膳自古就有，是古老的传统养生方法之一。清明前后的艾叶又鲜又嫩，是食用艾叶的最佳时间，可以用来制作艾叶红枣煮鸡蛋、艾青团（也叫艾叶青团或清明果子）、艾叶煎蛋、艾叶馒头等，以艾叶入食具有散寒、除湿、暖子宫、益气养血、安胎养神，适合痛经、月经不调或体质虚寒等功效。</p>
-<ol start="4">
-<li>艾叶通络贴片</li>
-</ol>
-<p>正所谓“痛则不通”湿邪之风堵塞了流畅的气血，气血相冲，疼痛之感自然就跟着来了。艾草具有温热除湿驱寒，活血化瘀舒缓疼痛的作用，祛风除湿通经活络艾草是在我国民间一直被广泛使用的药草，具有祛风除湿、活血通络的功效。中医认为关节、风湿病的发生，与正虚、邪侵、痰浊淤血有关。对中医有关注的人都知道，艾，是个好东西。古语云：“艾草不离身，医家不登门”。艾草通络贴片经过多道工序细心研磨、提纯，将艾草精华融进膏药里，只要轻松一贴，艾草精华就会深层渗透，直达皮肤深层，起到祛风除湿，通络止痛的作用。</p>
-<p>注意事项</p>
-<p>1、用艾叶泡脚是很多朋友喜欢的养生方式，但应注意饭前饭饭后不宜立即泡脚，这时候泡脚往往容易导致出现头晕不适的症状。</p>
-<p>2、由于艾叶烟熏时会有比较刺激的味道，对于有哮喘等唿吸道疾病的人群应慎用艾叶熏，防止病情加重。</p>
-<p>3、艾叶的用量一定要避免过量使用，因为过量使用可对于肝脏造成一定的损伤。</p>
-<p>艾草是草本植物，它的80%基本组成和烟草一样是纤维素和半纤维素，是有机物。艾草点燃后的烟雾与香烟一样含有非常复杂的成分，很多研究表明，艾烟确实有杀灭真菌和细菌的作用。安徽中医药大学研究用艾烟治疗皮肤病。记得非典时期，小汤山医院也确实用艾烟消毒。关键是：艾烟中同时含有很多有害物质，包括焦油、PM2.5、甲醛、一氧化碳、TVOC（总挥发性有机物）等。用艾烟消毒并不代表人吸入有好处！病房在消毒的时候哪个医生或者护士愿意待在正在消毒的房间内呢？有研究文献表明，一根艾条燃烧产生的焦油相当于20-40根中等焦油的香烟产生的焦油，您问问您的父母，他们是否愿意吸入如此浓度的焦油呢？艾烟有毒、有害是毫无疑问的，尤其是大浓度，长时间吸入。但是值得说明的是，历经数千年的中医传统艾灸能够提高人体的免疫力也是很多医案和现代研究已经证明的。别因为艾烟有害就否定艾灸疗法了。</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20230620-applescript使用方法"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/06/20/20230620-applescript%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/"
-    >20230620-applescript使用方法</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/06/20/20230620-applescript%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/" class="article-date">
-  <time datetime="2023-06-20T05:20:31.000Z" itemprop="datePublished">2023-06-20</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h2 id="什么是applescript"><a href="#什么是applescript" class="headerlink" title="什么是applescript"></a>什么是applescript</h2><p>applescript 是苹果公司退出的一种脚本语言，内置macos 中，可以直接操作控制 macos 以及它的应用程序，是一个实现macos 自动化的一个极其有力地工具，applescript 的前身是一个hypercard 所使用得脚本语言 hypertalk</p>
-<p>applescript的特点</p>
-<p>与其他的脚本语言python 和JavaScript 相比，applescript 最显著的特点就是可以控制其他macos 上的应用程序，我们可以通过使用applescript来完成一些繁琐重复的工作，applescript 语法简单，接近自然语言，就像在和系统对话一样，另外系统也提供了语法查询字典，可以很方便的查询语法</p>
-<h2 id="applescript编辑器"><a href="#applescript编辑器" class="headerlink" title="applescript编辑器"></a>applescript编辑器</h2><p>macos上有自带的脚本编辑器，支持applescript，其中有模板工程，模板代码，应用词典等功能，非常方便脚本的编写</p>
-<p>applescript 基础语法</p>
-<p>按照管理，用applescript写一个hello world <code>display dialog &quot;hello, world!&quot;</code></p>
-<p>然后运行，就可以看到系统弹出了一个hello world 的弹窗</p>
-<p>下面会介绍几种常用的语法</p>
-<ol>
-<li>告诉xx 做xx 就像上边说的那样，applescript 的语法非常接近自然语言，如果你想让一个应用做一些任务，就可以直接告诉他就可以，语法类似于</li>
-</ol>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">tell 应用</span><br><span class="line">做xx</span><br><span class="line">end tell</span><br></pre></td></tr></table></figure>
-
-<p>启动safari 然后打开花椒</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">tell application “Safari”</span><br><span class="line">    activate</span><br><span class="line">    open location &quot;https://www.huajiao.com/&quot;</span><br><span class="line">end tell</span><br></pre></td></tr></table></figure>
-
-<p>上述代码告诉了safari 启动，然后打开花椒，这个很接近于英语的表达方式</p>
-<ol start="2">
-<li>设置变量</li>
-</ol>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set 变量名 to 值</span><br></pre></td></tr></table></figure>
-
-
-<p>把花椒直播的网址设置为变量huajiao</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">set huajiao to &quot;https://www.huajiao.com/&quot;</span><br><span class="line">tell application &quot;Safari&quot;</span><br><span class="line">    activate</span><br><span class="line">    open location huajiao</span><br><span class="line">end tell</span><br></pre></td></tr></table></figure>
-
-
-<p>把地址设置为huajiao变量，然后打开</p>
-<ol start="4">
-<li>条件语句</li>
-</ol>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">if 条件 then</span><br><span class="line">    …</span><br><span class="line">else if 条件 then</span><br><span class="line">    …</span><br><span class="line">else</span><br><span class="line">    …</span><br><span class="line">end if</span><br></pre></td></tr></table></figure>
-
-<p>例如</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">set huajiao to &quot;https://www.huajiao.com/&quot;</span><br><span class="line">set baidu to &quot;http://www.baidu.com&quot;</span><br><span class="line">set num to 1</span><br><span class="line"></span><br><span class="line">tell application &quot;Safari&quot;</span><br><span class="line">    activate</span><br><span class="line">    if num &gt; 2 then</span><br><span class="line">        open location huajiao</span><br><span class="line">    else</span><br><span class="line">        open location baidu</span><br><span class="line">    end if</span><br><span class="line">end tell</span><br></pre></td></tr></table></figure>
-
-
-<ol start="5">
-<li>循环语句</li>
-</ol>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">repeat</span><br><span class="line">    …</span><br><span class="line">    exit repeat</span><br><span class="line">end repeat</span><br><span class="line"></span><br><span class="line">repeat while</span><br><span class="line">    …</span><br><span class="line">end repeat</span><br><span class="line"></span><br><span class="line">repeat with</span><br><span class="line">    …</span><br><span class="line">end repeat</span><br></pre></td></tr></table></figure>
-
-
-<p>eg</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">repeat with num in [1, 2, 3]</span><br><span class="line">    display dialog &quot;hello,word&quot;</span><br><span class="line">end repeat</span><br></pre></td></tr></table></figure>
-
-<ol start="6">
-<li>模拟点击输入事件，系统会默认把所有支持applescript的应用的各种按钮名编号，类似于button 1 window1 可以通过这些名字直接定位到应用的各种按钮，找到你想要点击的按钮以后，就可以做一些点击输入等操作</li>
-</ol>
-<p>首先如何快速拿到各个应用的按钮命名编号</p>
-<ol>
-<li><p>可以通过entire contents 来打印区域内所有的ui 元素来查找元素，也最精确，例如打印 qq 页面元素</p>
-</li>
-<li><p>可以直接通过脚本编辑器内置的字典来查看已经安装的所有支持applescript的应用，列出来所有支持applescript 的app 以及各个app 所支持的接口调用</p>
-</li>
-<li><p>介绍一个第三方的软件 ui browser 可以通过直接看到各个软件按钮的名字，这样就可以方便的找到想要点击的按钮，target 选择你要操作的程序，选中对应控件后，勾选 hightlight 对应控件会高亮显示，例如找到qq的登陆页面关闭按钮  window 1 下的checkbox2</p>
-</li>
-</ol>
-<p>找到这个元素后</p>
-<p>click 命令来点击按钮，keystroke 输入</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">click checkbox 2 of window &quot;Window&quot;</span><br></pre></td></tr></table></figure>
-
-<p>使用输入keystroke 输入一段内容</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">keystroke &quot;abc&quot;</span><br></pre></td></tr></table></figure>
-
-<p>或者key code 实现单个按键输入(Complete list of AppleScript key codes) 3）</p>
-<p><code>set value of text field 1 of … to &quot;abc&quot;</code></p>
-<h2 id="applescript-应用举例"><a href="#applescript-应用举例" class="headerlink" title="applescript 应用举例"></a>applescript 应用举例</h2><p>启动登陆qq</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">set username to “123456789”</span><br><span class="line">set qqpassword to “zhoujielun”</span><br><span class="line">#启动QQ</span><br><span class="line">tell application “QQ”</span><br><span class="line">    activate</span><br><span class="line">end tell</span><br><span class="line">delay 1</span><br><span class="line">#输入账号密码</span><br><span class="line">tell application “System Events”</span><br><span class="line">    set value of text field 1 of window “Window” of application process “QQ” to username</span><br><span class="line">    delay 2</span><br><span class="line">    set value of text field 2 of window “Window” of application process “QQ” to qqpassword</span><br><span class="line">    delay 1</span><br><span class="line">    click checkbox 3 of window “Window” of application process “QQ”</span><br><span class="line">end tell</span><br></pre></td></tr></table></figure>
-
-<h2 id="自动发送一个邮件"><a href="#自动发送一个邮件" class="headerlink" title="自动发送一个邮件"></a>自动发送一个邮件</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">set theSubject to “邮件标题”</span><br><span class="line">set recipientName to “test”</span><br><span class="line">set recipientAddress to “2541740067@qq.com”</span><br><span class="line">set theContent to “我是正文”</span><br><span class="line"></span><br><span class="line">tell application “Mail”</span><br><span class="line">    set theMessage to make new outgoing message with properties &#123;subject:theSubject, content:theContent, visible:false&#125;</span><br><span class="line">    tell theMessage</span><br><span class="line">        make new to recipient with properties &#123;name:recipientName, address:recipientAddress&#125;</span><br><span class="line">    end tell</span><br><span class="line">    send theMessage</span><br><span class="line">end tell</span><br></pre></td></tr></table></figure>
-
-<h2 id="applescript-小结"><a href="#applescript-小结" class="headerlink" title="applescript 小结"></a>applescript 小结</h2><p>applescript 是一个macos 上非常简单的ui 自动化控制脚本语言<br>无需代码基础即可做一些自动化控制<br>一些系统自带app 和第三方app 都暴露了很多提供脚本调用接口，完全可以将不同的应用串接起来完成一些流畅的自动化操作</p>
-<p>applescript 官方文档</p>
-<p>Introduction to AppleScript Language Guide</p>
-<p><a target="_blank" rel="noopener" href="https://developer.apple.com/library/archive/documentation/AppleScript/Conceptual/AppleScriptLangGuide/introduction/ASLR_intro.html">https://developer.apple.com/library/archive/documentation/AppleScript/Conceptual/AppleScriptLangGuide/introduction/ASLR_intro.html</a></p>
-<hr>
-<p>告诉xxx 做某事具有俄罗斯套娃的结构，如果你要具体到safari 的当前页面，那么就要访问它的front document 最前面的页面，代码就是在</p>
-<p>tell application “safari” 结构里再嵌入一个 tell front document</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">tell application &quot;Safari&quot;</span><br><span class="line">    tell front document</span><br><span class="line">        -- 你希望应用 Safari 的当前页面做的事</span><br><span class="line">        -- 比如获得当前页面的网页标题，直接用 name 就行</span><br><span class="line">        name</span><br><span class="line">    end tell</span><br><span class="line">end tell</span><br></pre></td></tr></table></figure>
-
-<p>这里的activate 和name 分别是applescript suite 里的类 command 和类的属性 property </p>
-<p>现在不理解别担心，下一节会专门介绍什么事applescript suite 以及如何使它它</p>
-<p>依此类推，你可以无限tell 下去</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">tell application &quot;Safari&quot;</span><br><span class="line">    tell front document</span><br><span class="line">        tell something</span><br><span class="line">            tell something</span><br><span class="line">                tell something</span><br><span class="line">                    -- macOS：你够了！</span><br><span class="line">                end tell</span><br><span class="line">            end tell</span><br><span class="line">        end tell</span><br><span class="line">    end tell</span><br><span class="line">end tell</span><br></pre></td></tr></table></figure>
-
-<p>模拟键盘操作</p>
-<p>模拟键盘操作是applescript的另一个特长，有两条命令可用于模拟键盘操作</p>
-<p>keystroke 一串字符<br>key code 键位编码</p>
-<p>再运行applescript 时，尤其是模拟键鼠操作时候，经常需要等待一个应用被打开，一个窗口弹出才能继续执行下一步操作，那就需要让运行中的脚本暂停片刻<br>用delay 命令就好</p>
-<p>delay 0.5   – 暂停 0.5 秒</p>
-<p>注释</p>
-<p>在代码中插入一些不会被执行的注释用于解释代码内容，可以让别人和自己看自己写的代码时更好动￥，applescript 中凡是双短线和井号 后的内容都会被认为是注释，不会被执行</p>
-<pre><code>-- 这是一条注释
-# 这也是一条注释
-</code></pre>
-<h2 id="applescript-suite"><a href="#applescript-suite" class="headerlink" title="applescript suite"></a>applescript suite</h2><p>applescript suite 就是applescript 类，及其元素和属性的集合</p>
-<p>一个类，可以是一个数据，比如safari HTML文档，也可以是一个函数，帮你完成一个特定功能，比如往 omnifocus 里添加任务这个动作</p>
-<p>parse tasks into</p>
-<p>一个类中可能包含元素和属性，比如name 是document的一个属性，代表document 的名称</p>
-<p>suite 是按照应用来分类的</p>
-<p>safari suite </p>
-<p>finder suite  访达 提供的applescript 类的集合，只适用于 访达</p>
-<p>此外，你还能找到一个standard suite 标准脚本套件，它是系统的全局脚本套件，不局限于单个应用，可在任意场景下使用</p>
-<p>在哪里可以找到 applescript suite 呢</p>
-<ol>
-<li>系统原生的脚本词典，打开 脚本编辑器，新建一个脚本，用快捷键 打开applescript 字典，在这里你可以看到你的mac 上所有支持applescript 的应用的suite</li>
-</ol>
-<p>目前你已经写出了一段可行的代码了，如果你之后经常使用它，可以通过automator 之类的软件界，新建一个服务，然后把这段代码粘贴到相关的动作中，被设为服务后这个自动化流程就可以在快捷键中设置被赋予快捷键，</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
   </article>
   
 
   
   <nav class="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/2/">上一页</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/23/">23</a><a class="extend next" rel="next" href="/page/4/">下一页</a>
+    <a class="extend prev" rel="prev" href="/page/2/">上一页</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/24/">24</a><a class="extend next" rel="next" href="/page/4/">下一页</a>
   </nav>
   
 </section>
