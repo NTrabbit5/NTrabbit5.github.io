@@ -126,6 +126,96 @@
     
     
     <article
+  id="post-20221212-蓝牙协议分析"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/12/12/20221212-%E8%93%9D%E7%89%99%E5%8D%8F%E8%AE%AE%E5%88%86%E6%9E%90/"
+    >20221212-蓝牙协议分析</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/12/12/20221212-%E8%93%9D%E7%89%99%E5%8D%8F%E8%AE%AE%E5%88%86%E6%9E%90/" class="article-date">
+  <time datetime="2022-12-12T09:26:15.000Z" itemprop="datePublished">2022-12-12</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/482020575">https://zhuanlan.zhihu.com/p/482020575</a></p>
+<p>本文介绍蓝牙协议的基本特点，版本演进，协议的构成，学习路线等基础知识分享</p>
+<p>​ 蓝牙（英语：Bluetooth），一种无线通讯技术标准，用来让固定与移动设备，在短距离间交换资料，以形成个人局域网（PAN）。其使用短波特高频（UHF）无线电波，经由2.4至2.485 GHz的ISM频段来进行通信。1994年由电信商爱立信（Ericsson）发展出这个技术。它最初的设计，是希望创建一个RS-232数据线的无线通信替代版本。它能够链接多个设备，克服同步的问题。</p>
+<p>技术类型 </p>
+<p>蓝牙技术分为 基础率 增强数据率，和低功耗 LE 两种技术类型，其中 、BR EDR 是以点对点网络拓扑结构创建一对一设备通信 LE 型则使用点对点 一对一 广播 一对多和网格 多对多 等多种网络拓扑结构</p>
+<p>蓝牙技术联盟（英语：Bluetooth Special Interest Group，缩写为SIG）拥有蓝牙的商标，负责制定蓝牙规范、认证制造厂商，授权他们使用蓝牙技术与蓝牙标志，但本身不负责蓝牙设备的设计、生产及贩售。</p>
+<p>蓝牙 2.x EDR<br>加入了非跳跃窄频通道，因为不需要与每个设备交换应答信号，这种通道可以用来将给中器件的蓝牙服务概要同时广播到巨量的蓝牙器件，应答信号交换过程当前需要大约一秒，实时公共交通的时刻表，基本的交通畅通性信息和高级交通指向指示灯未加密信息可以以高速度发送给设备，更高的连接速度，支持多个速度水平 </p>
+<p>​ 2007年7月26日，蓝牙技术联盟通过了蓝牙核心规范2.1+EDR，向下对1.2版本完全兼容，并增加了Sniff省电功能，使得适配器与设备的联系时间延长到0.5秒，能节约不小电量；增强功能有简单安全配对（SSP），这改善了蓝牙设备的配对经验，同时提升了使用和安全强度。</p>
+<p>蓝牙 3.0 HS</p>
+<p>是一种全新的交替射频技术，蓝牙3.0 + HS 提高了资料传输速率，集成802.11 PAL 最高速度可达24Mbps 此外引入了增强电源控制，实际空闲功耗明显降低</p>
+<p>蓝牙 4.x </p>
+<p>提出了低功耗蓝牙 传统蓝牙 和高速蓝牙  三种模式</p>
+<p>高速蓝牙 主攻数据交换与传输</p>
+<p>传统蓝牙 则以信息沟通，设备连接为重点</p>
+<p>低功耗蓝牙 以不需要占用太多带宽的设备连接为主，</p>
+<p>这三种协议规范还能够互相组合搭配，从而实现更广泛的应用模式，此外，Bluetooth 4.0 还包蓝牙的传输距离提升到100米以上  低功耗模式调条件下</p>
+<p>调频 使用所有蓝牙规范版本通用的自适应调频，最大程度地减少 和其他 2.4GHz ISM 频段无线技术的串扰</p>
+<p>蓝牙 5.x </p>
+<p>在有效传输距离上将是4.2 LE 版本的4倍 传输速度将是4.2LE 版本的2倍 </p>
+<p>蓝牙5.0 还支持室内定位导航功能，允许无需配对接受信标的数据 ，针对物联网进行了很多底层优化</p>
+<p>1.6 总结 </p>
+<p>我们常说的蓝牙4.0 不等同于BLE BLE 只是蓝牙4.0 的子集，蓝牙4.0 是一个综合性协议规范</p>
+<p>蓝牙4.0 版本以后技术模式上分为低功耗蓝牙 和经典蓝牙 两种，市场芯片多数为仅支持BLE 的，也有两者都支持的 双模蓝牙芯片</p>
+<p>蓝牙芯片的三种功能配置 </p>
+<ol start="2">
+<li>蓝牙协议栈</li>
+</ol>
+<p>蓝牙协议栈由主机 +HCI 可选 +控制器三大块组成，其中对于单芯片方案是没用HCI 的 </p>
+<p>主机 Host 主机部分由核心协议层 和核心规范构成</p>
+<p>控制器 此部分拆分为低功耗蓝牙和经典蓝牙两个章节说明</p>
+<p>HCI 此部分定义了主机和控制器之间通信的接口标准，可以是UART USB 等通信方式 </p>
+<p>上图中红色部分是 BR&#x2F;RED 经典蓝牙的必选项，绿色部分是LE 低功耗蓝牙必选项，蓝色部分是公共部分，当然经典蓝牙也可以具备绿色部分特性，HCI 接口根据芯片架构有关，是可选项，两者在物理层的差异性图中没有体现，不涉及芯片设计，这块可暂不关注 </p>
+<p>GPA 规范，通用接入规范，定义了所有蓝牙设备的基础功能，设备键发现，连接、配对，绑定的流程，蓝牙设备中四种角色，广播和扫描响应报文的格式，还有一些通用蓝牙参数定义，比如设备地址，名称、配对密钥和设备的外观特征值，用于区分是什么设备，手机还是电脑；明确了作为一个低功耗蓝牙设备的基本需求，包含哪些层级以及如何协同工作的，规范了一些通用的蓝牙参数，蓝牙设备地址、设备名称、配对密钥、外观特征值  用于区分是手机还是电脑</p>
+<p>ATT 属性协议，定义了访问对端设备上数据的一组规则，是GATT 规范的基础，也是低功耗蓝牙的基石，定义了host 端属性报文格式和报文类型</p>
+<p>GATT 通用属性规范，位于ATT 之上，定义了属性的类型及其使用方法，GATT 用来规范attribute 中的数据内容，并运用 group 的概念对attribute 进行分类管理，没有GATT BLE 协议栈也能跑，但互联互通就会出现问题</p>
+<p>L2CAP 层，屏蔽了控制器传输协议中的许多特性，方便高层协议的开发，报文分片和重组，SAR 流控，重传 报文完整性校验等</p>
+<p>SMP 安全管理协议，定义了蓝牙设备配对，认证，解密等行为的安全操作</p>
+<p>LLCP LL 链路层控制，</p>
+<p>PHY 物理层，低功耗蓝牙采用40个信道，分为数据信道和广播信道；广播信道占用3个，用于发现设备、建立连接、广播数据；数据信道占用37个，用于已建立连接设备间的数据通信。建立连接的两个设备，必须同一时间处于同一信道上才能通信。</p>
+<ol start="3">
+<li>学习路线</li>
+</ol>
+<p>此部分给出低功耗蓝牙的基本学习路线，不一定适合所有人</p>
+<p>初步理解协议栈基本组成、专业术语，对协议栈有整体的认识。<br>结合相关项目抓包分析，结合理论和实际表现分析每个子过程，比如ble广播功能、ble建立连接等。有条件的可以整个开发板，都有配套教程代码，可以直接运行的。<br>相关协议栈源码移植和学习，推荐Zephyr.<br>4. 协议文档<br>蓝牙联盟官方下载入口：<a target="_blank" rel="noopener" href="http://www.bluetooth.com/">http://www.bluetooth.com</a><br>个人网盘分享：<a target="_blank" rel="noopener" href="https://www.aliyundrive.com/s/dhKyo">https://www.aliyundrive.com/s/dhKyo</a></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-20221212-MQTT协议笔记"
   class="article article-type-post"
   itemscope
@@ -1338,53 +1428,6 @@
 <p>非生物性病原</p>
 <p>各种不良环境条件，如不宜的温度，光照，水分，营养等条件</p>
  
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20221127-FFT算法"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/11/27/20221127-FFT%E7%AE%97%E6%B3%95/"
-    >20221127-FFT算法</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/11/27/20221127-FFT%E7%AE%97%E6%B3%95/" class="article-date">
-  <time datetime="2022-11-27T03:17:22.000Z" itemprop="datePublished">2022-11-27</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>[TOC]</p>
-<h2 id="0x01"><a href="#0x01" class="headerlink" title="0x01"></a>0x01</h2><h2 id="0x02"><a href="#0x02" class="headerlink" title="0x02"></a>0x02</h2><h2 id="0x03"><a href="#0x03" class="headerlink" title="0x03"></a>0x03</h2><h2 id="0x04"><a href="#0x04" class="headerlink" title="0x04"></a>0x04</h2> 
       <!-- reward -->
       
     </div>
