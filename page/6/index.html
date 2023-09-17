@@ -126,6 +126,106 @@
     
     
     <article
+  id="post-20230512-mathematica入门教程"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/05/12/20230512-mathematica%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B/"
+    >20230512-mathematica入门教程</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/05/12/20230512-mathematica%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B/" class="article-date">
+  <time datetime="2023-05-12T01:56:42.000Z" itemprop="datePublished">2023-05-12</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>学会mma 基本用法</p>
+<p>内置函数首字母大写</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[] 是所需要计算的内容</span><br><span class="line"></span><br><span class="line">&#123;&#125; 列表或者范围</span><br><span class="line"></span><br><span class="line">shift+enter 执行计算</span><br></pre></td></tr></table></figure>
+<p>默认情况下未赋值变量运行后是蓝色，已赋值变量是黑色</p>
+<p>等号是 &#x3D;&#x3D;  而&#x3D; 是赋值符号</p>
+<p>设置工作路径 SetDirectory[NotebookDirectory[]]; SetDirectory[“.&#x2F;DataFiles”];</p>
+<h2 id="第一次使用mathematical"><a href="#第一次使用mathematical" class="headerlink" title="第一次使用mathematical"></a>第一次使用mathematical</h2><p>mma 尽可能给出准确的结果，例如</p>
+<p>In[1]:&#x3D; 8&#x2F;3<br>Out[1]&#x3D; 8&#x2F;3  </p>
+<p>函数N[]计算近似结果<br>In[5]:&#x3D; N[8&#x2F;3]<br>Out[5]&#x3D; 2.66667</p>
+<p>计算 3a+1 两个数或表达式之间空一格就代表两者相乘</p>
+<p>3 a+1<br># 等价于3*a+1</p>
+<p>多项式展开(a+1)(a-2)</p>
+<p>Expand[(a+1)(a-2)]</p>
+<p>简单方程求解 $x^2+2x+1&#x3D;0$</p>
+<p>Solve[x^2+2 x+1,x]</p>
+<p>自由格式输入，先输入等号提示符，后面内容不需要标准mathematica 语法，用英文表达自己的意思即可，例如，做sin(x)的图像</p>
+<p>化sin x 在区间0到10的函数图像</p>
+<p>Plot[Sin[x],{x,0,10}]</p>
+<p>列表表达式Table</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">In[3]:= Table[i, &#123;i, 1, 10&#125;]</span><br><span class="line"></span><br><span class="line">Out[3]= &#123;1, 2, 3, 4, 5, 6, 7, 8, 9, 10&#125;</span><br><span class="line"></span><br><span class="line">In[4]:= Table[i + j, &#123;i, 1, 5&#125;, &#123;j, 2, 5&#125;]</span><br><span class="line"></span><br><span class="line">Out[4]= &#123;&#123;3, 4, 5, 6&#125;, &#123;4, 5, 6, 7&#125;, &#123;5, 6, 7, 8&#125;, &#123;6, 7, 8, 9&#125;, &#123;7, </span><br><span class="line">  8, 9, 10&#125;&#125;</span><br></pre></td></tr></table></figure>
+<p>Clear 用法，清除全局变量</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Clear[&quot;Global `*&quot;]</span><br></pre></td></tr></table></figure>
+
+<p>好了到此为止，大家已经学会了mathematical 基本操作，不错，mma 就回去吃这么人性化，想做什么就做什么</p>
+<h2 id="输入输出"><a href="#输入输出" class="headerlink" title="输入输出"></a>输入输出</h2><p>自动补签，当我们输入某个命令前几个字母时就会有智能提示，根据提示可以选择我们需要的函数，这种情况适用于对函数具体写法不太清楚的时候，根据智能提示就可以选择正确的写法，例如plo，下面就会有非常多这几个字母开头的函数供选择</p>
+<p>普通格式+-*&#x2F;</p>
+<p>数学2D格式，善用esc 键，比如输入pi esc+pi+esc 当然有时候我们并不需要将完整的字母写出来</p>
+<p>百分号+数字，表示引用第几次结果，不加数字就是上一个结果，例如</p>
+<p>%% %8</p>
+<p>双斜线&#x2F;&#x2F; 函数后缀，里面simplify[] 和&#x2F;&#x2F;Simplify 是等价的</p>
+<p>mma 格式排版，Alt+数字1到7 可以得到不同的文档结构</p>
+<h2 id="wolf-mathematica-正式开始"><a href="#wolf-mathematica-正式开始" class="headerlink" title="wolf-mathematica 正式开始"></a>wolf-mathematica 正式开始</h2><h3 id="定义变量"><a href="#定义变量" class="headerlink" title="定义变量"></a>定义变量</h3><p>定义x&#x3D;10 计算2的x次方<br>In[26]:&#x3D;   x &#x3D; 10;2^x<br>Out[27]&#x3D; 1024</p>
+<p>判断两个值是否一致</p>
+<p>In[28]:&#x3D; x &#x3D;&#x3D; 1023<br>Out[28]&#x3D; False</p>
+<p>加减乘除幂指数括号运算</p>
+<p>In[31]:&#x3D; (Sqrt[2] + 1)^2 (3 - a)&#x2F;[Pi]<br>Out[31]&#x3D; ((1 + Sqrt[2])^2 (3 - a))&#x2F;[Pi]</p>
+<p>创建列表</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">In[32]:= Table[i^2, &#123;i, 1, 10&#125;]</span><br><span class="line">Out[32]= &#123;1, 4, 9, 16, 25, 36, 49, 64, 81, 100&#125;</span><br><span class="line">In[33]:= Table[i^2, &#123;i, 1, 10, 2&#125;]</span><br><span class="line">Out[33]= &#123;1, 9, 25, 49, 81&#125;</span><br><span class="line">In[34]:= Table[&#123;i, i^2&#125;, &#123;i, 1, 10, 2&#125;]</span><br><span class="line">Out[34]= &#123;&#123;1, 1&#125;, &#123;3, 9&#125;, &#123;5, 25&#125;, &#123;7, 49&#125;, &#123;9, 81&#125;&#125;</span><br></pre></td></tr></table></figure>
+<p>自定义函数</p>
+<p>简单函数，注意下划线与冒号，当然还有更高级用法，两个下划线与三个下划线，以及默认参数等</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">In[35]:= f[x_, y_] := x^2 y    </span><br><span class="line">        f[a, y]  </span><br><span class="line">        f[1, 2]   </span><br><span class="line">Out[36]= a^2 y  </span><br><span class="line">Out[37]= 2</span><br></pre></td></tr></table></figure>
+<p>交互式操作</p>
+<p>首先画一个sin x 函数图像，并改变其振幅与周期</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Manipulate[Plot[A Sin[a x], &#123;x, -5, 5&#125;, PlotRange -&gt; &#123;&#123;-5, 5&#125;, &#123;-5, 5&#125;&#125;], &#123;a, 2, 5, 0.5&#125;, &#123;A, -2, 2, 0.2&#125;]</span><br></pre></td></tr></table></figure>
+<p>改进一下模型，可以自定义函数头 {sin, cos, tan} 以及滑块名称定义，默认值定义</p>
+<p>使用帮助很重要</p>
+<p>选中需要帮助的函数，按F1 快捷键打开帮助文档</p>
+<p>?+ 函数，执行后给出函数帮助信息</p>
+<h2 id="2D-3D-绘图"><a href="#2D-3D-绘图" class="headerlink" title="2D 3D 绘图"></a>2D 3D 绘图</h2><p>2D 绘图</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Plot[&#123;Sin[x], Cos[x]&#125;, &#123;x, 0, 2 \[Pi]&#125;]</span><br></pre></td></tr></table></figure>
+<p>Plot 函数属性分叉之多，例如常用的如下</p>
+<p>AspectRatio 1 GoldenRatio 宽高比</p>
+<p>Axes True 是否绘制轴</p>
+<p>ClippingStyle None 如何绘制曲线被剪切的区域<br>ColorFunction Automatic 确定曲线颜色的方法<br>ColorFunctionScaling True 是否缩放 ColorFunction 的变量<br>PlotLabel None 整个绘图的标签<br>PlotLabels None 曲线的标签<br>EvaluationMonitor None<br>在每次函数计算时，需要计算的表达式 Exclusions Automatic<br>x 中排除的点 ExclusionsStyle None<br>排除点的绘制样式 Filling None<br>每条曲线下填充 FillingStyle Automatic<br>填充的样式 LabelingSize Automatic maximum size of callouts and labels MaxRecursion Automatic<br>递归子划分的最大数量 Mesh None<br>在每条曲线上绘制多少个网格点 MeshFunctions </p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-20230512-如何在markdown里优雅地画基本函数图像"
   class="article article-type-post"
   itemscope
@@ -1580,86 +1680,6 @@
 <p>在将ip 地址分配给不同的主机时，有时会出现ip 地址冲突的情况</p>
 <p>总结</p>
 <p>动态主机配置协议是一个非常关键和重要的网络服务，是必须要有的，因为使用它可以帮助你作为一个系统管理员或网络管理员，通过分配、跟踪和重新分配ip 来处理客户端，离开管理，此外，如果有任何外提，你只需要保持与服务器连接，并验证设置，而不是在客户端之间运行</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20230403-如何用python分析股票"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/04/03/20230403-%E5%A6%82%E4%BD%95%E7%94%A8python%E5%88%86%E6%9E%90%E8%82%A1%E7%A5%A8/"
-    >20230403-如何用python分析股票</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/04/03/20230403-%E5%A6%82%E4%BD%95%E7%94%A8python%E5%88%86%E6%9E%90%E8%82%A1%E7%A5%A8/" class="article-date">
-  <time datetime="2023-04-03T07:52:20.000Z" itemprop="datePublished">2023-04-03</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>一个基本的股市分析项目，旨在了解金融市场 python编程的一些基本知识，让你5分钟上手股票可视化分析，</p>
-<p>导入必要的模块</p>
-<p>我们导入numpy pandas 和用于作图的matplotlib 库</p>
-<p>第一部分</p>
-<p>从雅虎财经获取特斯拉 通用和福特的每日收盘价数据</p>
-<p>第二部分 可视化数据，并对有趣的事情进行可视化检查，在本节中，我们还将从头开始教你怎样画蜡烛图</p>
-<p>在同一张图中画出特斯拉 通用和福特股票的开盘价曲线</p>
-<p>每只股票的最大成交量是在哪一天</p>
-<p>从开盘价格的时间序列可视化来看，似乎特斯拉的股价一直都要比通用和福特的股价更有高，但至于为什么特斯拉的股价一直高于其他两支股票，这个问题的答案不是单由股价决定，我们还需要考虑公司的总市值，尽管我们目前的数据并没有关于目前股票总单位的信息，但是，我们可以做一个简单的计算，在这里我们假设总的交易金额将是成交量列乘以开盘价格，这只是对市值的粗略估计而不是真实的市场价值，我们只是使用时间序列来直观地表示交易的总金额</p>
-<p>为每个dataframe 创建一个名为总交易量新的一列，及开盘价格与成交量的乘积</p>
-<p>第三部分，通过计算和比较每日收益来进行基本财务分析，并绘制每只股票的每日收益分布图来识别三者之间的关系</p>
-<p>每日百分比可以通过下面的公式计算所得</p>
-<p>从收盘价 列计算收益</p>
-<p>同时我们用一些box plot 来比较三只股票的收益范围</p>
-<p>比较股票的日收益</p>
-<p>我们绘制散点矩阵图，以查看每个股票日收益率之间的相关性</p>
-<p>从上面的scatter 矩阵图 ，我们可以看出只有通用和特斯拉汇报率关系图和其他4对关系图看起来不一样，所以我们可以推断特斯拉和通用确实有某种关系</p>
-<p>累积日收益</p>
-<p>日收益 是指股票价格相对于前一日的损益</p>
-<p>累积回报  累积回报是相对于投资计算的，如果累计回报超过一，你就是在盈利，否则就是亏损</p>
-<p>累积日收益的公式为</p>
-<p>df[daily_cumulative_return] &#x3D; ( 1+df[pct_daily_return] ).cumprod()</p>
-<p>假设我们从2012年1月3日开始买入这三支股票并一直持有，则我们的累积日均收益为</p>
-<p>下面我们来可视化一下三支股票的累计收益率，可以发现购入特斯拉后，它的价格涨了14倍</p>
-<p>使用python实时监控股票，并且持续扫描大盘</p>
-<p>使用python 实现监控股票并持续扫描大盘，可以通过以下步骤来完成</p>
-<ol>
-<li>安装必要的库，需要安装 pandas numpy requests matplotlib 等库，可以通过pip 命令进行安装</li>
-</ol>
-<p>获取数据 可以通过python来获取股票实时数据和历史数据</p>
-<p>可以使用pandas 库来处理数据</p>
-<p>数据分析，可以通过pandas 和numpy 库来进行数据分析，可以进行技术分析，例如移动平均线  MACD RSI 等，也可以进行基本面分析，例如 市盈率 市净率 ROE 等</p>
-<p>可视化 可以使用matplotlib 库来可视化数据，例如 绘制K线图，交易量图，技术指标图等</p>
-<p>持续扫描，可以使用python 的time 或schedule 模块来进行定时任务，例如每隔10秒钟获取一次股票数据</p>
  
       <!-- reward -->
       

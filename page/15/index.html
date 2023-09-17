@@ -126,6 +126,81 @@
     
     
     <article
+  id="post-20221118-python读取ini配置文件"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/11/18/20221118-python%E8%AF%BB%E5%8F%96ini%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/"
+    >20221118-python读取ini配置文件</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/11/18/20221118-python%E8%AF%BB%E5%8F%96ini%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/" class="article-date">
+  <time datetime="2022-11-18T05:30:14.000Z" itemprop="datePublished">2022-11-18</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>在详解python读取ini文件之前，我们先说明一个ini文件的组成；</p>
+<p>一个ini文件是由多个section组成，每个section中以key&#x3D;vlaue形式存储数据；</p>
+<p><img src="https://img2018.cnblogs.com/i-beta/1857864/201911/1857864-20191126141947240-1291136423.png" alt="img"></p>
+<p>然后我们来使用python读取ini文件中的数据；</p>
+<p>1导包</p>
+<p><a href="javascript:void(0);"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># 导包</span><br><span class="line">import configparser</span><br><span class="line">config = configparser.ConfigParser() # 类实例化</span><br><span class="line"></span><br><span class="line"># 定义文件路径</span><br><span class="line">path = r&#x27;D:\Python_Script\new_framework\source_file\broswer_config.ini&#x27;</span><br></pre></td></tr></table></figure>
+
+<p><a href="javascript:void(0);"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a></p>
+<p>2.读取文件内容</p>
+<p><a href="javascript:void(0);"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># 第一种读取ini文件方式,通过read方法</span><br><span class="line">config.read(path)</span><br><span class="line">value = config[&#x27;select&#x27;][&#x27;url&#x27;]</span><br><span class="line">print(&#x27;第一种方法读取到的值：&#x27;,value)</span><br><span class="line"></span><br><span class="line"># 第二种读取ini文件方式，通过get方法</span><br><span class="line">value = config.get(&#x27;select&#x27;,&#x27;url&#x27;)</span><br><span class="line">print(&#x27;第二种方法读取到的值：&#x27;,value)</span><br><span class="line"># 第三种读取ini文件方式，读取到一个section中的所有数据，返回一个列表</span><br><span class="line">value = config.items(&#x27;select&#x27;)</span><br><span class="line">print(&#x27;第三种方法读取到的值：&#x27;,value)</span><br></pre></td></tr></table></figure>
+
+<p><a href="javascript:void(0);"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a></p>
+<p><img src="https://img2018.cnblogs.com/i-beta/1857864/201911/1857864-20191126143140445-1027724830.png" alt="img"></p>
+<p><img src="https://img2018.cnblogs.com/i-beta/1857864/201911/1857864-20191126145850349-1682504070.png" alt="img"></p>
+<p>3.通过上面两种方式，我们发现读取到的数据全部是str类型。如果我们想要得到指定数据类型的数据可以使用以下方法：</p>
+<p>getint()     getfloat()     getboolean()  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">value = config.getint(&#x27;connect_mysql&#x27;,&#x27;port&#x27;)</span><br><span class="line">print(&#x27;这是第三种方法读取到的值：&#x27;,value)</span><br><span class="line">print(&#x27;这是第三种方法读取到的值的数据类型：&#x27;,type(value))</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://img2018.cnblogs.com/i-beta/1857864/201911/1857864-20191126143345735-444114163.png" alt="img"></p>
+<p>4.写入数据到ini文件中</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># 将数据写入到ini文件中</span><br><span class="line">config.add_section(&#x27;login&#x27;) # 首先添加一个新的section</span><br><span class="line">config.set(&#x27;login&#x27;,&#x27;username&#x27;,&#x27;admin&#x27;)  # 写入数据</span><br><span class="line">config.set(&#x27;login&#x27;,&#x27;password&#x27;,&#x27;123456&#x27;) # 写入数据</span><br><span class="line">config.write(open(path,&#x27;a&#x27;))            #保存数据</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://img2018.cnblogs.com/i-beta/1857864/201911/1857864-20191126144910298-816876494.png" alt="img"></p>
+<p> 5.获取到ini文件所有的section</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># 读取ini文件中所有的section</span><br><span class="line">section = config.sections()</span><br><span class="line">print(section)</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://img2018.cnblogs.com/i-beta/1857864/201911/1857864-20191126150049367-723414604.png" alt="img"></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-20221117-汇编学习笔记"
   class="article article-type-post"
   itemscope
@@ -1615,58 +1690,6 @@
 <p>大曲<br>  中温大曲<br>  高温大曲<br>  超高温大曲<br>小曲<br>  传统小曲<br>  纯种小曲<br>麦曲<br>  传统麦曲<br>  纯种麦曲<br>麸曲<br>  地面曲<br>  盒子曲<br>  帘子曲<br>  通风曲<br>红曲<br>  乌衣红曲<br>  红曲</p>
 <p>在我的家乡这边，制作酒曲的原料的种类还是比较少见的，一般少则三四种，多则是六七种，比较常见的就是<br>辣蓼草<br>马鞭草<br>兰香草<br>淡竹叶<br>桃树叶<br>柑橘树叶等。</p>
 <p>有一些比较讲究的老人，则还会加入艾草、土茯苓、桑叶、竹叶、扁豆叶、桂叶和甘草等等。因为各地的植物分布不同，所以制作酒曲的原料也是不一样的。</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20221111-芮城百亿产业"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/11/11/20221111-%E8%8A%AE%E5%9F%8E%E7%99%BE%E4%BA%BF%E4%BA%A7%E4%B8%9A/"
-    >20221111-芮城百亿产业</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/11/11/20221111-%E8%8A%AE%E5%9F%8E%E7%99%BE%E4%BA%BF%E4%BA%A7%E4%B8%9A/" class="article-date">
-  <time datetime="2022-11-11T02:35:16.000Z" itemprop="datePublished">2022-11-11</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>生命健康产业集群</p>
-<p>新材料产业集群</p>
-<p>清洁能源产业集群</p>
-<p>临空经济产业集群</p>
-<p>绿色建材产业集群</p>
-<p>农产品加工产业集群</p>
  
       <!-- reward -->
       
