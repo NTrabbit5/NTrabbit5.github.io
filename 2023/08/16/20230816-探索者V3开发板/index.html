@@ -80,7 +80,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> 字数统计:</span>
-            <span class="post-count">812</span>
+            <span class="post-count">1.6k</span>
         </span>
     </span>
 
@@ -89,7 +89,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> 阅读时长≈</span>
-            <span class="post-count">3 分钟</span>
+            <span class="post-count">5 分钟</span>
         </span>
     </span>
 </div>
@@ -208,6 +208,70 @@
 <p>传信率  比特率<br>传码率  波特率</p>
 <p>CH340C</p>
 <p>串口通信的协议层中，规定了数据包的内容，它由起始位、主题数据、校验位以及停止位组成</p>
+<p>数据寄存器</p>
+<p>控制器</p>
+<p>串口波特率理解为每秒传输的二进制位数</p>
+<p>fck 是给串口的时钟</p>
+<p>USARTDIV 是允许有余数的，我们用四舍五入进行取整，这样会导致波特率会有所偏差，而这样小误差是可以被允许的。</p>
+<p>USART 寄存器</p>
+<p>串口时钟使能</p>
+<p>串口复位</p>
+<p>串口波特率设置</p>
+<p>串口控制</p>
+<p>数据发送与接收<br>USART_DR 来实现的，这是一个双寄存器 TDR RDR</p>
+<p>串口状态</p>
+<p>RXNE 读数据寄存器非空<br>TC 发送完成</p>
+<p>GPIO 引脚复用功能</p>
+<p>AFIO 复用功能寄存器</p>
+<p>AFRH AFRL</p>
+<p>宏定义的值都是一样的，而宏名称只是为了区分是哪个外设而已</p>
+<p>原理图</p>
+<p>这里需要注意的是：上图中的红色的接线引脚和蓝色的接线引脚需要用短路帽连接起来</p>
+<p>uart.c 是异步收发器功能</p>
+<p>usart.c 是通用同步异步收发器，暂时没有用到</p>
+<p>函数形参</p>
+<p>errorcode 串口错误操作信息，主要用于存放串口操作的错误信息</p>
+<p>函数返回值</p>
+<p>HAL_OK 表示成功，ERROR  BUSY TIMEOUT</p>
+<p>IT 函数是开启串口接收中断函数</p>
+<p>IRQHandler 函数 中断处理公共函数</p>
+<p>串口通信配置步骤</p>
+<p>中断服务函数</p>
+<p>RxCpltCallback 函数实现数据接收处理，</p>
+<p>串口数据接收和发送</p>
+<p>每个</p>
+<p>串口1 的初始化函数</p>
+<p>事实上这个函数的代码还可以直接放到usart_init 函数里面，但是hal 库为了代码的功能分层初始化，定义这个函数方便用户使用</p>
+<p>AF_PP 推挽复用</p>
+<p>AF_OD 开漏式复用</p>
+<p>因为我们用到串口中断，所以还需要中断相关的配置</p>
+<p>串口接收回调函数定义如下</p>
+<p>在中断服务函数中，可以直接编写自己的中断服务函数</p>
+<p>uint8_t</p>
+<hr>
+<p>18章 独立看门狗实验</p>
+<p>本质上是一个定时器，这个定时器有一个输出端，可以输出复位信号</p>
+<p>IWDG 框图</p>
+<p>IWDG 有一个输入，经过一个8位的可编程预分频器提供时钟给一个12位递减计数器</p>
+<p>重载计数值喂狗</p>
+<p>启动看门狗</p>
+<hr>
+<p>19 章 窗口门狗WWDG 实验</p>
+<p>通过LED0和LED1 提示程序的运行状态</p>
+<p>WWDG 寄存器</p>
+<p>控制寄存器 CR</p>
+<p>配置寄存器 CFR</p>
+<p>状态寄存器 SR</p>
+<p>WDGA 位则是看门狗的激活位，该位由软件置1</p>
+<p>WWDG 驱动代码</p>
+<p>init 是独立看门狗初始化函数，主要设置预分频数、窗口值和计数器的值</p>
+<hr>
+<p>第20章 基本定时器实验</p>
+<p>STM32 由众多的定时器，其中包括<br>2个基本定时器，10个通用定时器<br>2个高级控制定时器</p>
+<p>TIM6 和TIM7 功能完全相同，资源是完全独立的<br>16位 自动重载递增计数器</p>
+<p>16位可编程预分频器</p>
+<p>可以触发DAC的同步电路，以及生成中断DMA 请求</p>
+<p>时钟源<br>控制器<br>时基单元</p>
  
       <!-- reward -->
       
