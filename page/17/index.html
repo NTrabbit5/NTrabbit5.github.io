@@ -126,6 +126,95 @@
     
     
     <article
+  id="post-20220818-mutoolpdf简介"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/08/18/20220818-mutoolpdf%E7%AE%80%E4%BB%8B/"
+    >20220818-mutoolpdf简介</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/08/18/20220818-mutoolpdf%E7%AE%80%E4%BB%8B/" class="article-date">
+  <time datetime="2022-08-18T04:18:36.000Z" itemprop="datePublished">2022-08-18</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>MuPDF Command Line Tools<br>MuPDF 官网</p>
+<p>MuPDF 的命令行工具都放在了一个命令文件中：mutool.exe</p>
+<p>mutool draw 将页面转为图像等文件<br>draw 命令将文档渲染成图片，转换其他格式的矢量图或提取文本内容。</p>
+<pre><code>mutool draw [options] file [pages]
+</code></pre>
+<p>支持的输入格式：pdf, xps, cbz, and epub<br>支持的输出格式：</p>
+<ul>
+<li>图像：pbm, pgm, ppm, pam, png, tga, pwg, pcl</li>
+<li>矢量：svg, pdf, and debug trace (as xml)</li>
+<li>文本：plain text, html, and structured text (as xml)</li>
+</ul>
+<p>Options:<br>-p password<br>文件是加密的话，用以输入密码。</p>
+<p>-o output<br>指定输出的文件名，文件名可以嵌入指示页码（例如：“页面%d.PNG”），<br>并支持Prtf修改器，例如“%03d”。如果没有指定输出，输出将转到 stdout。从文件名可推断出输出格式。</p>
+<p>-F format<br>指定输出格式，一般在输出到 stdout 时使用。</p>
+<p>-R angle<br>指定顺时针旋转角度。</p>
+<p>-r resolution<br>指定的分辨率。默认为 72 dpi。</p>
+<p>-w width<br>指定页面宽度</p>
+<p>-h height<br>指定页面高度</p>
+<p>-f<br>精确匹配；在匹配指定的宽度&#x2F;高度时忽略纵横比。</p>
+<p>-B bandheight<br>本设置这在渲染过程中使用较少的内存。仅兼容PAM、PGM、PPM、PNM和PNG输出格式。和 md5 checksumming may 不能同时使用。</p>
+<p>-W width<br>EPUB布局中的页面宽度。</p>
+<p>-H height<br>EPUB布局中的页面高度。</p>
+<p>-S size<br>EPUB布局中的字体大小</p>
+<p>-U filename<br>指定用于EPUB布局的用户自定义的CSS样式表</p>
+<p>-c colorspace<br>指定渲染的色彩空间。支持的色彩空间：单色、灰度、Grayα、RGB、RGBALPHA、CMYK、CMYKALPHA。允许的缩写：M，G，GA，RGBA，CMYKA。默认值是基于输出格式选择的。</p>
+<p>-G gamma<br>伽马校正，0.7 或 1.4 常用于亮色或暗色文本的渲染。</p>
+<p>-I<br>反转颜色</p>
+<p>-s [mft5]<br>显示各种信息：</p>
+<ul>
+<li>m 用于字形缓存和总内存使用，</li>
+<li>f 用于页面特性，例如页面是灰度级还是颜色，</li>
+<li>t 用于每页渲染时间以及统计信息，</li>
+<li>5 用于 md5 渲染图像的校验和，这些校验和可用于检查渲染是否已经改变。</li>
+</ul>
+<p>-A bits<br>指定反锯齿位数。默认值为 8。</p>
+<p>-D<br>禁止显示列表的使用。会导致速度减慢，但可减少内存的使用量。</p>
+<p>-i<br>忽略错误。</p>
+<p>-L<br>低内存模式（避免缓存对象在每个页面后清除缓存）。</p>
+<p>-P<br>同时进行解释和渲染。</p>
+<p>pages<br>逗号分隔的页码和范围列表（例如：1,5，10-15）。如果没有指定页面，则将呈现所有页面。</p>
+<p>mutool convert 用于将文档转换成其他格式<br>mutool trace 这是一个调试工具，用于退踪打印图形的调用情况。<br>这些工具专门用于处理 PDF 文件:</p>
+<p>mutool show 显示 PDF 文件中内部对象的工具。<br>mutool extract 提取图像和嵌入字体资源。<br>mutool clean 重写PDF文件。用于修复损坏的文件，或使PDF文件可编辑。<br>mutool merge 将多个输入文件合并为一个新的 PDF 文件<br>mutool create 从文本文件创建一个新的PDF文件。<br>mutool portfolio Manipulate PDF portfolios.<br>最后，有一个工具可以做任何你能想象到的事情:</p>
+<p>mutool run 一种运行JavaScript程序的工具，可以访问MUPDF库函数。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-20220817-PDF文件处理提示"
   class="article article-type-post"
   itemscope
@@ -1560,81 +1649,6 @@
 <h2 id="参考"><a href="#参考" class="headerlink" title="参考#"></a>参考<a target="_blank" rel="noopener" href="https://www.cnblogs.com/ricolee/p/cmd-tree.html#3188521218">#</a></h2><ul>
 <li><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/32ba82d84680">Window 平台下添加 tree 命令</a></li>
 </ul>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20220801-《人类简史》目录"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/08/01/20220801-%E3%80%8A%E4%BA%BA%E7%B1%BB%E7%AE%80%E5%8F%B2%E3%80%8B%E7%9B%AE%E5%BD%95/"
-    >20220801-《人类简史》目录</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/08/01/20220801-%E3%80%8A%E4%BA%BA%E7%B1%BB%E7%AE%80%E5%8F%B2%E3%80%8B%E7%9B%AE%E5%BD%95/" class="article-date">
-  <time datetime="2022-08-01T08:31:00.000Z" itemprop="datePublished">2022-08-01</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>人类简史：从动物到上帝（图文精编版）<br>版权页<br>扉页<br>目录<br>推荐序</p>
-<p>第一部分 认知革命</p>
-<p>第一章 人类：一种也没什么特别的动物<br>家族秘史<br>“思考”的代价<br>厨师的种族<br>兄弟的守护者</p>
-<p>第二章 知善恶树<br>标致汽车的传说<br>绕过基因组的快速道路<br>历史和生物学</p>
-<p>第三章 亚当和夏娃的一天<br>原始的富裕社会<br>会说话的鬼<br>和平还是战争？<br>沉默的帷幕</p>
-<p>第四章 毁天灭地的人类洪水<br>罪名成立<br>地懒的绝灭<br>诺亚方舟</p>
-<p>第二部分 农业革命</p>
-<p>第五章 史上最大骗局<br>奢侈生活的陷阱<br>神圣的干预<br>革命的受害者</p>
-<p>第六章 盖起金字塔<br>未来的来临<br>由想象所建构的秩序<br>真正的坚信者<br>监狱的高墙</p>
-<p>第七章 记忆过载<br>由库辛签核<br>官僚制度的奇迹<br>数字的语言</p>
-<p>第八章 历史从无正义<br>恶性循环<br>美洲的“洁净”观念<br>他和她<br>性与性别<br>当男人究竟有什么好的？<br>肌肉理论<br>流氓理论<br>父权基因理论</p>
-<p>第三部分 人类的融合统一</p>
-<p>第九章 历史的方向<br>用一种间谍卫星的高度……<br>全球视野</p>
-<p>第十章 金钱的味道<br>这要怎么算？<br>贝壳和香烟<br>金钱的运作原理？<br>黄金福音<br>金钱的价格</p>
-<p>第十一章 帝国的愿景<br>究竟帝国是什么？<br>邪恶的帝国？<br>这是为你们好<br>当“他们”成了“我们”<br>历史上的好人和坏人<br>全新的全球帝国</p>
-<p>第十二章 宗教的法则<br>让羔羊变得沉默<br>偶像崇拜的好处<br>神是唯一<br>善恶之战<br>自然法则<br>当崇拜的对象变成了人</p>
-<p>第十三章 成功的秘密</p>
-<ol>
-<li>马后炮的谬误</li>
-<li>盲目的历史女神克丽欧</li>
-</ol>
-<p>第四部分 科学革命</p>
-<p>第十四章 发现自己的无知<br>不知为不知<br>科学教条<br>知识就是力量<br>进步论的理想<br>吉尔伽美什计划<br>科学研究的恩客</p>
-<p>第十五章 科学与帝国的联姻<br>为什么是欧洲？<br>征服的心态<br>地图上的空白<br>如同来自外层空间的侵略者<br>罕见的蜘蛛，被遗忘的文字</p>
-<p>第十六章 资本主义教条<br>会变大的饼<br>哥伦布也需要金主<br>以资本之名<br>对自由市场的崇拜<br>资本主义的地狱</p>
-<p>第十七章 工业的巨轮<br>厨房里的秘密<br>能源的汪洋大海<br>输送带上的生命<br>血拼的年代</p>
-<p>第十八章 一场永远的革命<br>摩登的现代<br>家庭和社群的崩溃<br>想象的社群<br>变动不休<br>我们这个年代的和平<br>帝国的退位<br>核子和平</p>
-<p>第十九章 从此过着幸福快乐的日子<br>快乐该如何计算？<br>快乐的化学成分<br>生命的意义<br>认识你自己</p>
-<p>第二十章 智人末日<br>老鼠和人<br>让尼安德特人再现<br>仿生的生命<br>另一种生命<br>奇异点<br>科学怪人预言<br>后记 变成神的这种动物<br>致谢<br>历史年表<br>参考数据<br>尾注</p>
  
       <!-- reward -->
       
