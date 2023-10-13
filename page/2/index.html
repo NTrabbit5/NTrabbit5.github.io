@@ -126,6 +126,237 @@
     
     
     <article
+  id="post-20230816-探索者V3开发板"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/08/16/20230816-%E6%8E%A2%E7%B4%A2%E8%80%85V3%E5%BC%80%E5%8F%91%E6%9D%BF/"
+    >20230816-探索者V3开发板</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/08/16/20230816-%E6%8E%A2%E7%B4%A2%E8%80%85V3%E5%BC%80%E5%8F%91%E6%9D%BF/" class="article-date">
+  <time datetime="2023-08-16T06:21:39.000Z" itemprop="datePublished">2023-08-16</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h2 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h2><blockquote>
+<p>接口丰富</p>
+</blockquote>
+<blockquote>
+<p>设计灵活</p>
+</blockquote>
+<blockquote>
+<p>资源充足</p>
+</blockquote>
+<blockquote>
+<p>人性化设计</p>
+</blockquote>
+<blockquote>
+<p>国产化程度高</p>
+</blockquote>
+<h2 id="基本参数"><a href="#基本参数" class="headerlink" title="基本参数"></a>基本参数</h2><p>产品型号<br>ATK- DNF407 V3.2<br>CPU<br>STM32F407ZGT6，LQFP144<br>引出 IO<br>112 个<br>外形尺寸<br>121mm*160mm<br>工作电压<br>5V（USB）、DC6V～15V（DC005）<br>工作电流<br>75mA～120mA1（@5V）<br>工作温度<br>-40℃～+85℃</p>
+<h2 id="V3硬件资源"><a href="#V3硬件资源" class="headerlink" title="V3硬件资源"></a>V3硬件资源</h2><p>CPU</p>
+<p>SRAM</p>
+<p>SPI FLASH</p>
+<p>EEPROM</p>
+<p>电源指示灯</p>
+<p>状态指示灯</p>
+<p>复位按键</p>
+<p>功能按键</p>
+<p>电容触摸按键</p>
+<p>电源开关</p>
+<p>可调电位器</p>
+<p>蜂鸣器</p>
+<p>板载扬声器</p>
+<p>红外接收头</p>
+<p>光敏传感器</p>
+<p>三轴磁力计芯片</p>
+<p>音频编解码芯片</p>
+<p>无线模块接口</p>
+<p>CAN 接口</p>
+<p>RS485 接口</p>
+<p>RS232 接口</p>
+<p>数字温湿度传感器接口</p>
+<p>ATK 模块接口</p>
+<p>LCD 接口</p>
+<p>摄像头接口</p>
+<p>OLED 模块接口</p>
+<p>USB 转串口</p>
+<p>USB 从机接口</p>
+<p>USB HOST(OTG)</p>
+<p>RS232&#x2F;485 选择接口</p>
+<p>RS232&#x2F;模块选择接口</p>
+<p>CAN&#x2F;USB 选择接口</p>
+<p>TF 卡接口</p>
+<p>10M&#x2F;100M 网口</p>
+<p>JTAG&#x2F;SWD 调试口</p>
+<p>录音咪头（MIC）</p>
+<p>立体声音频输出接口</p>
+<p>立体声录音输入接口</p>
+<p>多功能接口</p>
+<p>5V 电源输入&#x2F;输出口</p>
+<p>3.3V 电源输入&#x2F;输出口</p>
+<p>参考电压设置接口</p>
+<p>直流电源输入接口</p>
+<p>启动模式选择配置接口</p>
+<p>后备电池接口</p>
+<p>引出 IO</p>
+<p>一键下载电路</p>
+<hr>
+<p>JTAG SWD</p>
+<p>joint test action group 即联合测试行动小组</p>
+<p>用标准的JTAG 调试，需要占用5个io 口，有些时候，可能造成io 口不够用，而用swd 则只需要2个io 口，大大节约了io 数量，但他们达到的效果是一样的</p>
+<p>强烈建议仿真器使用swd模式</p>
+<p>JTAG引脚说明：</p>
+<p>TDI(Test Data In)：串行输入引脚</p>
+<p>TDO(Test Data Out)：串行输出引脚</p>
+<p>TCK(Test Clock)：时钟引脚</p>
+<p>TMS（Test Mode Select）：模式选择（控制信号）引脚</p>
+<p>TRST (Test Reset)：复位引脚</p>
+<p>SWD：Serial Wire Debug，代表串行线调试</p>
+<p>SWD是ARM设计的协议，主要针对他们内核的芯片进行程序调试和下载。</p>
+<p>SWD引脚说明：</p>
+<p>SWDIO(Serial Wire Data Input Output)：串行数据输入输出引脚</p>
+<p>SWCLK(Serial Wire Clock)：串行线时钟引脚</p>
+<p>2.JTAG和SWD协议各自优缺点</p>
+<p>JTAG优点：</p>
+<p>a). 不限于ARM内核单片机，能支持更多单片机程序调试和下载。</p>
+<p>b). 用途更广，用于编程，调试和生产测试.</p>
+<p>JTAG缺点：占用引脚数比较多，比较占用板子尺寸。</p>
+<p>SWD优点：</p>
+<p>a). 引脚数更少，有利于节约电路板尺寸。</p>
+<p>b). SWD具有特殊功能，例如通过其I &#x2F; O线打印调试信息。</p>
+<p>c). 在高速大数据情况下，SWD整体性能比JTAG更好。</p>
+<p>SWD缺点：只能用于ARM内核的单片机。</p>
+<hr>
+<p>第11章 STM32 时钟系统</p>
+<p>HSE_VALUE</p>
+<hr>
+<p>第17章 串口通信实验</p>
+<p>单片机和上位机</p>
+<p>单片机和外围器件之间</p>
+<p>USART IIC SPI CAN USB</p>
+<p>同步通信 可以实现高速率，大容量的数据传输</p>
+<p>缺点，硬件复杂</p>
+<p>异步通信 速率较低，只适用点对点传输</p>
+<p>通信速率</p>
+<p>传信率  比特率<br>传码率  波特率</p>
+<p>CH340C</p>
+<p>串口通信的协议层中，规定了数据包的内容，它由起始位、主题数据、校验位以及停止位组成</p>
+<p>数据寄存器</p>
+<p>控制器</p>
+<p>串口波特率理解为每秒传输的二进制位数</p>
+<p>fck 是给串口的时钟</p>
+<p>USARTDIV 是允许有余数的，我们用四舍五入进行取整，这样会导致波特率会有所偏差，而这样小误差是可以被允许的。</p>
+<p>USART 寄存器</p>
+<p>串口时钟使能</p>
+<p>串口复位</p>
+<p>串口波特率设置</p>
+<p>串口控制</p>
+<p>数据发送与接收<br>USART_DR 来实现的，这是一个双寄存器 TDR RDR</p>
+<p>串口状态</p>
+<p>RXNE 读数据寄存器非空<br>TC 发送完成</p>
+<p>GPIO 引脚复用功能</p>
+<p>AFIO 复用功能寄存器</p>
+<p>AFRH AFRL</p>
+<p>宏定义的值都是一样的，而宏名称只是为了区分是哪个外设而已</p>
+<p>原理图</p>
+<p>这里需要注意的是：上图中的红色的接线引脚和蓝色的接线引脚需要用短路帽连接起来</p>
+<p>uart.c 是异步收发器功能</p>
+<p>usart.c 是通用同步异步收发器，暂时没有用到</p>
+<p>函数形参</p>
+<p>errorcode 串口错误操作信息，主要用于存放串口操作的错误信息</p>
+<p>函数返回值</p>
+<p>HAL_OK 表示成功，ERROR  BUSY TIMEOUT</p>
+<p>IT 函数是开启串口接收中断函数</p>
+<p>IRQHandler 函数 中断处理公共函数</p>
+<p>串口通信配置步骤</p>
+<p>中断服务函数</p>
+<p>RxCpltCallback 函数实现数据接收处理，</p>
+<p>串口数据接收和发送</p>
+<p>每个</p>
+<p>串口1 的初始化函数</p>
+<p>事实上这个函数的代码还可以直接放到usart_init 函数里面，但是hal 库为了代码的功能分层初始化，定义这个函数方便用户使用</p>
+<p>AF_PP 推挽复用</p>
+<p>AF_OD 开漏式复用</p>
+<p>因为我们用到串口中断，所以还需要中断相关的配置</p>
+<p>串口接收回调函数定义如下</p>
+<p>在中断服务函数中，可以直接编写自己的中断服务函数</p>
+<p>uint8_t</p>
+<p>分数波特率发生器</p>
+<p>USART</p>
+<p>UART</p>
+<p>MAX3232</p>
+<p>TX</p>
+<p>RX</p>
+<p>SCLK</p>
+<p>SW_RX</p>
+<p>RX</p>
+<p>接收中断</p>
+<p>&#x2F;&#x2F; USART </p>
+<hr>
+<p>18章 独立看门狗实验</p>
+<p>本质上是一个定时器，这个定时器有一个输出端，可以输出复位信号</p>
+<p>IWDG 框图</p>
+<p>IWDG 有一个输入，经过一个8位的可编程预分频器提供时钟给一个12位递减计数器</p>
+<p>重载计数值喂狗</p>
+<p>启动看门狗</p>
+<hr>
+<p>19 章 窗口门狗WWDG 实验</p>
+<p>通过LED0和LED1 提示程序的运行状态</p>
+<p>WWDG 寄存器</p>
+<p>控制寄存器 CR</p>
+<p>配置寄存器 CFR</p>
+<p>状态寄存器 SR</p>
+<p>WDGA 位则是看门狗的激活位，该位由软件置1</p>
+<p>WWDG 驱动代码</p>
+<p>init 是独立看门狗初始化函数，主要设置预分频数、窗口值和计数器的值</p>
+<hr>
+<p>第20章 基本定时器实验</p>
+<p>STM32 由众多的定时器，其中包括<br>2个基本定时器，10个通用定时器<br>2个高级控制定时器</p>
+<p>TIM6 和TIM7 功能完全相同，资源是完全独立的<br>16位 自动重载递增计数器</p>
+<p>16位可编程预分频器</p>
+<p>可以触发DAC的同步电路，以及生成中断DMA 请求</p>
+<p>时钟源<br>控制器<br>时基单元</p>
+<p>115200</p>
+<p>电平 RS232</p>
+<p>RS422</p>
+<p>转换芯片</p>
+<p>CH340C 芯片驱动</p>
+<p>起始位 主体数据</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-20230816-亲爱的姑娘"
   class="article article-type-post"
   itemscope
@@ -1549,101 +1780,6 @@
 <h2 id="3-整体代码的实现"><a href="#3-整体代码的实现" class="headerlink" title="3.整体代码的实现"></a>3.整体代码的实现</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;assert.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="type">void</span> <span class="title function_">GetNext</span><span class="params">(<span class="type">char</span>* sub, <span class="type">int</span>* next, <span class="type">int</span> lensub)</span><span class="comment">/*sub代表子串；next是外部开辟的动态内存数组；lensub是子串长度*/</span></span><br><span class="line">&#123;</span><br><span class="line">  next[<span class="number">0</span>] = <span class="number">-1</span>;</span><br><span class="line">  next[<span class="number">1</span>] = <span class="number">0</span>;</span><br><span class="line">  <span class="type">int</span> i = <span class="number">2</span>;<span class="comment">//当前i下标</span></span><br><span class="line">  <span class="type">int</span> k = <span class="number">0</span>;<span class="comment">//前一项的k</span></span><br><span class="line"> </span><br><span class="line">  <span class="keyword">while</span>(i &lt; lensub)</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">if</span> (k == <span class="number">-1</span> || sub[i - <span class="number">1</span>] == sub[k])<span class="comment">//k回退到-1或前一项sub[i-1]==sub[k]</span></span><br><span class="line">    &#123;</span><br><span class="line">      next[i] = k + <span class="number">1</span>;</span><br><span class="line">      i++;</span><br><span class="line">      k++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">      k = next[k];<span class="comment">//if条件不满足时则需将k回退到-1下标</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="type">int</span> <span class="title function_">KMP</span><span class="params">(<span class="type">char</span>* str, <span class="type">char</span>* sub, <span class="type">int</span> pos)</span><span class="comment">/*str:代表主串；sub:代表子串；pos:代表从主串的pos位置开始找*/</span></span><br><span class="line">&#123;</span><br><span class="line">  assert(str&amp;&amp;sub);<span class="comment">//断言</span></span><br><span class="line">  <span class="keyword">if</span> (str == <span class="literal">NULL</span> || sub == <span class="literal">NULL</span>)<span class="comment">//字符串为空直接返回-1</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">  <span class="type">int</span> lenstr = <span class="built_in">strlen</span>(str);<span class="comment">//求主串长度</span></span><br><span class="line">  <span class="type">int</span> lensub = <span class="built_in">strlen</span>(sub);<span class="comment">//求子串长度</span></span><br><span class="line">  <span class="keyword">if</span> (pos &lt; <span class="number">0</span> || pos &gt;= lenstr)<span class="comment">//pos位置不合法直接返回-1</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line"> </span><br><span class="line">  <span class="type">int</span> *next = (<span class="type">int</span>*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="type">int</span>)*lensub);<span class="comment">//开辟动态内存给next数组存放数据</span></span><br><span class="line">  assert(next);</span><br><span class="line"> </span><br><span class="line">  GetNext(sub, next,lensub);<span class="comment">//求出next数组</span></span><br><span class="line"> </span><br><span class="line">  <span class="type">int</span> i = pos;<span class="comment">//遍历主串</span></span><br><span class="line">  <span class="type">int</span> j = <span class="number">0</span>;<span class="comment">//遍历子串</span></span><br><span class="line"> </span><br><span class="line">  <span class="keyword">while</span> (i &lt; lenstr&amp;&amp;j &lt; lensub)</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">if</span> (j == <span class="number">-1</span> || str[i] == sub[j])</span><br><span class="line">    &#123;</span><br><span class="line">      i++;</span><br><span class="line">      j++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">      j = next[j];</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">free</span>(next);</span><br><span class="line">  next = <span class="literal">NULL</span>;</span><br><span class="line">  <span class="keyword">if</span> (j &gt;= lensub)</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">return</span> i - j;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, KMP(<span class="string">&quot;ababcabcdabcde&quot;</span>, <span class="string">&quot;abcd&quot;</span>, <span class="number">0</span>));<span class="comment">//预期返回5</span></span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, KMP(<span class="string">&quot;ababcabcdabcde&quot;</span>, <span class="string">&quot;abcdf&quot;</span>, <span class="number">0</span>));<span class="comment">//预期返回-1</span></span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, KMP(<span class="string">&quot;ababcabcdabcde&quot;</span>, <span class="string">&quot;ab&quot;</span>, <span class="number">0</span>));<span class="comment">//预期返回0</span></span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>以上就是今天要讲的内容，本文介绍了关于字符串匹配的BF算法和KMP算法，通过比特大博哥的视频学习，对算法思路与实现代码进行理解和分析，简单学习记录。欢迎大家探讨指正！</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20230804-使用strchr与strrchr函数查找单个字符"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/08/04/20230804-%E4%BD%BF%E7%94%A8strchr%E4%B8%8Estrrchr%E5%87%BD%E6%95%B0%E6%9F%A5%E6%89%BE%E5%8D%95%E4%B8%AA%E5%AD%97%E7%AC%A6/"
-    >20230804-使用strchr与strrchr函数查找单个字符</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/08/04/20230804-%E4%BD%BF%E7%94%A8strchr%E4%B8%8Estrrchr%E5%87%BD%E6%95%B0%E6%9F%A5%E6%89%BE%E5%8D%95%E4%B8%AA%E5%AD%97%E7%AC%A6/" class="article-date">
-  <time datetime="2023-08-04T04:32:55.000Z" itemprop="datePublished">2023-08-04</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p><a target="_blank" rel="noopener" href="http://c.biancheng.net/view/340.html">http://c.biancheng.net/view/340.html</a></p>
-<h2 id="使用-strchr-与-strrchr-函数查找单个字符"><a href="#使用-strchr-与-strrchr-函数查找单个字符" class="headerlink" title="使用 strchr 与 strrchr 函数查找单个字符"></a>使用 strchr 与 strrchr 函数查找单个字符</h2><p>如果需要对字符串中的单个字符进行查找，那么应该使用 strchr 或 strrchr 函数。其中，strchr 函数原型的一般格式如下：<br>它表示在字符串 s 中查找字符 c，返回字符 c 第一次在字符串 s 中出现的位置，如果未找到字符 c，则返回 NULL。也就是说，strchr 函数在字符串 s 中从前到后（或者称为从左到右）查找字符 c，找到字符 c 第一次出现的位置就返回，返回值指向这个位置，如果找不到字符 c 就返回 NULL。</p>
-<p>相对于 strchr 函数，strrchr 函数原型的一般格式如下：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">char</span> *<span class="title function_">strrchr</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *s, <span class="type">int</span> c)</span>;</span><br></pre></td></tr></table></figure>
-
-<p>与 strchr 函数一样，它同样表示在字符串 s 中查找字符 c，返回字符 c 第一次在字符串 s 中出现的位置，如果未找到字符 c，则返回 NULL。但两者唯一不同的是，strrchr 函数在字符串 s 中是从后到前（或者称为从右向左）查找字符 c，找到字符 c 第一次出现的位置就返回，返回值指向这个位置。下面的示例代码演示了两者之间的区别：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">char</span> str[] = <span class="string">&quot;I welcome any ideas from readers， of course.&quot;</span>;</span><br><span class="line">    <span class="type">char</span> *lc = <span class="built_in">strchr</span>(str, <span class="string">&#x27;o&#x27;</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;strchr： %s\n&quot;</span>, lc);</span><br><span class="line">    <span class="type">char</span> *rc = <span class="built_in">strrchr</span>(str, <span class="string">&#x27;o&#x27;</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;strrchr： %s\n&quot;</span>, rc);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>对于上面的示例代码，strchr 函数是按照从前到后的顺序进行查找，所以得到的结果为</p>
-<p>“ome any ideas from readers，of course.”; 而 strrchr 函数则相反，它按照从后到前的顺序进行查找，所以得到的结果为“ourse.”。<br>示例代码运行结果为：strchr： ome any ideas from readers， of course.strrchr： ourse.</p>
-<p>其实原因很简单，这里用的是字符的 ASCII 码（因为每个字符都对应着一个 ASCII 码），这样在传值的时候既可以传“char”类型的值，又可以传“int”类型的值（0 ~ 127）。</p>
-<h2 id="使用-strpbrk-函数查找多个字符"><a href="#使用-strpbrk-函数查找多个字符" class="headerlink" title="使用 strpbrk 函数查找多个字符"></a>使用 strpbrk 函数查找多个字符</h2><p>上面的 strchr 与 strrchr 函数解决了对字符串中单个字符的查找，那么需要查找多个字符时怎么办呢？<br>如果要查找多个字符，就需要使用 strpbrk 函数了。该函数在源字符串（s1）中按从前到后顺序找出最先含有搜索字符串（s2）中任一字符的位置并返回，空字符 null(‘\0’) 不包括在内，若找不到则返回空指针。其函数原型的一般格式如下：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">char</span> *<span class="title function_">strpbrk</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *s1,<span class="type">const</span> <span class="type">char</span> *s2)</span>;</span><br></pre></td></tr></table></figure>
-<p>例如，在 strpbrk 函数的定义如下：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">char</span> *<span class="title function_">strpbrk</span> <span class="params">(<span class="type">const</span> <span class="type">char</span> *s, <span class="type">const</span> <span class="type">char</span> *accept)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">while</span> (*s != <span class="string">&#x27;\0&#x27;</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="type">const</span> <span class="type">char</span> *a = accept;</span><br><span class="line">        <span class="keyword">while</span> (*a != <span class="string">&#x27;\0&#x27;</span>)</span><br><span class="line">            <span class="keyword">if</span> (*a++ == *s)</span><br><span class="line">                <span class="keyword">return</span> (<span class="type">char</span> *) s;</span><br><span class="line">        ++s;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>如上面的代码所示，strpbrk 数首先依次循环检查字符串 s 中的字符，当被检验的字符在字符串 accept 中也包含时（即<code>if（*a++==*s）</code>），则停止检验，并返回<code>（char*）s</code>。如果没有匹配字符，则返回空指针 NULL。这里需要注意的是，空字符 <code>null(&#39;\0&#39;)</code>不包括在内。函数的调用示例如下面的代码所示：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">char</span> str[] = <span class="string">&quot;I welcome any ideas from readers， of course.&quot;</span>;</span><br><span class="line">    <span class="type">char</span> *rc=<span class="built_in">strpbrk</span>(str,<span class="string">&quot;come&quot;</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%s\n&quot;</span>,rc);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>很显然，示例代码的运行结果为“elcome any ideas from readers，of course.”。</p>
-<h2 id="使用-strstr-函数查找一个子串"><a href="#使用-strstr-函数查找一个子串" class="headerlink" title="使用 strstr 函数查找一个子串"></a>使用 strstr 函数查找一个子串</h2><p>相对于 strpbrk 函数，strstr 函数表示在字符串 haystack 中从前到后查找子串 needle 第一次出现的位置（不比较结束符 <code>null(&#39;\0&#39;)</code>），并返回指向第一次出现 needle 位置的指针，如果没找到则返回 NULL。其函数原型的一般格式如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">char *strstr(const char *haystack, const char *needle);</span><br></pre></td></tr></table></figure>
-<p>strstr 函数的调用示例如下面的代码所示：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">char</span> str[] = <span class="string">&quot;I welcome any ideas from readers， of course.&quot;</span>;</span><br><span class="line">    <span class="type">char</span> *c1=<span class="built_in">strstr</span>(str, <span class="string">&quot;come&quot;</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;come：%s\n&quot;</span>,c1);</span><br><span class="line">    <span class="type">char</span> *c2=<span class="built_in">strstr</span>(str, <span class="string">&quot;icome&quot;</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;icome：%s\n&quot;</span>,c2);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>这里需要注意的是，因为 strstr 函数与 strpbrk 函数不同，strstr 函数匹配的是字符串，所以语句<code>strstr(str,&quot;icome&quot;)</code>将返回 NULL。运行结果为：</p>
-<p>strspn 函数表示从字符串 s 的第一个字符开始，逐个检查字符与字符串 accept 中的字符是否不相同，如果不相同，则停止检查，并返回以字符串 s 开头连续包含字符串 accept 内的字符数目。其函数原型的一般格式如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">size_t strspn(const char *s, const char *accept);</span><br></pre></td></tr></table></figure>
-<p>例如，该函数的定义如下：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">size_t</span> <span class="title function_">strspn</span> <span class="params">(<span class="type">const</span> <span class="type">char</span> *s,<span class="type">const</span> <span class="type">char</span> *accept)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">const</span> <span class="type">char</span> *p;</span><br><span class="line">    <span class="type">const</span> <span class="type">char</span> *a;</span><br><span class="line">    <span class="type">size_t</span> count = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (p = s; *p != <span class="string">&#x27;\0&#x27;</span>; ++p)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span> (a = accept; *a != <span class="string">&#x27;\0&#x27;</span>; ++a)</span><br><span class="line">            <span class="keyword">if</span> (*p == *a)</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">if</span> (*a == <span class="string">&#x27;\0&#x27;</span>)</span><br><span class="line">                <span class="keyword">return</span> count;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                ++count;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> count;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>从上面的示例代码中可以看出，strspn 函数从字符串参数 s 的开头计算连续的字符，而这些字符完全是 accept 所指字符串中的字符。简单地说，如果 strspn 函数返回的数值为 n，则代表字符串 s 开头连续有 n 个字符都属于字符串 accept 内的字符。</p>
-<p>函数的调用示例如下面的代码所示：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">char</span> str[] = <span class="string">&quot;I welcome any ideas from readers， of course.&quot;</span>;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;I wel：%d\n&quot;</span>,<span class="built_in">strspn</span>(str,<span class="string">&quot;I wel&quot;</span>));</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Iwel：%d\n&quot;</span>,<span class="built_in">strspn</span>(str,<span class="string">&quot;Iwel&quot;</span>));</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;welcome：%d\n&quot;</span>,<span class="built_in">strspn</span>(str,<span class="string">&quot;welcome&quot;</span>));</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;5：%d\n&quot;</span>,<span class="built_in">strspn</span>(str,<span class="string">&quot;5&quot;</span>));</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>在上面的示例代码中，因为 strspn 函数返回的是以字符串 s 开头连续包含字符串 accept 内的字符数目。而源字符串 str 中的“I”与“welcome”之间有一个空格（即“I welcome”），所以，语句“strspn（str，”Iwel”）”将返回 1，而语句“strspn（str，”I wel”）”将返回 5。因此，输出结果为：I wel：5Iwel：1welcome：05：0</p>
-<p>相对于 strspn 函数，strcspn 函数与之相反，它表示从字符串 s 第一个字符开始，逐个检查字符与 reject 中的字符是否相同，如果相同，则停止检查，并返回以字符串 s 开头连续不含字符串 reject 内的字符数目。其函数原型的一般格式如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">size_t strcspn(const char *s, const char *reject);</span><br></pre></td></tr></table></figure>
-
-<p>该函数的定义如下：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">size_t</span> <span class="title function_">strcspn</span> <span class="params">(<span class="type">const</span> <span class="type">char</span> *s,<span class="type">const</span> <span class="type">char</span> *reject)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">size_t</span> count = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span> (*s != <span class="string">&#x27;\0&#x27;</span>)</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">strchr</span> (reject, *s++) == <span class="literal">NULL</span>)</span><br><span class="line">            ++count;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            <span class="keyword">return</span> count;</span><br><span class="line">    <span class="keyword">return</span> count;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>从上面的代码中不难发现，strcspn 函数正好与 strspn 函数相反。strcspn 函数从字符串参数 s 的开头计算连续的字符，而这些字符都完全不在参数 reject 所指的字符串中。简单地说，如果 strcspn 函数返回的数值为 n，则代表字符串 s 开头连续有 n 个字符都不包含字符串 reject 内的字符。</p>
-<p>函数的调用示例如下面的代码所示：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">char</span> str[] = <span class="string">&quot;I welcome any ideas from readers， of course.&quot;</span>;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;I wel：%d\n&quot;</span>,<span class="built_in">strcspn</span>(str,<span class="string">&quot;I wel&quot;</span>));</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Iwel：%d\n&quot;</span>,<span class="built_in">strcspn</span>(str,<span class="string">&quot;Iwel&quot;</span>));</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;welcome：%d\n&quot;</span>,<span class="built_in">strcspn</span>(str,<span class="string">&quot;welcome&quot;</span>));</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;5：%d\n&quot;</span>,<span class="built_in">strcspn</span>(str,<span class="string">&quot;5&quot;</span>));</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>在上面的示例代码中，因为 strcspn 函数返回的是以字符串 s 开头连续不包含字符串 accept 内的字符数目。因此，其运行结果为：</p>
-<p>I wel：0<br>Iwel：0<br>welcome：2<br>5：45</p>
-<p>由此可见，对于 strspn 函数，如果找到了 reject 与 s 不相同元素时，指针停止移动，并返回以字符串 s 开头连续包含字符串 accept 内的字符数目；而 strncspn 函数则是找到了 reject 与 s 相同元素时，指针停止移动，并返回以字符串 s 开头连续不包含字符串 accept 内的字符数目。这一点一定要注意，千万不要混淆了。  </p>
  
       <!-- reward -->
       
