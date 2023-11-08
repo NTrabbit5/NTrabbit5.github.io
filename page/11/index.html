@@ -126,6 +126,70 @@
     
     
     <article
+  id="post-20221219-固件firmware固件与驱动的区别"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/12/19/20221219-%E5%9B%BA%E4%BB%B6firmware%E5%9B%BA%E4%BB%B6%E4%B8%8E%E9%A9%B1%E5%8A%A8%E7%9A%84%E5%8C%BA%E5%88%AB/"
+    >20221219-固件firmware固件与驱动的区别</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/12/19/20221219-%E5%9B%BA%E4%BB%B6firmware%E5%9B%BA%E4%BB%B6%E4%B8%8E%E9%A9%B1%E5%8A%A8%E7%9A%84%E5%8C%BA%E5%88%AB/" class="article-date">
+  <time datetime="2022-12-19T03:12:53.000Z" itemprop="datePublished">2022-12-19</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/0222686c0fb4">https://www.jianshu.com/p/0222686c0fb4</a></p>
+<p>固件 firmware 就是写入EROM 可擦写只读存储器，或者EEPROM 电可擦写可编程只读存储器中的程序</p>
+<p>固件是指设备内部保存的设备驱动程序，通过固件，操作系统才能按照标准的设备驱动实现特定机器的运行运作，比如 光驱、刻录机 等都有内部固件</p>
+<p>固件是担任着一个系统最基础最底层工作的软件，而在硬件设备中，固件就是硬件设备的灵魂，因为一些硬件设备除了固件以外没有其他软件组成，因此固件也就决定了这硬件设备的功能以及性能</p>
+<p>手机、数码相机、mp3、mp4、路由器、电子书、交换机、猫、PSP、PS3、NDS、XBOX、U盘、主板、打印机的BIOS（BIOS就是一种固件）、显卡的BIOS。</p>
+<p>固件既然是软件，就有大小之分，大的可有几百兆，小的也许只有几K 甚至不足1k</p>
+<p>而对于非独立的电子产品，比如硬盘、鼠标 bios 光驱、是、盘等设备，固件就是指其最底层的，让设备得以运行的程序代码</p>
+<p>固件与驱动的区别</p>
+<p>驱动和固件都是代码，前者为软件服务，后者为硬件服务</p>
+<p>随着计算机体系结构的发展，硬件的种类开始变多，操作系统的种类也变多了，这个时候，因为各种技术的、商业的原因，硬件厂商希望自己的硬件能被更多的软件厂商使用，所以就需要在硬件之上做一些封装，让自己的硬件操纵起来更容易，这个时候就要有 firmware 这种东西了，它简化了软件与硬件的交互</p>
+<p>但是为什么不把firmware 做的很完美，做的不需要驱动支持呢？因为有不同的操作系统</p>
+<p>不同的操作系统，对于操作硬件的方式完全不同，在windows 里应用态是无法直接写io 端口的，而在嵌入式系统里，一般都不限制直接操作io 端口，所以，硬件厂商一方面为了自己的硬件能被软件更简单的使用，就需要写firmware ，而另一方面为了兼容各种操作系统，又不能把firmware 写的太死，必须预留足够的余地让软件自由发挥，软件的自由发挥就是驱动</p>
+<p>不同操作系统的驱动是不能兼容的，原因就是驱动是为操作系统服务的，有的操作系统是单线程的，有些操作系统不允许动态申请内存，所以不同的操作系统要操作硬件，就要根据自身的特性编写对应的操作代码，这就是驱动存在的意义–适应系统需要</p>
+<p>假如世界上只有一种操作系统，并且版本永远不会改变，那么firmware 和驱动就可以融合在一起，但这只能是一个不现实的梦想，要知道民用操作系统和工业控制操作系统差别是十分巨大的</p>
+<p>从计算机领域来说，驱动和固件从来没有过明确的定义，就好像今天我们说内存，大部分人用来表示SDRAM 但也有人把android 里的固化的flash storage 称为内存，你不能说这样说就错了，因为这确实是一种内部存储</p>
+<p>但在linux kernel 中，driver 和firmware 是有明确含义的，其中 driver 是控制被操作系统管理的外部设备 device 的代码段，很多时候 driver 会被实现为LKM 但这不是必要条件，driver 通过 register_driver 注册到总线上，当某个device 被注册到同样的总线的时候，driver 和device 会通过一定的策略进行binding ，最终在probe 函数中由driver 实际控制对应的设备，并把对该设备的控制接口注册到linux 的其他子系统上</p>
+<p>而 firmware，是表示运行在非 控制处理器 （指不直接运行操作系统的处理器，例如外设中的处理器，或者被用于bare metal 的主处理器的其中一些核） 中的程序，这些程序很多时候使用和操作所运行的处理器完全不同的指令集，这些程序以二进制形式存在于linux内核的源代码树中，根据配置，可以直接集成到最终的映像中，或者被拷贝到指定的位置，当driver 对device 进行初始化的时候，通过load_firmware 等接口，可以把指定的firmware 加载到内存中，由驱动传输到指定的设备上</p>
+<p>所以，总的来说，其实 driver 和firmware 没有什么直接的关系</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-20221218-MQTT入门介绍"
   class="article article-type-post"
   itemscope
@@ -1037,55 +1101,6 @@
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="type">static</span> <span class="type">int</span> INT_STATIC;</span><br></pre></td></tr></table></figure>
 
 <p>不可行的原因是不能声明多个存储类关键字，由于 typedef 已经占据了存储类关键字的位置，因此，在 typedef 声明中就不能够再使用 static 或任何其他存储类关键字了。当然，编译器也会报错，如在 VC++2010 中的报错信息为“无法指定多个存储类”。</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20221216-python3简单的串口通信实现"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/12/16/20221216-python3%E7%AE%80%E5%8D%95%E7%9A%84%E4%B8%B2%E5%8F%A3%E9%80%9A%E4%BF%A1%E5%AE%9E%E7%8E%B0/"
-    >20221216-python3简单的串口通信实现</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/12/16/20221216-python3%E7%AE%80%E5%8D%95%E7%9A%84%E4%B8%B2%E5%8F%A3%E9%80%9A%E4%BF%A1%E5%AE%9E%E7%8E%B0/" class="article-date">
-  <time datetime="2022-12-16T04:45:11.000Z" itemprop="datePublished">2022-12-16</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>串口通信就是计算机和外设之间，通过数据信号线，底线、控制线等，按位进行传输数据的一种通讯方式，这种通讯方式使用的数据线少</p>
-<p>串口是一种接口标准，它规定了接口的电气标准，没有规定接口插件电缆及使用的协议</p>
-<p>python</p>
  
       <!-- reward -->
       
