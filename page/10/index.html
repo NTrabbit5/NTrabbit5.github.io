@@ -126,6 +126,60 @@
     
     
     <article
+  id="post-20221224-HomeAssistant树莓派-动态平面图"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/12/24/20221224-HomeAssistant%E6%A0%91%E8%8E%93%E6%B4%BE-%E5%8A%A8%E6%80%81%E5%B9%B3%E9%9D%A2%E5%9B%BE/"
+    >20221224-HomeAssistant树莓派-动态平面图</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/12/24/20221224-HomeAssistant%E6%A0%91%E8%8E%93%E6%B4%BE-%E5%8A%A8%E6%80%81%E5%B9%B3%E9%9D%A2%E5%9B%BE/" class="article-date">
+  <time datetime="2022-12-24T03:27:36.000Z" itemprop="datePublished">2022-12-24</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>平面图设计</p>
+<p>Floorplan 是由底层 的平面设计图加上顶层 的矢量图交互元素部分组成，对于底图的格式并没有硬核的规定，但需要以方便导入为前提，底图可随意发挥，或2D或3D，甚至是简单的一个交互面板都可以，不必拘泥于 房屋平面图 这个概念，这也是floorp-lan 的魅力所在</p>
+<p>最终的成图必须为svg 的矢量图格式，视频中使用的是inkscape ，软件较为轻量，当然 illustrator 更是没有问题，其他的矢量图绘图工具也可以使用</p>
+<p>这里提供几个交互元素图标的下载地址：</p>
+<p>Find Icons with the…<br>Used by millions of designers…<br> fontawesome.io</p>
+<p>Millions of images …<br>Download Free Icons and Stick…<br> flaticon.com</p>
+<p>绘图工具</p>
+<p>绘制平面图，除了高大上的3dmax 其实有很多亲民的apps 可供选择，这里推荐几个</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-20221224-HomeAssistant树莓派-维护答疑"
   class="article article-type-post"
   itemscope
@@ -942,69 +996,6 @@
 <p>[Unit]<br>Description&#x3D;Node.js HomeKit Server<br>After&#x3D;syslog.target network-online.target<br>[Service]<br>Type&#x3D;simple<br>User&#x3D;homebridge<br>EnvironmentFile&#x3D;&#x2F;etc&#x2F;default&#x2F;homebridge<br>ExecStart&#x3D;&#x2F;usr&#x2F;lib&#x2F;node_modules&#x2F;homebridge&#x2F;bin&#x2F;homebridge $HOMEBRIDGE_OPTS<br>Restart&#x3D;on-failure<br>RestartSec&#x3D;10<br>KillMode&#x3D;process<br>[Install]<br>WantedBy&#x3D;multi-user.target<br>Ctrl+X，Y，回车</p>
 <p>cd &#x2F;<br>sudo systemctl daemon-reload<br>sudo systemctl enable homebridge<br>sudo systemctl start homebridge<br>sudo systemctl status homebridge<br>sudo systemctl enable mosquitto</p>
 <p>最后重启，sudo reboot</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20221219-microPython是什么"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/12/19/20221219-microPython%E6%98%AF%E4%BB%80%E4%B9%88/"
-    >20221219-microPython是什么</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/12/19/20221219-microPython%E6%98%AF%E4%BB%80%E4%B9%88/" class="article-date">
-  <time datetime="2022-12-19T08:11:09.000Z" itemprop="datePublished">2022-12-19</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>microPython是什么</p>
-<p>先了解一下，什么是python</p>
-<p>python 是一种简单易用的，能够运行在多个平台下的计算机编程语言</p>
-<p>microPython 是跑在mcu 微控制器上的python，通过内置的解释器执行py 文件或者py 命令，就可以让微控制器运行您想要的功能了，microPython 和python 编程语言一样，在任何板子上都可以使用通用的api 控制硬件底层，比如点亮LED 灯，读取传感器信息，LCD 显示字符串，控制电机、连接网络、连接蓝牙等等</p>
-<p>如果说Arduino让创客摆脱了各种编程环境配置，那么micropython直接让创客摆脱了底层。命令行和解释执行，都是C语言所不具备的优势，运行micropython的soc，就类似一台完整的电脑，我们用python文件和命令行，轻松控制这台电脑中的一切。</p>
-<p>micropython 是人们连接各种任务的黏合剂，即便您不懂编程，不懂硬件，也可以通过它来控制mcu 要给microPython </p>
-<p>microPython诞生啦！</p>
-<p>Damien George是一名计算机工程师，他每天都要使用Python语言工作，同时也在做一些机器人项目。有一天，他突然冒出了一个想法：能否用Python语言来控制单片机，进行实现对机器人的操控呢？</p>
-<p>要知道，Python是一款比较容易上手的脚本语言，而且有强大的社区支持，一些非计算机专业领域的人都选它作为入门语言。遗憾的是，它不能实现一些非常底层的操控，所以在硬件领域并不起眼。</p>
-<p>Damien为了突破这种限制，他花费了六个月的时间来打造Micro Python。它基于ANSI C，语法跟Pyton 3基本一致，拥有自家的解析器、编译器、虚拟机和类库等。目前它支持基于32-bit的ARM处理器，比如说pyboard（STM32F405），支持NRF51822（micro:bit）、支持FireBeetle-ESP32、支持WiPy、支持ESP8266核心主控、支持CC3200等等。</p>
-<p>pyload 是microPython 官方出的一款支持microPython 的微控制器，采用stm32f405rg MCU主芯片，邮票孔设计，体积小巧<br>在性能方面，pyboard除了将stm32f405rg本身的外设延用出来，还拓展了微型SD卡插槽、三周加速度计（mma7660）。在小巧的pyboard上，设有29个GPIO，4个LED灯，板载3.3V LDO电源管理芯片，可以提供高达250mA的电流，3.6~16V的宽电压输入。</p>
-<p>micro:bit</p>
-<p>micro：bit是由英国广播公司BBC推出的可编程微型计算机，可以帮助用户学习基础编程知识。它最大的亮点在于支持图形化编程，支持microPython编程。micro：bit主控采用nrf51822芯片作为主控，IC包括256KB片上闪存，16KB RAM，32位ARM®Cortex™ M0 CPU，支持Bluetooth低功耗，在低功耗模式下，最低功耗可以达到0.6uA。</p>
-<p>FireBeetle-ESP32</p>
-<p>FireBeetle-ESP32全称是FireBeetle Board-ESP32微控制器，是由DFRobot基于Espressif ESP32主芯片开发的物联网、低功耗为控制器。FireBeetle-ESP32板载ESP-WROOM-32双核芯片，支持WiFi和蓝牙双模通信，外围兼容低功耗硬件设计，深度睡眠模式下功耗仅为10uA。FireBeetle-ESP32控制器还提供了3.7V锂电池接口，并可以通过USB口给锂电池充电。其次，在软件方面，已经支持WiFi和蓝牙功能的使用，支持I2S音频的解码，结合uPyCraft IDE，可以轻松完成物联网开发设计。值得说明的是，本书的microPython教程是基于FireBeetle-ESP32控制器硬件。</p>
-<p>WiPy</p>
-<p>WiPy是支持microPython编程、支持WiFi和蓝牙的开发板，定位于物联网应用的设计。WiPy控制器的核心采用Espressif ESP32芯片，其最大的特点在于体积小巧，支持蓝牙和WiFi，这点和DFRobot的FireBeetle萤火虫系列主板相似。</p>
  
       <!-- reward -->
       
