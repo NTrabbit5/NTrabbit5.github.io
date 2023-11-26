@@ -126,6 +126,186 @@
     
     
     <article
+  id="post-20230401-随笔"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/04/01/20230401-%E9%9A%8F%E7%AC%94/"
+    >20230401-随笔</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/04/01/20230401-%E9%9A%8F%E7%AC%94/" class="article-date">
+  <time datetime="2023-03-31T23:30:01.000Z" itemprop="datePublished">2023-04-01</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>立于皓月之边，不弱星光之势</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-20230320-ffmpeg使用笔记"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/03/20/20230320-ffmpeg%E4%BD%BF%E7%94%A8%E7%AC%94%E8%AE%B0/"
+    >20230320-ffmpeg使用笔记</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/03/20/20230320-ffmpeg%E4%BD%BF%E7%94%A8%E7%AC%94%E8%AE%B0/" class="article-date">
+  <time datetime="2023-03-20T05:34:47.000Z" itemprop="datePublished">2023-03-20</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>旋转方式嘛，常见的就够用了，使用参数 transpose</p>
+<p>逆时针旋转90度并垂直旋转</p>
+<p>顺时针旋转90度</p>
+<p>顺时针旋转90度后并垂直翻转</p>
+<h2 id="顺时针旋转90度"><a href="#顺时针旋转90度" class="headerlink" title="顺时针旋转90度"></a>顺时针旋转90度</h2><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -i vid1.mp4 -vf &quot;transpose=1&quot; vid1-output.mp4</span><br></pre></td></tr></table></figure>
+
+<p>vid1.mp4是你要旋转的视频，参数指定-vf “transpose&#x3D;1”就是顺时针，vid1-output.mp4是你旋转后要保存的文件名，以下类推。</p>
+<h2 id="逆时针旋转90度（顺时针旋转270度）"><a href="#逆时针旋转90度（顺时针旋转270度）" class="headerlink" title="逆时针旋转90度（顺时针旋转270度）"></a>逆时针旋转90度（顺时针旋转270度）</h2><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -i vid1.mp4 -vf &quot;transpose=2&quot; vid1-output.mp4</span><br></pre></td></tr></table></figure>
+
+<p>我的视频就需要逆时针旋转90度，请观察你的视频以便确定旋转角度。</p>
+<h2 id="顺时针旋转180度"><a href="#顺时针旋转180度" class="headerlink" title="顺时针旋转180度"></a>顺时针旋转180度</h2><p>相当于是旋转两次：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -i vid1.mp4 -vf &quot;transpose=2,transpose=2&quot; vid1-output.mp4</span><br></pre></td></tr></table></figure>
+
+<h2 id="顺时针旋转90度后并垂直翻转"><a href="#顺时针旋转90度后并垂直翻转" class="headerlink" title="顺时针旋转90度后并垂直翻转"></a>顺时针旋转90度后并垂直翻转</h2><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -i vid1.mp4 -vf &quot;transpose=3&quot; vid1-output.mp4</span><br></pre></td></tr></table></figure>
+
+<p>如果你的视频和我一样，分辨率是1920*1080的，那么旋转后不会有黑边。</p>
+<p>这办法比直接旋转角度要好，如果你用这样的命令：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -i vid1.mp4 -vf &quot;rotate=PI/2&quot; vid11.mp4</span><br></pre></td></tr></table></figure>
+
+<p>会有黑边，因为原宽高并没有改变！</p>
+<p>成功喽：</p>
+<p>ffmpeg是个开源免费的视频命令行工具，如果有大量的视频需要批量操作，也是有办法的，请参考官网文档。</p>
+<h2 id="ffmpeg-合并多个视频文件"><a href="#ffmpeg-合并多个视频文件" class="headerlink" title="ffmpeg 合并多个视频文件"></a>ffmpeg 合并多个视频文件</h2><p>某某视频，通过工具把一个视频被切割成12个视频都下载下来。想要合并12个视频文件到一个视频文件，试过各种，达芬奇、QQ影音、PR，要么视频模糊了，要么文件巨大，受不了了。只好找到视频编辑鼻祖（不接受反抗，事实如此）。</p>
+<p>Mark:本文不解释ffmpeg安装和环境设置问题。</p>
+<p>方法一： 直接合并</p>
+<p>a.编辑 2.txt</p>
+<h6 id="仅包含12行，不包含-号。"><a href="#仅包含12行，不包含-号。" class="headerlink" title="仅包含12行，不包含#号。"></a>仅包含12行，不包含#号。</h6><p>file ‘01.mp4’</p>
+<p>file ‘02.mp4’</p>
+<p>file ‘03.mp4’</p>
+<p>file ‘04.mp4’</p>
+<p>file ‘05.mp4’</p>
+<p>file ‘06.mp4’</p>
+<p>file ‘07.mp4’</p>
+<p>file ‘08.mp4’</p>
+<p>file ‘09.mp4’</p>
+<p>file ‘10.mp4’</p>
+<p>file ‘11.mp4’</p>
+<p>file ‘12.mp4’</p>
+<h5 id=""><a href="#" class="headerlink" title=""></a></h5><p>b.直接无损合并</p>
+<p>ffmpeg.exe -f concat -safe 0 -i 2.txt -c copy -y o1.mp4</p>
+<p>-f concat是指合并</p>
+<p>-safe 为了避免权限报错</p>
+<p>-c copy 一定要指定，不然会重新封装，数据文件就会变大。</p>
+<p>好处：不会变大，且加了 -c copy很快完成合并。</p>
+<p>方法二：转成ts 再转回mp4</p>
+<p>根据各位大佬的描述，貌似转回ts，再重新压制是比较科学的做法，但是我这个场景可能比较简单。</p>
+<p>a. 先把12个mp4转换为ts文件</p>
+<p>编辑 1.bat</p>
+<p>####### 1.bat 不包含#####</p>
+<p>ffmpeg -i 01.mp4 -vcodec copy -acodec copy -vbsf h264_mp4toannexb 01.ts</p>
+<p>ffmpeg -i 02.mp4 -vcodec copy -acodec copy -vbsf h264_mp4toannexb 02.ts</p>
+<p>ffmpeg -i 03.mp4 -vcodec copy -acodec copy -vbsf h264_mp4toannexb 03.ts</p>
+<p>ffmpeg -i 04.mp4 -vcodec copy -acodec copy -vbsf h264_mp4toannexb 04.ts</p>
+<p>ffmpeg -i 05.mp4 -vcodec copy -acodec copy -vbsf h264_mp4toannexb 05.ts</p>
+<p>ffmpeg -i 06.mp4 -vcodec copy -acodec copy -vbsf h264_mp4toannexb 06.ts</p>
+<p>ffmpeg -i 07.mp4 -vcodec copy -acodec copy -vbsf h264_mp4toannexb 07.ts</p>
+<p>ffmpeg -i 08.mp4 -vcodec copy -acodec copy -vbsf h264_mp4toannexb 08.ts</p>
+<p>ffmpeg -i 09.mp4 -vcodec copy -acodec copy -vbsf h264_mp4toannexb 09.ts</p>
+<p>ffmpeg -i 10.mp4 -vcodec copy -acodec copy -vbsf h264_mp4toannexb 10.ts</p>
+<p>ffmpeg -i 11.mp4 -vcodec copy -acodec copy -vbsf h264_mp4toannexb 11.ts</p>
+<p>ffmpeg -i 12.mp4 -vcodec copy -acodec copy -vbsf h264_mp4toannexb 12.ts</p>
+<p>#######到这里结束，#号不要复制</p>
+<p>不要直接复制12个命令到cmd运行，会跑漏掉。</p>
+<p>在cmd里面 执行1.bat</p>
+<p>b.整合12个ts文件到一个mp4</p>
+<p>编辑 1.txt</p>
+<p>########</p>
+<p>file ‘01.ts’</p>
+<p>file ‘02.ts’</p>
+<p>file ‘03.ts’</p>
+<p>file ‘04.ts’</p>
+<p>file ‘05.ts’</p>
+<p>file ‘06.ts’</p>
+<p>file ‘07.ts’</p>
+<p>file ‘08.ts’</p>
+<p>file ‘09.ts’</p>
+<p>file ‘10.ts’</p>
+<p>file ‘11.ts’</p>
+<p>file ‘12.ts’</p>
+<p>########</p>
+<p>执行整合</p>
+<p>ffmpeg -f concat -i 1.txt -acodec copy -vcodec copy -absf aac_adtstoasc output.mp4</p>
+<ol start="3">
+<li>删除所有ts文件</li>
+</ol>
+<p>rm *.ts</p>
+<p>第二个方法，挺费时间，给大家备用吧。可能对于不同的文件格式确实需要转回ts再处理。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-20230307-使用python转换latexmath2svg"
   class="article article-type-post"
   itemscope
@@ -612,232 +792,13 @@
 </article>
 
     
-    <article
-  id="post-20230206-学会点菜"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/02/06/20230206-%E5%AD%A6%E4%BC%9A%E7%82%B9%E8%8F%9C/"
-    >20230206-学会点菜</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/02/06/20230206-%E5%AD%A6%E4%BC%9A%E7%82%B9%E8%8F%9C/" class="article-date">
-  <time datetime="2023-02-06T13:07:19.000Z" itemprop="datePublished">2023-02-06</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <ol>
-<li>如有可能，提前了解所请对象的人数，个人偏好和有没有忌口<br>根据你的了解，预定餐馆，了解该饭店的特色菜<br>这样做到有的放矢，不太会出错</li>
-</ol>
-<p>这里强调一点，预定餐馆的时候，一定根据本次聚餐的目的，来定位置<br>比如请领导，商务宴请</p>
-<p>比如请对象父母长辈</p>
-<p>你需要预定私密性好的位置就餐</p>
-<p>最好是单间，确保谈话流畅不被打扰</p>
-<p>当然，请一帮好友日常聚聚</p>
-<p>就需要定一个气氛活跃的餐厅</p>
-<ol start="2">
-<li>菜品选择方面  主义荤素搭配 营养搭配 冷热搭配  干湿搭配</li>
-</ol>
-<p>一般根据就餐人数来确定总菜品数量</p>
-<p>一般办法是</p>
-<p>采用点菜数量是实际就餐人数加二的模式点菜</p>
-<p>同时维持凉菜和热菜的比例为1:2</p>
-<p>比如就餐人数为4人</p>
-<p>那么我们点2个凉菜 4个热菜</p>
-<p>最后再上一碗汤</p>
-<p>确保菜品有序上桌</p>
-<p>不至于一下子全上菜</p>
-<p>或者上来一个吃没了</p>
-<p>下一个还没端上桌</p>
-<p>这些都有讲究</p>
-<ol start="3">
-<li>商务宴请，或者由重要客人的情况下</li>
-</ol>
-<p>一定要保证菜品里有传统意义上的大菜，硬菜</p>
-<p>比如 龙虾，上等牛肉等等</p>
-<p>这样能让客人感觉自己的尊贵以及你对客人的尊重和重视</p>
-<ol start="4">
-<li>避免点重复种类的菜</li>
-</ol>
-<p>比如已经点了清蒸黄花鱼</p>
-<p>不要再点别的以鱼为主的菜品</p>
-<ol start="5">
-<li>针对不同请客对象，有不同点菜安排</li>
-</ol>
-<p>如果是你请朋友或同事吃饭</p>
-<p>如果你想兼顾民主的话</p>
-<p>可以把重要的菜按上述方法点好</p>
-<p>让其他人大概了解你本次的预算</p>
-<p>再点一些点缀又符合他们个人口味的菜肴</p>
-<p>如果请重要客人吃饭</p>
-<p>又不知道对方口味的话</p>
-<p>最简单又不失礼貌的做法是</p>
-<p>先询问对方有没有忌口</p>
-<p>然后挑几个不同样式  不同特色的菜品看他喜欢哪个或者几个</p>
-<p>这样避免留下私自做主的印象</p>
-<p>又照顾到客人的好恶</p>
-<p>还避免互相推诿的尴尬和浪费时间</p>
-<p>如遇宴请自己长辈和其他长辈一起吃饭</p>
-<p>可以先请其他长辈客人点菜</p>
-<p>再请自己父母点几个菜</p>
-<p>然后你添加调整菜品平衡</p>
-<p>以上是根据不同人群交流</p>
-<p>总结道的一些宴请时的点餐经验精髓</p>
-<p>总之一句话  点菜是门艺术  点得好</p>
-<p>不仅这餐饭吃的好</p>
-<p>更重要为你自己的为人处世加分</p>
-<p>也为你的将来聚拢人脉基础</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20230106-竖排书籍常见名词"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/01/06/20230106-%E7%AB%96%E6%8E%92%E4%B9%A6%E7%B1%8D%E5%B8%B8%E8%A7%81%E5%90%8D%E8%AF%8D/"
-    >20230106-竖排书籍常见名词</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/01/06/20230106-%E7%AB%96%E6%8E%92%E4%B9%A6%E7%B1%8D%E5%B8%B8%E8%A7%81%E5%90%8D%E8%AF%8D/" class="article-date">
-  <time datetime="2023-01-06T04:21:51.000Z" itemprop="datePublished">2023-01-06</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>夹注</p>
-<p>割注</p>
-<hr>
-<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/183126390">https://zhuanlan.zhihu.com/p/183126390</a></p>
-<p>书籍排版设计的相关术语</p>
-<p>封面  又称 封一  前封面 封皮 书面</p>
-<p>封面印有书名、作者、译者姓名和出版社的名称，封面起着美化书刊和保护书芯的作用</p>
-<p>封里 又称 封二</p>
-<p>是指 封面的背页，封里一般是空白的，但在中常用它来印 目录，或有关的图片</p>
-<p>封底里 又称 封三</p>
-<p>是指封底的里面一页，封底里 一般为空白页，但中 常用它来印正文或其他正文 以外的文字，图片，</p>
-<p>封底  又称 封四、底封</p>
-<p>图书在封底的右下方印统一书号和定价，在封底印版权页，或用来印目录及其他非正文部分的文字、图片</p>
-<p>书脊 又称 封脊</p>
-<p>书脊是指连接封面和封底的书脊部，书脊上一般印有书名、册次  作者、译者姓名和出版社名，以便于查找</p>
-<p>书冠</p>
-<p>书冠是指封面上方印书名文字的部分</p>
-<h3 id="书脊排版设计的相关术语"><a href="#书脊排版设计的相关术语" class="headerlink" title="书脊排版设计的相关术语"></a>书脊排版设计的相关术语</h3><p>书脚  </p>
-<p>书脚是指封面下方印出版单位名称的部分</p>
-<p>扉页  又称里封面或副封面</p>
-<p>扉页是指在书籍封面或衬页之后，正文前的一页，扉页上一般印有书名、作者或译者姓名、出版社 和出版的年月等  扉页也起装饰作用，增加书籍的美观</p>
-<p>插页</p>
-<p>插页是指凡版面超过开本范围的、单独印刷插装在书刊内、印有图或表的单页、有时也指版面不超过开本、纸张与开本尺寸相同，但用不同于正文的纸张或颜色印刷的书页</p>
-<p>篇章页 又称中扉页或隔页</p>
-<p>篇章页是指在正文各篇 章起始前排的，印有篇 编  或章 名称的一面单页，篇章页只能利用单码 双码留空白，篇章页插在双页之后，一般作暗码计算或不急页码，篇章页有时用带色的纸印刷来显示区别</p>
-<p>目录</p>
-<p>目录是书刊中 章 节 标题的记录，起到主题索引的作用，便于读者查找，目录一般放在书刊正文之前  </p>
-<p>中因印张所限  常将目录放在封二 封三 或封四 上</p>
-<p>版权页</p>
-<p>版权页是指版本的记录页，版权页中，按有关规定记录有书名、作者或译者姓名、出版社、发行者、印刷者、版次、印次、印数、开本、印张、字数、出版年月、定价、书号等项目，图书版权页一般印在扉页背页的下端，版权页主要供读者了解图书的出版情况，常附于书刊的正文前后</p>
-<h3 id="书籍排版设计的相关术语"><a href="#书籍排版设计的相关术语" class="headerlink" title="书籍排版设计的相关术语"></a>书籍排版设计的相关术语</h3><p>索引</p>
-<p>索引分为主题索引、内容索引、名词索引、学名索引、人名索引等多种，索引属于正文以外部分的文字记载，一般用较小字号双栏排于正文之后，索引中标有页码以便于读者查找，在科技书中索引作用十分重要，它能使读者迅速找到需要查找的资料</p>
-<p>版式</p>
-<p>版式是指书刊正文部分的全部格式，包括正文和标题的字体、字号、版心大小、通栏、双栏、每页的行数、每行字数、行距及表格、图片的排版位置等</p>
-<p>版心</p>
-<p>版心是指每面书页上的文字部分，包括章、节标题、正文以及图表 公式等</p>
-<p>版口</p>
-<p>版口是指版心左右上下的极限，在某种意义上即指版心，严格来说，版心是以版面的面积来计算范围的，版口则以左右上下的周边来计算范围</p>
-<p>超版口</p>
-<p>超版口是指超过左右或上下版口极限的版面，当一个图或一个表的左右或上下超过了版口，则称为超版口图或超版口表</p>
-<p>直（竖）排本</p>
-<p>是指翻口在左，订口在右，文字从上至下，字行有右至左排印的版本，一般用于古书</p>
-<p>横排本</p>
-<p>就是翻口在右，订口在做，文字从左至右，字行由上至下排印的版本</p>
-<p>刊头</p>
-<p>刊头又称 题头，头花，用于表示文章或版别的性质，也是一种点缀性的装饰，刊头一般排在报刊  诗歌  散文的大标题的上边或左上角</p>
-<p>破栏</p>
-<p>破栏又称跨栏，报刊大多数是用分栏排的，这种在一栏之内排不下的图或表延伸到另一栏去而占多栏的排法称为破栏排</p>
-<p>天头</p>
-<p>天头是指每面书页的上端空白处</p>
-<p>地脚</p>
-<p>地脚是指没面书页的下端空白处</p>
-<p>暗页码</p>
-<p>又称暗码是指不排页码而又占页码的书页，一般用于超版心的插图、插表、空白页或隔页等</p>
-<p>页</p>
-<p>页与张的意义相同，一页即两面，书页正 反两个印面，应注意另页和另面的概念不同</p>
-<p>另页起</p>
-<p>另页起是指一篇文章从单码起排，如果第一篇文章以单页码结束，第二篇文章也要求另页起，就必须在上一篇文章的后留出一个双码的空白面，即放一个空码，每篇文章要求另页起的排法，多用于单印本印刷</p>
-<p>另面起</p>
-<p>另面起是指一篇文章可以从单 双码开始起排，但必须另起一面，不能与上篇文章接排</p>
-<p>表注</p>
-<p>表注是指表格的注解和说明，一般排在表的下方，也有的排在表框之内，表注的行长一般不要超过表的长度</p>
-<p>图注</p>
-<p>图注是指插图的注解和说明，一般排在图题下面，少数排在图题之上，图注的行长一般不应超过图的长度</p>
-<p>背题</p>
-<p>背题是指排在一面的末尾，并且其后无正文相随的标题，排印规范中禁止背题出现，当出现背题时应设法避免，解决的办法是在本页内加行，缩行或留下尾空而将标题移到下页</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
   </article>
   
 
   
   <nav class="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/7/">上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><a class="page-number" href="/page/10/">10</a><span class="space">&hellip;</span><a class="page-number" href="/page/24/">24</a><a class="extend next" rel="next" href="/page/9/">下一页</a>
+    <a class="extend prev" rel="prev" href="/page/7/">上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><a class="page-number" href="/page/10/">10</a><span class="space">&hellip;</span><a class="page-number" href="/page/25/">25</a><a class="extend next" rel="next" href="/page/9/">下一页</a>
   </nav>
   
 </section>

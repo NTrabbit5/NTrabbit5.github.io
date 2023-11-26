@@ -126,6 +126,197 @@
     
     
     <article
+  id="post-20221220-树莓派魔镜"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/12/20/20221220-%E6%A0%91%E8%8E%93%E6%B4%BE%E9%AD%94%E9%95%9C/"
+    >20221220-树莓派魔镜</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/12/20/20221220-%E6%A0%91%E8%8E%93%E6%B4%BE%E9%AD%94%E9%95%9C/" class="article-date">
+  <time datetime="2022-12-20T02:58:50.000Z" itemprop="datePublished">2022-12-20</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h2 id="材料准备"><a href="#材料准备" class="headerlink" title="材料准备"></a>材料准备</h2><p>树莓派3 魔镜的神经中枢</p>
+<p>usb麦克风</p>
+<p>显示屏 不论通过什么渠道取得的显示屏，在这里都建议自带hdmi 接口并侧面出口，剩下转接头的钱和空间，也方便未来背面走线</p>
+<p>如果考虑入触摸屏建议一步到位，目前面向树莓派生产的触控屏最大能到10寸左右，价格在400至500元。加装触摸屏，务必要考虑好触摸类型，因为最上面还需要覆盖一块单透镜。建议优先使用红外触摸，有能力在外框安置感应条即可；其次压敏，但是要考虑镜子的导电性；压感在覆盖镜子的前提下，基本不可能实现。</p>
+<p>驱动板+喇叭， LCD 屏需要加配高压条，一般来说近几年的屏幕都是LED 了，但还是要具体问题具体分析</p>
+<p>单向透视镜</p>
+<p>俗称原子镜，就是大家看的美剧里审讯室用的镜子，魔镜的“大脸”。目前，适配屏幕尺寸的单透镜需定制，价格较昂贵。定制时建议优先选择厚度较薄、透光率较强的镜面，否则会影响日间魔镜的展示效果。</p>
+<p>囊中羞涩的派友也可使用镜面贴膜曲线救国，效果参考汽车车窗贴膜，但透视效果较差。</p>
+<p>镜框</p>
+<p>电源 </p>
+<p>整套魔镜系统需要电源驱动的部件有树莓派，驱动板和显示屏，后两者并一体讨论，驱动板在外接喇叭的前提下，usb 供电接口无法为树莓派供电，因此必须独立供电树莓派，显示屏所需电源为12V5A 大家在购入电源适配器是务必看准电压电流、并兼顾走线，<br>有能力者，可手动并线</p>
+<p>可选材料</p>
+<p>智能插座</p>
+<p>超短HDMI 线</p>
+<p>工具  螺丝刀  电工胶布，泡棉胶</p>
+<p>显然，大部分的工作都集中在底层，我们需要把树莓派、驱动板等等部件合理安置在显示屏背部</p>
+<p>喇叭布置于头部，直立后出声位置位于上方，更具现实感。树莓派布置在底端，保证USB麦克风的收音效果，且方便拿取。中部安放驱动板，方便走线。<br>这里省略了一步操作，建议先将驱动板随附的控制板连接至驱动板，选定输入源、调整好音量后拔下，以节约背板空间。</p>
+<p>上述工作完成后，依次将单透镜和显示屏置入镜框内，扣入夹片固定好，避免松动。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-20221219-HomeAssistant智能家居系统搭建指南"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/12/19/20221219-HomeAssistant%E6%99%BA%E8%83%BD%E5%AE%B6%E5%B1%85%E7%B3%BB%E7%BB%9F%E6%90%AD%E5%BB%BA%E6%8C%87%E5%8D%97/"
+    >20221219-HomeAssistant智能家居系统搭建指南</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/12/19/20221219-HomeAssistant%E6%99%BA%E8%83%BD%E5%AE%B6%E5%B1%85%E7%B3%BB%E7%BB%9F%E6%90%AD%E5%BB%BA%E6%8C%87%E5%8D%97/" class="article-date">
+  <time datetime="2022-12-19T09:16:41.000Z" itemprop="datePublished">2022-12-19</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>Home assistant 是一个成熟完整的基于python 的智能家居系统，设备支持度高，支持自动化 automation 群组化，ui 客制化等等高度定制化设置，背后又有庞大的社群基础，且不断更新，最重要的是我们可以通过homeassistant-homebridge 插件打通两个平台，同样实现设备的siri 控制，整套体系的框架如下</p>
+<p>本系列将围绕安装，配置、开发等内容，详细介绍HASS 平台的方方面面，同时针对HASS 与hb 兼容与选择，自动化配置方法等等问题给出自己的观点和探索</p>
+<p>HASS 支持大部分平台，简而言之，只要你的主机能跑python 基本就能安装hass 配合魔镜项目，以及便捷性的考虑，<br>本系列教程也将基于树莓派展开</p>
+<p>初始安装</p>
+<p>在树莓派安装HASS 有2种方法供选择</p>
+<p>以其他操作系统，（这里以树莓派 官方系统 raspbian 为例） 为根系统，再通过指令安装</p>
+<p>直接安装集成了HASS 的hassbian 操作系统</p>
+<p>以上2种方法从性能上来说并无二异，均能实现hass全部功能，hassbian 实际上亦基于raspbian 唯一需要纳入考虑的是图形化操作界面的需求。由于树莓派基金官方尚未公开单独安装图形化操作界面的方法，在当下，如果有该需求，只能通过官方图形化操作系统 raspbian with desktop 实现</p>
+<p>方法1<br>安装前，请参考 <a href="https://link.zhihu.com/?target=https://sspai.com/user/714086">梓姵君</a> 的 <a href="https://link.zhihu.com/?target=https://sspai.com/post/38542">文章</a> 对树莓派进行初始基础设置，重点关注地区、WiFi、源替换的内容，这里不再展开，特别注意，2016年11月 后的官方系统默认关闭ssh 功能，请务必打开</p>
+<p>使用任何方法连接到树莓派终端、输入以下安装代码</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ curl -O https://raw.GitHubusercontent.com/home-assistant/fabric-home-assistant/master/hass_rpi_installer.sh &amp;&amp; sudo <span class="built_in">chown</span> pi:pi hass_rpi_installer.sh &amp;&amp; bash hass_rpi_installer.sh</span><br></pre></td></tr></table></figure>
+<p>注意，不要以sudo 运行，然后泡杯茶，做点别的事情，等待程序跑完，安装时间根据网络情况不等，大约需要1-2 个小时，国内网络环境大家自行改善</p>
+<p>如果你是使用此方法安装hass 的话，未来更新指令如下</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo su -s /bin/bash homeassistant</span><br><span class="line"><span class="built_in">source</span> /srv/homeassistant/homeassistant_venv/bin/activate</span><br><span class="line">pip3 install --upgrade homeassistant</span><br><span class="line"><span class="built_in">exit</span></span><br></pre></td></tr></table></figure>
+
+<p>方法2 </p>
+<p>参考 copriwolf 的</p>
+<p><a href="https://link.zhihu.com/?target=https://sspai.com/post/39851">教程</a></p>
+<p>使用 Etcher 安装官方最新</p>
+<p><a href="https://link.zhihu.com/?target=https://github.com/home-assistant/pi-gen/releases/latest">固件</a></p>
+<p>镜像。</p>
+<p>感谢少数派友 <strong>DJ</strong> 千辛万苦的搬运至<a href="https://link.zhihu.com/?target=https://pan.baidu.com/s/1dFpaaAH">度娘盘</a>（password: 2e98）</p>
+<p>要注意的是，hassbian 初次启动时需要联网进行原始设置，由于无法在初次启动前设置无限网络，因此务必将树莓派与电脑或者路由器有线连接起来，以保证树莓派在有网环境下顺利设置</p>
+<p>官方教程告知初次启动需要等待5分钟左右，基于国内的网络环境，我这里测试多次，都需要等待近10分钟，所以大家不要焦躁，可以看部番剧或者往下研究一下此篇文章以便接下来顺利进展。</p>
+<p>如果等待时间过久却没有出现初始界面，可尝试使用以下命令强制初始安装</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl <span class="built_in">enable</span> install_homeassistant.service</span><br><span class="line">sudo systemctl start install_homeassistant.service</span><br></pre></td></tr></table></figure>
+
+<p>如果使用此方法，未来更新指令如下</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ sudo systemctl stop home-assistant@homeassistant.service</span><br><span class="line">$ sudo su -s /bin/bash homeassistant</span><br><span class="line">$ <span class="built_in">source</span> /srv/homeassistant/bin/activate</span><br><span class="line">$ pip3 install --upgrade homeassistant</span><br><span class="line">$ <span class="built_in">exit</span></span><br><span class="line">$ sudo systemctl start home-assistant@homeassistant.service</span><br></pre></td></tr></table></figure>
+
+
+<p>无论使用哪种方法，等待过后，在浏览器输入 http:&#x2F;&#x2F;树莓派的ip 地址:8123 查找树莓派ip 地址可以直接前往路由器界面</p>
+<p>如果出现类似下图，则表示初始安装完成，如若没有出现界面，或者无法连接，有很大可能是尚未安装完毕，不要着急再等等，注意地址冒号为英文字符，请勿输入中文冒号</p>
+<p>Hassbian 安装注意，初次启动请等待安装出现以下界面，再进行后续操作，否则你的一切工作都是前功尽弃，并且除此启动时，勿SSH ，勿输入任何代码，保持通电，联网，静置状态，非常重要</p>
+<p>macOS</p>
+<p>macos 自带python，如果你不小心误删，请先重新安装，macos 下安装hass 也相当简单</p>
+<p>pip3 install homeassistant</p>
+<p>附加功能</p>
+<p>SMB 必须</p>
+<p>SMB 可以帮助我们开启树莓派的网盘模式，方便未来文件传输，这里我们除安装外把该功能加入了系统自启项目</p>
+<p>通用安装指令</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install samba </span><br><span class="line">sudo smbpasswd -a homeassistant -n</span><br><span class="line">sudo nano /etc/samba/smb.conf</span><br><span class="line">[global]</span><br><span class="line">netbios name = raspberrypi</span><br><span class="line">server string = The Pi File Center</span><br><span class="line">workgroup = WORKGROUP</span><br><span class="line">hosts allow =</span><br><span class="line">remote announce =</span><br><span class="line">remote browse <span class="built_in">sync</span> =</span><br><span class="line">[HOME ASSISTANT]</span><br><span class="line">path = /home/homeassistant/.homeassistant</span><br><span class="line">comment = No comment</span><br><span class="line">browsable = <span class="built_in">yes</span></span><br><span class="line"><span class="built_in">read</span> only = no</span><br><span class="line">valid <span class="built_in">users</span> =</span><br><span class="line">writable = <span class="built_in">yes</span></span><br><span class="line">guest ok = <span class="built_in">yes</span></span><br><span class="line">public = <span class="built_in">yes</span></span><br><span class="line">create mask = 0777</span><br><span class="line">directory mask = 0777</span><br><span class="line">force user = homeassistant</span><br><span class="line">force create mode = 0777</span><br><span class="line">force directory mode = 0777</span><br><span class="line">hosts allow =</span><br></pre></td></tr></table></figure>
+
+<p>Ctrl+X，Y，回车</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl restart smbd.service</span><br></pre></td></tr></table></figure>
+
+<p>hassbian 提供了一个附加功能工具包hassbian-config 这使我们的安装更加简单，使用工具包安装原则上已经自动配置好一切，建议大家还是修改一下权限和密码</p>
+<p>安装指令</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo hassbian-config install samba</span><br><span class="line">sudo smbpasswd -a pi</span><br></pre></td></tr></table></figure>
+
+<p>重启服务</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl restart home-assistant@homeassistant.service</span><br></pre></td></tr></table></figure>
+
+<p>2.2 MQTT<br>MQTT 是基于二进制消息的发布，订阅编程模式的消息协议，广泛用于物联网部署中，部分智能家居设备需要MQTT 连接</p>
+<p>通用安装指令</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install mosquitto mosquitto-clients python-mosquitto</span><br><span class="line">sudo systemctl start mosquitto</span><br></pre></td></tr></table></figure>
+
+<p>hassbian 工具包安装</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo hassbian-config install mosquitto</span><br><span class="line">sudo systemctl start mosquitto</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>Homebridge 安装<br>HASS 本身可以通过网页控制，这也赋予了其全平台的控制能力，当然，想必不少人还是冲着语言控制功能考虑智能家居的，对于ios 用户来说，想要更自由地使用homekit HB依然是绕不开的环节</li>
+</ol>
+<p>HB 的安装我就更不多说了，欢迎大家参考另外几篇文章，这里我根据之前指导派友的经验简单概括一下。</p>
+<p>HB 提供一行安装指令：sudo npm install -g –unsafe-perm homebridge 但是安装成功率比较低，推荐大家使用下面的手动安装指令。</p>
+<p>sudo apt-get install git make<br>sudo apt-get install g++<br>curl -sL <a target="_blank" rel="noopener" href="https://deb.nodesource.com/setup_7.x">https://deb.nodesource.com/setup_7.x</a> | sudo -E bash -<br>sudo apt-get install -y nodejs<br>sudo apt-get install libavahi-compat-libdnssd-dev<br>sudo npm install -g –unsafe-perm homebridge hap-nodejs node-gyp<br>cd &#x2F;usr&#x2F;local&#x2F;lib&#x2F;node_modules&#x2F;homebridge&#x2F;<br>（注意这里如果显示不存在文件夹，替换成 cd &#x2F;usr&#x2F;lib&#x2F;node_modules&#x2F;homebridge&#x2F;)<br>sudo npm install –unsafe-perm bignum<br>cd &#x2F;usr&#x2F;local&#x2F;lib&#x2F;node_modules&#x2F;hap-nodejs&#x2F;node_modules&#x2F;mdns<br>（注意这里如果显示不存在文件夹，替换成 cd &#x2F;usr&#x2F;lib&#x2F;node_modules&#x2F;hap-nodejs&#x2F;node_modules&#x2F;mdns）<br>sudo node-gyp BUILDTYPE&#x3D;Release rebuild</p>
+<p>运行到这里，HB就已经安装完成了，这里建议大家直接输入homebridge 运行一次，以生成示例配置文件，然后ctrl+C退出</p>
+<p>接着，安装homeassistant-homebridge 插件，实现平台联动</p>
+<p>sudo npm install -g homebridge-homeassistant</p>
+<ol start="4">
+<li>添加自启任务</li>
+</ol>
+<p>忙活了那么久，即将大功告成了，最后临门一脚，我们把HASS和HB 添加至树莓派开机任务中，这样每次启动后就会自动运行上述2个进程</p>
+<p>注意：配置 HB 前程序会运行错误，提示缺少配置文件，可先不理会。</p>
+<p>cd &#x2F;<br>sudo useradd –system homebridge<br>sudo mkdir &#x2F;var&#x2F;homebridge<br>sudo cp ~&#x2F;.homebridge&#x2F;config.json &#x2F;var&#x2F;homebridge&#x2F;<br>sudo cp -r ~&#x2F;.homebridge&#x2F;persist &#x2F;var&#x2F;homebridge<br>sudo chmod -R 0777 &#x2F;var&#x2F;homebridge<br>cd &#x2F;etc&#x2F;default<br>sudo nano homebridge 复制粘贴</p>
+<h1 id="Defaults-x2F-Configuration-options-for-homebridge"><a href="#Defaults-x2F-Configuration-options-for-homebridge" class="headerlink" title="Defaults &#x2F; Configuration options for homebridge"></a>Defaults &#x2F; Configuration options for homebridge</h1><h1 id="The-following-settings-tells-homebridge-where-to-find-the-config-json-file-and-where-to-persist-the-data-i-e-pairing-and-others"><a href="#The-following-settings-tells-homebridge-where-to-find-the-config-json-file-and-where-to-persist-the-data-i-e-pairing-and-others" class="headerlink" title="The following settings tells homebridge where to find the config.json file and where to persist the data (i.e. pairing and others)"></a>The following settings tells homebridge where to find the config.json file and where to persist the data (i.e. pairing and others)</h1><p>HOMEBRIDGE_OPTS&#x3D;-U &#x2F;var&#x2F;homebridge</p>
+<h1 id="If-you-uncomment-the-following-line-homebridge-will-log-more"><a href="#If-you-uncomment-the-following-line-homebridge-will-log-more" class="headerlink" title="If you uncomment the following line, homebridge will log more"></a>If you uncomment the following line, homebridge will log more</h1><h1 id="You-can-display-this-via-systemd’s-journalctl-journalctl-f-u-homebridge"><a href="#You-can-display-this-via-systemd’s-journalctl-journalctl-f-u-homebridge" class="headerlink" title="You can display this via systemd’s journalctl: journalctl -f -u homebridge"></a>You can display this via systemd’s journalctl: journalctl -f -u homebridge</h1><h1 id="DEBUG-x3D"><a href="#DEBUG-x3D" class="headerlink" title="DEBUG&#x3D;*"></a>DEBUG&#x3D;*</h1><p>Ctrl+X，Y，回车</p>
+<p>cd &#x2F;etc&#x2F;systemd&#x2F;system<br>sudo nano homebridge.service<br>复制粘贴</p>
+<p>[Unit]<br>Description&#x3D;Node.js HomeKit Server<br>After&#x3D;syslog.target network-online.target<br>[Service]<br>Type&#x3D;simple<br>User&#x3D;homebridge<br>EnvironmentFile&#x3D;&#x2F;etc&#x2F;default&#x2F;homebridge<br>ExecStart&#x3D;&#x2F;usr&#x2F;lib&#x2F;node_modules&#x2F;homebridge&#x2F;bin&#x2F;homebridge $HOMEBRIDGE_OPTS<br>Restart&#x3D;on-failure<br>RestartSec&#x3D;10<br>KillMode&#x3D;process<br>[Install]<br>WantedBy&#x3D;multi-user.target<br>Ctrl+X，Y，回车</p>
+<p>cd &#x2F;<br>sudo systemctl daemon-reload<br>sudo systemctl enable homebridge<br>sudo systemctl start homebridge<br>sudo systemctl status homebridge<br>sudo systemctl enable mosquitto</p>
+<p>最后重启，sudo reboot</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-20221219-microPython是什么"
   class="article article-type-post"
   itemscope
@@ -938,133 +1129,13 @@
 </article>
 
     
-    <article
-  id="post-20221216-AT指令介绍"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/12/16/20221216-AT%E6%8C%87%E4%BB%A4%E4%BB%8B%E7%BB%8D/"
-    >20221216-AT指令介绍</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/12/16/20221216-AT%E6%8C%87%E4%BB%A4%E4%BB%8B%E7%BB%8D/" class="article-date">
-  <time datetime="2022-12-16T08:37:08.000Z" itemprop="datePublished">2022-12-16</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>AT 指令最初是用来指导modem 工作的，</p>
-<p>虽然在PC 端，手机上已经没有了AT 的使用，但其却在嵌入式行业里各类联网模块中发挥着重要的作用，而且不仅仅只应用在蜂窝模块，还应用到了wifi ble 等模块中</p>
-<p>相关标准</p>
-<p>随着技术的发展，目前 AT 指令发展过程中形成两个重要标准</p>
-<p>V.250：该标准于 1995 年建立，1998 年重命名为 V.250<br>ETSI GSM 07.07（3GPP TS 27.007）：用于控制 GSM modem 的 AT 指令集<br>GSM 07.07 是基于 V.250 标准的。是目前最新的 AT 标准。</p>
-<p>当下AT 指令的应用</p>
-<p>目前 的AT 指令着重应用在蜂窝模块 wifi 模块，ble 模块，目的是为了简化嵌入式设备联网的复杂度</p>
-<p>AT 标准定义了At 命令的格式本身，比如命令以 AT 为前缀，以 或者 结尾，这被现有的AT 模块所延用</p>
-<p>但是，由于每个厂家的模块不一样，实现的功能不一样，导致每个 AT 模块厂家有自己的一套私有的 AT 命令集，每一个 AT 模块厂家实现的 AT 指令集解析器也不一样（解析器实现的 AT 标准功能也参差不齐）。像上图所示的 AT 命令使用方式不被大多数模块厂家所实现。</p>
-<p>AT模块的应用框图</p>
-<p>既然是指令集，那么必然会有指令集的解析处理，通常，我们把AT 模块端的解析处理程序称为AT Server，而将控制AT 模块的处理器端的解析处理程序称为AT client 由AT client 发起命令请求，AT Server 通过URC 来主动给AT client 发送数据</p>
-<p>一些约定</p>
-<p>AT 命令的常用格式</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">AT+CMD=&lt;xxx&gt;[,&lt;xxx&gt;,&lt;xxx&gt;]</span><br></pre></td></tr></table></figure>
-
-<p>AT命令以AT 开始，以 \r 或者 \r\n 结尾，参数之间使用 , 隔开，字符串参数使用双引号 “” 包裹，整形参数不适用双引号。</p>
-<p><CR>：回车符<br><LF>：换行符<br><xxx><br>尖括号中的名称 xxx 在 AT 里是一个语法元素，要求必须指定。尖括号本身不会出现在命令行里。<br>[xxx]<br>中括号中的名称 xxx 在 AT 里是一个语法元素，表示可选择指定。中括号本身不出现在命令行里。</p>
-<p>四类AT 命令</p>
-<p>Test 命令：AT+<x>&#x3D;?<br>测试指令类似于命令行里的 help 指令，用于提供该命令的使用信息，以及命令参数的取值范围。<br>Read 命令：AT+<x>?<br>用于查询该指令对应功能的当前值。<br>Set 命令：AT+<x>&#x3D;&lt;…&gt;<br>设置用户指定的参数到对应的功能里。<br>Execute 命令：AT+<x><br>执行相关操作。</p>
-<p>响应结果字符串</p>
-<p>AT 标准定义了标准的响应结果字符串：</p>
-<p>\r\nOK\r\n<br>如果 AT 指令被 AT Server 识别，并正确执行，则返回该结果。<br>“ 标准中的 V1 模式下响应结果代码的方式。V0 模式下返回 0\r。<br>”<br>\r\nERROR\r\n<br>“ 标准中的 V1 模式下响应结果代码的方式。V0 模式下返回 4\r。<br>”</p>
-<h2 id="数据模式与指令模式"><a href="#数据模式与指令模式" class="headerlink" title="数据模式与指令模式"></a>数据模式与指令模式</h2><p>在收到 +++，并且接下来 1s 内未收到其他数据的话，将从数据模式切换到指令模式。</p>
-<p>数据模式，可以透传数据，client 发什么，server 就原封不动发出去。指令模式时，AT Server 需要解析 AT 指令，并作出响应。</p>
-<!-- AT+name=”LiMou” --> 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20221216-蓝牙模块与单片机如何连接"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/12/16/20221216-%E8%93%9D%E7%89%99%E6%A8%A1%E5%9D%97%E4%B8%8E%E5%8D%95%E7%89%87%E6%9C%BA%E5%A6%82%E4%BD%95%E8%BF%9E%E6%8E%A5/"
-    >20221216-蓝牙模块与单片机如何连接</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/12/16/20221216-%E8%93%9D%E7%89%99%E6%A8%A1%E5%9D%97%E4%B8%8E%E5%8D%95%E7%89%87%E6%9C%BA%E5%A6%82%E4%BD%95%E8%BF%9E%E6%8E%A5/" class="article-date">
-  <time datetime="2022-12-16T07:56:20.000Z" itemprop="datePublished">2022-12-16</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/63449607">https://zhuanlan.zhihu.com/p/63449607</a></p>
-<h2 id="USB转TTL"><a href="#USB转TTL" class="headerlink" title="USB转TTL"></a>USB转TTL</h2><p>TTL 是一种电平</p>
-<p>像我们常用的单片机，引出来的串口，如果不加其他的接口电路，出来的信号就是TTL 电平，如果需要查看串口的打印信息，一般是需要接一个上位机的，常规的就是电脑，而现在的电脑一般的通信接口只有USB 老式的电脑可能会有 232 接口</p>
-<p>对于usb口而言，是没法和TTL 串口直接通信的，因为接口不匹配，电平也不匹配，这时候就需要借助外围的小设备来实现接口与电平的转换，常规操作是使用CH340 这种芯片所制作的usb 转串口模块，这个芯片可以实现TTL 串口和USB 之前的转换</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
   </article>
   
 
   
   <nav class="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/10/">上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="page-number" href="/page/10/">10</a><span class="page-number current">11</span><a class="page-number" href="/page/12/">12</a><a class="page-number" href="/page/13/">13</a><span class="space">&hellip;</span><a class="page-number" href="/page/24/">24</a><a class="extend next" rel="next" href="/page/12/">下一页</a>
+    <a class="extend prev" rel="prev" href="/page/10/">上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="page-number" href="/page/10/">10</a><span class="page-number current">11</span><a class="page-number" href="/page/12/">12</a><a class="page-number" href="/page/13/">13</a><span class="space">&hellip;</span><a class="page-number" href="/page/25/">25</a><a class="extend next" rel="next" href="/page/12/">下一页</a>
   </nav>
   
 </section>

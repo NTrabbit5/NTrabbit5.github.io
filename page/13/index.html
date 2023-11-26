@@ -126,6 +126,372 @@
     
     
     <article
+  id="post-20221214-PNG格式详解"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/12/14/20221214-PNG%E6%A0%BC%E5%BC%8F%E8%AF%A6%E8%A7%A3/"
+    >20221214-PNG格式详解</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/12/14/20221214-PNG%E6%A0%BC%E5%BC%8F%E8%AF%A6%E8%A7%A3/" class="article-date">
+  <time datetime="2022-12-14T03:35:43.000Z" itemprop="datePublished">2022-12-14</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>png 是20世纪90年代开始开发的图像文件存储格式，其目的是替代gif 和tiff 文件格式，同时增加一些gif 文件格式所不具备的特性，流式网络图形格式名称来源于非官方的  是一种位图文件存储格式，读成ping 。png 用来存储灰度图像时，灰度图像的深度可多到16位，存储彩色图像时，彩色图像的深度可多到48位，并且还可存储多到16位的alpha 通道，png 使用从LZ77 派生的无损数据压缩算法</p>
+<h3 id="特性"><a href="#特性" class="headerlink" title="特性"></a>特性</h3><p>使用调色板技术可支持256种颜色的彩色图像  必须的</p>
+<p>流式读 写性，图像文件格式允许连续读出和写入图像数据 因此适于网络传播</p>
+<p>逐次逼近显示，这种特性可使在通信链路上传输图像文件的同时就在终端上显示图像，把整个轮廓显示出来之后逐步显示图像的细节，也就是先用低分辨率显示图像，然后逐步提高它的分辨率  类似马赛克逐渐消除的过程</p>
+<p>透明性，这个性能可使图像中某些部分不显示出来，用来创建一些有特色的图像</p>
+<p>辅助信息，这个特性可用来在图像文件中存储一些文本注释信息  就是可以说一些废话</p>
+<p>独立于计算机硬件环境</p>
+<p>使用无损压缩</p>
+<p>可在一个文件中存储多幅图像</p>
+<h2 id="文件结构"><a href="#文件结构" class="headerlink" title="文件结构"></a>文件结构</h2><p>png 图像格式文件由文件署名和数据块 组成</p>
+<p>文件署名域</p>
+<p>8字节的png 文件署名域用来识别该文件是不是png 文件，该域的值是 </p>
+<p>十进制数  十六进制数<br>137 89<br>80  50<br>78  4e<br>71  47<br>13  0d<br>10  0a<br>26  1a<br>10  0a<br>这个文件署名就是在《利用文件头标志判断文件类型》中提到的文件头标志了，很简单。</p>
+<p>数据块</p>
+<p>这里有两种类型的数据块，一种是称为关键数据块，就是必须要有的块，另一种叫做辅助数据块</p>
+<p>每个数据块都由下表所示的4个域组成</p>
+<p>名称  字节数 说明<br>Length(长度)  4字节 指定数据块中数据域的长度，其长度不超过(231−1)(231−1)字节<br>Chunk Type Code(数据块类型码) 4字节 数据块类型码由ASCII字母(A-Z和a-z)组成<br>Chunk Data(数据块实际内容  可变长度  存储按照Chunk Type Code指定的数据<br>CRC(循环冗余检测  4字节 存储用来检测是否有错误的循环冗余码</p>
+<p>其中CRC 域中的值是对chunk type code 域和chunk data 域中的数据进行计算得到的，可以看作一种校验码</p>
+<p>关键数据块</p>
+<p>关键数据块中的4个标准数据块是</p>
+<p>文件头数据块 IHDR</p>
+<p>它包含有png 文件中存储的图像数据的基本信息，并要作为第一个数据块出现在png 数据流中，而且一个png 数据流中只能有一个文件头数据块</p>
+<p>文件头数据块由13字节，组成结构如下</p>
+<table>
+<thead>
+<tr>
+<th>域的名称</th>
+<th>字节数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Width</td>
+<td>4 bytes</td>
+<td>图像宽度，以像素为单位</td>
+</tr>
+<tr>
+<td>Height</td>
+<td>4 bytes</td>
+<td>图像高度，以像素为单位</td>
+</tr>
+<tr>
+<td>Bit depth</td>
+<td>1 byte</td>
+<td>图像深度：索引彩色图像：1，2，4或8 ;灰度图像：1，2，4，8或16 ;真彩色图像：8或16</td>
+</tr>
+<tr>
+<td>ColorType</td>
+<td>1 byte</td>
+<td>颜色类型：0：灰度图像, 1，2，4，8或16;2：真彩色图像，8或16;3：索引彩色图像，1，2，4或84：带α通道数据的灰度图像，8或16;6：带α通道数据的真彩色图像，8或16</td>
+</tr>
+<tr>
+<td>Compression method</td>
+<td>1 byte</td>
+<td>压缩方法(LZ77派生算法)</td>
+</tr>
+<tr>
+<td>Filter method</td>
+<td>1 byte</td>
+<td>滤波器方法</td>
+</tr>
+<tr>
+<td>Interlace method</td>
+<td>1 byte</td>
+<td>隔行扫描方法：0：非隔行扫描;1： Adam7(由Adam M. Costello开发的7遍隔行扫描方法)</td>
+</tr>
+</tbody></table>
+<p>调色板数据块PLTE</p>
+<p>它包含有与索引彩色图像相关的彩色变换数据，它仅与索引彩色图像有关，而且要放在图像数据块之前，真彩色的png 数据流也可以有调色板数据块，目的是便于非真彩色显示程序用它来量化图像数据，从而显示该图像，结构如下</p>
+<p>|颜色|字节|意义|<br>|Red|1 byte | 0 &#x3D; 黑色, 255 &#x3D; 红|<br>|Green|1 byte | 0 &#x3D; 黑色, 255 &#x3D; 绿色|<br>|Blue|1 byte | 0 &#x3D; 黑色, 255 &#x3D; 蓝色|</p>
+<p>PLTE 数据块是定义图像的调色板信息，PLTE 可以包含1-256 个调色板信息，每个调色板信息由3个字节组成，因此调色板数据块所包含的最大字节数为768 调色板的长度应该是3的倍数，否则，这将使一个非法的调色板</p>
+<p>对于索引图像，调色板信息是必须的，调色板的颜色索引从0开始编号，然后是 1 2 调色板的颜色数不能超过色深中规定的颜色数，否则，这将导致png 图像不合法</p>
+<p>图像数据块 IDAT </p>
+<p>它存储实际的数据，在数据流中可包含多个连续顺序的图像数据块<br>IDAT 存放着图像真正的数据信息，因此，如果能够了解IDAT 的结构，我们就可以很方便的生成PNG 图像</p>
+<p>图像结束数据IEND </p>
+<p>它用来标记png 文件或者数据流已经结束，并且必须要放在文件的尾部</p>
+<p>如果我们仔细观察PNG文件，我们会发现，文件的结尾12个字符看起来总应该是这样的：</p>
+<p>00 00 00 00 49 45 4E 44 AE 42 60 82</p>
+<p>不难明白，由于数据块结构的定义，IEND 数据块的长度总是0 0000000除非认为加入信息，数据标识总是iend 因此，CRC码也总是AE 42 60 82</p>
+<p>最后，除了表示数据块开始IHDR 必须放在最前面，表示png 文件结束的iend 数据块放在最后面，其他数据块的存放顺序没有限制</p>
+<p>辅助数据块</p>
+<p>比较杂 ，不需要全部了解透</p>
+<p>PNG 文件格式规范指定的10个辅助数据块是</p>
+<p>背景颜色数据块 bKGD</p>
+<p>基色和白色度数块cHRM 所谓白色度是指当 R G B 最大值时在显示器上产生的白色度</p>
+<p>图像gamma 数据块 gAMA</p>
+<p>图像直方图数据块hIST<br>物理像素尺寸数据块 pHYs</p>
+<p>样本有效位数据块 sBIT</p>
+<p>文本信息数据块 tEXt<br>图像最后修改时间数据块 tIME<br>图像透明数据块 tRNS </p>
+<p>压缩文本数据块 zTXt</p>
+<h2 id="数据块摘要"><a href="#数据块摘要" class="headerlink" title="数据块摘要"></a>数据块摘要</h2><p>关键数据块，辅助数据块和专用公共数据块 综合下表中</p>
+<table>
+<thead>
+<tr>
+<th>数据块符号</th>
+<th>数据块名称</th>
+<th>多数据块</th>
+<th>可选否</th>
+<th>位置限制</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>IHDR</td>
+<td>文件头数据块</td>
+<td>否</td>
+<td>否</td>
+<td>第一块</td>
+</tr>
+<tr>
+<td>cHRM</td>
+<td>基色和白色点数据块</td>
+<td>否</td>
+<td>是</td>
+<td>在PLTE和IDAT之前</td>
+</tr>
+<tr>
+<td>gAMA</td>
+<td>图像γ数据块</td>
+<td>否</td>
+<td>是</td>
+<td>在PLTE和IDAT之前</td>
+</tr>
+<tr>
+<td>sBIT</td>
+<td>样本有效位数据块</td>
+<td>否</td>
+<td>是</td>
+<td>在PLTE和IDAT之前</td>
+</tr>
+<tr>
+<td>PLTE</td>
+<td>调色板数据块</td>
+<td>否</td>
+<td>是</td>
+<td>在IDAT之前</td>
+</tr>
+<tr>
+<td>bKGD</td>
+<td>背景颜色数据块</td>
+<td>否</td>
+<td>是</td>
+<td>在PLTE之后IDAT之前</td>
+</tr>
+<tr>
+<td>hIST</td>
+<td>图像直方图数据块</td>
+<td>否</td>
+<td>是</td>
+<td>在PLTE之后IDAT之前</td>
+</tr>
+<tr>
+<td>tRNS</td>
+<td>图像透明数据块</td>
+<td>否</td>
+<td>是</td>
+<td>在PLTE之后IDAT之前</td>
+</tr>
+<tr>
+<td>oFFs</td>
+<td>(专用公共数据块)</td>
+<td>否</td>
+<td>是</td>
+<td>在IDAT之前</td>
+</tr>
+<tr>
+<td>pHYs</td>
+<td>物理像素尺寸数据块</td>
+<td>否</td>
+<td>是</td>
+<td>在IDAT之前</td>
+</tr>
+<tr>
+<td>sCAL</td>
+<td>(专用公共数据块)</td>
+<td>否</td>
+<td>是</td>
+<td>在IDAT之前</td>
+</tr>
+<tr>
+<td>IDAT</td>
+<td>图像数据块</td>
+<td>是</td>
+<td>否</td>
+<td>与其他IDAT连续</td>
+</tr>
+<tr>
+<td>tIME</td>
+<td>图像最后修改时间数据块</td>
+<td>否</td>
+<td>是</td>
+<td>无限制</td>
+</tr>
+<tr>
+<td>tEXt</td>
+<td>文本信息数据块</td>
+<td>是</td>
+<td>是</td>
+<td>无限制</td>
+</tr>
+<tr>
+<td>zTXt</td>
+<td>压缩文本数据块</td>
+<td>是</td>
+<td>是</td>
+<td>无限制</td>
+</tr>
+<tr>
+<td>fRAc</td>
+<td>(专用公共数据块)</td>
+<td>是</td>
+<td>是</td>
+<td>无限制</td>
+</tr>
+<tr>
+<td>gIFg</td>
+<td>(专用公共数据块)</td>
+<td>是</td>
+<td>是</td>
+<td>无限制</td>
+</tr>
+<tr>
+<td>gIFt</td>
+<td>(专用公共数据块)</td>
+<td>是</td>
+<td>是</td>
+<td>无限制</td>
+</tr>
+<tr>
+<td>gIFx</td>
+<td>(专用公共数据块)</td>
+<td>是</td>
+<td>是</td>
+<td>无限制</td>
+</tr>
+<tr>
+<td>IEND</td>
+<td>图像结束数据</td>
+<td>否</td>
+<td>否</td>
+<td>最后一个数据块</td>
+</tr>
+</tbody></table>
+<p>tEXt和zTXt数据块中的标准关键字：</p>
+<p>关键字 说明<br>Title 图像名称或者标题<br>Author  图像作者名<br>Description 图像说明<br>Copyright 版权声明<br>CreationTime  原图创作时间<br>Software  创作图像使用的软件<br>Disclaimer  弃权<br>Warning 图像内容警告<br>Source  创作图像使用的设备<br>Comment 各种注释<br>一个例子</p>
+<!-- http://qr61.cn/o8bjsz/qEp8BlI --> 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-20221213-BMP格式结构"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/12/13/20221213-BMP%E6%A0%BC%E5%BC%8F%E7%BB%93%E6%9E%84/"
+    >20221213-BMP格式结构</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/12/13/20221213-BMP%E6%A0%BC%E5%BC%8F%E7%BB%93%E6%9E%84/" class="article-date">
+  <time datetime="2022-12-13T11:26:33.000Z" itemprop="datePublished">2022-12-13</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>docs.microsoft.com&#x2F;zh-cn&#x2F;windows&#x2F;win32&#x2F;gdibitmap-storage</p>
+<p>简介</p>
+<p>bmp 图形文件是windows 采用的图形文件格式，在windows 环境下运行的所有图像处理软件都支持BMP 图像文件格式，windows 系统内部各图像绘制操作都是以BMP 为基础的</p>
+<p>因此把这种BMP 图像文件格式称为设备相关位图 DDB 文件格式，<br>目的是为了人windows 能够在任何类型的显示设备上显示所存储的图像</p>
+<p>bmp 位图文件默认的文件扩展名是bmp</p>
+<p>BMP 格式结构</p>
+<p>BMP 文件的数据按照从文件头开始的先后顺序分为四个部分</p>
+<p>位图文件头，提供文件的格式 大小等信息</p>
+<p>位图信息头 提供图像数据的尺寸，位平面数，压缩方式，颜色索引等信息</p>
+<p>调色板 可选，如使用索引来表示图像，调色板就是索引与其对饮的颜色的映射表</p>
+<p>位图数据 图像数据区</p>
+<p>BMP图片文件数据表如下：</p>
+<p>数据段名称<br>大小（byte）<br>开始地址<br>结束地址<br>位图文件头(bitmap-file header)<br>14<br>0000h<br>000Dh<br>位图信息头(bitmap-information header)<br>40<br>000Eh<br>0035h<br>调色板(color table)<br>由biBitCount决定<br>0036h<br>未知<br>图片点阵数据(bitmap data)<br>由图片大小和颜色定<br>未知<br>未知</p>
+<p>三、BMP 文件头</p>
+<p>BMP文件头结构体定义如下：<br>typedef struct tagBITMAPFILEHEADER<br>{<br>UINT16 bfType;        &#x2F;&#x2F;2Bytes，必须为”BM”，即0x424D 才是Windows位图文件<br>DWORD bfSize;         &#x2F;&#x2F;4Bytes，整个BMP文件的大小<br>UINT16 bfReserved1;  &#x2F;&#x2F;2Bytes，保留，为0<br>UINT16 bfReserved2;  &#x2F;&#x2F;2Bytes，保留，为0<br>DWORD bfOffBits;     &#x2F;&#x2F;4Bytes，文件起始位置到图像像素数据的字节偏移量<br>} BITMAPFILEHEADER;</p>
+<p>BMP文件头数据表如下：</p>
+<p>变量名<br>地址偏移<br>大小<br>作用说明<br>bfType<br>0000h<br>2Bytes<br>文件标识符，必须为”BM”，即0x424D 才是Windows位图文件<br>‘BM’：Windows 3.1x, 95, NT,…　　‘BA’：OS&#x2F;2 Bitmap Array　　‘CI’：OS&#x2F;2 Color Icon 　　<br>‘CP’：OS&#x2F;2 Color Pointer 　　‘IC’：OS&#x2F;2 Icon 　　<br>‘PT’：OS&#x2F;2 Pointer<br>因为OS&#x2F;2系统并没有被普及开，所以在编程时，你只需判断第一个标识“BM”就行<br>bfSize<br>0002h<br>4Bytes<br>整个BMP文件的大小（以位B为单位）<br>bfReserved1<br>0006h<br>2Bytes<br>保留，必须设置为0<br>bfReserved2<br>0008h<br>2Bytes<br>保留，必须设置为0<br>bfOffBits<br>000Ah<br>4Bytes<br>说明从文件头0000h开始到图像像素数据的字节偏移量（以字节Bytes为单位），以为位图的调色板长度根据位图格式不同而变化，可以用这个偏移量快速从文件中读取图像数据</p>
+<p>四、BMP 信息头</p>
+<p>BMP信息头结构体定义如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> _<span class="title">tagBMP_INFOHEADER</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">DWORD  biSize;    <span class="comment">//4Bytes，INFOHEADER结构体大小，存在其他版本I NFOHEADER，用作区分</span></span><br><span class="line">LONG   biWidth;    <span class="comment">//4Bytes，图像宽度（以像素为单位）</span></span><br><span class="line">LONG   biHeight;    <span class="comment">//4Bytes，图像高度，+：图像存储顺序为Bottom2Top，-：Top2Bottom</span></span><br><span class="line">WORD   biPlanes;    <span class="comment">//2Bytes，图像数据平面，BMP存储RGB数据，因此总为1</span></span><br><span class="line">WORD   biBitCount;         <span class="comment">//2Bytes，图像像素位数</span></span><br><span class="line">DWORD  biCompression;     <span class="comment">//4Bytes，0：不压缩，1：RLE8，2：RLE4</span></span><br><span class="line">DWORD  biSizeImage;       <span class="comment">//4Bytes，4字节对齐的图像数据大小</span></span><br><span class="line">LONG   biXPelsPerMeter;   <span class="comment">//4 Bytes，用象素/米表示的水平分辨率</span></span><br><span class="line">LONG   biYPelsPerMeter;   <span class="comment">//4 Bytes，用象素/米表示的垂直分辨率</span></span><br><span class="line">DWORD  biClrUsed;          <span class="comment">//4 Bytes，实际使用的调色板索引数，0：使用所有的调色板索引</span></span><br><span class="line">DWORD biClrImportant;     <span class="comment">//4 Bytes，重要的调色板索引数，0：所有的调色板索引都重要</span></span><br><span class="line">&#125;BMP_INFOHEADER;</span><br></pre></td></tr></table></figure>
+
+<p>变量名<br>地址偏移<br>大小<br>作用说明<br>biSize<br>000Eh<br>4Bytes<br>BNP信息头即BMP_INFOHEADER结构体所需要的字节数（以字节为单位）<br>biWidth<br>0012h<br>4Bytes<br>说明图像的宽度（以像素为单位）<br>biHeight<br>0016h<br>4Bytes<br>说明图像的高度（以像素为单位）。这个值还有一个用处，指明图像是正向的位图还是倒向的位图，该值是正数说明图像是倒向的即图像存储是由下到上；该值是负数说明图像是倒向的即图像存储是由上到下。大多数BMP位图是倒向的位图，所以此值是正值。<br>biPlanes<br>001Ah<br>2Bytes<br>为目标设备说明位面数，其值总设置为1<br>biBitCount<br>001Ch<br>2Bytes<br>说明一个像素点占几位（以比特位&#x2F;像素位单位），其值可为1,4,8,16,24或32<br>biCompression<br>001Eh<br>4Bytes<br>说明图像数据的压缩类型，取值范围为：<br>0         BI_RGB 不压缩（最常用）<br>1         BI_RLE8 8比特游程编码（BLE），只用于8位位图<br>2         BI_RLE4 4比特游程编码（BLE），只用于4位位图<br>3         BI_BITFIELDS比特域（BLE），只用于16&#x2F;32位位图<br>4<br>biSizeImage<br>0022h<br>4Bytes<br>说明图像的大小，以字节为单位。当用BI_RGB格式时，总设置为0<br>biXPelsPerMeter<br>0026h<br>4Bytes<br>说明水平分辨率，用像素&#x2F;米表示，有符号整数<br>biYPelsPerMeter<br>002Ah<br>4Bytes<br>说明垂直分辨率，用像素&#x2F;米表示，有符号整数<br>biClrUsed<br>002Eh<br>4Bytes<br>说明位图实际使用的调色板索引数，0：使用所有的调色板索引<br>biClrImportant<br>0032h<br>4Bytes<br>说明对图像显示有重要影响的颜色索引的数目，如果是0，表示都重要。</p>
+<p>BMP 调色板</p>
+<p>BMP调色板结构体定义如下：<br>typedef struct _tagRGBQUAD<br>{<br>BYTE  rgbBlue;       &#x2F;&#x2F;指定蓝色强度<br>BYTE  rgbGreen;      &#x2F;&#x2F;指定绿色强度<br>BYTE  rgbRed;        &#x2F;&#x2F;指定红色强度<br> BYTE  rgbReserved;  &#x2F;&#x2F;保留，设置为0<br>} RGBQUAD;</p>
+<p>1，4，8位图像才会使用调色板数据，16,24,32位图像不需要调色板数据，即调色板最多只需要256项（索引0 - 255）。<br>颜色表的大小根据所使用的颜色模式而定：2色图像为8字节；16色图像位64字节；256色图像为1024字节。其中，每4字节表示一种颜色，并以B（蓝色）、G（绿色）、R（红色）、alpha（32位位图的透明度值，一般不需要）。即首先4字节表示颜色号1的颜色，接下来表示颜色号2的颜色，依此类推。<br>颜色表中RGBQUAD结构数据的个数有biBitCount来确定，当biBitCount&#x3D;1,4,8时，分别有2,16,256个表项。<br>当biBitCount&#x3D;1时，为2色图像，BMP位图中有2个数据结构RGBQUAD，一个调色板占用4字节数据，所以2色图像的调色板长度为2<em>4为8字节。<br>当biBitCount&#x3D;4时，为16色图像，BMP位图中有16个数据结构RGBQUAD，一个调色板占用4字节数据，所以16像的调色板长度为16</em>4为64字节。<br>当biBitCount&#x3D;8时，为256色图像，BMP位图中有256个数据结构RGBQUAD，一个调色板占用4字节数据，所以256色图像的调色板长度为256*4为1024字节。<br>当biBitCount&#x3D;16，24或32时，没有颜色表。</p>
+<p>BMP 图像数据区</p>
+<p>位图数据记录了位图的每一个像素值，记录顺序是在扫描行内是从左到右,扫描行之间是从下到上。位图的一个像素值所占的字节数:<br>当biBitCount&#x3D;1时，8个像素占1个字节;<br>当biBitCount&#x3D;4时，2个像素占1个字节;<br>当biBitCount&#x3D;8时，1个像素占1个字节;<br>当biBitCount&#x3D;24时,1个像素占3个字节;<br>Windows规定一个扫描行所占的字节数必须是4的倍数(即以long为单位),不足的以0填充，<br>一个扫描行所占的字节数计算方法:</p>
+<p>235.125<br>264 * 8  &#x3D; 2112  个像素<br>33 + 31<br>57 + 31</p>
+<p>DataSizePerLine&#x3D; (biWidth* biBitCount+31)&#x2F;8;<br>&#x2F;&#x2F; 一个扫描行所占的字节数<br>DataSizePerLine&#x3D; DataSizePerLine&#x2F;4<em>4; &#x2F;&#x2F; 字节数必须是4的倍数<br>位图数据的大小(不压缩情况下):<br>DataSize&#x3D; DataSizePerLine</em> biHeight;</p>
+<p>颜色表接下来位为位图文件的图像数据区，在此部分记录着每点像素对应的颜色号，其记录方式也随颜色模式而定，既2色图像每点占1位（8位为1字节）；16色图像每点占4位（半字节）；256色图像每点占8位（1字节）；真彩色图像每点占24位（3字节）。所以，整个数据区的大小也会随之变化。究其规律而言，可的出如下计算公式：图像数据信息大小&#x3D;（图像宽度<em>图像高度</em>记录像素的位数）&#x2F;8。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-20221213-USB协议简析"
   class="article article-type-post"
   itemscope
@@ -814,201 +1180,13 @@
 </article>
 
     
-    <article
-  id="post-20221212-MQTT协议笔记"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/12/12/20221212-MQTT%E5%8D%8F%E8%AE%AE%E7%AC%94%E8%AE%B0/"
-    >20221212-MQTT协议笔记</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/12/12/20221212-MQTT%E5%8D%8F%E8%AE%AE%E7%AC%94%E8%AE%B0/" class="article-date">
-  <time datetime="2022-12-12T08:18:48.000Z" itemprop="datePublished">2022-12-12</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p><a target="_blank" rel="noopener" href="https://www.runoob.com/w3cnote/mqtt-intro.html">https://www.runoob.com/w3cnote/mqtt-intro.html</a></p>
-<p>MQTT 入门介绍</p>
-<p>MQTT 消息队列遥测传输协议，是一种基于发布&#x2F;订阅模式的轻量级 通讯协议，该协议构建于TCP&#x2F;IP 协议上，由IBM 在1999年发布，MQTT 最大优点在于，可以以极少的代码和有限的带宽，为连接远程设备提供实时可靠的消息服务，作为一种低开销，低带宽占用的即时通讯协议，使其在物联网、小型设备、移动应用等方面有较广泛的应用</p>
-<p>MQTT 是一个基于客户端-服务器的消息发布&#x2F;订阅传输协议。MQTT协议是轻量、简单、开放和易于实现的，这些特点使它适用范围非常广泛。在很多情况下，包括受限的环境中，如：机器与机器（M2M）通信和物联网（IoT）。其在，通过卫星链路通信传感器、偶尔拨号的医疗设备、智能家居、及一些小型化设备中已广泛使用。</p>
-<p>二、设计规范</p>
-<p>由于物联网的环境是非常特别的，所以MQTT 遵循以下设计原则</p>
-<p>精简，不添加有可无的功能</p>
-<p>发布&#x2F;订阅 模式，方便消息在传感器之间传递</p>
-<p>允许用户动态创建主题，零运维成本</p>
-<p>把传输量降到最低以提高传输效率</p>
-<p>把低带宽、高延迟、不稳定的网络等因素考虑在内</p>
-<p>支持连续的会话控制</p>
-<p>理解客户端计算能力可能很低</p>
-<p>提供服务质量管理</p>
-<p>假设数据不可知，不强求传输数据的类型与格式，保持灵活性</p>
-<h2 id="三、主要特性"><a href="#三、主要特性" class="headerlink" title="三、主要特性"></a>三、主要特性</h2><p>MQTT 协议工作在低带宽、不可靠的网络的远程传感器和控制设备通讯而设计的协议，它具有以下主要的几项特性。</p>
-<p>使用发布&#x2F;订阅消息模式，提供一对多的消息发布，解除应用程序耦合</p>
-<p>这一点很类似于XMPP，但是MQTT 的信息冗余远小于XMPP，因为XMPP 使用XML 格式文本来传递数据</p>
-<p>对负载内容屏蔽的消息传输</p>
-<p>使用TCP&#x2F;IP提供网络连接</p>
-<p>主流的MQTT 是基于TCP 连接进行数据推送的，但是同样有基于UDP 的版本，叫做MQTT-SN 这两种版本由于基于不同的连接方式，优缺点自然也就各有不同了</p>
-<p>有三种消息发布服务质量</p>
-<p>至多一次，消息发布完全依赖底层TCP&#x2F;IP 网络，会发生消息丢失或重复，这一级别可用于如下情况，环境传感器数据，丢失一次读记录无所谓，因为不久后还会有第二次发送，这一种方式主要普通APP 的推送，倘若你的智能设备在消息推送时未联网，推送过去没收到，再次联网也就收不到了</p>
-<p>至少一次，确保消息到达，但消息重复可能会发生</p>
-<p>只有一次，确保消息到达一次。在一些要求比较严格的计费系统中，可以使用此级别，在计费系统中，消息重复或丢失会导致不正确的结果，这种最高质量的消息发布服务还可以用于即时通讯类的app 的推送，确保用户收到且只会收到一次</p>
-<p>小型传输，开销很小，协议交换最小化，以降低网络流量。这就是为什么在介绍里说它非常适合  在物联网领域，传感器与服务器的通信，信息的收集，要知道嵌入式设备的运算能力和带宽都相对薄弱，使用这种协议来传递消息再适合不过了</p>
-<p>使用 last will 和testament特性通知有关各客户端异常中断的机制</p>
-<p>last will  即遗言机制，用于同位置同一主题下的其他设备发送遗言的设备已经断开了连接</p>
-<p>testament  医嘱机制，功能类似于  last will </p>
-<p>MQTT 协议原理 </p>
-<p>实现MQTT 协议需要客户端和服务器端通讯完成，在通讯过程中，MQTT 协议中有三种身份 发布者，代理，服务器，订阅者，其中，消息的发布者和订阅者都是客户端，消息代理是服务器，消息发布者可以同时是订阅者</p>
-<p>MQTT 传输的消息分为，主题，和负载 两部分</p>
-<p>topic 可以理解为消息的类型，订阅者订阅后，就会收到该主题的消息内容</p>
-<p>payload 可以理解为消息的内容，是指订阅者具体要使用的内容</p>
-<p>4.2 网络传输与应用消息</p>
-<p>MQTT 会构建底层网络传输，它将建立客户端到服务器的连接，提供两者之间的一个有序的、无损的、基于字节流的双向传输</p>
-<p>当应用数据通过MQTT 网络发送时，MQTT 会把与之相关的服务质量和主题名 相关连</p>
-<p>MQTT 客户端</p>
-<p>一个使用MQTT 协议的应用程序或者设备，它总是建立到服务器的网络连接，客户端可以</p>
-<p>发布其他客户端可能会订阅的信息</p>
-<p>订阅其他客户端发布的消息</p>
-<p>退订或删除应用程序的消息</p>
-<p>断开与服务器连接</p>
-<p>4.4 MQTT 服务器</p>
-<p>MQTT 服务器以称为消息代理，可以是一个应用程序或一台设备，它是位于消息发布者和订阅者之间，它可以</p>
-<p>接受来自客户的网络连接</p>
-<p>接受客户发布的应用信息</p>
-<p>处理来自客户端的订阅和退订请求</p>
-<p>向订阅的客户转发应用程序消息</p>
-<p>4.5 MQTT 协议中的订阅、主题、会话</p>
-<p>订阅 </p>
-<p>订阅包含主题筛选器 和最大服务质量，订阅会与一个会话关联，一个会话可以包含多个订阅，每一个会话中的每个订阅都有一个不同的主题筛选器</p>
-<p>会话</p>
-<p>每个客户端与服务器建立连接后就是一个会话，客户端和服务器之间有状态交互，会话存在于一个网络之间，也可能在客户端和服务器之间跨越多个连续的网络连接、</p>
-<p>主题名</p>
-<p>连接到一个应用程序消息的标签，该标签与服务器的订阅相匹配，服务器会将消息发送给订阅所匹配标签的每个客户端</p>
-<p>主题筛选器</p>
-<p>一个对主题名通配符筛选器，在订阅表达式中使用，表示订阅所匹配到的多个主题</p>
-<p>负载</p>
-<p>消息订阅者所具体接收的内容</p>
-<p>MQTT 协议中的方法</p>
-<p>MQTT 协议中定义了一些方法 也被称为动作，来于表示对确定资源所进行操作，这个资源可以代表预先存在的数据或动态生成数据，这取决于服务器的实现，通常来说，资源指服务器上的文件或输出，主要方法有</p>
-<p>connect 等待与服务器建立连接</p>
-<p>disconnect 等待MQTT 客户端完成所做的工作，并与服务器断开TCP&#x2F;IP 会话</p>
-<p>subscribe 等待完成订阅</p>
-<p>unsubscribe 等待服务器取消客户端的一个或多个topics 订阅 </p>
-<p>publish MQTT 客户端发送消息请求，发送完成后返回应用程序线程</p>
-<p>MQTT 协议数据包结构</p>
-<p>在MQTT 协议中，一个MQTT 数据包由固定头，可变头，消息体 三部分构成，MQTT 数据包结构如下</p>
-<p>固定头 fixed header  存在于所有MQTT 数据包中，表示数据包类型及数据包的分组类表示</p>
-<p>可变头  存在于部分MQTT 数据包中，数据包类型 决定了可变头是否存在及其具体内容</p>
-<p>消息体 pyload  存在于部分MQTT 数据包中，表示客户端收到的具体内容</p>
-<p>MQTT 固定头  </p>
-<p>固定头存在于所有MQTT 数据包中，其结构如下</p>
-<p>MQTT 数据包类型 </p>
-<p>位置byte1 中bits 7-4 </p>
-<p>相当于一个4位的无符号值，类型，取值及描述如下</p>
-<p>标识位</p>
-<p>在不使用标识位的消息类型中，标识位被作为保留位，如果收到无效的标志时，接收端必须关闭网络连接</p>
-<p>DUP 发布消息 的副本，用来在保证消息的可靠传输，如果设置为1  则在下面的变长中增加 messageid 并且需要回复确认，以保证消息传输完成，但不能用于检测消息重复发送</p>
-<p>QoS 发布消息的服务质量，即：保证消息传递的次数</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Ø00：最多一次，即：&lt;=1</span><br><span class="line"></span><br><span class="line">Ø01：至少一次，即：&gt;=1</span><br><span class="line"></span><br><span class="line">Ø10：一次，即：=1</span><br><span class="line"></span><br><span class="line">Ø11：预留</span><br></pre></td></tr></table></figure>
-
-<p>RETAIN 发布保留标识，表示服务器要保留这次推送的信息，如果有新的订阅者出现，就把消息推送给它，如果没有那么推送至当前订阅者后释放</p>
-<p>剩余长度</p>
-<p>固定头的第二字节用来保存变长头部和消息体的总大小，但不是直接保存的，这一字节是可以扩展的，其保存机制，前7位用于保存长度，后一部用作标识，当最后一位为1时，表示长度不足，需要使用两个字节继续保存，例如，计算出后面的大小为0 </p>
-<p>MQTT 可变头 </p>
-<p>MQTT 数据包中包含一个可变头，它驻位于固定的头和负载之间，可变头的内容因数据包类型而不同，较常的应用是作为包的标识</p>
-<p>很多类型数据包中都包括一个2字节的数据包标识字段，这些类型的包有</p>
-<p>PUBLISH (QoS &gt; 0)、PUBACK、PUBREC、PUBREL、PUBCOMP、SUBSCRIBE、SUBACK、UNSUBSCRIBE、UNSUBACK。</p>
-<p>Payload 消息体 </p>
-<p>payload 消息体位MQTT 数据包的第三部分，包含 connect subscribe  subback unsubscribe 四种类型的消息</p>
-<p>connect 消息体内容主要是客户端的clientID 订阅的topic message 以及用户名和密码 </p>
-<p>subscribe 消息体内容是一系列的要订阅的主题以及QoS</p>
-<p>suback 消息体内容是服务器对于subscribe 所申请的主题及QoS 进行确认和回复</p>
-<p>unsubscribe  消息体内容是要订阅的主题</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20221212-贪吃蛇小游戏"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/12/12/20221212-%E8%B4%AA%E5%90%83%E8%9B%87%E5%B0%8F%E6%B8%B8%E6%88%8F/"
-    >20221212-贪吃蛇小游戏</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/12/12/20221212-%E8%B4%AA%E5%90%83%E8%9B%87%E5%B0%8F%E6%B8%B8%E6%88%8F/" class="article-date">
-  <time datetime="2022-12-12T04:59:14.000Z" itemprop="datePublished">2022-12-12</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;conio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;time.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;windows.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdbool.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> H 23</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> W 75</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> WAIT_TIME 500</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//定义direction的每个值代表的方向</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> UP 0</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> DOWN 1</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> LEFT 2</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> RIGHT 3</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> a[H][W];        <span class="comment">//地图数组</span></span><br><span class="line"><span class="type">int</span> s[H*W][<span class="number">2</span>];      <span class="comment">//蛇身坐标数组</span></span><br><span class="line"><span class="type">int</span> sLength;        <span class="comment">//蛇的长度</span></span><br><span class="line"><span class="type">int</span> direction;      <span class="comment">//蛇的方向</span></span><br><span class="line"><span class="type">bool</span> eated=<span class="literal">false</span>;   <span class="comment">//标记是否吃到食物</span></span><br><span class="line"><span class="type">int</span> score=<span class="number">0</span>;        <span class="comment">//得分</span></span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">init</span><span class="params">()</span>         <span class="comment">//程序开始时的初始化操作</span></span><br><span class="line">&#123;</span><br><span class="line">    srand((<span class="type">unsigned</span>)time(<span class="literal">NULL</span>));            <span class="comment">//设置随机数种子为现在的时间</span></span><br><span class="line">    CONSOLE_CURSOR_INFO cursor_info = &#123;<span class="number">1</span>, <span class="number">0</span>&#125;;</span><br><span class="line">    SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &amp;cursor_info);    <span class="comment">//隐藏关标</span></span><br><span class="line">    <span class="type">int</span> i,j;</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>; i&lt;H; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        a[i][<span class="number">0</span>]=<span class="number">1</span>;          <span class="comment">//让第一列为1</span></span><br><span class="line">        a[i][W<span class="number">-1</span>]=<span class="number">1</span>;        <span class="comment">//让最后一列为1</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(j=<span class="number">0</span>; j&lt;W; j++)</span><br><span class="line">    &#123;</span><br><span class="line">        a[<span class="number">0</span>][j]=<span class="number">1</span>;      <span class="comment">//让第一行为1</span></span><br><span class="line">        a[H<span class="number">-1</span>][j]=<span class="number">1</span>;    <span class="comment">//让最后一行为1</span></span><br><span class="line">    &#125;</span><br><span class="line">    sLength=<span class="number">4</span>;          <span class="comment">//让蛇的最初长度为4</span></span><br><span class="line">    s[<span class="number">0</span>][<span class="number">0</span>]=H/<span class="number">2</span>;</span><br><span class="line">    s[<span class="number">0</span>][<span class="number">1</span>]=W/<span class="number">2</span>;        <span class="comment">//给蛇头坐标赋值</span></span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">1</span>; i&lt;<span class="number">4</span>; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        s[i][<span class="number">0</span>]=s[<span class="number">0</span>][<span class="number">0</span>]+i;</span><br><span class="line">        s[i][<span class="number">1</span>]=s[<span class="number">0</span>][<span class="number">1</span>];  <span class="comment">//给刚开始的蛇身几个初始坐标</span></span><br><span class="line">    &#125;</span><br><span class="line">    direction=UP;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">gotoxy</span><span class="params">(<span class="type">int</span> i,<span class="type">int</span> j)</span>        <span class="comment">//移动光标</span></span><br><span class="line">&#123;</span><br><span class="line">    COORD position= &#123;j,i&#125;;</span><br><span class="line">    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE),position);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">check</span><span class="params">(<span class="type">int</span> ii,<span class="type">int</span> jj)</span>        <span class="comment">//判断这个点能不能放食物，可以放返回1，不能放返回0</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span>(a[ii][jj]==<span class="number">1</span>)        <span class="comment">//如果有障碍物，返回0</span></span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    <span class="type">int</span> i;</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>; i&lt;sLength; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(ii==s[i][<span class="number">0</span>]&amp;&amp;jj==s[i][<span class="number">1</span>])      <span class="comment">//如果和其中一个蛇身重合，就返回0</span></span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(ii==<span class="number">0</span>||ii==H<span class="number">-1</span>||jj==<span class="number">0</span>||jj==W<span class="number">-1</span>)      <span class="comment">//如果在边界上面，返回0</span></span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>;                       <span class="comment">//最后筛选 过后的是符合条件的点</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">food</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> i,j;</span><br><span class="line">    <span class="keyword">do</span></span><br><span class="line">    &#123;</span><br><span class="line">        i=rand()%H;                 <span class="comment">//生成0~H-1之间的一个数</span></span><br><span class="line">        j=rand()%W;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span>(check(i,j)==<span class="number">0</span>);           <span class="comment">//生成点直到满足条件</span></span><br><span class="line">    a[i][j]=<span class="number">-1</span>;                     <span class="comment">//标记为食物</span></span><br><span class="line">    gotoxy(i,j);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;$&quot;</span>);                    <span class="comment">//画出食物</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">drawMap</span><span class="params">()</span>                  <span class="comment">//画地图</span></span><br><span class="line">&#123;</span><br><span class="line">    gotoxy(<span class="number">0</span>,<span class="number">0</span>);</span><br><span class="line">    <span class="type">int</span> i,j;</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>; i&lt;H; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span>(j=<span class="number">0</span>; j&lt;W; j++)          <span class="comment">//两重for循环遍历数组</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(a[i][j]==<span class="number">0</span>)          <span class="comment">//为0输出空格</span></span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">&quot; &quot;</span>);</span><br><span class="line">            <span class="keyword">else</span>                    <span class="comment">//为1输出#</span></span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">&quot;#&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;\n&quot;</span>);               <span class="comment">//别忘了换行</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">move</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> i;</span><br><span class="line">    gotoxy(s[sLength<span class="number">-1</span>][<span class="number">0</span>],s[sLength<span class="number">-1</span>][<span class="number">1</span>]);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot; &quot;</span>);                            <span class="comment">//在尾巴上面画空格以擦除尾巴</span></span><br><span class="line">    <span class="keyword">if</span>(eated)               <span class="comment">//如果吃到了食物</span></span><br><span class="line">    &#123;</span><br><span class="line">        sLength++;</span><br><span class="line">        eated=<span class="literal">false</span>;        <span class="comment">//设置为false，不然无限变长</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(i=sLength<span class="number">-1</span>; i&gt;<span class="number">0</span>; i--)  <span class="comment">//从尾巴开始，每一个点的位置等于它前面一个点的位置</span></span><br><span class="line">    &#123;</span><br><span class="line">        s[i][<span class="number">0</span>]=s[i<span class="number">-1</span>][<span class="number">0</span>];</span><br><span class="line">        s[i][<span class="number">1</span>]=s[i<span class="number">-1</span>][<span class="number">1</span>];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">switch</span>(direction)</span><br><span class="line">    &#123;</span><br><span class="line">    <span class="keyword">case</span> UP:</span><br><span class="line">        s[<span class="number">0</span>][<span class="number">0</span>]--;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> DOWN:</span><br><span class="line">        s[<span class="number">0</span>][<span class="number">0</span>]++;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> LEFT:</span><br><span class="line">        s[<span class="number">0</span>][<span class="number">1</span>]--;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> RIGHT:</span><br><span class="line">        s[<span class="number">0</span>][<span class="number">1</span>]++;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">drawSnake</span><span class="params">()</span>                <span class="comment">//画蛇</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> i;</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>; i&lt;sLength; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        gotoxy(s[i][<span class="number">0</span>],s[i][<span class="number">1</span>]);        <span class="comment">//移动关标到蛇的坐标</span></span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;@&quot;</span>);                    <span class="comment">//在这个位置画蛇</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">key</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span>(kbhit()!=<span class="number">0</span>)          <span class="comment">//如果有键盘输入</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="type">char</span> in;</span><br><span class="line">        <span class="keyword">while</span>(!kbhit()==<span class="number">0</span>)  <span class="comment">//如果玩家输入了多个按键，以最后一个按键为准</span></span><br><span class="line">            in=getch();</span><br><span class="line">        <span class="keyword">switch</span>(in)</span><br><span class="line">        &#123;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">&#x27;w&#x27;</span>:</span><br><span class="line">        <span class="keyword">case</span> <span class="string">&#x27;W&#x27;</span>:</span><br><span class="line">            <span class="keyword">if</span>(direction!=DOWN)         <span class="comment">//不能缩头吧。。。。</span></span><br><span class="line">                direction=UP;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">&#x27;s&#x27;</span>:</span><br><span class="line">        <span class="keyword">case</span> <span class="string">&#x27;S&#x27;</span>:</span><br><span class="line">            <span class="keyword">if</span>(direction!=UP)</span><br><span class="line">                direction=DOWN;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">&#x27;a&#x27;</span>:</span><br><span class="line">        <span class="keyword">case</span> <span class="string">&#x27;A&#x27;</span>:</span><br><span class="line">            <span class="keyword">if</span>(direction!=RIGHT)</span><br><span class="line">                direction=LEFT;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">&#x27;d&#x27;</span>:</span><br><span class="line">        <span class="keyword">case</span> <span class="string">&#x27;D&#x27;</span>:</span><br><span class="line">            <span class="keyword">if</span>(direction!=LEFT)</span><br><span class="line">                direction=RIGHT;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">&#x27;p&#x27;</span>:</span><br><span class="line">        <span class="keyword">case</span> <span class="string">&#x27;P&#x27;</span>:</span><br><span class="line">            gotoxy(H,<span class="number">0</span>);        <span class="comment">//将光标移动到下面</span></span><br><span class="line">            system(<span class="string">&quot;pause&quot;</span>);</span><br><span class="line">            gotoxy(H,<span class="number">0</span>);</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;                   &quot;</span>);  <span class="comment">//消去下面的按任意键继续</span></span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">bool</span> <span class="title function_">gameOver</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">bool</span> isGameOver=<span class="literal">false</span>;</span><br><span class="line">    <span class="type">int</span> sX=s[<span class="number">0</span>][<span class="number">0</span>],sY=s[<span class="number">0</span>][<span class="number">1</span>];      <span class="comment">//蛇头的x坐标和y坐标</span></span><br><span class="line">    <span class="keyword">if</span>(sX==<span class="number">0</span>||sX==H<span class="number">-1</span>||sY==<span class="number">0</span>||sY==W<span class="number">-1</span>)</span><br><span class="line">        isGameOver=<span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>; i&lt;sLength; i++)    <span class="comment">//判断有没有吃到自己</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(s[i][<span class="number">0</span>]==sX&amp;&amp;s[i][<span class="number">1</span>]==sY)</span><br><span class="line">            isGameOver=<span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> isGameOver;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">printScore</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    gotoxy(<span class="number">0</span>,W+<span class="number">2</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;  贪吃蛇小游戏&quot;</span>);</span><br><span class="line">    gotoxy(<span class="number">1</span>,W+<span class="number">2</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;  TeX白兔 制作&quot;</span>);</span><br><span class="line">    gotoxy(<span class="number">4</span>,W+<span class="number">2</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;  得分:%d&quot;</span>,score);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    init();                     <span class="comment">//程序开始时的初始化操作</span></span><br><span class="line">    drawMap();                  <span class="comment">//画地图</span></span><br><span class="line">    food();</span><br><span class="line">    <span class="keyword">while</span>(<span class="number">1</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        drawSnake();                <span class="comment">//画蛇</span></span><br><span class="line">        printScore();</span><br><span class="line">        Sleep(WAIT_TIME);           <span class="comment">//等待一段时间</span></span><br><span class="line">        key();</span><br><span class="line">        move();                     <span class="comment">//移动蛇（主要是修改蛇身数组的数据）</span></span><br><span class="line">        <span class="keyword">if</span>(gameOver())</span><br><span class="line">        &#123;</span><br><span class="line">            system(<span class="string">&quot;cls&quot;</span>);          <span class="comment">//清除屏幕内容</span></span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;Game Over\n&quot;</span>);</span><br><span class="line">            system(<span class="string">&quot;pause&quot;</span>);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(a[s[<span class="number">0</span>][<span class="number">0</span>]][s[<span class="number">0</span>][<span class="number">1</span>]]==<span class="number">-1</span>) <span class="comment">//如果蛇头碰到食物，就重新投放食物，并且把食物点重置为0</span></span><br><span class="line">        &#123;</span><br><span class="line">            eated=<span class="literal">true</span>;             <span class="comment">//标记已经吃到食物</span></span><br><span class="line">            score+=<span class="number">10</span>;</span><br><span class="line">            food();</span><br><span class="line">            a[s[<span class="number">0</span>][<span class="number">0</span>]][s[<span class="number">0</span>][<span class="number">1</span>]]=<span class="number">0</span>;  <span class="comment">//去掉食物</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure> 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
   </article>
   
 
   
   <nav class="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/12/">上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><a class="page-number" href="/page/12/">12</a><span class="page-number current">13</span><a class="page-number" href="/page/14/">14</a><a class="page-number" href="/page/15/">15</a><span class="space">&hellip;</span><a class="page-number" href="/page/24/">24</a><a class="extend next" rel="next" href="/page/14/">下一页</a>
+    <a class="extend prev" rel="prev" href="/page/12/">上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><a class="page-number" href="/page/12/">12</a><span class="page-number current">13</span><a class="page-number" href="/page/14/">14</a><a class="page-number" href="/page/15/">15</a><span class="space">&hellip;</span><a class="page-number" href="/page/25/">25</a><a class="extend next" rel="next" href="/page/14/">下一页</a>
   </nav>
   
 </section>

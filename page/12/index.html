@@ -126,6 +126,126 @@
     
     
     <article
+  id="post-20221216-AT指令介绍"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/12/16/20221216-AT%E6%8C%87%E4%BB%A4%E4%BB%8B%E7%BB%8D/"
+    >20221216-AT指令介绍</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/12/16/20221216-AT%E6%8C%87%E4%BB%A4%E4%BB%8B%E7%BB%8D/" class="article-date">
+  <time datetime="2022-12-16T08:37:08.000Z" itemprop="datePublished">2022-12-16</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>AT 指令最初是用来指导modem 工作的，</p>
+<p>虽然在PC 端，手机上已经没有了AT 的使用，但其却在嵌入式行业里各类联网模块中发挥着重要的作用，而且不仅仅只应用在蜂窝模块，还应用到了wifi ble 等模块中</p>
+<p>相关标准</p>
+<p>随着技术的发展，目前 AT 指令发展过程中形成两个重要标准</p>
+<p>V.250：该标准于 1995 年建立，1998 年重命名为 V.250<br>ETSI GSM 07.07（3GPP TS 27.007）：用于控制 GSM modem 的 AT 指令集<br>GSM 07.07 是基于 V.250 标准的。是目前最新的 AT 标准。</p>
+<p>当下AT 指令的应用</p>
+<p>目前 的AT 指令着重应用在蜂窝模块 wifi 模块，ble 模块，目的是为了简化嵌入式设备联网的复杂度</p>
+<p>AT 标准定义了At 命令的格式本身，比如命令以 AT 为前缀，以 或者 结尾，这被现有的AT 模块所延用</p>
+<p>但是，由于每个厂家的模块不一样，实现的功能不一样，导致每个 AT 模块厂家有自己的一套私有的 AT 命令集，每一个 AT 模块厂家实现的 AT 指令集解析器也不一样（解析器实现的 AT 标准功能也参差不齐）。像上图所示的 AT 命令使用方式不被大多数模块厂家所实现。</p>
+<p>AT模块的应用框图</p>
+<p>既然是指令集，那么必然会有指令集的解析处理，通常，我们把AT 模块端的解析处理程序称为AT Server，而将控制AT 模块的处理器端的解析处理程序称为AT client 由AT client 发起命令请求，AT Server 通过URC 来主动给AT client 发送数据</p>
+<p>一些约定</p>
+<p>AT 命令的常用格式</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">AT+CMD=&lt;xxx&gt;[,&lt;xxx&gt;,&lt;xxx&gt;]</span><br></pre></td></tr></table></figure>
+
+<p>AT命令以AT 开始，以 \r 或者 \r\n 结尾，参数之间使用 , 隔开，字符串参数使用双引号 “” 包裹，整形参数不适用双引号。</p>
+<p><CR>：回车符<br><LF>：换行符<br><xxx><br>尖括号中的名称 xxx 在 AT 里是一个语法元素，要求必须指定。尖括号本身不会出现在命令行里。<br>[xxx]<br>中括号中的名称 xxx 在 AT 里是一个语法元素，表示可选择指定。中括号本身不出现在命令行里。</p>
+<p>四类AT 命令</p>
+<p>Test 命令：AT+<x>&#x3D;?<br>测试指令类似于命令行里的 help 指令，用于提供该命令的使用信息，以及命令参数的取值范围。<br>Read 命令：AT+<x>?<br>用于查询该指令对应功能的当前值。<br>Set 命令：AT+<x>&#x3D;&lt;…&gt;<br>设置用户指定的参数到对应的功能里。<br>Execute 命令：AT+<x><br>执行相关操作。</p>
+<p>响应结果字符串</p>
+<p>AT 标准定义了标准的响应结果字符串：</p>
+<p>\r\nOK\r\n<br>如果 AT 指令被 AT Server 识别，并正确执行，则返回该结果。<br>“ 标准中的 V1 模式下响应结果代码的方式。V0 模式下返回 0\r。<br>”<br>\r\nERROR\r\n<br>“ 标准中的 V1 模式下响应结果代码的方式。V0 模式下返回 4\r。<br>”</p>
+<h2 id="数据模式与指令模式"><a href="#数据模式与指令模式" class="headerlink" title="数据模式与指令模式"></a>数据模式与指令模式</h2><p>在收到 +++，并且接下来 1s 内未收到其他数据的话，将从数据模式切换到指令模式。</p>
+<p>数据模式，可以透传数据，client 发什么，server 就原封不动发出去。指令模式时，AT Server 需要解析 AT 指令，并作出响应。</p>
+<!-- AT+name=”LiMou” --> 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-20221216-蓝牙模块与单片机如何连接"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/12/16/20221216-%E8%93%9D%E7%89%99%E6%A8%A1%E5%9D%97%E4%B8%8E%E5%8D%95%E7%89%87%E6%9C%BA%E5%A6%82%E4%BD%95%E8%BF%9E%E6%8E%A5/"
+    >20221216-蓝牙模块与单片机如何连接</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/12/16/20221216-%E8%93%9D%E7%89%99%E6%A8%A1%E5%9D%97%E4%B8%8E%E5%8D%95%E7%89%87%E6%9C%BA%E5%A6%82%E4%BD%95%E8%BF%9E%E6%8E%A5/" class="article-date">
+  <time datetime="2022-12-16T07:56:20.000Z" itemprop="datePublished">2022-12-16</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/63449607">https://zhuanlan.zhihu.com/p/63449607</a></p>
+<h2 id="USB转TTL"><a href="#USB转TTL" class="headerlink" title="USB转TTL"></a>USB转TTL</h2><p>TTL 是一种电平</p>
+<p>像我们常用的单片机，引出来的串口，如果不加其他的接口电路，出来的信号就是TTL 电平，如果需要查看串口的打印信息，一般是需要接一个上位机的，常规的就是电脑，而现在的电脑一般的通信接口只有USB 老式的电脑可能会有 232 接口</p>
+<p>对于usb口而言，是没法和TTL 串口直接通信的，因为接口不匹配，电平也不匹配，这时候就需要借助外围的小设备来实现接口与电平的转换，常规操作是使用CH340 这种芯片所制作的usb 转串口模块，这个芯片可以实现TTL 串口和USB 之前的转换</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-20221216-C语言中typedef的使用方法"
   class="article article-type-post"
   itemscope
@@ -1142,379 +1262,13 @@
 </article>
 
     
-    <article
-  id="post-20221214-PNG格式详解"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/12/14/20221214-PNG%E6%A0%BC%E5%BC%8F%E8%AF%A6%E8%A7%A3/"
-    >20221214-PNG格式详解</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/12/14/20221214-PNG%E6%A0%BC%E5%BC%8F%E8%AF%A6%E8%A7%A3/" class="article-date">
-  <time datetime="2022-12-14T03:35:43.000Z" itemprop="datePublished">2022-12-14</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>png 是20世纪90年代开始开发的图像文件存储格式，其目的是替代gif 和tiff 文件格式，同时增加一些gif 文件格式所不具备的特性，流式网络图形格式名称来源于非官方的  是一种位图文件存储格式，读成ping 。png 用来存储灰度图像时，灰度图像的深度可多到16位，存储彩色图像时，彩色图像的深度可多到48位，并且还可存储多到16位的alpha 通道，png 使用从LZ77 派生的无损数据压缩算法</p>
-<h3 id="特性"><a href="#特性" class="headerlink" title="特性"></a>特性</h3><p>使用调色板技术可支持256种颜色的彩色图像  必须的</p>
-<p>流式读 写性，图像文件格式允许连续读出和写入图像数据 因此适于网络传播</p>
-<p>逐次逼近显示，这种特性可使在通信链路上传输图像文件的同时就在终端上显示图像，把整个轮廓显示出来之后逐步显示图像的细节，也就是先用低分辨率显示图像，然后逐步提高它的分辨率  类似马赛克逐渐消除的过程</p>
-<p>透明性，这个性能可使图像中某些部分不显示出来，用来创建一些有特色的图像</p>
-<p>辅助信息，这个特性可用来在图像文件中存储一些文本注释信息  就是可以说一些废话</p>
-<p>独立于计算机硬件环境</p>
-<p>使用无损压缩</p>
-<p>可在一个文件中存储多幅图像</p>
-<h2 id="文件结构"><a href="#文件结构" class="headerlink" title="文件结构"></a>文件结构</h2><p>png 图像格式文件由文件署名和数据块 组成</p>
-<p>文件署名域</p>
-<p>8字节的png 文件署名域用来识别该文件是不是png 文件，该域的值是 </p>
-<p>十进制数  十六进制数<br>137 89<br>80  50<br>78  4e<br>71  47<br>13  0d<br>10  0a<br>26  1a<br>10  0a<br>这个文件署名就是在《利用文件头标志判断文件类型》中提到的文件头标志了，很简单。</p>
-<p>数据块</p>
-<p>这里有两种类型的数据块，一种是称为关键数据块，就是必须要有的块，另一种叫做辅助数据块</p>
-<p>每个数据块都由下表所示的4个域组成</p>
-<p>名称  字节数 说明<br>Length(长度)  4字节 指定数据块中数据域的长度，其长度不超过(231−1)(231−1)字节<br>Chunk Type Code(数据块类型码) 4字节 数据块类型码由ASCII字母(A-Z和a-z)组成<br>Chunk Data(数据块实际内容  可变长度  存储按照Chunk Type Code指定的数据<br>CRC(循环冗余检测  4字节 存储用来检测是否有错误的循环冗余码</p>
-<p>其中CRC 域中的值是对chunk type code 域和chunk data 域中的数据进行计算得到的，可以看作一种校验码</p>
-<p>关键数据块</p>
-<p>关键数据块中的4个标准数据块是</p>
-<p>文件头数据块 IHDR</p>
-<p>它包含有png 文件中存储的图像数据的基本信息，并要作为第一个数据块出现在png 数据流中，而且一个png 数据流中只能有一个文件头数据块</p>
-<p>文件头数据块由13字节，组成结构如下</p>
-<table>
-<thead>
-<tr>
-<th>域的名称</th>
-<th>字节数</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>Width</td>
-<td>4 bytes</td>
-<td>图像宽度，以像素为单位</td>
-</tr>
-<tr>
-<td>Height</td>
-<td>4 bytes</td>
-<td>图像高度，以像素为单位</td>
-</tr>
-<tr>
-<td>Bit depth</td>
-<td>1 byte</td>
-<td>图像深度：索引彩色图像：1，2，4或8 ;灰度图像：1，2，4，8或16 ;真彩色图像：8或16</td>
-</tr>
-<tr>
-<td>ColorType</td>
-<td>1 byte</td>
-<td>颜色类型：0：灰度图像, 1，2，4，8或16;2：真彩色图像，8或16;3：索引彩色图像，1，2，4或84：带α通道数据的灰度图像，8或16;6：带α通道数据的真彩色图像，8或16</td>
-</tr>
-<tr>
-<td>Compression method</td>
-<td>1 byte</td>
-<td>压缩方法(LZ77派生算法)</td>
-</tr>
-<tr>
-<td>Filter method</td>
-<td>1 byte</td>
-<td>滤波器方法</td>
-</tr>
-<tr>
-<td>Interlace method</td>
-<td>1 byte</td>
-<td>隔行扫描方法：0：非隔行扫描;1： Adam7(由Adam M. Costello开发的7遍隔行扫描方法)</td>
-</tr>
-</tbody></table>
-<p>调色板数据块PLTE</p>
-<p>它包含有与索引彩色图像相关的彩色变换数据，它仅与索引彩色图像有关，而且要放在图像数据块之前，真彩色的png 数据流也可以有调色板数据块，目的是便于非真彩色显示程序用它来量化图像数据，从而显示该图像，结构如下</p>
-<p>|颜色|字节|意义|<br>|Red|1 byte | 0 &#x3D; 黑色, 255 &#x3D; 红|<br>|Green|1 byte | 0 &#x3D; 黑色, 255 &#x3D; 绿色|<br>|Blue|1 byte | 0 &#x3D; 黑色, 255 &#x3D; 蓝色|</p>
-<p>PLTE 数据块是定义图像的调色板信息，PLTE 可以包含1-256 个调色板信息，每个调色板信息由3个字节组成，因此调色板数据块所包含的最大字节数为768 调色板的长度应该是3的倍数，否则，这将使一个非法的调色板</p>
-<p>对于索引图像，调色板信息是必须的，调色板的颜色索引从0开始编号，然后是 1 2 调色板的颜色数不能超过色深中规定的颜色数，否则，这将导致png 图像不合法</p>
-<p>图像数据块 IDAT </p>
-<p>它存储实际的数据，在数据流中可包含多个连续顺序的图像数据块<br>IDAT 存放着图像真正的数据信息，因此，如果能够了解IDAT 的结构，我们就可以很方便的生成PNG 图像</p>
-<p>图像结束数据IEND </p>
-<p>它用来标记png 文件或者数据流已经结束，并且必须要放在文件的尾部</p>
-<p>如果我们仔细观察PNG文件，我们会发现，文件的结尾12个字符看起来总应该是这样的：</p>
-<p>00 00 00 00 49 45 4E 44 AE 42 60 82</p>
-<p>不难明白，由于数据块结构的定义，IEND 数据块的长度总是0 0000000除非认为加入信息，数据标识总是iend 因此，CRC码也总是AE 42 60 82</p>
-<p>最后，除了表示数据块开始IHDR 必须放在最前面，表示png 文件结束的iend 数据块放在最后面，其他数据块的存放顺序没有限制</p>
-<p>辅助数据块</p>
-<p>比较杂 ，不需要全部了解透</p>
-<p>PNG 文件格式规范指定的10个辅助数据块是</p>
-<p>背景颜色数据块 bKGD</p>
-<p>基色和白色度数块cHRM 所谓白色度是指当 R G B 最大值时在显示器上产生的白色度</p>
-<p>图像gamma 数据块 gAMA</p>
-<p>图像直方图数据块hIST<br>物理像素尺寸数据块 pHYs</p>
-<p>样本有效位数据块 sBIT</p>
-<p>文本信息数据块 tEXt<br>图像最后修改时间数据块 tIME<br>图像透明数据块 tRNS </p>
-<p>压缩文本数据块 zTXt</p>
-<h2 id="数据块摘要"><a href="#数据块摘要" class="headerlink" title="数据块摘要"></a>数据块摘要</h2><p>关键数据块，辅助数据块和专用公共数据块 综合下表中</p>
-<table>
-<thead>
-<tr>
-<th>数据块符号</th>
-<th>数据块名称</th>
-<th>多数据块</th>
-<th>可选否</th>
-<th>位置限制</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>IHDR</td>
-<td>文件头数据块</td>
-<td>否</td>
-<td>否</td>
-<td>第一块</td>
-</tr>
-<tr>
-<td>cHRM</td>
-<td>基色和白色点数据块</td>
-<td>否</td>
-<td>是</td>
-<td>在PLTE和IDAT之前</td>
-</tr>
-<tr>
-<td>gAMA</td>
-<td>图像γ数据块</td>
-<td>否</td>
-<td>是</td>
-<td>在PLTE和IDAT之前</td>
-</tr>
-<tr>
-<td>sBIT</td>
-<td>样本有效位数据块</td>
-<td>否</td>
-<td>是</td>
-<td>在PLTE和IDAT之前</td>
-</tr>
-<tr>
-<td>PLTE</td>
-<td>调色板数据块</td>
-<td>否</td>
-<td>是</td>
-<td>在IDAT之前</td>
-</tr>
-<tr>
-<td>bKGD</td>
-<td>背景颜色数据块</td>
-<td>否</td>
-<td>是</td>
-<td>在PLTE之后IDAT之前</td>
-</tr>
-<tr>
-<td>hIST</td>
-<td>图像直方图数据块</td>
-<td>否</td>
-<td>是</td>
-<td>在PLTE之后IDAT之前</td>
-</tr>
-<tr>
-<td>tRNS</td>
-<td>图像透明数据块</td>
-<td>否</td>
-<td>是</td>
-<td>在PLTE之后IDAT之前</td>
-</tr>
-<tr>
-<td>oFFs</td>
-<td>(专用公共数据块)</td>
-<td>否</td>
-<td>是</td>
-<td>在IDAT之前</td>
-</tr>
-<tr>
-<td>pHYs</td>
-<td>物理像素尺寸数据块</td>
-<td>否</td>
-<td>是</td>
-<td>在IDAT之前</td>
-</tr>
-<tr>
-<td>sCAL</td>
-<td>(专用公共数据块)</td>
-<td>否</td>
-<td>是</td>
-<td>在IDAT之前</td>
-</tr>
-<tr>
-<td>IDAT</td>
-<td>图像数据块</td>
-<td>是</td>
-<td>否</td>
-<td>与其他IDAT连续</td>
-</tr>
-<tr>
-<td>tIME</td>
-<td>图像最后修改时间数据块</td>
-<td>否</td>
-<td>是</td>
-<td>无限制</td>
-</tr>
-<tr>
-<td>tEXt</td>
-<td>文本信息数据块</td>
-<td>是</td>
-<td>是</td>
-<td>无限制</td>
-</tr>
-<tr>
-<td>zTXt</td>
-<td>压缩文本数据块</td>
-<td>是</td>
-<td>是</td>
-<td>无限制</td>
-</tr>
-<tr>
-<td>fRAc</td>
-<td>(专用公共数据块)</td>
-<td>是</td>
-<td>是</td>
-<td>无限制</td>
-</tr>
-<tr>
-<td>gIFg</td>
-<td>(专用公共数据块)</td>
-<td>是</td>
-<td>是</td>
-<td>无限制</td>
-</tr>
-<tr>
-<td>gIFt</td>
-<td>(专用公共数据块)</td>
-<td>是</td>
-<td>是</td>
-<td>无限制</td>
-</tr>
-<tr>
-<td>gIFx</td>
-<td>(专用公共数据块)</td>
-<td>是</td>
-<td>是</td>
-<td>无限制</td>
-</tr>
-<tr>
-<td>IEND</td>
-<td>图像结束数据</td>
-<td>否</td>
-<td>否</td>
-<td>最后一个数据块</td>
-</tr>
-</tbody></table>
-<p>tEXt和zTXt数据块中的标准关键字：</p>
-<p>关键字 说明<br>Title 图像名称或者标题<br>Author  图像作者名<br>Description 图像说明<br>Copyright 版权声明<br>CreationTime  原图创作时间<br>Software  创作图像使用的软件<br>Disclaimer  弃权<br>Warning 图像内容警告<br>Source  创作图像使用的设备<br>Comment 各种注释<br>一个例子</p>
-<!-- http://qr61.cn/o8bjsz/qEp8BlI --> 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20221213-BMP格式结构"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/12/13/20221213-BMP%E6%A0%BC%E5%BC%8F%E7%BB%93%E6%9E%84/"
-    >20221213-BMP格式结构</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/12/13/20221213-BMP%E6%A0%BC%E5%BC%8F%E7%BB%93%E6%9E%84/" class="article-date">
-  <time datetime="2022-12-13T11:26:33.000Z" itemprop="datePublished">2022-12-13</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>docs.microsoft.com&#x2F;zh-cn&#x2F;windows&#x2F;win32&#x2F;gdibitmap-storage</p>
-<p>简介</p>
-<p>bmp 图形文件是windows 采用的图形文件格式，在windows 环境下运行的所有图像处理软件都支持BMP 图像文件格式，windows 系统内部各图像绘制操作都是以BMP 为基础的</p>
-<p>因此把这种BMP 图像文件格式称为设备相关位图 DDB 文件格式，<br>目的是为了人windows 能够在任何类型的显示设备上显示所存储的图像</p>
-<p>bmp 位图文件默认的文件扩展名是bmp</p>
-<p>BMP 格式结构</p>
-<p>BMP 文件的数据按照从文件头开始的先后顺序分为四个部分</p>
-<p>位图文件头，提供文件的格式 大小等信息</p>
-<p>位图信息头 提供图像数据的尺寸，位平面数，压缩方式，颜色索引等信息</p>
-<p>调色板 可选，如使用索引来表示图像，调色板就是索引与其对饮的颜色的映射表</p>
-<p>位图数据 图像数据区</p>
-<p>BMP图片文件数据表如下：</p>
-<p>数据段名称<br>大小（byte）<br>开始地址<br>结束地址<br>位图文件头(bitmap-file header)<br>14<br>0000h<br>000Dh<br>位图信息头(bitmap-information header)<br>40<br>000Eh<br>0035h<br>调色板(color table)<br>由biBitCount决定<br>0036h<br>未知<br>图片点阵数据(bitmap data)<br>由图片大小和颜色定<br>未知<br>未知</p>
-<p>三、BMP 文件头</p>
-<p>BMP文件头结构体定义如下：<br>typedef struct tagBITMAPFILEHEADER<br>{<br>UINT16 bfType;        &#x2F;&#x2F;2Bytes，必须为”BM”，即0x424D 才是Windows位图文件<br>DWORD bfSize;         &#x2F;&#x2F;4Bytes，整个BMP文件的大小<br>UINT16 bfReserved1;  &#x2F;&#x2F;2Bytes，保留，为0<br>UINT16 bfReserved2;  &#x2F;&#x2F;2Bytes，保留，为0<br>DWORD bfOffBits;     &#x2F;&#x2F;4Bytes，文件起始位置到图像像素数据的字节偏移量<br>} BITMAPFILEHEADER;</p>
-<p>BMP文件头数据表如下：</p>
-<p>变量名<br>地址偏移<br>大小<br>作用说明<br>bfType<br>0000h<br>2Bytes<br>文件标识符，必须为”BM”，即0x424D 才是Windows位图文件<br>‘BM’：Windows 3.1x, 95, NT,…　　‘BA’：OS&#x2F;2 Bitmap Array　　‘CI’：OS&#x2F;2 Color Icon 　　<br>‘CP’：OS&#x2F;2 Color Pointer 　　‘IC’：OS&#x2F;2 Icon 　　<br>‘PT’：OS&#x2F;2 Pointer<br>因为OS&#x2F;2系统并没有被普及开，所以在编程时，你只需判断第一个标识“BM”就行<br>bfSize<br>0002h<br>4Bytes<br>整个BMP文件的大小（以位B为单位）<br>bfReserved1<br>0006h<br>2Bytes<br>保留，必须设置为0<br>bfReserved2<br>0008h<br>2Bytes<br>保留，必须设置为0<br>bfOffBits<br>000Ah<br>4Bytes<br>说明从文件头0000h开始到图像像素数据的字节偏移量（以字节Bytes为单位），以为位图的调色板长度根据位图格式不同而变化，可以用这个偏移量快速从文件中读取图像数据</p>
-<p>四、BMP 信息头</p>
-<p>BMP信息头结构体定义如下：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> _<span class="title">tagBMP_INFOHEADER</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">DWORD  biSize;    <span class="comment">//4Bytes，INFOHEADER结构体大小，存在其他版本I NFOHEADER，用作区分</span></span><br><span class="line">LONG   biWidth;    <span class="comment">//4Bytes，图像宽度（以像素为单位）</span></span><br><span class="line">LONG   biHeight;    <span class="comment">//4Bytes，图像高度，+：图像存储顺序为Bottom2Top，-：Top2Bottom</span></span><br><span class="line">WORD   biPlanes;    <span class="comment">//2Bytes，图像数据平面，BMP存储RGB数据，因此总为1</span></span><br><span class="line">WORD   biBitCount;         <span class="comment">//2Bytes，图像像素位数</span></span><br><span class="line">DWORD  biCompression;     <span class="comment">//4Bytes，0：不压缩，1：RLE8，2：RLE4</span></span><br><span class="line">DWORD  biSizeImage;       <span class="comment">//4Bytes，4字节对齐的图像数据大小</span></span><br><span class="line">LONG   biXPelsPerMeter;   <span class="comment">//4 Bytes，用象素/米表示的水平分辨率</span></span><br><span class="line">LONG   biYPelsPerMeter;   <span class="comment">//4 Bytes，用象素/米表示的垂直分辨率</span></span><br><span class="line">DWORD  biClrUsed;          <span class="comment">//4 Bytes，实际使用的调色板索引数，0：使用所有的调色板索引</span></span><br><span class="line">DWORD biClrImportant;     <span class="comment">//4 Bytes，重要的调色板索引数，0：所有的调色板索引都重要</span></span><br><span class="line">&#125;BMP_INFOHEADER;</span><br></pre></td></tr></table></figure>
-
-<p>变量名<br>地址偏移<br>大小<br>作用说明<br>biSize<br>000Eh<br>4Bytes<br>BNP信息头即BMP_INFOHEADER结构体所需要的字节数（以字节为单位）<br>biWidth<br>0012h<br>4Bytes<br>说明图像的宽度（以像素为单位）<br>biHeight<br>0016h<br>4Bytes<br>说明图像的高度（以像素为单位）。这个值还有一个用处，指明图像是正向的位图还是倒向的位图，该值是正数说明图像是倒向的即图像存储是由下到上；该值是负数说明图像是倒向的即图像存储是由上到下。大多数BMP位图是倒向的位图，所以此值是正值。<br>biPlanes<br>001Ah<br>2Bytes<br>为目标设备说明位面数，其值总设置为1<br>biBitCount<br>001Ch<br>2Bytes<br>说明一个像素点占几位（以比特位&#x2F;像素位单位），其值可为1,4,8,16,24或32<br>biCompression<br>001Eh<br>4Bytes<br>说明图像数据的压缩类型，取值范围为：<br>0         BI_RGB 不压缩（最常用）<br>1         BI_RLE8 8比特游程编码（BLE），只用于8位位图<br>2         BI_RLE4 4比特游程编码（BLE），只用于4位位图<br>3         BI_BITFIELDS比特域（BLE），只用于16&#x2F;32位位图<br>4<br>biSizeImage<br>0022h<br>4Bytes<br>说明图像的大小，以字节为单位。当用BI_RGB格式时，总设置为0<br>biXPelsPerMeter<br>0026h<br>4Bytes<br>说明水平分辨率，用像素&#x2F;米表示，有符号整数<br>biYPelsPerMeter<br>002Ah<br>4Bytes<br>说明垂直分辨率，用像素&#x2F;米表示，有符号整数<br>biClrUsed<br>002Eh<br>4Bytes<br>说明位图实际使用的调色板索引数，0：使用所有的调色板索引<br>biClrImportant<br>0032h<br>4Bytes<br>说明对图像显示有重要影响的颜色索引的数目，如果是0，表示都重要。</p>
-<p>BMP 调色板</p>
-<p>BMP调色板结构体定义如下：<br>typedef struct _tagRGBQUAD<br>{<br>BYTE  rgbBlue;       &#x2F;&#x2F;指定蓝色强度<br>BYTE  rgbGreen;      &#x2F;&#x2F;指定绿色强度<br>BYTE  rgbRed;        &#x2F;&#x2F;指定红色强度<br> BYTE  rgbReserved;  &#x2F;&#x2F;保留，设置为0<br>} RGBQUAD;</p>
-<p>1，4，8位图像才会使用调色板数据，16,24,32位图像不需要调色板数据，即调色板最多只需要256项（索引0 - 255）。<br>颜色表的大小根据所使用的颜色模式而定：2色图像为8字节；16色图像位64字节；256色图像为1024字节。其中，每4字节表示一种颜色，并以B（蓝色）、G（绿色）、R（红色）、alpha（32位位图的透明度值，一般不需要）。即首先4字节表示颜色号1的颜色，接下来表示颜色号2的颜色，依此类推。<br>颜色表中RGBQUAD结构数据的个数有biBitCount来确定，当biBitCount&#x3D;1,4,8时，分别有2,16,256个表项。<br>当biBitCount&#x3D;1时，为2色图像，BMP位图中有2个数据结构RGBQUAD，一个调色板占用4字节数据，所以2色图像的调色板长度为2<em>4为8字节。<br>当biBitCount&#x3D;4时，为16色图像，BMP位图中有16个数据结构RGBQUAD，一个调色板占用4字节数据，所以16像的调色板长度为16</em>4为64字节。<br>当biBitCount&#x3D;8时，为256色图像，BMP位图中有256个数据结构RGBQUAD，一个调色板占用4字节数据，所以256色图像的调色板长度为256*4为1024字节。<br>当biBitCount&#x3D;16，24或32时，没有颜色表。</p>
-<p>BMP 图像数据区</p>
-<p>位图数据记录了位图的每一个像素值，记录顺序是在扫描行内是从左到右,扫描行之间是从下到上。位图的一个像素值所占的字节数:<br>当biBitCount&#x3D;1时，8个像素占1个字节;<br>当biBitCount&#x3D;4时，2个像素占1个字节;<br>当biBitCount&#x3D;8时，1个像素占1个字节;<br>当biBitCount&#x3D;24时,1个像素占3个字节;<br>Windows规定一个扫描行所占的字节数必须是4的倍数(即以long为单位),不足的以0填充，<br>一个扫描行所占的字节数计算方法:</p>
-<p>235.125<br>264 * 8  &#x3D; 2112  个像素<br>33 + 31<br>57 + 31</p>
-<p>DataSizePerLine&#x3D; (biWidth* biBitCount+31)&#x2F;8;<br>&#x2F;&#x2F; 一个扫描行所占的字节数<br>DataSizePerLine&#x3D; DataSizePerLine&#x2F;4<em>4; &#x2F;&#x2F; 字节数必须是4的倍数<br>位图数据的大小(不压缩情况下):<br>DataSize&#x3D; DataSizePerLine</em> biHeight;</p>
-<p>颜色表接下来位为位图文件的图像数据区，在此部分记录着每点像素对应的颜色号，其记录方式也随颜色模式而定，既2色图像每点占1位（8位为1字节）；16色图像每点占4位（半字节）；256色图像每点占8位（1字节）；真彩色图像每点占24位（3字节）。所以，整个数据区的大小也会随之变化。究其规律而言，可的出如下计算公式：图像数据信息大小&#x3D;（图像宽度<em>图像高度</em>记录像素的位数）&#x2F;8。</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
   </article>
   
 
   
   <nav class="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/11/">上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><a class="page-number" href="/page/11/">11</a><span class="page-number current">12</span><a class="page-number" href="/page/13/">13</a><a class="page-number" href="/page/14/">14</a><span class="space">&hellip;</span><a class="page-number" href="/page/24/">24</a><a class="extend next" rel="next" href="/page/13/">下一页</a>
+    <a class="extend prev" rel="prev" href="/page/11/">上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><a class="page-number" href="/page/11/">11</a><span class="page-number current">12</span><a class="page-number" href="/page/13/">13</a><a class="page-number" href="/page/14/">14</a><span class="space">&hellip;</span><a class="page-number" href="/page/25/">25</a><a class="extend next" rel="next" href="/page/13/">下一页</a>
   </nav>
   
 </section>
