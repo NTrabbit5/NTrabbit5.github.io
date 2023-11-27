@@ -126,6 +126,178 @@
     
     
     <article
+  id="post-20230802-cpp中cin的详细用法"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/08/02/20230802-cpp%E4%B8%ADcin%E7%9A%84%E8%AF%A6%E7%BB%86%E7%94%A8%E6%B3%95/"
+    >20230802-cpp中cin的详细用法</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/08/02/20230802-cpp%E4%B8%ADcin%E7%9A%84%E8%AF%A6%E7%BB%86%E7%94%A8%E6%B3%95/" class="article-date">
+  <time datetime="2023-08-02T09:14:54.000Z" itemprop="datePublished">2023-08-02</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="1-cin简介"><a href="#1-cin简介" class="headerlink" title="1.cin简介"></a>1.cin简介</h1><p>cin是C++编程语言中的标准输入流对象，即istream类的对象。cin主要用于从标准输入读取数据，这里的标准输入，指的是终端的键盘。此外，cout是流的对象，即ostream类的对象，cerr是标准错误输出流的对象，也是ostream 类的对象。这里的标准输出指的是终端键盘，标准错误输出指的是终端的屏幕。</p>
+<p>在理解cin功能时，不得不提标准输入缓冲区。当我们从键盘输入字符串的时候需要敲一下回车键才能够将这个字符串送入到缓冲区中，那么敲入的这个回车键(\r)会被转换为一个换行符\n，这个换行符\n也会被存储在cin的缓冲区中并且被当成一个字符来计算！比如我们在键盘上敲下了123456这个字符串，然后敲一下回车键（\r）将这个字符串送入了缓冲区中，那么此时缓冲区中的字节个数是7 ，而不是6。</p>
+<p>cin读取数据也是从缓冲区中获取数据，缓冲区为空时，cin的成员函数会阻塞等待数据的到来，一旦缓冲区中有数据，就触发cin的成员函数去读取数据。</p>
+<hr>
+<h1 id="2-cin的常用读取方法"><a href="#2-cin的常用读取方法" class="headerlink" title="2. cin的常用读取方法"></a>2. cin的常用读取方法</h1><p>使用cin从标准输入读取数据时，通常用到的方法有cin&gt;&gt;，cin.get，cin.getline。</p>
+<h2 id="2-1cin-gt-gt-的用法"><a href="#2-1cin-gt-gt-的用法" class="headerlink" title="2.1cin&gt;&gt;的用法"></a>2.1cin&gt;&gt;的用法</h2><p>cin可以连续从键盘读取想要的数据，以空格、tab或换行作为分隔符。实例程序如下。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">char</span> a;</span><br><span class="line">    <span class="type">int</span> b;</span><br><span class="line">    <span class="type">float</span> c;</span><br><span class="line">    string </span><br><span class="line">    cin&gt;&gt;a&gt;&gt;b&gt;&gt;c;</span><br><span class="line">    cout&lt;&lt;a&lt;&lt;<span class="string">&quot; &quot;</span>&lt;&lt;b&lt;&lt;<span class="string">&quot; &quot;</span>&lt;&lt;c&lt;&lt;<span class="string">&quot; &quot;</span>&lt;&lt;endl;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">system</span>(<span class="string">&quot;pause&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在屏幕中一次输入：a[回车]11[回车]5.56[回车]，程序将输出如下结果：<br><img src="https://img-blog.csdn.net/20150904213426227"></p>
+<p><strong>注意：</strong><br>（1）<code>cin&gt;&gt;</code> 等价于<code>cin.operator&gt;&gt;()</code>，即调用成员函数<code>operator&gt;&gt;()</code>进行读取数据。<br>（2）当<code>cin&gt;&gt;</code>从缓冲区中读取数据时，若缓冲区中第一个字符是空格、tab或换行这些分隔符时，<code>cin&gt;&gt;</code>会将其忽略并清除，继续读取下一个字符，若缓冲区为空，则继续等待。但是如果读取成功，字符后面的分隔符是残留在缓冲区的，<code>cin&gt;&gt;</code>不做处理。<br>（3）不想略过空白字符，那就使用 noskipws 流控制。比如<code>cin&gt;&gt;noskipws&gt;&gt;input</code>;</p>
+<p>验证程序见如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string&gt;</span> </span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">char</span> a;</span><br><span class="line">    <span class="type">int</span> b;</span><br><span class="line">    <span class="type">float</span> c;</span><br><span class="line">    string str;</span><br><span class="line">    cin&gt;&gt;a&gt;&gt;b&gt;&gt;c&gt;&gt;str;</span><br><span class="line">    cout&lt;&lt;a&lt;&lt;<span class="string">&quot; &quot;</span>&lt;&lt;b&lt;&lt;<span class="string">&quot; &quot;</span>&lt;&lt;c&lt;&lt;<span class="string">&quot; &quot;</span>&lt;&lt;str&lt;&lt;endl;</span><br><span class="line"></span><br><span class="line">    string test;</span><br><span class="line">    <span class="built_in">getline</span>(cin,test);<span class="comment">//不阻塞</span></span><br><span class="line">    cout&lt;&lt;<span class="string">&quot;test:&quot;</span>&lt;&lt;test&lt;&lt;endl;</span><br><span class="line">    <span class="built_in">system</span>(<span class="string">&quot;pause&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>从键盘输入:[回车][回车][回车]a[回车]5[回车]2.33[回车]hello[回车]，输出结果是：<br><img src="https://img-blog.csdn.net/20150904213554338"></p>
+<p>从结果可以看出，cin&gt;&gt;对缓冲区中的第一个换行符视而不见，采取的措施是忽略清除，继续阻塞等待缓冲区有效数据的到来。但是，getline()读取数据时，并非像cin&gt;&gt;那样忽略第一个换行符，getline()发现cin的缓冲区中有一个残留的换行符，不阻塞请求键盘输入，直接读取，送入目标字符串后，再将换行符替换为空字符’\0’，因此程序中的test为空串。</p>
+<h2 id="2-2-cin-get的用法"><a href="#2-2-cin-get的用法" class="headerlink" title="2.2 cin.get的用法"></a>2.2 cin.get的用法</h2><p>该函数有有多种重载形式，分为四种格式：无参，一参数，二参数，三个参数。常用的的函数原型如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> cin.<span class="built_in">get</span>();</span><br><span class="line">istream&amp; cin.<span class="built_in">get</span>(<span class="type">char</span>&amp; var);</span><br><span class="line"><span class="function">istream&amp; <span class="title">get</span> <span class="params">( <span class="type">char</span>* s, streamsize n )</span></span>;</span><br><span class="line"><span class="function">istream&amp; <span class="title">get</span> <span class="params">( <span class="type">char</span>* s,  streamsize  n, <span class="type">char</span> delim )</span>。</span></span><br></pre></td></tr></table></figure>
+
+<p>其中streamsize 在VC++中被定义为long long型。另外，还有两个重载形式不怎么使用，就不详述了，函数原型如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">istream&amp; <span class="title">get</span> <span class="params">( streambuf&amp; sb)</span></span>;</span><br><span class="line"><span class="function">istream&amp; <span class="title">get</span> <span class="params">( streambuf&amp; sb, <span class="type">char</span> delim )</span></span>;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-2-1-cin-get读取一个字符"><a href="#2-2-1-cin-get读取一个字符" class="headerlink" title="2.2.1 cin.get读取一个字符"></a>2.2.1 cin.get读取一个字符</h3><p>读取一个字符，可以使用cin.get或者cin.get(var)，示例代码如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">char</span> a;</span><br><span class="line">    <span class="type">char</span> b;</span><br><span class="line">    a=cin.<span class="built_in">get</span>();</span><br><span class="line">    cin.<span class="built_in">get</span>(b);</span><br><span class="line">    cout&lt;&lt;a&lt;&lt;b&lt;&lt;endl;</span><br><span class="line">    <span class="built_in">system</span>(<span class="string">&quot;pause&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>输入：e[回车]，输出：<br><img src="https://img-blog.csdn.net/20150904213700306"><br><strong>注意：</strong><br>（1）从结果可以看出，cin.get()从输入缓冲区读取单个字符时不忽略分隔符，直接将其读取，就出现了如上情况，将换行符读入变量b，输出时打印两次。</p>
+<p>（2）cin.get()的返回值是int类型，成功：读取字符的ASCII码值，遇到文件结束符时，返回EOF，即-1，Windows下标准输入输入文件结束符为Ctrl+z，<a target="_blank" rel="noopener" href="http://lib.csdn.net/base/linux">Linux</a>为Ctrl+d。cin.get(char var)如果成功返回的是cin对象，因此可以支持链式操作，如cin.get(b).get(c)。</p>
+<h3 id="2-2-2-cin-get读取一行"><a href="#2-2-2-cin-get读取一行" class="headerlink" title="2.2.2 cin.get读取一行"></a>2.2.2 cin.get读取一行</h3><p>读取一行可以使用istream&amp; get ( char* s, streamsize n )或者istream&amp; get ( char* s, size_t n, streamsize delim )。二者的区别是前者默认以换行符结束，后者可指定结束符。n表示目标空间的大小。示例代码如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">char</span> a;</span><br><span class="line">    <span class="type">char</span> array[<span class="number">20</span>]=&#123;<span class="literal">NULL</span>&#125;; </span><br><span class="line">    cin.<span class="built_in">get</span>(array,<span class="number">20</span>);</span><br><span class="line">    cin.<span class="built_in">get</span>(a);</span><br><span class="line">    cout&lt;&lt;array&lt;&lt;<span class="string">&quot; &quot;</span>&lt;&lt;(<span class="type">int</span>)a&lt;&lt;endl;</span><br><span class="line">    <span class="built_in">system</span>(<span class="string">&quot;pause&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>输入：123456789[回车]，输出：<br><img src="https://img-blog.csdn.net/20150904213736035"></p>
+<p><strong>注意：</strong><br>（1）从结果可以看出，cin.get(array,20);读取一行时，遇到换行符时结束读取，但是不对换行符进行处理，换行符仍然残留在输入缓冲区。第二次由cin.get()将换行符读入变量b，打印输入换行符的ASCII码值为10。这也是cin.get()读取一行与使用getline读取一行的区别所在。getline读取一行字符时，默认遇到<code>\n</code>时终止，并且将<code>\n</code>直接从输入缓冲区中删除掉，不会影响下面的输入处理。</p>
+<p>（2）cin.get(str,size);读取一行时，只能将字符串读入C风格的字符串中，即char*，但是C++的getline函数可以将字符串读入C++风格的字符串中，即string类型。鉴于getline较cin.get()的这两种优点，建议使用getline进行行的读取。关于getline的用法，下文将进行详述。</p>
+<h2 id="2-3-cin-getline读取一行"><a href="#2-3-cin-getline读取一行" class="headerlink" title="2.3 cin.getline读取一行"></a>2.3 cin.getline读取一行</h2><p>函数作用：从标准输入设备键盘读取一串字符串，并以指定的结束符结束。<br>函数原型有两个：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">istream&amp; <span class="title">getline</span><span class="params">(<span class="type">char</span>* s, streamsize count)</span></span>; <span class="comment">//默认以换行符结束</span></span><br><span class="line"><span class="function">istream&amp; <span class="title">getline</span><span class="params">(<span class="type">char</span>* s, streamsize count, <span class="type">char</span> delim)</span></span>;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>使用示例：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">char</span> array[<span class="number">20</span>]=&#123;<span class="literal">NULL</span>&#125;;</span><br><span class="line">    cin.<span class="built_in">getline</span>(array,<span class="number">20</span>); <span class="comment">//或者指定结束符，使用下面一行</span></span><br><span class="line">    <span class="comment">//cin.getline(array,20,&#x27;\n&#x27;);</span></span><br><span class="line">    cout&lt;&lt;array&lt;&lt;endl;</span><br><span class="line">    <span class="built_in">system</span>(<span class="string">&quot;pause&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>注意，cin.getline与cin.get的区别是，cin.getline不会将结束符或者换行符残留在输入缓冲区中。</p>
+<hr>
+<h1 id="3-cin的条件状态"><a href="#3-cin的条件状态" class="headerlink" title="3. cin的条件状态"></a>3. cin的条件状态</h1><p>使用cin读取键盘输入时，难免发生错误，一旦出错，cin将设置条件状态(condition state)。条件状态标识符号为:<br>goodbit:无错误<br>eofbit:已到达文件尾<br>failbit:非致命的输入&#x2F;输出错误，可挽回<br>badbit:致命的输入&#x2F;输出错误,无法挽回<br>若在输入输出类里.需要加<a target="_blank" rel="noopener" href="http://lib.csdn.net/base/ios">iOS</a>::标识符号。与这些条件状态对应的就是设置、读取和判断条件状态的流对象的成员函数。他们主要有：<br>s.eof()：若流s的eofbit置位，则返回true；<br>s.fail()：若流s的failbit置位，则返回true；<br>s.bad()：若流s的badbit置位，则返回true；<br>s.good()：若流s的goodbit置位，则返回true；<br>s.clear(flags)：清空状态标志位，并将给定的标志位flags置为1，返回void。<br>s.setstate(flags)：根据给定的flags条件状态标志位，将流s中对应的条件状态位置为1，返回void。<br>s.rdstate()：返回流s的当前条件状态，返回值类型为strm::iostate。strm::iostate 机器相关的整形名,由各个iostream类定义,用于定义条件状态。</p>
+<p>了解以上关于输入流的条件状态与相关操作函数，下面看一个因输入缓冲区未读取完造成的条件状态位failbit被置位，再通过clear()复位的例子。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"><span class="type">char</span> ch, str[<span class="number">20</span>]; </span><br><span class="line">    cin.<span class="built_in">getline</span>(str, <span class="number">5</span>);</span><br><span class="line">    cout&lt;&lt;<span class="string">&quot;flag1:&quot;</span>&lt;&lt;cin.<span class="built_in">good</span>()&lt;&lt;endl;    <span class="comment">// 查看goodbit状态，即是否有异常</span></span><br><span class="line">    cin.<span class="built_in">clear</span>();                         <span class="comment">// 清除错误标志</span></span><br><span class="line">    cout&lt;&lt;<span class="string">&quot;flag1:&quot;</span>&lt;&lt;cin.<span class="built_in">good</span>()&lt;&lt;endl;    <span class="comment">// 清除标志后再查看异常状态</span></span><br><span class="line">    cin&gt;&gt;ch; </span><br><span class="line">    cout&lt;&lt;<span class="string">&quot;str:&quot;</span>&lt;&lt;str&lt;&lt;endl;</span><br><span class="line">    cout&lt;&lt;<span class="string">&quot;ch :&quot;</span>&lt;&lt;ch&lt;&lt;endl;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">system</span>(<span class="string">&quot;pause&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>输入：12345[回车]，输出结果为：<br><img src="https://img-blog.csdn.net/20150904213958795"></p>
+<p>可以看出，因输入缓冲区未读取完造成输入异常，通过clear()可以清除输入流对象cin的异常状态。，不影响后面的cin&gt;&gt;ch从输入缓冲区读取数据。因为cin.getline读取之后，输入缓冲区中残留的字符串是：5[换行]，所以cin&gt;&gt;ch将5读取并存入ch，打印输入并输出5。</p>
+<p>如果将clear()注释，cin&gt;&gt;ch;将读取失败，ch为空。<br>cin.clear()等同于cin.clear(<a target="_blank" rel="noopener" href="http://lib.csdn.net/base/ios">ios</a>::goodbit);因为cin.clear()的默认参数是ios::goodbit，所以不需显示传递，故而你最常看到的就是:<br>cin.clear()。</p>
+<hr>
+<h1 id="4-cin清空输入缓冲区"><a href="#4-cin清空输入缓冲区" class="headerlink" title="4. cin清空输入缓冲区"></a>4. cin清空输入缓冲区</h1><p>从上文中可以看出，上一次的输入操作很有可能是输入缓冲区中残留数据，影响下一次的输入。那么如何解决这个问题呢？自然而然，我们想到了在进行输入时，对输入缓冲区进行清空和状态条件的复位。条件状态的复位使用clear()，清空输入缓冲区应该使用：<br>函数原型：<code>istream &amp;ignore( streamsize num=1, int delim=EOF );</code><br>函数作用：跳过输入流中n个字符，或在遇到指定的终止字符时提前结束（此时跳过包括终止字符在内的若干字符）。<br>使用示例如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">char</span> str1[<span class="number">20</span>]=&#123;<span class="literal">NULL</span>&#125;,str2[<span class="number">20</span>]=&#123;<span class="literal">NULL</span>&#125;;</span><br><span class="line">    cin.<span class="built_in">getline</span>(str1,<span class="number">5</span>);</span><br><span class="line">    cin.<span class="built_in">clear</span>();  <span class="comment">// 清除错误标志   </span></span><br><span class="line">    cin.<span class="built_in">ignore</span>(numeric_limits&lt;std::streamsize&gt;::<span class="built_in">max</span>(),<span class="string">&#x27;\n&#x27;</span>); <span class="comment">//清除缓冲区的当前行</span></span><br><span class="line">    cin.<span class="built_in">getline</span>(str2,<span class="number">20</span>);</span><br><span class="line">    cout&lt;&lt;<span class="string">&quot;str1:&quot;</span>&lt;&lt;str1&lt;&lt;endl;</span><br><span class="line">    cout&lt;&lt;<span class="string">&quot;str2:&quot;</span>&lt;&lt;str2&lt;&lt;endl;</span><br><span class="line">    <span class="built_in">system</span>(<span class="string">&quot;pause&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>程序输入：12345[回车]success[回车]，程序输出：<br><img src="https://img-blog.csdn.net/20150904214119892"></p>
+<p><strong>注意：</strong><br>（1）程序中使用cin.ignore清空了输入缓冲区的当前行，使上次的输入残留下的数据没有影响到下一次的输入，这就是ignore()函数的主要作用。其中，numeric_limits::max()不过是头文件定义的流使用的最大值，你也可以用一个足够大的整数代替它。<br>如果想清空输入缓冲区，去掉换行符，使用：<br>cin.ignore(numeric_limits&lt; std::streamsize&gt;::max()); 清除cin里所有内容。</p>
+<p>（2）cin.ignore()；当输入缓冲区没有数据时，也会阻塞等待数据的到来。</p>
+<p>（3）有个疑问，网上很多资料说调用cin.sync()即可清空输入缓冲区，本人<a target="_blank" rel="noopener" href="http://lib.csdn.net/base/softwaretest">测试</a>了一下，VC++可以，但是在<a target="_blank" rel="noopener" href="http://lib.csdn.net/base/linux">linux</a>下使用GNU C++却不行，无奈之下，linux下就选择了cin.ignore()。</p>
+<hr>
+<h1 id="5-其它从标准输入读取一行字符串的方法"><a href="#5-其它从标准输入读取一行字符串的方法" class="headerlink" title="5.其它从标准输入读取一行字符串的方法"></a>5.其它从标准输入读取一行字符串的方法</h1><h2 id="5-1-getline读取一行"><a href="#5-1-getline读取一行" class="headerlink" title="5.1 getline读取一行"></a>5.1 getline读取一行</h2><p>C++中定义了一个在std名字空间的全局函数getline，因为这个getline函数的参数使用了string字符串，所以声明在了&lt; string&gt;头文件中了。</p>
+<p>getline利用cin可以从标准输入设备键盘读取一行，当遇到如下三种情况会结束读操作：1）到文件结束，2）遇到函数的定界符，3）输入达到最大限度。</p>
+<p>函数原型有两个重载形式：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">istream&amp; <span class="title">getline</span> <span class="params">( istream&amp; is, string&amp; str)</span></span>;<span class="comment">//默认以换行符结束</span></span><br><span class="line"><span class="function">istream&amp; <span class="title">getline</span> <span class="params">( istream&amp; is, string&amp; str, <span class="type">char</span> delim)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>使用示例：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string&gt;</span> </span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    string str;</span><br><span class="line">    <span class="built_in">getline</span>(cin,str);</span><br><span class="line">    cout&lt;&lt;str&lt;&lt;endl;</span><br><span class="line">    <span class="built_in">system</span>(<span class="string">&quot;pause&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>输入：hello world[回车]，输出：<br><img src="https://img-blog.csdn.net/20150904214254021"></p>
+<p>注意，getline遇到结束符时，会将结束符一并读入指定的string中，再将结束符替换为空字符。因此，进行从键盘读取一行字符时，建议使用getline，较为安全。但是，最好还是要进行标准输入的安全检查，提高程序容错能力。</p>
+<p>cin.getline()类似，但是cin.getline()属于istream流，而getline()属于string流，是不一样的两个函数。</p>
+<h2 id="5-2-gets读取一行"><a href="#5-2-gets读取一行" class="headerlink" title="5.2 gets读取一行"></a>5.2 gets读取一行</h2><p>gets是C中的库函数，在&lt; stdio.h&gt;申明，从标准输入设备读字符串，可以无限读取，不会判断上限，以回车结束或者EOF时停止读取，所以程序员应该确保buffer的空间足够大，以便在执行读操作时不发生溢出。<br>函数原型：<code>char *gets( char *buffer );</code><br>使用示例：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">char</span> array[<span class="number">20</span>]=&#123;<span class="literal">NULL</span>&#125;;</span><br><span class="line">    <span class="built_in">gets</span>(array);</span><br><span class="line">    cout&lt;&lt;array&lt;&lt;endl;</span><br><span class="line">    <span class="built_in">system</span>(<span class="string">&quot;pause&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>输入：I am lvlv[回车]，输出：<br><img src="https://img-blog.csdn.net/20150904214323777"></p>
+<p>由于该函数是C的库函数，所以不建议使用，既然是C++程序，就尽量使用C++的库函数吧。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-20230802-VisualStudio2022构建调试Cpp项目"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/08/02/20230802-VisualStudio2022%E6%9E%84%E5%BB%BA%E8%B0%83%E8%AF%95Cpp%E9%A1%B9%E7%9B%AE/"
+    >20230802-VisualStudio2022构建调试C++项目</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/08/02/20230802-VisualStudio2022%E6%9E%84%E5%BB%BA%E8%B0%83%E8%AF%95Cpp%E9%A1%B9%E7%9B%AE/" class="article-date">
+  <time datetime="2023-08-02T03:28:54.000Z" itemprop="datePublished">2023-08-02</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>入门篇</p>
+<p>开发-编写和编辑代码</p>
+<p>项目和解决方案</p>
+<p>项目和解决方案基本设置</p>
+<p>visual studio 2022 调试快速入门</p>
+<p>批量编辑修改代码，查看类试图，查看定义代码和引用情况</p>
+<p>查找和替换，<br>插入代码片段</p>
+<p>波浪线错误自动修正</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-20230720-METAFONT教程"
   class="article article-type-post"
   itemscope
@@ -935,257 +1107,6 @@
 <p>选中程序，右击选择结束进程。</p>
 <p><img src="https://pic3.zhimg.com/80/v2-12b5e03f4cbb730780a985e76a1b2b0a_1440w.webp" alt="img"></p>
 <p>现在就可以删除文件了。结束系统进程前最好查一下，看看能不能结束，免得出现问题，那就得不偿失了。</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20230703-缝纫线迹科普"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/07/03/20230703-%E7%BC%9D%E7%BA%AB%E7%BA%BF%E8%BF%B9%E7%A7%91%E6%99%AE/"
-    >20230703-缝纫线迹科普</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/07/03/20230703-%E7%BC%9D%E7%BA%AB%E7%BA%BF%E8%BF%B9%E7%A7%91%E6%99%AE/" class="article-date">
-  <time datetime="2023-07-03T03:12:24.000Z" itemprop="datePublished">2023-07-03</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV16e4y177tE">https://www.bilibili.com/video/BV16e4y177tE</a></p>
-<p>ISO 4915 </p>
-<p>GB 24118-2009 4915,1991</p>
-<p>纺织品  线迹型式 分类和术语</p>
-<p>100种缝纫线迹</p>
-<p>8种链式线迹</p>
-<p>20种手工线迹</p>
-<p>30种锁式线迹</p>
-<p>17种多线链式线迹</p>
-<p>16 种包缝链式线迹</p>
-<p>300 系列最常见的就是301 线迹</p>
-<p>它由两根线组成</p>
-<p>两根线互相交错</p>
-<p>在我们的面料正反面，呈现虚线的样式</p>
-<p>这其实是最常见的 301 锁式线迹，没有之一，在行业内，一般称呼它为平缝线迹</p>
-<p>也叫平车线迹</p>
-<p>平车 这个词翻译过来就是可以缝纫出301 线迹的缝纫机</p>
-<p>老式缝纫机就是一种平车</p>
-<p>当然还有符合这个时代的家用平缝机</p>
-<p>以及工业平缝机</p>
-<p>301 线迹通常会用到机织面料上</p>
-<p>例如基础款的衬衫，使用平缝机完全可以完成整件衬衫的制作</p>
-<p>不过前提是会手工缝纽扣和扣眼</p>
-<p>当然在工业上会使用专业机器</p>
-<p>钉扣缝纫机和扣眼缝纫机</p>
-<p>有些衬衫制作也会使用到套结缝纫机</p>
-<p>401 线迹的面线呈现虚线样式</p>
-<p>双线链式线迹</p>
-<p>三条线 一个结  三条线 一个结 重复的样式</p>
-<p>在服装领域</p>
-<p>这种线迹通常在家用绷缝机以及工业双重环缝缝纫机上可以缝制出来</p>
-<p>因此这样的线迹也被称为双重环缝</p>
-<p>也有不少地方直接称呼为链缝</p>
-<p>然而我们在成衣上比较容易看到的是两条 401 线迹</p>
-<p>举个例子，在做功还算考究的T恤领域里</p>
-<p>通常会缝制捆条防止T恤领口变形</p>
-<p>而固定捆条就需要使用到两条401 线迹</p>
-<p>很多人会认为这两条线迹是平车车缝的</p>
-<p>平车车缝出来的是锁式线迹</p>
-<p>拉伸性能比较差</p>
-<p>使用平车车缝弹性针织面料的时候</p>
-<p>极容易开线</p>
-<p>因此缝制两条401 线迹也是需要专业的缝纫机</p>
-<p>也就是双针双重环缝缝纫机</p>
-<p>406 是双针网底线迹</p>
-<p>正面呈现两条虚线</p>
-<p>反面呈现网状</p>
-<p>该线迹非常有弹性</p>
-<p>通常出现在T恤的下摆 袖口</p>
-<p>锁边 翻折后 再缝制406 线迹</p>
-<p>当然如果你想看清除</p>
-<p>也可以在 裤袢 上找一下</p>
-<p>通常家用绷缝机以及工业绷缝机可以缝制406 线迹</p>
-<p>406 线迹也被常称呼为三线绷缝线迹</p>
-<p>三线单面绷缝</p>
-<p>407 是406 线迹的升级版</p>
-<p>三针网底线迹</p>
-<p>性能较406 是一致的</p>
-<p>407 线迹也叫四线绷缝 通常在男士内裤上使用</p>
-<p>500 系列是包缝链式线迹</p>
-<p>502 线迹 </p>
-<p>主要作用就是把面料的边缘包住防止散开</p>
-<p>512 线迹</p>
-<p>522 线迹</p>
-<p>或者是几层面料包在一起固定</p>
-<p>504 是更常见的三线包缝</p>
-<p>缝制这种三线锁边线迹可以使用家用包缝机和工业单针包缝机</p>
-<p>锁边机</p>
-<p>四线  五线 锁边机</p>
-<p>五线锁边实际上就是三线包缝504 线迹加上链缝401 线迹</p>
-<p>于是另外给这个线迹取名为516 五线包缝线迹</p>
-<p>516 线迹通常会用在裤子的侧缝</p>
-<p>这种线迹只需要车缝一遍</p>
-<p>就可以完成锁边和固定布片</p>
-<p>效率高且牢固</p>
-<p>四线锁边指的就是514 线迹</p>
-<p>与三线包缝直观区别就是中间多了一条线迹</p>
-<p>当然 缝制514 线迹使用的缝纫机和三线包缝是一样的</p>
-<p>只需要增加一根线而已</p>
-<p>605 是三针五线 绷缝线迹</p>
-<p>605 三针五线绷缝线和407三针网底线迹的区别</p>
-<p>就在面料正面多了一条缠绕的覆盖线</p>
-<p>600 系列的覆盖线迹通常用于拼接布料或者单纯装饰</p>
-<p>607 线迹<br>四针六线绷缝线迹  此线迹常用在泳裤上</p>
-<hr>
-<p>服装材料科普</p>
-<p>陶纺轮</p>
-<p>纺轮 中间有一个孔</p>
-<p>可以插一根杆</p>
-<p>纤维是什么</p>
-<p>纺纱和服装材料有什么关系</p>
-<p>织布必先纺纱</p>
-<p>斜纹布</p>
-<p>汗布</p>
-<p>针织面料</p>
-<p>罗纹布</p>
-<p>把纤维或者纱线经过化学  机械或热的处理</p>
-<p>加工成布的样子，这就是非织造布了</p>
-<p>热熔粘和衬</p>
-<p>羊皮</p>
-<p>皮革的意思绝对不是真皮与合成革</p>
-<p>木棉 攀枝花</p>
-<p>木棉纤维与棉纤维  的化学成分比较</p>
-<p>韧皮纤维</p>
-<p>脱胶</p>
-<p>去除果胶  半纤维素和木质素等非纤维素物质</p>
-<p>苎麻</p>
-<p>动物纤维大多是蛋白质纤维</p>
-<p>山羊绒</p>
-<p>人造纤维 合成纤维</p>
-<p>棉浆粕</p>
-<p>铜氨纤维</p>
-<p>醋酯纤维</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20230703-基尔霍夫定律"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/07/03/20230703-%E5%9F%BA%E5%B0%94%E9%9C%8D%E5%A4%AB%E5%AE%9A%E5%BE%8B/"
-    >20230703-基尔霍夫定律</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/07/03/20230703-%E5%9F%BA%E5%B0%94%E9%9C%8D%E5%A4%AB%E5%AE%9A%E5%BE%8B/" class="article-date">
-  <time datetime="2023-07-03T02:25:05.000Z" itemprop="datePublished">2023-07-03</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>基尔霍夫定律指的是两条定律，第一条是电流定律，第二条是电压定律，下面，我们分别讲</p>
-<p>基尔霍夫电流定律</p>
-<p>简写为KCL</p>
-<p>基尔霍夫电流定律指出，流入电路中某节点的电流之和等于流出电流之和</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">\sum I_&#123;流入&#125; = \sum I_&#123;流出&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="基尔霍夫电流定律"><a href="#基尔霍夫电流定律" class="headerlink" title="基尔霍夫电流定律"></a>基尔霍夫电流定律</h2><p>其中 sum 符号是求和符号，表示对一系列的数求和，就是把它们一个一个加起来</p>
-<p>举个例子，对于下面这个节点，有两个流入电流，三个流出电流</p>
-<p>对于上面节点，流入电流之和等于流出电流之和</p>
-<p>为了方便记忆，我们将KCL 总结为</p>
-<p>流入电流&#x3D;流出电流</p>
-<p>基尔霍夫电流定律也被称为基尔霍夫第一定律，节点法则，点法则，因为它是研究电路中某个节点的电流的</p>
-<p>我们可以用张艺谋的电影 一个都不能少 来助记这条定律的</p>
-<h2 id="基尔霍夫电压定律"><a href="#基尔霍夫电压定律" class="headerlink" title="基尔霍夫电压定律"></a>基尔霍夫电压定律</h2><p>简称为KVL</p>
-<p>基尔霍夫电压定律指出，闭合回路轴电压升之和等于电压降之和</p>
-<p>如果我们规定电压升为正，电压降为负，基尔霍夫电压定律也可以表达为 闭合电路中电压的代数和为零</p>
-<p>用数学符号表达就是</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">\sum V =0</span><br></pre></td></tr></table></figure>
-
-<p>为了方便记忆，我们可以降kvl 总结为</p>
-<p>升压&#x3D; 降压</p>
-<p>基尔霍夫电压定律也被称为基尔霍夫第二定律<br>回路法则  网格法则</p>
-<h2 id="升压还是降压"><a href="#升压还是降压" class="headerlink" title="升压还是降压"></a>升压还是降压</h2><p>在用基尔霍夫电压定律分析电路问题时，确定器件是升压还是降压是至关重要的</p>
-<p>升压还是降压由两个方向决定，一个是电流的方向，一个是绕行方向，电流防线就是传统电流的方向  和电子的流动方向，绕行方向就是分析电路时沿着的反向，我面下面用一个简单的电路来说明</p>
-<p>下图中电池电压为12V 电阻值为10Ω  求电路中的电流</p>
-<p>电阻升压</p>
-<p>电阻的压降是沿着电流的方向产生的，如果我们逆着电流的方向看，它就是升压的，</p>
-<p>对电阻来说，如果顺着电流方向，电阻是降压的，但是逆着电流反向看，它就是升压的，总结电阻升降压规律如下</p>
-<p>电流方向和绕行方向相同 降压</p>
-<p>电流方向和绕行方向相反 升压</p>
-<p>对电池或电源来说，如果我们规定其电动势的方向为电源内部负极指向正极的方向，那么</p>
-<p>电动势方向和绕行方向相同  升压</p>
-<p>电动势方向和绕行方向相反，降压</p>
-<p>我们用下图表示上述电池升降压规律</p>
-<hr>
-<p>我们总结一下解题步骤</p>
-<p>标定各回路中的电流方向</p>
-<p>选择绕行方向</p>
-<p>选择节点，应用KCL 写出节点方程</p>
-<p>选择回路，应用KVL 写出回路方程</p>
-<p>解方程</p>
-<p>一开始标定的电流方向可能是错的，没关系，大胆选就行，最后的计算结果会纠正</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>KCL 是描述节点的，KVL 是描述回路的</p>
-<p>KCL 是说流过电路中任意节点的电流的代数和为零，或者说对任意节点流入电流之和等于流出电路之和</p>
-<p>KVL 是说对于任意闭合回路电压的代数和为零，或者说闭合回路中电压升之和等于电压降之和。</p>
-<p>在应用 KVL 进行分析时，器件是升压还是降压取决于你怎么看，对于电阻来说取决于两个方向：电流方向和绕行方向；对于电源来说，取决于：电动势方向和绕行方向。</p>
  
       <!-- reward -->
       
