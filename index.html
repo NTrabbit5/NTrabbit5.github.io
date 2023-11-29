@@ -126,6 +126,154 @@
     
     
     <article
+  id="post-20231129-Xshell工具的使用"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/11/29/20231129-Xshell%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BD%BF%E7%94%A8/"
+    >20231129-Xshell工具的使用</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/11/29/20231129-Xshell%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BD%BF%E7%94%A8/" class="article-date">
+  <time datetime="2023-11-29T06:25:00.000Z" itemprop="datePublished">2023-11-29</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>Xshell 是一个强大的安全终端模拟软件，它支持ssh1 ssh2 以及Microsoft windows 的telnet 协议</p>
+<p>xshell 通过互联网到远程主机的安全连接以及他创新性的设计和特色帮助用户在复杂的网络环境中享受他们的工作</p>
+<p>xshell 可以在windows 界面下用来访问远端不同系统下的服务器，从而比较好的达到远程控制终端的目的，除此之外，其还有丰富的外观配色方案以及样式选择</p>
+<p>xshell 是通过命令来操作服务器</p>
+<p>其实他的大家庭里还有  xftp securecrt securecrtFX putty 等</p>
+<p>让xshell开始工作</p>
+<p>安装好之后，我们开始第一次的正式使用，首先打开xshell 的工作界面</p>
+<p>点击文件 新建</p>
+<p>或者是点击这个新建按钮</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-20231129-SSH加密和安全笔记"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/11/29/20231129-SSH%E5%8A%A0%E5%AF%86%E5%92%8C%E5%AE%89%E5%85%A8%E7%AC%94%E8%AE%B0/"
+    >20231129-SSH加密和安全笔记</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/11/29/20231129-SSH%E5%8A%A0%E5%AF%86%E5%92%8C%E5%AE%89%E5%85%A8%E7%AC%94%E8%AE%B0/" class="article-date">
+  <time datetime="2023-11-29T05:48:25.000Z" itemprop="datePublished">2023-11-29</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>软件的实现</p>
+<p>openssh ssh 协议的开源实现，centos 默认安装</p>
+<p>dropbear 另一个开源项目的实现</p>
+<p>ssh 协议版本</p>
+<p>v1基于crc32做mac 不安全 man-in-middle</p>
+<p>v2 双方主机协议选择安全的mac 方式，基于DH 算法做密钥交换，基于RSA 或DSA 实现身份认证</p>
+<p>3.1.1 公钥交换原理</p>
+<p>客户端发起链接请求</p>
+<p>服务端返回自己的公钥，以及一个会话id </p>
+<p>客户端生成密钥对</p>
+<hr>
+<p>命令行工具</p>
+<p>base64</p>
+<p>md5sum</p>
+<p>cat</p>
+<p>当用户远程连接ssh 服务器时，会复制ssh 服务器 .pub 文件中的公钥到客户机的 know_hosts 中，下次连接时，会自动匹配相应私钥，不能匹配，将拒绝连接</p>
+<p>范例</p>
+<p>禁用自动连接的过程</p>
+<p>安全机制</p>
+<p>对称和非对称加密</p>
+<p>散列算法</p>
+<p>gpg</p>
+<p>PKI和CA</p>
+<p>openssl</p>
+<p>证书管理</p>
+<p>ssh 服务和dropbear</p>
+<p>轻量级自动化运维工具</p>
+<p>aide</p>
+<p>sudo<br>tcp wrappers</p>
+<p>pam 模块</p>
+<p>centos</p>
+<p>openssh 是ssh 协议的免费开源实现，一般在各种linux 版本中会默认安装，基于cs 结构</p>
+<p>rdm</p>
+<p>systemctl status sshd 查看服务器的状态</p>
+<p>ss -ntl</p>
+<p>scp</p>
+<p>sftp</p>
+<p>远程执行命令</p>
+<p>ssh 10.0.0.8 “sed -i.bak</p>
+<p>在远程主机运行本地shell脚本</p>
+<p>ssh 选项</p>
+<p>-p port 远程服务器监听的端口<br>-b 指定连接的源ip<br>-v 调试模式<br>-c 压缩方式<br>-x 支持x11转发</p>
+<p>lastb</p>
+<p>btmp</p>
+<p>wc -l</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">lastb -f btmp-34 | wc -l</span><br><span class="line"></span><br><span class="line">lastb -f btmp-34 | awk &#x27;&#123;print $3&#125;&#x27; | sort |uniq -c |sort -nr|head</span><br></pre></td></tr></table></figure>
+
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-20231127-如何使用电烙铁焊接"
   class="article article-type-post"
   itemscope
@@ -621,105 +769,6 @@
     <div class="article-entry" itemprop="articleBody">
        
   <p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Wu411o73s">https://www.bilibili.com/video/BV1Wu411o73s</a></p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20231013-使用Mac的100个小技巧"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/10/13/20231013-%E4%BD%BF%E7%94%A8Mac%E7%9A%84100%E4%B8%AA%E5%B0%8F%E6%8A%80%E5%B7%A7/"
-    >20231013-使用Mac的100个小技巧</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/10/13/20231013-%E4%BD%BF%E7%94%A8Mac%E7%9A%84100%E4%B8%AA%E5%B0%8F%E6%8A%80%E5%B7%A7/" class="article-date">
-  <time datetime="2023-10-13T03:49:45.000Z" itemprop="datePublished">2023-10-13</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Xc411h7ve">https://www.bilibili.com/video/BV1Xc411h7ve</a></p>
-<p>1 使用预览直接修改图片大小 00:02<br>2 找不到想要保存的文件的位置 ）00:19<br>3 不安装软件改图片格式 00:30<br>4 在程序坞保留&#x2F;移除软件图标 ) 00:47<br>5、把iPhone里的照片导出到硬盘 01:06<br>6、访达新建Tab窗口 01:26<br>7、keynote导出PPT 01:41<br>8、Mac桌面便笺 02:01<br>9、快速输入字符 02:16<br>10、更改文件的默认打开方式 02:34</p>
-<p>P2<br>11、用keynote抠图P2 00:02<br>12、提取软件图标 00:46<br>13、移动状态栏图标 01:11<br>14、「连接互通」相机  01:20<br>15、快速找到文件夹内的某个文件 01:37<br>16、安装&#x2F;卸载字体 01:52<br>17、活动监视器查看磁盘读写速度 02:23<br>18、窗口左右分屏 02:40<br>19、截屏时不现实浮动缩略图 03:07<br>20、访达小齿轮图标新建文件夹 03:23</p>
-<p>P3<br>21、触控栏截屏 00:02<br>22、显示访达状态栏 00:09<br>23、保存pages文稿里的图片 00:21<br>24、找回程序坞上的「下载」 00:36<br>25、快速显示&#x2F;隐藏Mac文件 00:56<br>26、把多张图片变成PDF 01:19<br>27、硬盘同时支持Mac和win 01:33<br>28、强制退出应用程序 01:55<br>29、怎么查Mac保修期 02:19<br>30、Mac屏幕共享 02:39</p>
-<p>P4<br>31、Mac加密文件 00:03<br>32、iPhone投屏到Mac 00:23<br>33、一键查单词翻译 00:36<br>34、访达搜索当前文件夹 00:53<br>35、输入拼音声调à 01:12<br>36、用预览转换HEIC图片 02:21<br>37、快速输入表情符号 01:36<br>38、移除windows系统 01:55<br>39、菜单栏显示蓝牙 02:11<br>40、拆字输入生僻字 02:22</p>
-<p>P5<br>41、右键App添加QQ邮箱账号 00:02<br>42、查找输入码 00:35<br>43、用Apple Watch解锁Mac 00:51<br>44、清除DNS缓存 01:05<br>45、查看电池循环次数 01:19<br>46、触控版手写输入 01:30<br>47、自定义触控栏 01:53<br>48、用option键快速输入特殊符号 02:07<br>49、格式化U盘&#x2F;硬盘 02:26<br>50、多桌面 02:43</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20231008-业余无线电通信"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/10/08/20231008-%E4%B8%9A%E4%BD%99%E6%97%A0%E7%BA%BF%E7%94%B5%E9%80%9A%E4%BF%A1/"
-    >20231008-业余无线电通信</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/10/08/20231008-%E4%B8%9A%E4%BD%99%E6%97%A0%E7%BA%BF%E7%94%B5%E9%80%9A%E4%BF%A1/" class="article-date">
-  <time datetime="2023-10-08T06:57:33.000Z" itemprop="datePublished">2023-10-08</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1HG4y1j79t">https://www.bilibili.com/video/BV1HG4y1j79t</a></p>
  
       <!-- reward -->
       

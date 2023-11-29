@@ -126,6 +126,151 @@
     
     
     <article
+  id="post-20230209-功能强大车载obd接口解析及使用体验"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/02/09/20230209-%E5%8A%9F%E8%83%BD%E5%BC%BA%E5%A4%A7%E8%BD%A6%E8%BD%BDobd%E6%8E%A5%E5%8F%A3%E8%A7%A3%E6%9E%90%E5%8F%8A%E4%BD%BF%E7%94%A8%E4%BD%93%E9%AA%8C/"
+    >20230209-功能强大车载obd接口解析及使用体验</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/02/09/20230209-%E5%8A%9F%E8%83%BD%E5%BC%BA%E5%A4%A7%E8%BD%A6%E8%BD%BDobd%E6%8E%A5%E5%8F%A3%E8%A7%A3%E6%9E%90%E5%8F%8A%E4%BD%BF%E7%94%A8%E4%BD%93%E9%AA%8C/" class="article-date">
+  <time datetime="2023-02-09T03:53:28.000Z" itemprop="datePublished">2023-02-09</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h2 id="OBD接口简介"><a href="#OBD接口简介" class="headerlink" title="OBD接口简介"></a>OBD接口简介</h2><p>去4S店保养的时候看到技工在进行检测时将一个专用的电脑检测仪，接入这个看不清位置的插口，然后车辆的故障码就被清除，清洗过后的节气门也不再报错了，其实这个接口并没有想象中那么神秘，而且对于车主来说，学会使用obd 接口能让你变成一个汽车高手</p>
+<h2 id="OBD是什么"><a href="#OBD是什么" class="headerlink" title="OBD是什么"></a>OBD是什么</h2><p>OBD 作为一个专有名词的缩写，其全称是 on board diagnostics 中文的意思是，车载自动诊断系统，这套系统能在汽车运行过程中实时监测发动机电控系统及车辆的其他功能模块的工作状况，如有发现工况异常，则根据特定的算法判断出具体的故障，并以诊断故障代码 DTC Diagnostic trouble codes 的形式存储在系统内的存储器上，系统自动诊断后得到的有用信息可以为车辆的维修和保养提供帮助，维修人员可以利用汽车原厂专用仪器读取故障代码，从而可以对故障进行快速定位，以便于对车辆的修理，减少人工诊断的时间</p>
+<p>由于初期不同厂商的obd 系统之间各行其是，互不兼容，所以为了统一标准，美国汽车工程师协会 1988 年指定了obd-ii 标准  obd-ii 实行标准的检测程序，并且具有严格的排放针对性，用于实时监测汽车尾气排放情况</p>
+<p>作为一个检测尾气排放的系统，obd 在后来的发展中开始逐渐扩大了自己的控制范围，随着车辆的各种传感器及电子化程度的提高，obd 将各项检测功能都纳入到了自己的管辖范围内，现在我们说到obd 一般都会用obd 接口这个词，因为我们车辆上只能看到这个系统的传输接口，但它背后其实是整个车辆控制系统的集合体</p>
+<p>早期的obd 接口使用基于iso 协议的k-line 通讯方式，通过计算机标准的串口通讯方式与外接设备相连接，由于其半双工的通信效率比较低，所以这种通讯方式基本被淘汰，近几年的技术进步使得新的总线系统也就 CAN-BUS 通讯方式称为了主流，can-bus 同样使用了基于iso 的协议，但它属于网络型分布，具有很强的可扩展性，国内市场也在2008年7月份开始强制规定所有市场上出售的车辆都必须配备这个协议，这个协议的普及让车辆检测工作得到了大大的简化，一台检测仪就可以对多个品牌的车辆进行检测</p>
+<h2 id="OBD-接口能实现的功能"><a href="#OBD-接口能实现的功能" class="headerlink" title="OBD 接口能实现的功能"></a>OBD 接口能实现的功能</h2><p>OBD 接口可以做什么</p>
+<ol>
+<li>行车电脑数据显示</li>
+</ol>
+<p>obd 接口作为车载监控系统的通讯接口，除了读取故障码以供修车外，首要的功能就是可以提供车辆的各种工况数据，除了车辆仪表显示的数据外，实际在行车电脑中所记录的数据要多得多，包括很多无行车电脑显示屏配置的车辆，其实各项油耗记录，电池电压，空燃比 节气门开度，爆震数量等数据在系统中都是有记录的，但厂家会因为价格配置等因素，在较低配置车型上去掉行车电脑显示这项配置，导致用户无法参考这些有用的数据，所以市场上出现了一些专门的行车电脑显示产品</p>
+<p>这类产品有两种形式，一种就是通过一条专用的数据线连接到车辆的obd 接口，将数据读取出来再显示到配套的显示屏上，基本等于自己加装了一个行车电脑显示屏，平时连接线可以一直插在obd 接口上不用摘下，而只需固定显示屏即可，车主可以自行选择需要显示的数据</p>
+<p>另一种产品形式就是无线obd 接口适配器+智能手机端软件，这种与手机端配合的obd 端口读取器类似于一个加入了无线通讯模块的单片机，通过蓝牙或wifi 将obd 接口读取的数据传输到智能手机端，再通过手机端的软件呈现给使用者</p>
+<ol start="2">
+<li>更改代码实现更多功能</li>
+</ol>
+<p>现代汽车的电控系统可以通过obd 接口接入车辆控制系统的canbus总线，对车辆的各个控制模块的功能进行调节，这里最出名的应用就是由ross tech 开发的数据线及VCDS系统诊断软件，许多大众系的车友都爱用这套设备调节大众车系的系统功能，由于大众车系的can-bus 功能强大，而通过obd 接口的数据线接入车辆的can 总线并调节各个模块的代码就可以实现许多不同的隐藏功能，这样免费的 增配 对许多大众车主来说都非常具有吸引力</p>
+<ol start="3">
+<li>读取刷写 ECU TCU 程序</li>
+</ol>
+<p>随着车载电脑系统的硬件升级，现代车辆的ecu （electronic control unit）发动机电子控制单元内的程序存储器都由之前的只读式变为了可刷写式，厂家这样设置是为了随时能对ecu 的控制程序进行更新，就像手机的固件升级一样，针对不同的行驶地区或工况通过对ecu 系统程序的升级使得发动机能适应各种不同工作环境</p>
+<p>针对制动变速箱有些厂家还加入了可刷写式的TCU（Transmission Control Unit） 传动系统控制单元，大众的7速DSG 变速箱在出问题的初期就曾经试图通过在4S店用电脑刷写TCU的方式来改变DSG 变速箱的一些相应参数，来避免出现问题</p>
+<p>改装厂商跟敏捷的发现了可刷写程序的ECU 和TCU 的便利性，所以现代汽车改装多了ECU 程序刷写这样的改装项目，原厂的ECU 程序由于稳定性和经济性的考虑，一般在动力输出上都有所保留，而改装厂商通过改写原车ECU 数据即可实现对动力的提升，而TCU  的程序改写可以让变速箱反应更灵敏或者让换挡时机变得更激进来提升车辆的性能，这一切在有了obd 接口之后变得轻而易举，只需电脑和数据线连接到obd 接口就可以完成刷写的工作</p>
+<p>小结：obd 接口出现之初只是为了监控汽车的尾气排放而设置，但近些年的发展已经跨越了好几代，功能和作用都得到了极大的提升，而作为最终用户的我们，obd 接口对我们用车都能起到哪些具体的作用，而我们又该如何操作呢，</p>
+<h2 id="OBD接口作用和针脚定义图解"><a href="#OBD接口作用和针脚定义图解" class="headerlink" title="OBD接口作用和针脚定义图解"></a>OBD接口作用和针脚定义图解</h2><p>OBD 接口作用和针脚定义图解</p>
+<p>车辆obd 接口，连接车辆ecu 行车电脑的接口，检修车辆时把设备解码仪器插在此接口，进行扫描车辆是否有故障及故障代码，以后的车联网都是基于此口加以研发的</p>
+<p>OBDII 的作用</p>
+<p>obdII 程序使得汽车故障诊断简单而统一，维修人员不需专门学习每一个厂家的新系统</p>
+<ol>
+<li><p>随时检测零部件和系统的故障，保证汽车在使用寿命中的排放不超过 obd 法规的要求</p>
+</li>
+<li><p>检测到相关排放故障时，obd 系统可以用仪表板上的mil 灯进行报警</p>
+</li>
+</ol>
+<p>故障车辆能够得到及时修理，减少车辆排放</p>
+<p>obd 系统有助于 技师迅速诊断，对症修理，降低维修成本</p>
+<p>汽车obdii 接口定义</p>
+<p>除却各种电源和地线之外，关键的有can 线，iso 0141-2 K线 J1850 总线，接口也有很多，下面我们来看看obdii 接口引脚定义</p>
+<p>1 3 8 11 12 13 厂家自定义</p>
+<p>2 SAE J1850 总线+ 10 SAE J1850 总线-</p>
+<p>4 车身线  5 信号线</p>
+<p>6 CAN-H 14 CAN-L</p>
+<p>7 K-Line 15 L-Line</p>
+<p>16 常电源</p>
+<p>故障码标准</p>
+<p>SAE J2010 规定了一个5位标准故障代码，第一位是字母，后面4位是数字</p>
+<p>1 首位字母表示设置故障码的系统，当前分配的字母有四个，P 代表动力系统，B代表车身，C 代表底盘，u 代表未定义的系统</p>
+<p>2 第2位字符是0123 意义如下<br>  0 SAE 美国汽车工程师协会定义的通用故障码<br>  1 汽车厂家定义的扩展故障码<br>  2 3 随系统字符 PBCU 的不同而不同，动力系统故障码 P 的2 或3 由SAE 留作将来使用，车身或底盘故障码的2位厂家保留，车身或底盘故障码的3由SAE 保留</p>
+<p>3 第3位字符表示出故障的系统<br>  1 燃油或空气计量故障<br>  2 燃油或空气计量故障<br>  3 点火故障或发动机缺火<br>  4 辅助排放控制系统故障<br>  5 汽车或怠速控制系统故障<br>  6 电脑或输出电路故障<br>  7 变速器控制系统<br>  8 变速器控制系统</p>
+<p>4 最后两位字符表示触发故障码的条件，不同的传感器，执行器和电路分配了不同区段的数字，区段中较小的数字表示通用故障，即通过故障码，较大的数字表示扩展码，提供了更具体的信息，如电压低或高，响应慢，或信号超出范围</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-20230208-svncleanup失败的方法"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/02/08/20230208-svncleanup%E5%A4%B1%E8%B4%A5%E7%9A%84%E6%96%B9%E6%B3%95/"
+    >20230208-svncleanup失败的方法</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/02/08/20230208-svncleanup%E5%A4%B1%E8%B4%A5%E7%9A%84%E6%96%B9%E6%B3%95/" class="article-date">
+  <time datetime="2023-02-08T02:46:54.000Z" itemprop="datePublished">2023-02-08</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>1、先下载sqlite3.exe<br>链接：<a target="_blank" rel="noopener" href="https://pan.baidu.com/s/19NoROpm9_1CuGwOG6j5x3Q">https://pan.baidu.com/s/19NoROpm9_1CuGwOG6j5x3Q</a></p>
+<p>提取码：tc8b</p>
+<p>2、找到你项目的.svn文件，查看是否存在wc.db（如果看不到.svn，说明你电脑设置了不显示隐藏文件，改成显示隐藏文件就可以了）<br>3、将sqlite3.exe放到.svn的文件夹目录下<br>4、启动cmd执行sqlite3 wc.db “select * from work_queue”<br>5、启动cmd执行sqlite3 wc.db “delete from work_queue”</p>
+<p>现在在到项目里面，执行cleanup，应该成功了，如果还不成功提示fail to process file的情况，提示xxx file has been locked，需要执行一个清除数据库中的wc_lock的表的操作。<br>6、启动cmd执行sqlite3 .svn&#x2F;wc.db “select * from wc_lock”<br>7、启动cmd执行sqlite3 .svn&#x2F;wc.db “delete from wc_lock”<br>现在在到项目里面，执行cleanup，应该成功了，如果还不成功，那就行勾选上下面的Break write locks，然后在执行Cleanup，这样应该成功了吧！</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-20230207-侃哥侃英语"
   class="article article-type-post"
   itemscope
@@ -735,239 +880,6 @@
     <div class="article-entry" itemprop="articleBody">
        
   <p>七律二首·送瘟神<br>朝代：现代<br>作者：毛泽东<br>其一<br>绿水青山枉自多，华佗无奈小虫何！<br>千村薜荔人遗矢，万户萧疏鬼唱歌。<br>坐地日行八万里，巡天遥看一千河。<br>牛郎欲问瘟神事，一样悲欢逐逝波。<br>其二<br>春风杨柳万千条，六亿神州尽舜尧。<br>红雨随心翻作浪，青山着意化为桥。<br>天连五岭银锄落，地动三河铁臂摇。<br><strong>借问瘟君欲何往，纸船明烛照天烧</strong>。</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20221225-docx格式文档详解：xml解析并用html还原"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/12/25/20221225-docx%E6%A0%BC%E5%BC%8F%E6%96%87%E6%A1%A3%E8%AF%A6%E8%A7%A3%EF%BC%9Axml%E8%A7%A3%E6%9E%90%E5%B9%B6%E7%94%A8html%E8%BF%98%E5%8E%9F/"
-    >20221225-docx格式文档详解：xml解析并用html还原</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/12/25/20221225-docx%E6%A0%BC%E5%BC%8F%E6%96%87%E6%A1%A3%E8%AF%A6%E8%A7%A3%EF%BC%9Axml%E8%A7%A3%E6%9E%90%E5%B9%B6%E7%94%A8html%E8%BF%98%E5%8E%9F/" class="article-date">
-  <time datetime="2022-12-25T11:54:30.000Z" itemprop="datePublished">2022-12-25</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p><a target="_blank" rel="noopener" href="https://juejin.cn/post/7166821284087595038">https://juejin.cn/post/7166821284087595038</a></p>
-<h2 id="一、应用场景，有什么好处"><a href="#一、应用场景，有什么好处" class="headerlink" title="一、应用场景，有什么好处"></a>一、应用场景，有什么好处</h2><p>解析就是解剖并分析，解析word ，就是提取word 里面的结构和内容</p>
-<p>一套试卷有几十道题，一道题又有十来个属性<br>可以通过技术手段，自己去读出word 的内容</p>
-<p>理论上，word 里展示的所有内容，程序员都能拿到，拿到数据之后，家境差点的公司，通过代码逻辑去找试卷名、选项这类属性，家境好点的企业，通过人工智能的NLP 文本分类，可以更好地实现智能分类</p>
-<p>而此时，录入员只负责编辑word 就可以了，这个过程就叫做 word 导入</p>
-<p>能导入的前提，是可以解析出来word 的内容，能解析word 的前提，就是docx 格式</p>
-<h2 id="docx-格式：为什么出现"><a href="#docx-格式：为什么出现" class="headerlink" title="docx 格式：为什么出现"></a>docx 格式：为什么出现</h2><p>原来的doc 格式是加密的，只有微软自己家的软件才能打开</p>
-<p>后来微软觉得，这样并没有让自己很神圣，反而限制了自己的发展</p>
-<h2 id="文件结构：怎么来解析"><a href="#文件结构：怎么来解析" class="headerlink" title="文件结构：怎么来解析"></a>文件结构：怎么来解析</h2><p>分析发现，在docx 中同一张图复制多次，media 里面只保留一张原图，这说明，它是个勤俭节约的好孩子，承载同样多的内容，docx 格式比doc 的体积要小</p>
-<p>比较关键的几点</p>
-<h3 id="3-1-主文件document-xml"><a href="#3-1-主文件document-xml" class="headerlink" title="3.1 主文件document.xml"></a>3.1 主文件document.xml</h3><p>位于word 下的document.xml 文件，是docx 的主战场，可以说，文档中你能看到的所有内容，在这里都有直接或间接的记录</p>
-<p>document.xml 是一个xml 格式的文档</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">w:document</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">w:body</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">w:p</span>&gt;</span>...<span class="tag">&lt;/<span class="name">w:p</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">w:p</span>&gt;</span>...<span class="tag">&lt;/<span class="name">w:p</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">w:tbl</span>&gt;</span>...<span class="tag">&lt;/<span class="name">w:tbl</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">w:p</span>&gt;</span>...<span class="tag">&lt;/<span class="name">w:p</span>&gt;</span></span><br><span class="line">        ...</span><br><span class="line">        <span class="tag">&lt;<span class="name">w:sectPr</span>&gt;</span>...<span class="tag">&lt;/<span class="name">w:sectPr</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">w:body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">w:document</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>我们看到，body 体力，只有3种标签，分别是&lt;w:p&gt; &lt;w:tbl&gt; 和 &lt;w:sectPr&gt;</p>
-<p>一个docx 文档，基本由这三种成分组成，w 指的是word p 指的是paragraph段落，tbl 表示table 表格，sectPr 全称是section primp，这个容易扰乱思路</p>
-<h3 id="3-2-段落标签w-p"><a href="#3-2-段落标签w-p" class="headerlink" title="3.2 段落标签w:p"></a>3.2 段落标签w:p</h3><p>在docx 中，段落是最常见的，是文档中最主要的组成单元</p>
-<p>和你理解的段落一样，不换行就属于一个段落，即便是 咔咔咔 敲上6个回车，虽然没有内容，那它也属于6个段落，在xml 中是6个 &lt;w:p&gt;</w:p>。</p>
-<p>另外，包含图片，流程图，公式等元素的内容，也是包含在段落中的，换句话说，它们都是小弟</p>
-<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 导入解析xml的库</span></span><br><span class="line"><span class="keyword">import</span> xml.dom.minidom <span class="keyword">as</span> xdom</span><br><span class="line"><span class="comment"># 加载文档</span></span><br><span class="line">xp = xdom.parse(<span class="string">&#x27;word/document.xml&#x27;</span>)</span><br><span class="line"><span class="comment"># 获取文档根节点</span></span><br><span class="line">root=xp.documentElement</span><br><span class="line"><span class="comment"># 获取body节点们</span></span><br><span class="line">bodys = root.getElementsByTagName(<span class="string">&quot;w:body&quot;</span>) </span><br><span class="line"><span class="comment"># 因为getElements返回多个对象，我们只有一个</span></span><br><span class="line">body = bodys[<span class="number">0</span>]</span><br><span class="line"><span class="comment"># 循环遍历body下的节点</span></span><br><span class="line"><span class="keyword">for</span> i,ele <span class="keyword">in</span> <span class="built_in">enumerate</span>(body.childNodes):</span><br><span class="line">    e_name = ele.nodeName</span><br><span class="line">    <span class="comment"># 打印&#123;序号&#125; -&gt; &#123;节点名称&#125; is &#123;对象&#125;</span></span><br><span class="line">    <span class="built_in">print</span>(i,<span class="string">&quot;-&gt;&quot;</span>,e_name,<span class="string">&quot;is&quot;</span>,ele)</span><br></pre></td></tr></table></figure>
-
-<p>下面该详细说一下w:p 的小弟们了</p>
-<h3 id="3-3-文本标签-w-t"><a href="#3-3-文本标签-w-t" class="headerlink" title="3.3 文本标签 w:t"></a>3.3 文本标签 w:t</h3><p>在纷杂的xml 文件中，可以扒拉出来一个叫 w:t 标签</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">w:p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">w:r</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">w:t</span>&gt;</span>word的doc格式原来是不开源的，后来改成了docx格式后，是开源的。<span class="tag">&lt;/<span class="name">w:t</span>&gt;</span></span><br><span class="line">        ……</span><br><span class="line">    <span class="tag">&lt;/<span class="name">w:r</span>&gt;</span></span><br><span class="line">    ……</span><br><span class="line"><span class="tag">&lt;/<span class="name">w:p</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>这里面存储的内容，就是word 里面的文字，t 就是text 的简称</p>
-<p>你在docx 里面看到的每一个字，基本上都是被 w:t w:r 所包裹的</p>
-<p>也就是说，如果我们拿出所有w:t 标签内的文本，我们就做到了纯文本docx 解析 </p>
-<p>代码，其实很简单，就是在w:p 元素中，扫描 w:t 的标签并取出其内容</p>
-<p>上面我们已经拿到了body 标签，所以从那里继续</p>
-<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 循环body下的大单元 w:p段落，w:tbl表格</span></span><br><span class="line"><span class="keyword">for</span> i,ele <span class="keyword">in</span> <span class="built_in">enumerate</span>(body.childNodes):</span><br><span class="line">    <span class="comment"># 找到包含w:t的标签,可能是多个</span></span><br><span class="line">    wts = ele.getElementsByTagName(<span class="string">&quot;w:t&quot;</span>) </span><br><span class="line">    ele_text = <span class="string">&quot;&quot;</span> <span class="comment"># 记录大单元内所有文本</span></span><br><span class="line">    <span class="keyword">for</span> wt <span class="keyword">in</span> wts: <span class="comment"># 循环</span></span><br><span class="line">        ele_text = ele_text + wt.text</span><br><span class="line">    <span class="built_in">print</span>(ele_text) <span class="comment"># 打印输出</span></span><br></pre></td></tr></table></figure>
-
-<p>提取一个docx的文本，就是那么简单，你现在可以写一个程序，可以做到把docx 转为txt</p>
-<p>但是，有一点我要告诉你，运行代码里的wt.text 可能会报错，为了便于你理解，我特意写了伪代码，实际上，要从 w:t 中取出文本内容，可以像下面这样</p>
-<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re <span class="comment"># 导入正则库</span></span><br><span class="line"><span class="comment"># 构建一个正则，去除&lt;&gt;标签</span></span><br><span class="line">pattern_del_tag = re.<span class="built_in">compile</span>(<span class="string">r&#x27;&lt;[^&gt;]+&gt;&#x27;</span>,re.S)</span><br><span class="line"><span class="comment"># 把&lt;w:t&gt;元素转为xml格式&lt;w:t&gt;xxx&lt;/w:t&gt;，然后去标签</span></span><br><span class="line">t_text =  pattern_del_tag.sub(<span class="string">&#x27;&#x27;</span>, wt.toxml())</span><br></pre></td></tr></table></figure>
-
-<p>我认为这么讲，你反而能理解，因为，不用在理解什么叫 w:t 的时候，还要分散注意力到正则表达式</p>
-<h3 id="3-4-连续块w-r"><a href="#3-4-连续块w-r" class="headerlink" title="3.4 连续块w:r"></a>3.4 连续块w:r</h3><p>上面我们讲了如何去解析文字，但是，那太简单了</p>
-<p>文字是有样式的</p>
-<p>都在同一段 w:p 内的文字，它们的样式，可能不一样</p>
-<p>比如前两个字是红色，那么这两个字样式一样，但是，后两个字是绿色，和前面又不一样</p>
-<p>为了解决这个问题，docx 把具有相同样式的文字，用w:r 标签包裹</p>
-<p>r 代表run ，关于这个run 的解释，很多国内文档都直接翻译为运行</p>
-<p>其实，run 在英文中有很多解释，我觉得在这里更适合它的释义应该是 一段 一系列 连续上演 因此，我个人给这个标签起名叫 连续块，表示在这个标签之内的文本，是一个系列的，他们的特点是连续不间断的</p>
-<p>代码依然是处理xml 文件的那一套，不是找标签就是拿属性</p>
-<p>还有其他的样式标签，你可以自己研究，我这里先抛砖引玉，举两个例子</p>
-<p>比如上面例子中的字体颜色，一般在w:rPr 标签内，w 依然表示word r 表示run Pr 表示 Primp 是修饰，装饰的意思，w:rPr 这个标签的释义就是 连续块的样式说明，类似的还有w:pPr 表示对段落paragraph 的样式说明，w:tcPr 表示对表格单元格 table cell 的样式说明</p>
-<p>我们来看以下，连续块修饰 w:rPr 是如何定义的</p>
-<p>比如对于粗体、斜体的说明</p>
-<p>用代码进行判断，主要是tag 的读取，能找到tag，就说明有此种样式的标记</p>
-<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">w_i = w_rPr.getElementsByTagName(<span class="string">&quot;w:i&quot;</span>)</span><br><span class="line"><span class="keyword">if</span> w_i:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;是斜体&quot;</span>)</span><br><span class="line">w_b = w_rPr.getElementsByTagName(<span class="string">&quot;w:b&quot;</span>)</span><br><span class="line"><span class="keyword">if</span> w_i:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;是粗体&quot;</span>)</span><br></pre></td></tr></table></figure>
-
-<p>再比如对于各种线条的说明</p>
-<p>上面的例子，如果用代码进行判断的话，除了对tag 存在的判断，还需要获取属性值 w:val 表示用了哪一类具体的样式</p>
-<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">w_u = w_rPr.getElementsByTagName(<span class="string">&quot;w:u&quot;</span>)</span><br><span class="line"><span class="keyword">if</span> w_u:</span><br><span class="line">    <span class="comment"># 获取属性值用 getAttribute</span></span><br><span class="line">    line_value = w_u[<span class="number">0</span>].getAttribute(<span class="string">&quot;w:val&quot;</span>)</span><br><span class="line">    <span class="keyword">if</span> line_value == <span class="string">&quot;single&quot;</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;是下划线&quot;</span>)</span><br><span class="line">    <span class="keyword">if</span> line_value == <span class="string">&quot;double&quot;</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;是双划线&quot;</span>)</span><br><span class="line">    <span class="keyword">if</span> line_value == <span class="string">&quot;wave&quot;</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;是波浪形线&quot;</span>)</span><br><span class="line">    <span class="keyword">if</span> line_value == <span class="string">&quot;dotted&quot;</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;是虚线&quot;</span>)</span><br></pre></td></tr></table></figure>
-
-<p>我可以很负责地说，只要是文档中呈现的信息，在xml 文件中都可以找到对应的标注</p>
-<p>我们可以看到，包括 字号，字体，字色，标线都可以复原</p>
-<h3 id="3-5-图像标签w-drawing"><a href="#3-5-图像标签w-drawing" class="headerlink" title="3.5 图像标签w:drawing"></a>3.5 图像标签w:drawing</h3><p>docx 中的图片是如何从xml 中提取出来的呢</p>
-<p>你在连续块 w:r 中会发现，有一个w:drawing 标签，这里面主要存放的，就是图画相关的信息</p>
-<p>图片仅仅是 w:drawing 中的一个小分类，除了图片，还有图表、形状、流程图等</p>
-<p>今天咱们说个最简单的，那就是如何提取图片</p>
-<p>图片的标签是pic:pic ，他在xml 中如下定义</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">w:drawing</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">pic:pic</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">pic:blipFill</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">a:blip</span> <span class="attr">r:embed</span>=<span class="string">&quot;rId9&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">pic:blipFill</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">pic:pic</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">w:drawing</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>其中图片就藏在<code>&lt;a:blip r:embed=&quot;rId9&quot;/&gt;</code>中，里面的rId9 就是捕获图片的线索</p>
-<p>那个media 文件夹，里面有好多图片</p>
-<p>是有图片，但这也不是rId9</p>
-<p>有个文件专门做关联这件事情，他就是解压缩之后的<code>word/_rels/document.xml.rels</code>文件。</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;UTF-8&quot;</span> standalone=<span class="string">&quot;true&quot;</span>?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">Relationships</span>&gt;</span></span><br><span class="line">    ……</span><br><span class="line">    <span class="tag">&lt;<span class="name">Relationship</span> <span class="attr">Target</span>=<span class="string">&quot;media/image1.png&quot;</span> <span class="attr">Id</span>=<span class="string">&quot;rId9&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">Relationship</span> <span class="attr">Target</span>=<span class="string">&quot;media/image3.png&quot;</span> <span class="attr">Id</span>=<span class="string">&quot;rId11&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">Relationship</span> <span class="attr">Target</span>=<span class="string">&quot;media/image2.GIF&quot;</span> <span class="attr">Id</span>=<span class="string">&quot;rId10&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">Relationships</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>这里有档案，记录了哪个id 指向哪个文件，于是，我们解析这个文件，就可以拿到对应关系</p>
-<p>然后，遇到pic 和id 等于rId9 的，就把media&#x2F;image1.png 这个图片文件展示出来</p>
-<p>这，就实现了图片的解析</p>
-<h3 id="3-6-表格标签w-tbl"><a href="#3-6-表格标签w-tbl" class="headerlink" title="3.6 表格标签w:tbl"></a>3.6 表格标签w:tbl</h3><p>表格标签w:tbl 的地位很重，它和段落标签 w:p 平级</p>
-<p>分析整个文档的顶层组成元素，我们不难发现，除了 w:tbl 就是 w:p </p>
-<p>一开始，我不理解，为什么图表、流程图那么复杂的元素，却不配得到表格那么高的地位</p>
-<p>单纯表格的结构，其实不复杂，但是，表格里的每一个单元格，却可以容纳另一个word 文档，表格里面，图片，图表、文本样式，甚至表格里再来一个表格，什么都可以添加，它甚至是包含了w:p 大佬，w:tbl 和w:p 并列，它反而是委屈的</p>
-<p>我们来看一下表格w:tbl 的基本结构</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">w:tbl</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">w:tblGrid</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">w:gridCol</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">w:gridCol</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">w:tblGrid</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">w:tr</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">w:tc</span>&gt;</span><span class="tag">&lt;<span class="name">w:p</span>&gt;</span>...<span class="tag">&lt;/<span class="name">w:p</span>&gt;</span><span class="tag">&lt;/<span class="name">w:tc</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">w:tc</span>&gt;</span>...<span class="tag">&lt;/<span class="name">w:tc</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">w:tr</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">w:tr</span>&gt;</span></span><br><span class="line">    ...</span><br><span class="line">    <span class="tag">&lt;/<span class="name">w:tr</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">w:tbl</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>节点元素中，主要有两部分内容，一个 w:tblGrid 介绍表格列的个数，另一个是w:tr 包含表格行的信息，tr 是table row 的缩写</p>
-<p>其中，w:tr 里面有 w:tc，这里面是格子的内容，我们发现其内容，居然是一个它的兄弟节点 w:p </p>
-<p>tc 是table cell 的缩写，表示单元格的意思<br>从结构上看，我们会感觉 table cell 更适合语境</p>
-<p>先说基本表格的解析，如下图所示</p>
-<p>解析的代码参考如下</p>
-<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">w_table = body.childNodes[<span class="number">0</span>] <span class="comment"># 拿到表格节点</span></span><br><span class="line"><span class="comment"># 获取所有的行</span></span><br><span class="line">w_trs = w_table.getElementsByTagName(<span class="string">&quot;w:tr&quot;</span>)</span><br><span class="line">rows_text = [] <span class="comment"># 存放行的文本</span></span><br><span class="line"><span class="keyword">for</span> r_index, tr <span class="keyword">in</span> <span class="built_in">enumerate</span>(w_trs):</span><br><span class="line">    <span class="comment"># 获取所有的单元格</span></span><br><span class="line">    cells = tr.getElementsByTagName(<span class="string">&quot;w:tc&quot;</span>)</span><br><span class="line">    cells_text = [] <span class="comment"># 存放单元格的文本</span></span><br><span class="line">    <span class="keyword">for</span> c_index, cell <span class="keyword">in</span> <span class="built_in">enumerate</span>(cells):</span><br><span class="line">        <span class="comment"># 获取所有的文本</span></span><br><span class="line">        wts = cell.getElementsByTagName(<span class="string">&quot;w:t&quot;</span>) </span><br><span class="line">        <span class="keyword">for</span> wt <span class="keyword">in</span> wts: <span class="comment"># 把文本拼接</span></span><br><span class="line">            cells_text.append(wt.text)</span><br><span class="line">    rows_text.append(cells_text)</span><br><span class="line"><span class="built_in">print</span>(rows_text) <span class="comment"># 打印结果，二维数组[[r1c1,r1c2],[r2c1,r2c2]]</span></span><br></pre></td></tr></table></figure>
-
-<p>运行一下代码，结果如下</p>
-<p>这里面我又挖坑了，除了前面讲 w:t 时的 wt.text 陷阱之外，w:tc 的内容应该是去解析 完整的w:p 结构，而这里我只取了w:t 文本，这样最简单，因为，我们是要理解表格的结构，因此，其他的可以假装看不见</p>
-<p>但是，也由此可见，做好表格解析的前提，是做好段落解析，因为表格单元格里是段落</p>
-<p>我相信，有了表格的解析结果 二维数组，你很容易就可以把它还原成表格页面用于展示，只需要循环就好，第一层循环，第二层循环</p>
-<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">rows_text = [[<span class="string">&#x27;名称&#x27;</span>, <span class="string">&#x27;后缀名&#x27;</span>], [<span class="string">&#x27;Word&#x27;</span>, <span class="string">&#x27;docx&#x27;</span>]]</span><br><span class="line">table_html = [<span class="string">&quot;&lt;table&gt;&quot;</span>] </span><br><span class="line"><span class="keyword">for</span> row <span class="keyword">in</span> rows_text:</span><br><span class="line">    table_html.append(<span class="string">&quot;&lt;tr&gt;&quot;</span>)</span><br><span class="line">    <span class="keyword">for</span> cell <span class="keyword">in</span> row:</span><br><span class="line">        table_html.append(<span class="string">&quot;&lt;td&gt;&quot;</span>+cell+<span class="string">&quot;&lt;/td&gt;&quot;</span>)</span><br><span class="line">    table_html.append(<span class="string">&quot;&lt;/tr&gt;&quot;</span>)</span><br><span class="line">table_html.append(<span class="string">&quot;&lt;/table&gt;&quot;</span>)</span><br><span class="line">table_html = <span class="string">&quot;&quot;</span>.join(table_html)</span><br><span class="line"><span class="built_in">print</span>(table_html)</span><br><span class="line"><span class="comment"># &lt;table&gt;</span></span><br><span class="line"><span class="comment"># &lt;tr&gt;&lt;td&gt;名称&lt;/td&gt;&lt;td&gt;后缀名&lt;/td&gt;&lt;/tr&gt;</span></span><br><span class="line"><span class="comment"># &lt;tr&gt;&lt;td&gt;Word&lt;/td&gt;&lt;td&gt;docx&lt;/td&gt;&lt;/tr&gt;</span></span><br><span class="line"><span class="comment"># &lt;/table&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>据我所知，世界上的表格除了上面那种简单的，还有一些稍微复杂的，那就是带有合并单元格的表格</p>
-<p>比如下面这种</p>
-<p>这类表格的解析稍微复杂一些，它们属于复杂里面最简单的</p>
-<p>我们来看看他们的xml 数据是如何定义的</p>
-<p>首先来看带有跨行的表格的例子</p>
-<p>对于跨行的情况，我们发现表格的xml 数据，该有的行和列，数量都没有变，只是在要合并的单元格上标记了一个w:vMerge 标签 </p>
-<p>这个标签表示有跨行的单元格，v 表示vertical ，是竖直方向的意思，vMerge 表示竖直合并，这个标签里面还有属性值 w:val 当值为restart 时表示此单元格开始出现合并，continue 表示此单元格没有结束，继续保持，直到遇到非continue 情况</p>
-<p>再来看看跨列的情况</p>
-<p>跨列因为发生在行内，是行内矛盾，不影响其他行，所以，我们看到只有在第一行的第一格中，采用 w:gridSpan 标签，说明本行有跨列的单元格，val 值是2，表示跨2 个单位</p>
-<p>为什么我前面说，tc 是table cell 的缩写，我的依据就在这里，其实这个表格的结构是2行2列，如果c 指的是column 的话，它应该有2个 w:tc 后一个复用前一个，但是，我们看上图里的结构，它只有一个w:tc ，那我们称呼它叫单元格更贴切，因为它只有一个框，你可以反驳我，</p>
-<p>带有合并单元格的页面还原，逻辑稍微复杂，但是底层还是和普通表格一样，通过循环行和列，你只需要遇到合并的时候，搞一个colspan&#x3D;2 或者 rowspan &#x3D;3 就行</p>
-<p>搞合并单元格时，花费了2天时间才完成，</p>
-<p>对于复杂表格，最终的数据结构用一维数组更恰当。这个结构可以像这样<br><code>[&#123;&quot;x_start&quot;:0, &quot;x_end&quot;:1, &quot;y_start&quot;:0, &quot;y_end&quot;:0, &quot;content&quot;:&quot;不要问我&quot;&#125;]</code></p>
-<hr>
-<h5 id="前端实现docx-pdf-格式文件在线预览"><a href="#前端实现docx-pdf-格式文件在线预览" class="headerlink" title="前端实现docx pdf 格式文件在线预览"></a>前端实现docx pdf 格式文件在线预览</h5><p>在业务中，如果遇到文档管理类的功能，会出现需要在线预览的业务需求，<br>本文主要是通过第三方库来实现文档预览功能，并将其封装成preview 组件</p>
-<p>docx 的实现需要使用 docx-preview 插件</p>
-<p>PDF 的预览需要使用PDFJS 这个插件，通过将文件流解析写到canvas 上实现预览效果</p>
-<p>此处pdf的渲染数据this.fileData必须是一个ArrayBuffer格式的数据，如果请求的的数据是Blob格式必须要先使用Blob.arrayBuffer()转换</p>
-<p>PDF 的放大和缩小</p>
-<p>PDF 文件渲染后如果不能调整大小会因为源文件的大小和文件内容，出现模糊的问题，所以进行缩放渲染是有必要的</p>
-<p>多格式的文件渲染函数映射</p>
-<p>因为将多种文件渲染放在一个文件中，所以处理函数需要做映射处理，执行对应格式的文件渲染</p>
-<p>不支持的文件提示处理</p>
-<p>在这个文件中，目前只支持docx 和pdf 的预览，如果出现了不支持的文件，需要增加一个提示处理，告知用户，例如如下的文件提示</p>
-<div class="container" v-show="extend == 'other'">
-  <a-alert
-    :message="`不支持.${this.extendName}格式的在线预览，请下载后预览或转换为支持的格式`"
-    description="支持docx, pdf格式的在线预览"
-    type="info"
-    show-icon
-  />
-</div>
-
-
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20221225-什么是差分信号"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/12/25/20221225-%E4%BB%80%E4%B9%88%E6%98%AF%E5%B7%AE%E5%88%86%E4%BF%A1%E5%8F%B7/"
-    >20221225-什么是差分信号</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/12/25/20221225-%E4%BB%80%E4%B9%88%E6%98%AF%E5%B7%AE%E5%88%86%E4%BF%A1%E5%8F%B7/" class="article-date">
-  <time datetime="2022-12-25T10:51:33.000Z" itemprop="datePublished">2022-12-25</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <!-- 脉冲信号-422差分信号、PNP信号和NPN信号 -->
-
-<p>差分传输是一种信号传输的技术，区别于传统的一根信号线一根地线的做法，差分传输在这两根线上都传输信号，这两个信号的振幅相等，相位相差180度，极性相反，在这两根线上传输的信号就是差分信号</p>
-<p>差分信号与单端信号的区别</p>
-<p>单端信号指的是用一个线传输的信号，一根线没参考点怎么会有信号呢？参考点就是地线，也就是说，单端信号是在一根导线上传输的与地之间的电平差，那么当你把信号从A 点传递到B 点的时候，有一个前提就是A 点和B 点的地电势应该差不多是一样的，差分信号指的是用两根信号线传输的信号，传输的是两根信号之间的电平差，当你把信号从A 点传递到B点的时候，A 点和B 点的地电势可以一样也可以不一样，但是A 点和B 点的地电势差有一个范围，超过这个范围就会出问题了，一个差分信号是用一个数值来表示两个物理量之间的差异，从严格意义上来讲，所有电压信号都是差分的，因为一个电压只能是相对于另一个电压而言的，在某些系统里，系统地被用作电压基准点，当地当作电压测量基准时，这种信号规划被称之为单端的，我们使用该术语是因为信号是用单个导体上的电压来表示的</p>
-<p>另一方面，一个差分信号作用在两个导体上，信号值是两个导体间的电压差，尽管不是非常必要，这两个电压的平均值还是会经常保持一致，我们用一个方法对差分信号做一下比喻，差分信号就好比是跷跷板上的两个人，当一个人被跷上去的时候，另一个人被跷下来了 - 但是他们的平均位置是不变的。继续跷跷板的类推，正值可以表示左边的人比右边的人高，而负值表示右边的人比左边的人高。0 表示两个人都是同一水平。这两个跷跷板用一对标识为V+和V-的导线来表示。当V+&gt;V-时，信号定义成正极信号，当V+&lt;V-时，信号定义成负极信号。</p>
-<p>差分信号的优点</p>
-<p>优点一，相对于单端信号，差分信号减小了潜在的电磁干扰 EMI ，使用差分方式传输，信号的电压峰峰值会被放大了一倍，但是单根线上的电流却保持不变，如果采用传统的单线传输方式，在驱动相同的信号时，更容易造成EMI 问题</p>
-<p>优点二、差分信号的值很大程度上与地的精确值无关，能很好的抵抗电源的干扰，在一个地做基准，单端信号方案的系统里，测量信号的精确值依赖系统内地的一致性，信号源和信号接收器距离越远，他们局部地电压值之间有差异的可能性就越大，从差分信号恢复的信号值在很大程度上与地的精确值无关，而在某一范围内，假如两条信号都收到同样的 （同向、等幅度） 的干扰信号，由于接收端是对接收的两条线信号进行减法处理，因此干扰信号会被基本抵消，也就是说，一个差分放大器的输入有效信号幅度只需要几毫伏，但是它却能够对一个高达几伏特的共模信号无动于衷</p>
-<p>差分信号在做pcb 设计时的处理方法</p>
-<p>一般我们在做pcb 设计时，习惯的硬件命名上，会在差分信号的信号名尾部加 + 和 - 或者 P 和N 作为标识，大家可以通过命名来识别差分信号，常规的差分信号处理方法是</p>
-<p>差分信号走线要耦合处理，就是2根信号线在PCB 设计时是紧挨着的，不允许分开走线</p>
-<p>一对差分信号的2根信号线之间需要做等长处理，等长范围为5mil 等长不需要做到更小，有仿真验证，等长范围做到5mil 以下并不能对信号质量有很大提升，等长处理的位置选择在产生长度误差的地方，等长需要做小波浪处理 </p>
  
       <!-- reward -->
       

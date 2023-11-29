@@ -126,6 +126,120 @@
     
     
     <article
+  id="post-20220713-电子书管理工作流"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/07/13/20220713-%E7%94%B5%E5%AD%90%E4%B9%A6%E7%AE%A1%E7%90%86%E5%B7%A5%E4%BD%9C%E6%B5%81/"
+    >20220713-电子书管理工作流</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/07/13/20220713-%E7%94%B5%E5%AD%90%E4%B9%A6%E7%AE%A1%E7%90%86%E5%B7%A5%E4%BD%9C%E6%B5%81/" class="article-date">
+  <time datetime="2022-07-12T23:58:42.000Z" itemprop="datePublished">2022-07-13</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>基于zotero+zotfile+syncthing+ReadEra，实现电脑+手机两端同步的电子书管理流程</p>
+<p>视频大纲：<a target="_blank" rel="noopener" href="https://logseq.fishyer.com/#/page/%E7%94%B5%E5%AD%90%E4%B9%A6%E7%AE%A1%E7%90%86%E5%B7%A5%E4%BD%9C%E6%B5%81">https://logseq.fishyer.com/#/page/%E7%94%B5%E5%AD%90%E4%B9%A6%E7%AE%A1%E7%90%86%E5%B7%A5%E4%BD%9C%E6%B5%81</a></p>
+<p>更多工具推荐，欢迎查看 <a target="_blank" rel="noopener" href="https://logseq.fishyer.com/">https://logseq.fishyer.com</a></p>
+<p>public:true<br>1-用Zlibrary下载书，或者是其他网络渠道，比如百度网盘、阿里网盘、淘宝<br>2-导入到Zotero里面<br>安装Zotfile插件，配置附件路径为Dropbox网盘下的路径<br>3-配置Syncthing，同步书籍文件夹到Android手机上<br>电脑-Windows<br>C:\Users\Administrator\Dropbox\MyObsidian\MyAttachment\MyZotoreFile<br>手机-Android<br>&#x2F;storage&#x2F;emulated&#x2F;0&#x2F;MyObsidian<br>主要就是同步MyObsidian文件夹，下面的子文件夹自然就同步了<br>其实Mac电脑也支持，不过ios手机的话就稍稍麻烦一点<br>4-阅读方式<br>PDF就在电脑上用Zotero本身看<br>很方便截图标注<br>epub等其他格式，就直接在Android手机上ReadEra看<br>其实也可以用Calibre将其他类型转换为PDF，但是我现在的主力阅读器是手机，所以就不转PDF了<br>作用<br>Zotero-书架，添加标签和添加分类等<br>ReadEra-阅读器，方便随时随地看书</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-20220713-计算机定时启动程序"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/07/13/20220713-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%AE%9A%E6%97%B6%E5%90%AF%E5%8A%A8%E7%A8%8B%E5%BA%8F/"
+    >20220713-计算机定时启动程序</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/07/13/20220713-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%AE%9A%E6%97%B6%E5%90%AF%E5%8A%A8%E7%A8%8B%E5%BA%8F/" class="article-date">
+  <time datetime="2022-07-12T23:56:32.000Z" itemprop="datePublished">2022-07-13</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>首先，shutdown.exe 的参数 -h 是睡眠。其次，在windows10的控制面板-管理工具-任务计划程序（当然，你从其他路径进去也一样）</p>
+<ol>
+<li><p>打开任务计划程序，在操作里选择创建基本任务。</p>
+</li>
+<li><p>第一步页面是让你写个你的任务名称，这个随意。</p>
+</li>
+<li><p>点下一步后会来到触发器页面，在这里你选每天。</p>
+</li>
+<li><p>继续下一步会来到每日页面，在这里设置一个开始的时间，然后间隔是一天。</p>
+</li>
+<li><p>再下一步会来到操作页面，选择启动程序。</p>
+</li>
+<li><p>再再下一步会来到完成页面，程序填shutdown.exe，然后添加参数（可选）里填 -h </p>
+</li>
+<li><p>完成。</p>
+</li>
+</ol>
+<p>到时间电脑就会睡眠了，然后再开机后你会发现电脑之前打开的页面都还原封不动在。你可以先测试下。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-20220609-python-yield-use"
   class="article article-type-post"
   itemscope
@@ -761,106 +875,6 @@
 <p><strong>文件头混淆</strong></p>
 <p>Rtf文档正常的文件头是**{rtf1**，但解析器只识别前四个字节{rt}，所以可以通过修改文件头达到样本混淆的效果。</p>
 <p>{rt</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20220426-秋瑾"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/04/26/20220426-%E7%A7%8B%E7%91%BE/"
-    >秋瑾</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/04/26/20220426-%E7%A7%8B%E7%91%BE/" class="article-date">
-  <time datetime="2022-04-26T10:38:53.000Z" itemprop="datePublished">2022-04-26</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>陶澹人</p>
-<p>出自清代的《秋暮遣怀》</p>
-<p>人生天地一叶萍，利名役役三秋草。<br>秋草能为春草新，苍颜难换朱颜好。<br>篱前黄菊未开花，寂寞清樽冷怀抱。<br><strong>秋风秋雨愁煞人，寒宵独坐心如捣</strong>。<br>出门拔剑壮槃游，霜华拂处尘氛少。<br>朝凌五岳暮三洲，人世风波岂能保。<br>不如归去卧糟丘，老死蓬蒿事幽讨。</p>
-<p>事已至此，余位卑言轻，愧无力成全，然汝死非我意，幸亮之也</p>
-<p>《勉女权歌》<br>【年代】清<br>【作者】秋瑾</p>
-<p>吾辈爱自由，勉励自由一杯酒。<br>男女平权天赋就，岂甘居牛后？<br>愿奋然自拔，一洗从前羞耻垢。<br>愿安作同俦，恢复江山劳素手。<br>旧习最堪羞，女子竟同牛马偶。<br>曙光新放文明侯，独去占头筹。<br>愿奴隶根除，智识学问历练就。<br>责任上肩头，国民女杰期无负。</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20220425-乐高"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/04/25/20220425-%E4%B9%90%E9%AB%98/"
-    >乐高</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/04/25/20220425-%E4%B9%90%E9%AB%98/" class="article-date">
-  <time datetime="2022-04-25T09:41:11.000Z" itemprop="datePublished">2022-04-25</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>乐高LDD 软件</p>
-<p>Lego Digital Designer</p>
  
       <!-- reward -->
       

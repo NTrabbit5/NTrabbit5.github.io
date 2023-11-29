@@ -126,6 +126,304 @@
     
     
     <article
+  id="post-20221215-使用wttr-in在你的终端中显示天气预报"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/12/15/20221215-%E4%BD%BF%E7%94%A8wttr-in%E5%9C%A8%E4%BD%A0%E7%9A%84%E7%BB%88%E7%AB%AF%E4%B8%AD%E6%98%BE%E7%A4%BA%E5%A4%A9%E6%B0%94%E9%A2%84%E6%8A%A5/"
+    >20221215-使用wttr.in在你的终端中显示天气预报</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/12/15/20221215-%E4%BD%BF%E7%94%A8wttr-in%E5%9C%A8%E4%BD%A0%E7%9A%84%E7%BB%88%E7%AB%AF%E4%B8%AD%E6%98%BE%E7%A4%BA%E5%A4%A9%E6%B0%94%E9%A2%84%E6%8A%A5/" class="article-date">
+  <time datetime="2022-12-15T02:04:16.000Z" itemprop="datePublished">2022-12-15</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>wttr.in 是一个功能丰富的天气预报服务，它支持在命令行显示天气，它可以 根据你的ip 地址<br>自动检测你的位置，也支持指定位置或搜索地理位置，如城市，山区等，另外，你不需要安装它，你只需要使用curl 或wget </p>
+<p>wttr.in 功能包括</p>
+<p>显示当前天气以及3天内的天气预报，分为早晨，中午、傍晚和夜晚 包括温度范围、风速和风向 可见度，降水量 和概率</p>
+<p>可以显示月相</p>
+<p>基于你的ip地址自动检测位置</p>
+<p>允许指定城市名称，3字母的机场代码，区域代码，GPS坐标，IP 地址或域名，你还可以指定地理位置，如湖泊 山脉，地标等</p>
+<p>支持多语言位置名称  查询字符串必须以unicode 指定</p>
+<p>支持指定天气预报显示的语言  它支持超过50种语言</p>
+<p>来自美国的查询使用uscs 单位用于，世界其他地方使用公制系统，但你可以通过附加?u 使用uscs 附加?m 使用公制系统</p>
+<p>3种输出格式，终端的ansi 浏览器的html 和png </p>
+<p>或者你可以安装wego 这是一个使用wtter.in 的终端气候应用，虽然wego 要求注册一个api 密钥来安装</p>
+<p><a target="_blank" rel="noopener" href="http://wttr.in/">http://wttr.in</a> 命令行示例<br>获取你所在位置的天气（<a target="_blank" rel="noopener" href="http://wttr.in/">http://wttr.in</a> 会根据你的 IP 地址猜测你的位置）：</p>
+<p>curl wttr.in<br>通过在 curl 之后添加 -4，强制 cURL 将名称解析为 IPv4 地址（如果你用 IPv6 访问 wttr.in 有问题）：</p>
+<p>curl -4 wttr.in<br>如果你想检索天气预报保存为 png，还可以使用 Wget（而不是 cURL），或者你想这样使用它：</p>
+<p>wget -O- -q wttr.in<br>如果相对 cURL 你更喜欢 Wget ，可以在下面的所有命令中用 wget -O- -q 替换 curl。</p>
+<p>指定位置：</p>
+<p>curl wttr.in&#x2F;Dublin<br>显示地标的天气信息（本例中为艾菲尔铁塔）：</p>
+<p>curl wttr.in&#x2F;~Eiffel+Tower<br>获取 IP 地址位置的天气信息（以下 IP 属于 GitHub）：</p>
+<p>curl wttr.in&#x2F;@192.30.253.113<br>使用 USCS 单位检索天气：</p>
+<p>curl wttr.in&#x2F;Paris?u<br>如果你在美国，强制 <a target="_blank" rel="noopener" href="http://wttr.in/">http://wttr.in</a> 使用公制系统（SI）：</p>
+<p>curl wttr.in&#x2F;New+York?m<br>使用 Wget 将当前天气和 3 天预报下载为 PNG 图像：</p>
+<p>wget wttr.in&#x2F;Istanbul.png<br>你可以指定 PNG 的透明度，这在你要使用一个脚本自动添加天气信息到某些图片（比如墙纸）上有用。</p>
+<p>对于其他示例，请查看wttr.in 项目页面或在终端中输入 </p>
+<p>curl wttr.in&#x2F;:help</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-20221214-通过Content-Type和文件头判断文件类型"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/12/14/20221214-%E9%80%9A%E8%BF%87Content-Type%E5%92%8C%E6%96%87%E4%BB%B6%E5%A4%B4%E5%88%A4%E6%96%AD%E6%96%87%E4%BB%B6%E7%B1%BB%E5%9E%8B/"
+    >20221214-通过Content-Type和文件头判断文件类型</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/12/14/20221214-%E9%80%9A%E8%BF%87Content-Type%E5%92%8C%E6%96%87%E4%BB%B6%E5%A4%B4%E5%88%A4%E6%96%AD%E6%96%87%E4%BB%B6%E7%B1%BB%E5%9E%8B/" class="article-date">
+  <time datetime="2022-12-14T12:43:46.000Z" itemprop="datePublished">2022-12-14</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="通过Content-Type和文件头判断文件类型"><a href="#通过Content-Type和文件头判断文件类型" class="headerlink" title="通过Content-Type和文件头判断文件类型"></a>通过Content-Type和文件头判断文件类型</h1><h2 id="关于MIME"><a href="#关于MIME" class="headerlink" title="关于MIME"></a>关于MIME</h2><p><strong>MIME</strong>的全称是Multipurpose Internet Mail Extensions，即多用途互联网邮件扩展，尽管读起来有些拗口，但大多数人可能都知道，<br>这是HTTP协议中用来定义文档性质及格式的标准。<a target="_blank" rel="noopener" href="https://tools.ietf.org/html/rfc6838">IETF RFC 6838</a>，对HTTP传输内容类型进行了全面定义。<br>而<strong>IANA</strong>(互联网号码分配机构)是负责管理所有标准MIME类型的官方机构。可以<a target="_blank" rel="noopener" href="https://www.iana.org/assignments/media-types/media-types.xhtml">在这里</a>)找到所有的标准MIME</p>
+<p><strong>服务器通过MIME告知响应内容类型，而浏览器则通过MIME类型来确定如何处理文档；</strong><br><strong>因此为传输内容(文档、图片等)设置正确的MIME非常重要</strong>。</p>
+<p>通常Server会在HTTP响应中设置<strong>Content-Type</strong>，如下面的响应：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CodeHTTP/1.1 200 OKServer: Golfe2    Content-Length: 233Content-Type: application/htmlDate: Sun, 28 Dec 2018 02:55:19 GMT12345</span><br></pre></td></tr></table></figure>
+
+<p>这表示服务端将返回html格式的文档，而同样客户端也可以在HTTP请求中设置<strong>Content-Type</strong>以告知服务器当前所发送内容的格式。<br>如下面的请求体：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CodePOST / HTTP/1.1Host: localhost:8000User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:50.0) Gecko/20100101 Firefox/50.0Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8Connection: keep-aliveContent-Type: application/jsonContent-Length: 4651234567</span><br></pre></td></tr></table></figure>
+
+<p>这表示客户端会发送application&#x2F;json格式的数据到服务端，同时应该注意到<strong>Accept</strong>请求头，这个选项用于告知服务器应该返回什么样的数据格式(由客户端接收并完成解析)。</p>
+<p><strong>MIME的格式</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Codetype/subtype1</span><br></pre></td></tr></table></figure>
+
+<p>这是一个两级的分类，比较容易理解，第一级分类通常包含：</p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>text</td>
+<td>普通文本</td>
+</tr>
+<tr>
+<td>image</td>
+<td>某种图像</td>
+</tr>
+<tr>
+<td>audio</td>
+<td>某种音频文件</td>
+</tr>
+<tr>
+<td>video</td>
+<td>某种视频文件</td>
+</tr>
+<tr>
+<td>application</td>
+<td>应用数据</td>
+</tr>
+<tr>
+<td>multi-part</td>
+<td>复合内容</td>
+</tr>
+</tbody></table>
+<p>而二级类型则非常多，以下是一些常用的MIME：</p>
+<table>
+<thead>
+<tr>
+<th>MIME</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>audio&#x2F;wav</td>
+<td>wave音频流媒体文件</td>
+</tr>
+<tr>
+<td>audio&#x2F;webm</td>
+<td>webm 音频文件格式</td>
+</tr>
+<tr>
+<td>audio&#x2F;ogg</td>
+<td>ogg多媒体文件格式的音频文件</td>
+</tr>
+<tr>
+<td>audio&#x2F;mpeg</td>
+<td>mpeg多媒体文件格式的音频文件</td>
+</tr>
+<tr>
+<td>image&#x2F;gif</td>
+<td>gif图片</td>
+</tr>
+<tr>
+<td>image&#x2F;jpeg</td>
+<td>jpeg图片</td>
+</tr>
+<tr>
+<td>image&#x2F;png</td>
+<td>png图片</td>
+</tr>
+<tr>
+<td>image&#x2F;svg+xml</td>
+<td>svg矢量图片</td>
+</tr>
+<tr>
+<td>application&#x2F;json</td>
+<td>json格式</td>
+</tr>
+<tr>
+<td>application&#x2F;xml</td>
+<td>xml格式</td>
+</tr>
+<tr>
+<td>application&#x2F;xhtml+xml</td>
+<td>扩展html格式</td>
+</tr>
+<tr>
+<td>application&#x2F;x-www-form-urlencoded</td>
+<td>表单url内容编码</td>
+</tr>
+<tr>
+<td>application&#x2F;octet-stream</td>
+<td>二进制格式</td>
+</tr>
+<tr>
+<td>application&#x2F;pdf</td>
+<td>pdf文档</td>
+</tr>
+<tr>
+<td>application&#x2F;atom+xml</td>
+<td>atom订阅feed流</td>
+</tr>
+<tr>
+<td>multipart&#x2F;form-data</td>
+<td>多文档格式</td>
+</tr>
+<tr>
+<td>text&#x2F;plain</td>
+<td>普通文本</td>
+</tr>
+<tr>
+<td>text&#x2F;html</td>
+<td>html文档</td>
+</tr>
+<tr>
+<td>text&#x2F;css</td>
+<td>css文件</td>
+</tr>
+<tr>
+<td>text&#x2F;javascript</td>
+<td>javascript文件</td>
+</tr>
+<tr>
+<td>text&#x2F;markdown</td>
+<td>markdown文档</td>
+</tr>
+<tr>
+<td>video&#x2F;mpeg</td>
+<td>mpeg多媒体视频文件</td>
+</tr>
+<tr>
+<td>video&#x2F;quicktime</td>
+<td>mov多媒体视频文件</td>
+</tr>
+</tbody></table>
+<h4 id="MIME-Type-与-Content-Type-的关系"><a href="#MIME-Type-与-Content-Type-的关系" class="headerlink" title="MIME Type 与 Content-Type 的关系"></a>MIME Type 与 Content-Type 的关系</h4><p>首先看看tomcat服务器中默认的web.xml中的描述：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Code&lt;!-- ===================== Default MIME Type Mappings =================== --&gt;&lt;!-- When serving static resources, Tomcat will automatically generate    --&gt;&lt;!-- a &quot;Content-Type&quot; header based on the resource&#x27;s filename extension, --&gt;&lt;!-- based on these mappings. Additional mappings can be added here (to --&gt;&lt;!-- apply to all web applications), or in your own application&#x27;s web.xml --&gt;&lt;!-- deployment descriptor.   --&gt;123456</span><br></pre></td></tr></table></figure>
+
+<p>再看看apache服务器中mime.types的描述：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CodeThis file controls what Internet media types are sent to the client forgiven file extension(s). Sending the correct media type to the clientis important so they know how to handle the content of the file.Extra types can either be added here or by using an AddType directivein your config files. For more information about Internet media types,please read RFC 2045, 2046, 2047, 2048, and 2077. The Internet media type registry is at http://www.iana.org/assignments/media-types/.123456</span><br></pre></td></tr></table></figure>
+
+<p><strong>当web服务器收到静态的资源文件请求时，依据请求文件的后缀名在服务器的MIME配置文件中找到对应的MIME Type，再根据MIME Type设置HTTP Response的Content-Type，然后浏览器根据Content-Type的值处理文件。</strong></p>
+<p>也就是说, <strong>文件扩展名&#x3D;&gt;MIME Type&#x3D;&gt;Content-Type</strong></p>
+<h2 id="通过文件头识别文件"><a href="#通过文件头识别文件" class="headerlink" title="通过文件头识别文件"></a>通过文件头识别文件</h2><p>不同的文件类型有不同的文件头, 而文件头部的几个字节被称为Magic Number, 通常用十六进制表示, 可用来判断文件类型.</p>
+<p>比如png文件的文件头Magic Number是0x89504E开始的, java class文件Magic Number为Oxcafebabe</p>
+<p>我们可以通过判断文件的文件头信息来判断文件的类型, 而且<strong>即使改变文件扩展名文件头信息也是不改变的</strong>.</p>
+<p>通过java代码判断文件类型:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Javapublic class FileType &#123;    //默认判断文件头前三个字节内容    public static int CHECK_BYTES_NUMBER = 3;    public final static Map&lt;String, String&gt; FILE_TYPE_MAP = new HashMap&lt;String, String&gt;();    private FileType()&#123;&#125;    static&#123;        getAllFileType(); //初始化文件类型信息    &#125;    /**     * Discription:[getAllFileType,常见文件头信息]     */    private static void getAllFileType()    &#123;        FILE_TYPE_MAP.put(&quot;ffd8ffe000104a464946&quot;, &quot;jpg&quot;); //JPEG (jpg)        FILE_TYPE_MAP.put(&quot;89504e470d0a1a0a0000&quot;, &quot;png&quot;); //PNG (png)        FILE_TYPE_MAP.put(&quot;47494638396126026f01&quot;, &quot;gif&quot;); //GIF (gif)        FILE_TYPE_MAP.put(&quot;49492a00227105008037&quot;, &quot;tif&quot;); //TIFF (tif)        FILE_TYPE_MAP.put(&quot;424d228c010000000000&quot;, &quot;bmp&quot;); //16色位图(bmp)        FILE_TYPE_MAP.put(&quot;424d8240090000000000&quot;, &quot;bmp&quot;); //24位位图(bmp)        FILE_TYPE_MAP.put(&quot;424d8e1b030000000000&quot;, &quot;bmp&quot;); //256色位图(bmp)        FILE_TYPE_MAP.put(&quot;41433130313500000000&quot;, &quot;dwg&quot;); //CAD (dwg)        FILE_TYPE_MAP.put(&quot;3c21444f435459504520&quot;, &quot;html&quot;); //HTML (html)        FILE_TYPE_MAP.put(&quot;3c21646f637479706520&quot;, &quot;htm&quot;); //HTM (htm)        FILE_TYPE_MAP.put(&quot;48544d4c207b0d0a0942&quot;, &quot;css&quot;); //css        FILE_TYPE_MAP.put(&quot;696b2e71623d696b2e71&quot;, &quot;js&quot;); //js        FILE_TYPE_MAP.put(&quot;7b5c727466315c616e73&quot;, &quot;rtf&quot;); //Rich Text Format (rtf)        FILE_TYPE_MAP.put(&quot;38425053000100000000&quot;, &quot;psd&quot;); //Photoshop (psd)        FILE_TYPE_MAP.put(&quot;46726f6d3a203d3f6762&quot;, &quot;eml&quot;); //Email [Outlook Express 6] (eml)        FILE_TYPE_MAP.put(&quot;d0cf11e0a1b11ae10000&quot;, &quot;doc&quot;); //MS Excel 注意：word、msi 和 excel的文件头一样        FILE_TYPE_MAP.put(&quot;d0cf11e0a1b11ae10000&quot;, &quot;vsd&quot;); //Visio 绘图        FILE_TYPE_MAP.put(&quot;5374616E64617264204A&quot;, &quot;mdb&quot;); //MS Access (mdb)        FILE_TYPE_MAP.put(&quot;252150532D41646F6265&quot;, &quot;ps&quot;);        FILE_TYPE_MAP.put(&quot;255044462d312e350d0a&quot;, &quot;pdf&quot;); //Adobe Acrobat (pdf)        FILE_TYPE_MAP.put(&quot;2e524d46000000120001&quot;, &quot;rmvb&quot;); //rmvb/rm相同        FILE_TYPE_MAP.put(&quot;464c5601050000000900&quot;, &quot;flv&quot;); //flv与f4v相同        FILE_TYPE_MAP.put(&quot;00000020667479706d70&quot;, &quot;mp4&quot;);        FILE_TYPE_MAP.put(&quot;49443303000000002176&quot;, &quot;mp3&quot;);        FILE_TYPE_MAP.put(&quot;000001ba210001000180&quot;, &quot;mpg&quot;); //        FILE_TYPE_MAP.put(&quot;3026b2758e66cf11a6d9&quot;, &quot;wmv&quot;); //wmv与asf相同        FILE_TYPE_MAP.put(&quot;52494646e27807005741&quot;, &quot;wav&quot;); //Wave (wav)        FILE_TYPE_MAP.put(&quot;52494646d07d60074156&quot;, &quot;avi&quot;);        FILE_TYPE_MAP.put(&quot;4d546864000000060001&quot;, &quot;mid&quot;); //MIDI (mid)        FILE_TYPE_MAP.put(&quot;504b0304140000000800&quot;, &quot;zip&quot;);        FILE_TYPE_MAP.put(&quot;526172211a0700cf9073&quot;, &quot;rar&quot;);        FILE_TYPE_MAP.put(&quot;235468697320636f6e66&quot;, &quot;ini&quot;);        FILE_TYPE_MAP.put(&quot;504b03040a0000000000&quot;, &quot;jar&quot;);        FILE_TYPE_MAP.put(&quot;4d5a9000030000000400&quot;, &quot;exe&quot;);//可执行文件        FILE_TYPE_MAP.put(&quot;3c25402070616765206c&quot;, &quot;jsp&quot;);//jsp文件        FILE_TYPE_MAP.put(&quot;4d616e69666573742d56&quot;, &quot;mf&quot;);//MF文件        FILE_TYPE_MAP.put(&quot;3c3f786d6c2076657273&quot;, &quot;xml&quot;);//xml文件        FILE_TYPE_MAP.put(&quot;494e5345525420494e54&quot;, &quot;sql&quot;);//xml文件        FILE_TYPE_MAP.put(&quot;7061636b616765207765&quot;, &quot;java&quot;);//java文件        FILE_TYPE_MAP.put(&quot;406563686f206f66660d&quot;, &quot;bat&quot;);//bat文件        FILE_TYPE_MAP.put(&quot;1f8b0800000000000000&quot;, &quot;gz&quot;);//gz文件        FILE_TYPE_MAP.put(&quot;6c6f67346a2e726f6f74&quot;, &quot;properties&quot;);//bat文件        FILE_TYPE_MAP.put(&quot;cafebabe0000002e0041&quot;, &quot;class&quot;);//bat文件        FILE_TYPE_MAP.put(&quot;49545346030000006000&quot;, &quot;chm&quot;);//bat文件        FILE_TYPE_MAP.put(&quot;04000000010000001300&quot;, &quot;mxp&quot;);//bat文件        FILE_TYPE_MAP.put(&quot;504b0304140006000800&quot;, &quot;docx&quot;);//docx文件        FILE_TYPE_MAP.put(&quot;d0cf11e0a1b11ae10000&quot;, &quot;wps&quot;);//WPS文字wps、表格et、演示dps都是一样的        FILE_TYPE_MAP.put(&quot;6431303a637265617465&quot;, &quot;torrent&quot;);        FILE_TYPE_MAP.put(&quot;6D6F6F76&quot;, &quot;mov&quot;); //Quicktime (mov)        FILE_TYPE_MAP.put(&quot;FF575043&quot;, &quot;wpd&quot;); //WordPerfect (wpd)        FILE_TYPE_MAP.put(&quot;CFAD12FEC5FD746F&quot;, &quot;dbx&quot;); //Outlook Express (dbx)        FILE_TYPE_MAP.put(&quot;2142444E&quot;, &quot;pst&quot;); //Outlook (pst)        FILE_TYPE_MAP.put(&quot;AC9EBD8F&quot;, &quot;qdf&quot;); //Quicken (qdf)        FILE_TYPE_MAP.put(&quot;E3828596&quot;, &quot;pwl&quot;); //Windows Password (pwl)        FILE_TYPE_MAP.put(&quot;2E7261FD&quot;, &quot;ram&quot;); //Real Audio (ram)    &#125;    /**     * 根据制定文件的文件头判断其文件类型     * @param filePaht     * @return     */    public static String getFileType(String filePaht)&#123;        String res = null;        try &#123;            FileInputStream is = new FileInputStream(filePaht);            getFileType(is);        &#125; catch (FileNotFoundException e) &#123;            e.printStackTrace();        &#125;        return res;    &#125;    public static String getFileType(InputStream in)&#123;        String res = null;        try &#123;            byte[] b = new byte[CHECK_BYTES_NUMBER];            in.read(b, 0, b.length);            String fileCode = bytesToHexString(b);//            System.out.println(fileCode);            //这种方法在字典的头代码不够位数的时候可以用但是速度相对慢一点            Iterator&lt;String&gt; keyIter = FILE_TYPE_MAP.keySet().iterator();            while(keyIter.hasNext())&#123;                String key = keyIter.next();                if(key.toLowerCase().startsWith(fileCode.toLowerCase()) || fileCode.toLowerCase().startsWith(key.toLowerCase()))&#123;                    res = FILE_TYPE_MAP.get(key);                    break;                &#125;            &#125;        &#125; catch (FileNotFoundException e) &#123;            e.printStackTrace();        &#125; catch (IOException e) &#123;            e.printStackTrace();        &#125;        return res;    &#125;    /**     * 得到上传文件的文件头     * @param src     * @return     */    public static String bytesToHexString(byte[] src) &#123;        StringBuilder stringBuilder = new StringBuilder();        if (src == null || src.length &lt;= 0) &#123;            return null;        &#125;        for (int i = 0; i &lt; src.length; i++) &#123;            int v = src[i] &amp; 0xFF;            String hv = Integer.toHexString(v);            if (hv.length() &lt; 2) &#123;                stringBuilder.append(0);            &#125;            stringBuilder.append(hv);        &#125;        return stringBuilder.toString();    &#125;    public static int getCheckBytesNumber() &#123;        return CHECK_BYTES_NUMBER;    &#125;    public static void setCheckBytesNumber(int checkBytesNumber) &#123;        CHECK_BYTES_NUMBER = checkBytesNumber;    &#125;&#125;123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103104105106107108109110111112113114115116117118119120121122123124125126127128129130131132133134135136137138139140141142143144145146147148149150</span><br></pre></td></tr></table></figure>
+
+<p>常见文件头表示如下:</p>
+<p>255044PDF<br>526563 EML<br>D0CF11 PPT<br>4D5AEE COM<br>E93B03 COM<br>4D5A90 EXE<br>424D3E BMP<br>49492A TIF<br>384250 PSD<br>C5D0D3 EPS<br>0A0501 PCS<br>89504E PNG<br>060500 RAW<br>000002 TGA<br>60EA27 ARJ<br>526172 RAR<br>504B03 ZIP<br>495363 CAB<br>1F9D8C Z<br>524946 WAV<br>435753 SWF<br>3026B2 WMV<br>3026B2 WMA<br>2E524D RM<br>00000F MOV<br>000077 MOV<br>000001 MPA<br>FFFB50 MP3<br>234558 m3u<br>3C2144 HTM<br>FFFE3C XSL<br>3C3F78 XML<br>3C3F78 MSC<br>4C0000 LNK<br>495453 CHM<br>805343 scm<br>D0CF11 XLS<br>31BE00 WRI<br>00FFFF MDF<br>4D4544 MDS<br>5B436C CCD<br>00FFFF IMG<br>FFFFFF SUB<br>17A150 PCB<br>2A5052 ECO<br>526563 PPC<br>000100 DDB<br>42494C LDB<br>2A7665 SCH<br>2A2420 LIB<br>434841 FNT<br>7B5C72 RTF<br>7B5072 GTD<br>234445 PRG<br>000007 PJT<br>202020 BAS<br>000002 TAG<br>4D5A90 dll<br>4D5A90 OCX<br>4D5A50 DPL<br>3F5F03 HLP<br>4D5A90 OLB<br>4D5A90 IMM<br>4D5A90 IME<br>3F5F03 LHP<br>C22020 NLS<br>5B5769 CPX<br>4D5A16 DRV<br>5B4144 PBK<br>24536F PLL<br>4E4553 NES<br>87F53E GBC<br>00FFFF SMD<br>584245 XBE<br>005001 XMV<br>000100 TTF<br>484802 PDG<br>000100 TST<br>414331 dwg<br>D0CF11 max</p>
+<p>另外还有一些重要的文件，<strong>没有固定的文件头</strong>，如下：</p>
+<p><strong>TXT 没固定文件头定义</strong><br>TMP 没固定文件头定义<br>INI 没固定文件头定义<br>BIN 没固定文件头定义<br>DBF 没固定文件头定义<br>C 没没固定文件头定义<br>CPP 没固定文件头定义<br>H 没固定文件头定义<br>BAT 没固定文件头定义</p>
+<p>还有一些不同的文件有相同的文件头，最典型的就是下面：</p>
+<p>4D5A90 EXE<br>4D5A90 dll<br>4D5A90 OCX<br>4D5A90 OLB<br>4D5A90 IMM<br>4D5A90 IME</p>
+<h2 id="文件上传"><a href="#文件上传" class="headerlink" title="文件上传"></a>文件上传</h2><p>当我们需要实现上传文件的时候, 为了安全起见, 我们需要判断上传文件的格式, 防止将病毒木马等有害的文件上传到服务器上.</p>
+<p>判断文件类型的三种方式</p>
+<ul>
+<li><p>通过文件后缀名</p>
+<p>这个方法只要修改后缀名就可以了</p>
+</li>
+<li><p>通过Content-Type判断</p>
+<p>但是Content-Type取决于文件类型, 文件类型取决于文件扩展名, 所以改变了文件扩展名就改变了Content-Type</p>
+</li>
+<li><p>通过文件头判断文件, 即使文件扩展名改变了文件头也不会改变</p>
+</li>
+</ul>
+<p>文件上传的思路: 先判断Content-Type, Content-Type符合条件的再判断文件头信息</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Java<span class="meta">@ResponseBody</span>    <span class="meta">@GetMapping(&quot;validate&quot;)</span>    <span class="keyword">public</span> Map&lt;String, String&gt; <span class="title function_">validate</span><span class="params">(<span class="meta">@Validated(&#123;AllFiled.class&#125;)</span> UserInfo userInfo, BindingResult result)</span>&#123;<span class="comment">//        SpringValidatorAdapter adapter = (SpringValidatorAdapter)result;        Map&lt;String, String&gt; map = new HashMap&lt;String, String&gt;();        if (result.hasErrors()) &#123;            List&lt;ObjectError&gt; list  = result.getAllErrors();            for (ObjectError error :                    list) &#123;                FieldError fieldError = (FieldError)error;                String defaultMessage = fieldError.getDefaultMessage();                String field = fieldError.getField();                map.put(field, defaultMessage);            &#125;        &#125;        return map;    &#125;//    consumes = &#123;//        MediaType.MULTIPART_FORM_DATA_VALUE &#125;, produces = MediaType.TEXT_PLAIN_VALUE    @PostMapping(value = &quot;file&quot;)    @ResponseBody    public String file(@RequestParam(&quot;username&quot;) String name, MultipartFile file) throws IOException &#123;        //获取文件名        String fileName = file.getOriginalFilename();        //获取表单提交文件使用的字段        String partName = file.getName();        //判断文件是否为空        boolean empty = file.isEmpty();        //获取ContentType        String contentType = file.getContentType();        //获取文件直接数        Long size = file.getSize();        //获取文件所有字节        byte[] bytes = file.getBytes();        //获取InputStream        InputStream in = file.getInputStream();        //根据文件头获取文件类型        String type = FileType.getFileType(in);                //业务.....        StringBuilder builder = new StringBuilder();        //存储文件        File root = new File(&quot;D:/temp&quot;);        if (!root.isDirectory()) &#123;            root.mkdirs();        &#125;        try &#123;            file.transferTo(new File(root, name));            return String.format(&quot;Upload to %s&quot;, fileName);        &#125; catch (IllegalStateException e) &#123;            e.printStackTrace();        &#125; catch (IOException e) &#123;            e.printStackTrace();        &#125;        return &quot;Upload Failed&quot;;    &#125;</span></span><br></pre></td></tr></table></figure>
+
+
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-20221214-二维码版本与容量"
   class="article article-type-post"
   itemscope
@@ -1237,226 +1535,6 @@
 <p>RXNEIE:发送完成中断使能。</p>
 <p>USART_CR1寄存器：<br>USART_CR2寄存器：<br>USART_CR3寄存器：</p>
 <p>之后会基于STM32继续介绍怎样配置并使用UART，包括串口轮询&#x2F;中断&#x2F;DMA方式发送&#x2F;接收数据。</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20221213-VGA显示图像详细总结"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/12/13/20221213-VGA%E6%98%BE%E7%A4%BA%E5%9B%BE%E5%83%8F%E8%AF%A6%E7%BB%86%E6%80%BB%E7%BB%93/"
-    >20221213-VGA显示图像详细总结</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/12/13/20221213-VGA%E6%98%BE%E7%A4%BA%E5%9B%BE%E5%83%8F%E8%AF%A6%E7%BB%86%E6%80%BB%E7%BB%93/" class="article-date">
-  <time datetime="2022-12-13T02:09:18.000Z" itemprop="datePublished">2022-12-13</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_44406200/article/details/103823607">https://blog.csdn.net/weixin_44406200/article/details/103823607</a></p>
-<h2 id="VGA-显示原理"><a href="#VGA-显示原理" class="headerlink" title="VGA 显示原理"></a>VGA 显示原理</h2><p>VGA 概念</p>
-<p>VGA 不是用来显示的那块屏幕，而是用来传输信号的接口，VGA 全称是video graphics array 及视频图形阵列，是模拟信号的一种视频传输标准，VGA 传输接口实物图如下</p>
-<p>自测试 地址码 蓝基色  绿基色  红基色</p>
-<p>数字地        蓝地  绿地   红地<br>地址码 场同步 行同步  地址码 地址码</p>
-<p>操作VGA 的过程就是给你一块有横纵坐标范围的区域，区域上的每一个坐标点就是一个像素点，你可以做的事情是给这个像素点特定的rgb 色彩，既可以通过自定义rgb 也可以去取图像某个像素点的rgb ，这也就提供了你在vga 上画图以及显示图片的能力</p>
-<p>VGA 分辨率及理解误区</p>
-<p>640 * 480 的规格就是显示屏幕上每行有640 个像素点，总共有480行，注意，一件很重要的事情是，虽然你看到的屏幕上的大小是640 * 480 的 但是它实际大小并不只有那么点，形象一点就是说，VGA 的扫描范围是包含了你能够看到的640 480 这一块区域的更大区域，他会在周围一圈你看不到的区域部分进行扫描，因此，我们在处理扫描信号的时候一定要注意只有扫描到有效区域的时候才能把像素点数据传给 VGa 显示 </p>
-<p>VGA 显示器扫描方式从屏幕左上角一点开始，从左向右逐点扫描，每扫描完一行，电子束回到屏幕的左边下一行的起始位置，在这期 间，CRT 对电子束进行消隐，每行结束时，用行同步信号进行同步，当扫描完所有的行，形成一帧，用场同步信号进行场同步，并使扫描回到屏幕左上方，同时进行场消隐，开始下一帧，完成一行扫描的时间称为水平扫描时间，其倒数称为行频率，完成一帧，扫描的时间称为垂直扫描时间，其倒数称为场频率，及屏幕的刷新频率，其扫描示意图如下图所示</p>
-<p>有效显示区域</p>
-<p>关于那一块非有效显示区域，实际上是因为每一行和每一列的扫描区间都是由以下几部分组成</p>
-<p>行扫描  Hor Sync 、Hor Back Porch 、Hor Active Video和Hor Front Porch</p>
-<p>Hor Scan Time 是一个扫描周期，它会先扫描到hor sync 再扫描 hor back porch 然后才进入有效显示区  hor active video 最后是一段 hor front porch 可以看出来，四段区间只有hor active video 这一段是能够正常显示图像信息的，也就是屏幕上显示的那一块区间</p>
-<p>列扫描也同理</p>
-<p>给定参数</p>
-<p>实际上，根据固定的分辨率大小，比如我们实验室的板子使用的640 480 的屏幕大小，这些非有效区间的长度值都是一个固定的常数，因此你只要在扫描的时候把这些常数稍加处理即可</p>
-<p>下图罗列了不同分辨率所对应的各个参数，其中的a、b、c、d、e、f、g、h、i、k的含义，与上面给出的两张图的标注一一对应；我们实验使用的是第一组数据，可以看到行时序参数中的c代表每一行的有效显示区间640，列时序参数中的h代表每一列的有效显示区间480</p>
-<p>需要扫描频率，很重要的一件事，无论是行扫描还是给像素点赋值，我们都需要用一个时钟，这个时钟不是系统时针，必须要先将50MHZ 的时钟分频为25MHZ 然后拿去作为扫描信号的时钟</p>
-<p>这一点是特别需要注意的，否则到时候会出现out of range 的现象</p>
-<p>前期准备 coe 文件的生成</p>
-<p>coe 和ip 核介绍</p>
-<p>我们调用VGA 的终极目标是想要能够显示一张图片，在这之前，我们要先对这张图片进行一些预处理，因为我们是通过verilog 语言去调用图片数据的，但是verilog 并不知道怎么从一张已有的图片上去取相应的数据</p>
-<p>因此我们要先将图片转换为coe 文件，coe 文件实际上就是按照某种规律将图像每一个像素点的rgb 数据都摆放成单独一行 16进制，然后借助ISE 的IP 核生成将coe 文件转化成ROM ，生成的ROM.xco 和ROM.v 文件就可以被verilog 语言所识别调用，最终就能够取到图像的数据了</p>
-<p>24位bmp 图像转换为coe 文件 复原代码</p>
-<p>为了统一规范，这里我们使用24位真彩色的bmp 格式图像进行转换，好处是，bmp 的三通道数据特征是非常明显的，易于处理</p>
-<p>如何获取24位bmp 图像 </p>
-<p>然后bmp 格式也有很多种，如单色 16色 24 256 ，这里我们统一选择24位位图选项，点击保存即可</p>
-<p>使用matlab 将24位真彩色bmp 位图转化为coe 文件 </p>
-<p>由于24位共rgb 三个通道，每个通道分到的是8位，占用资源太多，且老师给的ucf 引脚约束对rgb 每一个通道只给了4位，因此我们在转化为coe 文件的同时，要将每个通道压缩成4位，即整张图像同时转化为12位</p>
-<p>压缩图像是一件非常重要的事情，因为经过后续的实践我们发现，板子内存资源有限，无法同时加载多张大图</p>
-<p>为了能够对多张图像进行批量处理，我使用matlab 写了一个 img2coe.m 函数，只要对bmp 图像调用这个函数即可转换成coe 文件了，转换过程介绍如下</p>
-<p>先将rgb 提取为三个通道，用reshape 函数对转置后的矩阵进行重组，对rgb 三个分量的数据都右移，舍去细节，留下高四位作为最终的数据，然后写入到coe 文件中</p>
-<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">img2coe</span><span class="params">(path,name)</span></span></span><br><span class="line">    <span class="comment">% 利用imread函数把图片转化为一个三维矩阵</span></span><br><span class="line">    image_array = imread(path);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">% 利用size函数把图片矩阵的三个维度大小计算出来</span></span><br><span class="line">    <span class="comment">% 第一维为图片的高度，第二维为图片的宽度，第三维为图片的RGB分量</span></span><br><span class="line">    [height,width,z]=<span class="built_in">size</span>(image_array);   </span><br><span class="line"></span><br><span class="line">    red   = image_array(:,:,<span class="number">1</span>); <span class="comment">% 提取红色分量，数据类型为uint8</span></span><br><span class="line">    green = image_array(:,:,<span class="number">2</span>); <span class="comment">% 提取绿色分量，数据类型为uint8</span></span><br><span class="line">    blue  = image_array(:,:,<span class="number">3</span>); <span class="comment">% 提取蓝色分量，数据类型为uint8</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">% 把上面得到了各个分量重组成一个1维矩阵，由于reshape函数重组矩阵的</span></span><br><span class="line">    <span class="comment">% 时候是按照列进行重组的，所以重组前需要先把各个分量矩阵进行转置以后再重组</span></span><br><span class="line">    <span class="comment">% 利用reshape重组完毕以后，由于后面需要对数据拼接，所以为了避免溢出</span></span><br><span class="line">    <span class="comment">% 这里把uint8类型的数据扩大为uint32类型</span></span><br><span class="line">    r = uint32(<span class="built_in">reshape</span>(red&#x27;   , <span class="number">1</span> ,height*width));</span><br><span class="line">    g = uint32(<span class="built_in">reshape</span>(green&#x27; , <span class="number">1</span> ,height*width));</span><br><span class="line">    b = uint32(<span class="built_in">reshape</span>(blue&#x27;  , <span class="number">1</span> ,height*width));</span><br><span class="line"></span><br><span class="line">    <span class="comment">% 初始化要写入.coe文件中的RGB颜色矩阵</span></span><br><span class="line">    rgb=<span class="built_in">zeros</span>(<span class="number">1</span>,height*width);</span><br><span class="line"></span><br><span class="line">    <span class="comment">% 因为导入的图片是24-bit真彩色图片，每个像素占用24-bit，其中RGB分别占用8-bit</span></span><br><span class="line">    <span class="comment">% 而我这里需要的是12-bit，其中R为4-bit，G为4-bit，B为4-bit，所以需要在这里对24-bit的数据进行重组与拼接</span></span><br><span class="line">    <span class="comment">% bitshift()函数的作用是对数据进行移位操作，其中第一个参数是要进行移位的数据，第二个参数为负数表示向右移，为</span></span><br><span class="line">    <span class="comment">% 正数表示向左移，更详细的用法直接在Matlab命令窗口输入 doc bitshift 进行查看</span></span><br><span class="line">    <span class="comment">% 所以这里对红色分量先右移4位取出高4位，然后左移11位作为ROM中RGB数据的第11-bit到第8-bit</span></span><br><span class="line">    <span class="comment">% 对绿色分量先右移4位取出高4位，然后左移5位作为ROM中RGB数据的第7-bit到第4-bit</span></span><br><span class="line">    <span class="comment">% 对蓝色分量先右移4位取出高4位，然后左移0位作为ROM中RGB数据的第3-bit到第0-bit</span></span><br><span class="line">    <span class="keyword">for</span> <span class="built_in">i</span> = <span class="number">1</span>:height*width</span><br><span class="line">        rgb(<span class="built_in">i</span>) = bitshift(bitshift(r(<span class="built_in">i</span>),<span class="number">-3</span>),<span class="number">11</span>) + bitshift(bitshift(g(<span class="built_in">i</span>),<span class="number">-2</span>),<span class="number">5</span>) + bitshift(bitshift(b(<span class="built_in">i</span>),<span class="number">-3</span>),<span class="number">0</span>);</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">    fid = fopen( name , <span class="string">&#x27;w+&#x27;</span> );</span><br><span class="line"></span><br><span class="line">    <span class="comment">% .coe文件的最前面一行必须为这个字符串，其中16表示16进制</span></span><br><span class="line">    fprintf( fid, <span class="string">&#x27;memory_initialization_radix=16;\n&#x27;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">% .coe文件的第二行必须为这个字符串</span></span><br><span class="line">    fprintf( fid, <span class="string">&#x27;memory_initialization_vector =\n&#x27;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">% 把rgb数据的前 height*width-1  个数据写入.coe文件中，每个数据之间用逗号隔开</span></span><br><span class="line">    fprintf( fid, <span class="string">&#x27;%x,\n&#x27;</span>,rgb(<span class="number">1</span>:<span class="keyword">end</span><span class="number">-1</span>));</span><br><span class="line"></span><br><span class="line">    <span class="comment">% 把rgb数据的最后一个数据写入.coe文件中，并用分号结尾</span></span><br><span class="line">    fprintf( fid, <span class="string">&#x27;%x;&#x27;</span>,rgb(<span class="keyword">end</span>));</span><br><span class="line"></span><br><span class="line">    fclose( fid ); <span class="comment">% 关闭文件指针</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-
-
-<p>中期准备 coe 转换为rom </p>
-<p>经过上面的步骤我们已经得到了coe 文件</p>
-<p>接下来就是把它转化成verilog 能够调用的rom 文件了 </p>
-<p>在ISE 工程中，点击右键新建文件，选择ip 核生成 </p>
-<p>选择Memories选项中的RAMs&amp;ROMs里的Block Memory Generator</p>
-<p>然后进入到这个设置参数的界面</p>
-<p>其中width代表你设置的图片数据是几进制，由于之前写coe的时候是用16进制写的，因此这里写16；depth表示图像的大小，即长乘宽，由于我使用的是640<em>480的图片，因此这里填207200(&#x3D;640</em>480)</p>
-<p>当你的文件路径成功出现的时候，你就可以点击下方的generate生成了，当然这个generate也要很久很久，一般一张640 *480的图片要generate近一个小时左右才能生成</p>
-<p>生成完毕的标志是creating结束，并且在你的目录下出现类型太阳的这个标记</p>
-<p>后期调用与测试 </p>
-<p>VGA 显示的过程中会遇到很多小bug 有些小bug 的原因你根本找不出，比如 out of range ，你只能静下心来慢慢调试仿真</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20221212-SPI协议详解"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/12/12/20221212-SPI%E5%8D%8F%E8%AE%AE%E8%AF%A6%E8%A7%A3/"
-    >20221212-SPI协议详解</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/12/12/20221212-SPI%E5%8D%8F%E8%AE%AE%E8%AF%A6%E8%A7%A3/" class="article-date">
-  <time datetime="2022-12-12T11:58:24.000Z" itemprop="datePublished">2022-12-12</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/290620901">https://zhuanlan.zhihu.com/p/290620901</a></p>
-<p>UART 没有时钟信号，无法控制何时发送数据，也无法保证双方按照完全相同的速度接收数据，因此，双方以不同的速度进行数据接收和发送，就会出现问题</p>
-<p>如果要解决这个问题，uart 为每个字节添加额外的起始位和停止位，以帮助接收器在数据到达时进行同步</p>
-<p>双方还必须事先就传输速度达成共识，设置相同的波特率 例如每秒9600位</p>
-<p>传输速率如果有微小差异不是问题，因为接收器会在每个字节的开头重新同步</p>
-<p>如果您注意到上图中的11001010不等于0x53，这是一个细节。串口协议通常会首先发送最低有效位，因此最小位在最左边LSB。低四位字节实际上是0011 &#x3D; 0x3，高四位字节是0101 &#x3D; 0x5。</p>
-<p>异步串行工作得很好，但是在每个字节发送的时候都需要额外的起始位和停止位 以及在发送和接收数据所需的复杂硬件方面都有很多开销</p>
-<p>不难发现，如果接收端和发送端设置的速度都不一致，那么接收到的数据将是垃圾 乱码</p>
-<h2 id="SPI-通讯协议"><a href="#SPI-通讯协议" class="headerlink" title="SPI 通讯协议"></a>SPI 通讯协议</h2><p>spi 是一个同步的数据总线，也就是说它是用单独的数据线和一个单独的时钟信号来保证发送端和接收端的完美同步</p>
-<p>时钟是一个振荡信号，它告诉接收端在确切的时机对数据线上的信号进行采样</p>
-<p>产生时钟的一侧称为主机，另一侧为从机，总是只有一个主机 一般来说可以是微控制器 MCU 但是可以有多个从机</p>
-<p>数据的采集时机可能是时钟信号的上升沿 或下降沿</p>
-<p>具体要看对 spi 的配置</p>
-<p>整体的传输大概可以分为以下几个过程</p>
-<p>主机先将NSS 信号拉低，这样保证开始接收数据</p>
-<p>当接收端检测到时钟的边沿信号时，它将立即读取数据线上的信号，这样就得到了一位数据 1bit</p>
-<p>由于时钟是随数据一起发送的，因此指定数据的传输速度并不重要，尽管设备将具有可以运行的最高速度</p>
-<p>主机发送到从机时：主机产生相应的时钟信号，然后数据一位一位地将从MOSI信号线上进行发送到从机；<br>主机接收从机数据：如果从机需要将数据发送回主机，则主机将继续生成预定数量的时钟信号，并且从机会将数据通过MISO信号线发送；</p>
-<p>注意  spi 是全双工 具有单独的发送和接收线路，因此可以在同一时间发送和接收数据，另外 spi 的接收硬件可以是一个简单的移位寄存器，这笔异步串行通信所需的完整uart 要简单得多，并且更加便宜</p>
-<p>spi 特性</p>
-<p>spi 总线包括4条 逻辑线，定义如下</p>
-<p>MISO 主机输入，从机输出，数据来自从机</p>
-<p>MOSI 主机输出，从机输入</p>
-<p>SCLK 串行时钟信号，由主机产生发送给从机</p>
-<p>SS 片选信号，由主机发送，以控制与哪个从机通信，通常是低电平有效信号</p>
-<p>其他制造商可能会遵循其他命名规则，但是最终他们指的相同的含义。以下是一些常用术语；</p>
-<p>MISO也可以是SIMO，DOUT，DO，SDO或SO（在主机端）;<br>MOSI也可以是SOMI，DIN，DI，SDI或SI（在主机端）;<br>NSS也可以是CE，CS或SSEL;<br>SCLK也可以是SCK;<br>本文将按照以下命名进行讲解[MISO, MOSI, SCK，NSS]</p>
-<p>时钟频率</p>
-<p>SPI 总线上的主机必须在通信开始时候配置并生成相应的时钟信号，在每个SPI 时钟周期内，都会发生全双工数据传输</p>
-<p>主机在mosi 线上发送一位数据，从机读取它，而从机在miso 线上发送一位数据，主机读取它</p>
-<p>就算只进行单向的数据传输，也要保持这样的顺序，这就意味着无论接收任何数据，必须实际发送一些东西，在这种情况下，我们称其为虚拟数据</p>
-<p>从理论上讲，只要实际可行，时钟速率就可以是您想要的任何速率，当然这个速率受限于每个系统能提供多大的系统时钟频率，以及最大的SPI传输速率。</p>
-<p>时钟极性 CKP Clock Polarity</p>
-<p>除了配置串行时钟频率 外，SPI 主设备还需要配置时钟极性</p>
-<p>根据硬件制造商的命名规则不同，时钟极性通常写为CKP或CPOL。时钟极性和相位共同决定读取数据的方式，比如信号上升沿读取数据还是信号下降沿读取数据；</p>
-<p>CKP 可以配置为1或0 ，这意味着您可以根据需要将时钟的默认状态 IDLE 设置为高或低，极性反转可以通过简单的逻辑逆变器实现，您必须参考设备的数据手册才能正确设置CKP 和CKE</p>
-<p>CKP &#x3D; 0：时钟空闲IDLE为低电平0；<br>CKP &#x3D; 1：时钟空闲IDLE为高电平1；</p>
-<p>时钟相位 CKE Clock Phase Edge</p>
-<p>除配置串行时钟速率和极性外，SPI 主设备还应配置时钟相位，根据硬件制造商的不同，时钟相位通常写为CKE 或CPHA</p>
-<p>顾明思义，时钟相位&#x2F;边沿，也就是采集数据时是在时钟信号的具体相位或者边沿</p>
-<p>CKE &#x3D; 0 在时钟信号SCK 的第一个跳变沿采样</p>
-<p>CKE &#x3D; 1 在时钟信号SCK 的第二个跳变沿采样</p>
-<p>时钟配置总结</p>
-<p>综上几种情况，下图总结了所有时钟配置组合，并突出显示了实际采样数据的时刻</p>
-<p>其中黑色线为采样数据的时刻</p>
-<p>蓝色线为SCK 时钟信号</p>
-<p>具体如下图所示</p>
-<p>模式编号</p>
-<p>SPI 的时钟极性和相位的配置通常称为SPI 模式，所有可能的模式都遵循以下约定，具体如下表所示</p>
-<p>除此之外，我们还应该仔细检查微控制器数据手册中包含的模式表，以确保一切正常</p>
-<p>多从机模式</p>
-<p>前面说到的SPI 总线必须有一个主机，可以有多个从机，那么具体连接到SPI 总线的方法有以下两种</p>
-<p>第一种方法 多NSS</p>
-<p>通常，每个从机都需要一条单独的SS 线</p>
-<p>如果要和特定的从机进行通讯，可以将相应的NSS 信号线拉低，并保持其他NSS 信号线的状态为高电平，如果同时将两个NSS 信号线拉低，则可能会出现乱码，因为从机可能都试图在同一条MISO 线上传输数据，最终导致接收数据乱码</p>
-<p>具体连接方式如下图所示</p>
-<p>第二种方法 菊花链</p>
-<p>在数字通信世界中，在设备信号 （总线信号或中断信号） 以串行的方式从一个设备依次传到下一个设备，不断循环直到数据到达目标设备的方式被称为菊花链</p>
-<ol>
-<li>菊花链的最大缺点是因为信号串行传输，所以一旦数据链路中的某设备发生故障的时候，它下面优先级较低的设备就不可能得到服务了</li>
-</ol>
-<p>另一方面，距离主机越远的从机，获得服务的优先级越低，所以需要安排好从机的优先级，并且设置总线检测器，如果某个从机超时，则对该从机进行短路，防止单个从机损坏造成整个链路崩溃的情况</p>
-<p>具体的连接如下图所示</p>
-<p>其中红线加粗为数据的流向</p>
-<p>所以最终的数据流向图可以表示为</p>
-<p>SCK 为时钟信号，8clks 表示8个边沿信号</p>
-<p>其中D 为数据，X 为无效数据</p>
-<p>所以不难发现，菊花链模式充分使用了SPI 其移位寄存器的功能，整个链充当通信移位寄存器，每个从机在下一个时钟周期将输入数据复制到输出</p>
-<p>优缺点</p>
-<p>SPI 通讯的优势</p>
-<p>使SPI 作为串口通信接口脱颖而出的原因很多</p>
-<p>全双工串行通信；<br>高速数据传输速率。<br>简单的软件配置；<br>极其灵活的数据传输，不限于8位，它可以是任意大小的字；<br>非常简单的硬件结构。从站不需要唯一地址（与I2C不同）。从机使用主机时钟，不需要精密时钟振荡器&#x2F;晶振（与UART不同）。不需要收发器（与CAN不同）。</p>
-<p>SPI 的缺点 </p>
-<p>没有硬件从机应答信号  主机可能在不知情的情况下无处发送</p>
-<p>通常仅支持一个主设备</p>
-<p>需要更多的引脚 与I2C 不同</p>
-<p>没有定义硬件级别的错误检查协议</p>
-<p>与RS232 和CAN 总线相比，只能支持非常短的距离</p>
-<p>编程实现<br>下面是通过STM32的cubemx自动生成的HAL库代码，比较简单，截取了其中一部分，具体如下；</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">static</span> <span class="type">void</span> <span class="title function_">MX_SPI1_Init</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    hspi1.Instance = SPI1;</span><br><span class="line">    hspi1.Init.Mode = SPI_MODE_MASTER;    <span class="comment">//主机模式</span></span><br><span class="line">    hspi1.Init.Direction = SPI_DIRECTION_2LINES; <span class="comment">//全双工</span></span><br><span class="line">    hspi1.Init.DataSize = SPI_DATASIZE_8BIT;  <span class="comment">//数据位为8位</span></span><br><span class="line">    hspi1.Init.CLKPolarity = SPI_POLARITY_LOW;  <span class="comment">//CPOL=0</span></span><br><span class="line">    hspi1.Init.CLKPhase = SPI_PHASE_1EDGE;   <span class="comment">//CPHA为数据线的第一个变化沿</span></span><br><span class="line">    hspi1.Init.NSS = SPI_NSS_SOFT;     <span class="comment">//软件控制NSS</span></span><br><span class="line">    hspi1.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_2;<span class="comment">//2分频，32M/2=16MHz</span></span><br><span class="line">    hspi1.Init.FirstBit = SPI_FIRSTBIT_MSB;   <span class="comment">//最高位先发送</span></span><br><span class="line">    hspi1.Init.TIMode = SPI_TIMODE_DISABLE;   <span class="comment">//TIMODE模式关闭</span></span><br><span class="line">    hspi1.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;<span class="comment">//CRC关闭</span></span><br><span class="line">    hspi1.Init.CRCPolynomial = <span class="number">10</span>;     <span class="comment">//默认值，无效</span></span><br><span class="line">    <span class="keyword">if</span> (HAL_SPI_Init(&amp;hspi1) != HAL_OK)    <span class="comment">//初始化</span></span><br><span class="line">    &#123;</span><br><span class="line">        _Error_Handler(__FILE__, __LINE__);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">    </span><br><span class="line"><span class="comment">//发送数据</span></span><br><span class="line">HAL_StatusTypeDef  </span><br><span class="line"><span class="title function_">HAL_SPI_Transmit</span><span class="params">(SPI_HandleTypeDef *hspi, </span></span><br><span class="line"><span class="params">                 <span class="type">uint8_t</span> *pData, </span></span><br><span class="line"><span class="params">                 <span class="type">uint16_t</span> Size, </span></span><br><span class="line"><span class="params">                 <span class="type">uint32_t</span> Timeout)</span>;</span><br><span class="line"><span class="comment">//接收数据</span></span><br><span class="line">HAL_StatusTypeDef  </span><br><span class="line"><span class="title function_">HAL_SPI_Receive</span><span class="params">(SPI_HandleTypeDef *hspi, </span></span><br><span class="line"><span class="params">                <span class="type">uint8_t</span> *pData, </span></span><br><span class="line"><span class="params">                <span class="type">uint16_t</span> Size, </span></span><br><span class="line"><span class="params">                <span class="type">uint32_t</span> Timeout)</span>;</span><br></pre></td></tr></table></figure>
-
-<p>% SPI、UART、RS232、RS485、IIC 5</p>
  
       <!-- reward -->
       

@@ -126,6 +126,423 @@
     
     
     <article
+  id="post-20230512-视频监控三种存储方式NVR、IP-SAN和CVR哪种好"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/05/12/20230512-%E8%A7%86%E9%A2%91%E7%9B%91%E6%8E%A7%E4%B8%89%E7%A7%8D%E5%AD%98%E5%82%A8%E6%96%B9%E5%BC%8FNVR%E3%80%81IP-SAN%E5%92%8CCVR%E5%93%AA%E7%A7%8D%E5%A5%BD/"
+    >20230512-视频监控三种存储方式NVR、IP-SAN和CVR哪种好</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/05/12/20230512-%E8%A7%86%E9%A2%91%E7%9B%91%E6%8E%A7%E4%B8%89%E7%A7%8D%E5%AD%98%E5%82%A8%E6%96%B9%E5%BC%8FNVR%E3%80%81IP-SAN%E5%92%8CCVR%E5%93%AA%E7%A7%8D%E5%A5%BD/" class="article-date">
+  <time datetime="2023-05-12T03:46:05.000Z" itemprop="datePublished">2023-05-12</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>对于监控的项目来说，需要考虑四个部分，那就是前端系统，传输系统，存储系统以及显示系统</p>
+<p>存储系统是监控项目中非常重要的一部分，很多朋友也经常讨论到，那么今天我们来了解下常用的三种存储方式 NVR IP-SAN 和CVR 之间的区别</p>
+<p>NVR 存储 是网络硬盘录像机的缩写，NVR 最主要的功能是通过网络接收IPC 网络摄像机，设备传输的数字视频码流，并进行存储、管理，从而实现网络化带来的分布式架构优势，简单来说，通过NVR，可以同时观看，浏览，回放，管理，存储多个网络摄像机，摆脱了电脑硬件的牵绊，再也不用面临安装软件的繁琐</p>
+<p>NVR 框架</p>
+<p>现在市场上面也有少量的128路NVR 因为NVR 是x86 架构储存+监控软件，他本身也有磁盘阵列功能</p>
+<p>NVR 主要用于中小型监控的方案中，但对于大型监控应用来说，NVR 他短板大于他有时，监控点多，码流大，压力高，容量大等问题，都会使它使用起来力不从心，而对于大型公共监控的要考虑其扩展性，易管理性，所以采用IP-SAN或CVR 的存储方式</p>
+<p>第二种 IP-SAN存储</p>
+<p>IP-SAN 即基于ip 以太网络的san 存储架构，它使用iscsi 协议传输数据，直接在ip 网络上进行存储，iscsi 协议就是把scsi 命令包在tcp&#x2F;ip 包中传输，即为scsi over tcp&#x2F;ip</p>
+<p>ip san 也算是san 的一种，只是服务器和存储之间通过网络交换机互联，性能不算最好，但不受距离的限制，ip 存储应用十分广泛，一般也可作为大型监控存储</p>
+<p>IP-SAN 也算是san的一种，只是服务器和存储之间通过网络交换机互联，性能不算最好，但不受距离的限制，ip 存储应用十分广泛，一般也可作为大型监控存储</p>
+<p>ip-san 可以将存储设备分成一个或多个卷，并导出给前端应用客户端，客户端计算机可以对这些导过来的卷进行新建文件系统 格式化操作，客户端计算机对这些卷的访问方式为设备级的块访问，IP-SAN 通过把数据分成多个数据块 block 并行写入 读出磁盘，块级访问的特性决定了iscsi 数据访问的高io 性能和传输低延迟</p>
+<p>简单的说，它是以块作为存储的，你可以认为它是含阵列功能的硬盘，其实就是磁盘阵列+硬盘</p>
+<p>相比较nvr 存储来说，ip-san 一般会与流媒体服务器一起使用</p>
+<p>其中流媒体服务器的作用是为了有效的解决多用户同时访问同一实时视频数据信息时对网络宽带重复占用的问题，充分节省网络带宽资源，有效降低网络阻塞的发生，需要在联网监控中心配备一台流媒体服务器</p>
+<p>ip-san 存储模式具有如下特点</p>
+<p>具有高带宽 块 级数据传输的优势</p>
+<p>即使tpc ip ip 网络技术成熟，具有tcp ip 的所有优点，可路由等，减少了配置、维护管理的复杂度</p>
+<p>可以通过以太网来部署iscsi 存储网络，易部署，成本低</p>
+<p>易于扩展，当需要增加存储空间时，只需要增加存储设备即可完全满足，扩展性高</p>
+<p>数据迁移和远程镜像容易，只要网络带宽支持，基本没有距离限制，更好的支持备份和异地容灾</p>
+<p>CRV 存储<br>海康 crv 存储模式可支持视频流经编码器直接写入存储设备，省去存储服务器成本，避免服务器形成单点故障和性能瓶颈，独特的数据结构确保监控服务的高稳定和高性能</p>
+<p>存储框架</p>
+<p>而CVR 是安防监控的专用视频存储设备，cvr 是tcp ip 上的视频流改写成流数据结构直接写到磁盘里，所以磁盘里存的不是文件，没有碎片</p>
+<p>CVR 存储模式的特点</p>
+<p>前端直接统一管理</p>
+<p>海康cvr 存储模式可支持视频流经编码器直接写入存储设备，省去存储服务器，可通过集中管理平台可实现多网络存储设备的集中化管理和状态监控，可以实现业务系统中存储设备的集中配置，管理，实时监控存储设备单元工作状态及其对应可管理的设备部件，运行协议，RAID 组等内容，集中报警管理支持对存储设备的定期状态巡检功能，对系统运行状态  阵列运行，iscsi http cifs scsi 通道等状态进行实时监控，集中显示</p>
+<ol start="2">
+<li>简化网络结构</li>
+</ol>
+<p>海康cvr 存储模式通过前端编码设备直接写入存储设备中，不需要存储服务器，简化网络结构，解放原有设计中存储服务器与存储设备之间网络压力问题</p>
+<ol start="3">
+<li>独有的流媒体文件系统保护技术</li>
+</ol>
+<p>海康cvr 存储模式采用独特的vspp 视频流预保护技术，彻底解决由于断点断网引起的文件系统不稳定甚至文件系统损坏而导致的监控服务停止、数据只读或丢失等故障问题</p>
+<p>海康cvr 存储模式采用自身独有的数据块管理结构和容错机制，脱离对服务器端文件系统的依赖，避免其文件系统损坏对监控业务造成影响，提供更加稳定，高效的管理方式</p>
+<ol start="4">
+<li>高效的磁盘碎片免疫技术</li>
+</ol>
+<p>海康cvr 存储模式采用磁盘预分配与延迟分配技术相结合，首先查找空闲空间区域并用于存储新数据的过程，最大程度地提高系统性能和避免磁盘碎片，同时，结合高效的碎片整理程序，在系统空闲时对磁盘碎片进行整理，改善系统的性能</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-20230512-端口映射应用场景"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/05/12/20230512-%E7%AB%AF%E5%8F%A3%E6%98%A0%E5%B0%84%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF/"
+    >20230512-端口映射应用场景</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/05/12/20230512-%E7%AB%AF%E5%8F%A3%E6%98%A0%E5%B0%84%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF/" class="article-date">
+  <time datetime="2023-05-12T03:33:44.000Z" itemprop="datePublished">2023-05-12</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>内网映射技术原理</p>
+<p>内网映射项目实战</p>
+<p>内网服务器对外发布</p>
+<p>内网设备，从外部进行远程管理</p>
+<p>内网监控视频，从外部取流</p>
+<p>xxx</p>
+<p>NVR 网络硬盘录像机</p>
+<p>NAT 网络地址转换</p>
+<p>nat 转换成公网ip 这个公网 ip 怎么来的</p>
+<p>用的是企业宽带，互联网专线，运营商给咱们的固定的公网ip 这种宽带几千到上万一个月</p>
+<p>用的是家用宽带，运营商不给固定公网ip 很多用户共用一个公网ip 几十一个月</p>
+<p>现在的条件</p>
+<p>硬件条件 企业级的路由器，化为ar2220</p>
+<p>宽带条件，互联网专线，有5个可用的公网ip</p>
+<p>要实现的目标</p>
+<p>外网的访客，能访问到内网的服务器</p>
+<p>sy 回车 进入配置模式</p>
+<p>interface G0&#x2F;0&#x2F;1 进入连接宽带的外网接口</p>
+<p>ip address 64.1.1.1 255.255.255.0 配上从运营商购买的公网ip</p>
+<p>int g0&#x2F;0&#x2F;1 进入外网口</p>
+<p>nat server global 64.1.1.2 inside 172.16.1.100</p>
+<p>把内网服务器 172.16.1.100  映射为一个公网ip 64.1.1.2</p>
+<p>外网的访客，可以通过64.1.1.2  这个公网ip 来访问172.16.1.100</p>
+<p>实际工作中，几乎不会这么做</p>
+<p>环路检测</p>
+<p>主要原因，</p>
+<p>土豪方法，有100个服务器，买100个公网ip 可以，不现实</p>
+<p>用1个公网，来映射100个服务器</p>
+<p>端口号</p>
+<p>端口映射</p>
+<p>数据包有个端口号，用来区分</p>
+<p>收到腾讯课堂的数据包</p>
+<p>收到网易云音乐数据包</p>
+<p>收到杀毒软件更新的数据包</p>
+<p>收到xxx 的数据包</p>
+<p>netstat -nb</p>
+<p>网络连接 tcp udp</p>
+<p>深信服</p>
+<p>tcp 稳  每个数据包都有确认机制，可能会增加延迟</p>
+<p>udp 快 只管发  速度快，延迟低，可能丢包了还不知道</p>
+<p>http 或https 都是基于tcp 的应用</p>
+<p>端口可以随便选吗，留个悬念</p>
+<p>闭坑指南</p>
+<p>端口号，理论上，可以随便用</p>
+<p>实际上，避开常见病毒的端口，以防误杀，有次映射为6666 不同，这端口号，和某危险应用相同，误拦截</p>
+<p>避开运营商禁止的端口</p>
+<p>避开运营商禁止的端口  问到</p>
+<p>避开其他人用过的端口，专员的it 部门有记录</p>
+<p>建议1024 以下不用，知名协议端口号会用</p>
+<p>为什么要学网络技术</p>
+<p>从事技术工作，但技术含量不高，希望转向网络技术&#x2F;网络安全岗位</p>
+<p>从事网络技术相关工作，提升技能，胜任工作，得到职业晋升</p>
+<p>在校大学生，提升就业竞争力</p>
+<p>技术学到什么层级</p>
+<p>HCIA-Datacom  培养具备数通基础理论技能的网络工程师</p>
+<p>IP<br>培养跨领域解决方案规划设计或单领域规划及部署的网络高级工程师</p>
+<p>IE<br>培养具备跨领域解决方案坚实理论及部署能力的网络专家</p>
+<p>大型WLAN 组网方案</p>
+<p>技术发展方向</p>
+<p>数通类</p>
+<p>最易入行，下限第 上限高  职业发展方向宽</p>
+<p>网络安全类</p>
+<p>售后方向</p>
+<p>售前方向</p>
+<p>HCIA </p>
+<p>HCIP </p>
+<p>傻瓜交换机 组件一个同网段的，小型局域网的</p>
+<p>企业的二层交换机 性能更好，功能更多，支持调试</p>
+<p>核心三层交换机</p>
+<p>路由器</p>
+<p>防火墙</p>
+<p>无线AC+AP</p>
+<p>为什么网络有问题</p>
+<ol>
+<li>主机会受到太多的广播包</li>
+<li>万一发生故障，没做隔离，影响范围很大</li>
+</ol>
+<p>3000个电脑，在一起，电脑的正常工作发广播包，我就会收到太多的广播包，消耗带宽，cpu 内存处理</p>
+<p>用户私接小路由器，影响其他办公室，导致网络故障</p>
+<p>eNSP</p>
+<p>最后我们如何解决问题</p>
+<p>拿出一个三层交换机，把各个楼层的傻瓜，连接到三层交换机</p>
+<p>vlan 虚拟局域网，是一个隔离技术</p>
+<ol>
+<li>隔离广播</li>
+<li>隔离故障</li>
+</ol>
+<p>vlan 配置</p>
+<p>三层交换机</p>
+<p>sy 回车，进入配置模式</p>
+<p>undo in en 关掉设备的英文提示</p>
+<p>vlan 10 创建vlan10</p>
+<p>vlan 20 创建 vlan20</p>
+<p>int g0&#x2F;0&#x2F;1 进入1号口<br>port link-type access 设置接口类型</p>
+<p>port default vlan 10 把接口放到 vlan 10</p>
+<p>交换机配vlan 的时候，接口设置类型</p>
+<p>如果这个接口，连接的是一台电脑，一台傻瓜交换机，用access<br>如果这个接口，连接的是一台企业级交换机，用trunk</p>
+<p>int g0&#x2F;0&#x2F;2 进入2号口</p>
+<p>port link-type access 设置接口类型<br>port default vlan 20 把接口放到vlan 20</p>
+<p>1 卡顿，解决了<br> 故障隔离，解决了</p>
+<p>问题又来了</p>
+<p>为什么不是 vlan 1 和2 呢</p>
+<p>vlan 1是默认 vlan</p>
+<p>用了vlan 1 </p>
+<p>网关，是一个网络设备，三层交换机，路由器，防火墙，有实现不同网段之间的数据转发</p>
+<p>int vlan 10<br>ip add 192.168.10.1 255.255.255.0<br>int vlan 20<br>ip add 192.168.10.1 255.255.255.0</p>
+<p>三层交换机，输入了以下两条命令</p>
+<p>总结以下</p>
+<p>在实际工作中，vlan 是这么用的</p>
+<p>用vlan 把用户隔离开，隔离的是不好的数据包，可能会引起故障的包</p>
+<p>再用三层交换机，配好网关接口，把他们连通，连通的是好的包，正常通信</p>
+<p>vlanif 网关接口，创建网关的时候，完整命令是 int vlanif 10</p>
+<p>如何规划 vlan 的问题</p>
+<p>问题，多少个主机放到1个vlan</p>
+<p>如果办公电脑，这种普通人用的，一个vlan 不能放太多，</p>
+<p>如果监控，门禁，哑终端，故障频率小，一个vlan 放多一些，问题不大</p>
+<p>网络工程师职业规划</p>
+<p>弱电  </p>
+<p>桌面运维</p>
+<p>大学生</p>
+<p>网络的就业方向岗位及薪资</p>
+<p>从弱电施工转为网工</p>
+<p>除了简单的交换机、路由器调试</p>
+<p>还要会防火墙调试，网络组网，故障排除</p>
+<p>环路怎么办，高可靠性组网需求怎么办，无线优化等等</p>
+<p>避免环路又要用到生成树</p>
+<p>高可靠性 mstp vrrp 堆叠  BFD ospf</p>
+<p>无线优化，ac+ap 组网，信道优化，黑白名单</p>
+<p>SSH 网络安全加固</p>
+<p>先掌握基础设备调试</p>
+<p>基本网络故障排除能力</p>
+<p>能掌握网络规划设计能力更佳</p>
+<ol>
+<li><p>先满足自己的工作需求</p>
+</li>
+<li><p>储备一些知识，掌握基本故障解决能力，提高一些职业竞争力</p>
+</li>
+</ol>
+<p>转行需谨慎，不要轻易尝试</p>
+<p>年龄不大，可以尝试转行，同时在平时工作中注意多留意一些网络搭建方面的项目</p>
+<p>30岁以下</p>
+<p>一定要多学习拓展知识，以免错失机会</p>
+<p>年龄小，发展上限高，无论内部调岗或转行都可行性大</p>
+<p>除学习基本路由交换方面的核心技术之外，额外拓展例如安全等方面的技术知识</p>
+<hr>
+<p>传统以太网的问题</p>
+<p>二层广播域</p>
+<p>在典型交换网络中，当某台主机发送一个广播帧或未知单帧时，该数据帧会被泛洪，甚至传递到整个广播域</p>
+<p>广播域越大，产生的网络安全问题、垃圾流量问题，就越严重</p>
+<p>Switch1与Switch2同属一个企业，该企业统一规划了网络中的vlan 其中vlan10 用于A 部门，vlan 20 用于B 部门，A B 部门的员工在switch1 和switch 2 上都有接入</p>
+<p>PC1 发出的数据经过Switch1 和Switch2 之间的链路到达了switch2 如果不加处理，后者无法判断该数据所述的vlan，也不知道应该将这个数据输出到本地那个vlan 中</p>
+<p>交换机如何识别接收到的数据帧属于哪个vlan</p>
+<p>要使交换机能够分辨不同vlan 的报文，需要在报文中添加标识vlan 信息的字段</p>
+<p>IEEE 802.1Q 协议规定，在以太网数据帧中，加入4个字节的vlan 标签，又称vlan Tag 简称tag</p>
+<h3 id="Vlan-数据帧"><a href="#Vlan-数据帧" class="headerlink" title="Vlan 数据帧"></a>Vlan 数据帧</h3><p>原始以太网数据帧  无标记帧</p>
+<p>802.1QTag </p>
+<p>TPID 标签协议标识符，标识数据帧的类型，值为0x8100 时表示802.1Q帧</p>
+<p>PRI 优先级 标识帧的优先级，主要用于QoS<br>CFI 标准格式指示符，在以太网环境中，该字段的值为0</p>
+<p>Vlan ID VLAN 标识符，标识该帧所述的vlan</p>
+<p>802.1Q 帧标记帧</p>
+<p>目的MAC 地址  源mac地址，tag 类型  data FCS</p>
+<p>Switch1和switch2 之间的链路需要承载多个vlan 的数据，需要一种基于vlan 的数据标记手段，以便对不同vlan 的数据帧进行区分</p>
+<p>IEEE 802.1Q 标准定义了该标记方法，该标准对传统的以太网数据帧进行修改，在帧头中插入 802.1Q Tag ，而在该Tag 中，便可以写入vlan 信息</p>
+<p>整个网络是如何划分vlan的而</p>
+<p>Vlan 划分方式</p>
+<p>基于接口<br>基于mac 地址</p>
+<p>基于ip 子网划分</p>
+<p>基于协议划分</p>
+<p>基于策略</p>
+<p>–<br>基于接口的vlan 划分</p>
+<p>原理</p>
+<p>根据交换机的接口来划分 vlan</p>
+<p>网络管理员预先给交换机的每个接口配置不同的pvid ，将该接口划入pvid 对应的vlan</p>
+<p>当一个数据帧进入交换机时，如果没有带vlan 标签，该数据帧就会被打上接口指定的pvid 的tag 然后数据帧将在指定pvid 中传输</p>
+<p>缺省 vlan pvid</p>
+<p>port vlan id 是接口上的缺省 vlan</p>
+<p>取值 1–4094</p>
+<p>基于MAC 地址的vlan 划分</p>
+<p>SW1 的mac 地址与vlan 表</p>
+<p>基于mac 地址的vlan 划分</p>
+<p>原理</p>
+<p>根据数据帧的源mac 地址来划分vlan</p>
+<p>网络管理员预先配置mac 地址和vlan id 映射关系表</p>
+<p>当交换机收到的是untagged 帧时，就依据该表给数据帧添加指定vlan 的tag，然后数据帧将在指定vlan 中传输</p>
+<p>映射表</p>
+<p>记录了mac 地址和vlan id 的关联情况</p>
+<p>以太网二层接口类型</p>
+<p>access 接口<br>交换机上常用来连接用户pc 服务器等终端设备的接口，access 接口所连接的这些设备的网卡往往只收发无标记帧，access 接口只能加入一个vlan</p>
+<p>Trunk 接口</p>
+<p>Trunk 接口允许多个vlan 的数据帧通过，这些数据帧通过802.1Q Tag 实现区分，Trunk 接口常用于交换机之间的互联，也用于连接路由器、防火墙等设备的子接口</p>
+<p>Hybrid 接口</p>
+<p>Hybrid 接口与Trunk 接口类似，也允许多个vlan 的数据帧通过，这些数据帧通过802.1Q Tag 实现区分，用户可以灵活指定hybrid 接口在发送某个 vlan 的数据帧时是否携带tag</p>
+<p>配置接口类型 port link-type hybrid</p>
+<p>在接口视图下，配置接口的链路类型为hybrid</p>
+<p>配置hybrid 接口加入 指定vlan</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">port hybrid untagged vlan &#123;&#123; vlan-id1 [to vlan=id2] | all &#125;&#125;</span><br></pre></td></tr></table></figure>
+<p>配置hybrid 接口的缺省 vlan</p>
+<p>port hybrid pvid vlan vlan-id</p>
+<p>在接口视图下，配置hybrid 类型接口的缺省vlan</p>
+<p>hybrid 接口的基础配置 1</p>
+<p>解决方案</p>
+<p>通过vlan 实现故障隔离</p>
+<p>通过DHCP snooping 禁止私设服务器的DHCP 报文</p>
+<p>通过ACL 访问控制列表，禁止用户区域DHCP 服务器报文</p>
+<p>vlan 的接口类型</p>
+<p>access  如果这个口只通过一个vlan 用access</p>
+<p>trunk 如果这个口需要通过多个vlan 用 trunk</p>
+<p>hybrid 应用灵活</p>
+<p>业务隔离</p>
+<p>可以通过划分不同的vlan 实现不同业务的隔离</p>
+<p>链路聚合</p>
+<p>链路聚合是把多条物理链路聚合在一起，形成一条逻辑链路</p>
+<p>采用链路聚合既可以提供链路冗余性，又可以提高链路的带宽</p>
+<p>聚合接口是一个手工配置的逻辑接口，链路聚合组是随着聚合接口的创建而自动生成的</p>
+<p>操作key 是在链路聚合时，聚合控制根据成员端口的某些配置自动生成的一个配置组合</p>
+<p>链路聚合模式</p>
+<p>静态聚合模式</p>
+<p>端口不与对端设备交互信息</p>
+<p>根据本端设备信息选择参考端口</p>
+<p>用户命令创建和删除静态聚合组</p>
+<p>动态聚合模式</p>
+<p>端口的LACP 协议自动使能，与对端设备交互LACP 报文</p>
+<p>根据本端设备与对端设备交互信息选择参考端口</p>
+<p>用户命令创建和删除动态聚合组</p>
+<p>DHCP 系统组成</p>
+<p>DHCP 服务器</p>
+<p>能提供DHCP 功能的服务器或具有DHCP 功能的网络设备</p>
+<p>DHCP 中继</p>
+<p>一般为路由器或三层交换机等网络设备</p>
+<p>DHCP 客户端</p>
+<p>需要动态获得ip 地址的主机</p>
+<p>手工分配</p>
+<p>根据需求，网络管理员为某些少数特定的主机  如DNS 服务器，打印机  绑定固定的ip 地址，其地址不会过期</p>
+<p>自动分配</p>
+<p>为连接到网络的某些主机分配 ip 地址，该地址将长期由该主机使用</p>
+<p>动态分配<br>主机申请ip 地址最常用的方法，DHCP 服务器为客户端指定一个ip 地址，同时为此地址规定了一个租用期限，如果租用时间到期，客户端必须重新申请ip 地址</p>
+<hr>
+<p>vlan 技术特殊应用</p>
+<p>vlan 数据转发原理</p>
+<p>华为系pvid 思科系本征vlan 原理</p>
+<p>无线网络，云桌面等环境pvid 应用实例</p>
+<p>基本的vlan通信原理</p>
+<p>什么是vlan 虚拟局域网，把一个大的局域网，分隔成多个小的局域网</p>
+<p>隔离广播包，大网络，人太多了，广播包就太多了，当我收到太多的广播包，我会卡顿</p>
+<p>隔离故障，否则，故障影响范围太大，排查麻烦</p>
+<p>vlan 如何配置</p>
+<p>vlan 的数据转发原理</p>
+<p>ensp 华为出的一个网络设备模拟器，用来模拟搭建一个企业级网络</p>
+<p>化为G口和E口有什么区别，工作中到底用什么口<br>f 四万兆<br>t 万兆<br>g 千兆<br>e 百兆</p>
+<p>配vlan 的时候，交换机的接口类型，有多种，最常见的是两种</p>
+<p>access 如果这个接口只连接一个vlan 用access</p>
+<p>trunk </p>
+<p>基本的vlan 配置</p>
+<p>怎么创建vlan</p>
+<p>怎么把中断 电脑 摄像头 门禁 放到对应的vlan</p>
+<p>怎么配置 trunk 两台交换机互联，一个接口要通过多个vlan</p>
+<p>怎么配置网关</p>
+<p>交换机B，给交换机A，发数据包的时候，会给数据包带上vlan 标签</p>
+<p>这样，交换机A 的trunk 接口收到数据包，看标签，就知道这个包是什么vlan</p>
+<p>反着想问题，交换机A 的trunk 接口收到数据包，如果包没标签，那怎么处理</p>
+<p>pvid 可以在trunk 口配一个pvid 的值，比如5</p>
+<p>当咱们配了pvid，接下来，交换机A的trunk 接口收到数据包，如果包没标签，认为他属于vlan 5</p>
+<p>云桌面，办公电脑不是普通的电脑，是一个类似于电视盒的小玩意</p>
+<p>电视盒，专业名词，云终端，云电脑，只负责显示画面，不复杂计算</p>
+<p>物理服务器，放到 vlan5</p>
+<p>物理服务器全新的时候，还没进入云平台的管辖范围，还不会给自己打标签</p>
+<p>作为网络设备的技术支持，要做到，让交换机收到没标签的包，还知道这个包，属于vlan5</p>
+<p>网络技术学习路线</p>
+<p>单核心网络</p>
+<p>产品</p>
+<p>二三层交换机<br>路由器<br>无线AC+AP<br>防火墙  无复杂策略</p>
+<p>技术 dhcp<br>vlan<br>静态路由<br>nat</p>
+<p>可胜任工作</p>
+<p>小型弱电项目网络技术支持<br>小型企业运维</p>
+<p>高可靠多分支网络</p>
+<p>数通技术典型发展路线</p>
+<p>小公司，小的网络</p>
+<p>大公司 中大型的网络  hcip hcie</p>
+<p>小公司，创业型，收入更高</p>
+<p>网络安全发展路线</p>
+<ol>
+<li>系统继承商</li>
+<li>启明星辰<br>深信服</li>
+</ol>
+<p>云计算路线<br>普通二本，毕业去h3c公司</p>
+<p>跳槽，去了腾讯，负责腾讯云的网络技术支持</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-20230512-mathematica入门教程"
   class="article article-type-post"
   itemscope
@@ -1500,186 +1917,6 @@
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">  * @file       led.h</span></span><br><span class="line"><span class="comment">  * @author     JonesLee</span></span><br><span class="line"><span class="comment">  * @email    Jones_Lee3@163.com</span></span><br><span class="line"><span class="comment">  * @version  V4.01</span></span><br><span class="line"><span class="comment">  * @date     07-DEC-2017</span></span><br><span class="line"><span class="comment">  * @license    GNU General Public License (GPL)  </span></span><br><span class="line"><span class="comment">  * @brief    Controller Area Network</span></span><br><span class="line"><span class="comment">  * @detail   detail</span></span><br><span class="line"><span class="comment">  * @attention</span></span><br><span class="line"><span class="comment">  *  This file is part of OST.                                                  \n                                                                  </span></span><br><span class="line"><span class="comment">  *  This program is free software; you can redistribute it and/or modify     \n     </span></span><br><span class="line"><span class="comment">  *  it under the terms of the GNU General Public License version 3 as        \n   </span></span><br><span class="line"><span class="comment">  *  published by the Free Software Foundation.                                 \n </span></span><br><span class="line"><span class="comment">  *  You should have received a copy of the GNU General Public License      \n      </span></span><br><span class="line"><span class="comment">  *  along with OST. If not, see &lt;http://www.gnu.org/licenses/&gt;.            \n  </span></span><br><span class="line"><span class="comment">  *  Unless required by applicable law or agreed to in writing, software        \n</span></span><br><span class="line"><span class="comment">  *  distributed under the License is distributed on an &quot;AS IS&quot; BASIS,          \n</span></span><br><span class="line"><span class="comment">  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.   \n</span></span><br><span class="line"><span class="comment">  *  See the License for the specific language governing permissions and      \n  </span></span><br><span class="line"><span class="comment">  *  limitations under the License.                         \n</span></span><br><span class="line"><span class="comment">  *                                         \n</span></span><br><span class="line"><span class="comment">  * @htmlonly </span></span><br><span class="line"><span class="comment">  * &lt;span style=&quot;font-weight: bold&quot;&gt;History&lt;/span&gt; </span></span><br><span class="line"><span class="comment">  * @endhtmlonly </span></span><br><span class="line"><span class="comment">  * Version|Auther|Date|Describe</span></span><br><span class="line"><span class="comment">  * ------|----|------|-------- </span></span><br><span class="line"><span class="comment">  * V3.3|Jones Lee|07-DEC-2017|Create File</span></span><br><span class="line"><span class="comment">  * &lt;h2&gt;&lt;center&gt;&amp;copy;COPYRIGHT 2017 WELLCASA All Rights Reserved.&lt;/center&gt;&lt;/h2&gt;</span></span><br><span class="line"><span class="comment">  */</span>  </span><br><span class="line"><span class="comment">/** @addtogroup  BSP</span></span><br><span class="line"><span class="comment">  * @&#123;</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">  * @brief Light Emitting Diode</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line"><span class="comment">/** @addtogroup LED </span></span><br><span class="line"><span class="comment">  * @&#123;</span></span><br><span class="line"><span class="comment">  */</span> </span><br><span class="line"><span class="meta">#<span class="keyword">ifndef</span> __LED_H__</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> __LED_H__</span></span><br><span class="line"><span class="meta">#<span class="keyword">ifdef</span> __cplusplus</span></span><br><span class="line"><span class="keyword">extern</span> <span class="string">&quot;C&quot;</span> &#123;</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span> </span></span><br><span class="line">  <span class="meta">#<span class="keyword">include</span> <span class="string">&quot;bsp.h&quot;</span></span></span><br><span class="line">  <span class="function"><span class="keyword">extern</span> s32  <span class="title">led_init</span><span class="params">(Led_TypeDef led)</span></span>;</span><br><span class="line">  <span class="function"><span class="keyword">extern</span> s32  <span class="title">led_config</span><span class="params">(<span class="type">void</span>)</span></span>;</span><br><span class="line">  <span class="function"><span class="keyword">extern</span> s32  <span class="title">led_on</span><span class="params">(Led_TypeDef led)</span></span>;</span><br><span class="line">  <span class="function"><span class="keyword">extern</span> s32  <span class="title">led_off</span><span class="params">(Led_TypeDef led)</span></span>;</span><br><span class="line">  <span class="function"><span class="keyword">extern</span> s32  <span class="title">led_toggle</span><span class="params">(Led_TypeDef led)</span></span>;</span><br><span class="line"><span class="meta">#<span class="keyword">ifdef</span> __cplusplus</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">endif</span>  <span class="comment">/*__LED_H__ */</span></span></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">  * @&#125;</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">  * @&#125;</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line"><span class="comment">/******************* (C)COPYRIGHT 2017 WELLCASA All Rights Reserved. *****END OF FILE****/</span></span><br></pre></td></tr></table></figure>
 
 <p>前面说明了是C语言的，C语言没有继承一说，在C++中有时候需要展示继承，如图</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20230418-用sphinx快速制作文档"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/04/18/20230418-%E7%94%A8sphinx%E5%BF%AB%E9%80%9F%E5%88%B6%E4%BD%9C%E6%96%87%E6%A1%A3/"
-    >20230418-用sphinx快速制作文档</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/04/18/20230418-%E7%94%A8sphinx%E5%BF%AB%E9%80%9F%E5%88%B6%E4%BD%9C%E6%96%87%E6%A1%A3/" class="article-date">
-  <time datetime="2023-04-17T23:55:19.000Z" itemprop="datePublished">2023-04-18</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>Sphinx 快速制作文档</p>
-<p>简介</p>
-<p>sphinx 是一种文档工具，它可以令人轻松的撰写出清晰且优美的文档，由georg brandl 在bsd 许可证下开发，新版的python文档就是由sphinx 生成的，并且它已成为python项目的首选的文档工具，同时它对c++项目也有很好的支持，并计划对其他开发语言添加特殊支持，本站当然也是使用sphinx 生成的，它采用 reStructuredText Sphinx 还在继续开发，下面列出了其良好特性，这些特性在python官方文档中均有体现</p>
-<p>丰富的输出格式，支持HTML 包括windows 帮助文档，latex 可以打印PDF版本，manual pages man 文档，纯文本</p>
-<p>完备的交叉引用，语义化的标签，并可以自动化链接函数，类，引文，术语及相似的片段信息</p>
-<p>明晰的分层结构 可以轻松的定义文档树，并自动化链接同级 父级 下级文章</p>
-<p>美观的自动索引  可自动生成美观的模块索引</p>
-<p>精确的语法高亮  基于pygments 自动生成语法高亮</p>
-<p>开放的扩展，支持代码块的自动测试，并包含python模块的自述文档 api docs 等</p>
-<p>sphinx 使用reStructureText 作为标记语言，可以享有docutils 为restructureText 提供的分析，转换等多种工具</p>
-<p>安装sphinx </p>
-<p>sphinx 为python 语言的一个第三方库，我们需要在终端中输入下列命令进行安装</p>
-<p>pip install sphinx</p>
-<p>创建 sphinx 项目</p>
-<p>创建一个用于存放文档的文件夹，然后在该文件夹路径下运行下列命令快速生成sphinx 项目</p>
-<p>sphinx-quickstart</p>
-<p>接下来会让你选择一些配置</p>
-<p>设置文档的根路径  回车 使用默认设置</p>
-<p>是否分离source 和build 目录</p>
-<p>设定模板前缀  回车 使用默认选项</p>
-<p>输入项目名称和作者</p>
-<p>输入项目版本号</p>
-<p>文档语言 回车 默认即可</p>
-<p>设定文档就按的后缀</p>
-<p>设定首页名称  回车 选择默认index 即可</p>
-<p>根据需要选择是否开启 epub 输出 一般用不到 回车默认不开启即可</p>
-<p>根据需求选择是否开启相应的sphinx 拓展功能</p>
-<p>创建项目以后目录结构如下所示</p>
-<p>build 用来存放通过make html 生成文档网页文件的目录</p>
-<p>source 存放用于生成文档的源文件</p>
-<p>conf.py sphinx 的配置文件</p>
-<p>index.rst 主文档</p>
-<p>定义文档结构</p>
-<p>主文档 index.rst 的主要功能是被转换成欢迎页，它包含一个目录表 table of contents tree 或者 toctree sphinx 主要功能是使用reStructureText 把许多文件组织成一份结构合理的文档</p>
-<p>toctree 指令初始值如下</p>
-<p>你可以在content 的位置添加文档列表</p>
-<p>注 文档文件放在与index.rst 同级目录下</p>
-<p>支持markdown 文件、更改文档主题</p>
-<p>spinx 本身不支持md 文件生成文档，需要我们使用第三方库 recommonmark 进行转换，首先分别运行下列命令安装 recommonmark 与sphinx_rtd_theme 库</p>
-<p>pip install recommonmark</p>
-<p>pip install sphinx_rtd_theme</p>
-<p>a安装好 在conf.py 中修改下列两个配置</p>
-<p>并新增</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">source_parsers = &#123;</span><br><span class="line">    &#x27;.md&#x27;: CommonMarkParser,</span><br><span class="line">    &#x27;.MD&#x27;: CommonMarkParser,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>生成文档</p>
-<p>在sphinx 项目所在的文件夹路径下运行下列命令生成文档</p>
-<p>make html</p>
-<p>生成后的文档位于 build&#x2F;html 文件夹内，用浏览器打开index.html 即可看到生成后的文档</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20230410-什么是DHCP？总结DHCP优缺点和工作原理"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/04/10/20230410-%E4%BB%80%E4%B9%88%E6%98%AFDHCP%EF%BC%9F%E6%80%BB%E7%BB%93DHCP%E4%BC%98%E7%BC%BA%E7%82%B9%E5%92%8C%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/"
-    >20230410-什么是DHCP？总结DHCP优缺点和工作原理</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/04/10/20230410-%E4%BB%80%E4%B9%88%E6%98%AFDHCP%EF%BC%9F%E6%80%BB%E7%BB%93DHCP%E4%BC%98%E7%BC%BA%E7%82%B9%E5%92%8C%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/" class="article-date">
-  <time datetime="2023-04-10T12:01:45.000Z" itemprop="datePublished">2023-04-10</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>了解DHCP或动态主机配置协议</p>
-<p>DHCP 是动态主机配置协议的缩写，它是一种存在于应用层的网络管理协议，在DHCP 的帮助下，可以动态地给网络上的任何设备或节点分配一个互联网协议ip 地址，使它们可以使用这个ip 进行通信，网络管理员的任务是将大量的ip 地址手动分配给网络中的所有设备，然而，在DHCP 中，这个任务是自动化的，是集中管理，而不是手工管理，无论是小型本地网络还是大型企业网络都实现了DHCP DHCP 的基本目标是为主机分配一个唯一的ip地址</p>
-<p>子网掩码</p>
-<p>路由器地址</p>
-<p>DNS 地址</p>
-<p>供应商类别标识符</p>
-<p>DHCP 有两种不同的方式，即作为客户端和服务器</p>
-<p>DHCP的历史</p>
-<p>DHCP 是bootp的扩展版本，也是1985年开始的一个网络管理协议，DHCP 服务器有足够的能力处理来自 BOOTP 客户端的请求，不仅如此，与BOOTP 相比，DHCP 更先进</p>
-<p>DHCP 是如何工作的</p>
-<p>当DHCP服务器作为服务器时，DHCP 服务器是用来自动分配唯一的ip 地址，同时配置网络的其他信息，在小型企业或家庭中，DHCP 服务器除了路由器之外，没有其他任何一个是DHCP 服务器，然而，在大型网络中，DHCP 服务器可以是一台计算机</p>
-<p>在这个过程中发生了什么，简单的总结如下，</p>
-<p>客户端向主机发送一个ip 地址请求，客户端可以是任何发送请求的设备，主机可以是路由器，主机将寻找一个可用的ip地址并分配给客户端</p>
-<p>使用这个ip 地址，客户端就可以在网络上进行通信</p>
-<p>现在我们就来详细了解一下这个过程，下面提到的步骤可以深入了解一下</p>
-<p>连接到有DHCP 服务器的网络的设备发送的请求称为 DHCPDISCOVER 请求</p>
-<p>这个请求以一个名为discover 的数据包的形式发送给DHCP 服务器，DHCP 服务器收到这个数据包，服务器就会立即寻找设备使用的ip 地址，一旦找到后，服务器会通过向客户端发送一个名为DHCPoffer 的数据包进行响应</p>
-<p>设备或客户端现在必须用一个名为 DHCPrequest 的数据包回馈给服务器，以接受所选的ip 地址，对于这个数据包，服务器会立即寻找设备使用的ip 地址，一旦找到后，服务器会通过向客户端发送一个名为dhcp offer 的数据包进行响应</p>
-<p>设备或客户端现在必须用一个名为dhcprequest的数据包回馈给服务器，以接受所选的ip 地址，对于这个数据包，服务器会发送一个确认 ack 确认设备现在可以使用这个特定的ip 地址，它还声明了特定 ip 地址的有效性，这样设备就能准确地知道何时必须获得一个新的ip 地址</p>
-<p>如果服务器不希望设备拥有给定的ip地址，它将不会通过发送一个nac来确认设备的请求</p>
-<p>虽然上面提到的步骤看起来很费时间，但实际操作起来却非常快，让人不自觉地就会想到，当然，这个过程不需要技术上的细节，只需阅读就可以从dhcp 服务器上获得一个ip 地址</p>
-<p>DHCP 是如何让工作变得轻松</p>
-<p>DHCP 服务器有一个地址池，可以让设备获得有效的网络连接，它基本上给出了谁be接收地址的范围，或范围内的ip 地址</p>
-<p>DHCP 有用的第二个原因是，很多设备可以在指定的时间段内连接到一个网络，甚至不需要任何可用的地址池，例如，考虑20个地址由DHCP 服务器定义 40 80 100 的设备只要不超过20个地址同时使用其中一个可用的ip 地址就可以连接到网络</p>
-<p>像ipconfig 这样的的命令在使用dhcp 时，会随着时间的推移返回不同的ip 地址，因为这些地址是提供给你的计算机网络的，在指定的时间段内也称为租期，拥有手动分配ip 地址的设备不一定能与动态接收ip 地址的设备在同一网络中共存，手动分配的ip 地址也称为静态ip 地址</p>
-<p>DHCP 的优缺点</p>
-<p>DHCP 的优点和缺点如下</p>
-<p>优点</p>
-<p>DHCP 有很多好处，因此它非常受欢迎，以下是使用dhcp 的一些优点</p>
-<p>可以很容易地在网络中添加新的客户端</p>
-<p>ip 地址是由 dhcp 集中管理的</p>
-<p>ip 地址可以重复使用，从而减少了对ip 地址总数的要求</p>
-<p>DHCP 服务器上的ip 地址空间可以很容易地进行重新配置，而不需要单独重新配置客户端</p>
-<p>网络管理员可以利用 dhcp 协议提供的方法，从集中区域配置网络</p>
-<p>缺点</p>
-<p>就像每一个硬币都有它的优点和缺点一样，使用DHCP 也有以下缺点</p>
-<p>在将ip 地址分配给不同的主机时，有时会出现ip 地址冲突的情况</p>
-<p>总结</p>
-<p>动态主机配置协议是一个非常关键和重要的网络服务，是必须要有的，因为使用它可以帮助你作为一个系统管理员或网络管理员，通过分配、跟踪和重新分配ip 来处理客户端，离开管理，此外，如果有任何外提，你只需要保持与服务器连接，并验证设置，而不是在客户端之间运行</p>
  
       <!-- reward -->
       
