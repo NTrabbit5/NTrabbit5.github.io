@@ -80,7 +80,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> 字数统计:</span>
-            <span class="post-count">383</span>
+            <span class="post-count">1.5k</span>
         </span>
     </span>
 
@@ -89,7 +89,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> 阅读时长≈</span>
-            <span class="post-count">1 分钟</span>
+            <span class="post-count">5 分钟</span>
         </span>
     </span>
 </div>
@@ -149,6 +149,105 @@
 <p>wc -l</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">lastb -f btmp-34 | wc -l</span><br><span class="line"></span><br><span class="line">lastb -f btmp-34 | awk &#x27;&#123;print $3&#125;&#x27; | sort |uniq -c |sort -nr|head</span><br></pre></td></tr></table></figure>
 
+<p>联发科 专用刷机工具 mtkclient</p>
+<p>手机获取root 权限基本步骤</p>
+<p>解锁 bootloader 提取 boot 修补 boot 刷入 boot</p>
+<p>fastboot 环境  bootrom 环境 系统环境  fastboot 环境</p>
+<p>xmanager</p>
+<p>1 CA实现和证书管理，用脚本实现</p>
+<p>2 ssh 服务常见操作</p>
+<p>openssl</p>
+<p>base64 编码</p>
+<p>加密和安全</p>
+<p>跳跃</p>
+<p>ssh -t 10.0.0.8 ssh -t 10.0.0.7 ssh 10.0.0.6</p>
+<p>-o 指定 ssh 的配置</p>
+<p>输入重定向</p>
+<p>ssh 10.0.0.6 bash &lt; &#x2F;root&#x2F;test2.sh</p>
+<p>ssh 服务登录的常用验证方式</p>
+<p>用户 口令</p>
+<p>基于密钥</p>
+<p>scp 拷贝文件</p>
+<p>win10 创建访客账户</p>
+<p>实现基于密钥的登录方式</p>
+<p>ll .sh&#x2F;</p>
+<p>防火墙</p>
+<p>cat hosts.txt</p>
+<p>while read ip; do ssh $ip bash &lt; &#x2F;root&#x2F;test2.sh; done &lt; hosts.txt</p>
+<p>for i in <code>cat hosts.txt</code>; do echo $i; done</p>
+<p>ls -a .sh</p>
+<p>RSC 协议</p>
+<p>-n 模拟复制过程<br>显示详细过程<br>递归复制目录树<br>保留权限<br>保留修改时间戳<br>保留组信息<br>保留所有者信息<br>将软链接文件指向的文件复制</p>
+<p>如果接收者的文件比发送者的文件较新，将忽略同步</p>
+<p>压缩，节约带宽</p>
+<p>rsync -av &#x2F;data&#x2F;test 10.0.0.7:&#x2F;data # 复制目录和目录下的文件</p>
+<p>rsync -av &#x2F;data&#x2F;test&#x2F; 10.0.0.7:&#x2F;data # 只目录下的文件</p>
+<p>ssh 高级应用</p>
+<p>本地端口转发</p>
+<p>ssh 会自动加密和解密所有ssh 客户端与服务端之间的网络数据</p>
+<p>telnet SMTP LDAP 这些TCP 应用均能够从中得益，避免了用户名，密码以及隐私信息的明文传输</p>
+<p>SSH 端口转发能够提供两大功能</p>
+<p>加密ssh client 端至ssh server 端之间的通讯数据</p>
+<p>突破防火墙的限制完成一些之前无法建立连接的TCP 连接</p>
+<p>sam 文件 密码</p>
+<p>iptable</p>
+<p>tail</p>
+<p>ssh 服务器配置</p>
+<p>服务器端 sshd</p>
+<p>服务器端的配置文件 sshd-config</p>
+<p>常用参数</p>
+<p>魂斗罗 contra</p>
+<p>ssh 服务的最佳实践</p>
+<p>建议使用非默认端口</p>
+<p>禁止使用 </p>
+<p>限制可登录用户</p>
+<p>设定空闲会话超时时长</p>
+<p>禁止使用空密码</p>
+<p>禁止root 用户直接登录</p>
+<p>限制ssh 的访问频度和并发在线数</p>
+<p>经常分析日志</p>
+<p>ssh 其它相关工具</p>
+<p>挂在远程ssh 目录sshfs</p>
+<p>由EPEL源提供，目前centos 还没有提供，可以利用ssh 协议高在远程目录</p>
+<p>自动登录ssh 工具sshpass</p>
+<p>由EPEL源提供，ssh 登录不能在命令行中指定密码，sshpass 的出现，解决了这一问题</p>
+<p>它支持密码从命令行  文件 环境变量中读取</p>
+<p>格式 sshpass [option] command parameters</p>
+<p>常见选项</p>
+<p>-p password 后跟密码它允许你用 -p 参数指定明文密码，然后直接登录远程服务器</p>
+<p>-f filename 后跟保存密码的文件名，密码是文件内容的第一行</p>
+<p>-e 将环境变量SSHPASS 作为密码</p>
+<p>sshpass –help</p>
+<p>sshpass -p magedu ssh -o StrictHostKeyChecking&#x3D;no 10.0.0.7</p>
+<p>本机known_hosts文件中有的主机才能生效</p>
+<p>chmod</p>
+<p>vim change_pass_dd.sh</p>
+<p>ssh 10.0.0.28</p>
+<p>批量修改多台主机的root 密码为随机密码</p>
+<p>批量部署多台主机基于key 验证 1</p>
+<p>遗传算法</p>
+<p>轻量级自动化运维工具pssh</p>
+<p>EPEL 源中提供了多个自动化运维工具</p>
+<p>pssh 基于 python 编写，可在多台服务器上执行命令的工具，也可实现文件复制，提供了基于ssh 和scp 的多个并行工具</p>
+<p>pdsh 是一个多线程远程shell 客户端，可以并行执行多个远程主机上的命令</p>
+<p>mussh 是一个shell 脚本，允许使用命令在多个主机上通过ssh 执行命令。</p>
+<p>pssh 命令选项如下</p>
+<p>pssh -h hosts.txt -i echo $UID</p>
+<p>pssh -h hosts.txt -i echo $HOSTNAME</p>
+<p>pslurp 命令</p>
+<p>功能是将远程主机的文件批量复制到本地</p>
+<p>-L 指定从远程主机下载到本机的存储的目录，local 是下载到本地好的名称</p>
+<p>-r 递归复制目录</p>
+<p>dropbear</p>
+<p>是特别有用的嵌入式linux 系统，如无线路由器，期望在存储器与运算能力有限的情况下取代openssh，尤其是嵌入式系统</p>
+<p>rpm -qf &#x2F;usr&#x2F;sbin&#x2F;sshd</p>
+<p>wget</p>
+<p>文件完整性检查 AIDE</p>
+<p>编译安装 dropbear</p>
+<p>dropbear -p :2222 -FE</p>
+<p>linux&#x3D;grub2+kernel+busybox+dropbear</p>
+<p>动态端口转发</p>
+<p>depmod</p>
  
       <!-- reward -->
       
