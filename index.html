@@ -153,8 +153,17 @@
       
     <div class="article-entry" itemprop="articleBody">
        
-  <p>[TOC]</p>
-<h2 id="0x01"><a href="#0x01" class="headerlink" title="0x01"></a>0x01</h2><h2 id="0x02"><a href="#0x02" class="headerlink" title="0x02"></a>0x02</h2><h2 id="0x03"><a href="#0x03" class="headerlink" title="0x03"></a>0x03</h2><h2 id="0x04"><a href="#0x04" class="headerlink" title="0x04"></a>0x04</h2> 
+  <p>要想为对于500台的计算机同时安装操作系统，首先需要满足如下安装条件</p>
+<p>必须有一台带网卡的计算机A 作为服务器，其他的计算机作为客户端</p>
+<p>必须将这些计算机都设置在一个局域网内</p>
+<p>将这些电脑的ip 地址设置在一个网段之中</p>
+<p>需要安装系统的电脑B 支持网络启动，如启动到PE ，内存最好大于256M</p>
+<p>准备好活动硬盘或者u盘，其中包含操作系统和驱动程序相关文件</p>
+<p>准备好网络启动软件包，两个软件包均可以启动到dos 或winpe ，启动会均支持usb 设备</p>
+<p>window server</p>
+<p>要想为对于500台的计算机批量安装操作系统，首页必须将其中的一台安装好可以做服务的操作系统，如window server 2003 2008 等，在安装好操作系统后，下面就可以创建服务器了</p>
+<p>在安装好服务器端之后，下面就可以安装客户端程序了，这里以maxdos8为例，在客户机中安装客户端程序的具体操作步骤如下。</p>
+ 
       <!-- reward -->
       
     </div>
@@ -209,6 +218,415 @@
 <p>安装好之后，我们开始第一次的正式使用，首先打开xshell 的工作界面</p>
 <p>点击文件 新建</p>
 <p>或者是点击这个新建按钮</p>
+<p>xftp</p>
+<p>如何修改xftp 显示服务器中隐藏的文件</p>
+<p>可以直接通过关设置xftp 的属性就可以了</p>
+<p>xshell 与 xftp 互联</p>
+<p>我们可以通过xshell 连接xftp 吗</p>
+<p>我们可以通过xftp 连接xshell 吗</p>
+<p>好处，不需要额外建立连接或者是打开软件或者是再次输入密码</p>
+<p>xftp 如何导出已有的登录信息</p>
+<p>integritydl 「阿里云盘」链接：<a target="_blank" rel="noopener" href="https://www.aliyundrive.com/s/hao5yBVF9SF">https://www.aliyundrive.com/s/hao5yBVF9SF</a> 提取码: 2y5e</p>
+<hr>
+<p>常用命令的使用 cd ls cp rm tar</p>
+<p>文本的编辑 vi gedit</p>
+<p>用户及权限系统  chmod</p>
+<p>shell 脚本入门 .sh</p>
+<p>常见的服务器 vsftpd</p>
+<p>java tomcat 运行环境的搭建等</p>
+<p>其他软件的编译与安装 redis</p>
+<p>X window gui 支持</p>
+<p>文件系统</p>
+<p>对于linux 来说，使用统一的目录树结构</p>
+<p>&#x2F;home&#x2F;shaofa<br>&#x2F;root<br>&#x2F;bin<br>&#x2F;mnt<br>&#x2F;usr<br>&#x2F;etc</p>
+<p>String filePath&#x3D;”c:&#x2F;example?abc.txt”</p>
+<p>&#x2F;home&#x2F;shaofa&#x2F;abc.txt</p>
+<p>opt 目录</p>
+<p>cd 即current directory </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd ~/example  其中~特指用户的主目录</span><br><span class="line">cd 回到用户目录 主目录位置</span><br></pre></td></tr></table></figure>
+
+<p>pwd print working directory</p>
+<p>ls 即list 列出文件和目录</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls -l ~example 其中 -l 参数表示详细模式</span><br></pre></td></tr></table></figure>
+
+<p>FastCopy</p>
+<p>绝对路径</p>
+<p>相对路径</p>
+<p>目录操作</p>
+<p>mkdir 即make directory 创建目录</p>
+<p>mkdir abc</p>
+<p>mkdir -p abc&#x2F;123&#x2F;test</p>
+<p>使用-p 参数，可以将路径的层次目录全部创建</p>
+<p>rmdir 即 remove directory 删除空目录</p>
+<p>rmdir abc</p>
+<p>如果目录非空，则删除失败</p>
+<p>rm -rf abc<br>删除abc 目录，和子项一并删除</p>
+<p>其中r 表示 recursive 递归的 f 表示force</p>
+<p>cp 复制 copy 复制文件或者目录</p>
+<p>cp -rf example example2</p>
+<p>归档压缩</p>
+<p>tar 即tape 磁带设备 archive 档案打包</p>
+<p>创建档案包</p>
+<p>tar -cvf example.tar example</p>
+<p>其中 c 表示create 创建档案<br>v 表示verbose 显示详情<br>f 表示file</p>
+<p>也可以多个目录打包 tar -cvf xxx.tar file1 file2 file3</p>
+<p>还原档案包</p>
+<p><code>tar -xvf example.tar</code></p>
+<p><code>tar -xvf example.tar -C outdir</code></p>
+<p>其中-C 参数指定目标目录，默认解压到当前目录下</p>
+<p>先前的tar 格式并没有压缩，体积较大</p>
+<p>归档并压缩</p>
+<p><code>tar -czvf example.tar.gz example</code></p>
+<p>解压缩</p>
+<p><code>tar -xzvf example.tar.gz -C outdir</code></p>
+<p>通常我们所见的，都是 <code>*.tar.gz</code> 这种格式的</p>
+<p>tab键可以自动补全</p>
+<p>上下键可以回顾历史记录，左右键可以修改插入</p>
+<p>一般地 在终端窗口里按鼠标右键支持复制粘贴</p>
+<p>useradd 添加用户</p>
+<p>chmod change file mode 改变文件权限</p>
+<p>vi cat ps kill ping ifconfig</p>
+<p>后续的章节中，会按照分类介绍更多命令行</p>
+<p>软链接</p>
+<p>即windows 下的快捷方式</p>
+<p>使用ln 命令来创建软链接</p>
+<p>ln -s source link</p>
+<p>其中-s 表示soft 软链接 默认为硬</p>
+<p>比如 </p>
+<p>ln -s example example2</p>
+<p>Hirender P1 播放器 Qlab</p>
+<p>软链接的特点，对源文件没有影响<br>删除源文件，则软链接失效</p>
+<p>除了软链接之外，还有一个为硬链接，不在本课程讲解</p>
+<p>用户管理需要以管理员身份执行</p>
+<p>所以，要先切换到root 账户</p>
+<p>su 即switch user 可以切换用户</p>
+<p>注意，是当前终端会话变成了root 账户，不是整个登录</p>
+<p>用户管理</p>
+<p>添加用户</p>
+<p>useradd test1</p>
+<p>观察 home 目录下的变化</p>
+<p>修改用户密码</p>
+<p>passwd test1</p>
+<p>删除用户</p>
+<p>userdel test1</p>
+<p>以root 身份执行命令，有三种方法</p>
+<p>以root 账户登录</p>
+<p>以普通用户来登录，临时切换到su</p>
+<p>以普通用户来登录，临时执行sudo</p>
+<p>用户和组</p>
+<p>groupadd boys</p>
+<p>useradd -g boys gang</p>
+<p>useradd -g boys ming</p>
+<p>usermod 表示修改用户信息</p>
+<p>usermod -g boys </p>
+<p>如何查看用户和组</p>
+<p>cat &#x2F;etc&#x2F;group</p>
+<p>每一行表示一个用户信息</p>
+<p>cat &#x2F;etc&#x2F;passwd</p>
+<p>用户不多时，管理的时候并不使用组的概念</p>
+<p>一个root 两个普通用户 a1 b1</p>
+<p>文件的权限</p>
+<p>本章讨论文件的权限问题</p>
+<p>考虑以下几个方面</p>
+<p>-owner 文件的属主 owner<br>-r 文件是否可读 read<br>-w 文件是否可写 write<br>-x 文件是否可执行 excute</p>
+<p>chmod -x</p>
+<p>rw-r–r– 表示该文件的访问权限</p>
+<p>使用ls 命令查看一个文件</p>
+<p>权限分为三部分，自己  同组 别人</p>
+<p>例如<br>rwx rwx rwx<br>rwx rwx r–<br>r– — —</p>
+<p>在文件夹窗口里，文件 属性，权限 查看</p>
+<p>escape :wq</p>
+<p>chmod o+w simple.txt </p>
+<p>其中<br>o 表示other 别人<br>+w 表示增写write权限</p>
+<p>chmod a+w simple.txt<br>所有人all 添加w 权限</p>
+<p>chmod a-w simple.txt<br>所有人减去w 权限</p>
+<p>chmod u+w simple.txt<br>仅用户user 自己的权限+w</p>
+<p>chmod o-w simple.txt<br>修改别人other 的权限-w</p>
+<p>只有文件的属主 或者root 可以修改文件权限</p>
+<p>省略写法</p>
+<p>chmod +w simple.txt<br>chmod -w simple.txt</p>
+<p>默认是修改自己和本组的权限</p>
+<p>chown 即change owner 修改文件的属主</p>
+<p>一般来说，每个用户只操作自己的用户目录</p>
+<p>所以chown 命令并不常用</p>
+<p>修改文件属主</p>
+<p>在&#x2F;opt 目录下建立一个文件夹source </p>
+<p>将source 目录分配给用户shaofa</p>
+<p>chown -R 表示递归</p>
+<p>只有文件的owner和root 才有权更改属主</p>
+<p>可执行脚本</p>
+<p>脚本script 一种解释执行的程序</p>
+<p>linux 下常见的三种脚本程序</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">shell 脚本 *.sh</span><br><span class="line">perl 脚本， *.pl</span><br><span class="line">python 脚本 *.py</span><br></pre></td></tr></table></figure>
+
+<p>脚本程序，本质是一个文本文件</p>
+<p>它是一个文本文件<br>它具有可执行权限</p>
+<p>ls -l &#x2F;bin&#x2F;python3</p>
+<p>本质上，脚本都是由解释器来执行的</p>
+<p>shell 脚本解释器<br>perl 脚本解释器<br>python 脚本解释器</p>
+<p>执行一个脚本时，以下两种方式等效</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">./hellp.py</span><br><span class="line">./usr/bin/python3 hello.py</span><br><span class="line">#!/bin/sh</span><br><span class="line"></span><br><span class="line">echo &quot;hello world&quot;</span><br></pre></td></tr></table></figure>
+
+<p>环境变量，就是放在当前环境中的变量</p>
+<p>无论linux 还是windows 都有环境变量</p>
+<p>比如，最常用的环境变量 path，java_home</p>
+<p>export</p>
+<p>用户环境变量</p>
+<p>用户环境变量 定义在 <code>~/.bash_profile</code> 中</p>
+<p>在主目录下</p>
+<p>ls -la </p>
+<p>其中，a 表示all ，显示所有文件</p>
+<p>注，在linux 下，以. 开头的文件为隐藏文件</p>
+<p>gedit .bash_profile</p>
+<p>要点与细节</p>
+<p>以点号 . 开头的文件为隐藏文件</p>
+<p>ls -a 查看所有文件</p>
+<p>此配置只对当前用户有效</p>
+<p>因为每个用户都有自己的配置文件.bash_profile</p>
+<hr>
+<p>系统环境变量</p>
+<p>定义在&#x2F;etc&#x2F;profile 中</p>
+<p>此中的环境变量对所有用户有效</p>
+<p>以root 登录或执行</p>
+<p>gedit &#x2F;etc&#x2F;ptofile</p>
+<p>在centos 下，一般不直接修改 etc&#x2F;profile 而是在etc&#x2F;profile.d&#x2F; 创建一个自定义的脚本</p>
+<p>系统环境变量<br>用gedit 创建一个脚本</p>
+<p>定义环境变量</p>
+<p>注销并重新登录</p>
+<p>重新登录后，环境变量生效</p>
+<p>PATH 环境变量</p>
+<p>先来看一个问题，创建一个可执行脚本</p>
+<p>默认地，系统从以下目录中搜索可执行程序</p>
+<pre><code>~/bin
+/usr/bin
+/usr/sbin
+/usr/local/bin
+/usr/local/sbin
+
+其中，sbin 为超级用户root 才能执行的程序
+
+/usr/ 下系统自带的程序， /usr/local/ 是用户安装的程序
+
+如果要对所有用户生效，需要加到
+
+/etc/profile.d/myprofile.sh
+
+export PATH=$PATH:/opt/jdk1.8/bin
+
+VMware 下虚拟机上网的问题
+
+在centos 内用浏览器上网
+
+以管理员运行VMware 编辑 虚拟网络编辑器
+
+三种联网方式
+
+VMnet0 桥接Bridge
+VMnet1 仅主机
+VMnet8 NAT共享主机
+
+一般地，使用NAT 方式或者Bridge 方式
+
+虚拟机网络编辑器
+
+打开windows 控制面板，大图标，网络与共享中心 更改适配器设置
+
+默认地，在WMware 安装的时候会自动添加2个虚拟网卡
+
+ifconfig
+
+虚拟机与宿主机的互相连通的
+
+与宿主机的网络互联
+
+虚拟机与宿主机
+
+VMware 虚拟出来的这个路由器不支持ping操作
+
+tracert 自动连接网络
+
+设置网络，在系统启动时自动连接网络
+
+两种方式，
+图形界面，直接设置
+命令行界面，修改配置文件
+
+ens33 
+
+ls /etc/sysconfig/network-scripts
+
+FTP 文件传输
+
+用U盘拷贝过去
+
+网络传输
+
+FTP
+SSH/SFTP
+SAMBA/CIFS
+NFS
+
+FileZilla 客户端
+
+SSH远程登录
+
+本章介绍以ssh 方式进行远程登录
+
+Telnet
+
+Putty SecureCRT XShell
+
+sshd 默认是启动的
+
+systemctl status sshd
+
+如果有防火墙，注意打开ssh 协议的22端口
+
+运行SecureFX 文件上传 下载
+
+FX 即 file Transmission
+
+协议SFTP Secret File Transfer Protocol 端口22
+
+gedit 一个基于gui的文本编辑器
+
+vi 一个基于命令行的文本编辑器
+
+需要掌握vi 的简单操作，因为一般的centos 可能不带gui 窗口环境
+
+
+vi 的更多用法
+
+vi 下其实还有非常复杂的命令和用法，除了i 和ESC 之外，几乎键盘上的每一个键都是快捷键
+
+dd 表示删除一行
+
+但是，这些都是不需要掌握的，不建议学习
+
+如果只有少量修改，用vi
+
+如果需要大量复杂的修改，现在windows 上编辑好
+再上传到服务器上
+
+
+文本文件的上传
+
+比如，修改 /etc/vsftpd/vsftpd.conf
+
+备份
+
+cp /etc/vsftpd/vsftpd.conf /etc/vsftpd/vsftpd.conf.2
+
+下载
+本地编辑
+
+用notepad++编辑
+
+上传
+换行符问题
+
+当编辑linux 下的脚本文件或配置文件的时候，需要注意，换行符的问题
+
+windows 下的文本文件的换行符 \r\n
+linux 下的文本文件的换行符 \n
+
+编辑，文档格式转换，转换为unix 格式
+
+一般地，只有linux 脚本文件或者配置文件需要转换
+
+其他的普通文件 java xml html 等则没有影响
+
+在notepad++ 下，开启特殊符号显示，以方便检查换行符
+
+java 运行环境
+
+JRE，用于运行java 程序的环境
+
+openjdk centos 配套的jdk 软件包，java 的开源版本，目前被更多人使用
+
+
+查看已经安装的软件包
+yum list installed
+
+查看已经安装的软件包，并搜索java 记录
+yum list installed | grep java
+
+yum search java
+
+grep ： global regular expression 命令用于查找文件里符合条件的字符串或正则表达式
+
+grep 指令用于查找内容包含指定的范本样式的文件，如果发现某文件的内容符合所指定的范本样式，预设grep 指令会吧含有范本样式的那一列显示出来。
+
+在linux 命令行进行算数运算的几种方法
+
+openjdk 软件包
+
+
+
+JRE 运行环境 [推荐]
+java-1.8.0-openjdk.x86_64
+
+开发环境
+java-1.8.0-openjdk-devel.x86_64
+
+精简的jre 运行环境，headless 版本
+java-1.8.0-openjdk-headless.x86_64
+
+运行java 程序
+
+java -jqr your_program.jar
+
+上传到centos
+
+运行程序
+
+java -jar simple.jar
+
+权限因素，自行检查
+
+程序里需要访问系统文件
+
+程序里需要开启tcp 端口，需要用root运行
+
+创建运行脚本
+
+一般来说，需要创建一个脚本，以便能快捷地启动程序
+
+参考run_app.sh
+
+设置工作目录
+
+设置必要地环境变量
+
+设置JVM 运行参数
+
+运行程序
+
+Tomcat 服务器地运行
+
+本身是一个java 程序，必须要有java 地运行环境
+
+检查tomacat 进程是否在运行
+
+ps -ef | grep java
+
+netstat -anp | grep 8080
+
+访问网站
+
+关闭服务器
+
+ps -ef|grep java
+
+要点与细节
+
+需要有java 运行环境才能运行
+
+tomcat 作为网络服务器，应该以root 执行
+
+tomcat 是以后台服务方式运行的
+
+</code></pre>
  
       <!-- reward -->
       
