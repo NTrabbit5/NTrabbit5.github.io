@@ -80,7 +80,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> 字数统计:</span>
-            <span class="post-count">3.1k</span>
+            <span class="post-count">3.4k</span>
         </span>
     </span>
 
@@ -89,7 +89,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> 阅读时长≈</span>
-            <span class="post-count">11 分钟</span>
+            <span class="post-count">13 分钟</span>
         </span>
     </span>
 </div>
@@ -518,6 +518,81 @@ ps -ef|grep java
 tomcat 作为网络服务器，应该以root 执行
 
 tomcat 是以后台服务方式运行的
+
+要点与细节
+
+不一定要部署在/opt/ 也可以放在 /root 下
+
+注意网站的根目录，ROOT 区分大小写
+
+/opt/www_your_own/ROOT
+
+
+tomcat
+
+创建启动脚本
+
+tomcat 自带的脚本
+
+startup
+
+shutdown
+
+catalina
+
+创建一个脚本 run_tomcat.sh
+
+以后台方式运行服务
+
+停止服务
+
+在当前窗口运行 方便打印调试
+
+run_tomcat.sh run
+
+其中，参数 start stop run 会间接地传给catalina.sh
+
+------- 程序与进程
+
+程序 program 指一个程序文件，
+
+ps -ef 查看所有的进程信息
+
+要点与细节
+
+重点注意 进程的pid 字段，pid 由系统动态赋予，不是固定的。
+
+
+中断进程
+
+强行结束 当前进程 ctrl+c
+
+演示
+运行top 按 ctrl+c 强行结束
+
+gedit 按 ctrl+c 强行结束
+
+杀死进程
+
+已知一个进程 的pid ，可以强行杀死该进程
+
+kill -9 NNN
+
+或者pkill name_of_process
+
+显然，只有root 才能杀死一切进程，普通用户就只能杀死自己的进程
+
+redis 服务器
+
+redis，一款基于内存的key value 型数据库
+
+本章内容
+
+redis 服务器的安装
+redis 源码的编译
+redis 服务器的配置
+
+
 
 </code></pre>
  

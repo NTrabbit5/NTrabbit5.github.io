@@ -126,6 +126,160 @@
     
     
     <article
+  id="post-20221226-优雅的API接口"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/12/26/20221226-%E4%BC%98%E9%9B%85%E7%9A%84API%E6%8E%A5%E5%8F%A3/"
+    >20221226-优雅的API接口</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/12/26/20221226-%E4%BC%98%E9%9B%85%E7%9A%84API%E6%8E%A5%E5%8F%A3/" class="article-date">
+  <time datetime="2022-12-26T07:34:22.000Z" itemprop="datePublished">2022-12-26</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>设计api 接口时，需要注意的一些地方，希望对你会有所帮助</p>
+<p>如何设计一个优雅的api接口，能够满足 安全性，可重复调用性，稳定性，好定位问题等多方面问题</p>
+<h2 id="1-签名"><a href="#1-签名" class="headerlink" title="1. 签名"></a>1. 签名</h2><p>为了防止api 接口中的数据被篡改，很多时候我们需要对api 接口做 签名</p>
+<p>接口请求方将 请求参数+时间戳+密钥 拼接成一个字符串，然后通过md5 等hash 算法，生成一个签名sign</p>
+<p>然后在请求参数或者请求头中，增加sign 参数，传递给api 接口 </p>
+<p>API 接口的网关服务，获取到该sign 值，然后用相同的请求参数+时间戳+密钥拼接成一个字符串，用相同的md5算法生成另外一个sign，对比两个sign 值是否相等</p>
+<p>如果两个sign 相等，则认为是有效请求，api 接口的网关服务会将给请求转发给相应的业务系统</p>
+<p>如果两个sign 不相等，则spi 接口的网关服务会直接返回签名错误</p>
+<p>签名中为什么要加时间戳</p>
+<p>为了安全性考虑，防止同一次请求被反复利用，增加了密钥没被破解的可能性，我们必须要对每次请求都设置一个合理的过期时间，比如15分钟</p>
+<p>这样一次请求，在15分钟之内是有效的，超过15分钟，api 接口的网关服务会返回超过有效期的异常提示</p>
+<p>目前生成签名中的密钥有两种形式</p>
+<p>一种是双方约定一个固定值 privateKey</p>
+<p>另一种是api 接口提供方给出AK&#x2F;SK 两个值，双方约定用sk 作为签名中的密钥，AK接口调用方作为header 中的accessKey 传递给api 接口提供方，这样api 接口提供方可以根据AK 获取到SK，而生成新的sign</p>
+<h2 id="2-加密"><a href="#2-加密" class="headerlink" title="2. 加密"></a>2. 加密</h2><p>有些时候，我们的api 接口直接传递的非常重要的数据，比如 用户的银行卡号，用户身份证等，如果将这些参数，直接明文，暴露到公网上是非常危险的事情</p>
+<p>目前使用比较多的是用BASE64 加密解密</p>
+<p>我们可以将所有的数据，按照一定的规律拼接成一个大的字符串，然后在加一个密钥，拼接到一起</p>
+<p>然后使用JDK1.8 之后的Base64 工具类处理，效果如下</p>
+<p>【加密前的数据】<a target="_blank" rel="noopener" href="http://www.baidu.com/">www.baidu.com</a><br>【加密后的数据】d3d3LmJhaWR1LmNvbQ&#x3D;&#x3D;</p>
+<p>为了安全性，使用Base64 可以加密多次</p>
+<p>API 接口的调用方在传递参数时，body 中只有一个参数data 它就是base64 之后的加密数据</p>
+<p>API 接口的网关服务，在接收到data 数据后，根据双方事先预定的密钥、加密算法、加密次数等，进行解密，并且反序列化出参数数据</p>
+<h2 id="3-ip-白名单"><a href="#3-ip-白名单" class="headerlink" title="3. ip 白名单"></a>3. ip 白名单</h2><p>为了进一步加强api 接口的安全性，防止接口的签名或者加密被破解了，攻击者可以在自己的服务器上请求该接口</p>
+<p>需求限制请求ip 增加ip 白名单</p>
+<p>只有在白名单中的ip 地址，才能成功请求api 接口，否则直接返回无访问权限</p>
+<p>ip 白名单也可以加载api 网关服务上</p>
+<p>但也要防止公司的内部应用服务器被攻破，这种情况也可以从内部服务器上发起api 接口的请求</p>
+<p>这时候就需要增加web 防火墙了，比如 modsecurity 等</p>
+<h2 id="4-限流"><a href="#4-限流" class="headerlink" title="4. 限流"></a>4. 限流</h2><p>如果你的api 接口被第三方平台调用了，这就意味着，调用频率是没法控制的</p>
+<p>第三方平台调用你的api 接口时，如果并发量一下子太高，可能会导致你的api 服务不可用，接口直接挂掉</p>
+<p>由此，必须要对api 接口做限流</p>
+<p>限流方法有三种</p>
+<ol>
+<li>对请求ip 做限流，比如同一个ip ，在一分钟内，对 api 接口总的请求次数，不能超过10000次</li>
+</ol>
+<p>对请求接口做限流  比如同一个ip 在一分钟内，对指定的api 接口，请求次数少不能超过2000次</p>
+<p>对请求用户做限流，比如同一个AK&#x2F;SK 用户，在一分钟内，对api 接口总的请求次数，不能超过10000次</p>
+<p>我们在实际工作中，可以通过nginx redis 或者gateway实现限流的功能</p>
+<h2 id="5-参数校验"><a href="#5-参数校验" class="headerlink" title="5. 参数校验"></a>5. 参数校验</h2><p>我们需要对api 接口做参数校验，比如：校验必填字段是否为空，校验字段类型，校验字段长度，校验枚举值等等</p>
+<p>这样做可以拦截一些无效的请求</p>
+<p>比如在新增数据时，字段长度超过了数据字段的最大长度，数据库会直接报错</p>
+<p>但这种异常的请求，我们完全可以在api 接口的前期进行识别，没有必要走到数据库保存数据那一步，浪费系统资源</p>
+<p>有些金额字段，本来是正数，但如果用户传入了负数，万一接口没做校验，可能会导致一些没必要的损失</p>
+<p>还有些状态字段，如果不做校验，用户如果传入了系统中不存在的枚举值，就会导致保存的数据异常</p>
+<p>由此可见，做参数校验是非常有必要的</p>
+<p>在java 中校验数据使用最多的是hiberate 的validator 框架，它里面包含了null notempty size max min 等注解</p>
+<p>用它们校验数据非常方便</p>
+<p>当然有些日期字段和枚举字段，可能需要通过自定义注解的方式实现参数校验</p>
+<h2 id="6-统一返回值"><a href="#6-统一返回值" class="headerlink" title="6. 统一返回值"></a>6. 统一返回值</h2><p>我之前调用过别人的api 接口，正常返回数据是一种json 格式，比如</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;code&quot;</span><span class="punctuation">:</span><span class="number">0</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;message&quot;</span><span class="punctuation">:</span><span class="keyword">null</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;data&quot;</span><span class="punctuation">:</span><span class="punctuation">[</span><span class="punctuation">&#123;</span><span class="attr">&quot;id&quot;</span><span class="punctuation">:</span><span class="number">123</span><span class="punctuation">,</span><span class="attr">&quot;name&quot;</span><span class="punctuation">:</span><span class="string">&quot;abc&quot;</span><span class="punctuation">&#125;</span><span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br></pre></td></tr></table></figure>
+
+<p>签名错误返回的json 格式</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;code&quot;</span><span class="punctuation">:</span><span class="number">1001</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;message&quot;</span><span class="punctuation">:</span><span class="string">&quot;签名错误&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;data&quot;</span><span class="punctuation">:</span><span class="keyword">null</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>没有数据权限返回的json 格式</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;rt&quot;</span><span class="punctuation">:</span><span class="number">10</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;errorMgt&quot;</span><span class="punctuation">:</span><span class="string">&quot;没有权限&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;result&quot;</span><span class="punctuation">:</span><span class="keyword">null</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>这是比较坑的做法，返回值中有多种不同格式的返回数据，这样会导致对接方很难理解</p>
+<p>出现这种情况，可能是api 网关定义了一直返回值接口，业务系统定义了另外一种返回值结构，如果是网关异常，则返回网关定义的返回值结构，如果是业务系统异常，则返回业务系统的返回值结构</p>
+<p>但这样会导致api 接口出现不同的异常，返回不同的返回值结构，非常不利于接口的维护</p>
+<p>其实这个问题我们可以在设计 api 网关时解决</p>
+<p>业务系统在出现异常时，抛出</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-20221226-七律·送瘟神"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/12/26/20221226-%E4%B8%83%E5%BE%8B%C2%B7%E9%80%81%E7%98%9F%E7%A5%9E/"
+    >20221226-七律·送瘟神</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/12/26/20221226-%E4%B8%83%E5%BE%8B%C2%B7%E9%80%81%E7%98%9F%E7%A5%9E/" class="article-date">
+  <time datetime="2022-12-26T06:01:54.000Z" itemprop="datePublished">2022-12-26</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>七律二首·送瘟神<br>朝代：现代<br>作者：毛泽东<br>其一<br>绿水青山枉自多，华佗无奈小虫何！<br>千村薜荔人遗矢，万户萧疏鬼唱歌。<br>坐地日行八万里，巡天遥看一千河。<br>牛郎欲问瘟神事，一样悲欢逐逝波。<br>其二<br>春风杨柳万千条，六亿神州尽舜尧。<br>红雨随心翻作浪，青山着意化为桥。<br>天连五岭银锄落，地动三河铁臂摇。<br><strong>借问瘟君欲何往，纸船明烛照天烧</strong>。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-20221225-docx格式文档详解：xml解析并用html还原"
   class="article article-type-post"
   itemscope
@@ -867,143 +1021,6 @@
 <p>module.js:328<br>    throw err;<br>    ^</p>
 <p>Error: Cannot find module ‘..&#x2F;build&#x2F;Release&#x2F;dns_sd_bindings’<br>    at Function.Module._resolveFilename (module.js:326:15)<br>    at Function.Module._load (module.js:277:25)<br>    at Module.require (module.js:354:17)<br>    at require (internal&#x2F;module.js:12:17)<br>    at Object.<anonymous> (&#x2F;usr&#x2F;local&#x2F;lib&#x2F;node_modules&#x2F;homebridge&#x2F;node_modules&#x2F;mdns&#x2F;lib&#x2F;dns_sd.js:32:22)<br>    at Module._compile (module.js:410:26)<br>    at Object.Module._extensions..js (module.js:417:10)<br>    at Module.load (module.js:344:32)<br>    at Function.Module._load (module.js:301:12)<br>    at Module.require (module.js:354:17)<br>请操作如下指令：</p>
 <p>cd &#x2F;usr&#x2F;local&#x2F;lib&#x2F;node_modules&#x2F;homebridge<br>sudo npm install –unsafe-perm mdns<br>sudo npm rebuild –unsafe-perm<br>以上是比较普遍出现在派友中的问题，我也将不断更新，大家亦可通过评论及其他渠道反映个人遇到的困难。</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20221222-python：PIL库中getpixel方法的使用"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/12/22/20221222-python%EF%BC%9APIL%E5%BA%93%E4%B8%ADgetpixel%E6%96%B9%E6%B3%95%E7%9A%84%E4%BD%BF%E7%94%A8/"
-    >20221222-python：PIL库中getpixel方法的使用</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/12/22/20221222-python%EF%BC%9APIL%E5%BA%93%E4%B8%ADgetpixel%E6%96%B9%E6%B3%95%E7%9A%84%E4%BD%BF%E7%94%A8/" class="article-date">
-  <time datetime="2022-12-22T05:19:07.000Z" itemprop="datePublished">2022-12-22</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>python pil 库中getpixel 方法的使用</p>
-<p>getpixel 函数是用来获取图像中某一点的像素的RGB颜色值，getpixel的参数是一个像素点的坐标，对于图像的不同的模式，getpixel 函数返回的值不同</p>
-<h2 id="RGB-模式-RED-GREEN-BLUE"><a href="#RGB-模式-RED-GREEN-BLUE" class="headerlink" title="RGB 模式 RED GREEN BLUE"></a>RGB 模式 RED GREEN BLUE</h2><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line">im=Image.<span class="built_in">open</span>(<span class="string">&#x27;1.tif&#x27;</span>)<span class="comment">#文件的路径</span></span><br><span class="line"><span class="built_in">print</span>(im.mode)</span><br><span class="line"><span class="built_in">print</span>(im.getpixel((<span class="number">30</span>,<span class="number">25</span>)))<span class="comment">#（0，0）表示像素点的坐标</span></span><br></pre></td></tr></table></figure>
-
-<p>结果为</p>
-<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">RGB</span><br><span class="line">(<span class="number">8</span>, <span class="number">8</span>, <span class="number">8</span>)</span><br></pre></td></tr></table></figure>
-
-<p>返回的坐标点 30 35 处的red green blue 的数值</p>
-<ol start="2">
-<li>P 模式，模式P 为8位彩色图像，它的每个像素用8个bit 表示，其对应的彩色值是按照调色板查询出来的</li>
-</ol>
-<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line">im=Image.<span class="built_in">open</span>(<span class="string">&#x27;1.tif&#x27;</span>)</span><br><span class="line">im2=im.convert(<span class="string">&quot;P&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(im2.mode)</span><br><span class="line"><span class="built_in">print</span>(im2.getpixel((<span class="number">30</span>,<span class="number">25</span>)))</span><br></pre></td></tr></table></figure>
-
-<p>结果为 P 46 </p>
-<p>转化为P 模式之后，坐标点 30 25 处的值有所变化</p>
-<p>1 模式  模式1 为二值图像，非黑即白，但是它每个像素用8个bit 表示，0表示黑，255 表示白</p>
-<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line">im=Image.<span class="built_in">open</span>(<span class="string">&#x27;1.tif&#x27;</span>)</span><br><span class="line">im2=im.convert(<span class="string">&quot;1&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(im2.mode)</span><br><span class="line"><span class="built_in">print</span>(im2.getpixel((<span class="number">30</span>,<span class="number">25</span>)))</span><br></pre></td></tr></table></figure>
-
-<p>结果为 1 0 </p>
-<p>PIL中有九种不同模式，分别为1，L，P，RGB，RGBA，CMYK，YCbCr，I，F，详情见博客：<a target="_blank" rel="noopener" href="https://editor.csdn.net/md?not_checkout=1&amp;articleId=114289398%EF%BC%8C%E5%85%B6%E4%BB%96%E7%9A%84%E6%A8%A1%E5%BC%8F%E5%9C%A8%E6%AD%A4%E4%B8%8D%E5%86%8D%E4%B8%80%E4%B8%80%E8%BF%9B%E8%A1%8C%E5%AE%9E%E9%AA%8C%E3%80%82%E5%9C%A8%E5%AF%B9%E5%9B%BE%E5%83%8F%E8%BF%9B%E8%A1%8C%E5%A4%84%E7%90%86%E7%9A%84%E6%97%B6%E5%80%99%EF%BC%8C%E5%A6%82%E6%9E%9C%E6%98%AF%E7%94%A8Image.open()%E6%89%93%E5%BC%80%E4%B8%80%E4%B8%AA%E5%9B%BE%E5%83%8F%EF%BC%8C%E8%AF%A5%E5%9B%BE%E5%83%8F%E4%B8%80%E5%AE%9A%E4%BC%9A%E5%8F%98%E6%88%90RGB%E6%A8%A1%E5%BC%8F%EF%BC%8C%E5%A6%82%E6%9E%9C%E6%83%B3%E8%A6%81%E5%88%A9%E7%94%A8getpixel%E7%9A%84%E8%BF%94%E5%9B%9E%E7%9A%84%E5%87%BD%E6%95%B0%E5%80%BC%EF%BC%8C%E4%B8%89%E5%85%83%E7%BB%84%E7%9A%84%E6%95%B0%E5%80%BC%E4%B8%8D%E5%A4%AA%E5%A5%BD%E5%A4%84%E7%90%86%EF%BC%8C%E5%B0%B1%E5%8F%AF%E4%BB%A5%E6%8A%8A%E5%9B%BE%E5%83%8F%E6%A8%A1%E5%BC%8F%E8%BD%AC%E5%8F%98%E4%B8%BA%E2%80%9CP%E2%80%9D%E6%A8%A1%E5%BC%8F%EF%BC%8C%E2%80%9CL%E2%80%9D%E6%A8%A1%E5%BC%8F%E7%AD%89%EF%BC%8C%E6%96%B9%E4%BE%BF%E5%88%A9%E7%94%A8getpixel%E8%BF%94%E5%9B%9E%E5%80%BC%E3%80%82">https://editor.csdn.net/md?not_checkout=1&amp;articleId=114289398，其他的模式在此不再一一进行实验。在对图像进行处理的时候，如果是用Image.open()打开一个图像，该图像一定会变成RGB模式，如果想要利用getpixel的返回的函数值，三元组的数值不太好处理，就可以把图像模式转变为“P”模式，“L”模式等，方便利用getpixel返回值。</a></p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20221222-HomeAssistant树莓派-Haio篇"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/12/22/20221222-HomeAssistant%E6%A0%91%E8%8E%93%E6%B4%BE-Haio%E7%AF%87/"
-    >20221222-HomeAssistant树莓派-Haio篇</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/12/22/20221222-HomeAssistant%E6%A0%91%E8%8E%93%E6%B4%BE-Haio%E7%AF%87/" class="article-date">
-  <time datetime="2022-12-22T04:46:15.000Z" itemprop="datePublished">2022-12-22</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>简单比较一下安装hass 的三种方法，hassbian 和all-in-one 所安装的hass 都是基于本身的系统框架化运行的，因此拥有原生系统的功能、参考文档等一切，你可以理解为买了一栋公寓里的一套房间，而hass.io 则是独立的系统，一切全部依靠图形界面操作，你所能接触的文档权限非常有限，就像你虽然拥有一幢楼，但是装修得按着别人的规划走。特别是出现问题时，只能从 Hass 官网和社群寻找支持。</p>
-<p>安装</p>
-<p>hass.io 是ha 官方与reinos 合作推出的系统</p>
-<p>使用 Etcher 等应用将系统烧录至内存卡，将卡插入树莓派中，保证树莓派处于联网状态。<br>由于安装资源需要全程连接 外网下载，</p>
-<p>如要设置 wifi 连接，请打开存储卡目录下system-connections&#x2F;resin-sample 文件，使用编译器编译</p>
-<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[connection]</span></span><br><span class="line"><span class="attr">id</span>=resin-wifi</span><br><span class="line"><span class="attr">type</span>=wifi</span><br><span class="line"></span><br><span class="line"><span class="section">[wifi]</span></span><br><span class="line"><span class="attr">hidden</span>=<span class="literal">true</span></span><br><span class="line"><span class="attr">mode</span>=infrastructure</span><br><span class="line"><span class="attr">ssid</span>=你的WIFI SSID</span><br><span class="line"></span><br><span class="line"><span class="section">[ipv4]</span></span><br><span class="line"><span class="attr">method</span>=auto</span><br><span class="line"></span><br><span class="line"><span class="section">[ipv6]</span></span><br><span class="line"><span class="attr">addr-gen-mode</span>=stable-privacy</span><br><span class="line"><span class="attr">method</span>=auto</span><br><span class="line"></span><br><span class="line"><span class="section">[wifi-security]</span></span><br><span class="line"><span class="attr">auth-alg</span>=open</span><br><span class="line"><span class="attr">key-mgmt</span>=wpa-psk</span><br><span class="line"><span class="attr">psk</span>=你的 WIFI 密码</span><br></pre></td></tr></table></figure>
-
-<p>附加功能</p>
-<p>hass.io 的核心就在于高度简化配置过程，尽量使用全图形化操作，插件的安装也是如此</p>
-<p>点击左侧栏 hass.io  我们便进入了附加功能安装面板，HA 老用户发现对比其他版本HA 增加了自动化 和hass.io 面板，而后者就是hass.io 的插件管理界面，你可以在此安装官方提供的插件，也可以添加插件源安装其他用户分享或自己制作的插件，十分便捷方便</p>
-<p>下面我们使用操作面板安装 samba 功能，实现hass 和电脑的文件共享</p>
-<p>SMB 如此重要，自然 hass.io 原生内置了安装入口，在插件安装面板下拉找到 samba share ，点击进入安装界面，而后再点击 install ，等到小圈不转了，一切就大功告成了，</p>
-<p>安装完成后，便会出现info 和options 卡片</p>
-<p>首先，建议在info 中打开自动更新，接着我们来详细看看options 中的配置</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;workgroup&quot;</span><span class="punctuation">:</span> <span class="string">&quot;WORKGROUP&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;hassio&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;guest&quot;</span><span class="punctuation">:</span> <span class="keyword">true</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;map&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;config&quot;</span><span class="punctuation">:</span> <span class="keyword">true</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;addons&quot;</span><span class="punctuation">:</span> <span class="keyword">true</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;ssl&quot;</span><span class="punctuation">:</span> <span class="keyword">false</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;share&quot;</span><span class="punctuation">:</span> <span class="keyword">true</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;backup&quot;</span><span class="punctuation">:</span> <span class="keyword">true</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;username&quot;</span><span class="punctuation">:</span> <span class="string">&quot;&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;password&quot;</span><span class="punctuation">:</span> <span class="string">&quot;&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;interface&quot;</span><span class="punctuation">:</span> <span class="string">&quot;eth0&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
-
-<p>变量说明 汉化官方文档，原文地址</p>
-<p>name (可选): 用户名，默认值 hassio。<br>workgroup (可选): 用户组，默认值 WORKGROUP。<br>guest (可选): 是否允许客人用户（无用户名无密码）默认值 true。<br>map (可选): 开放文件夹，默认值 all，即全部开放。可选有 config，addons，share，backup，ssl。<br>username (可选): 登录用户名。<br>password (可选): 登录密码。<br>interface (可选): 开放接口，有线网连接使用 eth0，无线网连接使用 wlan0。</p>
-<p>按需更改配置后，点击save 保存，再点击start，你的SMB 服务就启动了，并且自动加入了自启服务</p>
-<p>通过SMB 的设置，相信你对在hass.io  中安装附加功能 add-on 有了一定了解，官方提供的插件列表见此，大家可以根据说明按需安装</p>
-<p>这里推荐安装SMB SSH 及Bluetooth BCM43xx 可以使你更安逸地使用hass.io </p>
-<p>使用apple 终端，对使用homekit 控制智能家居设备有需求的朋友不少，因此接下来特别介绍一下 homebridge 插件 的安装方法，希望大家可以借此掌握安装第三方源插件的方法</p>
-<p>homebridge</p>
-<p>最早提供hb 安装的源已经不再维护，我已替换为其他保持更新的第三方源，</p>
-<p>安装附加功能后，你的HA 环境就和其他方法安装的ha 基本一致了，有关设备的接入、个性化配置等，欢迎参考系列的其他文章，老用户可以直接复制粘贴原 configuration.yaml 配置文件，但需特别注意添加 Discovery: 服务。</p>
  
       <!-- reward -->
       

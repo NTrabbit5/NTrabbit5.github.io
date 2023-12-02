@@ -126,6 +126,225 @@
     
     
     <article
+  id="post-20231201-利用Filezilla在局域网内搭建自己的FTP服务器"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/12/01/20231201-%E5%88%A9%E7%94%A8Filezilla%E5%9C%A8%E5%B1%80%E5%9F%9F%E7%BD%91%E5%86%85%E6%90%AD%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84FTP%E6%9C%8D%E5%8A%A1%E5%99%A8/"
+    >20231201-利用Filezilla在局域网内搭建自己的FTP服务器</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/12/01/20231201-%E5%88%A9%E7%94%A8Filezilla%E5%9C%A8%E5%B1%80%E5%9F%9F%E7%BD%91%E5%86%85%E6%90%AD%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84FTP%E6%9C%8D%E5%8A%A1%E5%99%A8/" class="article-date">
+  <time datetime="2023-12-01T13:56:27.000Z" itemprop="datePublished">2023-12-01</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>filezilla server<br>filezilla client</p>
+<p>在general setting 里面<br>更改最大用户树，这个数指的是允许的同时登录到服务器的用户数量</p>
+<p>链接：<a target="_blank" rel="noopener" href="https://pan.baidu.com/s/1Ou4bQXyGn8OpfndGE-O5sg">https://pan.baidu.com/s/1Ou4bQXyGn8OpfndGE-O5sg</a><br>提取码：rb31</p>
+<p>安装ftp 服务器</p>
+<p>yum install -y vsftpd</p>
+<p>添加用户名，用作ftp 匿名访问用户</p>
+<p>useradd ftpuser</p>
+<p>passwd ftpuser</p>
+<p>配置文件</p>
+<p>init.d linux 系统启动的初始化文件</p>
+<p>winscp</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">void* func;</span><br><span class="line">const char* name;</span><br><span class="line"></span><br><span class="line">(void *) 强制类型转换</span><br><span class="line">void*p = (void*)p;</span><br><span class="line">void* vp1 = void*(p);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">static_cast&lt;&gt;</span><br><span class="line">const_cast&lt;&gt;</span><br><span class="line">dynamic_cast&lt;&gt;</span><br><span class="line">reinterpret_cast&lt;&gt;</span><br><span class="line"></span><br><span class="line">void (*init)(uint16_t tclk)</span><br><span class="line"></span><br><span class="line">void (*exe)(void)</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>动态绑定</p>
+<p>id</p>
+<p>sptype 参数显示类型<br>parmtype </p>
+<p>runtimeflag</p>
+<p>extern struct <code>_m_usmart_dev_usmart_dev</code>;</p>
+<!-- usmart_nametab[]; -->
+
+<p>结构体的初始化</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line"></span><br><span class="line">myprint</span><br><span class="line"></span><br><span class="line">print_hex</span><br><span class="line"></span><br><span class="line">port</span><br><span class="line"></span><br><span class="line">sptype = 1;</span><br><span class="line"></span><br><span class="line">usmart_init</span><br><span class="line"></span><br><span class="line">usmart_cmd_rec</span><br><span class="line"></span><br><span class="line">const_char</span><br><span class="line"></span><br><span class="line">(char *)</span><br></pre></td></tr></table></figure>
+
+<p>尽量少做转型工作</p>
+<p>paramtype</p>
+<p>参数是字符串</p>
+<p>参数是数字</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">int arr[3] = &#123;0,1,2&#125;;</span><br><span class="line"></span><br><span class="line">for (int i = 0; i&lt; std::size(arr);i++)</span><br><span class="line">  std::cout &lt;&lt; arr[i] &lt;&lt; &quot; \n&quot;[i == std::size(arr) -1];</span><br><span class="line"></span><br><span class="line">(*(uint32_t(*)()))usmart_dev.funs[id].func(temp[0],temp[1],temp[2]);</span><br><span class="line"></span><br><span class="line">break;</span><br><span class="line"></span><br><span class="line">解引用</span><br><span class="line"></span><br><span class="line">uint32_t</span><br><span class="line"></span><br><span class="line">usmart_get_input_string</span><br><span class="line"></span><br><span class="line">III</span><br><span class="line"></span><br><span class="line">comp 对比字符串</span><br><span class="line"></span><br><span class="line">strtemp</span><br><span class="line"></span><br><span class="line">const</span><br><span class="line"></span><br><span class="line">print_hex(int i)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>把函数存起来</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">std::function</span><br><span class="line"></span><br><span class="line">print_add(int 1)</span><br><span class="line"></span><br><span class="line">std::bind</span><br><span class="line"></span><br><span class="line">auto factorial</span><br><span class="line"></span><br><span class="line">cppreference.com</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-20231201-LVGL模块"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/12/01/20231201-LVGL%E6%A8%A1%E5%9D%97/"
+    >20231201-LVGL模块入门</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/12/01/20231201-LVGL%E6%A8%A1%E5%9D%97/" class="article-date">
+  <time datetime="2023-12-01T13:34:44.000Z" itemprop="datePublished">2023-12-01</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>GUI简介</p>
+<p>GUI 库：图形用户界面库，只要调用gui库的函数即可快速绘制出所需要的用户界面</p>
+<p>开发难度低<br>可移植性高</p>
+<p>风格统一、协调</p>
+<p>嵌入式系统中常用的gui库</p>
+<p>emwin</p>
+<p>LVGL</p>
+<p>TouchGFX</p>
+<p>QT</p>
+<p>LVGL简介</p>
+<p>Light and versatile graphics library 是一个轻量、多功能的开源图形库。</p>
+<p>LVGL移植要求</p>
+<p>LVGL资料获取</p>
+<p>LVGL库软件介绍</p>
+<p>课堂总结</p>
+<p>支持多种输入设备</p>
+<p>部件、功能丰富</p>
+<p>具备高级图形特征</p>
+<p>支持多种样式属性</p>
+<p>C语言编写</p>
+<p>css 样式设计理念</p>
+<p>LVGL 移植要求 熟悉</p>
+<p>16 32 64 为￥微控制器或处理器</p>
+<p>主控频率 &gt; 16Mhz</p>
+<p>Flash&#x2F;ROM &gt;64kb 建议180kb以上</p>
+<p>RAM &gt; 8kb 建议 24kb以上</p>
+<p>图形缓冲区 &gt; 水平分辨率像素，建议大于1&#x2F;10 屏幕总像素</p>
+<p>C99 或更新的版本的编译器</p>
+<p>此要求仅针对v8版本的LVGL</p>
+<hr>
+<p>优化LVGL 运行效果的方法</p>
+<p>提高芯片主频</p>
+<p>增大 SRAM 容量，提高读写速度</p>
+<p>增大图形缓冲区，使用双缓冲</p>
+<p>减小需要刷新的总像素</p>
+<hr>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">std::vector&lt;std::thread&gt;</span><br><span class="line">jthread </span><br><span class="line"></span><br><span class="line">uart</span><br><span class="line"></span><br><span class="line">public:</span><br><span class="line">  template &lt;typename Fn, typename ... &gt;</span><br><span class="line"></span><br><span class="line">std::any </span><br><span class="line"></span><br><span class="line">private:</span><br><span class="line">  void* m_fun;</span><br></pre></td></tr></table></figure>
+
+<p>模板函数</p>
+<p>ranges</p>
+<p>类型</p>
+<p>beep</p>
+<p>后备区域BKP</p>
+<p>RCC_BDCR<br>LSE</p>
+<p>扭力扳手</p>
+<p>RTC_PRER PREDIV_A 异步预分频器</p>
+<p>ck_apre<br>ck_spre</p>
+<p>0xff 即256分频</p>
+<p>时间和日期相关寄存器</p>
+<p>BCD码</p>
+<p>可编程闹钟</p>
+<p>周期性自动唤醒</p>
+<p>16位可编程自动重载递减计数器</p>
+<p>ck_spre</p>
+<p>软件清零WUTF标志</p>
+<p>TR 寄存器</p>
+<p>0</p>
+<p>写保护</p>
+<p>WUTIE</p>
+<p>位14</p>
+<p>ALRAE</p>
+<p>FMT 为小时格式选择位</p>
+<p>ss[15:0]</p>
+<p>亚秒值&#x3D;(PREDIV_S-SS)&#x2F;(PREDIV_S+1)</p>
+<p>ALRBF</p>
+<p>ALRAF</p>
+<p>init 为初始化模式控制位</p>
+<p>RTC唤醒寄存器</p>
+<p>闹钟 秒的</p>
+<p>备份寄存器</p>
+<p>BKP 存储重要的数据</p>
+<p>EEPROM</p>
+<p>LSE<br>RTC</p>
+<p>usmart 设置时间</p>
+<p>hal 库</p>
+<p>HAL_RTC_Init()</p>
+<p>PutPut 使能A输出</p>
+<p>HAL_RTC_SetTime() 设置rtc的时间函数</p>
+<p>SetDate 是设置RTC 的日期函数</p>
+<p>GetTime 函数</p>
+<p>取消备份区域写保护</p>
+<p>LSE RTC</p>
+<p>唤醒中断，闹钟</p>
+<p>g_rtc_handle</p>
+<p>句柄</p>
+<p>声明与使用靠近</p>
+<p>LSE 外部低速时钟</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">retry--</span><br><span class="line"></span><br><span class="line">LSI</span><br><span class="line"></span><br><span class="line">rtc_read_bkr();</span><br><span class="line"></span><br><span class="line">sprintf(tbuf,&#x27;Time:%02d&#x27;,hour,min,sec)</span><br><span class="line"></span><br><span class="line">rtc_read_bkr</span><br><span class="line"></span><br><span class="line">rtc_get_week(uint16_t year,uint16_t month,uint16_t day)</span><br><span class="line"></span><br><span class="line">AlarmAEventCallback</span><br></pre></td></tr></table></figure>
+
+
+
+
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-20231130-如何批量安装操作系统"
   class="article article-type-post"
   itemscope
@@ -625,6 +844,81 @@ ps -ef|grep java
 tomcat 作为网络服务器，应该以root 执行
 
 tomcat 是以后台服务方式运行的
+
+要点与细节
+
+不一定要部署在/opt/ 也可以放在 /root 下
+
+注意网站的根目录，ROOT 区分大小写
+
+/opt/www_your_own/ROOT
+
+
+tomcat
+
+创建启动脚本
+
+tomcat 自带的脚本
+
+startup
+
+shutdown
+
+catalina
+
+创建一个脚本 run_tomcat.sh
+
+以后台方式运行服务
+
+停止服务
+
+在当前窗口运行 方便打印调试
+
+run_tomcat.sh run
+
+其中，参数 start stop run 会间接地传给catalina.sh
+
+------- 程序与进程
+
+程序 program 指一个程序文件，
+
+ps -ef 查看所有的进程信息
+
+要点与细节
+
+重点注意 进程的pid 字段，pid 由系统动态赋予，不是固定的。
+
+
+中断进程
+
+强行结束 当前进程 ctrl+c
+
+演示
+运行top 按 ctrl+c 强行结束
+
+gedit 按 ctrl+c 强行结束
+
+杀死进程
+
+已知一个进程 的pid ，可以强行杀死该进程
+
+kill -9 NNN
+
+或者pkill name_of_process
+
+显然，只有root 才能杀死一切进程，普通用户就只能杀死自己的进程
+
+redis 服务器
+
+redis，一款基于内存的key value 型数据库
+
+本章内容
+
+redis 服务器的安装
+redis 源码的编译
+redis 服务器的配置
+
+
 
 </code></pre>
  
@@ -1193,100 +1487,6 @@ tomcat 是以后台服务方式运行的
 <p>smart st-1200 扩展能力</p>
 <p>TIA</p>
 <p>博途</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20231018-视频转文本的方法"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/10/18/20231018-%E8%A7%86%E9%A2%91%E8%BD%AC%E6%96%87%E6%9C%AC%E7%9A%84%E6%96%B9%E6%B3%95/"
-    >20231018-视频转文本的方法</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/10/18/20231018-%E8%A7%86%E9%A2%91%E8%BD%AC%E6%96%87%E6%9C%AC%E7%9A%84%E6%96%B9%E6%B3%95/" class="article-date">
-  <time datetime="2023-10-18T06:42:31.000Z" itemprop="datePublished">2023-10-18</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>剪映电脑端<br>智能字幕</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-20231015-北京精雕ArtForm软件教程"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/10/15/20231015-%E5%8C%97%E4%BA%AC%E7%B2%BE%E9%9B%95ArtForm%E8%BD%AF%E4%BB%B6%E6%95%99%E7%A8%8B/"
-    >20231015-北京精雕ArtForm软件教程</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/10/15/20231015-%E5%8C%97%E4%BA%AC%E7%B2%BE%E9%9B%95ArtForm%E8%BD%AF%E4%BB%B6%E6%95%99%E7%A8%8B/" class="article-date">
-  <time datetime="2023-10-15T11:20:41.000Z" itemprop="datePublished">2023-10-15</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Wu411o73s">https://www.bilibili.com/video/BV1Wu411o73s</a></p>
  
       <!-- reward -->
       
