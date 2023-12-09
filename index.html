@@ -1202,6 +1202,51 @@ redis 服务器的配置
 <p>SMP 负载均衡</p>
 <p>gcc<br>-E 预处理，开发过程中想快速确定某个宏可以使用 -E -dM</p>
 <p>-c 把预处理、编译、汇编都做了，但是不链接<br>-o 指定输出文件<br>-I 指定头文件目录<br>-L 指定链接时库文件目录<br>-l 指定链接哪一个库文件</p>
+<p>awk 命令实现数组切分提取</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">awk -F &#x27; &#x27; &#x27;&#123;print $1&#125;&#x27;</span><br><span class="line">v2 | awk -F &#x27; &#x27; &#x27;&#123;print $1&#125;&#x27; | xargs -i kubectl logs -n 20 -n weather &#123;&#125; -c istio-proxy</span><br><span class="line"></span><br><span class="line">内容太多 正则表达式继续筛选，找到需要的内容</span><br><span class="line"></span><br><span class="line">数据统计</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
  
       <!-- reward -->
       
